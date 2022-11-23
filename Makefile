@@ -23,9 +23,10 @@ TOP_DIR := $(ROOT_DIR)
 
 SRC_DIRS = $(ROOT_DIR)/src
 INC_DIRS := $(ROOT_DIR)/../
-export TARGET=arm
-export CC=arm-rdk-linux-gnueabi-g++  -march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard  --sysroot=/home/ABK30/1509_platco/build-platco-cad11/tmp/work/armv7at2hf-neon-rdk-linux-gnueabi/tvsettings-hal/git999-r0/recipe-sysroot
-#export YLDFLAGS += /home/ABK30/1509_platco/build-platco-cad11/tmp/work/armv7at2hf-neon-rdk-linux-gnueabi/tvsettings-hal/git999-r0/image/usr/lib/libtvsettings-hal.so
+INC_DIRS += $(ROOT_DIR)/include
+SYS_ROOT_PATH := "$(ROOT_DIR)/../../../build-platco-cad11/tmp/work/armv7at2hf-neon-rdk-linux-gnueabi/tvsettings-hal/git999-r0/recipe-sysroot"
+export CC=g++ 
+
 ifeq ($(TARGET),)
 $(info TARGET NOT SET )
 $(info TARGET FORCED TO Linux)
@@ -37,6 +38,7 @@ $(info TARGET [$(TARGET)])
 
 HAL_LIB_DIR := $(ROOT_DIR)/..
 ifeq ($(TARGET),arm)
+export CC=arm-rdk-linux-gnueabi-g++  -march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard --sysroot=$(SYS_ROOT_PATH)
 YLDFLAGS = -Wl,-rpath,$(HAL_LIB_DIR) -L$(HAL_LIB_DIR) -ltvsettings-hal
 endif
 
