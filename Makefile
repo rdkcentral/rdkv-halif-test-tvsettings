@@ -31,10 +31,15 @@ ifeq ($(TARGET),)
 $(info TARGET NOT SET )
 $(info TARGET FORCED TO Linux)
 TARGET=linux
-SRC_DIRS += $(ROOT_DIR)/skeletons/src
 endif
 
+
 $(info TARGET [$(TARGET)])
+
+
+ifeq ($(TARGET),linux)
+SRC_DIRS += $(ROOT_DIR)/skeletons/src
+endif
 
 HAL_LIB_DIR := $(ROOT_DIR)/..
 ifeq ($(TARGET),arm)
