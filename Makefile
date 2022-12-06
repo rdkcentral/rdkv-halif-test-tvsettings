@@ -24,8 +24,6 @@ TOP_DIR := $(ROOT_DIR)
 SRC_DIRS = $(ROOT_DIR)/src
 INC_DIRS := $(ROOT_DIR)/../
 INC_DIRS += $(ROOT_DIR)/include
-SYS_ROOT_PATH := "$(ROOT_DIR)/../../../build-platco-cad11/tmp/work/armv7at2hf-neon-rdk-linux-gnueabi/tvsettings-hal/git999-r0/recipe-sysroot"
-export CC=g++ 
 
 ifeq ($(TARGET),)
 $(info TARGET NOT SET )
@@ -39,11 +37,12 @@ $(info TARGET [$(TARGET)])
 
 ifeq ($(TARGET),linux)
 SRC_DIRS += $(ROOT_DIR)/skeletons/src
+export CC=g++ 
 endif
 
 HAL_LIB_DIR := $(ROOT_DIR)/..
 ifeq ($(TARGET),arm)
-export CC=arm-rdk-linux-gnueabi-g++  -march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard --sysroot=$(SYS_ROOT_PATH)
+export CC=arm-rdk-linux-gnueabi-g++  -march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard --sysroot=$(PKG_CONFIG_SYSROOT_DIR)
 YLDFLAGS = -Wl,-rpath,$(HAL_LIB_DIR) -L$(HAL_LIB_DIR) -ltvsettings-hal
 endif
 
@@ -62,12 +61,18 @@ export HAL_LIB_DIR
 
 build:
 	@echo UT [$@]
+	echo "PKG_CONFIG_SYSROOT_DIR"
+	echo $(PKG_CONFIG_SYSROOT_DIR)
 	make -C ./ut-core
 
 list:
 	@echo UT [$@]
+	echo "PKG_CONFIG_SYSROOT_DIR"
+	echo $(PKG_CONFIG_SYSROOT_DIR)
 	make -C ./ut-core list
 
 clean:
 	@echo UT [$@]
+	echo "PKG_CONFIG_SYSROOT_DIR"
+	echo $(PKG_CONFIG_SYSROOT_DIR)
 	make -C ./ut-core clean
