@@ -21,9 +21,6 @@
 #include <setjmp.h>
 #include "tvSettings.h"
 #include <tv_settings_hal.h>
-//#include "PqClient.h"
-//#include "pqcmd.h"
-
 
 #include <ut.h>
 
