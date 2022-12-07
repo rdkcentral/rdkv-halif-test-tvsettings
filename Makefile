@@ -61,18 +61,12 @@ export HAL_LIB_DIR
 
 build:
 	@echo UT [$@]
-	echo "PKG_CONFIG_SYSROOT_DIR"
-	echo $(PKG_CONFIG_SYSROOT_DIR)
 	make -C ./ut-core
 
 list:
 	@echo UT [$@]
-	echo "PKG_CONFIG_SYSROOT_DIR"
-	echo $(PKG_CONFIG_SYSROOT_DIR)
 	make -C ./ut-core list
 
 clean:
 	@echo UT [$@]
-	echo "PKG_CONFIG_SYSROOT_DIR"
-	echo $(PKG_CONFIG_SYSROOT_DIR)
 	make -C ./ut-core clean

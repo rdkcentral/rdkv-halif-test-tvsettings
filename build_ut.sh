@@ -9,8 +9,8 @@
 #Below link to be changed once master is ready
 TEST_REPO="https://github.com/comcast-sky/rdk-components-haltest-tvsettings"
 
+UT_BRANCH_VERSION=RDK-38603_CunitFramework_Tvsettings_HAL
 
-UT_BRANCH_VERSION=RDK-38598_md_HAL_unit_test
 # Set default UT_BRANCH_VERSION to master
 if [ -z "${UT_BRANCH_VERSION}" ]; then
     UT_BRANCH_VERSION=master
@@ -19,7 +19,6 @@ fi
 SCRIPTDIR=${BASH_SOURCE[0]%/*} #$(pwd) #get data from running script file.
 #SCRIPTDIR="$( cd "$( dirname "$0" )" && pwd )"
 
-#UT_DIR="./ut"
 UT_DIR=${SCRIPTDIR}/ut
 
 # Simple help
@@ -40,13 +39,14 @@ echo $IsTarget
 if [ "$IsTarget" = "TARGET" ]
 then
     TARGET=${PARAMETER_1#*=}
-    echo "READ TARGET PARAM"
+    echo "Param1 is contains value as TARGET=xxx"
     echo $TARGET
 else
     echo "Param1 is not contains value as TARGET=xxx"
 fi
 
 export TARGET
+
 # Check if the common document configuration is present, if not clone it
 if [ -d "${UT_DIR}" ]; then
     echo "Compiling unit Test for this module"
@@ -62,5 +62,5 @@ else
     git checkout ${UT_BRANCH_VERSION}
     popd > /dev/null
     source ${UT_DIR}/build.sh $@
-    # ./${0} $@   #Commented to avoid recursive call, if clone is not succeed case.
+    # ./${0} $@   #Commented to avoid server lock by recursive call, when clone is not succeed..
 fi
