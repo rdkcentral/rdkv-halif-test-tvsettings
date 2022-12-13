@@ -20,9 +20,7 @@
 #include <stddef.h>
 #include <tv_settings_hal.h>
 #include <ut.h>
-
-#define INFO_UT(text, ...) do {\
-printf("TV-SET-HAL-UT-L2: %s[%d] - %s: " text, __FUNCTION__, __LINE__, "INFO", ##__VA_ARGS__);}while(0);
+#include <ut_log.h>
 
 void test_generic_L2_SetCMSState( void )
 {
@@ -38,7 +36,7 @@ void test_generic_L2_SetCMSState( void )
     /* Failure Case - i.e since already intialized */
     result = SetCMSState(tunelType,colorType,componentState);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE );
-    INFO_UT(" T2: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);    
+    UT_LOG(" T2: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);    
 
 }
 
@@ -57,7 +55,7 @@ void test_generic_L2_SaveColorTemperatureUser( void )
     value =0;
     result = SaveColorTemperatureUser(rgbType,value);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T17: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T17: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -78,7 +76,7 @@ void test_generic_L2_SetColorTemperatureUser( void )
  
     result = SetColorTemperatureUser(rgbType,value);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T19: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T19: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -92,7 +90,7 @@ void test_generic_L2_GetTVSupportedHLGModes( void )
     count = 0;
      result = GetTVSupportedHLGModes(hlgModes,&count);
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T23: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T23: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -107,7 +105,7 @@ void test_generic_L2_SetLocalDimmingLevel( void )
     localDimmingLevel = 1;
     result = SetLocalDimmingLevel(localDimmingLevel); 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE );
-    INFO_UT(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
   
 }
 
@@ -120,7 +118,7 @@ void test_generic_L2_GetLocalDimmingLevel( void )
     tvTerm();
     result = GetLocalDimmingLevel(&localDimmingLevel); 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE );
-    INFO_UT(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
   
 }
 
@@ -137,7 +135,7 @@ void test_generic_L2_SaveLocalDimmingLevel( void )
     tvTerm();
     result = SaveLocalDimmingLevel(sourceInput,pq_mode,hdr_type,value); 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE );
-    INFO_UT(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
  
   
 }
@@ -151,7 +149,7 @@ void test_generic_L2_UpdateEDIDAndSetDimmingLevel( void )
     tvTerm();
     result = UpdateEDIDAndSetDimmingLevel(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE );
-    INFO_UT(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
