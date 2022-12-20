@@ -22,33 +22,24 @@ BIN_DIR := $(ROOT_DIR)/bin
 TOP_DIR := $(ROOT_DIR)
 
 SRC_DIRS = $(ROOT_DIR)/src
-INC_DIRS := $(ROOT_DIR)/../
-INC_DIRS += $(ROOT_DIR)/include
+INC_DIRS := $(ROOT_DIR)/../include
 
 ifeq ($(TARGET),)
 $(info TARGET NOT SET )
 $(info TARGET FORCED TO Linux)
 TARGET=linux
+SRC_DIRS += $(ROOT_DIR)/skeletons/src
 endif
-
 
 $(info TARGET [$(TARGET)])
 
-
-ifeq ($(TARGET),linux)
-SRC_DIRS += $(ROOT_DIR)/skeletons/src
-export CC=g++ 
-endif
-
-HAL_LIB_DIR := $(ROOT_DIR)/..
 ifeq ($(TARGET),arm)
-export CC=arm-rdk-linux-gnueabi-g++  -march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard --sysroot=$(PKG_CONFIG_SYSROOT_DIR)
+HAL_LIB_DIR := $(ROOT_DIR)/..
 YLDFLAGS = -Wl,-rpath,$(HAL_LIB_DIR) -L$(HAL_LIB_DIR) -ltvsettings-hal
 endif
 
 .PHONY: clean list all
 
-# Here is a list of exports from this makefile to the next
 export YLDFLAGS
 export BIN_DIR
 export SRC_DIRS
