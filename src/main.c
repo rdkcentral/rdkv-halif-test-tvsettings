@@ -20,17 +20,11 @@
 #include <ut.h>
 
 extern int register_hal_l1_tests( void );
-#if DELETE
-extern int register_hal_l2_tests( void );
-#endif
 int main(int argc, char** argv) 
 {
     /* Register tests as required, then call the UT-main to support switches and triggering */
     UT_init( argc, argv );
 
     register_hal_l1_tests();
-#if DELETE // For next level analysis
-    register_hal_l2_tests();
-#endif
     UT_run_tests();
 }

@@ -25,6 +25,7 @@
 //#include "pqcmd.h"
 
 #include <ut.h>
+#include <ut_log.h>
 
 pic_modes_t *availableModes;
 
@@ -34,8 +35,8 @@ pic_modes_t *availableModes;
 #define DEFAULT_WB_CUST_GAIN     (1024)
 
 static UT_test_suite_t *pSuite = NULL;
-#define INFO_UT(text, ...) do {\
-printf("TV-SET-HAL-UT: %s[%d] - %s: " text, __FUNCTION__, __LINE__, "INFO", ##__VA_ARGS__);}while(0);
+//#define UT_LOG(text, ...) do {\
+//printf("TV-SET-HAL-UT: %s[%d] - %s: " text, __FUNCTION__, __LINE__, "INFO", ##__VA_ARGS__);}while(0);
 
 void SwitchEDID(int pqmode);
 tvError_t SetLocalDimmingLevel(int localDimmingLevel);
@@ -54,12 +55,12 @@ void test_generic_tvInit( void )
     /* Positive result */
     result = tvInit();
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T1: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T1: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /*calling tvInit should succeed, As it will not return any error since already initialised */
     result = tvInit();
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T2: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T2: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* #TODO: Unclear how the function will fail, maybe this function should be void? */
     
@@ -73,12 +74,12 @@ void test_generic_tvTerm( void )
     /* Positive result */
     result = tvTerm();
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T3: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T3: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /*calling tvInit should succeed, As it will not return any error since already initialised */
     result = tvTerm();
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T4: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T4: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
         /* #TODO: Unclear how the function will fail, maybe this function should be void? */
 
@@ -93,12 +94,12 @@ void test_generic_GetTVPictureMode( void )
     char picMode[PIC_MODE_NAME_MAX];
     result = GetTVPictureMode((char*)picMode);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T5: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T5: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Negative Result */
     result = GetTVPictureMode((char*)picMode);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T6: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T6: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -112,16 +113,16 @@ void test_generic_SetTVPictureMode( void )
 
     result=SetTVPictureMode("tvPictureMode_COLORFUL");
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T7: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T7: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Negative Result */
     result = SetTVPictureMode("none");
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T8: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T8: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
     result = SetTVPictureMode("tvPictureMode_MAX");
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T9: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T9: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
     
 }
 
@@ -133,13 +134,13 @@ void test_generic_GetBacklight(void )
    value = tvBacklightMode_ECO;
    result = GetBacklight(&value);
    UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T10: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T10: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Negative Result */
     value = tvBacklightMode_INVALID;
     result = GetBacklight(&value);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T11: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T11: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -149,17 +150,17 @@ void test_generic_SetBacklight( void )
     /* Positive Result */
     result = SetBacklight(90);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T12: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T12: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Negative Resukt */
     result = SetBacklight(120);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T13: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T13: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 
     result = SetBacklight(-1);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T14: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T14: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -170,16 +171,16 @@ void test_generic_SetBrightness( void )
     /* positive result */
     result = SetBrightness(90);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T15: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T15: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetBrightness(110);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T16: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T16: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     result = SetBrightness(-10);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T17: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T17: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -190,12 +191,12 @@ void test_generic_GetBrightness( void )
    /* positive result */
     result = GetBrightness(&value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T18: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T18: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetBrightness(&value);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T19: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T19: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -206,17 +207,17 @@ void test_generic_SetContrast( void )
     /* positive result */
     result = SetContrast(90);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T20: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T20: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetContrast(-1);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T21: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T21: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     result = SetContrast(120);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T22: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 
 }
@@ -229,12 +230,12 @@ void test_generic_GetContrast( void )
     /*positive result */
     result = GetContrast(&value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T23: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T23: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Negative Result */
     result = GetContrast(&value);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T24: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T24: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
    
 }
 
@@ -245,16 +246,16 @@ void test_generic_SetSharpness( void )
     /* positive result */
     result = SetSharpness(50);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T25: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T25: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Negative Result */
     result = SetSharpness(-1);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T26: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T26: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     result = SetSharpness(110);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T27: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T27: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -266,12 +267,12 @@ void test_generic_GetSharpness( void )
     /* positive result */
     result = GetSharpness(&value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T28: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T28: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetSharpness(&value);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T29: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T29: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -282,16 +283,16 @@ void test_generic_SetSaturation( void )
     /* positive result */
     result = SetSaturation(80);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T30: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T30: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetSaturation(-1);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T31: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T31: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     result = SetSaturation(150);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T32: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T32: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -303,12 +304,12 @@ void test_generic_GetSaturation( void )
     /* positive result */
     result = GetSaturation(&value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T33: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T33: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetSaturation(&value);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T34: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T34: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
     
 }
 
@@ -319,16 +320,16 @@ void test_generic_SetHue( void )
     /* positive result */
     result = SetHue(80);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T35: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T35: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetHue(-1);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T36: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T36: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = SetHue(150);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T37: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T37: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -340,12 +341,12 @@ void test_generic_GetHue( void )
     /* positive result */
     result = GetHue(&value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T38: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T38: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetHue(&value);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T39: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T39: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -358,32 +359,32 @@ void test_generic_SetColorTemperature( void )
     colorTemp = tvColorTemp_STANDARD;
     result = SetColorTemperature(colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T40: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T40: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     colorTemp = tvColorTemp_WARM;
     result = SetColorTemperature(colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T41: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T41: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     colorTemp = tvColorTemp_COLD;
     result = SetColorTemperature(colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T42: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T42: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     colorTemp = tvColorTemp_USER;
     result = SetColorTemperature(colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T43: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T43: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     colorTemp = tvColorTemp_MAX;
     result = SetColorTemperature(colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T44: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T44: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* negative result */
     result = SetColorTemperature((tvColorTemp_t)10);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T45: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T45: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -395,12 +396,12 @@ void test_generic_GetColorTemperature( void )
     /* positive result */
     result = GetColorTemperature(&colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T46: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T46: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemperature(&colorTemp);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T47: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T47: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
     
 }
 
@@ -411,16 +412,16 @@ void test_generic_SetAspectRatio( void )
     /* positive result */
     result = SetAspectRatio(tvDisplayMode_NORMAL);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T48: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T48: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = SetAspectRatio(tvDisplayMode_ZOOM);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T49: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T49: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetAspectRatio((tvDisplayMode_t)10);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T50: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T50: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 
 }
@@ -433,12 +434,12 @@ void test_generic_GetAspectRatio( void )
     /* positive result */
     result = GetAspectRatio(&dispMode);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T51: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T51: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetAspectRatio(&dispMode);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T52: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T52: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -452,7 +453,7 @@ void test_generic_GetSupportedBacklightModes( void )
     /* positive result */
     result = GetSupportedBacklightModes(&blModes);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T53: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T53: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -464,7 +465,7 @@ void test_generic_GetCurrentBacklightMode( void )
     /* positive result */
     result = GetCurrentBacklightMode(&blMode);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T54: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T54: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -477,12 +478,12 @@ void test_generic_SetCurrentBacklightMode( void )
     blMode = tvBacklightMode_NONE;
     result = SetCurrentBacklightMode(blMode);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T55: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T55: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetCurrentBacklightMode((tvBacklightMode_t)10);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T56: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T56: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -494,7 +495,7 @@ void test_generic_GetCurrentVideoFormat( void )
     /* positive result */
     result = GetCurrentVideoFormat(&format);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T57: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T57: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -506,12 +507,12 @@ void test_generic_GetVideoResolution( void )
     /* positive result */
     result = GetVideoResolution(&resolutionstruct);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T58: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T58: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetVideoResolution(&resolutionstruct);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T59: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T59: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 
 }
@@ -524,12 +525,12 @@ void test_generic_GetVideoFrameRate( void )
     /* positive result */
     result = GetVideoFrameRate(&frameRate);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T60: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T60: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetVideoFrameRate(NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T61: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T61: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -542,16 +543,16 @@ void test_generic_setWakeupConfig( void )
     setValue = tvWakeupSrc_BLUETOOTH;
     result = setWakeupConfig(setValue,1);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T62: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T62: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = setWakeupConfig(setValue,0);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T63: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T63: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = setWakeupConfig(setValue,0);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T64: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T64: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -562,16 +563,16 @@ void test_generic_SetRGBPattern( void )
     /* positive result */
     result = SetRGBPattern(0XFF,0,0);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T65: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T65: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = SetRGBPattern(0,0xFF,0);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T66: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T66: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetRGBPattern(0,0,0);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T67: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T67: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -585,12 +586,12 @@ void test_generic_GetRGBPattern( void )
     /* positive result */
     result = GetRGBPattern(&r,&g,&b);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T68: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T68: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetRGBPattern(&r,&g,NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T69: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T69: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 void test_generic_SetGrayPattern( void )
@@ -602,17 +603,17 @@ void test_generic_SetGrayPattern( void )
     YUVvalue = 100;
     result = SetGrayPattern(YUVvalue);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T70: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T70: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     YUVvalue = 258;
     result = SetGrayPattern(YUVvalue);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T71: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T71: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     result = SetGrayPattern(-1);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T72: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T72: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -624,14 +625,14 @@ void test_generic_GetGrayPattern( void )
     /* positive result */
     result = GetGrayPattern(&YUVvalue);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T73: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T73: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
 #if  NEED_SOURCE_MOD
     result = GetGrayPattern(NULL);
 #endif    
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T74: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T74: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -647,17 +648,17 @@ void test_generic_SetColorTemp_Rgain( void )
     colorTemp = tvColorTemp_WARM;
     result = SetColorTemp_Rgain(colorTemp,rgain);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T75: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T75: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetColorTemp_Rgain(tvColorTemp_MAX,rgain);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T76: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T76: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     result = SetColorTemp_Rgain(colorTemp,2050);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T77: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T77: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -674,12 +675,12 @@ void test_generic_SetColorTemp_Ggain( void )
     colorTemp = tvColorTemp_WARM;
     result = SetColorTemp_Ggain(colorTemp,ggain);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T78: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T78: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetColorTemp_Ggain(colorTemp,2050);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T79: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T79: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -695,17 +696,17 @@ void test_generic_SetColorTemp_Bgain( void )
     colorTemp = tvColorTemp_WARM;
     result = SetColorTemp_Bgain(colorTemp,bgain);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T80: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T80: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetColorTemp_Bgain(tvColorTemp_MAX,bgain);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T81: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T81: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     result = SetColorTemp_Bgain(colorTemp,2050);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T82: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T82: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -720,13 +721,13 @@ void test_generic_GetColorTemp_Rgain( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_Rgain(colorTemp,&rgain);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T83: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T83: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = GetColorTemp_Rgain(colorTemp,&rgain);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T84: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T84: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -741,19 +742,19 @@ void test_generic_GetColorTemp_Ggain( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_Ggain(colorTemp,&ggain);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T85: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T85: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = GetColorTemp_Ggain(colorTemp,&ggain);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T86: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T86: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = GetColorTemp_Ggain(colorTemp,&ggain);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T87: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T87: E[%d]-A[%d] \n",result,tvERROR_NONE);
 }
 
 void test_generic_GetColorTemp_Bgain( void )
@@ -767,19 +768,19 @@ void test_generic_GetColorTemp_Bgain( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_Bgain(colorTemp,&bgain);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T88: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T88: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = GetColorTemp_Bgain(colorTemp,&bgain);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T89: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T89: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
         /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = GetColorTemp_Bgain(colorTemp,&bgain);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T90: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T90: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -795,18 +796,18 @@ void test_generic_SetColorTemp_R_post_offset( void )
     rpostoffset = 100;
     result = SetColorTemp_R_post_offset(colorTemp,rpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T91: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T91: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetColorTemp_R_post_offset(colorTemp,1050);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T92: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T92: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = SetColorTemp_R_post_offset(colorTemp,rpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T93: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T93: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -822,18 +823,18 @@ void test_generic_SetColorTemp_G_post_offset( void )
     gpostoffset = 100;
     result = SetColorTemp_G_post_offset(colorTemp,gpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T94: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T94: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetColorTemp_G_post_offset(colorTemp,1050);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T95: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T95: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = SetColorTemp_G_post_offset(colorTemp,gpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T96: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T96: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -849,18 +850,18 @@ void test_generic_SetColorTemp_B_post_offset( void )
     bpostoffset = 100;
     result = SetColorTemp_B_post_offset(colorTemp,bpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T97: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T97: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetColorTemp_B_post_offset(colorTemp,1050);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T98: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T98: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     result = SetColorTemp_B_post_offset(colorTemp,bpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T99: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T99: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -875,12 +876,12 @@ void test_generic_GetColorTemp_R_post_offset( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_R_post_offset(colorTemp,&rpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T100: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T100: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_R_post_offset(colorTemp,NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T101: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T101: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -895,12 +896,12 @@ void test_generic_GetColorTemp_G_post_offset( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_G_post_offset(colorTemp,&gpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T102: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T102: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_G_post_offset(colorTemp,&gpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T103: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T103: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -915,12 +916,12 @@ void test_generic_GetColorTemp_B_post_offset( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_B_post_offset(colorTemp,&bpostoffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T104: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T104: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_B_post_offset(colorTemp,NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T105: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T105: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -933,12 +934,12 @@ void test_generic_GetTVSupportedPictureModes( void )
     /* positive result */
     result = GetTVSupportedPictureModes(&pictureModes,count);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T106: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T106: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /*negative result */
     result = GetTVSupportedPictureModes(NULL,count);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T107: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T107: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -952,12 +953,12 @@ void test_generic_GetTVSupportedDVModes(void)
     /* positive result */
     result = GetTVSupportedDVModes(&dvModes,&count);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T108: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T108: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* positive result */
     result = GetTVSupportedDVModes(&dvModes,&count);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T109: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T109: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -969,7 +970,7 @@ void test_generic_SetTVDolbyVisionMode(void)
     /* positive result */
     result = SetTVDolbyVisionMode("bright");
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T110: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T110: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
 #if NEED_SOURCE_MOD
@@ -977,7 +978,7 @@ void test_generic_SetTVDolbyVisionMode(void)
 #endif
 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T111: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T111: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -990,12 +991,12 @@ void test_generic_GetTVDolbyVisionMode(void)
     /* positive result */
     result = GetTVDolbyVisionMode((char *)dolbyMode);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T112: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T112: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetTVDolbyVisionMode(NULL);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T113: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T113: E[%d]-A[%d] \n",result,tvERROR_NONE);
 }
 
 
@@ -1008,12 +1009,12 @@ void test_generic_GetTVSupportedHLGModes(void)
     /* positive result */
     result = GetTVSupportedHLGModes(&hlgModes, &count);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T114: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T114: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetTVSupportedHLGModes(&hlgModes, &count);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T115: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T115: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1026,12 +1027,12 @@ void test_generic_GetTVSupportedHDR10Modes(void)
     /*positive result */
     result = GetTVSupportedHDR10Modes(&hdr10Modes, &count);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T116: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T116: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetTVSupportedHDR10Modes(&hdr10Modes, &count);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T117: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T117: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1051,27 +1052,27 @@ void test_generic_SetColorTemp_Rgain_onSource( void )
     saveOnly  = 1;
     result = SetColorTemp_Rgain_onSource(colorTemp,rgain,sourceOffset,saveOnly);//saves the value
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T118: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T118: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     sourceOffset = 1;
     saveOnly  = 0;
     result = SetColorTemp_Rgain_onSource(colorTemp,rgain,sourceOffset,saveOnly); //sets the value
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T119: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T119: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     colorTemp = tvColorTemp_USER;
     rgain = 2000;
     result = SetColorTemp_Rgain_onSource(colorTemp,rgain,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T120: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T120: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_WARM;
     rgain = 2050;
     result = SetColorTemp_Rgain_onSource(colorTemp,rgain,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T121: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T121: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1092,27 +1093,27 @@ void test_generic_SetColorTemp_Ggain_onSource( void )
     saveOnly  = 1;
     result = SetColorTemp_Ggain_onSource(colorTemp,ggain,sourceOffset,saveOnly);//saves the value
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T122: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T122: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     sourceOffset = 1;
     saveOnly  = 0;
     result = SetColorTemp_Ggain_onSource(colorTemp,ggain,sourceOffset,saveOnly); //sets the value
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T123: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T123: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     colorTemp = tvColorTemp_USER;
     ggain = 2000;
     result = SetColorTemp_Ggain_onSource(colorTemp,ggain,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T124: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T124: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_WARM;
     ggain = 2050;
     result = SetColorTemp_Ggain_onSource(colorTemp,ggain,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T125: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T125: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1132,27 +1133,27 @@ void test_generic_SetColorTemp_Bgain_onSource( void )
     saveOnly  = 1;
     result = SetColorTemp_Bgain_onSource(colorTemp,bgain,sourceOffset,saveOnly);//saves the value
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T126: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T126: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     sourceOffset = 1;
     saveOnly  = 0;
     result = SetColorTemp_Bgain_onSource(colorTemp,bgain,sourceOffset,saveOnly); //sets the value
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T127: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T127: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     colorTemp = tvColorTemp_USER;
     bgain = 2000;
     result = SetColorTemp_Bgain_onSource(colorTemp,bgain,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T128: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T128: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_WARM;
     bgain = 2050;
     result = SetColorTemp_Bgain_onSource(colorTemp,bgain,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T129: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T129: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1169,25 +1170,25 @@ void test_generic_GetColorTemp_Rgain_onSource( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_Rgain_onSource(colorTemp,&rgain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T130: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T130: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_Rgain_onSource(tvColorTemp_MAX,NULL,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T131: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T131: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     rgain = -1;
     result = GetColorTemp_Rgain_onSource(colorTemp,&rgain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T132: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T132: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     rgain = 2000;
     result = GetColorTemp_Rgain_onSource(colorTemp,&rgain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T133: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T133: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1204,25 +1205,25 @@ void test_generic_GetColorTemp_Ggain_onSource( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_Ggain_onSource(colorTemp,&ggain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T134: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T134: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_Ggain_onSource(tvColorTemp_MAX,NULL,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T135: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T135: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     ggain = -1;
     result = GetColorTemp_Ggain_onSource(colorTemp,&ggain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T136: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T136: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     ggain = 2000;
     result = GetColorTemp_Ggain_onSource(colorTemp,&ggain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T137: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T137: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 }
 
 void test_generic_GetColorTemp_Bgain_onSource( void )
@@ -1237,25 +1238,25 @@ void test_generic_GetColorTemp_Bgain_onSource( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_Bgain_onSource(colorTemp,&bgain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T138: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T138: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_Bgain_onSource(tvColorTemp_MAX,NULL,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T139: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T139: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     bgain = -1;
     result = GetColorTemp_Bgain_onSource(colorTemp,&bgain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T140: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T140: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     bgain = 2000;
     result = GetColorTemp_Bgain_onSource(colorTemp,&bgain,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T141: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T141: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1275,7 +1276,7 @@ void test_generic_SetColorTemp_R_post_offset_onSource( void )
     saveOnly = 1;
     result = SetColorTemp_R_post_offset_onSource(colorTemp,rpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T142: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T142: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* positive result */
     colorTemp = tvColorTemp_WARM;
@@ -1284,20 +1285,20 @@ void test_generic_SetColorTemp_R_post_offset_onSource( void )
     saveOnly = 0;
     result = SetColorTemp_R_post_offset_onSource(colorTemp,rpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T143: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T143: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     rpostoffset = 1050;
     result = SetColorTemp_R_post_offset_onSource(colorTemp,rpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T144: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T144: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     rpostoffset = 100;
     result = SetColorTemp_R_post_offset_onSource(colorTemp,rpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T145: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T145: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1317,7 +1318,7 @@ void test_generic_SetColorTemp_G_post_offset_onSource( void )
     saveOnly = 1;
     result = SetColorTemp_G_post_offset_onSource(colorTemp,gpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T146: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T146: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* positive result */
     colorTemp = tvColorTemp_WARM;
@@ -1326,20 +1327,20 @@ void test_generic_SetColorTemp_G_post_offset_onSource( void )
     saveOnly = 0;
     result = SetColorTemp_G_post_offset_onSource(colorTemp,gpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T147: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T147: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     gpostoffset = 1050;
     result = SetColorTemp_G_post_offset_onSource(colorTemp,gpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T148: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T148: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     gpostoffset = 100;
     result = SetColorTemp_G_post_offset_onSource(colorTemp,gpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T149: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T149: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1359,7 +1360,7 @@ void test_generic_SetColorTemp_B_post_offset_onSource( void )
     saveOnly = 1;
     result = SetColorTemp_B_post_offset_onSource(colorTemp,bpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T150: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T150: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* positive result */
     colorTemp = tvColorTemp_WARM;
@@ -1368,20 +1369,20 @@ void test_generic_SetColorTemp_B_post_offset_onSource( void )
     saveOnly = 0;
     result = SetColorTemp_B_post_offset_onSource(colorTemp,bpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T151: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T151: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     bpostoffset = 1050;
     result = SetColorTemp_B_post_offset_onSource(colorTemp,bpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T152: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T152: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     /* negative result */
     colorTemp = tvColorTemp_COLD;
     bpostoffset = 100;
     result = SetColorTemp_R_post_offset_onSource(colorTemp,bpostoffset,sourceOffset,saveOnly);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T153: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T153: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -1396,12 +1397,12 @@ void test_generic_GetColorTemp_R_post_offset_onSource( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_R_post_offset_onSource(colorTemp,&rpostoffset,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T154: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T154: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_R_post_offset_onSource(colorTemp,NULL,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T155: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T155: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1418,12 +1419,12 @@ void test_generic_GetColorTemp_G_post_offset_onSource( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_G_post_offset_onSource(colorTemp,&gpostoffset,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T156: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T156: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_G_post_offset_onSource(colorTemp,NULL,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T157: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T157: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1440,12 +1441,12 @@ void test_generic_GetColorTemp_B_post_offset_onSource( void )
     colorTemp = tvColorTemp_WARM;
     result = GetColorTemp_B_post_offset_onSource(colorTemp,&bpostoffset,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T158: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T158: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetColorTemp_B_post_offset_onSource(colorTemp,NULL,sourceOffset);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T159: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T159: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1457,12 +1458,12 @@ void test_generic_SetDynamicContrast(void)
     dynamicContrastEnable = "enabled";
     result = SetDynamicContrast(dynamicContrastEnable);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T160: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T160: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SetDynamicContrast(NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T161: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T161: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1473,12 +1474,12 @@ void test_generic_GetDynamicContrast(void)
     /* positive result */
     result = GetDynamicContrast(dynamicContrastEnable);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T162: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T162: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetDynamicContrast(NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T163: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T163: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1507,14 +1508,14 @@ void test_generic_getWbInfo(void)
 
     result = getWbInfo(&params,selector,input,colorTmp);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T164: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T164: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     
     if((selector.empty()) || (input.empty()) || (colorTmp.empty()))
     {
         result = getWbInfo(&params,selector,input,colorTmp);
         UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-        INFO_UT(" T165: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+        UT_LOG(" T165: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
     }
 }
@@ -1526,11 +1527,11 @@ void test_generic_enableWBmode(void)
     /* positive result */
     result = enableWBmode(true);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T166: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T166: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = enableWBmode(NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T167: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T167: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 }
 
 void test_generic_GetSupportedComponentColor(void)
@@ -1540,12 +1541,12 @@ void test_generic_GetSupportedComponentColor(void)
     /* positive result */
     result = GetSupportedComponentColor(blComponentColor);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T168: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T168: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetSupportedComponentColor(NULL);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T169: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T169: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1560,13 +1561,13 @@ void test_generic_SetCurrentComponentSaturation(void)
     blSaturation =  tvDataColor_RED;
     result = SetCurrentComponentSaturation(blSaturation,saturation);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T170: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T170: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* negative result */
     saturation= 150;
     result = SetCurrentComponentSaturation(blSaturation,saturation);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T171: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T171: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
     
 }
 
@@ -1580,12 +1581,12 @@ void test_generic_GetCurrentComponentSaturation(void)
     blSaturation = tvDataColor_RED; 
     result = GetCurrentComponentSaturation(blSaturation,saturation);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T172: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T172: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetCurrentComponentSaturation(blSaturation,saturation);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T173: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T173: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 }
 
 void test_generic_SetCurrentComponentHue(void)
@@ -1599,13 +1600,13 @@ void test_generic_SetCurrentComponentHue(void)
     blHueColor =  tvDataColor_RED;
     result = SetCurrentComponentHue(blHueColor,hue);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T174: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T174: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* negative result */
     hue = 150;
     result = SetCurrentComponentHue(blHueColor,hue);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T175: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T175: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
     
 }
 
@@ -1619,12 +1620,12 @@ void test_generic_GetCurrentComponentHue(void)
     blHueColor = tvDataColor_RED; 
     result = GetCurrentComponentHue(blHueColor,hue);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T176: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T176: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetCurrentComponentHue(blHueColor,hue);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE);
-    INFO_UT(" T177: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T177: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 }
 
 void test_generic_SetCurrentComponentLuma(void)
@@ -1638,13 +1639,13 @@ void test_generic_SetCurrentComponentLuma(void)
     blLumaColor = tvDataColor_RED;
     result = SetCurrentComponentLuma(blLumaColor,luma);
     UT_ASSERT_EQUAL( result, tvERROR_NONE);
-    INFO_UT(" T178: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T178: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* negative result */
     luma = 150;
     result = SetCurrentComponentLuma(blLumaColor,luma);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T179: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T179: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
     
 }
 
@@ -1658,7 +1659,7 @@ void test_generic_GetCurrentComponentLuma(void)
     blLumaColor = tvDataColor_RED; 
     result = GetCurrentComponentLuma(blLumaColor,luma);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T180: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T180: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     //TBD
@@ -1677,17 +1678,17 @@ void test_generic_GetTVSupportedDimmingModes(void)
     *dimmingModes[1] = "dark";
     result = GetTVSupportedDimmingModes(dimmingModes,&count);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T181: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T181: E[%d]-A[%d] \n",result,tvERROR_NONE);
 #endif
     /* negative result */
     result = GetTVSupportedDimmingModes(NULL,count);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T182: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T182: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     result = GetTVSupportedDimmingModes(dimmingModes,0);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T183: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T183: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1700,12 +1701,12 @@ void test_generic_SetTVDimmingMode(void)
     dimmingMode = "global";
     result = SetTVDimmingMode(dimmingMode);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T184: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T184: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* negative result */
     result = SetTVDimmingMode(NULL);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T185: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T185: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1717,12 +1718,12 @@ void test_generic_GetTVBacklightGlobalFactor(void)
     /* positive result */
     result = GetTVBacklightGlobalFactor(&value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T186: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T186: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetTVBacklightGlobalFactor(0);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T187: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T187: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1741,12 +1742,12 @@ void test_generic_GetTVPictureModeIndex(void)
     pictureMode = "tvColorTemp_USER";
     result = GetTVPictureModeIndex(pictureMode);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T188: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T188: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetTVPictureModeIndex("unknown");
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T189: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T189: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1756,7 +1757,7 @@ void test_generic_GetCurrentContentFormat(void)
     /* positive result */
     result = GetCurrentContentFormat();
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T190: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T190: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     // N/A
@@ -1771,16 +1772,16 @@ void test_generic_GetSupportedContentFormats(void)
     /* positive result */
     result = GetSupportedContentFormats(&contentFormats,&numberOfFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T191: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T191: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetSupportedContentFormats(0,&numberOfFormats);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T192: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T192: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     result = GetSupportedContentFormats(&contentFormats,0);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T193: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T193: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 }
 
 void test_generic_ResetBrightness(void)
@@ -1794,12 +1795,12 @@ void test_generic_ResetBrightness(void)
     resetForAllFormats = 1;
     result = ResetBrightness(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T194: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T194: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetBrightness(120,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T195: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T195: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 }
 
 void test_generic_ResetContrast(void)
@@ -1813,12 +1814,12 @@ void test_generic_ResetContrast(void)
     resetForAllFormats = 1;
     result = ResetContrast(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T196: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T196: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetContrast(120,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T197: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T197: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1833,12 +1834,12 @@ void test_generic_ResetSharpness(void)
     resetForAllFormats = 1;
     result = ResetSharpness(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T198: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T198: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetSharpness(120,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T199: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T199: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1853,12 +1854,12 @@ void test_generic_ResetSaturation(void)
     resetForAllFormats = 1;
     result = ResetSaturation(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T200: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T200: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetSaturation(120,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T201: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T201: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1873,12 +1874,12 @@ void test_generic_ResetHue(void)
     resetForAllFormats = 1;
     result = ResetHue(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T202: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T202: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetHue(120,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T203: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T203: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1893,12 +1894,12 @@ void test_generic_ResetBacklight(void)
     resetForAllFormats = 1;
     result = ResetBacklight(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T204: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T204: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetBacklight(120,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T205: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T205: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1914,12 +1915,12 @@ void test_generic_ResetColorTemperature(void)
     resetForAllFormats = 1;
     result = ResetColorTemperature(defaultValue,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T206: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T206: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetColorTemperature(10,resetForAllFormats);
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T207: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T207: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -1934,17 +1935,17 @@ void test_generic_ResetComponentSaturation(void)
     defaultValue = 2;
     result = ResetComponentSaturation(color,defaultValue);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T208: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T208: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetComponentSaturation(-1,defaultValue);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T209: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T209: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     result = ResetComponentSaturation(color,-1);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T210: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T210: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1959,17 +1960,17 @@ void test_generic_ResetComponentLuma(void)
     defaultValue = 2;
     result = ResetComponentLuma(color,defaultValue);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T211: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T211: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetComponentLuma(-1,defaultValue);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T212: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T212: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     result = ResetComponentLuma(color,-10);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T213: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T213: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -1984,17 +1985,17 @@ void test_generic_ResetComponentHue(void)
     defaultValue = 2;
     result = ResetComponentHue(color,defaultValue);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T214: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T214: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = ResetComponentHue(-1,defaultValue);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T215: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T215: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
     /* negative result */
     result = ResetComponentHue(color,-10);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T216: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T216: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -2005,12 +2006,12 @@ void test_generic_isCurrentHDRTypeIsSDR(void)
     /* positive result */
     result = isCurrentHDRTypeIsSDR();
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T217: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T217: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = isCurrentHDRTypeIsSDR();
     UT_ASSERT_EQUAL(result, tvERROR_GENERAL);
-    INFO_UT(" T218: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T218: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -2022,12 +2023,12 @@ void test_generic_GetPanelID(void)
     /* positive result */
     result = GetPanelID(panelID);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T219: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T219: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     /* negative result */
     result = GetPanelID(NULL);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);   
-    INFO_UT(" T220: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T220: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -2040,7 +2041,7 @@ void test_generic_GetDefaultPanelID(void)
     /* positive result */
     // void function - need to handle this case
     GetDefaultPanelID(panelID);
-    INFO_UT(" T221: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T221: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -2059,12 +2060,12 @@ void test_generic_SaveColorTemperature(void)
     value = 50;
     result = SaveColorTemperature(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T222: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T222: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveColorTemperature(0,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T223: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T223: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 } 
 
 void test_generic_SaveBacklight(void)
@@ -2082,12 +2083,12 @@ void test_generic_SaveBacklight(void)
     value = 50;
     result = SaveBacklight(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T224: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T224: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveBacklight(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T225: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T225: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -2106,12 +2107,12 @@ void test_generic_SaveContrast(void)
     value = 50;
     result = SaveContrast(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T226: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T226: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveContrast(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T227: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T227: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -2130,12 +2131,12 @@ void test_generic_SaveSaturation(void)
     value = 50;
     result = SaveSaturation(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T228: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T228: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveSaturation(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T229: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T229: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -2154,12 +2155,12 @@ void test_generic_SaveSharpness(void)
     value = 50;
     result = SaveSharpness(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T230: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T230: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveSharpness(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T231: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T231: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -2178,12 +2179,12 @@ void test_generic_SaveBrightness(void)
     value = 50;
     result = SaveBrightness(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T232: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T232: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveBrightness(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T233: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T233: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
     
 }
 
@@ -2202,12 +2203,12 @@ void test_generic_SaveHue(void)
     value = 50;
     result = SaveHue(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T234: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T234: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveHue(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T235: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T235: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
     
 }
 
@@ -2226,12 +2227,12 @@ void test_generic_SaveDynamicBacklight(void)
     value = 50;
     result = SaveDynamicBacklight(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T236: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T236: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveDynamicBacklight(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T237: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T237: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
      
 }
 
@@ -2250,12 +2251,12 @@ void test_generic_SaveDisplayMode(void)
     value = 10;
     result = SaveDisplayMode(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T238: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T238: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveDisplayMode(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T239: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T239: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
     
 }
 
@@ -2278,12 +2279,12 @@ void test_generic_SaveCMS(void)
     value = 10;
     result = SaveCMS(sourceInput,pq_mode,hdr_type,tunnel_type,color_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T240: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T240: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveCMS(sourceInput,pq_mode,hdr_type,tunnel_type,color_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T241: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T241: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 }
 
 void test_generic_SaveDolbyMode(void)
@@ -2301,12 +2302,12 @@ void test_generic_SaveDolbyMode(void)
     value = 10;
     result = SaveDolbyMode(sourceInput,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T242: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T242: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = SaveDolbyMode(-1,pq_mode,hdr_type,value);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T243: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T243: E[%d]-A[%d] \n",result,tvERROR_NONE);
 }
 
 void test_generic_GetNumberOfModesupported(void)
@@ -2316,12 +2317,12 @@ void test_generic_GetNumberOfModesupported(void)
     /* positive result */
     result = GetNumberOfModesupported();
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T244: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T244: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetNumberOfModesupported();
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T245: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T245: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 
 }
 
@@ -2332,12 +2333,12 @@ void test_generic_GetCurrentPQIndex(void)
     /* positive result */
     result = GetCurrentPQIndex();
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T246: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T246: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetCurrentPQIndex();
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T247: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T247: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
 }
 
 void test_generic_GetAllSupportedPicModeIndex(void)
@@ -2348,7 +2349,7 @@ void test_generic_GetAllSupportedPicModeIndex(void)
     /* positive result */
     // void function - need to handle this case
     GetAllSupportedPicModeIndex(pic_mode_index);
-    INFO_UT(" T248: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T248: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -2361,7 +2362,7 @@ void test_generic_GetCMSDefault(void)
     color_tunel_type = COLOR_LUMA;
     result = GetCMSDefault(color_tunel_type);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T249: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T249: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     //TBD
@@ -2376,12 +2377,12 @@ void test_generic_GetDolbyModeIndex(void)
     dolbyMode = "bright";
     result = GetDolbyModeIndex(dolbyMode);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T250: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T250: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     result = GetDolbyModeIndex(NULL);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T251: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T251: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
     
    
 }
@@ -2395,7 +2396,7 @@ void test_generic_ConvertVideoFormatToHDRFormat(void)
     videoFormat = tvVideoHDRFormat_SDR;
     result = ConvertVideoFormatToHDRFormat(videoFormat);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T252: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T252: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     // TBD
@@ -2411,7 +2412,7 @@ void test_generic_ConvertTVColorToVendorColor(void)
     blComponentColor = tvDataColor_RED;
     result = ConvertTVColorToVendorColor(blComponentColor);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T253: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T253: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     // TBD
@@ -2427,7 +2428,7 @@ void test_generic_ConvertHDRFormatToContentFormat(void)
     hdrFormat = HDR_TYPE_SDR;
     result = ConvertHDRFormatToContentFormat(hdrFormat);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T254: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T254: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* negative result */
     // TBD
@@ -2441,12 +2442,12 @@ void test_generic_GetCustomPQModeIndex(void)
     /* positive result */
     result = GetCustomPQModeIndex();
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T255: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T255: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* neagative result */
     result = GetCustomPQModeIndex();
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-    INFO_UT(" T256: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T256: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 
 
@@ -2459,12 +2460,12 @@ void test_generic_SetTVHLGMode(void)
     /* positive result */
     result = SetTVHLGMode("tvHLGMode_Dark");
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T257: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T257: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /*negative result */
     result = SetTVHLGMode("unknown");
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T258: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T258: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 }
 
 void test_generic_SetTVHDR10Mode(void)
@@ -2474,12 +2475,12 @@ void test_generic_SetTVHDR10Mode(void)
     /* positive result */
     result = SetTVHDR10Mode("tvHDR10Mode_Dark");
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    INFO_UT(" T259: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T259: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /*negative result */
     result = SetTVHDR10Mode("unknown");
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    INFO_UT(" T260: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T260: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 }
 
@@ -2493,21 +2494,21 @@ void test_generic_SetCMSState( void )
 
     result = SetCMSState(tunelType,colorType,componentState);
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T261: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T261: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Failure Case - i.e since already intialized */
     result = SetCMSState(tunelType,colorType,componentState);
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_STATE );
-    INFO_UT(" T262: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
+    UT_LOG(" T262: E[%d]-A[%d] \n",result,tvERROR_INVALID_STATE);
     
     result = SetCMSState(tunelType,colorType,componentState);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL);
-    INFO_UT(" T263: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T263: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 #ifndef HAS_CMS_SUPPORT
     result = SetCMSState(tunelType,colorType,componentState);
     UT_ASSERT_EQUAL( result, tvERROR_OPERATION_NOT_SUPPORTED);
-    INFO_UT(" T264: E[%d]-A[%d] \n",result,tvERROR_OPERATION_NOT_SUPPORTED);
+    UT_LOG(" T264: E[%d]-A[%d] \n",result,tvERROR_OPERATION_NOT_SUPPORTED);
 #endif
 }
 #if 0
@@ -2518,7 +2519,7 @@ void test_generic_ReadCustWBvaluesFromDriverOnInit( void )
 
     result = ReadCustWBvaluesFromDriverOnInit();
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T265: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T265: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* TODO:Failure Case is not handled source code */
 
@@ -2536,7 +2537,7 @@ void test_generic_GetUSerWBValueOnInit( void )
     custWBValueInitAfter = GetUSerWBValueOnInit();
     //CU_ASSERT_NOT_EQUAL( custWBValueInitBefore, custWBValueInitAfter ); 
     // UT_ASSERT_NOT_EQUAL( custWBValueInitBefore, custWBValueInitAfter ); /* Need to add in ut.h file if needed */
-    INFO_UT(" T266: E[%d]-A[%d] \n",custWBValueInitBefore.r_offset,custWBValueInitAfter.r_offset);
+    UT_LOG(" T266: E[%d]-A[%d] \n",custWBValueInitBefore.r_offset,custWBValueInitAfter.r_offset);
 
     /* TODO:Failure Case is not handled source code */
 
@@ -2557,13 +2558,13 @@ void test_generic_isWBUserDfault( void )
 
     result = isWBUserDfault(wbvalue);
     UT_ASSERT_EQUAL( true, result );
-    INFO_UT(" T267: E[%d]-A[%d] \n",result,true);
+    UT_LOG(" T267: E[%d]-A[%d] \n",result,true);
 
     /* Failure Case  */
     wbvalue.r_gain = -1;
     result = isWBUserDfault(wbvalue);
     UT_ASSERT_EQUAL( false, result );
-    INFO_UT(" T268: E[%d]-A[%d] \n",result,false);
+    UT_LOG(" T268: E[%d]-A[%d] \n",result,false);
 
 }
 
@@ -2577,34 +2578,34 @@ void test_generic_GetWBRgbType( void )
 
     rgb_type = GetWBRgbType("red","gain");
     UT_ASSERT_EQUAL( rgb_type, R_GAIN );
-    INFO_UT(" T269: E[%d]-A[%d] \n",rgb_type,R_GAIN);
+    UT_LOG(" T269: E[%d]-A[%d] \n",rgb_type,R_GAIN);
 
     /* Success Case - Green */
     rgb_type = GetWBRgbType("green","gain");
     UT_ASSERT_EQUAL( rgb_type, G_GAIN );
-    INFO_UT(" T270: E[%d]-A[%d] \n",rgb_type,G_GAIN);
+    UT_LOG(" T270: E[%d]-A[%d] \n",rgb_type,G_GAIN);
 
     /* Success Case - Blue */
     rgb_type = GetWBRgbType("blue","gain");
     UT_ASSERT_EQUAL( rgb_type, B_GAIN );
-    INFO_UT(" T271: E[%d]-A[%d] \n",rgb_type,B_GAIN);
+    UT_LOG(" T271: E[%d]-A[%d] \n",rgb_type,B_GAIN);
 
     /* Failure Case - Blue */
     rgb_type = GetWBRgbType("Unknown","gain");
     UT_ASSERT_EQUAL( rgb_type, B_GAIN );
-    INFO_UT(" T272: E[%d]-A[%d] \n",rgb_type,B_GAIN);
+    UT_LOG(" T272: E[%d]-A[%d] \n",rgb_type,B_GAIN);
 
     rgb_type = GetWBRgbType("red","Unknown");
     UT_ASSERT_EQUAL( rgb_type, R_POST_OFFSET );
-    INFO_UT(" T273: E[%d]-A[%d] \n",rgb_type,R_POST_OFFSET);
+    UT_LOG(" T273: E[%d]-A[%d] \n",rgb_type,R_POST_OFFSET);
 
     rgb_type = GetWBRgbType("green","Unknown");
     UT_ASSERT_EQUAL( rgb_type, G_POST_OFFSET );
-    INFO_UT(" T274: E[%d]-A[%d] \n",rgb_type,G_POST_OFFSET);
+    UT_LOG(" T274: E[%d]-A[%d] \n",rgb_type,G_POST_OFFSET);
 
     rgb_type = GetWBRgbType("blue","Unknown");
     UT_ASSERT_EQUAL( rgb_type, B_POST_OFFSET );
-    INFO_UT(" T275: E[%d]-A[%d] \n",rgb_type,B_POST_OFFSET);
+    UT_LOG(" T275: E[%d]-A[%d] \n",rgb_type,B_POST_OFFSET);
 
     
 }
@@ -2620,14 +2621,14 @@ void test_generic_SaveColorTemperatureUser( void )
     value =0;
     result = SaveColorTemperatureUser(rgbType,value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T276: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T276: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Failure Case */
     rgbType= -2;
     value = -1;
     result = SaveColorTemperatureUser(rgbType,value);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T277: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T277: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -2642,14 +2643,14 @@ void test_generic_SetColorTemperatureUser( void )
     value =0;
     result = SetColorTemperatureUser(rgbType,value);
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T278: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T278: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* Failure Case */
     rgbType= -2;
     value = -1;
     result = SetColorTemperatureUser(rgbType,value);
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T279: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T279: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -2663,13 +2664,13 @@ void test_generic_GetDriverEquivalentBLForCurrentFmt( void )
     backlight =0;
     result = GetDriverEquivalentBLForCurrentFmt(backlight);
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T280: E[%d]-A[%d] \n",result,tvERROR_NONE); // Need predicted value
+    UT_LOG(" T280: E[%d]-A[%d] \n",result,tvERROR_NONE); // Need predicted value
 
     /* TODO: Failure Case */
     backlight = -1; //There is a chance to crash. Need to handle in source code
     //result = GetDriverEquivalentBLForCurrentFmt(rgbType,value); // Enable once supported in code
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T281: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T281: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 void test_generic_SetBacklightInfo( void )
@@ -2681,7 +2682,7 @@ void test_generic_SetBacklightInfo( void )
    
     result = SetBacklightInfo(backlightDefaults); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T282: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T282: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     /* TODO:Failure Case */
   
@@ -2697,30 +2698,30 @@ void test_generic_ReadAllModeConfigfile( void )
    
     result = ReadAllModeConfigfile(GENERIC_MODE_CONFIG_FILE,buffer,"picmodes"); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T283: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T283: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = ReadAllModeConfigfile(GENERIC_MODE_CONFIG_FILE,buffer,"dvmodes"); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T284: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T284: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     result = ReadAllModeConfigfile(GENERIC_MODE_CONFIG_FILE,buffer,"hdr10modes"); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T285: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T285: E[%d]-A[%d] \n",result,tvERROR_NONE);
     
     result = ReadAllModeConfigfile(GENERIC_MODE_CONFIG_FILE,buffer,"hlgmodes"); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T286: E[%d]-A[%d] \n",result,tvERROR_NONE);   
+    UT_LOG(" T286: E[%d]-A[%d] \n",result,tvERROR_NONE);   
     
  /* Failure Case */
     result = ReadAllModeConfigfile("Invalid",buffer,"picmodes"); 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM );
-    INFO_UT(" T287: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T287: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 
 /* TODO: Enable below once code is ready  */
 
    // result = ReadAllModeConfigfile(NULL,NULL,NULL); 
     UT_ASSERT_EQUAL( result, tvERROR_INVALID_PARAM );
-    INFO_UT(" T288: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+    UT_LOG(" T288: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
   
 }
 void test_generic_splitstringsandvaluefrombuffer( void )
@@ -2732,13 +2733,13 @@ void test_generic_splitstringsandvaluefrombuffer( void )
     // TODO
     splitstringsandvaluefrombuffer(buffer,hlgModes,&count);
    // CU_ASSERT_NOT_EQUAL( 0, count );
-    //INFO_UT(" T289: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    //UT_LOG(" T289: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 /* TODO: Enable below once code is ready  */
 
    // splitstringsandvaluefrombuffer(NULL,NULL,&count); 
    // UT_ASSERT_EQUAL( 0, count );
-   // INFO_UT(" T290: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
+   // UT_LOG(" T290: E[%d]-A[%d] \n",result,tvERROR_INVALID_PARAM);
 }
 
 void test_generic_splitstringsfrombuffer( void )
@@ -2750,17 +2751,17 @@ void test_generic_splitstringsfrombuffer( void )
     // TODO
     splitstringsfrombuffer(buffer,supportedDimmingModes,&totalcount);
     //CU_ASSERT_NOT_EQUAL( 0, totalcount );
-    INFO_UT(" T291: E[%d]-A[%d] \n",0,totalcount);
+    UT_LOG(" T291: E[%d]-A[%d] \n",0,totalcount);
 
 /* TODO: Enable below once code is ready  */
 
    //splitstringsfrombuffer(buffer,supportedDimmingModes,&totalcount);
     //UT_ASSERT_EQUAL( 0, totalcount );
-    INFO_UT(" T292: E[%d]-A[%d] \n",0,totalcount);
+    UT_LOG(" T292: E[%d]-A[%d] \n",0,totalcount);
 
 //splitstringsfrombuffer(NULL,NULL,&totalcount);
     //UT_ASSERT_EQUAL( 0, totalcount );
-    INFO_UT(" T293: E[%d]-A[%d] \n",0,totalcount);
+    UT_LOG(" T293: E[%d]-A[%d] \n",0,totalcount);
 
 }
 
@@ -2775,12 +2776,12 @@ void test_generic_SetBacklightFade( void )
     duration = 40;
     result = SetBacklightFade(from, to, duration); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T294: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T294: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     from = -1;
     result = SetBacklightFade(from, to, duration); 
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T295: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T295: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
     /* TODO:Failure Case */
   
 }
@@ -2794,17 +2795,17 @@ void test_generic_SetGammaMode( void )
 
     result = SetGammaMode(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T296: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T296: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     mode = 0;
     result = SetGammaMode(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T297: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T297: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     mode = -1;
     result = SetGammaMode(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T298: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T298: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
     
   
 }
@@ -2818,12 +2819,12 @@ void test_generic_SetLocalDimmingLevel( void )
 
     result = SetLocalDimmingLevel(localDimmingLevel); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T299: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T299: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     localDimmingLevel = 0;
     result = SetLocalDimmingLevel(localDimmingLevel); 
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T300: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T300: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
   
 }
 
@@ -2836,12 +2837,12 @@ void test_generic_GetLocalDimmingLevel( void )
 
     result = GetLocalDimmingLevel(&localDimmingLevel); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T301: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T301: E[%d]-A[%d] \n",result,tvERROR_NONE);
 /* TODO: Error case */
     localDimmingLevel = 0;
    // result = GetLocalDimmingLevel(NULL);  // Enable once it is supported
  //   UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-  //  INFO_UT(" T302: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+  //  UT_LOG(" T302: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
   
 }
 
@@ -2858,13 +2859,13 @@ void test_SaveLocalDimmingLevel( void )
 
     result = SaveLocalDimmingLevel(sourceInput,pq_mode,hdr_type,value); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T303: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T303: E[%d]-A[%d] \n",result,tvERROR_NONE);
 /* TODO: Error case */
     hdr_type = HDR_TYPE_SDR;
     sourceInput = -1;
     result = SaveLocalDimmingLevel(sourceInput,pq_mode,hdr_type,value); 
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T304: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T304: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
   
 }
 
@@ -2877,7 +2878,7 @@ void test_generic_SwitchEDID( void )
 
     SwitchEDID(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T305: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T305: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
@@ -2890,12 +2891,12 @@ void test_generic_UpdateEDIDAndSetDimmingLevel( void )
 
     result = UpdateEDIDAndSetDimmingLevel(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T306: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T306: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
     mode = -1;
     result = UpdateEDIDAndSetDimmingLevel(mode); 
     UT_ASSERT_EQUAL( result, tvERROR_GENERAL );
-    INFO_UT(" T307: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
+    UT_LOG(" T307: E[%d]-A[%d] \n",result,tvERROR_GENERAL);
 
 }
 
@@ -2909,7 +2910,7 @@ void test_generic_GetLDIMAndEDIDLevel( void )
 
     GetLDIMAndEDIDLevel(dimmingMode,format, &dimmingLevel,  &edidLevel); 
     UT_ASSERT_EQUAL( result, tvERROR_NONE );
-    INFO_UT(" T308: E[%d]-A[%d] \n",result,tvERROR_NONE);
+    UT_LOG(" T308: E[%d]-A[%d] \n",result,tvERROR_NONE);
 
 }
 
