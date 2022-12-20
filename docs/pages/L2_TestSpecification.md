@@ -1,10 +1,10 @@
-# Level 2 HAL Testing Specification
+# Level 2 HAL Testing Specification (TBC)
 
 ## History
 
-|Version|Date (YY-MM-DD)|Author|Comments|
-|-------|-----|-----|----|
-|1.0.0| 31/08/21 |Gerald Weatherup|Draft Revision|
+|Version|Date (YY-MM-DD)|Author|
+|-------|-----|-----|
+|1.0.0| 22/07/21 |Joe Bloggs|
 
 ## Document Scope
 
@@ -16,8 +16,7 @@ This document will define the requirements for testing for this HAL.
 - [Acronyms](#acronyms)
 - [Definitions](#definitions)
 - [References](#references)
-- [Testing Requirements](#testing-requirements)
-- [Top Level Testing Requirements](#top-level-testing-requirements)
+- [L1 Testing Requirements](#l1-testing-requirements)
 
 ## Acronyms
 
@@ -41,7 +40,7 @@ This document will define the requirements for testing for this HAL.
   - GTest - [https://google.github.io/googletest] \- Google Test Suit
   - CUnit - [http://cunit.sourceforge.net/] \- C Testing Suit
   - Unity - [http://www.throwtheswitch.org/unity] -C Embedded Testing Suit
-  - `ut-core` - Common Testing Framework [https://github.com/comcast-sky/rdk-components-ut-core], which wraps a open-source framework that can be expanded to the requirements for future comcast-sky framework.
+- `ut-core` - Common Testing Framework [https://github.com/comcast-sky/rdk-components-ut-core]
 
 ## References
 
@@ -51,26 +50,5 @@ This document will define the requirements for testing for this HAL.
 
 ## Testing Requirements
 
-The following level 2 tests are to be expected at this state.
+- TBC
 
-
-### Top Level Testing Requirements
-
-|Main Focus|Description|
-|----------|-----------|
-|SSID| Testing scenario's for all radio's setting the SSID|
-|TBC| Review of TDK HAL Testings is required |
-|TBC| Review of QA Requirements is required |
-
-### SSID Checks
-
-Basic L2 SSID checks have been created, but focus on the testing specification, for the requirements for this level of testing, needs to be clearly defined.
-
-| Test | Purpose|
-|------|---------|
-|setValidSSID_2Ghz| Check SSID is capable on 2Ghz|
-|setValidSSID_5Ghz| Check SSID is capable on 5Ghz|
-|setValidSSID_6Ghz| Check SSID is capable on 6Ghz|
-|setNULLSSID_2Ghz| Set SSID is as NULL, API should fail|
-|setNULLSSID_5Ghz| Set SSID is as NULL, API should fail|
-|setNULLSSID_6Ghz| Set SSID is as NULL, API should fail|
