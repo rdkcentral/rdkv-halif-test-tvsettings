@@ -4,7 +4,7 @@
 
 |Version|Date (YY-MM-DD)|Author|
 |-------|-----|-----|
-|1.0.0| 22/07/21 |Joe Bloggs|
+|1.0.0| 22/07/21 |Aishwariya Bhaskar |
 
 ## Document Scope
 
