@@ -20,9 +20,6 @@
 #include <stdlib.h>
 #include <setjmp.h>
 #include "tvSettings.h"
-#include <tv_settings_hal.h>
-//#include "PqClient.h"
-//#include "pqcmd.h"
 
 #include <ut.h>
 #include <ut_log.h>
@@ -35,8 +32,6 @@ pic_modes_t *availableModes;
 #define DEFAULT_WB_CUST_GAIN     (1024)
 
 static UT_test_suite_t *pSuite = NULL;
-//#define UT_LOG(text, ...) do {\
-//printf("TV-SET-HAL-UT: %s[%d] - %s: " text, __FUNCTION__, __LINE__, "INFO", ##__VA_ARGS__);}while(0);
 
 void SwitchEDID(int pqmode);
 tvError_t SetLocalDimmingLevel(int localDimmingLevel);

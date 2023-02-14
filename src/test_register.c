@@ -24,11 +24,13 @@
 
 /* L1 Testing Functions */
 extern int test_tvsettings_hal( void );
+
 int register_hal_l1_tests( void )
 {
     int registerFailed=0;
 
     registerFailed |= test_tvsettings_hal();
+    
     return registerFailed;
 }
 
