@@ -28,7 +28,13 @@ ifeq ($(TARGET),)
 $(info TARGET NOT SET )
 $(info TARGET FORCED TO Linux)
 TARGET=linux
+endif
+
+ifeq ($(TARGET),linux)
 SRC_DIRS += $(ROOT_DIR)/skeletons/src
+INC_DIRS := $(ROOT_DIR)/../include
+INC_DIRS += $(ROOT_DIR)/include
+YLDFLAGS = -lpthread
 endif
 
 $(info TARGET [$(TARGET)])

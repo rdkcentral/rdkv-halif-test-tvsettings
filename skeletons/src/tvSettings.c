@@ -4,20 +4,29 @@
 //#include "cmock.h"
 #include "tvSettings.h"
 
+static bool                       gTvInit       = false;
 
 tvError_t tvInit(void)
 {
-  /*TODO: Implement Me!*/
-  return (tvError_t)0;
-}
+  /* Tv settings module initialization succeed */
+  gTvInit = true;
 
-tvError_t tvSD3toCriSyncInit(void)
-{
-  /*TODO: Implement Me!*/
-  return (tvError_t)0;
+  return  tvERROR_NONE;
 }
 
 tvError_t tvTerm(void)
+{
+  if ( gTvInit ==  false )
+  {
+    return tvERROR_INVALID_STATE; /* Tv settings is not initialized */
+  }
+  /* Tv settings module termination succeed */
+  gTvInit = false;
+
+  return  tvERROR_NONE;
+}
+
+tvError_t tvSD3toCriSyncInit(void)
 {
   /*TODO: Implement Me!*/
   return (tvError_t)0;
