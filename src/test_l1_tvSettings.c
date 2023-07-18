@@ -18,16 +18,16 @@
 */
 
 /**
-* @file TODO: test_l1_tvSettings.c
-* @page module_name TODO: Required field, name of the main module
-* @subpage sub_page_name TODO: Add a function group if relevant
+* @file test_l1_tvSettings.c
+*^ @page module_name TODO: Required field, name of the main module
+*^ @subpage sub_page_name TODO: Add a function group if relevant
 *
 * ## Module's Role
-* TODO: Explain the module's role in the system in general
+*^ TODO: Explain the module's role in the system in general
 * This is to ensure that the API meets the operational requirements of the module across all vendors.
 *
-* **Pre-Conditions:**  TODO: Add pre-conditions if any@n
-* **Dependencies:** TODO: Add dependencies if any@n
+*^ **Pre-Conditions:**  TODO: Add pre-conditions if any@n
+*^ **Dependencies:** TODO: Add dependencies if any@n
 *
 * Ref to API Definition specification documentation : [halSpec.md](../../../docs/halSpec.md)
 */
@@ -41,15 +41,15 @@
 /**
 * @brief Validate tvInit() for all positive invocation scenarios
 * 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Close the module using tvTerm()
+* This test ensures that the TV Settings module is initialised using tvInit()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 1@n
 * 
 * **Pre-Conditions:** @n
 * None
+*
+* @post Close the module using tvTerm()
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -70,15 +70,15 @@ void test_l1_tvSettings_positive_tvInit (void)
 /**
 * @brief Validate tvInit() for all negative invocation scenarios
 * 
-* This test ensure following conditions:
-* 1. tvERROR_ALREADY_INITIALISED is returned if called tvInit) again
-* 2. Close the module using tvTerm()
+* This test ensures that tvERROR_INVALID_STATE is returned if called tvInit() again
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 2@n
 * 
 * **Pre-Conditions:** @n
 * None
+*
+* @post Close the module using tvTerm()
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -87,8 +87,7 @@ void test_l1_tvSettings_positive_tvInit (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* TODO: meeting : 2) tvERROR_NONE or already initialised needed?
-* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_ALREADY_INITIALISED | Should Pass |
+* | 02 | call tvInit() -  Re-initialise to get the appropriate error code | void | tvERROR_INVALID_STATE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_negative_tvInit (void)
@@ -99,11 +98,7 @@ void test_l1_tvSettings_negative_tvInit (void)
 /**
 * @brief Validate tvSD3toCriSyncInit() for all positive invocation scenarios
 * 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* //TODO: meeting, without tvinit() shouldn't success the tvSD3toCriSyncInit or not? 
-* 2. Initialise the Sync the SD3 values using tvSD3toCriSyncInit()
-* 3. Close the module using tvTerm()
+* This test ensures that white balance values sync from SD3 to driver
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
@@ -120,7 +115,7 @@ void test_l1_tvSettings_negative_tvInit (void)
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call tvSD3toCriSyncInit() -  Initialise and Sync the Critical data SD3 values | void | tvERROR_NONE | Should Pass |
+* | 02 | call tvSD3toCriSyncInit() -  Sync the white balance SD3 values | void | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_tvSD3toCriSyncInit (void)
@@ -8799,10 +8794,10 @@ int test_l1_tvSettings_register ( void )
 
 	UT_add_test( pSuite, "tvInit_L1_positive" ,test_l1_tvSettings_positive_tvInit );
 	UT_add_test( pSuite, "tvInit_L1_negative" ,test_l1_tvSettings_negative_tvInit );
-	UT_add_test( pSuite, "tvSD3toCriSyncInit_L1_positive" ,test_l1_tvSettings_positive_tvSD3toCriSyncInit );
-	UT_add_test( pSuite, "tvSD3toCriSyncInit_L1_negative" ,test_l1_tvSettings_negative_tvSD3toCriSyncInit );
 	UT_add_test( pSuite, "tvTerm_L1_positive" ,test_l1_tvSettings_positive_tvTerm );
 	UT_add_test( pSuite, "tvTerm_L1_negative" ,test_l1_tvSettings_negative_tvTerm );
+	UT_add_test( pSuite, "tvSD3toCriSyncInit_L1_positive" ,test_l1_tvSettings_positive_tvSD3toCriSyncInit );
+	UT_add_test( pSuite, "tvSD3toCriSyncInit_L1_negative" ,test_l1_tvSettings_negative_tvSD3toCriSyncInit );
 	UT_add_test( pSuite, "GetTVPictureMode_L1_positive" ,test_l1_tvSettings_positive_GetTVPictureMode );
 	UT_add_test( pSuite, "GetTVPictureMode_L1_negative" ,test_l1_tvSettings_negative_GetTVPictureMode );
 	UT_add_test( pSuite, "SetTVPictureMode_L1_positive" ,test_l1_tvSettings_positive_SetTVPictureMode );
