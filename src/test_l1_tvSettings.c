@@ -45,8 +45,7 @@
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 01@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * @post Close the module using tvTerm()
 *
@@ -74,8 +73,7 @@ void test_l1_tvSettings_positive_tvInit (void)
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 02@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * @post Close the module using tvTerm()
 *
@@ -171,13 +169,11 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 
 /**
 * @brief Validate GetTVPictureMode() for all negative invocation scenarios
-* 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 06@n
 * 
 * **Pre-Conditions:** None@n
-* None
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -195,6 +191,7 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
+
 /*Todo: add environement varaibale for picture mode ("Entertainment")*/
 /**
 * @brief Validate SetTVPictureMode() for all positive invocation scenarios
@@ -223,14 +220,11 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 
 /**
 * @brief Validate SetTVPictureMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 08@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -252,18 +246,13 @@ void test_l1_tvSettings_negative_SetTVPictureMode (void)
 
 /**
 * @brief Validate GetBacklight() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Backlight value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 09@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -283,20 +272,13 @@ void test_l1_tvSettings_positive_GetBacklight (void)
 
 /**
 * @brief Validate GetBacklight() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Backlight value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 10@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -317,18 +299,13 @@ void test_l1_tvSettings_negative_GetBacklight (void)
 
 /**
 * @brief Validate SetBacklight() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the backlight value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 11@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -350,20 +327,13 @@ void test_l1_tvSettings_positive_SetBacklight (void)
 /*@todo 1. change numbers, 2. all the sets add same value again*/
 /** 
 * @brief Validate SetBacklight() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the backlight value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 12@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -386,18 +356,13 @@ void test_l1_tvSettings_negative_SetBacklight (void)
 
 /**
 * @brief Validate SetBrightness() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the brightness value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 13@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -419,20 +384,13 @@ void test_l1_tvSettings_positive_SetBrightness (void)
 
 /**
 * @brief Validate SetBrightness() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the brightness value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 14@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -455,16 +413,11 @@ void test_l1_tvSettings_negative_SetBrightness (void)
 
 /**
 * @brief Validate GetBrightness() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the brightness value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 15@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -485,18 +438,11 @@ void test_l1_tvSettings_positive_GetBrightness (void)
 /* # 03 call GetBrightness() -   Retrieve current TV brightness with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |*/
 /**
 * @brief Validate GetBrightness() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the brightness value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 16@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -516,18 +462,13 @@ void test_l1_tvSettings_negative_GetBrightness (void)
 
 /**
 * @brief Validate SetContrast() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the contrast value once module is initialized
-* 3. Close the module using tvTerm()
 *  
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 17@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -549,20 +490,13 @@ void test_l1_tvSettings_positive_SetContrast (void)
 
 /**
 * @brief Validate SetContrast() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the contrast value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 18@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -585,16 +519,11 @@ void test_l1_tvSettings_negative_SetContrast (void)
 
 /**
 * @brief Validate GetContrast() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Contrast value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 19@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -614,17 +543,11 @@ void test_l1_tvSettings_positive_GetContrast (void)
 
 /**
 * @brief Validate GetContrast() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Contrast value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 20@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -644,18 +567,13 @@ void test_l1_tvSettings_negative_GetContrast (void)
 
 /**
 * @brief Validate SetSharpness() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the sharpness value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 21@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -677,20 +595,13 @@ void test_l1_tvSettings_positive_SetSharpness (void)
 
 /**
 * @brief Validate SetSharpness() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the sharpness value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 22@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -713,16 +624,11 @@ void test_l1_tvSettings_negative_SetSharpness (void)
 
 /**
 * @brief Validate GetSharpness() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the sharpness value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 23@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -742,18 +648,11 @@ void test_l1_tvSettings_positive_GetSharpness (void)
 
 /**
 * @brief Validate GetSharpness() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the sharpness value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 24@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -774,18 +673,13 @@ void test_l1_tvSettings_negative_GetSharpness (void)
 /*todo add 0 and 100 instead of other values*/
 /**
 * @brief Validate SetSaturation() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the saturation value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 25@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -807,20 +701,13 @@ void test_l1_tvSettings_positive_SetSaturation (void)
 
 /**
 * @brief Validate SetSaturation() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the saturation value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 26@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -843,16 +730,11 @@ void test_l1_tvSettings_negative_SetSaturation (void)
 
 /**
 * @brief Validate GetSaturation() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the saturation value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 27@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -872,18 +754,11 @@ void test_l1_tvSettings_positive_GetSaturation (void)
 
 /**
 * @brief Validate GetSaturation() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the saturation value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 28@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -903,18 +778,13 @@ void test_l1_tvSettings_negative_GetSaturation (void)
 
 /**
 * @brief Validate SetHue() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the hue value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 29@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -935,20 +805,13 @@ void test_l1_tvSettings_positive_SetHue (void)
 
 /**
 * @brief Validate SetHue() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the hue value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 30@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -971,16 +834,11 @@ void test_l1_tvSettings_negative_SetHue (void)
 
 /**
 * @brief Validate GetHue() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Hue value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 31@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1000,18 +858,11 @@ void test_l1_tvSettings_positive_GetHue (void)
 
 /**
 * @brief Validate GetHue() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Hue value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 32@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1031,18 +882,13 @@ void test_l1_tvSettings_negative_GetHue (void)
 
 /**
 * @brief Validate SetColorTemperature() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemperature value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 33@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1065,20 +911,13 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 //TODO: verify invalid i/p parameter (-1, 7,20 or tvColorTemp_MAX)
 /**
 * @brief Validate SetColorTemperature() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemperature value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 34@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1100,16 +939,11 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 
 /** 
 * @brief Validate GetColorTemperature() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemperature value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 35@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1129,18 +963,11 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 
 /**
 * @brief Validate GetColorTemperature() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemperature value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 36@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1161,18 +988,13 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 
 /**
 * @brief Validate SetAspectRatio() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the AspectRatio value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 37@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1197,20 +1019,13 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 
 /**
 * @brief Validate SetAspectRatio() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the AspectRatio value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 38@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1232,16 +1047,11 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 
 /**
 * @brief Validate GetAspectRatio() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the AspectRatio value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 39@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1261,18 +1071,11 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 
 /**
 * @brief Validate GetAspectRatio() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the AspectRatio value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 40@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1293,16 +1096,11 @@ void test_l1_tvSettings_negative_GetAspectRatio (void)
 
 /**
 * @brief Validate GetSupportedBacklightModes() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the SupportedBacklightModes value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 41@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1322,17 +1120,11 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 
 /**
 * @brief Validate GetSupportedBacklightModes() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the SupportedBacklightModes value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 42@n
 * 
-* **Pre-Conditions:** Initialise the module using tvInit()
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1353,17 +1145,11 @@ void test_l1_tvSettings_negative_GetSupportedBacklightModes (void)
 
 /** 
 * @brief Validate GetCurrentBacklightMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the CurrentBacklightMode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 43@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1383,18 +1169,11 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 
 /**
 * @brief Validate GetCurrentBacklightMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the CurrentBacklightMode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 44@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1414,19 +1193,13 @@ void test_l1_tvSettings_negative_GetCurrentBacklightMode (void)
 }
 /** 
 * @brief Validate SetCurrentBacklightMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the CurrentBacklightMode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 45@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1449,20 +1222,13 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 
 /**
 * @brief Validate SetCurrentBacklightMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the CurrentBacklightMode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 46@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1485,17 +1251,11 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 
 /**
 * @brief Validate GetCurrentVideoFormat() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the CurrentVideoFormat value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 47@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1515,18 +1275,11 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 
 /**
 * @brief Validate GetCurrentVideoFormat() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the CurrentVideoFormat value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 48@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1547,17 +1300,11 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
 
 /**
 * @brief Validate GetVideoResolution() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the VideoResolution value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 49@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1576,18 +1323,11 @@ void test_l1_tvSettings_positive_GetVideoResolution (void)
 }
 /**
 * @brief Validate GetVideoResolution() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the VideoResolution value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 50@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1608,17 +1348,11 @@ void test_l1_tvSettings_negative_GetVideoResolution (void)
 
 /**
 * @brief Validate GetVideoFrameRate() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the VideoFrameRate value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 51@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1638,18 +1372,11 @@ void test_l1_tvSettings_positive_GetVideoFrameRate (void)
 
 /**
 * @brief Validate GetVideoFrameRate() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the VideoFrameRate value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 52@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1670,19 +1397,13 @@ void test_l1_tvSettings_negative_GetVideoFrameRate (void)
 
 /**
 * @brief Validate setWakeupConfig() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the WakeupConfig value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 53@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1718,20 +1439,13 @@ void test_l1_tvSettings_positive_setWakeupConfig (void)
 
 /**
 * @brief Validate setWakeupConfig() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the WakeupConfig value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 54@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1753,19 +1467,13 @@ void test_l1_tvSettings_negative_setWakeupConfig (void)
 
 /**
 * @brief Validate SetRGBPattern() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the RGBPattern value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 55@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1786,20 +1494,13 @@ void test_l1_tvSettings_positive_SetRGBPattern (void)
 
 /**
 * @brief Validate SetRGBPattern() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the RGBPattern value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 56@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1822,17 +1523,11 @@ void test_l1_tvSettings_negative_SetRGBPattern (void)
 
 /**
 * @brief Validate GetRGBPattern() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the RGB Pattern value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 57@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1852,18 +1547,11 @@ void test_l1_tvSettings_positive_GetRGBPattern (void)
 
 /**
 * @brief Validate GetRGBPattern() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the RGBPattern value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 58@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1886,17 +1574,11 @@ void test_l1_tvSettings_negative_GetRGBPattern (void)
 
 /**
 * @brief Validate SetGrayPattern() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the GrayPattern value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 59@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1917,18 +1599,11 @@ void test_l1_tvSettings_positive_SetGrayPattern (void)
 
 /**
 * @brief Validate SetGrayPattern() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the GrayPattern value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 60@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1950,17 +1625,11 @@ void test_l1_tvSettings_negative_SetGrayPattern (void)
 
 /**
 * @brief Validate GetGrayPattern() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the GrayPattern value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 61@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -1979,18 +1648,11 @@ void test_l1_tvSettings_positive_GetGrayPattern (void)
 
 /**
 * @brief Validate GetGrayPattern() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the GrayPattern value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 62@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2011,17 +1673,11 @@ void test_l1_tvSettings_negative_GetGrayPattern (void)
 
 /**
 * @brief Validate SetColorTemp_Rgain() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp Rgain value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 63@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2047,20 +1703,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain (void)
 
 /**
 * @brief Validate SetColorTemp_Rgain() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp Rgain value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 64@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2083,17 +1732,11 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain (void)
 
 /**
 * @brief Validate GetColorTemp_Rgain() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp Rgain value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 65@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2116,18 +1759,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain (void)
 
 /**
 * @brief Validate GetColorTemp_Rgain() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp Rgain value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 66@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2149,17 +1785,11 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain (void)
 
 /**
 * @brief Validate SetColorTemp_Ggain() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp Ggain value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 67@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2185,20 +1815,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain (void)
 
 /**
 * @brief Validate SetColorTemp_Ggain() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp Ggain value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 68@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2221,17 +1844,11 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain (void)
 
 /**
 * @brief Validate GetColorTemp_Ggain() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp Ggain value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 69@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2254,19 +1871,12 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain (void)
 
 /**
 * @brief Validate GetColorTemp_Ggain() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp Ggain value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 70@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2288,17 +1898,11 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain (void)
 
 /**
 * @brief Validate SetColorTemp_Bgain() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp Bgain value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 71@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2324,20 +1928,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain (void)
 
 /**
 * @brief Validate SetColorTemp_Bgain() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp Bgain value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 72@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2360,17 +1957,11 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain (void)
 
 /**
 * @brief Validate GetColorTemp_Bgain() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp Bgain value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 73@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2393,19 +1984,12 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain (void)
 
 /**
 * @brief Validate GetColorTemp_Bgain() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp Bgain value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 74@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2427,19 +2011,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain (void)
 
 /**
 * @brief Validate SetColorTemp_R_post_offset() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp R_post_offset value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 75@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2461,20 +2039,13 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset (void)
 
 /**
 * @brief Validate SetColorTemp_R_post_offset() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp R_post_offset value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 76@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2498,17 +2069,11 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset (void)
 
 /**
 * @brief Validate GetColorTemp_R_post_offset() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp R_post_offset value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 77@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2532,18 +2097,11 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset (void)
 
 /**
 * @brief Validate GetColorTemp_R_post_offset() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp R_post_offset value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 78@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2566,19 +2124,13 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset (void)
 
 /**
 * @brief Validate SetColorTemp_G_post_offset() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp G_post_offset value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 79@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2600,20 +2152,13 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset (void)
 
 /**
 * @brief Validate SetColorTemp_G_post_offset() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp G_post_offset value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 80@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2637,17 +2182,11 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset (void)
 
 /**
 * @brief Validate GetColorTemp_G_post_offset() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp G_post_offset value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 81@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2671,18 +2210,11 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset (void)
 
 /**
 * @brief Validate GetColorTemp_G_post_offset() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp G_post_offset value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 82@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2705,19 +2237,13 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset (void)
 
 /**
 * @brief Validate SetColorTemp_B_post_offset() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp B_post_offset value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 83@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2739,20 +2265,13 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset (void)
 
 /**
 * @brief Validate SetColorTemp_B_post_offset() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp B_post_offset value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 84@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2776,17 +2295,11 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset (void)
 
 /**
 * @brief Validate GetColorTemp_B_post_offset() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp B_post_offset value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 85@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2810,18 +2323,11 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset (void)
 
 /**
 * @brief Validate GetColorTemp_B_post_offset() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp B_post_offset value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 86@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2844,19 +2350,13 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset (void)
 
 /**
 * @brief Validate SetColorTemp_Rgain_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp Rgain_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 87@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2880,20 +2380,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_Rgain_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp Rgain_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 88@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2918,17 +2411,11 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_Rgain_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp Rgain_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 89@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2950,18 +2437,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_Rgain_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp Rgain_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 90@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -2984,19 +2464,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_Ggain_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp Ggain_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 91@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3020,20 +2494,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_Ggain_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp Ggain_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 92@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3058,17 +2525,11 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_Ggain_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp Ggain_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 93@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3090,18 +2551,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_Ggain_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp Ggain_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 94@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3125,19 +2579,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_Bgain_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp Bgain_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 95@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3161,20 +2609,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_Bgain_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp Bgain_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 96@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3199,17 +2640,11 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_Bgain_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp Bgain_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 97@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3231,18 +2666,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_Bgain_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp Bgain_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 98@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3265,19 +2693,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_R_post_offset_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp R_post_offset_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 99@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3304,20 +2726,13 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_R_post_offset_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp R_post_offset_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 100@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3343,17 +2758,11 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_R_post_offset_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp R_post_offset_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 101@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3378,19 +2787,12 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_R_post_offset_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp R_post_offset_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 102@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3414,19 +2816,13 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_G_post_offset_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp G_post_offset_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 103@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3451,20 +2847,13 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_G_post_offset_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp G_post_offset_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 104@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3488,17 +2877,11 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_G_post_offset_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp G_post_offset_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 105@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3523,19 +2906,12 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_G_post_offset_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp G_post_offset_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 106@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3559,19 +2935,13 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_B_post_offset_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the ColorTemp B_post_offset_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 107@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3596,20 +2966,13 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 
 /**
 * @brief Validate SetColorTemp_B_post_offset_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the ColorTemp B_post_offset_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 108@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3633,17 +2996,11 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_B_post_offset_onSource() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the ColorTemp B_post_offset_onSource value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 109@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3666,19 +3023,12 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 
 /**
 * @brief Validate GetColorTemp_B_post_offset_onSource() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the ColorTemp B_post_offset_onSource value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 110@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3702,17 +3052,11 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 
 /**
 * @brief Validate GetTVSupportedPictureModes() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the TV Supported PictureModes value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 111@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3733,18 +3077,11 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 
 /**
 * @brief Validate GetTVSupportedPictureModes() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the TV Supported PictureModes value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 112@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3768,17 +3105,11 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 
 /**
 * @brief Validate GetTVSupportedDVModes() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the TV Supported DVModes value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 113@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3799,19 +3130,12 @@ void test_l1_tvSettings_positive_GetTVSupportedDVModes (void)
 
 /**
 * @brief Validate GetTVSupportedDVModes() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the TV Supported DVModes value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 114@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3835,19 +3159,13 @@ void test_l1_tvSettings_negative_GetTVSupportedDVModes (void)
 
 /**
 * @brief Validate SetTVDolbyVisionMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the TV DolbyVision Mode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 115@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3867,18 +3185,11 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 
 /**
 * @brief Validate SetTVDolbyVisionMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the TV DolbyVision Mode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 116@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3901,17 +3212,11 @@ void test_l1_tvSettings_negative_SetTVDolbyVisionMode (void)
 
 /**
 * @brief Validate GetTVDolbyVisionMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the TV DolbyVision Mode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 117@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3932,18 +3237,11 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 
 /**
 * @brief Validate GetTVDolbyVisionMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the TV DolbyVision Mode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 118@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3965,19 +3263,13 @@ void test_l1_tvSettings_negative_GetTVDolbyVisionMode (void)
 
 /**
 * @brief Validate SetTVHLGMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the TV HLG Mode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 119@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -3998,18 +3290,11 @@ void test_l1_tvSettings_positive_SetTVHLGMode (void)
 
 /**
 * @brief Validate SetTVHLGMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the TV HLG Mode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 120@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4032,19 +3317,13 @@ void test_l1_tvSettings_negative_SetTVHLGMode (void)
 
 /**
 * @brief Validate SetTVHDR10Mode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the TV HDR10 Mode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 121@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4065,18 +3344,11 @@ void test_l1_tvSettings_positive_SetTVHDR10Mode (void)
 
 /**
 * @brief Validate SetTVHDR10Mode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the TV HDR10 Mode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 122@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4099,17 +3371,11 @@ void test_l1_tvSettings_negative_SetTVHDR10Mode (void)
 
 /**
 * @brief Validate GetTVSupportedHLGModes() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the TV Supported HLG Modes once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 123@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4130,19 +3396,12 @@ void test_l1_tvSettings_positive_GetTVSupportedHLGModes (void)
 
 /**
 * @brief Validate GetTVSupportedHLGModes() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get TV Supported HLG Modes once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 124@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4164,17 +3423,11 @@ void test_l1_tvSettings_negative_GetTVSupportedHLGModes (void)
 
 /**
 * @brief Validate GetTVSupportedHDR10Modes() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get TV Supported HDR10 Mode values once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 125@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4195,19 +3448,12 @@ void test_l1_tvSettings_positive_GetTVSupportedHDR10Modes (void)
 
 /**
 * @brief Validate GetTVSupportedHDR10Modes() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the  TV Supported HDR10 Mode values once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 126@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4229,19 +3475,13 @@ void test_l1_tvSettings_negative_GetTVSupportedHDR10Modes (void)
 
 /**
 * @brief Validate SetDynamicContrast() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Dynamic Contrast value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 127@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4263,20 +3503,13 @@ void test_l1_tvSettings_positive_SetDynamicContrast (void)
 
 /**
 * @brief Validate SetDynamicContrast() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Dynamic Contrast value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 128@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4299,17 +3532,11 @@ void test_l1_tvSettings_negative_SetDynamicContrast (void)
 
 /**
 * @brief Validate GetDynamicContrast() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Dynamic Contrast value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 129@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4330,18 +3557,11 @@ void test_l1_tvSettings_positive_GetDynamicContrast (void)
 
 /**
 * @brief Validate GetDynamicContrast() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Dynamic Contrast value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 130@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4363,19 +3583,13 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 
 /**
 * @brief Validate setWBctrl() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the WBctrl value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 131@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4405,20 +3619,13 @@ void test_l1_tvSettings_positive_setWBctrl (void)
 
 /**
 * @brief Validate setWBctrl() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the WBctrl value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 132@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4451,17 +3658,11 @@ void test_l1_tvSettings_negative_setWBctrl (void)
 
 /**
 * @brief Validate getWBctrl() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the WBctrl value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 133@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4484,18 +3685,11 @@ void test_l1_tvSettings_positive_getWBctrl (void)
 
 /**
 * @brief Validate getWBctrl() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the WBctrl value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 134@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4522,19 +3716,13 @@ void test_l1_tvSettings_negative_getWBctrl (void)
 
 /**
 * @brief Validate enableWBmode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully enable the WBmode mode once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 135@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4556,20 +3744,13 @@ void test_l1_tvSettings_positive_enableWBmode (void)
 
 /**
 * @brief Validate enableWBmode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully enable the WBmode mode once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 136@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4590,17 +3771,11 @@ void test_l1_tvSettings_negative_enableWBmode (void)
 
 /** 
 * @brief Validate GetSupportedComponentColor() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Supported ComponentColor value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 137@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4621,18 +3796,11 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 
 /**
 * @brief Validate GetSupportedComponentColor() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Supported ComponentColor value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 138@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4654,19 +3822,13 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 
 /**
 * @brief Validate SetCurrentComponentSaturation() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Current Component Saturation value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 139@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4690,20 +3852,13 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 
 /**
 * @brief Validate SetCurrentComponentSaturation() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Current Component Saturation value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 140@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4727,17 +3882,11 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 
 /**
 * @brief Validate GetCurrentComponentSaturation() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Current Component Saturation value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 141@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4760,18 +3909,11 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 
 /**
 * @brief Validate GetCurrentComponentSaturation() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Current Component Saturation value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 142@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4794,17 +3936,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 
 /**
 * @brief Validate SetCurrentComponentHue() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Current Component Hue value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 143@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4825,19 +3961,12 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 
 /**
 * @brief Validate SetCurrentComponentHue() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Current Component Hue value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 144@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4860,17 +3989,11 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 
 /**
 * @brief Validate GetCurrentComponentHue() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Current Component Hue value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 145@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4891,18 +4014,11 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 
 /**
 * @brief Validate GetCurrentComponentHue() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Current Component Hue value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 146@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4924,17 +4040,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 
 /**
 * @brief Validate SetCurrentComponentLuma() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Current Component Luma value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 147@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4955,18 +4065,11 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 
 /**
 * @brief Validate SetCurrentComponentLuma() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Current Component Luma value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 148@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -4988,17 +4091,11 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 
 /**
 * @brief Validate GetCurrentComponentLuma() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Current Component Luma value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 149@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5019,18 +4116,11 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 
 /**
 * @brief Validate GetCurrentComponentLuma() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Current Component Luma value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 150@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5052,17 +4142,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 
 /**
 * @brief Validate GetTVSupportedDimmingModes() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the TV Supported DimmingModes once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 151@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5083,18 +4167,11 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 
 /**
 * @brief Validate GetTVSupportedDimmingModes() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the TV Supported DimmingModes value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 152@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5117,17 +4194,11 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 
 /**
 * @brief Validate SetTVDimmingMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the TV Dimming Mode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 153@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5149,18 +4220,11 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 
 /**
 * @brief Validate SetTVDimmingMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the TV Dimming Mode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 154@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5183,17 +4247,11 @@ void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 
 /**
 * @brief Validate GetTVPictureModeIndex() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the TV Picture ModeIndex value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 155@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5214,18 +4272,11 @@ void test_l1_tvSettings_positive_GetTVPictureModeIndex (void)
 
 /**
 * @brief Validate GetTVPictureModeIndex() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the TV PictureMode Index value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 156@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5247,17 +4298,11 @@ void test_l1_tvSettings_negative_GetTVPictureModeIndex (void)
 
 /**
 * @brief Validate GetCurrentContentFormat() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Current ContentFormat value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 157@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5278,18 +4323,11 @@ void test_l1_tvSettings_positive_GetCurrentContentFormat (void)
 
 /**
 * @brief Validate GetCurrentContentFormat() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Current ContentFormat value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 158@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5310,17 +4348,11 @@ void test_l1_tvSettings_negative_GetCurrentContentFormat (void)
 
 /**
 * @brief Validate GetSupportedContentFormats() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Supported ContentFormats value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 159@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5341,18 +4373,11 @@ void test_l1_tvSettings_positive_GetSupportedContentFormats (void)
 
 /**
 * @brief Validate GetSupportedContentFormats() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Supported ContentFormats value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 160@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5375,17 +4400,11 @@ void test_l1_tvSettings_negative_GetSupportedContentFormats (void)
 
 /**
 * @brief Validate SaveColorTemperature() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully save the Color Temperature value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 161@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5409,18 +4428,11 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 
 /**
 * @brief Validate SaveColorTemperature() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the Color Temperature value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 162@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5444,17 +4456,11 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 
 /**
 * @brief Validate SaveBacklight() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the Backlight value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 163@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5478,18 +4484,11 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 
 /**
 * @brief Validate SaveBacklight() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save the Backlight value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 164@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5514,17 +4513,11 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 
 /**
 * @brief Validate SaveContrast() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the Contrast value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 165@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5548,18 +4541,11 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 
 /**
 * @brief Validate SaveContrast() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save the Contrast value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 166@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5584,17 +4570,11 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 
 /**
 * @brief Validate SaveSaturation() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the Saturation value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 167@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5618,18 +4598,11 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 
 /**
 * @brief Validate SaveSaturation() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save the Saturation value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 168@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5654,17 +4627,11 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 
 /**
 * @brief Validate SaveSharpness() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the Sharpness value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 169@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5688,18 +4655,11 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 
 /**
 * @brief Validate SaveSharpness() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save current TV Sharpness value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 170@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5724,17 +4684,11 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 
 /**
 * @brief Validate SaveBrightness() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully save the brightness value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 171@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5758,18 +4712,11 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 
 /**
 * @brief Validate SaveBrightness() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the brightness value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 172@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5794,17 +4741,11 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 
 /**
 * @brief Validate SaveHue() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully save the Hue value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 173@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5828,18 +4769,11 @@ void test_l1_tvSettings_positive_SaveHue (void)
 
 /**
 * @brief Validate SaveHue() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the Hue value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 174@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5864,17 +4798,11 @@ void test_l1_tvSettings_negative_SaveHue (void)
 
 /**
 * @brief Validate SaveDynamicBacklight() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the DynamicBacklight value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 175@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5898,18 +4826,11 @@ void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 
 /**
 * @brief Validate SaveDynamicBacklight() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the DynamicBacklight value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 176@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5934,17 +4855,11 @@ void test_l1_tvSettings_negative_SaveDynamicBacklight (void)
 
 /**
 * @brief Validate SaveDisplayMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the DisplayMode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 177@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -5968,18 +4883,11 @@ void test_l1_tvSettings_positive_SaveDisplayMode (void)
 
 /**
 * @brief Validate SaveDisplayMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save the DisplayMode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 178@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6004,17 +4912,11 @@ void test_l1_tvSettings_negative_SaveDisplayMode (void)
 
 /**
 * @brief Validate SaveCMS() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the CMS value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 179@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6038,18 +4940,11 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 
 /**
 * @brief Validate SaveCMS() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the CMS value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 180@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6076,17 +4971,11 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 
 /**
 * @brief Validate SaveDolbyMode() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully save the DolbyMode value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 181@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6110,18 +4999,11 @@ void test_l1_tvSettings_positive_SaveDolbyMode (void)
 
 /**
 * @brief Validate SaveDolbyMode() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the DolbyMode value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 182@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6146,17 +5028,11 @@ void test_l1_tvSettings_negative_SaveDolbyMode (void)
 
 /**
 * @brief Validate GetNumberOfModesupported() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Get the Number Of Modesupported value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 183@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6177,18 +5053,11 @@ void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
 
 /**
 * @brief Validate GetNumberOfModesupported() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Number Of Modesupported value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 184@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6209,17 +5078,11 @@ void test_l1_tvSettings_negative_GetNumberOfModesupported (void)
 
 /**
 * @brief Validate GetCurrentPQIndex() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the PQIndex value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 185@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6240,18 +5103,11 @@ void test_l1_tvSettings_positive_GetCurrentPQIndex (void)
 
 /**
 * @brief Validate GetCurrentPQIndex() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the current PQIndex value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 186@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6272,17 +5128,11 @@ void test_l1_tvSettings_negative_GetCurrentPQIndex (void)
 
 /**
 * @brief Validate GetAllSupportedPicModeIndex() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Supported PicModeIndex value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 187@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6303,18 +5153,11 @@ void test_l1_tvSettings_positive_GetAllSupportedPicModeIndex (void)
 
 /**
 * @brief Validate GetAllSupportedPicModeIndex() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Supported PicModeIndex value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 188@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6336,17 +5179,11 @@ void test_l1_tvSettings_negative_GetAllSupportedPicModeIndex (void)
 
 /**
 * @brief Validate GetCMSDefault() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the CMS Default value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 189@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6369,18 +5206,11 @@ void test_l1_tvSettings_positive_GetCMSDefault (void)
 
 /**
 * @brief Validate GetCMSDefault() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the CMS Default value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 190@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6402,17 +5232,11 @@ void test_l1_tvSettings_negative_GetCMSDefault (void)
 
 /**
 * @brief Validate GetDolbyModeIndex() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Dolby ModeIndex value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 191@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6433,18 +5257,11 @@ void test_l1_tvSettings_positive_GetDolbyModeIndex (void)
 
 /**
 * @brief Validate GetDolbyModeIndex() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Dolby ModeIndex value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 192@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6466,17 +5283,11 @@ void test_l1_tvSettings_negative_GetDolbyModeIndex (void)
 
 /**
 * @brief Validate SetCMSState() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Set the CMSState value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 193@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6500,18 +5311,11 @@ void test_l1_tvSettings_positive_SetCMSState (void)
 
 /**
 * @brief Validate SetCMSState() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Set the CMSState value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 194@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6533,17 +5337,11 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 
 /**
 * @brief Validate SetColorTemperatureUser() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Color Temperature User value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 195@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6567,18 +5365,11 @@ void test_l1_tvSettings_positive_SetColorTemperatureUser (void)
 
 /**
 * @brief Validate SetColorTemperatureUser() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Color Temperature User value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 196@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6601,17 +5392,11 @@ void test_l1_tvSettings_negative_SetColorTemperatureUser (void)
 
 /**
 * @brief Validate SaveColorTemperatureUser() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save Color Temperature User value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 197@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6635,18 +5420,11 @@ void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
 
 /**
 * @brief Validate SaveColorTemperatureUser() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save Color Temperature User value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 198@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6669,17 +5447,11 @@ void test_l1_tvSettings_negative_SaveColorTemperatureUser (void)
 
 /**
 * @brief Validate GetHLGModeIndex() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the HLGModeIndex value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 199@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6700,18 +5472,11 @@ void test_l1_tvSettings_positive_GetHLGModeIndex (void)
 
 /**
 * @brief Validate GetHLGModeIndex() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the HLGModeIndex value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 200@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6733,17 +5498,11 @@ void test_l1_tvSettings_negative_GetHLGModeIndex (void)
 
 /**
 * @brief Validate GetHDR10ModeIndex() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the HDR10 ModeIndex value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 201@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6764,18 +5523,11 @@ void test_l1_tvSettings_positive_GetHDR10ModeIndex (void)
 
 /**
 * @brief Validate GetHDR10ModeIndex() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the HDR10 ModeIndex value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 202@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6797,17 +5549,11 @@ void test_l1_tvSettings_negative_GetHDR10ModeIndex (void)
 
 /** TODO: Needed exact i/p parameters in header files
 * @brief Validate SetBacklightFade() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Backlight Fade value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 203@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6829,18 +5575,11 @@ void test_l1_tvSettings_positive_SetBacklightFade (void)
 
 /**
 * @brief Validate SetBacklightFade() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Backlight Fade value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 204@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6864,14 +5603,12 @@ void test_l1_tvSettings_negative_SetBacklightFade (void)
 
 /**
 * @brief Validate SetGammaMode() for all positive invocation scenarios
-* 
 * This test ensures that the TV Settings module is to set Gamma Mode value
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 205@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6891,14 +5628,12 @@ void test_l1_tvSettings_positive_SetGammaMode (void)
 
 /**
 * @brief Validate SetGammaMode() for all negative invocation scenarios
-* 
 * This test ensures that the TV Settings module is to set Gamma Mode value
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 206@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6917,17 +5652,11 @@ void test_l1_tvSettings_negative_SetGammaMode (void)
 
 /**
 * @brief Validate SetLocalDimmingLevel() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Local DimmingLevel value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 207@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6949,18 +5678,11 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 
 /**
 * @brief Validate SetLocalDimmingLevel() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Local DimmingLevel value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 208@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -6983,17 +5705,11 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 
 /**
 * @brief Validate GetLocalDimmingLevel() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Local DimmingLevel value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 209@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7014,18 +5730,11 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 
 /**
 * @brief Validate GetLocalDimmingLevel() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Local DimmingLevel value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 210@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7047,17 +5756,11 @@ void test_l1_tvSettings_negative_GetLocalDimmingLevel (void)
 
 /**
 * @brief Validate SaveLocalDimmingLevel() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the LocalDimming Level value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 211@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7081,18 +5784,11 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 
 /**
 * @brief Validate SaveLocalDimmingLevel() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save the Local DimmingLevel value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 212@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7117,17 +5813,11 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 
 /**
 * @brief Validate SaveLowLatencyState() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully Save the Low LatencyState value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 213@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7151,18 +5841,11 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 
 /**
 * @brief Validate SaveLowLatencyState() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully Save the Low LatencyState value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 214@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7187,17 +5870,11 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 
 /**
 * @brief Validate SetLowLatencyState() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the Low LatencyState value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 215@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7219,18 +5896,11 @@ void test_l1_tvSettings_positive_SetLowLatencyState (void)
 
 /**
 * @brief Validate SetLowLatencyState() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the Low LatencyState value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 216@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7254,17 +5924,11 @@ void test_l1_tvSettings_negative_SetLowLatencyState (void)
 
 /**
 * @brief Validate GetLowLatencyState() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get the Low LatencyState value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 217@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7285,18 +5949,11 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 
 /**
 * @brief Validate GetLowLatencyState() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the Low LatencyState value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 218@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7318,17 +5975,11 @@ void test_l1_tvSettings_negative_GetLowLatencyState (void)
 
 /**
 * @brief Validate SetGammaTable() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the GammaTable value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 219@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7348,18 +5999,11 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 
 /**
 * @brief Validate SetGammaTable() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the GammaTable value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 220@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7383,17 +6027,11 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 
 /**
 * @brief Validate GetGammaTable() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully get GammaTable once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 221@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7413,18 +6051,11 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 
 /**
 * @brief Validate GetGammaTable() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully get the GammaTable value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 222@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7446,17 +6077,11 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
 
 /**
 * @brief Validate SaveGammaTable() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully save the GammaTable value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 223@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7476,18 +6101,11 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 
 /**
 * @brief Validate SaveGammaTable() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully save the GammaTable value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 224@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7510,17 +6128,11 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 
 /**
 * @brief Validate SetGammaPattern() for all positive invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. Initialise the Tv Settings module using tvInit()
-* 2. Able to successfully set the GammaPattern value once module is initialized
-* 3. Close the module using tvTerm()
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 225@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7540,18 +6152,11 @@ void test_l1_tvSettings_positive_SetGammaPattern (void)
 
 /**
 * @brief Validate SetGammaPattern() for all negative invocation scenarios
-* 
-* This test ensure following conditions:
-* 1. tvERROR_INVALID_STATE is returned if called without initialising
-* 2. Able to successfully set the GammaTable value once module is initialized
-* 3. Passing invalid parameter returns tvERROR_INVALID_PARAM
-* 4. Once module is closed, API returns tvERROR_INVALID_STATE
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 226@n
 * 
-* **Pre-Conditions:** @n
-* None
+* **Pre-Conditions:** None@n
 *
 * **Dependencies:** None@n
 * **User Interaction:** None
@@ -7813,7 +6418,5 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "SaveGammaTable_L1_negative" ,test_l1_tvSettings_negative_SaveGammaTable );
 	UT_add_test( pSuite, "SetGammaPattern_L1_positive" ,test_l1_tvSettings_positive_SetGammaPattern );
 	UT_add_test( pSuite, "SetGammaPattern_L1_negative" ,test_l1_tvSettings_negative_SetGammaPattern );
-	
-
 	return 0;
 } 
