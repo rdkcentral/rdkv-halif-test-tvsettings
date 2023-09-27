@@ -912,7 +912,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 * | 01 | call SetColorTemperature() - Set the TV ColorTemperature even before tvInit() | tvColorTemp_WARM | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | tvColorTemp_MAX + 1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | tvColorTemp_MAX | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetColorTemperature() -  Set the TV ColorTemperature with valid input after tvTerm() | tvColorTemp_USER | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -961,9 +961,8 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemperature() -  Retrieve current TV ColorTemperature even before tvInit() | tvColorTemp_t  * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemperature() -   Retrieve current TV ColorTemperature with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemperature() -  Retrieve current TV ColorTemperature valid arguments | tvColorTemp_t  * | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemperature() -  Retrieve current TV ColorTemperature valid arguments | tvColorTemp_t  * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemperature (void)
 {
@@ -1017,10 +1016,8 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetAspectRatio() - Set the TV AspectRatio even before tvInit() | tvDisplayMode_16x9 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetAspectRatio() -   Set the TV AspectRatio with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetAspectRatio() -   Set the TV AspectRatio with invalid input | 100 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call SetAspectRatio() -  Set the TV AspectRatio with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call SetAspectRatio() -  Set the TV AspectRatio with valid input after tvTerm() | tvDisplayMode_16x9 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetAspectRatio (void)
 {
@@ -1123,6 +1120,7 @@ void test_l1_tvSettings_negative_GetSupportedBacklightModes (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*@todo L2 should cover GetCurrentBacklightMode is in the list of GetSupportedBacklightModes()*/
 /** 
 * @brief Validate GetCurrentBacklightMode() for all positive invocation scenarios
 *
@@ -1170,6 +1168,7 @@ void test_l1_tvSettings_negative_GetCurrentBacklightMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
+
 /** 
 * @brief Validate SetCurrentBacklightMode() for all positive invocation scenarios
 *
@@ -1197,6 +1196,8 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*@todo max range  and low range update in all the set apis*/
+/*verify GetSupportedBacklightModes then SetCurrentBacklightMode validate  */
 /**
 * @brief Validate SetCurrentBacklightMode() for all negative invocation scenarios
 *
@@ -1215,12 +1216,12 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetCurrentBacklightMode() - Set the TV CurrentBacklightMode even before tvInit() | tvBacklightMode_AMBIENT | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid input | tvBacklightMode_INVALID | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid input | 20 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetCurrentBacklightMode() -  Set the TV CurrentBacklightMode with valid input after tvTerm() | tvBacklightMode_MANUAL | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range | tvBacklightMode_INVALID | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with lower range  | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call SetCurrentBacklightMode() -  Set the TV CurrentBacklightMode with valid input after tvTerm() | tvBacklightMode_MANUAL | tvERROR_INVALID_STATE | Should Pass |
 */
+
 void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
