@@ -183,9 +183,8 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetTVPictureMode() - Retrieve current TV PictureMode even before tvInit() | char * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVPictureMode() -   Retrieve current TV PictureMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetTVPictureMode() -  Retrieve current TV PictureMode with valid input after tvTerm() | NULL | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetTVPictureMode() -  Retrieve current TV PictureMode with valid input after tvTerm() | NULL | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVPictureMode (void)
 {
@@ -221,6 +220,8 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 /**
 * @brief Validate SetTVPictureMode() for all negative invocation scenarios
 *
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 08@n
 * 
@@ -246,8 +247,6 @@ void test_l1_tvSettings_negative_SetTVPictureMode (void)
 
 /**
 * @brief Validate GetBacklight() for all positive invocation scenarios
-*
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 09@n
@@ -288,9 +287,8 @@ void test_l1_tvSettings_positive_GetBacklight (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetBacklight() -   Retrieve current TV backlight even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetBacklight() -   Retrieve current TV backlight with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetBacklight() -  Retrieve current TV brightness valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetBacklight() -  Retrieve current TV brightness valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetBacklight (void)
 {
@@ -317,14 +315,14 @@ void test_l1_tvSettings_negative_GetBacklight (void)
 * | 02 | Call SetBacklight() - Set the backlight with valid value | 8 | tvERROR_NONE | Should Pass |
 * | 03 | call SetBacklight() -  Reset the backlight with another valid value | 50 | tvERROR_NONE | Should Pass |
 * | 04 | call SetBacklight() -  Reset the backlight with another valid value | 99 | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call SetBacklight() -  Reset the backlight with another valid value | 99 | tvERROR_NONE | Should Pass |
+* | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetBacklight (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*@todo 1. change numbers, 2. all the sets add same value again*/
 /** 
 * @brief Validate SetBacklight() for all negative invocation scenarios
 *
@@ -345,9 +343,9 @@ void test_l1_tvSettings_positive_SetBacklight (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetBacklight() -   Set the TV backlight with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetBacklight() -   Set the TV backlight with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetBacklight() -   Set the TV backlight with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetBacklight() -  Set the TV backlight with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
+* | 05 | call SetBacklight() -   Set the TV backlight with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call SetBacklight() -  Set the TV backlight with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetBacklight (void)
 {
@@ -356,8 +354,6 @@ void test_l1_tvSettings_negative_SetBacklight (void)
 
 /**
 * @brief Validate SetBrightness() for all positive invocation scenarios
-*
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 13@n
@@ -371,10 +367,10 @@ void test_l1_tvSettings_negative_SetBacklight (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetBrightness() -  Set the brightness with valid value | 08 | tvERROR_NONE | Should Pass |
+* | 02 | call SetBrightness() -  Set the brightness with valid value | 00 | tvERROR_NONE | Should Pass |
 * | 03 | call SetBrightness() -  Reset the brightness with another valid value | 50 | tvERROR_NONE | Should Pass |
-* | 04 | call SetBrightness() -  Reset the brightness with another valid value | 99 | tvERROR_NONE | Should Pass |
-* | 05 | call SetBrightness() -  Reset the brightness with another valid value | 99 | tvERROR_NONE | Should Pass |
+* | 04 | call SetBrightness() -  Reset the brightness with another valid value | 100 | tvERROR_NONE | Should Pass |
+* | 05 | call SetBrightness() -  Reset the brightness with another valid value | 100 | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetBrightness (void)
@@ -401,10 +397,10 @@ void test_l1_tvSettings_positive_SetBrightness (void)
 * | 01 | call SetBrightness() - Set the TV brightness even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetBrightness() -   Set the TV brightness with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetBrightness() -   Set the TV brightness with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetBrightness() -   Set the TV brightness with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetBrightness() -  Set the TV brightness with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
+* | 04 | call SetBrightness() -   Set the TV brightness with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetBrightness() -   Set the TV brightness with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call SetBrightness() -  Set the TV brightness with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetBrightness (void)
 {
@@ -435,7 +431,6 @@ void test_l1_tvSettings_positive_GetBrightness (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/* # 03 call GetBrightness() -   Retrieve current TV brightness with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |*/
 /**
 * @brief Validate GetBrightness() for all negative invocation scenarios
 *
@@ -463,8 +458,6 @@ void test_l1_tvSettings_negative_GetBrightness (void)
 /**
 * @brief Validate SetContrast() for all positive invocation scenarios
 *  
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
-*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 17@n
 * 
@@ -477,11 +470,11 @@ void test_l1_tvSettings_negative_GetBrightness (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetContrast() -  Set the Contrast with valid value | 08 | tvERROR_NONE | Should Pass |
+* | 02 | call SetContrast() -  Set the Contrast with valid value | 00 | tvERROR_NONE | Should Pass |
 * | 03 | call SetContrast() -  Reset the Contrast with another valid value | 50 | tvERROR_NONE | Should Pass |
-* | 04 | call SetContrast() -  Reset the Contrast with another valid value | 99 | tvERROR_NONE | Should Pass |
-* | 04 | call SetContrast() -  Reset the Contrast with another valid value | 99 | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client  | void | tvERROR_NONE | Should Pass |
+* | 04 | call SetContrast() -  Reset the Contrast with another valid value | 100 | tvERROR_NONE | Should Pass |
+* | 05 | call SetContrast() -  Reset the Contrast with another valid value | 100 | tvERROR_NONE | Should Pass |
+* | 06 | call tvTerm() -  Terminate and close the instance of the TV client  | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetContrast (void)
 {
@@ -568,8 +561,6 @@ void test_l1_tvSettings_negative_GetContrast (void)
 /**
 * @brief Validate SetSharpness() for all positive invocation scenarios
 *
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
-*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 21@n
 * 
@@ -582,10 +573,10 @@ void test_l1_tvSettings_negative_GetContrast (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetSharpness() -  Set the sharpness with valid value | 08 | tvERROR_NONE | Should Pass |
+* | 02 | call SetSharpness() -  Set the sharpness with valid value | 00 | tvERROR_NONE | Should Pass |
 * | 03 | call SetSharpness() -  Reset the sharpness with another valid value | 50 | tvERROR_NONE | Should Pass |
-* | 04 | call SetSharpness() -  Reset the sharpness with another valid value | 99 | tvERROR_NONE | Should Pass |
-* | 05 | call SetSharpness() -  Reset the sharpness with another valid value | 99 | tvERROR_NONE | Should Pass |
+* | 04 | call SetSharpness() -  Reset the sharpness with another valid value | 100 | tvERROR_NONE | Should Pass |
+* | 05 | call SetSharpness() -  Reset the sharpness with another valid value | 100 | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetSharpness (void)
@@ -612,10 +603,10 @@ void test_l1_tvSettings_positive_SetSharpness (void)
 * | 01 | call SetSharpness() - Set the TV sharpness even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetSharpness() -   Set the TV sharpness with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetSharpness() -   Set the TV sharpness with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetSharpness() -   Set the TV sharpness with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetSharpness() -  Set the TV sharpness with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
+* | 04 | call SetSharpness() -   Set the TV sharpness with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetSharpness() -   Set the TV sharpness with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call SetSharpness() -  Set the TV sharpness with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetSharpness (void)
 {
@@ -670,11 +661,8 @@ void test_l1_tvSettings_negative_GetSharpness (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*todo add 0 and 100 instead of other values*/
 /**
 * @brief Validate SetSaturation() for all positive invocation scenarios
-*
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 25@n
@@ -779,8 +767,6 @@ void test_l1_tvSettings_negative_GetSaturation (void)
 /**
 * @brief Validate SetHue() for all positive invocation scenarios
 *
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
-*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 29@n
 * 
@@ -793,10 +779,11 @@ void test_l1_tvSettings_negative_GetSaturation (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetHue() -  Set the hue with valid value | 08 | tvERROR_NONE | Should Pass |
+* | 02 | call SetHue() -  Set the hue with valid value | 00 | tvERROR_NONE | Should Pass |
 * | 03 | call SetHue() -  Reset the hue with another valid value | 50 | tvERROR_NONE | Should Pass |
-* | 04 | call SetHue() -  Reset the hue with another valid value | 99 | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call SetHue() -  Reset the hue with another valid value | 100 | tvERROR_NONE | Should Pass |
+* | 05 | call SetHue() -  Reset the hue with another valid value | 100 | tvERROR_NONE | Should Pass |
+* | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetHue (void)
 {
@@ -872,8 +859,8 @@ void test_l1_tvSettings_positive_GetHue (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetHue() -  Retrieve current TV Hue even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetHue() -  Retrieve current TV Hue valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetHue() -  Retrieve current TV Hue valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetHue (void)
 {
@@ -882,8 +869,6 @@ void test_l1_tvSettings_negative_GetHue (void)
 
 /**
 * @brief Validate SetColorTemperature() for all positive invocation scenarios
-*
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 33@n
@@ -908,7 +893,6 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-//TODO: verify invalid i/p parameter (-1, 7,20 or tvColorTemp_MAX)
 /**
 * @brief Validate SetColorTemperature() for all negative invocation scenarios
 *
@@ -929,8 +913,8 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | tvColorTemp_MAX + 1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemperature() -  Set the TV ColorTemperature with valid input after tvTerm() | tvColorTemp_USER | tvERROR_INVALID_STATE | Should Pass |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemperature() -  Set the TV ColorTemperature with valid input after tvTerm() | tvColorTemp_USER | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemperature (void)
 {
@@ -989,8 +973,6 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 /**
 * @brief Validate SetAspectRatio() for all positive invocation scenarios
 *
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
-*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 37@n
 * 
@@ -1006,11 +988,11 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 * | 02 | call SetAspectRatio() -  Set the AspectRatio with valid value | tvDisplayMode_4x3  | tvERROR_NONE | Should Pass |
 * | 03 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_16x9 | tvERROR_NONE | Should Pass |
 * | 04 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_FULL | tvERROR_NONE | Should Pass |
-* | 04 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_NORMAL | tvERROR_NONE | Should Pass |
-* | 04 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_AUTO | tvERROR_NONE | Should Pass |
-* | 04 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_DIRECT | tvERROR_NONE | Should Pass |
-* | 04 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_ZOOM | tvERROR_NONE | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_NORMAL | tvERROR_NONE | Should Pass |
+* | 06 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_AUTO | tvERROR_NONE | Should Pass |
+* | 07 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_DIRECT | tvERROR_NONE | Should Pass |
+* | 08 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_ZOOM | tvERROR_NONE | Should Pass |
+* | 09 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetAspectRatio (void)
 {
@@ -1085,9 +1067,8 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetAspectRatio() -  Retrieve current TV AspectRatio even before tvInit() | tvDisplayMode_t * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetAspectRatio() -   Retrieve current TV AspectRatio with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetAspectRatio() -  Retrieve current TV AspectRatio valid arguments | tvDisplayMode_t * | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetAspectRatio() -  Retrieve current TV AspectRatio valid arguments | tvDisplayMode_t * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetAspectRatio (void)
 {
@@ -1134,9 +1115,8 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetSupportedBacklightModes() -  Retrieve current TV SupportedBacklightModes even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetSupportedBacklightModes() -   Retrieve current TV SupportedBacklightModes with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetSupportedBacklightModes() -  Retrieve current TV SupportedBacklightModes valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetSupportedBacklightModes() -  Retrieve current TV SupportedBacklightModes valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetSupportedBacklightModes (void)
 {
@@ -1183,9 +1163,8 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetCurrentBacklightMode() -  Retrieve current TV CurrentBacklightMode even before tvInit() | tvBacklightMode_t * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentBacklightMode() -   Retrieve current TV CurrentBacklightMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call GetCurrentBacklightMode() -  Retrieve current TV CurrentBacklightMode valid arguments | tvBacklightMode_t * | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetCurrentBacklightMode() -  Retrieve current TV CurrentBacklightMode valid arguments | tvBacklightMode_t * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetCurrentBacklightMode (void)
 {
@@ -1193,8 +1172,6 @@ void test_l1_tvSettings_negative_GetCurrentBacklightMode (void)
 }
 /** 
 * @brief Validate SetCurrentBacklightMode() for all positive invocation scenarios
-*
-* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 45@n
@@ -1289,7 +1266,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetCurrentVideoFormat() -  Retrieve current TV CurrentVideoFormat even before tvInit() | tvVideoHDRFormat_t * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentVideoFormat() -   Retrieve current TV CurrentVideoFormat with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetCurrentVideoFormat() -  Retrieve current TV CurrentVideoFormat valid arguments | tvVideoHDRFormat_t * | tvERROR_INVALID_STATE | Should Pass |
 */
