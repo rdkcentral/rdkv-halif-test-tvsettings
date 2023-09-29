@@ -341,9 +341,9 @@ void test_l1_tvSettings_positive_SetBacklight (void)
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call SetBacklight() - Set the TV backlight even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetBacklight() -   Set the TV backlight with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetBacklight() -   Set the TV backlight with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetBacklight() -   Set the TV backlight with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetBacklight() -   Set the TV backlight with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetBacklight() -   Set the TV backlight with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetBacklight() -   Set the TV backlight with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetBacklight() -  Set the TV backlight with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -396,9 +396,9 @@ void test_l1_tvSettings_positive_SetBrightness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetBrightness() - Set the TV brightness even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetBrightness() -   Set the TV brightness with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetBrightness() -   Set the TV brightness with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetBrightness() -   Set the TV brightness with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetBrightness() -   Set the TV brightness with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetBrightness() -   Set the TV brightness with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetBrightness() -   Set the TV brightness with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetBrightness() -  Set the TV brightness with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -499,9 +499,9 @@ void test_l1_tvSettings_positive_SetContrast (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetContrast() - Set the TV contrast even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetContrast() -   Set the TV contrast with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetContrast() -   Set the TV contrast with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetContrast() -   Set the TV contrast with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetContrast() -   Set the TV contrast with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetContrast() -   Set the TV contrast with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetContrast() -   Set the TV contrast with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetContrast() -  Set the TV contrast with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -602,9 +602,9 @@ void test_l1_tvSettings_positive_SetSharpness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetSharpness() - Set the TV sharpness even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetSharpness() -   Set the TV sharpness with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetSharpness() -   Set the TV sharpness with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetSharpness() -   Set the TV sharpness with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetSharpness() -   Set the TV sharpness with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetSharpness() -   Set the TV sharpness with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetSharpness() -   Set the TV sharpness with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetSharpness() -  Set the TV sharpness with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -705,9 +705,9 @@ void test_l1_tvSettings_positive_SetSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetSaturation() - Set the TV saturation even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetSaturation() -   Set the TV saturation with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetSaturation() -   Set the TV saturation with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetSaturation() -   Set the TV saturation with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetSaturation() -   Set the TV saturation with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetSaturation() -   Set the TV saturation with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetSaturation() -   Set the TV saturation with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetSaturation() -  Set the TV saturation with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -808,9 +808,9 @@ void test_l1_tvSettings_positive_SetHue (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetHue() - Set the TV hue even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetHue() -   Set the TV hue with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetHue() -   Set the TV hue with invalid input | 101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetHue() -   Set the TV hue with invalid input | 200 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetHue() -   Set the TV hue with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetHue() -   Set the TV hue with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetHue() -   Set the TV hue with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetHue() -  Set the TV hue with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -911,8 +911,8 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemperature() - Set the TV ColorTemperature even before tvInit() | tvColorTemp_WARM | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with invalid input | tvColorTemp_MAX | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with max range | tvColorTemp_MAX | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetColorTemperature() -  Set the TV ColorTemperature with valid input after tvTerm() | tvColorTemp_USER | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1432,8 +1432,8 @@ void test_l1_tvSettings_positive_setWakeupConfig (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call setWakeupConfig() - Set the TV WakeupConfig even before tvInit() | tvWakeupSrc_LAN, true | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call setWakeupConfig() -   Set the TV WakeupConfig with invalid input | tvWakeupSrc_MAX, true  | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call setWakeupConfig() -   Set the TV WakeupConfig with invalid input | tvWakeupSrc_MAX, false  | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call setWakeupConfig() -   Set the TV WakeupConfig with lower range | -1, true  | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call setWakeupConfig() -   Set the TV WakeupConfig with  max range | tvWakeupSrc_MAX, true  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call setWakeupConfig() -  Set the TV WakeupConfig with valid input after tvTerm() | tvWakeupSrc_CEC, false  | tvERROR_INVALID_STATE | Should Pass |
 */
