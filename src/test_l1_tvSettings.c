@@ -1371,7 +1371,7 @@ void test_l1_tvSettings_negative_GetVideoFrameRate (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
-todo : false 
+
 /**
 * @brief Validate setWakeupConfig() for all positive invocation scenarios
 *
@@ -1391,19 +1391,19 @@ todo : false
 * | 03 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_VOICE , true | tvERROR_NONE | Should Pass |
 * | 04 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_PRESENCE_DETECTION, false | tvERROR_NONE | Should Pass |
 * | 05 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_PRESENCE_DETECTION, true | tvERROR_NONE | Should Pass |
-* | 06 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_BLUETOOTH, flase | tvERROR_NONE | Should Pass |
+* | 06 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_BLUETOOTH, false | tvERROR_NONE | Should Pass |
 * | 07 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_BLUETOOTH, true | tvERROR_NONE | Should Pass |
-* | 08 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_WIFI, flase | tvERROR_NONE | Should Pass |
+* | 08 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_WIFI, false | tvERROR_NONE | Should Pass |
 * | 09 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_WIFI, true | tvERROR_NONE | Should Pass |
-* | 10 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_IR, flase | tvERROR_NONE | Should Pass |
+* | 10 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_IR, false | tvERROR_NONE | Should Pass |
 * | 11 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_IR, true | tvERROR_NONE | Should Pass |
-* | 12 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_POWER_KEY, flase | tvERROR_NONE | Should Pass |
+* | 12 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_POWER_KEY, false | tvERROR_NONE | Should Pass |
 * | 13 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_POWER_KEY, true | tvERROR_NONE | Should Pass |
-* | 14 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_TIMER, flase | tvERROR_NONE | Should Pass |
+* | 14 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_TIMER, false | tvERROR_NONE | Should Pass |
 * | 15 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_TIMER, true | tvERROR_NONE | Should Pass |
-* | 16 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_CEC, flase | tvERROR_NONE | Should Pass |
+* | 16 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_CEC, false | tvERROR_NONE | Should Pass |
 * | 17 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_CEC, true | tvERROR_NONE | Should Pass |
-* | 18 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_LAN, flase | tvERROR_NONE | Should Pass |
+* | 18 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_LAN, false | tvERROR_NONE | Should Pass |
 * | 19 | call setWakeupConfig() -  Reset the WakeupConfig with another valid value | tvWakeupSrc_LAN, true | tvERROR_NONE | Should Pass |
 * | 20 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
@@ -2063,8 +2063,10 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset (void)
 * | 04 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments | tvColorTemp_STANDARD, int * | tvERROR_NONE | Should Pass |
 * | 05 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments and validate with above value | tvColorTemp_STANDARD, int * | tvERROR_NONE | Should Pass |
 * | 06 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments | tvColorTemp_COLD, int * | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
-* | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments and validate with above value | tvColorTemp_COLD, int * | tvERROR_NONE | Should Pass |
+* | 08 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
+* | 09 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments and validate with above value | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
+* | 10 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_R_post_offset (void)
 {
@@ -2174,8 +2176,10 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset (void)
 * | 04 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments | tvColorTemp_STANDARD, int * | tvERROR_NONE | Should Pass |
 * | 05 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments and validate with above value | tvColorTemp_STANDARD, int * | tvERROR_NONE | Should Pass |
 * | 06 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments | tvColorTemp_COLD, int * | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
-* | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments and validate with above value | tvColorTemp_COLD, int * | tvERROR_NONE | Should Pass |
+* | 08 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
+* | 09 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments and validate with above value | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
+* | 10 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_G_post_offset (void)
 {
@@ -2285,7 +2289,9 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset (void)
 * | 04 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments | tvColorTemp_STANDARD, int * | tvERROR_NONE | Should Pass |
 * | 05 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments and validate with above value | tvColorTemp_STANDARD, int * | tvERROR_NONE | Should Pass |
 * | 06 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments | tvColorTemp_COLD, int * | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments and validate with above value | tvColorTemp_COLD, int * | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments and validate with above value | tvColorTemp_USER, int * | tvERROR_NONE | Should Pass |
 * | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_B_post_offset (void)
@@ -2335,12 +2341,12 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value | tvColorTemp_STANDARD, 08, HDMI_OFFSET, 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_COLD, 500, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_WARM, 999, AV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_STANDARD, 1200, HDMI_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_COLD, 1500, TV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_WARM, 2047, AV_OFFSET, 1 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_COLD, 2047, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_WARM, 0, AV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_STANDARD, 2047, HDMI_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_COLD, 250, TV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_WARM, 750, AV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
@@ -2364,15 +2370,15 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call SetColorTemp_Rgain_onSource() - Set the TV ColorTemp Rgain_onSource even before tvInit() | tvColorTemp_STANDARD, 08, HDMI_OFFSET, 0 | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetColorTemp_Rgain_onSource() - Set the TV ColorTemp Rgain_onSource even before tvInit() | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_MAX, 08, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 08, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 08, TV_OFFSET, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 09 | call SetColorTemp_Rgain_onSource() -  Set the TV ColorTemp Rgain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 09 | call SetColorTemp_Rgain_onSource() -  Set the TV ColorTemp Rgain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 {
@@ -2394,10 +2400,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments and validate with above value | tvColorTemp_USER, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 03 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments and validate with above value | tvColorTemp_USER, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
@@ -2421,13 +2427,13 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET  | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_COLD, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET  | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 {
@@ -2449,13 +2455,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value | tvColorTemp_STANDARD, 08, HDMI_OFFSET, 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_COLD, 500, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_WARM, 999, AV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_STANDARD, 1200, HDMI_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_COLD, 1500, TV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_WARM, 2047, AV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_COLD, 2047, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_WARM, 0, AV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_STANDARD, 2047, HDMI_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_COLD, 0, TV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 {
@@ -2478,15 +2484,15 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call SetColorTemp_Ggain_onSource() - Set the TV ColorTemp Ggain_onSource even before tvInit() | tvColorTemp_STANDARD, 08, HDMI_OFFSET, 0 | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetColorTemp_Ggain_onSource() - Set the TV ColorTemp Ggain_onSource even before tvInit() | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_MAX, 08, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 08, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 08, TV_OFFSET, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 09 | call SetColorTemp_Ggain_onSource() -  Set the TV ColorTemp Ggain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 09 | call SetColorTemp_Ggain_onSource() -  Set the TV ColorTemp Ggain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 {
@@ -2508,10 +2514,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp G gain_onSource with valid arguments and validate with above value | tvColorTemp_USER, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 03 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp G gain_onSource with valid arguments and validate with above value | tvColorTemp_USER, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
@@ -2535,13 +2541,13 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET  | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_COLD, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET  | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 */
 
 void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
@@ -2564,13 +2570,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value | tvColorTemp_STANDARD, 08, HDMI_OFFSET, 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_COLD, 500, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_WARM, 999, AV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_STANDARD, 1200, HDMI_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_COLD, 1500, TV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_WARM, 2047, AV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_COLD, 2047, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_WARM, 0, AV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_STANDARD, 2047, HDMI_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_COLD, 0, TV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 {
@@ -2593,15 +2599,15 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call SetColorTemp_Bgain_onSource() - Set the TV ColorTemp Bgain_onSource even before tvInit() | tvColorTemp_STANDARD, 08, HDMI_OFFSET, 0 | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetColorTemp_Bgain_onSource() - Set the TV ColorTemp Bgain_onSource even before tvInit() | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_MAX, 08, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 08, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 08, TV_OFFSET, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 09 | call SetColorTemp_Bgain_onSource() -  Set the TV ColorTemp Bgain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 09 | call SetColorTemp_Bgain_onSource() -  Set the TV ColorTemp Bgain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 {
@@ -2623,10 +2629,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments and validate with above value | tvColorTemp_USER, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 03 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments and validate with above value | tvColorTemp_USER, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
@@ -2650,13 +2656,13 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET  | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_COLD, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET  | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 {
@@ -2680,13 +2686,13 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value | tvColorTemp_STANDARD, -1023, HDMI_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_COLD, -400, TV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_WARM, 0, AV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_USER, 100, HDMI_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_STANDARD, 500, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_COLD, 700, AV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 08 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_WARM, 1024, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_COLD, 1024, TV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_WARM, -1024, AV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_USER, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_STANDARD, 0, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_COLD, 500, AV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 08 | call SetColorTemp_R_post_offset_onSource() -  Reset the ColorTemp R_post_offset_onSource with another valid value | tvColorTemp_WARM, 100, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
 * | 09 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
@@ -2712,13 +2718,13 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call SetColorTemp_R_post_offset_onSource() - Set the TV ColorTemp R_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1023, HDMI_OFFSET, 0 | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetColorTemp_R_post_offset_onSource() - Set the TV ColorTemp R_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET, 5 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, 5, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset_onSource() -  Set the TV ColorTemp R_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET_NEW, 5 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_R_post_offset_onSource() -  Set the TV ColorTemp R_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 {
@@ -2742,11 +2748,11 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET| tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, HDMI_OFFSET | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_STANDARD, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 06 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW| tvERROR_NONE | Should Pass |
+* | 03 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_STANDARD, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 06 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
@@ -2768,13 +2774,13 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, 5 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 {
@@ -2796,13 +2802,13 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value | tvColorTemp_STANDARD, -1023, HDMI_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_COLD, -400, TV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_WARM, 0, AV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_USER, 100, HDMI_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_STANDARD, 500, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_COLD, 700, AV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 08 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_WARM, 1024, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_COLD, 1024, TV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_WARM, -1024, AV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_USER, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_STANDARD, 0, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_COLD, 500, AV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 08 | call SetColorTemp_G_post_offset_onSource() -  Reset the ColorTemp G_post_offset_onSource with another valid value | tvColorTemp_WARM, 1000, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
 * | 09 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
@@ -2826,13 +2832,14 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call SetColorTemp_G_post_offset_onSource() - Set the TV ColorTemp G_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1023, HDMI_OFFSET, 0 | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetColorTemp_G_post_offset_onSource() - Set the TV ColorTemp G_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET, 5 | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, 5, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset_onSource() -  Set the TV ColorTemp G_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_COLD, -1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_COLD, 1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 08 | call SetColorTemp_G_post_offset_onSource() -  Set the TV ColorTemp G_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 {
@@ -2856,11 +2863,11 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET| tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, HDMI_OFFSET | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_STANDARD, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 06 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW| tvERROR_NONE | Should Pass |
+* | 03 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_STANDARD, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 06 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
@@ -2882,13 +2889,13 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, 5 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 {
@@ -2910,13 +2917,13 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value | tvColorTemp_STANDARD, -1023, HDMI_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_COLD, -400, TV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_WARM, 0, AV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_USER, 100, HDMI_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_STANDARD, 500, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_COLD, 700, AV_OFFSET, 1 | tvERROR_NONE | Should Pass |
-* | 08 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_WARM, 1024, TV_OFFSET, 0 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_COLD, 1024, TV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_WARM, -1024, AV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_USER, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_STANDARD, 0, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_COLD, 500, AV_OFFSET_NEW, 1 | tvERROR_NONE | Should Pass |
+* | 08 | call SetColorTemp_B_post_offset_onSource() -  Reset the ColorTemp B_post_offset_onSource with another valid value | tvColorTemp_WARM, 1000, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
 * | 09 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
@@ -2940,13 +2947,13 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call SetColorTemp_B_post_offset_onSource() - Set the TV ColorTemp B_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1023, HDMI_OFFSET, 0 | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetColorTemp_B_post_offset_onSource() - Set the TV ColorTemp B_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET, 5 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, 5, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET_NEW, 5 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_B_post_offset_onSource() -  Set the TV ColorTemp B_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call SetColorTemp_B_post_offset_onSource() -  Set the TV ColorTemp B_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 {
@@ -2968,11 +2975,11 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET| tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, HDMI_OFFSET | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 05 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_STANDARD, int *, TV_OFFSET | tvERROR_NONE | Should Pass |
-* | 06 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW| tvERROR_NONE | Should Pass |
+* | 03 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 04 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_WARM, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 05 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_STANDARD, int *, TV_OFFSET_NEW | tvERROR_NONE | Should Pass |
+* | 06 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments and validate with above value | tvColorTemp_COLD, int *, AV_OFFSET_NEW | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
@@ -2996,13 +3003,13 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, 5 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 {
