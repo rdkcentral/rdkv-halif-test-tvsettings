@@ -3620,7 +3620,6 @@ void test_l1_tvSettings_negative_setWBctrl (void)
 * | 05 | call getWBctrl() -  Retrieve the current WBctrl with valid arguments and validate with above value | "AV", "cool", "blue", "offset", int * | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_getWBctrl (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3728,7 +3727,6 @@ void test_l1_tvSettings_negative_enableWBmode (void)
 * | 03 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3754,7 +3752,6 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetSupportedComponentColor() -  Retrieve current TV Supported ComponentColor valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3784,7 +3781,6 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 * | 06 | call SetCurrentComponentSaturation() -  Reset the Current Component Saturation with another valid value | tvDataColor_CYAN,  96 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3814,7 +3810,6 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with valid input after tvTerm() | tvDataColor_GREEN,  20 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3841,7 +3836,6 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 * | 05 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid arguments and validate with above value |tvDataColor_CYAN, int * | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3868,7 +3862,6 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetCurrentComponentSaturation() -  Retrieve current TV Component Saturation valid arguments | tvDataColor_RED, int * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3893,7 +3886,6 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 * | 03 | call SetCurrentComponentHue() -  Retrieve the Current Component Hue with valid arguments and validate with above value | tvDataColor_RED , 10 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3901,7 +3893,8 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 
 /**
 * @brief Validate SetCurrentComponentHue() for all negative invocation scenarios
-
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 144@n
@@ -3921,7 +3914,6 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetCurrentComponentHue() -  Retrieve current TV Current Component Hue valid arguments | tvDataColor_RED, 10 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3946,7 +3938,6 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 * | 03 | call GetCurrentComponentHue() -  Retrieve the current Current Component Hue with valid arguments and validate with above value |tvDataColor_RED, int * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3972,7 +3963,6 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetCurrentComponentHue() -  Retrieve current TV brightness valid arguments | tvDataColor_RED, int * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -3997,7 +3987,6 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 * | 03 | call SetCurrentComponentLuma() -  Retrieve the Current Component Luma with valid arguments and validate with above value | tvDataColor_RED, 10 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4005,6 +3994,8 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 
 /**
 * @brief Validate SetCurrentComponentLuma() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 148@n
@@ -4023,7 +4014,6 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetCurrentComponentLuma() -  Retrieve Current Component Luma valid arguments | tvDataColor_RED, 10 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4048,7 +4038,6 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 * | 03 | call GetCurrentComponentLuma() -  Retrieve the current Component Luma with valid arguments and validate with above value | tvDataColor_RED, int * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4074,7 +4063,6 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetCurrentComponentLuma() -  Retrieve current TV Current Component Luma valid arguments | tvDataColor_RED, int * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4099,7 +4087,6 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 * | 03 | call GetTVSupportedDimmingModes() -  Retrieve the current TV Supported DimmingModes with valid arguments and validate with above value | char **, unsigned short * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4107,6 +4094,8 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 
 /**
 * @brief Validate GetTVSupportedDimmingModes() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 152@n
@@ -4126,7 +4115,6 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetTVSupportedDimmingModes() -  Retrieve current TV Supported DimmingModes valid arguments | char **, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4152,7 +4140,6 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 * | 04 | call SetTVDimmingMode() -  Retrieve the current TV Dimming Mode with valid arguments and validate with above value | "global" | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4160,6 +4147,8 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 
 /**
 * @brief Validate SetTVDimmingMode() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 154@n
@@ -4179,7 +4168,6 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetTVDimmingMode() -  Retrieve current TV Dimming Mode valid arguments | "global" | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4204,12 +4192,12 @@ void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 * | 03 | call GetTVPictureModeIndex() -  Retrieve the current TV Picture ModeIndex with valid arguments and validate with above value | const char * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetTVPictureModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo : there is no return error cases*/
 /**
 * @brief Validate GetTVPictureModeIndex() for all negative invocation scenarios
 *
@@ -4230,7 +4218,6 @@ void test_l1_tvSettings_positive_GetTVPictureModeIndex (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetTVPictureModeIndex() -  Retrieve current TVPictureMode Index valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetTVPictureModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4255,12 +4242,12 @@ void test_l1_tvSettings_negative_GetTVPictureModeIndex (void)
 * | 03 | call GetCurrentContentFormat() -  Retrieve the current Current ContentFormat with valid arguments and validate with above value | void | tvVideoFormat_HLG  | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetCurrentContentFormat (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo : there is no return error cases*/
 /**
 * @brief Validate GetCurrentContentFormat() for all negative invocation scenarios
 *
@@ -4280,7 +4267,6 @@ void test_l1_tvSettings_positive_GetCurrentContentFormat (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetCurrentContentFormat() -  Retrieve current TV ContentFormat valid arguments | void | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetCurrentContentFormat (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4305,12 +4291,12 @@ void test_l1_tvSettings_negative_GetCurrentContentFormat (void)
 * | 03 | call GetSupportedContentFormats() -  Retrieve the current Supported ContentFormats with valid arguments and validate with above value | unsigned int *, unsigned short * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetSupportedContentFormats (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo : there is no return error cases*/
 /**
 * @brief Validate GetSupportedContentFormats() for all negative invocation scenarios
 *
@@ -4332,7 +4318,6 @@ void test_l1_tvSettings_positive_GetSupportedContentFormats (void)
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetSupportedContentFormats() -  Retrieve current TV Supported ContentFormats valid arguments | unsigned int *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetSupportedContentFormats (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4360,7 +4345,6 @@ void test_l1_tvSettings_negative_GetSupportedContentFormats (void)
 * | 06 | call SaveColorTemperature() -  Save the current Color Temperature with valid arguments and validate with above value | TV, 4, HDR_TYPE_HDR10, tvColorTemp_STANDARD | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveColorTemperature (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4368,6 +4352,8 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 
 /**
 * @brief Validate SaveColorTemperature() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 162@n
@@ -4388,7 +4374,6 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SaveColorTemperature() -  Save the current Color Temperature valid arguments | HDMI, 0, HDR_TYPE_HLG, tvColorTemp_WARM | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveColorTemperature (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4416,7 +4401,6 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 * | 06 | call SaveBacklight() -  Save the Backlight with valid arguments | HDMI, 4, HDR_TYPE_HLG, 95 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveBacklight (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4424,6 +4408,8 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 
 /**
 * @brief Validate SaveBacklight() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 164@n
@@ -4445,7 +4431,6 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveBacklight() -  Retrieve current TV Backlight valid arguments | HDMI, 3, HDR_TYPE_DOVI, 78 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveBacklight (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4473,7 +4458,6 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 * | 06 | call SaveContrast() -  Save the Contrast with valid arguments | HDMI, 4, HDR_TYPE_HLG, 95 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveContrast (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4481,6 +4465,8 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 
 /**
 * @brief Validate SaveContrast() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 166@n
@@ -4502,7 +4488,6 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveContrast() -  save current TV Contrast valid arguments | HDMI, 3, HDR_TYPE_DOVI, 78 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveContrast (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4530,7 +4515,6 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 * | 06 | call SaveSaturation() -  Save the Saturation with valid arguments | HDMI, 4, HDR_TYPE_HLG, 95 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveSaturation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4538,6 +4522,8 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 
 /**
 * @brief Validate SaveSaturation() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 168@n
@@ -4559,7 +4545,6 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveSaturation() -  save current TV Saturation valid arguments | HDMI, 3, HDR_TYPE_DOVI, 78 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveSaturation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4587,7 +4572,6 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 * | 06 | call SaveSharpness() -  Save the Sharpness with valid arguments | HDMI, 4, HDR_TYPE_HLG, 95 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveSharpness (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4595,6 +4579,8 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 
 /**
 * @brief Validate SaveSharpness() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 170@n
@@ -4616,7 +4602,6 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveSharpness() -  save current TV Sharpness valid arguments | HDMI, 3, HDR_TYPE_DOVI, 78 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveSharpness (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4644,7 +4629,6 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 * | 06 | call SaveBrightness() -  Save the Brightness with valid arguments | HDMI, 4, HDR_TYPE_HLG, 95 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveBrightness (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4652,6 +4636,8 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 
 /**
 * @brief Validate SaveBrightness() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 172@n
@@ -4673,7 +4659,6 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveBrightness() -  save current TV Brightness valid arguments | HDMI, 3, HDR_TYPE_DOVI, 78 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveBrightness (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4701,7 +4686,6 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 * | 06 | call SaveHue() -  Save the Hue with valid arguments | HDMI, 4, HDR_TYPE_HLG, 95 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveHue (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4709,6 +4693,8 @@ void test_l1_tvSettings_positive_SaveHue (void)
 
 /**
 * @brief Validate SaveHue() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 174@n
@@ -4730,7 +4716,6 @@ void test_l1_tvSettings_positive_SaveHue (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveHue() -  save current TV Hue valid arguments | HDMI, 3, HDR_TYPE_DOVI, 78 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveHue (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4758,7 +4743,6 @@ void test_l1_tvSettings_negative_SaveHue (void)
 * | 06 | call SaveDynamicBacklight() -  Save the DynamicBacklight with valid arguments | HDMI, 4, HDR_TYPE_HLG, tvDimmingMode_Global | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4766,6 +4750,8 @@ void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 
 /**
 * @brief Validate SaveDynamicBacklight() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 176@n
@@ -4787,7 +4773,6 @@ void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveDynamicBacklight() -  save the DynamicBacklight valid arguments | HDMI, 3, HDR_TYPE_DOVI, tvDimmingMode_Fixed | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveDynamicBacklight (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4815,7 +4800,6 @@ void test_l1_tvSettings_negative_SaveDynamicBacklight (void)
 * | 06 | call SaveDisplayMode() -  Save the DisplayMode with valid arguments | HDMI, 4, HDR_TYPE_HLG, tvDisplayMode_ZOOM | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveDisplayMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4823,6 +4807,8 @@ void test_l1_tvSettings_positive_SaveDisplayMode (void)
 
 /**
 * @brief Validate SaveDisplayMode() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 178@n
@@ -4844,7 +4830,6 @@ void test_l1_tvSettings_positive_SaveDisplayMode (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveDisplayMode() -  save the DisplayMode valid arguments | HDMI, 3, HDR_TYPE_DOVI, tvDisplayMode_4x3 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveDisplayMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4872,7 +4857,6 @@ void test_l1_tvSettings_negative_SaveDisplayMode (void)
 * | 06 | call SaveCMS() -  Save the CMS with valid arguments | HDMI, 4, HDR_TYPE_HLG, COLOR_HUE, COLOR_MAGENTA, 92 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveCMS (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4880,6 +4864,8 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 
 /**
 * @brief Validate SaveCMS() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 180@n
@@ -4903,7 +4889,6 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 * | 09 | call tvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call SaveCMS() -  save the CMS valid arguments | HDMI, 4, HDR_TYPE_HLG, COLOR_HUE, COLOR_MAGENTA, 92 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveCMS (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4931,7 +4916,6 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 * | 06 | call SaveDolbyMode() -  Save the DolbyMode with valid arguments | HDMI, 4, HDR_TYPE_HLG, dark | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveDolbyMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4939,6 +4923,8 @@ void test_l1_tvSettings_positive_SaveDolbyMode (void)
 
 /**
 * @brief Validate SaveDolbyMode() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 182@n
@@ -4960,7 +4946,6 @@ void test_l1_tvSettings_positive_SaveDolbyMode (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveDolbyMode() -  save the DolbyMode valid arguments | HDMI, 3, HDR_TYPE_DOVI, bright | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveDolbyMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -4985,12 +4970,12 @@ void test_l1_tvSettings_negative_SaveDolbyMode (void)
 * | 03 | call GetNumberOfModesupported() -  Retrieve the current Mode supported with valid arguments and validate with above value | void | int | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo: no return value*/
 /**
 * @brief Validate GetNumberOfModesupported() for all negative invocation scenarios
 *
@@ -5010,7 +4995,6 @@ void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
 * | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 04 | call GetNumberOfModesupported() -  Retrieve current Number Of TV Mode supported valid arguments | void | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetNumberOfModesupported (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5035,12 +5019,12 @@ void test_l1_tvSettings_negative_GetNumberOfModesupported (void)
 * | 03 | call GetCurrentPQIndex() -  Retrieve the current PQIndex with valid arguments and validate with above value | void | int | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetCurrentPQIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo: no return value*/
 /**
 * @brief Validate GetCurrentPQIndex() for all negative invocation scenarios
 *
@@ -5060,7 +5044,6 @@ void test_l1_tvSettings_positive_GetCurrentPQIndex (void)
 * | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 04 | call GetCurrentPQIndex() -  Retrieve current PQIndex valid arguments | void | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetCurrentPQIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5085,12 +5068,12 @@ void test_l1_tvSettings_negative_GetCurrentPQIndex (void)
 * | 03 | call GetAllSupportedPicModeIndex() -  Retrieve the Supported PicModeIndex with valid arguments and validate with above value | int [] | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetAllSupportedPicModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo: no return value*/
 /**
 * @brief Validate GetAllSupportedPicModeIndex() for all negative invocation scenarios
 *
@@ -5111,7 +5094,6 @@ void test_l1_tvSettings_positive_GetAllSupportedPicModeIndex (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetAllSupportedPicModeIndex() -  Retrieve Supported PicModeIndex valid arguments | int [] | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetAllSupportedPicModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5138,12 +5120,12 @@ void test_l1_tvSettings_negative_GetAllSupportedPicModeIndex (void)
 * | 05 | call GetCMSDefault() -  Retrieve the current brightness with valid arguments | COLOR_LUMA  | int | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetCMSDefault (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo: no return value*/
 /**
 * @brief Validate GetCMSDefault() for all negative invocation scenarios
 *
@@ -5164,7 +5146,6 @@ void test_l1_tvSettings_positive_GetCMSDefault (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetCMSDefault() -  Retrieve current TV brightness valid arguments | COLOR_HUE | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetCMSDefault (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5189,12 +5170,12 @@ void test_l1_tvSettings_negative_GetCMSDefault (void)
 * | 03 | call GetDolbyModeIndex() -  Retrieve the current Dolby ModeIndex with valid arguments and validate with above value | const char * | int | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetDolbyModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo: no return value*/
 /**
 * @brief Validate GetDolbyModeIndex() for all negative invocation scenarios
 *
@@ -5215,7 +5196,6 @@ void test_l1_tvSettings_positive_GetDolbyModeIndex (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetDolbyModeIndex() -  Retrieve current TV Dolby ModeIndex valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetDolbyModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5243,7 +5223,6 @@ void test_l1_tvSettings_negative_GetDolbyModeIndex (void)
 * | 06 | call SetGrayPattern() -  Reset the CMSState with another valid value | COLOR_LUMA, COLOR_BLUE, COMPONENT_RESET | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetCMSState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5251,6 +5230,8 @@ void test_l1_tvSettings_positive_SetCMSState (void)
 
 /**
 * @brief Validate SetCMSState() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 194@n
@@ -5269,7 +5250,6 @@ void test_l1_tvSettings_positive_SetCMSState (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetCMSState() -  Set the TV CMS State with valid input after tvTerm() | COLOR_HUE, COLOR_RED, COMPONENT_ENABLE | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetCMSState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5297,7 +5277,6 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 * | 06 | call SetColorTemperatureUser() -  Set the  Color Temperature User value with valid value | B_GAIN , 65 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetColorTemperatureUser (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5305,6 +5284,8 @@ void test_l1_tvSettings_positive_SetColorTemperatureUser (void)
 
 /**
 * @brief Validate SetColorTemperatureUser() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 196@n
@@ -5324,7 +5305,6 @@ void test_l1_tvSettings_positive_SetColorTemperatureUser (void)
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetColorTemperatureUser() -  Set the TV Color Temperature User with valid input after tvTerm() | R_GAIN, 65 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetColorTemperatureUser (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5352,7 +5332,6 @@ void test_l1_tvSettings_negative_SetColorTemperatureUser (void)
 * | 06 | call SaveColorTemperatureUser() -  Save the  Color Temperature User value with valid value | G_GAIN, 65 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5360,6 +5339,8 @@ void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
 
 /**
 * @brief Validate SaveColorTemperatureUser() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 198@n
@@ -5379,7 +5360,6 @@ void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SaveColorTemperatureUser() -  Save the TV Color Temperature User with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveColorTemperatureUser (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5404,12 +5384,12 @@ void test_l1_tvSettings_negative_SaveColorTemperatureUser (void)
 * | 03 | call GetHLGModeIndex() -  Retrieve the current HLGModeIndex with valid arguments and validate with above value | const char * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetHLGModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo : no return error for this*/
 /**
 * @brief Validate GetHLGModeIndex() for all negative invocation scenarios
 *
@@ -5430,7 +5410,6 @@ void test_l1_tvSettings_positive_GetHLGModeIndex (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetHLGModeIndex() -  Retrieve current TV HLGModeIndex valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetHLGModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5455,12 +5434,12 @@ void test_l1_tvSettings_negative_GetHLGModeIndex (void)
 * | 03 | call GetHDR10ModeIndex() -  Retrieve the current HDR10 ModeIndex with valid arguments and validate with above value | const char * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetHDR10ModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
+/*todo : no return error for this*/
 /**
 * @brief Validate GetHDR10ModeIndex() for all negative invocation scenarios
 *
@@ -5481,7 +5460,6 @@ void test_l1_tvSettings_positive_GetHDR10ModeIndex (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetHDR10ModeIndex() -  Retrieve current TV HDR10 ModeIndex valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetHDR10ModeIndex (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5507,7 +5485,6 @@ void test_l1_tvSettings_negative_GetHDR10ModeIndex (void)
 * | 04 | call SetBacklightFade() -  Reset the Backlight Fade with another valid value | 10, 90, 500 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetBacklightFade (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5515,6 +5492,8 @@ void test_l1_tvSettings_positive_SetBacklightFade (void)
 
 /**
 * @brief Validate SetBacklightFade() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 204@n
@@ -5535,7 +5514,6 @@ void test_l1_tvSettings_positive_SetBacklightFade (void)
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetBacklightFade() -  Set the TV  Backlight Fade value with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetBacklightFade (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5560,7 +5538,6 @@ void test_l1_tvSettings_negative_SetBacklightFade (void)
 * | 02 | call SetGammaMode() -  Reset the Gamma Mode with another valid value | 01 | tvERROR_NONE | Should Pass |
 * | 03 | call SetGammaMode() -  Reset the Gamma Mode with another valid value | 00 | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetGammaMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5569,6 +5546,8 @@ void test_l1_tvSettings_positive_SetGammaMode (void)
 /**
 * @brief Validate SetGammaMode() for all negative invocation scenarios
 * This test ensures that the TV Settings module is to set Gamma Mode value
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 206@n
@@ -5584,7 +5563,6 @@ void test_l1_tvSettings_positive_SetGammaMode (void)
 * | 01 | call SetGammaMode() -   Set the TV GammaMode with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 02 | call SetGammaMode() -   Set the TV GammaMode with invalid input | 256 | tvERROR_INVALID_PARAM | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetGammaMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5610,7 +5588,6 @@ void test_l1_tvSettings_negative_SetGammaMode (void)
 * | 04 | call SetLocalDimmingLevel() -  Reset the Local DimmingLevel with another valid value | 0 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5618,6 +5595,8 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 
 /**
 * @brief Validate SetLocalDimmingLevel() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 208@n
@@ -5637,7 +5616,6 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetLocalDimmingLevel() -  Set the TV Local DimmingLevel with valid input after tvTerm() | 1 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5662,7 +5640,6 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 * | 03 | call GetLocalDimmingLevel() -  Retrieve the Local DimmingLevel with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5688,7 +5665,6 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetLocalDimmingLevel() -  Retrieve current TV Local DimmingLevel valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetLocalDimmingLevel (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5716,7 +5692,6 @@ void test_l1_tvSettings_negative_GetLocalDimmingLevel (void)
 * | 06 | call SaveLocalDimmingLevel() -  Save the Local DimmingLevel with valid arguments | HDMI, 4, HDR_TYPE_HLG, 1 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5724,6 +5699,8 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 
 /**
 * @brief Validate SaveLocalDimmingLevel() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 212@n
@@ -5745,7 +5722,6 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveLocalDimmingLevel() -  save current Local DimmingLevel valid arguments | HDMI, 3, HDR_TYPE_DOVI, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5773,7 +5749,6 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 * | 06 | call SaveLowLatencyState() -  Save the Low LatencyState with valid arguments | HDMI, 4, HDR_TYPE_HLG, 0 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5781,6 +5756,8 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 
 /**
 * @brief Validate SaveLowLatencyState() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 214@n
@@ -5802,7 +5779,6 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SaveLowLatencyState() -  save current TV Contrast valid arguments | HDMI, 3, HDR_TYPE_DOVI, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5828,7 +5804,6 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 * | 04 | call SetLowLatencyState() -  Reset the LowLatency State with another valid value | 0 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_SetLowLatencyState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5836,6 +5811,8 @@ void test_l1_tvSettings_positive_SetLowLatencyState (void)
 
 /**
 * @brief Validate SetLowLatencyState() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 216@n
@@ -5856,7 +5833,6 @@ void test_l1_tvSettings_positive_SetLowLatencyState (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetLowLatencyState() -  Set the TV LowLatency State with valid input after tvTerm() | 1 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetLowLatencyState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5881,7 +5857,6 @@ void test_l1_tvSettings_negative_SetLowLatencyState (void)
 * | 03 | call GetLowLatencyState() -  Retrieve the current LowLatency State with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-
 void test_l1_tvSettings_positive_GetLowLatencyState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5889,6 +5864,8 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 
 /**
 * @brief Validate GetLowLatencyState() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 218@n
@@ -5907,7 +5884,6 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetLowLatencyState() -  Retrieve current TV LowLatency State valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_GetLowLatencyState (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5940,6 +5916,8 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 /**
 * @brief Validate SetGammaTable() for all negative invocation scenarios
 *
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 220@n
 * 
@@ -5959,7 +5937,6 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetGammaTable() -  Set the TV LowLatency State with valid input after tvTerm() | unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_STATE | Should Pass |
 */
-
 void test_l1_tvSettings_negative_SetGammaTable (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
@@ -5991,6 +5968,8 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 
 /**
 * @brief Validate GetGammaTable() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 222@n
@@ -6042,6 +6021,8 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 /**
 * @brief Validate SaveGammaTable() for all negative invocation scenarios
 *
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 224@n
 * 
@@ -6092,6 +6073,8 @@ void test_l1_tvSettings_positive_SetGammaPattern (void)
 
 /**
 * @brief Validate SetGammaPattern() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 226@n
