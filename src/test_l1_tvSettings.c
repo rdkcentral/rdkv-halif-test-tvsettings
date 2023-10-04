@@ -341,7 +341,7 @@ void test_l1_tvSettings_positive_SetBacklight (void)
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call SetBacklight() - Set the TV backlight even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetBacklight() -   Set the TV backlight with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetBacklight() -   Set the TV backlight with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetBacklight() -   Set the TV backlight with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetBacklight() -   Set the TV backlight with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -396,7 +396,7 @@ void test_l1_tvSettings_positive_SetBrightness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetBrightness() - Set the TV brightness even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetBrightness() -   Set the TV brightness with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetBrightness() -   Set the TV brightness with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetBrightness() -   Set the TV brightness with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetBrightness() -   Set the TV brightness with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -499,7 +499,7 @@ void test_l1_tvSettings_positive_SetContrast (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetContrast() - Set the TV contrast even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetContrast() -   Set the TV contrast with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetContrast() -   Set the TV contrast with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetContrast() -   Set the TV contrast with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetContrast() -   Set the TV contrast with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -602,7 +602,7 @@ void test_l1_tvSettings_positive_SetSharpness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetSharpness() - Set the TV sharpness even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetSharpness() -   Set the TV sharpness with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetSharpness() -   Set the TV sharpness with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetSharpness() -   Set the TV sharpness with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetSharpness() -   Set the TV sharpness with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -705,7 +705,7 @@ void test_l1_tvSettings_positive_SetSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetSaturation() - Set the TV saturation even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetSaturation() -   Set the TV saturation with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetSaturation() -   Set the TV saturation with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 03 | call SetSaturation() -   Set the TV saturation with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
 * | 03 | call SetSaturation() -   Set the TV saturation with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -808,7 +808,7 @@ void test_l1_tvSettings_positive_SetHue (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetHue() - Set the TV hue even before tvInit() | 30 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetHue() -   Set the TV hue with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetHue() -   Set the TV hue with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetHue() -   Set the TV hue with max range | 101 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetHue() -   Set the TV hue with max range | 200 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -911,7 +911,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemperature() - Set the TV ColorTemperature even before tvInit() | tvColorTemp_WARM | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with max range | tvColorTemp_MAX | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetColorTemperature() -  Set the TV ColorTemperature with valid input after tvTerm() | tvColorTemp_USER | tvERROR_INVALID_STATE | Should Pass |
@@ -1688,7 +1688,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Rgain() - Set the TV ColorTemp Rgain even before tvInit() |  tvColorTemp_COLD, 2047 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain() -   Set the TV ColorTemp Rgain with lower range |tvColorTemp_COLD, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Rgain() -   Set the TV ColorTemp Rgain with less than the lower range |tvColorTemp_COLD, -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_Rgain() -   Set the TV ColorTemp Rgain with max range |tvColorTemp_COLD, 2048 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_Rgain() -   Set the TV ColorTemp Rgain with max range | tvColorTemp_MAX, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -1803,9 +1803,9 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Ggain() - Set the TV ColorTemp Ggain  even before tvInit() |  tvColorTemp_COLD, 2047 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain() -   Set the TV ColorTemp Ggain with lower range |tvColorTemp_COLD, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Ggain() -   Set the TV ColorTemp Ggain with less than the lower range |tvColorTemp_COLD, -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_Ggain() -   Set the TV ColorTemp Ggain  with max range |tvColorTemp_COLD, 2048 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Ggain() -   Set the TV ColorTemp Ggain  with lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Ggain() -   Set the TV ColorTemp Ggain  with less than the lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_Ggain() -   Set the TV ColorTemp Ggain  with max range | tvColorTemp_MAX, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_Ggain() -  Set the TV ColorTemp Ggain  with valid input after tvTerm() | tvColorTemp_COLD, 2047 | tvERROR_INVALID_STATE | Should Pass |
@@ -1861,7 +1861,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain (void)
 * | 01 | call GetColorTemp_Ggain() -  Retrieve current TV ColorTemp Ggain even before tvInit() | tvColorTemp_STANDARD, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with invalid input | tvColorTemp_STANDARD, NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with less than the lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with max range | tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_Ggain() -  Retrieve current TV ColorTemp Ggain valid arguments | tvColorTemp_WARM, int * | tvERROR_INVALID_STATE | Should Pass ||
@@ -1919,9 +1919,9 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Bgain() - Set the TV ColorTemp Bgain even before tvInit() |  tvColorTemp_COLD, 2047 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain() -   Set the TV ColorTemp Bgain with lower range |tvColorTemp_COLD, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Bgain() -   Set the TV ColorTemp Bgain with less than the lower range |tvColorTemp_COLD, -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_Bgain() -   Set the TV ColorTemp Bgain with max range |tvColorTemp_COLD, 2048 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Bgain() -   Set the TV ColorTemp Bgain with lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Bgain() -   Set the TV ColorTemp Bgain with less than the lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_Bgain() -   Set the TV ColorTemp Bgain with max range | tvColorTemp_MAX, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_Bgain() -  Set the TV ColorTemp Bgain with valid input after tvTerm() | tvColorTemp_COLD, 2047 | tvERROR_INVALID_STATE | Should Pass |
@@ -1977,7 +1977,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain (void)
 * | 01 | call GetColorTemp_Bgain() -  Retrieve current TV ColorTemp Bgain even before tvInit() | tvColorTemp_STANDARD, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with invalid input | tvColorTemp_STANDARD, NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with less than the lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with max range | tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_Bgain() -  Retrieve current TV ColorTemp Bgain valid arguments | tvColorTemp_WARM, int * | tvERROR_INVALID_STATE | Should Pass ||
@@ -2031,9 +2031,9 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_R_post_offset() - Set the TV ColorTemp R_post_offset even before tvInit() | tvColorTemp_STANDARD, 104 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with lower range | tvColorTemp_WARM, -1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with less than the lower range | tvColorTemp_WARM, -1025 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with max range | tvColorTemp_COLD, 1025 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with lower range | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with less than the lower range | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with max range | tvColorTemp_MAX, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_R_post_offset() -  Set the TV ColorTemp R_post_offset with valid input after tvTerm() | tvColorTemp_STANDARD, 10 | tvERROR_INVALID_STATE | Should Pass |
@@ -2090,7 +2090,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset (void)
 * | 01 | call GetColorTemp_R_post_offset() -  Retrieve current TV ColorTemp R_post_offset even before tvInit() |  tvColorTemp_COLD, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with invalid input |  tvColorTemp_COLD, NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with lower range |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with less than the lower range |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with max range |  tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetColorTemp_R_post_offset() -  Retrieve current TV ColorTemp R_post_offset valid arguments |  tvColorTemp_WARM, int * | tvERROR_INVALID_STATE | Should Pass |
@@ -2144,9 +2144,9 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_G_post_offset() - Set the TV ColorTemp G_post_offset even before tvInit() | tvColorTemp_STANDARD, 104 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with lower range | tvColorTemp_WARM, -1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with less than the lower range | tvColorTemp_WARM, -1025 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with max range | tvColorTemp_COLD, 1025 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with lower range | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with less than the lower range | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with max range | tvColorTemp_MAX, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_G_post_offset() -  Set the TV ColorTemp G_post_offset with valid input after tvTerm() | tvColorTemp_STANDARD, 10 | tvERROR_INVALID_STATE | Should Pass |
@@ -2203,7 +2203,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset (void)
 * | 01 | call GetColorTemp_G_post_offset() -  Retrieve current TV ColorTemp G_post_offset even before tvInit() |  tvColorTemp_COLD, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with invalid input |  tvColorTemp_COLD, NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with lower ranget |  -1 , int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with less than the lower ranget |  -1 , int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with max range |  tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetColorTemp_G_post_offset() -  Retrieve current TV ColorTemp G_post_offset valid arguments |  tvColorTemp_WARM, int * | tvERROR_INVALID_STATE | Should Pass |
@@ -2257,9 +2257,9 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_B_post_offset() - Set the TV ColorTemp B_post_offset even before tvInit() | tvColorTemp_STANDARD, 104 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with lower range | tvColorTemp_WARM, -1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with less than the lower range | tvColorTemp_WARM, -1025 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with max range | tvColorTemp_COLD, 1025 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with lower range | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with less than the lower range | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with max range | tvColorTemp_MAX, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_B_post_offset() -  Set the TV ColorTemp B_post_offset with valid input after tvTerm() | tvColorTemp_STANDARD, 10 | tvERROR_INVALID_STATE | Should Pass |
@@ -2316,7 +2316,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset (void)
 * | 01 | call GetColorTemp_B_post_offset() -  Retrieve current TV ColorTemp B_post_offset even before tvInit() |  tvColorTemp_COLD, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with invalid arguments |  tvColorTemp_COLD, NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with lower range |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with less than the lower range |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with max range |  tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetColorTemp_B_post_offset() -  Retrieve current TV ColorTemp B_post_offset valid arguments |  tvColorTemp_WARM, int * | tvERROR_INVALID_STATE | Should Pass |
@@ -2372,11 +2372,11 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Rgain_onSource() - Set the TV ColorTemp Rgain_onSource even before tvInit() | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with max range | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with less than the lower range | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with max range | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with max range | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with max range | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_Rgain_onSource() -  Set the TV ColorTemp Rgain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2429,11 +2429,13 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_COLD, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with max range |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with less than the lower range |  -1, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with max range | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with less than the lower range | tvColorTemp_COLD, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 09 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 {
@@ -2486,10 +2488,10 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Ggain_onSource() - Set the TV ColorTemp Ggain_onSource even before tvInit() | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with max range | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with less than the lower range | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with max range| tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with max range | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_Ggain_onSource() -  Set the TV ColorTemp Ggain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
@@ -2543,9 +2545,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with max range |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with invalid input | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with max range | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2601,10 +2603,10 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Bgain_onSource() - Set the TV ColorTemp Bgain_onSource even before tvInit() | tvColorTemp_STANDARD, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with max range | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with less than the lower range | tvColorTemp_WARM, -1, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with max range | tvColorTemp_WARM, 2048, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with max range | tvColorTemp_WARM, 0, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, 0, TV_OFFSET_NEW, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_Bgain_onSource() -  Set the TV ColorTemp Bgain_onSource with valid input after tvTerm() | tvColorTemp_WARM, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
@@ -2658,9 +2660,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with max range |  tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_WARM, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with invalid input | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with max range | tvColorTemp_COLD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource valid arguments | tvColorTemp_WARM, int *, TV_OFFSET_NEW  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2720,11 +2722,12 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_R_post_offset_onSource() - Set the TV ColorTemp R_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET_NEW, 5 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_R_post_offset_onSource() -  Set the TV ColorTemp R_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with max range | tvColorTemp_COLD, 1025, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with less than the lower range | tvColorTemp_COLD, -1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with max range | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with max range | tvColorTemp_Max, 100, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 08 | call SetColorTemp_R_post_offset_onSource() -  Set the TV ColorTemp R_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 {
@@ -2777,8 +2780,8 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 * | 01 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with max range | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource with  max range | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2834,10 +2837,10 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_G_post_offset_onSource() - Set the TV ColorTemp G_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_COLD, -1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_COLD, 1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with max range | tvColorTemp_MAX, 0, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with less than the lower range | tvColorTemp_COLD, -1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with max range | tvColorTemp_COLD, 1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with max range | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_G_post_offset_onSource() -  Set the TV ColorTemp G_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2892,8 +2895,8 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 * | 01 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with max range | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource with max range | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2949,11 +2952,12 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_B_post_offset_onSource() - Set the TV ColorTemp B_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, -1024, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_MAX, -1025, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_COLD, 0, TV_OFFSET_NEW, 5 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_B_post_offset_onSource() -  Set the TV ColorTemp B_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with less than the lower range | tvColorTemp_COLD, -1025, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with max range | tvColorTemp_COLD, 1025, TV_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with max range | tvColorTemp_STANDARD, 100, MAX_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with max range | tvColorTemp_Max, 100, HDMI_OFFSET_NEW, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 08 | call SetColorTemp_B_post_offset_onSource() -  Set the TV ColorTemp B_post_offset_onSource with valid input after tvTerm() | tvColorTemp_WARM, 1024, HDMI_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 {
@@ -3006,8 +3010,8 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 * | 01 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource even before tvInit() | tvColorTemp_STANDARD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, NULL, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with invalid input | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with max range | tvColorTemp_MAX, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource with max range | tvColorTemp_STANDARD, int *, MAX_OFFSET_NEW | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource valid arguments | tvColorTemp_COLD, int *, HDMI_OFFSET_NEW | tvERROR_INVALID_STATE | Should Pass |
 */
