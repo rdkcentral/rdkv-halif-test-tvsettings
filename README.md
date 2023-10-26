@@ -1,3 +1,5 @@
-# Module Documenation
+# Unit Testing Suite
 
-As part of the requirement to develop a module, you must document it here
+The following documents should be references to provide specific information on the tests required for this module.
+
+[Documentation can be found under "docs/pages" in this repository](docs/pages)
