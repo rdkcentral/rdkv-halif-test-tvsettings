@@ -117,7 +117,6 @@ void test_l1_tvSettings_positive_tvTerm (void)
 }
 
 /**
-* @note There is no  negative error return value currently for tvTerm()
 * @brief Validate tvTerm() for all neagtive invocation scenarios
 * 
 * This test ensures that the TV Settings module is terminated using tvTerm()
@@ -161,6 +160,7 @@ void test_l1_tvSettings_negative_tvTerm (void)
 * | 02 | Call GetTVPictureMode() -  Retrieve the current TVPictureMode with valid arguments | char * | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVPictureMode() -  Retrieve the current TVPictureMode with valid arguments and validate with above value | char * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+*
 */
 void test_l1_tvSettings_positive_GetTVPictureMode (void)
 {
@@ -183,8 +183,9 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetTVPictureMode() - Retrieve current TV PictureMode even before tvInit() | char * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVPictureMode() -  Retrieve current TV PictureMode with valid input after tvTerm() | NULL | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call GetTVPictureMode() -  Retrieve current TV PictureMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetTVPictureMode() -  Retrieve current TV PictureMode with valid input after tvTerm() | char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVPictureMode (void)
 {
@@ -207,10 +208,8 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVPictureMode() -  Set the TV PictureMode with valid value | "Entertainment" | tvERROR_NONE | Should Pass |
-* | 03 | call SetTVPictureMode() -  Reset the TV PictureMode with another valid value | "Dynamic" | tvERROR_NONE | Should Pass |
-* | 04 | call SetTVPictureMode() -  Reset the TV PictureMode with another valid value | "Entertainment" | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVPictureMode() -  Set the TV PictureMode by looping through all the config input values for pictureMode | const char * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVPictureMode (void)
 {
@@ -236,7 +235,7 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 * | 01 | call SetTVPictureMode() - Set the TV PictureMode even before tvInit() | "Entertainment"  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input | "INVALID"  | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input not in config file | "INVALID"  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetTVPictureMode() -  Set the TV PictureMode with valid input after tvTerm() | "Dynamic" | tvERROR_INVALID_STATE | Should Pass |
 */
