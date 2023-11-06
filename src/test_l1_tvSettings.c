@@ -208,7 +208,7 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVPictureMode() -  Set the TV PictureMode by looping through all the config input values for pictureMode | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVPictureMode() -  Set the TV PictureMode by looping through all the values of pictureModes from the config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVPictureMode (void)
@@ -232,12 +232,12 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 * **Test Procedure:**@n
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
-* | 01 | call SetTVPictureMode() - Set the TV PictureMode even before tvInit() | "Entertainment"  | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetTVPictureMode() - Set the TV PictureMode even before tvInit() with input as picturemode from the config file | const char *  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input not in config file | "INVALID"  | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input with input as picturemode from not in the config file | const char *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call SetTVPictureMode() -  Set the TV PictureMode with valid input after tvTerm() | "Dynamic" | tvERROR_INVALID_STATE | Should Pass |
+* | 06 | call SetTVPictureMode() -  Set the TV PictureMode with valid input after tvTerm() with input as picturemode from the config file  | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetTVPictureMode (void)
 {
