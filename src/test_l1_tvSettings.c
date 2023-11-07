@@ -192,7 +192,6 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*Todo: add environement varaibale for picture mode ("Entertainment")*/
 /**
 * @brief Validate SetTVPictureMode() for all positive invocation scenarios
 *
@@ -987,7 +986,7 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |  
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVSetAspectRatio() -  Set the TV Aspect ratio by looping through all the values of aspect ratios from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetAspectRatio() -  Set the TV Aspect ratio by looping through all the values of aspect ratios from the config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetAspectRatio (void)
@@ -1013,9 +1012,10 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetAspectRatio() - Set the TV AspectRatio even before tvInit() | tvDisplayMode_16x9 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetTVAspectRatio() -  Retrieve current TV Aspect ratio with invalid input | NULL | tvERROR_INVALID_PARAM |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call SetAspectRatio() -  Set the TV AspectRatio with valid input after tvTerm() | tvDisplayMode_16x9 | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call SetAspectRatio() -  Retrieve current TV Aspect ratio with invalid input | -1 | tvERROR_INVALID_PARAM |
+* | 04 | call SetAspectRatio() -  Retrieve current TV Aspect ratio with invalid input | tvDisplayMode_MAX | tvERROR_INVALID_PARAM |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call SetAspectRatio() -  Set the TV AspectRatio with valid input after tvTerm() | tvDisplayMode_16x9 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetAspectRatio (void)
 {
@@ -1246,8 +1246,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
-
-/* @note test_l1_tvSettings_negative_GetCurrentVideoFormat() is not implemented no negative return type*/
 
 /**  
 * @brief Validate GetCurrentVideoFormat() for all negative invocation scenarios
@@ -6059,8 +6057,7 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "tvInit_L1_positive" ,test_l1_tvSettings_positive_tvInit );
 	UT_add_test( pSuite, "tvInit_L1_negative" ,test_l1_tvSettings_negative_tvInit );
 	UT_add_test( pSuite, "tvTerm_L1_positive" ,test_l1_tvSettings_positive_tvTerm );
-	//There is no  negative error return value currently for tvTerm()
-	//UT_add_test( pSuite, "tvTerm_L1_negative" ,test_l1_tvSettings_negative_tvTerm );
+	UT_add_test( pSuite, "tvTerm_L1_negative" ,test_l1_tvSettings_negative_tvTerm );
 	UT_add_test( pSuite, "GetTVPictureMode_L1_positive" ,test_l1_tvSettings_positive_GetTVPictureMode );
 	UT_add_test( pSuite, "GetTVPictureMode_L1_negative" ,test_l1_tvSettings_negative_GetTVPictureMode );
 	UT_add_test( pSuite, "SetTVPictureMode_L1_positive" ,test_l1_tvSettings_positive_SetTVPictureMode );
