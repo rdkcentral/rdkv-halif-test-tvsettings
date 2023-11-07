@@ -20,10 +20,13 @@
 #include <ut.h>
 
 extern int register_hal_l1_tests( void );
+extern int config_read(char *);
 int main(int argc, char** argv) 
 {
     /* Register tests as required, then call the UT-main to support switches and triggering */
     UT_init( argc, argv );
+
+    config_read(argv[1]);
 
     register_hal_l1_tests();
     UT_run_tests();
