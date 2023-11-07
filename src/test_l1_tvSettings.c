@@ -656,8 +656,8 @@ void test_l1_tvSettings_positive_GetSharpness (void)
 * | 01 | call GetSharpness() -  Retrieve current TV sharpness even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSharpness() -  Retrieve current TV Sharpness with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 04 | call GetSharpness() -  Retrieve current TV sharpness valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetSharpness() -  Retrieve current TV sharpness valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetSharpness (void)
 {
@@ -863,7 +863,7 @@ void test_l1_tvSettings_positive_GetHue (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetHue() -  Retrieve current TV Hue even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVHue() -  Retrieve current TV Hue with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetHue() -  Retrieve current TV Hue with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetHue() -  Retrieve current TV Hue valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -887,11 +887,8 @@ void test_l1_tvSettings_negative_GetHue (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemperature() -  Set the ColorTemperature with valid value | tvColorTemp_STANDARD  | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemperature() -  Reset the ColorTemperature with another valid value | tvColorTemp_WARM | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemperature() -  Reset the ColorTemperature with another valid value | tvColorTemp_COLD | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemperature() -  Reset the ColorTemperature with another valid value | tvColorTemp_COLD | tvERROR_NONE | Should Pass |
-* | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemperature() -  Set the TV ColorTemperature by looping through all the values of ColorTemperatures from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemperature (void)
 {
@@ -968,7 +965,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVColorTemperature() -  Retrieve current TV ColorTemperature with invalid input | NULL | tvERROR_INVALID_PARAM |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemperature() -  Retrieve current TV ColorTemperature valid arguments | tvColorTemp_t  * | tvERROR_INVALID_STATE | Should Pass |
+* | 05 | call GetColorTemperature() -  Retrieve current TV ColorTemperature valid arguments | tvColorTemp_t  * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetColorTemperature (void)
 {
@@ -990,14 +987,8 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |  
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetAspectRatio() -  Set the AspectRatio with valid value | tvDisplayMode_4x3  | tvERROR_NONE | Should Pass |
-* | 03 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_16x9 | tvERROR_NONE | Should Pass |
-* | 04 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_FULL | tvERROR_NONE | Should Pass |
-* | 05 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_NORMAL | tvERROR_NONE | Should Pass |
-* | 06 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_AUTO | tvERROR_NONE | Should Pass |
-* | 07 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_DIRECT | tvERROR_NONE | Should Pass |
-* | 08 | call SetAspectRatio() -  Reset the AspectRatio with another valid value | tvDisplayMode_ZOOM | tvERROR_NONE | Should Pass |
-* | 09 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVSetAspectRatio() -  Set the TV Aspect ratio by looping through all the values of aspect ratios from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetAspectRatio (void)
 {
@@ -1203,8 +1194,6 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*@todo max range  and low range update in all the set apis*/
-/*verify GetSupportedBacklightModes then SetCurrentBacklightMode validate  */
 /**
 * @brief Validate SetCurrentBacklightMode() for all negative invocation scenarios
 *
