@@ -1214,8 +1214,10 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range | tvBacklightMode_INVALID | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with less than the lower range  | -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call SetCurrentBacklightMode() -  Set the TV CurrentBacklightMode with valid input after tvTerm() | tvBacklightMode_MANUAL | tvERROR_INVALID_STATE | Should Pass |
+* | 05 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid parameter  | (tvBacklightMode_MANUAL| tvBacklightMode_AMBIENT) | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range  | (tvBacklightMode_INVALID |tvBacklightMode_AMBIENT) | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 08 | call SetCurrentBacklightMode() -  Set the TV CurrentBacklightMode with valid input after tvTerm() | tvBacklightMode_MANUAL | tvERROR_INVALID_STATE | Should Pass |
 */
 
 void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
