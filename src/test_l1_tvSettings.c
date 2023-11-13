@@ -1123,7 +1123,6 @@ void test_l1_tvSettings_negative_GetSupportedBacklightModes (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*@todo L2 should cover GetCurrentBacklightMode is in the list of GetSupportedBacklightModes()*/
 /** 
 * @brief Validate GetCurrentBacklightMode() for all positive invocation scenarios
 *
@@ -1472,12 +1471,12 @@ void test_l1_tvSettings_positive_SetRGBPattern (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetRGBPattern() - Set the TV RGBPattern even before tvInit() | 00,00,00 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of R with  max range | 256,100,100 | tvERROR_GENERAL | Should Pass |
-* | 04 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of G with  max range | 100,256,100 | tvERROR_GENERAL | Should Pass |
-* | 05 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of B with  max range | 100,100,256 | tvERROR_GENERAL | Should Pass |
-* | 06 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of R with less than lower range | -1,100,100 | tvERROR_GENERAL | Should Pass |
-* | 07 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of G with less than lower range | 100,-1,100 | tvERROR_GENERAL | Should Pass |
-* | 08 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of B with less than lower range | 100,100,-1 | tvERROR_GENERAL | Should Pass |
+* | 03 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of R with  max range | 256,100,100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of G with  max range | 100,256,100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of B with  max range | 100,100,256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of R with less than lower range | -1,100,100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of G with less than lower range | 100,-1,100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetRGBPattern() - Set the TV RGBPattern with invalid value of B with less than lower range | 100,100,-1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call SetRGBPattern() -  Set the TV RGBPattern with valid input after tvTerm() | 255,255,255 | tvERROR_INVALID_STATE | Should Pass |
 */
