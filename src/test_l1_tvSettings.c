@@ -157,10 +157,8 @@ void test_l1_tvSettings_negative_tvTerm (void)
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | Call GetTVPictureMode() -  Retrieve the current TVPictureMode with valid arguments | char * | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVPictureMode() -  Retrieve the current TVPictureMode with valid arguments and validate with above value | char * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVPictureMode() -  Retrieve the current TVPictureMode and validate TVPictureMode by looping through the config file values | char *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVPictureMode() -  Retrieve the current TVPictureMode and validate TVPictureMode by looping through the test specific config file values | char *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 *
 */
 void test_l1_tvSettings_positive_GetTVPictureMode (void)
@@ -208,7 +206,7 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVPictureMode() -  Set the TV PictureMode by looping through all the values of pictureModes from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVPictureMode() -  Set the TV PictureMode by looping through all the values of pictureModes from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVPictureMode (void)
@@ -232,12 +230,12 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 * **Test Procedure:**@n
 * |Variation / Step|Description|Test Data|Expected Result|Notes|
 * |:--:|---------|----------|--------------|-----|
-* | 01 | call SetTVPictureMode() - Set the TV PictureMode even before tvInit() with input as picturemode from the config file | const char *  | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call SetTVPictureMode() - Set the TV PictureMode even before tvInit() with input as picturemode from the test specific config file | const char *  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input with input as picturemode from not in the config file | const char *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetTVPictureMode() -   Set the TV PictureMode with invalid input with input as picturemode from not in the test specific config file | const char *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call SetTVPictureMode() -  Set the TV PictureMode with valid input after tvTerm() with input as picturemode from the config file  | const char * | tvERROR_INVALID_STATE | Should Pass |
+* | 06 | call SetTVPictureMode() -  Set the TV PictureMode with valid input after tvTerm() with input as picturemode from the test specific config file  | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetTVPictureMode (void)
 {
@@ -887,7 +885,7 @@ void test_l1_tvSettings_negative_GetHue (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemperature() -  Set the TV ColorTemperature by looping through all the values of ColorTemperatures from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemperature() -  Set the TV ColorTemperature by looping through all the values of ColorTemperatures from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemperature (void)
@@ -915,7 +913,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemperature() -   Set the TV ColorTemperature with less than the lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemperature() -   Set the TV ColorTemperature with max range | tvColorTemp_MAX | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemperature() -   Set the TV ColorTemperature with valid value but not supported by the platform by looping through the config file | tvColorTemp_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemperature() -   Set the TV ColorTemperature with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call SetColorTemperature() -  Set the TV ColorTemperature with valid input after tvTerm() | tvColorTemp_t | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -939,10 +937,9 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemperature() -  Retrieve the current ColorTemperature with valid arguments | tvColorTemp_t  * | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemperature() -  Retrieve the current ColorTemperature with valid arguments and validate with above value | tvColorTemp_t  * | tvERROR_NONE | Should Pass |
-* | 04 | call GetColorTemperature() -  Retrieve the current ColorTemperature and validate ColorTemperature by looping through the config file values | tvColorTemp_t *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+
+* | 02 | call GetColorTemperature() -  Retrieve the current ColorTemperature and validate ColorTemperature by looping through the test specific config file values | tvColorTemp_t *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemperature (void)
 {
@@ -989,7 +986,7 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |  
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetAspectRatio() -  Set the TV Aspect ratio by looping through all the values of aspect ratios from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetAspectRatio() -  Set the TV Aspect ratio by looping through all the values of aspect ratios from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetAspectRatio (void)
@@ -1017,7 +1014,7 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetAspectRatio() -  Set the TV Aspect ratio with invalid input | -1 | tvERROR_INVALID_PARAM |
 * | 04 | call SetAspectRatio() -  Set the TV Aspect ratio with invalid input | tvDisplayMode_MAX | tvERROR_INVALID_PARAM |
-* | 07 | call SetAspectRatio() -   Set the TV Aspect ratio with valid value but not supported by the platform by looping through the config file | tvDisplayMode_16x9 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetAspectRatio() -   Set the TV Aspect ratio with valid value but not supported by the platform by looping through the test specific config file | tvDisplayMode_t  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call SetAspectRatio() -  Set the TV AspectRatio with valid input after tvTerm() | tvDisplayMode_16x9 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1041,10 +1038,9 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetAspectRatio() -  Retrieve the current AspectRatio with valid arguments | tvDisplayMode_t * | tvERROR_NONE | Should Pass |
-* | 03 | call GetAspectRatio() -  Retrieve the current AspectRatio with valid arguments and validate with above value | tvDisplayMode_t * | tvERROR_NONE | Should Pass |
-* | 04 | call GetAspectRatio() -  Retrieve the current AspectRatio and validate AspectRatio by looping through the config file values | tvDisplayMode_t *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+
+* | 02 | call GetAspectRatio() -  Retrieve the current AspectRatio and validate AspectRatio by looping through the test specific config file values | tvDisplayMode_t *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetAspectRatio (void)
 {
@@ -1091,10 +1087,9 @@ void test_l1_tvSettings_negative_GetAspectRatio (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes with valid arguments | int * | tvERROR_NONE | Should Pass |
-* | 03 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
-* | 04 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes and validate SupportedBacklightModes by looping through the config file values | int *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+
+* | 02 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes and validate SupportedBacklightModes by looping through the test specific config file values | int *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 {
@@ -1118,7 +1113,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 * | 01 | call GetSupportedBacklightModes() -  Retrieve current TV SupportedBacklightModes even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetSupportedBacklightModes() -  Retrieve supported Backlight modes with invalid input | NULL | tvERROR_INVALID_PARAM |
-* | 04 | call GetSupportedBacklightModes() -  Retrieve supported Backlight modes modes with valid inputs and validate backlightmodes by looping through the config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetSupportedBacklightModes() -  Retrieve supported Backlight modes modes with valid inputs and validate backlightmodes by looping through the test specific config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetSupportedBacklightModes() -  Retrieve current TV SupportedBacklightModes valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1142,10 +1137,8 @@ void test_l1_tvSettings_negative_GetSupportedBacklightModes (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode with valid arguments | tvBacklightMode_t  * | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode with valid arguments and validate with above value | tvBacklightMode_t  * | tvERROR_NONE | Should Pass |
-* | 04 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode and validate CurrentBacklightMode by looping through the config file values | tvBacklightMode_t *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode and validate CurrentBacklightMode by looping through the test specific config file values | tvBacklightMode_t *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 {
@@ -1192,7 +1185,7 @@ void test_l1_tvSettings_negative_GetCurrentBacklightMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetCurrentBacklightMode() -  Set the TV Current Baklight mode by looping through all the values of backlight modes from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetCurrentBacklightMode() -  Set the TV Current Baklight mode by looping through all the values of backlight modes from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 
@@ -1222,7 +1215,7 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 * | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range | tvBacklightMode_INVALID | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with less than the lower range  | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid parameter of all possible combinations  | (tvBacklightMode_MANUAL| tvBacklightMode_AMBIENT) | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with valid value but not supported by the platform by looping through the config file  | tvBacklightMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with valid value but not supported by the platform by looping through the test specific config file  | tvBacklightMode_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetCurrentBacklightMode() -  Set the TV CurrentBacklightMode with valid input after tvTerm() | tvBacklightMode_MANUAL | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1247,10 +1240,8 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat with valid arguments | tvVideoHDRFormat_t * | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat with valid arguments and validate with above value | tvVideoHDRFormat_t * | tvERROR_NONE | Should Pass |
-* | 04 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat and validate CurrentVideoFormat by looping through the config file values | tvVideoHDRFormat_t *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat and validate CurrentVideoFormat by looping through the test specific config file values | tvVideoHDRFormat_t *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 {
@@ -1297,10 +1288,8 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetVideoResolution() -  Retrieve the current VideoResolution with valid arguments | tvResolutionParam_t * | tvERROR_NONE | Should Pass |
-* | 03 | call GetVideoResolution() -  Retrieve the current VideoResolution with valid arguments and validate with above value | tvResolutionParam_t * | tvERROR_NONE | Should Pass |
-* | 04 | call GetVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution by looping through the config file values | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution by looping through the test specific config file values | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetVideoResolution (void)
 {
@@ -1346,10 +1335,8 @@ void test_l1_tvSettings_negative_GetVideoResolution (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetVideoFrameRate() -  Retrieve the current VideoFrameRate with valid arguments | tvVideoFrameRate_t * | tvERROR_NONE | Should Pass |
-* | 03 | call GetVideoFrameRate() -  Retrieve the current VideoFrameRate with valid arguments and validate with above value | tvVideoFrameRate_t * | tvERROR_NONE | Should Pass |
-* | 04 | call GetVideoFrameRate() -  Retrieve the current VideoFrameRate and validate VideoFrameRate by looping through the config file values | tvVideoFrameRate_t *  | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetVideoFrameRate() -  Retrieve the current VideoFrameRate and validate VideoFrameRate by looping through the test specific config file values | tvVideoFrameRate_t *  | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetVideoFrameRate (void)
 {
@@ -1396,8 +1383,8 @@ void test_l1_tvSettings_negative_GetVideoFrameRate (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call setWakeupConfig() -  Enable the WakeupConfig with by looping through all the values of wakeup modes from the config file | const tvWakeupSrcType_t , true | tvERROR_NONE | Should Pass |
-* | 03 | call setWakeupConfig() -  Disable the WakeupConfig with by looping through all the values of wakeup modes from the config file | const tvWakeupSrcType_t , false | tvERROR_NONE | Should Pass |
+* | 02 | call setWakeupConfig() -  Enable the WakeupConfig with by looping through all the values of wakeup modes from the test specific config file | const tvWakeupSrcType_t , true | tvERROR_NONE | Should Pass |
+* | 03 | call setWakeupConfig() -  Disable the WakeupConfig with by looping through all the values of wakeup modes from the test specific config file | const tvWakeupSrcType_t , false | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_setWakeupConfig (void)
@@ -1426,8 +1413,8 @@ void test_l1_tvSettings_positive_setWakeupConfig (void)
 * | 03 | call setWakeupConfig() -   Set the TV WakeupConfig with less than lower range | -1, true  | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call setWakeupConfig() -   Set the TV WakeupConfig with less than lower range | -1, false  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call setWakeupConfig() -   Set the TV WakeupConfig with  max range | tvWakeupSrc_MAX, true  | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call setWakeupConfig() -   Set the TV WakeupConfig with valid value but not supported by the platform by looping through the config file | tvWakeupSrcType_t, true  | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call setWakeupConfig() -   Set the TV WakeupConfig with valid value but not supported by the platform by looping through the config file | tvWakeupSrcType_t, false  | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call setWakeupConfig() -   Set the TV WakeupConfig with valid value but not supported by the platform by looping through the test specific config file | tvWakeupSrcType_t, true  | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call setWakeupConfig() -   Set the TV WakeupConfig with valid value but not supported by the platform by looping through the test specific config file | tvWakeupSrcType_t, false  | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call setWakeupConfig() -  Set the TV WakeupConfig with valid input after tvTerm() | tvWakeupSrcType_t, false  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1662,9 +1649,9 @@ void test_l1_tvSettings_negative_GetGrayPattern (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Rgain() -  Set the ColorTemp Rgain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain() -  Set the ColorTemp Rgain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 2047 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Rgain() -  Set the ColorTemp Rgain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 1000 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Rgain() -  Set the ColorTemp Rgain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Rgain() -  Set the ColorTemp Rgain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 2047 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Rgain() -  Set the ColorTemp Rgain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 1000 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_Rgain (void)
@@ -1690,11 +1677,11 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Rgain() - Set the TV ColorTemp Rgain even before tvInit() |  tvColorTemp_t, 2047 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain() -   Set the ColorTemp invalid Rgain by looping through all the values of colortemp values from the config file |tvColorTemp_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Rgain() -   Set the ColorTemp invalid Rgain by looping through all the values of colortemp values from the config file |tvColorTemp_t, 2048 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Rgain() -   Set the ColorTemp invalid Rgain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Rgain() -   Set the ColorTemp invalid Rgain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, 2048 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_Rgain() -   Set the TV ColorTemp valid Rgain with invalid colortemp less than lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_Rgain() -   Set the TV ColorTemp valid Rgain with invalid colortemp max range | tvColorTemp_MAX, 100 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Rgain() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Rgain() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_Rgain() -  Set the TV ColorTemp Rgain with valid input after tvTerm() | tvColorTemp_t, 2047 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1718,7 +1705,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Rgain() -  Retrieve the current ColorTemp Rgain by looping through all the values of colortemp values from the config file |tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Rgain() -  Retrieve the current ColorTemp Rgain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Rgain (void)
@@ -1744,10 +1731,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_Rgain() -  Retrieve current TV ColorTemp Rgain even before tvInit() | tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Rgain() -   Retrieve current TV ColorTemp Rgain with invalid input by looping through all the values of colortemp values from the config file| tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Rgain() -   Retrieve current TV ColorTemp Rgain with invalid input by looping through all the values of colortemp values from the test specific config file| tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Rgain() -   Retrieve current TV ColorTemp Rgain with less than lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_Rgain() -   Retrieve current TV ColorTemp Rgain with max range | tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Rgain() -   Retrieve the Rgain for a valid value of TV ColorTemp but not supported by the platform by looping through the config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Rgain() -   Retrieve the Rgain for a valid value of TV ColorTemp but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call GetColorTemp_Rgain() -  Retrieve current TV ColorTemp Rgain valid arguments | tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass ||
 */
@@ -1771,9 +1758,9 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Ggain() -  Set the ColorTemp Ggain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain() -  Set the ColorTemp Ggain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 2047 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Ggain() -  Set the ColorTemp Ggain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 1000 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Ggain() -  Set the ColorTemp Ggain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Ggain() -  Set the ColorTemp Ggain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 2047 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Ggain() -  Set the ColorTemp Ggain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 1000 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_Ggain (void)
@@ -1799,11 +1786,11 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Ggain() - Set the TV ColorTemp Ggain even before tvInit() |  tvColorTemp_t, 2047 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain() -   Set the ColorTemp invalid Ggain by looping through all the values of colortemp values from the config file |tvColorTemp_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Ggain() -   Set the ColorTemp invalid Ggain by looping through all the values of colortemp values from the config file |tvColorTemp_t, 2048 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Ggain() -   Set the ColorTemp invalid Ggain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Ggain() -   Set the ColorTemp invalid Ggain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, 2048 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_Ggain() -   Set the TV ColorTemp valid Ggain with invalid colortemp less than lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_Ggain() -   Set the TV ColorTemp valid Ggain with invalid colortemp max range | tvColorTemp_MAX, 100 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Ggain() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Ggain() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_Ggain() -  Set the TV ColorTemp Ggain with valid input after tvTerm() | tvColorTemp_t, 2047 | tvERROR_INVALID_STATE | Should Pass | |
 */
@@ -1827,7 +1814,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Ggain() -  Retrieve the current ColorTemp Ggain by looping through all the values of colortemp values from the config file |tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Ggain() -  Retrieve the current ColorTemp Ggain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Ggain (void)
@@ -1853,10 +1840,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_Ggain() -  Retrieve current TV ColorTemp Ggain even before tvInit() | tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with invalid input by looping through all the values of colortemp values from the config file| tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with invalid input by looping through all the values of colortemp values from the test specific config file| tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with less than lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_Ggain() -   Retrieve current TV ColorTemp Ggain with max range | tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Ggain() -   Retrieve the Ggain for a valid value of TV ColorTemp but not supported by the platform by looping through the config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Ggain() -   Retrieve the Ggain for a valid value of TV ColorTemp but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call GetColorTemp_Ggain() -  Retrieve current TV ColorTemp Ggain valid arguments | tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass ||
 */
@@ -1880,9 +1867,9 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Bgain() -  Set the ColorTemp Bgain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain() -  Set the ColorTemp Bgain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 2047 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Bgain() -  Set the ColorTemp Bgain by looping through all the values of colortemp values from the config file | tvColorTemp_t , 1000 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Bgain() -  Set the ColorTemp Bgain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Bgain() -  Set the ColorTemp Bgain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 2047 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Bgain() -  Set the ColorTemp Bgain by looping through all the values of colortemp values from the test specific config file | tvColorTemp_t , 1000 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_Bgain (void)
@@ -1908,11 +1895,11 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_Bgain() - Set the TV ColorTemp Bgain even before tvInit() |  tvColorTemp_t, 2047 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain() -   Set the ColorTemp invalid Bgain by looping through all the values of colortemp values from the config file |tvColorTemp_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_Bgain() -   Set the ColorTemp invalid Bgain by looping through all the values of colortemp values from the config file |tvColorTemp_t, 2048 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_Bgain() -   Set the ColorTemp invalid Bgain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_Bgain() -   Set the ColorTemp invalid Bgain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, 2048 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_Bgain() -   Set the TV ColorTemp valid Bgain with invalid colortemp less than lower range | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_Bgain() -   Set the TV ColorTemp valid Bgain with invalid colortemp max range | tvColorTemp_MAX, 100 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Bgain() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Bgain() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_Bgain() -  Set the TV ColorTemp Bgain with valid input after tvTerm() | tvColorTemp_t, 2047 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1936,7 +1923,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Bgain() -  Retrieve the current ColorTemp Bgain by looping through all the values of colortemp values from the config file |tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Bgain() -  Retrieve the current ColorTemp Bgain by looping through all the values of colortemp values from the test specific config file |tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Bgain (void)
@@ -1962,10 +1949,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_Bgain() -  Retrieve current TV ColorTemp Bgain even before tvInit() | tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with invalid input by looping through all the values of colortemp values from the config file| tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with invalid input by looping through all the values of colortemp values from the test specific config file| tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with less than lower range | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetColorTemp_Bgain() -   Retrieve current TV ColorTemp Bgain with max range | tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Bgain() -   Retrieve the Bgain for a valid value of TV ColorTemp but not supported by the platform by looping through the config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Bgain() -   Retrieve the Bgain for a valid value of TV ColorTemp but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call GetColorTemp_Bgain() -  Retrieve current TV ColorTemp Bgain valid arguments | tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass ||
 */
@@ -1989,10 +1976,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_R_post_offset() -  Set the ColorTemp R_post_offset with valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, -1024 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset() -  Reset the ColorTemp R_post_offset with another valid value by looping through all the values of colortemp modes from the config file | tvColorTemp_t, 1024 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_R_post_offset() -  Reset the ColorTemp R_post_offset with another valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset() -  Reset the ColorTemp R_post_offset with another valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, 500 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_R_post_offset() -  Set the ColorTemp R_post_offset with valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, -1024 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset() -  Reset the ColorTemp R_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file | tvColorTemp_t, 1024 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_R_post_offset() -  Reset the ColorTemp R_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset() -  Reset the ColorTemp R_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, 500 | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_R_post_offset (void)
@@ -2018,11 +2005,11 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_R_post_offset() - Set the TV ColorTemp R_post_offset even before tvInit() | tvColorTemp_t, 104 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with less than the lower range by looping through all the values of colortemp modes from the config file| tvColorTemp_t, -1025 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with max range by looping through all the values of colortemp modes from the config file | tvColorTemp_t, 1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with less than the lower range by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, -1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with max range by looping through all the values of colortemp modes from the test specific config file | tvColorTemp_t, 1025 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with less than the lower range value of colortemp | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp R_post_offset with max range value of colortemp| tvColorTemp_MAX, 500 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_R_post_offset() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_R_post_offset() -  Set the TV ColorTemp R_post_offset with valid input after tvTerm() | tvColorTemp_t, 10 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2046,7 +2033,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments by looping through all the values of colortemp modes from the config file| tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_R_post_offset() -  Retrieve the current ColorTemp R_post_offset with valid arguments by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_R_post_offset (void)
@@ -2070,10 +2057,10 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_R_post_offset() -  Retrieve current TV ColorTemp R_post_offset even before tvInit() |  tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with invalid input by looping through all the values of colortemp modes from the config file |  tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with invalid input by looping through all the values of colortemp modes from the test specific config file |  tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with less than the lower range of colortemp |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_R_post_offset() -   Retrieve current TV ColorTemp R_post_offset with max range of colortemp|  tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_R_post_offset() -   Retrieve the R_post_offset for a valid value of TV ColorTemp but not supported by the platform by looping through the config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_R_post_offset() -   Retrieve the R_post_offset for a valid value of TV ColorTemp but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_R_post_offset() -  Retrieve current TV ColorTemp R_post_offset valid arguments |  tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2097,10 +2084,10 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_G_post_offset() -  Set the ColorTemp G_post_offset with valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, -1024 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset() -  Reset the ColorTemp G_post_offset with another valid value by looping through all the values of colortemp modes from the config file |  tvColorTemp_t, 1024 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_G_post_offset() -  Reset the ColorTemp G_post_offset with another valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset() -  Reset the ColorTemp G_post_offset with another valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, 500 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_G_post_offset() -  Set the ColorTemp G_post_offset with valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, -1024 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset() -  Reset the ColorTemp G_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file |  tvColorTemp_t, 1024 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_G_post_offset() -  Reset the ColorTemp G_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset() -  Reset the ColorTemp G_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, 500 | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_G_post_offset (void)
@@ -2126,11 +2113,11 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_G_post_offset() - Set the TV ColorTemp G_post_offset even before tvInit() | tvColorTemp_t, 104 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with less than the lower range by looping through all the values of colortemp modes from the config file| tvColorTemp_t, -1025 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with max range by looping through all the values of colortemp modes from the config file | tvColorTemp_t, 1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with less than the lower range by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, -1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with max range by looping through all the values of colortemp modes from the test specific config file | tvColorTemp_t, 1025 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with less than the lower range value of colortemp | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp G_post_offset with max range value of colortemp| tvColorTemp_MAX, 500 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_G_post_offset() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_G_post_offset() -  Set the TV ColorTemp G_post_offset with valid input after tvTerm() | tvColorTemp_t, 10 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2154,7 +2141,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 *  | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments by looping through all the values of colortemp modes from the config file| tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_G_post_offset() -  Retrieve the current ColorTemp G_post_offset with valid arguments by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_G_post_offset (void)
@@ -2178,10 +2165,10 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_G_post_offset() -  Retrieve current TV ColorTemp G_post_offset even before tvInit() |  tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with invalid input by looping through all the values of colortemp modes from the config file |  tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with invalid input by looping through all the values of colortemp modes from the test specific config file |  tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with less than the lower range of colortemp |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_G_post_offset() -   Retrieve current TV ColorTemp G_post_offset with max range of colortemp|  tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_G_post_offset() -   Retrieve the G_post_offset for a valid value of TV ColorTemp but not supported by the platform by looping through the config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_G_post_offset() -   Retrieve the G_post_offset for a valid value of TV ColorTemp but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_G_post_offset() -  Retrieve current TV ColorTemp G_post_offset valid arguments |  tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2205,10 +2192,10 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_B_post_offset() -  Set the ColorTemp B_post_offset with valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, -1024 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset() -  Reset the ColorTemp B_post_offset with another valid value by looping through all the values of colortemp modes from the config file |  tvColorTemp_t, 1024 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_B_post_offset() -  Reset the ColorTemp B_post_offset with another valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset() -  Reset the ColorTemp B_post_offset with another valid value by looping through all the values of colortemp modes from the config file| tvColorTemp_t, 500 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_B_post_offset() -  Set the ColorTemp B_post_offset with valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, -1024 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset() -  Reset the ColorTemp B_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file |  tvColorTemp_t, 1024 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_B_post_offset() -  Reset the ColorTemp B_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset() -  Reset the ColorTemp B_post_offset with another valid value by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, 500 | tvERROR_NONE | Should Pass |
 * | 06 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_B_post_offset (void)
@@ -2234,11 +2221,11 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetColorTemp_B_post_offset() - Set the TV ColorTemp B_post_offset even before tvInit() | tvColorTemp_t, 104 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with less than the lower range by looping through all the values of colortemp modes from the config file| tvColorTemp_t, -1025 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with max range by looping through all the values of colortemp modes from the config file | tvColorTemp_t, 1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with less than the lower range by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, -1025 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with max range by looping through all the values of colortemp modes from the test specific config file | tvColorTemp_t, 1025 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with less than the lower range value of colortemp | -1, 500 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp B_post_offset with max range value of colortemp| tvColorTemp_MAX, 500 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_B_post_offset() -   Set the TV ColorTemp with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemp_B_post_offset() -  Set the TV ColorTemp B_post_offset with valid input after tvTerm() | tvColorTemp_t, 10 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2262,7 +2249,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments by looping through all the values of colortemp modes from the config file| tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_B_post_offset() -  Retrieve the current ColorTemp B_post_offset with valid arguments by looping through all the values of colortemp modes from the test specific config file| tvColorTemp_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_B_post_offset (void)
@@ -2286,10 +2273,10 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetColorTemp_B_post_offset() -  Retrieve current TV ColorTemp B_post_offset even before tvInit() |  tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with invalid input by looping through all the values of colortemp modes from the config file |  tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with invalid input by looping through all the values of colortemp modes from the test specific config file |  tvColorTemp_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with less than the lower range of colortemp |  -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_B_post_offset() -   Retrieve current TV ColorTemp B_post_offset with max range of colortemp|  tvColorTemp_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_B_post_offset() -   Retrieve the B_post_offset for a valid value of TV ColorTemp but not supported by the platform by looping through the config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_B_post_offset() -   Retrieve the B_post_offset for a valid value of TV ColorTemp but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetColorTemp_B_post_offset() -  Retrieve current TV ColorTemp B_post_offset valid arguments |  tvColorTemp_t, int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2313,12 +2300,12 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 0, int , 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 2047, int , 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 1000, int , 0| tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 0, int , 1| tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 2047, int , 1| tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 1000, int , 1| tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 0, int , 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 2047, int , 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 1000, int , 0| tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 0, int , 1| tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 2047, int , 1| tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Rgain_onSource() -  Set the ColorTemp Rgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 1000, int , 1| tvERROR_NONE | Should Pass |
 * | 06 | call SetColorTemp_Rgain_onSource() -  Reset the ColorTemp Rgain_onSource with another valid value | tvColorTemp_t, 2047, TV_OFFSET_NEW, 0 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
@@ -2347,14 +2334,14 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with max range of colortemp | tvColorTemp_MAX, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with less than lower range of colortemp | -1, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid rgain with by looping through all the values of colortemp from the config file | tvColorTemp_t, -1, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid rgain with by looping through all the values of colortemp from the config file | tvColorTemp_t, 2048, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid sourceId with by looping through all the values of colortemp from the config file | tvColorTemp_t, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid sourceId with by looping through all the values of colortemp from the config file | tvColorTemp_t, 0, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, 0, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, 0, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid rgain with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, -1, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid rgain with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 2048, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid sourceId with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid sourceId with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 0, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, 0, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, 0, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp Rgain_onSource with max range | tvColorTemp_MAX, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call SetColorTemp_Rgain_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 13 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 14 | call SetColorTemp_Rgain_onSource() -  Set the TV ColorTemp Rgain_onSource with valid input after tvTerm() | tvColorTemp_t, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2378,7 +2365,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the config file | tvColorTemp_t, int *, int | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Rgain_onSource() -  Retrieve the current ColorTemp Rgain_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the test specific config file | tvColorTemp_t, int *, int | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
@@ -2407,10 +2394,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with max range color temp| tvColorTemp_MAX, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with less range color temp |  -1, int *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource invalide Rgain by looping through all the values of colortemp from the config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Rgain_onSource() -   Retrieve the Rgain_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource invalide Rgain by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Rgain_onSource() -   Retrieve the Rgain_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource valid arguments | tvColorTemp_t, int *, int  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2434,12 +2421,12 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 0, int , 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 2047, int , 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 1000, int , 0| tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 0, int , 1| tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 2047, int , 1| tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 1000, int , 1| tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 0, int , 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 2047, int , 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 1000, int , 0| tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 0, int , 1| tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 2047, int , 1| tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Ggain_onSource() -  Set the ColorTemp Ggain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 1000, int , 1| tvERROR_NONE | Should Pass |
 * | 06 | call SetColorTemp_Ggain_onSource() -  Reset the ColorTemp Ggain_onSource with another valid value | tvColorTemp_t, 2047, int, 0 | tvERROR_NONE | Should Pass |
 * | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
@@ -2468,14 +2455,14 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with max range of colortemp | tvColorTemp_MAX, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with less than lower range of colortemp | -1, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid rgain with by looping through all the values of colortemp from the config file | tvColorTemp_t, -1, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid rgain with by looping through all the values of colortemp from the config file | tvColorTemp_t, 2048, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid sourceId with by looping through all the values of colortemp from the config file | tvColorTemp_t, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid sourceId with by looping through all the values of colortemp from the config file | tvColorTemp_t, 0, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, 0, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, 0, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid rgain with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, -1, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid rgain with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 2048, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid sourceId with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid sourceId with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 0, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, 0, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, 0, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp Ggain_onSource with max range | tvColorTemp_MAX, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call SetColorTemp_Ggain_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 13 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 14 | call SetColorTemp_Ggain_onSource() -  Set the TV ColorTemp Ggain_onSource with valid input after tvTerm() | tvColorTemp_t, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2499,7 +2486,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the config file | tvColorTemp_t, int *, int | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Ggain_onSource() -  Retrieve the current ColorTemp Ggain_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the test specific config file | tvColorTemp_t, int *, int | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
@@ -2527,10 +2514,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with max range color temp| tvColorTemp_MAX, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource with less range color temp |  -1, int *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource invalide Rgain by looping through all the values of colortemp from the config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetColorTemp_Ggain_onSource() -   Retrieve the Ggain_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource invalide Rgain by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_Ggain_onSource() -   Retrieve current TV ColorTemp Ggain_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetColorTemp_Ggain_onSource() -   Retrieve the Ggain_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call GetColorTemp_Ggain_onSource() -  Retrieve current TV ColorTemp Ggain_onSource valid arguments | tvColorTemp_t, int *, int  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2555,12 +2542,12 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 0, int , 0| tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 2047, int , 0| tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 1000, int , 0| tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 0, int , 1| tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 2047, int , 1| tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the config file | tvColorTemp_t, 1000, int , 1| tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 0, int , 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 2047, int , 0| tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 1000, int , 0| tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 0, int , 1| tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 2047, int , 1| tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_Bgain_onSource() -  Set the ColorTemp Bgain_onSource with valid value by looping through all the values of colurtemp and sourceId from the test specific config file | tvColorTemp_t, 1000, int , 1| tvERROR_NONE | Should Pass |
 * | 08 | call SetColorTemp_Bgain_onSource() -  Reset the ColorTemp Bgain_onSource with another valid value | tvColorTemp_t, 2047, int, 0 | tvERROR_NONE | Should Pass |
 * | 09 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
@@ -2589,14 +2576,14 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with max range of colortemp | tvColorTemp_MAX, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with max range less than lower range of colortemp | -1, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid rgain with by looping through all the values of colortemp from the config file | tvColorTemp_t, -1, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid rgain with by looping through all the values of colortemp from the config file | tvColorTemp_t, 2048, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid sourceId with by looping through all the values of colortemp from the config file | tvColorTemp_t, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid sourceId with by looping through all the values of colortemp from the config file | tvColorTemp_t, 0, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, 0, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, 0, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid rgain with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, -1, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid rgain with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 2048, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid sourceId with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid sourceId with by looping through all the values of colortemp from the test specific config file | tvColorTemp_t, 0, 3, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, 0, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, 0, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp Bgain_onSource with max range | tvColorTemp_MAX, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call SetColorTemp_Bgain_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 13 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 14 | call SetColorTemp_Bgain_onSource() -  Set the TV ColorTemp Bgain_onSource with valid input after tvTerm() | tvColorTemp_t, 2047, AV_OFFSET_NEW, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2620,7 +2607,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the config file | tvColorTemp_t, int *, int | tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_Bgain_onSource() -  Retrieve the current ColorTemp Bgain_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the test specific config file | tvColorTemp_t, int *, int | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
@@ -2648,10 +2635,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with max range color temp| tvColorTemp_MAX, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource with less range color temp |  -1, int *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource invalide Rgain by looping through all the values of colortemp from the config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetColorTemp_Bgain_onSource() -   Retrieve the Bgain_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource invalide Rgain by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_Bgain_onSource() -   Retrieve current TV ColorTemp Bgain_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetColorTemp_Bgain_onSource() -   Retrieve the Bgain_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call GetColorTemp_Bgain_onSource() -  Retrieve current TV ColorTemp Bgain_onSource valid arguments | tvColorTemp_t, int *, int  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2677,12 +2664,12 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, -1024, int, 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 1024, int, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 500, int, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, -1024, int, 1 | tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 1024, int, 1 | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 500, int, 1 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, -1024, int, 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 1024, int, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 500, int, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, -1024, int, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 1024, int, 1 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_R_post_offset_onSource() -  Set the ColorTemp R_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 500, int, 1 | tvERROR_NONE | Should Pass |
 * | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
@@ -2712,11 +2699,11 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with max range | tvColorTemp_Max, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource with less than the lower range | -1, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the config file | tvColorTemp_t, -1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the config file | tvColorTemp_t, 1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, int, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, int, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the test specific config file | tvColorTemp_t, -1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the test specific config file | tvColorTemp_t, 1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, int, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp R_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, int, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetColorTemp_R_post_offset_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 11 | call SetColorTemp_R_post_offset_onSource() -  Set the TV ColorTemp R_post_offset_onSource with valid input after tvTerm() | tvColorTemp_t, 1024, int, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2742,7 +2729,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the config file | tvColorTemp_t, int *, int| tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_R_post_offset_onSource() -  Retrieve the current ColorTemp R_post_offset_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the test specific config file | tvColorTemp_t, int *, int| tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
@@ -2768,10 +2755,10 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource with max range color temp| tvColorTemp_MAX, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource with less range color temp |  -1, int *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource invalide gpostoffset  by looping through all the values of colortemp and SourceId from the config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetColorTemp_R_post_offset_onSource() -   Retrieve the R_post_offset_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource invalide gpostoffset  by looping through all the values of colortemp and SourceId from the test specific config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_R_post_offset_onSource() -   Retrieve current TV ColorTemp R_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetColorTemp_R_post_offset_onSource() -   Retrieve the R_post_offset_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call GetColorTemp_R_post_offset_onSource() -  Retrieve current TV ColorTemp R_post_offset_onSource valid arguments | tvColorTemp_t, int *, int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2795,12 +2782,12 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, -1024, int, 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 1024, int, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 500, int, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, -1024, int, 1 | tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 1024, int, 1 | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 500, int, 1 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, -1024, int, 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 1024, int, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 500, int, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, -1024, int, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 1024, int, 1 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_G_post_offset_onSource() -  Set the ColorTemp G_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 500, int, 1 | tvERROR_NONE | Should Pass |
 * | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
@@ -2828,11 +2815,11 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with max range | tvColorTemp_Max, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource with less than the lower range | -1, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the config file | tvColorTemp_t, -1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the config file | tvColorTemp_t, 1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, int, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, int, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the test specific config file | tvColorTemp_t, -1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the test specific config file | tvColorTemp_t, 1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, int, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp G_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, int, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetColorTemp_G_post_offset_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 11 | call SetColorTemp_G_post_offset_onSource() -  Set the TV ColorTemp G_post_offset_onSource with valid input after tvTerm() | tvColorTemp_t, 1024, int, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2858,7 +2845,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the config file | tvColorTemp_t, int *, int| tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_G_post_offset_onSource() -  Retrieve the current ColorTemp G_post_offset_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the test specific config file | tvColorTemp_t, int *, int| tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
@@ -2884,10 +2871,10 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource with max range color temp| tvColorTemp_MAX, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource with less range color temp |  -1, int *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource invalide gpostoffset  by looping through all the values of colortemp and SourceId from the config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetColorTemp_G_post_offset_onSource() -   Retrieve the G_post_offset_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource invalide gpostoffset  by looping through all the values of colortemp and SourceId from the test specific config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_G_post_offset_onSource() -   Retrieve current TV ColorTemp G_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetColorTemp_G_post_offset_onSource() -   Retrieve the G_post_offset_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call GetColorTemp_G_post_offset_onSource() -  Retrieve current TV ColorTemp G_post_offset_onSource valid arguments | tvColorTemp_t, int *, int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2911,12 +2898,12 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, -1024, int, 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 1024, int, 0 | tvERROR_NONE | Should Pass |
-* | 04 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 500, int, 0 | tvERROR_NONE | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, -1024, int, 1 | tvERROR_NONE | Should Pass |
-* | 06 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 1024, int, 1 | tvERROR_NONE | Should Pass |
-* | 07 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the config file| tvColorTemp_t, 500, int, 1 | tvERROR_NONE | Should Pass |
+* | 02 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, -1024, int, 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 1024, int, 0 | tvERROR_NONE | Should Pass |
+* | 04 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 500, int, 0 | tvERROR_NONE | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, -1024, int, 1 | tvERROR_NONE | Should Pass |
+* | 06 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 1024, int, 1 | tvERROR_NONE | Should Pass |
+* | 07 | call SetColorTemp_B_post_offset_onSource() -  Set the ColorTemp B_post_offset_onSource with valid value by looping through all the values of colortemp and sourceId from the test specific config file| tvColorTemp_t, 500, int, 1 | tvERROR_NONE | Should Pass |
 * | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
@@ -2944,11 +2931,11 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with max range | tvColorTemp_Max, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource with less than the lower range | -1, 0, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the config file | tvColorTemp_t, -1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the config file | tvColorTemp_t, 1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, int, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the config file | tvColorTemp_t, int, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the test specific config file | tvColorTemp_t, -1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid gpostoffset with by looping through all the values of colortemp and SourceId from the test specific config file | tvColorTemp_t, 1025, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, int, int, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp B_post_offset_onSource invalid saveonly flag with by looping through all the values of colortemp and sourceId from the test specific config file | tvColorTemp_t, int, int, 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetColorTemp_B_post_offset_onSource() -   Set the TV ColorTemp and sourceId with valid value but not supported by the platform by looping through the test specific config file | tvColorTemp_t, 50, int, 0 | tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 11 | call SetColorTemp_B_post_offset_onSource() -  Set the TV ColorTemp B_post_offset_onSource with valid input after tvTerm() | tvColorTemp_t, 1024, int, 1 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -2972,7 +2959,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the config file | tvColorTemp_t, int *, int| tvERROR_NONE | Should Pass |
+* | 02 | call GetColorTemp_B_post_offset_onSource() -  Retrieve the current ColorTemp B_post_offset_onSource with valid arguments by looping through all the values of colortemp and sourceId modes from the test specific config file | tvColorTemp_t, int *, int| tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
@@ -3000,10 +2987,10 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource with max range color temp| tvColorTemp_MAX, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource with less range color temp |  -1, int *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource invalide gpostoffset  by looping through all the values of colortemp and SourceId from the config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetColorTemp_B_post_offset_onSource() -   Retrieve the B_post_offset_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource invalide gpostoffset  by looping through all the values of colortemp and SourceId from the test specific config file |  tvColorTemp_t, NULL, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetColorTemp_B_post_offset_onSource() -   Retrieve current TV ColorTemp B_post_offset_onSource invalide SourceId by looping through all the values of colortemp from the test specific config file |  tvColorTemp_t, int *, 3 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetColorTemp_B_post_offset_onSource() -   Retrieve the B_post_offset_onSource for a valid value of TV ColorTemp and SourceId but not supported by the platform by looping through the test specific config file | tvColorTemp_t, int *, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call GetColorTemp_B_post_offset_onSource() -  Retrieve current TV ColorTemp B_post_offset_onSource valid arguments | tvColorTemp_t, int *, int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3029,7 +3016,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 02 | call GetTVSupportedPictureModes() -  Retrieve the current TV Supported PictureModes with valid arguments | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSupportedPictureModes() -  Retrieve the current TV Supported PictureModes with valid arguments and validate with above value |  pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVSupportedPictureModes() -  Retrieve the current TV Supported PictureModes and validate TV Supported PictureModes by looping through the config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
+* | 04 | call GetTVSupportedPictureModes() -  Retrieve the current TV Supported PictureModes and validate TV Supported PictureModes by looping through the test specific config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
@@ -3057,7 +3044,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSupportedPictureModes() -  Retrieve supported TV PictureMode with invalid input | NULL, unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetTVSupportedPictureModes() -  Retrieve supported TV PictureMode with invalid input |  pic_modes_t *, NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetTVSupportedPictureModes() -  Retrieve supported TV PictureModes modes with valid inputs and validate PictureMode by looping through the config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetTVSupportedPictureModes() -  Retrieve supported TV PictureModes modes with valid inputs and validate PictureMode by looping through the test specific config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetTVSupportedPictureModes() -  Retrieve current TV Supported PictureModes valid arguments | pic_modes_t *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3081,10 +3068,8 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetTVSupportedDVModes() -  Retrieve the current TV Supported DVModes with valid arguments | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVSupportedDVModes() -  Retrieve the current TV Supported DVModes with valid arguments and validate with above value |  pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVSupportedDVModes() -  Retrieve the current TV Supported DVModes and validate TV Supported DVModes by looping through the config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVSupportedDVModes() -  Retrieve the current TV Supported DVModes and validate TV Supported DVModes by looping through the test specific config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedDVModes (void)
 {
@@ -3111,7 +3096,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDVModes (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSupportedDVModes() -  Retrieve supported TV DV modes with invalid input | NULL, unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetTVSupportedDVModes() -  Retrieve supported TV DV modes with invalid input | pic_modes_t *,  NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetTVSupportedDVModes() -  Retrieve supported TV DV modes with valid inputs and validate DVmodes by looping through the config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetTVSupportedDVModes() -  Retrieve supported TV DV modes with valid inputs and validate DVmodes by looping through the test specific config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetTVSupportedDVModes() -  Retrieve current TV Supported DVModes valid arguments | pic_modes_t *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3135,7 +3120,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDVModes (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVDolbyVisionMode() -  Set the TV DolbyVision mode by looping through all the values of DolbyVision modes from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVDolbyVisionMode() -  Set the TV DolbyVision mode by looping through all the values of DolbyVision modes from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
@@ -3186,10 +3171,8 @@ void test_l1_tvSettings_negative_SetTVDolbyVisionMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetTVDolbyVisionMode() -  Retrieve the current DolbyVision Mode with valid arguments | char * | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVDolbyVisionMode() -  Retrieve the current DolbyVision Mode with valid arguments and validate with above value | char * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVDolbyVisionMode() -  Retrieve the current DolbyVision and validate DolbyVision by looping through the config file | char * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVDolbyVisionMode() -  Retrieve the current DolbyVision and validate DolbyVision by looping through the test specific config file | char * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 {
@@ -3238,7 +3221,7 @@ void test_l1_tvSettings_negative_GetTVDolbyVisionMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVHLGMode() -  Set the TV HLG mode by looping through all the values of HLG modes from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVHLGMode() -  Set the TV HLG mode by looping through all the values of HLG modes from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVHLGMode (void)
@@ -3289,7 +3272,7 @@ void test_l1_tvSettings_negative_SetTVHLGMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVHDR10Mode() -  Set the TV HDR10 mode by looping through all the values of HDR10 modes from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVHDR10Mode() -  Set the TV HDR10 mode by looping through all the values of HDR10 modes from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVHDR10Mode (void)
@@ -3340,10 +3323,8 @@ void test_l1_tvSettings_negative_SetTVHDR10Mode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetTVSupportedHLGModes() -  Retrieve the current TV Supported HLG Modes with valid arguments | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVSupportedHLGModes() -  Retrieve the current TV Supported HLG Modes with valid arguments and validate with above value | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVSupportedHLGModes() -  Retrieve the current TV Supported HLG Modes and validate TV Supported HLG Modes by looping through the config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVSupportedHLGModes() -  Retrieve the current TV Supported HLG Modes and validate TV Supported HLG Modes by looping through the test specific config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedHLGModes (void)
 {
@@ -3371,7 +3352,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHLGModes (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSupportedHLGModes() -  Retrieve supported TV HLG modes with invalid input | NULL , unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetTVSupportedHLGModes() -  Retrieve supported TV HLG modes with invalid input | pic_modes_t * , NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetTVSupportedHLGModes() -  Retrieve supported TV HLG modes with valid inputs and validate HLGmodes by looping through the config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetTVSupportedHLGModes() -  Retrieve supported TV HLG modes with valid inputs and validate HLGmodes by looping through the test specific config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetTVSupportedHLGModes() -  Retrieve current TV Supported HLG Modes valid arguments | pic_modes_t *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3395,10 +3376,8 @@ void test_l1_tvSettings_negative_GetTVSupportedHLGModes (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetTVSupportedHDR10Modes() -  Retrieve the current TV Supported HDR10 Mode with valid arguments | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVSupportedHDR10Modes() -  Retrieve the current TV Supported HDR10 Mode with valid arguments and validate with above value | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVSupportedHDR10Modes() -  Retrieve the current TV Supported HDR10 Modes and validate TV Supported HDR10 Modes by looping through the config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVSupportedHDR10Modes() -  Retrieve the current TV Supported HDR10 Modes and validate TV Supported HDR10 Modes by looping through the test specific config file | pic_modes_t *, unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedHDR10Modes (void)
 {
@@ -3426,7 +3405,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHDR10Modes (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSupportedHDR10Modes() -   Retrieve current TV Supported HDR10 Mode with invalid input | pic_modes_t *, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetTVSupportedHDR10Modes() -   Retrieve current TV Supported HDR10 Mode with invalid input | NULL , unsigned short *| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetTVSupportedHDR10Modes() -  Retrieve supported TV HDR10 modes with valid inputs and validate HDR10modes by looping through the config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetTVSupportedHDR10Modes() -  Retrieve supported TV HDR10 modes with valid inputs and validate HDR10modes by looping through the test specific config file values | pic_modes_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetTVSupportedHDR10Modes() -  Retrieve current TV Supported HDR10 Mode with valid arguments | pic_modes_t *,  unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3552,12 +3531,12 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call setWBctrl() -  Set the TV White balance control of gain value by looping through all the values of Inputsrc, colortemp and color from the config file | char *, char * ,char * , "gain", 0  | tvERROR_NONE | Should Pass |
-* | 03 | call setWBctrl() -  Set the TV White balance control of gain value by looping through all the values of Inputsrc, colortemp and color from the config file | char *, char * ,char * , "gain", 2047  | tvERROR_NONE | Should Pass |
-* | 04 | call setWBctrl() -  Set the TV White balance control of gain value by looping through all the values of Inputsrc, colortemp and color from the config file | char *, char * ,char * , "gain", 1000  | tvERROR_NONE | Should Pass |
-* | 05 | call setWBctrl() -  Set the TV White balance control of offset value by looping through all the values of Inputsrc, colortemp and color from the config file | char *, char * ,char * , "offset", -1024  | tvERROR_NONE | Should Pass |
-* | 06 | call setWBctrl() -  Set the TV White balance control of offset value by looping through all the values of Inputsrc, colortemp and color from the config file | char *, char * ,char * , "offset", 1024  | tvERROR_NONE | Should Pass |
-* | 07 | call setWBctrl() -  Set the TV White balance control of offset value by looping through all the values of Inputsrc, colortemp and color from the config file | char *, char * ,char * , "offset",  0  | tvERROR_NONE | Should Pass |
+* | 02 | call setWBctrl() -  Set the TV White balance control of gain value by looping through all the values of Inputsrc, colortemp and color from the test specific config file | char *, char * ,char * , "gain", 0  | tvERROR_NONE | Should Pass |
+* | 03 | call setWBctrl() -  Set the TV White balance control of gain value by looping through all the values of Inputsrc, colortemp and color from the test specific config file | char *, char * ,char * , "gain", 2047  | tvERROR_NONE | Should Pass |
+* | 04 | call setWBctrl() -  Set the TV White balance control of gain value by looping through all the values of Inputsrc, colortemp and color from the test specific config file | char *, char * ,char * , "gain", 1000  | tvERROR_NONE | Should Pass |
+* | 05 | call setWBctrl() -  Set the TV White balance control of offset value by looping through all the values of Inputsrc, colortemp and color from the test specific config file | char *, char * ,char * , "offset", -1024  | tvERROR_NONE | Should Pass |
+* | 06 | call setWBctrl() -  Set the TV White balance control of offset value by looping through all the values of Inputsrc, colortemp and color from the test specific config file | char *, char * ,char * , "offset", 1024  | tvERROR_NONE | Should Pass |
+* | 07 | call setWBctrl() -  Set the TV White balance control of offset value by looping through all the values of Inputsrc, colortemp and color from the test specific config file | char *, char * ,char * , "offset",  0  | tvERROR_NONE | Should Pass |
 * | 08 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_setWBctrl (void)
@@ -3583,11 +3562,11 @@ void test_l1_tvSettings_positive_setWBctrl (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call setWBctrl() - Set the TV WBctrl even before tvInit() | char *, char * ,char *, char *ctrl, int value | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the config file | char *, char * ,char * , "gain", -1  | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the config file | char *, char * ,char * , "gain", 2048  | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the config file | char *, char * ,char * , "offset", -1025  | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the config file | char *, char * ,char * , "offset", 1025  | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call setWBctrl() -  Set the TV White balance with InputSrc, ColorTemp, color and ctrl with valid value but not supported by the platform by looping through the config file | char *, char * ,char * , char *, 1000 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "gain", -1  | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "gain", 2048  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "offset", -1025  | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "offset", 1025  | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call setWBctrl() -  Set the TV White balance with InputSrc, ColorTemp, color and ctrl with valid value but not supported by the platform by looping through the test specific config file | char *, char * ,char * , char *, 1000 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call setWBctrl() -  Set the TV WBctrl with valid input after tvTerm() | char *, char * ,char *, char *ctrl, int value | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3611,7 +3590,7 @@ void test_l1_tvSettings_negative_setWBctrl (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call getWBctrl() -  Retrieve the current WBctrl with valid arguments by looping through all the values of Inputsrc, colurtemp and color from the config file| char *, char *,char *, char *, int * | tvERROR_NONE | Should Pass |
+* | 02 | call getWBctrl() -  Retrieve the current WBctrl with valid arguments by looping through all the values of Inputsrc, colurtemp and color from the test specific config file| char *, char *,char *, char *, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_getWBctrl (void)
@@ -3635,11 +3614,11 @@ void test_l1_tvSettings_positive_getWBctrl (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call getWBctrl() -  Retrieve current TV WBctrl even before tvInit() | char *, char *,char *, char *, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from config file | NULL, , char *,char *, char *, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from config file | char *, NULL  ,char *, char *, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from config file | char *, char *,NULL  , char *, int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from config file | char *, char *,char *, NULL ,  int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from config file | char *, char *,char *, char *, NULL  | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from test specific config file | NULL, , char *,char *, char *, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from test specific config file | char *, NULL  ,char *, char *, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from test specific config file | char *, char *,NULL  , char *, int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from test specific config file | char *, char *,char *, NULL ,  int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call getWBctrl() -  Retrieve current White balance control with invalid input of Inputsrc, colurtemp and color by looping through all the values from test specific config file | char *, char *,char *, char *, NULL  | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call getWBctrl() -  Retrieve current TV WBctrl valid arguments | "HDMI", "normal", "red", "gain", int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3716,10 +3695,8 @@ void test_l1_tvSettings_negative_enableWBmode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor with valid arguments | int * | tvERROR_NONE | Should Pass |
-* | 03 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
-* | 04 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor and validate Supported ComponentColor by looping through the config file | int * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor and validate Supported ComponentColor by looping through the test specific config file | int * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 {
@@ -3743,7 +3720,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 * | 01 | call GetSupportedComponentColor() -  Retrieve current TV Supported ComponentColor even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetSupportedComponentColor() -  Retrieve supported component colortemperature with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetSupportedComponentColor() -  Retrieve supported component color with valid inputs and validate componentColor by looping through the config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetSupportedComponentColor() -  Retrieve supported component color with valid inputs and validate componentColor by looping through the test specific config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetSupportedComponentColor() -  Retrieve current TV Supported ComponentColor valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -3767,9 +3744,9 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from config file| tvDataComponentColor_t  ,0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from config file| tvDataComponentColor_t ,100 | tvERROR_NONE | Should Pass |
-* | 04 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from config file| tvDataComponentColor_t  ,50 | tvERROR_NONE | Should Pass |
+* | 02 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from test specific config file| tvDataComponentColor_t  ,0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from test specific config file| tvDataComponentColor_t ,100 | tvERROR_NONE | Should Pass |
+* | 04 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from test specific config file| tvDataComponentColor_t  ,50 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
@@ -3795,8 +3772,8 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetCurrentComponentSaturation() - Set the TV Current Component Saturation even before tvInit() | tvDataComponentColor_t ,  int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with max range by looping through all the values from config file  | tvDataComponentColor_t,  101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with less than the lower range by looping through all the values from config file | tvDataComponentColor_t,  -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with max range by looping through all the values from test specific config file  | tvDataComponentColor_t,  101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with less than the lower range by looping through all the values from test specific config file | tvDataComponentColor_t,  -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with max range DataComponentColor| tvDataColor_MAX, 10 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with less than the lower range of DataComponentColor| -1, 10 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SetCurrentComponentSaturation() -  Set the TV Current Component Saturation with valid value of DataComponentColor but not supported by the platform by looping through the config fil| tvDataComponentColor_t, 10 | tvERROR_INVALID_PARAM | Should Pass |
@@ -3823,7 +3800,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid arguments by looping through all the values of DataComponentColor from config file | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid arguments by looping through all the values of DataComponentColor from test specific config file | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
@@ -3847,7 +3824,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetCurrentComponentSaturation() -  Retrieve current TV Component Saturation even before tvInit() | tvDataComponentColor_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentComponentSaturation() -  Retrieve current TV component saturation with invalid input by looping through all the values of DataComponentColor from config file | tvDataComponentColor_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetCurrentComponentSaturation() -  Retrieve current TV component saturation with invalid input by looping through all the values of DataComponentColor from test specific config file | tvDataComponentColor_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetCurrentComponentSaturation() -  Retrieve current TV component saturation with Max range of DataComponentColor | tvDataComponentColor_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetCurrentComponentSaturation() -  Retrieve current TV component saturation with less than lower range of DataComponentColor  | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -3873,9 +3850,9 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from config file| tvDataComponentColor_t , 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from config file| tvDataComponentColor_t , 100 | tvERROR_NONE | Should Pass |
-* | 04 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from config file| tvDataComponentColor_t , 50 | tvERROR_NONE | Should Pass |
+* | 02 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from test specific config file| tvDataComponentColor_t , 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from test specific config file| tvDataComponentColor_t , 100 | tvERROR_NONE | Should Pass |
+* | 04 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from test specific config file| tvDataComponentColor_t , 50 | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
@@ -3901,8 +3878,8 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetCurrentComponentHue() -  Retrieve current TV Current Component Hue even before tvInit() | tvDataComponentColor_t, int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with max range by looping through all the values from config file | tvDataComponentColor_t,  101 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with less than the lower range by looping through all the values from config file | tvDataComponentColor_t,  -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with max range by looping through all the values from test specific config file | tvDataComponentColor_t,  101 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with less than the lower range by looping through all the values from test specific config file | tvDataComponentColor_t,  -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with max range DataComponentColor| tvDataColor_MAX, 10 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with less than the lower range of DataComponentColor| -1, 10 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SetCurrentComponentHue() -  Set the TV Current Component Hue with valid value of DataComponentColor but not supported by the platform by looping through the config fil| tvDataComponentColor_t, 10 | tvERROR_INVALID_PARAM | Should Pass |
@@ -3929,7 +3906,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentComponentHue() - Retrieve the current Component Hue with valid arguments by looping through all the values of DataComponentColor from config file | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentComponentHue() - Retrieve the current Component Hue with valid arguments by looping through all the values of DataComponentColor from test specific config file | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
@@ -3953,7 +3930,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetCurrentComponentHue() -  Retrieve current TV brightness even before tvInit() |tvDataComponentColor_t, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentComponentHue() -  Retrieve current TV component Hue with invalid input by looping through all the values of DataComponentColor from config file | tvDataComponentColor_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetCurrentComponentHue() -  Retrieve current TV component Hue with invalid input by looping through all the values of DataComponentColor from test specific config file | tvDataComponentColor_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetCurrentComponentHue() -  Retrieve current TV component Hue with Max range of DataComponentColor | tvDataComponentColor_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetCurrentComponentHue() -  Retrieve current TV component Hue with less than lower range of DataComponentColor  | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -3979,9 +3956,9 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from config file| tvDataComponentColor_t , 0 | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from config file| tvDataComponentColor_t , 30 | tvERROR_NONE | Should Pass |
-* | 04 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from config file| tvDataComponentColor_t , 15 | tvERROR_NONE | Should Pass |* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from test specific config file| tvDataComponentColor_t , 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from test specific config file| tvDataComponentColor_t , 30 | tvERROR_NONE | Should Pass |
+* | 04 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from test specific config file| tvDataComponentColor_t , 15 | tvERROR_NONE | Should Pass |* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 {
@@ -4006,8 +3983,8 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetCurrentComponentLuma() -  Retrieve current TV Current Component Luma even before tvInit() | tvDataComponentColor_t, int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentComponentLuma() -  Set the TV Current Component Luma with max range by looping through all the values from config file | tvDataComponentColor_t,  31 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetCurrentComponentLuma() -  Set the TV Current Component Luma with less than the lower range by looping through all the values from config file | tvDataComponentColor_t,  -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetCurrentComponentLuma() -  Set the TV Current Component Luma with max range by looping through all the values from test specific config file | tvDataComponentColor_t,  31 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetCurrentComponentLuma() -  Set the TV Current Component Luma with less than the lower range by looping through all the values from test specific config file | tvDataComponentColor_t,  -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetCurrentComponentLuma() -  Set the TV Current Component Luma with max range DataComponentColor| tvDataColor_MAX, 10 | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetCurrentComponentLuma() -  Set the TV Current Component Luma with less than the lower range of DataComponentColor| -1, 10 | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SetCurrentComponentLuma() -  Set the TV Current Component Lima with valid value of DataComponentColor but not supported by the platform by looping through the config fil| tvDataComponentColor_t, 10 | tvERROR_INVALID_PARAM | Should Pass |
@@ -4035,7 +4012,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentComponentLuma() - Retrieve the current Component Luma with valid arguments by looping through all the values of DataComponentColor from config file | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentComponentLuma() - Retrieve the current Component Luma with valid arguments by looping through all the values of DataComponentColor from test specific config file | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
@@ -4059,7 +4036,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetCurrentComponentLuma() -  Retrieve current TV Current Component Luma even before tvInit() | tvDataColor_RED, int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentComponentLuma() -  Retrieve current TV component Luma with invalid input by looping through all the values of DataComponentColor from config file | tvDataComponentColor_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetCurrentComponentLuma() -  Retrieve current TV component Luma with invalid input by looping through all the values of DataComponentColor from test specific config file | tvDataComponentColor_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetCurrentComponentLuma() -  Retrieve current TV component Luma with Max range of DataComponentColor | tvDataComponentColor_MAX, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call GetCurrentComponentLuma() -  Retrieve current TV component Luma with less than lower range of DataComponentColor  | -1, int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -4085,10 +4062,8 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetTVSupportedDimmingModes() -  Retrieve the current TV Supported DimmingModes with valid arguments | char **, unsigned short * | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVSupportedDimmingModes() -  Retrieve the current TV Supported DimmingModes with valid arguments and validate with above value | char **, unsigned short * | tvERROR_NONE | Should Pass |
-* | 04 | call GetTVSupportedDimmingModes() -  Retrieve the current TV Supported DimmingModes and validate TV Supported DimmingModes by looping through the config file | char **, unsigned short * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVSupportedDimmingModes() -  Retrieve the current TV Supported DimmingModes and validate TV Supported DimmingModes by looping through the test specific config file | char **, unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 {
@@ -4115,7 +4090,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetTVSupportedDimmingModes() -  Retrieve supported TV dimming modes with invalid input | NULL,  unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetTVSupportedDimmingModes() -  Retrieve supported TV dimming modes with invalid input | char **,  NULL| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetTVSupportedDimmingModes() -  Retrieve supported TV Dimming modes with valid inputs and validate Dimmingmodes by looping through the config file values | char **,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetTVSupportedDimmingModes() -  Retrieve supported TV Dimming modes with valid inputs and validate Dimmingmodes by looping through the test specific config file values | char **,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetTVSupportedDimmingModes() -  Retrieve current TV Supported DimmingModes valid arguments | char **, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4139,7 +4114,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetTVDimmingMode() -  Set the TV dimming mode by looping through all the values of dimming modes from the config file | const char * | tvERROR_NONE | Should Pass |
+* | 02 | call SetTVDimmingMode() -  Set the TV dimming mode by looping through all the values of dimming modes from the test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetTVDimmingMode (void)
@@ -4166,7 +4141,7 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 * | 01 | call SetTVDimmingMode() -  Set TV Dimming Mode even before tvInit() | const char * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetTVDimmingMode() -   Set TV Dimming Mode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 03 | call SetTVDimmingMode() -   Set TV Dimming Mode with valid value but not supported by the platform by looping through the config file | const char * | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetTVDimmingMode() -   Set TV Dimming Mode with valid value but not supported by the platform by looping through the test specific config file | const char * | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SetTVDimmingMode() -  Set TV Dimming Mode valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4190,9 +4165,8 @@ void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetTVPictureModeIndex() -  Retrieve the current TV Picture ModeIndex with validate by looping through all the values of config file | const char * | tvPictureMode_t  | Should Pass |
-* | 03 | call GetTVPictureModeIndex() -  Retrieve the current TV Picture ModeIndex with valid arguments and validate by looping through all the values of config file | const char * | tvPictureMode_t  | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVPictureModeIndex() -  Retrieve the current TV Picture ModeIndex with valid arguments and validate by looping through all the values of test specific config file | const char * | tvPictureMode_t  | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVPictureModeIndex (void)
 {
@@ -4215,7 +4189,7 @@ void test_l1_tvSettings_positive_GetTVPictureModeIndex (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetTVPictureModeIndex() -  Retrieve current TV PictureMode Index even before tvInit() | const char * | tvPictureMode_t  | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVPictureModeIndex() -   Retrieve current TV PictureMode Index return value should not in config file | NULL | tvPictureMode_t  | Should Pass |
+* | 03 | call GetTVPictureModeIndex() -   Retrieve current TV PictureMode Index return value should not in test specific config file | NULL | tvPictureMode_t  | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetTVPictureModeIndex() -  Retrieve current TVPictureMode Index valid arguments | const char * | tvPictureMode_t  | Should Pass |
 */
@@ -4239,9 +4213,8 @@ void test_l1_tvSettings_negative_GetTVPictureModeIndex (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentContentFormat() -  Retrieve the current ContentFormat with validate by looping through all the values in config file | void | tvVideoHDRFormat_t | Should Pass |
-* | 03 | call GetCurrentContentFormat() -  Retrieve the current ContentFormat with valid arguments and validate by looping through all the values in config file | void | tvVideoHDRFormat_t | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentContentFormat() -  Retrieve the current ContentFormat with valid arguments and validate by looping through all the values in test specific config file | void | tvVideoHDRFormat_t | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentContentFormat (void)
 {
@@ -4287,10 +4260,8 @@ void test_l1_tvSettings_negative_GetCurrentContentFormat (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetSupportedContentFormats() -  Retrieve the current Supported ContentFormats with valid arguments | unsigned int *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 03 | call GetSupportedContentFormats() -  Retrieve the current Supported ContentFormats with valid arguments and validate with above value | unsigned int *, unsigned short * | tvERROR_NONE | Should Pass |
-* | 04 | call GetSupportedContentFormats() -  Retrieve the current Supported ContentFormats and validate Supported ContentFormats by looping through the config file | char **, unsigned short * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetSupportedContentFormats() -  Retrieve the current Supported ContentFormats and validate Supported ContentFormats by looping through the test specific config file | char **, unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetSupportedContentFormats (void)
 {
@@ -4315,7 +4286,7 @@ void test_l1_tvSettings_positive_GetSupportedContentFormats (void)
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetSupportedContentFormats() -   Retrieve current TV Supported ContentFormats with invalid input | unsigned int *, NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call GetSupportedContentFormats() -   Retrieve current TV Supported ContentFormats with invalid input | NULL, unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetSupportedContentFormats() -  Retrieve supported TV content formats with valid inputs and validate ContentFormats by looping through the config file values | unsigned int *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetSupportedContentFormats() -  Retrieve supported TV content formats with valid inputs and validate ContentFormats by looping through the test specific config file values | unsigned int *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 07 | call GetSupportedContentFormats() -  Retrieve current TV Supported ContentFormats valid arguments | unsigned int *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4339,7 +4310,7 @@ void test_l1_tvSettings_negative_GetSupportedContentFormats (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveColorTemperature() -  Save the current Color Temperature with by looping through all the values of sourceId, pqmode, hdr_type and colortemp from the config file | tv_source_input_t , int ,tvhdr_type_t ,tvColorTemp_t | tvERROR_NONE| Should Pass|
+* | 02 | call SaveColorTemperature() -  Save the current Color Temperature with by looping through all the values of sourceId, pqmode, hdr_type and colortemp from the test specific config file | tv_source_input_t , int ,tvhdr_type_t ,tvColorTemp_t | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveColorTemperature (void)
@@ -4372,7 +4343,7 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 * | 07 | call SaveColorTemperature() -  Save current Color Temperature with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveColorTemperature() -  Save current Color Temperature with invalid colortemp with max range| tv_source_input_t, int , tvhdr_type_t ,tvColorTemp_MAX| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveColorTemperature() -  Save current Color Temperature with invalid colortemp value less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveColorTemperature() -  Save current Color Temperature with valid source input, pqmode, hdr_type, colortemp value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveColorTemperature() -  Save current Color Temperature with valid source input, pqmode, hdr_type, colortemp value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveColorTemperature() -  Save the current Color Temperature valid arguments | HDMI, 0, HDR_TYPE_HLG, tvColorTemp_t | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4396,7 +4367,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveBacklight() -  Save the current Color Backlight with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveBacklight() -  Save the current Color Backlight with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveBacklight (void)
@@ -4427,9 +4398,9 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * | 05 | call SaveBacklight() -  Save current Color Backlight with invalid pqmode | tv_source_input_t, -1 ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveBacklight() -  Save current Color Backlight with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveBacklight() -  Save current Color Backlight with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveBacklight() -  Save current Color Backlight with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveBacklight() -  Save current Color Backlight with invalid value less than the lower range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveBacklight() -  Save current Color Backlight with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveBacklight() -  Save current Color Backlight with invalid value with less than the lower range | tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveBacklight() -  Save current Color Backlight with invalid value with max range | tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveBacklight() -  Save current Color Backlight with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveBacklight() -  Retrieve current TV Backlight valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4453,7 +4424,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveContrast() -  Save the current Color Contrast with by looping through all the values of sourceId, pqmode, hdr_type  from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveContrast() -  Save the current Color Contrast with by looping through all the values of sourceId, pqmode, hdr_type  from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveContrast (void)
@@ -4486,7 +4457,7 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * | 07 | call SaveContrast() -  Save current Color Contrast with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveContrast() -  Save current Color Contrast with invalid value with with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveContrast() -  Save current Color Contrast with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveContrast() -  Save current Color Contrast with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveContrast() -  Save current Color Contrast with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveContrast() -  save current TV Contrast valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4510,8 +4481,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveSaturation() -  Save the current Color Saturation with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
-
+* | 02 | call SaveSaturation() -  Save the current Color Saturation with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveSaturation (void)
@@ -4544,7 +4514,7 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * | 07 | call SaveSaturation() -  Save current Color Saturation with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveSaturation() -  Save current Color Saturation with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSaturation() -  Save current Color Saturation with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveSaturation() -  Save current Color Saturation with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveSaturation() -  Save current Color Saturation with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveSaturation() -  save current TV Saturation valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4568,7 +4538,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveSharpness() -  Save the current Color Sharpness with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveSharpness() -  Save the current Color Sharpness with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveSharpness (void)
@@ -4601,7 +4571,7 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * | 07 | call SaveSharpness() -  Save current Color Sharpness with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveSharpness() -  Save current Color Sharpness with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSharpness() -  Save current Color Sharpness with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveSharpness() -  Save current Color Sharpness with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveSharpness() -  Save current Color Sharpness with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveSharpness() -  save current TV Sharpness valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4625,7 +4595,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveBrightness() -  Save the current Color Brightness with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveBrightness() -  Save the current Color Brightness with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveBrightness (void)
@@ -4658,7 +4628,7 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 * | 07 | call SaveBrightness() -  Save current Color Brightness with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveBrightness() -  Save current Color Brightness with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveBrightness() -  Save current Color Brightness with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveBrightness() -  Save current Color Brightness with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveBrightness() -  Save current Color Brightness with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveBrightness() -  save current TV Brightness valid arguments | tv_source_input_t , int ,tvhdr_type_t ,int  | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4682,7 +4652,8 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveHue() -  Save the current Color Brightness with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveHue() - Save the current Color Brightness with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveHue (void)
 {
@@ -4714,7 +4685,7 @@ void test_l1_tvSettings_positive_SaveHue (void)
 * | 07 | call SaveHue() -  Save current Color Hue with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveHue() -  Save current Color Hue with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveHue() -  Save current Color Hue with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveHue() -  Save current Color Hue with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveHue() -  Save current Color Hue with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveHue() -  save current TV Hue valid arguments |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4738,7 +4709,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveDynamicBacklight() -  Save the current Color Brightness with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,tvDimmingMode_t | tvERROR_NONE| Should Pass|
+* | 02 | call SaveDynamicBacklight() -  Save the current Color DynamicBacklight with by looping through all the values of source input, pqmode, hdr_type and Diming mode from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,tvDimmingMode_t | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
@@ -4769,11 +4740,10 @@ void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 * | 05 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid pqmode | tv_source_input_t, -1 ,tvhdr_type_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,3| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , tvDimmingMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 12 | call SaveDynamicBacklight() -  save the DynamicBacklight valid arguments | tv_source_input_t , int ,tvhdr_type_t ,tvDimmingMode_t | tvERROR_INVALID_STATE | Should Pass |
+* | 08 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with valid source input, pqmode, hdr_type and Diming mode value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , tvDimmingMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 11 | call SaveDynamicBacklight() -  save the DynamicBacklight valid arguments | tv_source_input_t , int ,tvhdr_type_t ,tvDimmingMode_t | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveDynamicBacklight (void)
 {
@@ -4795,7 +4765,7 @@ void test_l1_tvSettings_negative_SaveDynamicBacklight (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveDisplayMode() -  Save the current Color DisplayMode with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,tvDisplayMode_t | tvERROR_NONE| Should Pass|
+* | 02 | call SaveDisplayMode() -  Save the current Color DisplayMode with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,tvDisplayMode_t | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveDisplayMode (void)
@@ -4828,7 +4798,7 @@ void test_l1_tvSettings_positive_SaveDisplayMode (void)
 * | 07 | call SaveDisplayMode() -  Save current Color DisplayMode with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveDisplayMode() -  Save current Color DisplayMode with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,3| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveDisplayMode() -  Save current Color DisplayMode with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveDisplayMode() -  Save current Color DisplayMode with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , tvDisplayMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveDisplayMode() -  Save current Color DisplayMode with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , tvDisplayMode_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveDisplayMode() -  save the DisplayMode valid arguments | tv_source_input_t , int ,tvhdr_type_t ,tvDisplayMode_t | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4852,7 +4822,7 @@ void test_l1_tvSettings_negative_SaveDisplayMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveCMS() -  Save the current CMS value with by looping through all the values of sourceId, pqmode, hdr_type, tunnel_type, color_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveCMS() -  Save the current CMS value with by looping through all the values of sourceId, pqmode, hdr_type, tunnel_type, color_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveCMS (void)
@@ -4878,7 +4848,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveCMS() -  save the CMS even before tvInit() |  tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit()  -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveCMS() -  Save current CMS value by looping through all the invalid input from config file| tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveCMS() -  Save current CMS value by looping through all the invalid input from test specific config file| tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call SaveCMS() -  save the CMS valid arguments |  tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4902,8 +4872,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveDolbyMode() -  Save the current DolbyMode with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-
+* | 02 | call SaveDolbyMode() -  Save the current DolbyMode with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveDolbyMode (void)
@@ -4936,7 +4905,7 @@ void test_l1_tvSettings_positive_SaveDolbyMode (void)
 * | 07 | call SaveDolbyMode() -  Save current DolbyMode with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveDolbyMode() -  Save current DolbyMode with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveDolbyMode() -  Save current DolbyMode with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveDolbyMode() -  Save current DolbyMode with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t , int | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveDolbyMode() -  Save current DolbyMode with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , int | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveDolbyMode() -  save the DolbyMode valid arguments | tv_source_input_t, int ,tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -4986,7 +4955,7 @@ void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
 * | 01 | call GetNumberOfModesupported() -  Retrieve current Number Of TV Mode supported even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetNumberOfModesupported() -  Retrieve supported TV modes with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetNumberOfModesupported() -  Retrieve supported TV modes with valid inputs and validate modes by looping through the config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetNumberOfModesupported() -  Retrieve supported TV modes with valid inputs and validate modes by looping through the test specific config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 06 | call GetNumberOfModesupported() -  Retrieve current Number Of TV Mode supported valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5010,10 +4979,8 @@ void test_l1_tvSettings_negative_GetNumberOfModesupported (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void| tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentPQIndex() -  Retrieve the current PQIndex with valid arguments | int * | tvERROR_NONE | Should Pass |
-* | 03 | call GetCurrentPQIndex() -  Retrieve the current PQIndex with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
-* | 04 | call GetCurrentPQIndex() -  Retrieve the current PQIndex and validate PQIndex by looping through the values of config file | int * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentPQIndex() -  Retrieve the current PQIndex and validate PQIndex by looping through the values of test specific config file | int * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentPQIndex (void)
 {
@@ -5061,10 +5028,8 @@ void test_l1_tvSettings_negative_GetCurrentPQIndex (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetAllSupportedPicModeIndex() -  Retrieve the Supported PicModeIndex with valid arguments | int [] | tvERROR_NONE | Should Pass |
-* | 03 | call GetAllSupportedPicModeIndex() -  Retrieve the Supported PicModeIndex with valid arguments and validate with above value | int [] | tvERROR_NONE | Should Pass |
-* | 04 | call GetAllSupportedPicModeIndex() -  Retrieve the Supported PicModeIndex and validate Supported PicModeIndex by looping through the values of config file | int [] | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetAllSupportedPicModeIndex() -  Retrieve the Supported PicModeIndex and validate Supported PicModeIndex by looping through the values of test specific config file | int [] | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetAllSupportedPicModeIndex (void)
 {
@@ -5087,7 +5052,7 @@ void test_l1_tvSettings_positive_GetAllSupportedPicModeIndex (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetAllSupportedPicModeIndex() -  Retrieve Supported PicModeIndex even before tvInit() | int [] | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetAllSupportedPicModeIndex () -  Retrieve supported PicModeIndex with valid inputs and validate PicModeIndex by looping through the config file values | int [] | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetAllSupportedPicModeIndex () -  Retrieve supported PicModeIndex with valid inputs and validate PicModeIndex by looping through the test specific config file values | int [] | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetAllSupportedPicModeIndex() -  Retrieve Supported PicModeIndex valid arguments | int [] | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5111,9 +5076,8 @@ void test_l1_tvSettings_negative_GetAllSupportedPicModeIndex (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCMSDefault() -  Retrieve the CMS value by looping through the values | tvCMS_tunel_t | int | Should Pass |
-* | 03 | call GetCMSDefault() -  Retrieve the CMS value by looping through the values and validate with above value | tvCMS_tunel_t  | int | Should Pass |
-* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCMSDefault() -  Retrieve the CMS value by looping through the values of test specific config file| tvCMS_tunel_t | int | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCMSDefault (void)
 {
@@ -5162,9 +5126,7 @@ void test_l1_tvSettings_negative_GetCMSDefault (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetDolbyModeIndex() -  Retrieve the current Dolby ModeIndex with valid arguments | const char * | Should Pass |
-* | 03 | call GetDolbyModeIndex() -  Retrieve the current Dolby ModeIndex with valid arguments and validate with above value | const char * | Should Pass |
-* | 04 | call GetDolbyModeIndex() -  Retrieve the current Dolby ModeIndex and validate current Dolby ModeIndex by looping through the values of config file | const char * | tvERROR_NONE | Should Pass |
+* | 04 | call GetDolbyModeIndex() -  Retrieve the current Dolby ModeIndex and validate current Dolby ModeIndex by looping through the values of test specific config file | const char * | tvERROR_NONE | Should Pass |
 * | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetDolbyModeIndex (void)
@@ -5212,7 +5174,7 @@ void test_l1_tvSettings_negative_GetDolbyModeIndex (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetCMSState() -  Set the CMSState with by looping through the all the values from config file | tvCMS_tunel_t ,tvcomponent_color_type_t ,tvcomponent_state_t | tvERROR_NONE | Should Pass |
+* | 02 | call SetCMSState() -  Set the CMSState with by looping through the all the values from test specific config file | tvCMS_tunel_t ,tvcomponent_color_type_t ,tvcomponent_state_t | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetCMSState (void)
@@ -5243,7 +5205,7 @@ void test_l1_tvSettings_positive_SetCMSState (void)
 * | 05 | call SetCMSState() -  Set the current CMS State with invalid colorType with less than lower range | tvCMS_tunel_t , -1 ,tvcomponent_state_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetCMSState() -  Set the current CMS State with invalid colorType with Max range | tvCMS_tunel_t , 7 ,tvcomponent_state_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SetCMSState() -  Set the current CMS State with invalid componentState less than lower range | tvCMS_tunel_t , tvcomponent_color_type_t ,-1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SetCMSState() -  Set the current CMS State with valid tunelType, colorType, componentState value but not supported by the platform by looping through the config file | tvCMS_tunel_t , tvcomponent_color_type_t , tvcomponent_state_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetCMSState() -  Set the current CMS State with valid tunelType, colorType, componentState value but not supported by the platform by looping through the test specific config file | tvCMS_tunel_t , tvcomponent_color_type_t , tvcomponent_state_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SetCMSState() -  Set the current CMS State with invalid componentState with Max range | tvCMS_tunel_t , tvcomponent_color_type_t ,3 | tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 11 | call SetCMSState() -  Set the TV CMS State with valid input after tvTerm() | tvCMS_tunel_t ,tvcomponent_color_type_t ,tvcomponent_state_t | tvERROR_INVALID_STATE | Should Pass |
@@ -5298,7 +5260,7 @@ void test_l1_tvSettings_positive_SetColorTemperatureUser (void)
 * | 04 | call SetColorTemperatureUser() - Set the TV Color Temperature User with invalid value by looping through the gain config values | tvRGBType_t , 2048 | tvERROR_INVALID_STATE | Should Pass |
 * | 05 | call SetColorTemperatureUser() - Set the TV Color Temperature User with invalid value by looping through the offset config values | tvRGBType_t , -1025 | tvERROR_INVALID_STATE | Should Pass |
 * | 06 | call SetColorTemperatureUser() - Set the TV Color Temperature User with invalid value by looping through the offset config values | tvRGBType_t , 1025 | tvERROR_INVALID_STATE | Should Pass |
-* | 07 | call SetColorTemperatureUser() - Set the TV Color Temperature User with valid value but not supported by the platform by looping through the config file | tvRGBType_t , 1000 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetColorTemperatureUser() - Set the TV Color Temperature User with valid value but not supported by the platform by looping through the test specific config file | tvRGBType_t , 1000 | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 09 | call SetColorTemperatureUser() -  Set the TV Color Temperature User with valid input after tvTerm() | tvRGBType_t , int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5322,7 +5284,7 @@ void test_l1_tvSettings_negative_SetColorTemperatureUser (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveColorTemperature() -  Save the current Color Temperature with valid inputs by looping through all the values of config file  | tvRGBType_t , int  | tvERROR_NONE| Should Pass|
+* | 02 | call SaveColorTemperature() -  Save the current Color Temperature with valid inputs by looping through all the values of test specific config file  | tvRGBType_t , int  | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
@@ -5352,7 +5314,7 @@ void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
 * | 04 | call SaveColorTemperatureUser() - Save the TV Color Temperature User with invalid value by looping through the gain config values | tvRGBType_t , 2048 | tvERROR_INVALID_STATE | Should Pass |
 * | 05 | call SaveColorTemperatureUser() - Save the TV Color Temperature User with invalid value by looping through the offset config values | tvRGBType_t , -1025 | tvERROR_INVALID_STATE | Should Pass |
 * | 06 | call SaveColorTemperatureUser() - Save the TV Color Temperature User with invalid value by looping through the offset config values | tvRGBType_t , 1025 | tvERROR_INVALID_STATE | Should Pass |
-* | 07 | call SaveColorTemperatureUser() - SetSave the TV Color Temperature User with valid value but not supported by the platform by looping through the config file | tvRGBType_t , 1000 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveColorTemperatureUser() - SetSave the TV Color Temperature User with valid value but not supported by the platform by looping through the test specific config file | tvRGBType_t , 1000 | tvERROR_INVALID_PARAM | Should Pass |
 * | 03 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 04 | call SaveColorTemperatureUser() -  Save the TV Color Temperature User with valid input after tvTerm() | 50 | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5377,10 +5339,8 @@ void test_l1_tvSettings_negative_SaveColorTemperatureUser (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetHLGModeIndex() -  Retrieve the current HLGModeIndex with valid arguments | const char * | int | Should Pass |
-* | 03 | call GetHLGModeIndex() -  Retrieve the current HLGModeIndex with valid arguments and validate with above value | const char * | int | Should Pass |
-* | 04 | call GetHLGModeIndex() -  Retrieve the current HLGModeIndex and validate current HLGModeIndex by looping through the values of config file | const char * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetHLGModeIndex() -  Retrieve the current HLGModeIndex and validate current HLGModeIndex by looping through the values of test specific config file | const char * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetHLGModeIndex (void)
 {
@@ -5427,10 +5387,8 @@ void test_l1_tvSettings_negative_GetHLGModeIndex (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetHDR10ModeIndex() -  Retrieve the current HDR10 ModeIndex with valid arguments | const char * | int | Should Pass |
-* | 03 | call GetHDR10ModeIndex() -  Retrieve the current HDR10 ModeIndex with valid arguments and validate with above value | const char * | int | Should Pass |
-* | 04 | call GetHDR10ModeIndex() -  Retrieve the current HDR10 ModeIndex and validate current HDR10 ModeIndex by looping through the values of config file | const char * | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetHDR10ModeIndex() -  Retrieve the current HDR10 ModeIndex and validate current HDR10 ModeIndex by looping through the values of test specific config file | const char * | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetHDR10ModeIndex (void)
 {
@@ -5687,7 +5645,7 @@ void test_l1_tvSettings_negative_GetLocalDimmingLevel (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveLocalDimmingLevel() -  Save the current LocalDimming Level with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 02 | call SaveLocalDimmingLevel() -  Save the current LocalDimming Level with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
@@ -5720,7 +5678,7 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 * | 07 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1 | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with valid value of source input, pqmode, hdr_type but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with valid value of source input, pqmode, hdr_type but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveLocalDimmingLevel() -  save current Local DimmingLevel valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5744,9 +5702,8 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveLowLatencyState() -  Save the current LowLatency State with by looping through all the values of sourceId, pqmode, hdr_type from the config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
-
-* | 07 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SaveLowLatencyState() -  Save the current LowLatency State with by looping through all the values of sourceId, pqmode, hdr_type from the test specific config file  |  tv_source_input_t , int ,tvhdr_type_t ,int | tvERROR_NONE| Should Pass|
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 {
@@ -5778,7 +5735,7 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 * | 07 | call SaveLowLatencyState() -  Save current LowLatency State with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveLowLatencyState() -  Save current LowLatency State with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveLowLatencyState() -  Save current LowLatency State with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveLowLatencyState() -  Save current LowLatency State with valid value of source input, pqmode, hdr_type but not supported by the platform by looping through the config file| tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveLowLatencyState() -  Save current LowLatency State with valid value of source input, pqmode, hdr_type but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveLowLatencyState() -  save current TV Contrast valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5960,10 +5917,8 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetGammaTable() -  Retrieve the current GammaTable value with valid arguments | int ,  unsigned short *,  unsigned short *,  unsigned short *, int | tvERROR_NONE | Should Pass |
-* | 03 | call GetGammaTable() -  Retrieve the current GammaTable value with valid arguments and validate with above value | int ,  unsigned short *,  unsigned short *,  unsigned short *, int | tvERROR_NONE | Should Pass |
-* | 04 | call GetGammaTable() -  Retrieve the current GammaTable for the colortemp not supported by the platform by looping through the values of config file | int ,  unsigned short *,  unsigned short *,  unsigned short *, int | tvERROR_NONE | Should Pass |
-* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetGammaTable() -  Retrieve the current GammaTable for the colortemp not supported by the platform by looping through the values of test specific config file | int ,  unsigned short *,  unsigned short *,  unsigned short *, int | tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetGammaTable (void)
 {
@@ -5988,12 +5943,12 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetGammaTable() -  Retrieve current TV GammaTable State even before tvInit() | int ,  unsigned short *,  unsigned short *,  unsigned short *, int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from config file | int ,  NULL,  unsigned short *,  unsigned short *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from config file | int , unsigned short *,  NULL, unsigned short *, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from config file | int , unsigned short *,  unsigned short *, NULL,  int | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from test specific config file | int ,  NULL,  unsigned short *,  unsigned short *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from test specific config file | int , unsigned short *,  NULL, unsigned short *, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from test specific config file | int , unsigned short *,  unsigned short *, NULL,  int | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid colortemp with max range | tvColorTemp_MAX , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid colortemp  less than lower range | -1 , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetGammaTable() -   Retrieve current TV GammaTable State with valid colortemp  value but not supported by the platform by looping through the config file | int , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetGammaTable() -   Retrieve current TV GammaTable State with valid colortemp  value but not supported by the platform by looping through the test specific config file | int , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call GetGammaTable() -  Retrieve current TV GammaTable State valid arguments |int ,  unsigned short *,  unsigned short *,  unsigned short *, intint ,  unsigned short *,  unsigned short *,  unsigned short *, int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -6017,8 +5972,8 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SaveGammaTable() -  save the current GammaTable State with valid arguments by looping through the colortemp from config file| int , unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_NONE | Should Pass |
-* | 03 | call SaveGammaTable() -  save the current GammaTable State with valid arguments and validate with above value by looping through the colortemp from config file | int , unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_NONE | Should Pass |
+* | 02 | call SaveGammaTable() -  save the current GammaTable State with valid arguments by looping through the colortemp from test specific config file| int , unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_NONE | Should Pass |
+* | 03 | call SaveGammaTable() -  save the current GammaTable State with valid arguments and validate with above value by looping through the colortemp from test specific config file | int , unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveGammaTable (void)
@@ -6044,12 +5999,12 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveGammaTable() - save the current GammaTable State even before tvInit() | int, unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from config file| int, NULL, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from config file| int, unsigned short *, NULL, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from config file| int, unsigned short *, unsigned short *, NULL, 256| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from test specific config file| int, NULL, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from test specific config file| int, unsigned short *, NULL, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from test specific config file| int, unsigned short *, unsigned short *, NULL, 256| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveGammaTable() -   save the current GammaTable State with invalid colortemp with max range | tvColorTemp_MAX , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveGammaTable() -   save the current GammaTable State with invalid colortemp  less than lower range| -1 , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveGammaTable() -   save the current GammaTable State with valid colortemp  value but not supported by the platform by looping through the config file | int , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveGammaTable() -   save the current GammaTable State with valid colortemp  value but not supported by the platform by looping through the test specific config file | int , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 10 | call SaveGammaTable() -  Set the TV LowLatency State with valid input after tvTerm() | int, unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_STATE | Should Pass |
 */
