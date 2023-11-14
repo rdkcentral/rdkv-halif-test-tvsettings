@@ -3598,9 +3598,15 @@ void test_l1_tvSettings_positive_setWBctrl (void)
 * | 04 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "gain", 2048  | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "offset", -1025  | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "offset", 1025  | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call setWBctrl() -  Set the TV White balance with InputSrc, ColorTemp, color and ctrl with valid value but not supported by the platform by looping through the test specific config file | char *, char * ,char * , char *, 1000 | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 09 | call setWBctrl() -  Set the TV WBctrl with valid input after tvTerm() | char *, char * ,char *, char *ctrl, int value | tvERROR_INVALID_STATE | Should Pass |
+* | 07 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color  from the test specific config file | char *, char * ,char * , NULL, 0  | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, and colurtemp from the test specific config file | char *, char * ,NULL , "offset", 0  | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, and color from the test specific config file | char *, NULL ,char * , "offset", 0  | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of colurtemp and color from the test specific config file | NULL, char * ,char * , "offset", 0  | tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the Invalid values of Inputsrc, colurtemp and color from the test specific config file | "Invalid", "Invalid" ,"Invalid" , "offset", 0  | tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call setWBctrl() -  Set the TV White balance control of invalid value by looping through all the values of Inputsrc, colurtemp and color from the test specific config file | char *, char * ,char * , "offset", 1025  | tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call setWBctrl() -  Set the TV White balance with InputSrc, ColorTemp, color and ctrl with valid value but not supported by the platform by looping through the test specific config file | char *, char * ,char * , char *, 1000 | tvERROR_INVALID_PARAM | Should Pass |
+* | 14 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 15 | call setWBctrl() -  Set the TV WBctrl with valid input after tvTerm() | char *, char * ,char *, char *ctrl, int value | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_setWBctrl (void)
 {
