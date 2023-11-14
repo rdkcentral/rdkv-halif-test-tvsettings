@@ -4484,12 +4484,12 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveContrast() -  save current TV Contrast even before tvInit() | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveContrast() -  Save current Color Contrast with invalid source input with max range| SOURCE_MAX, int ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveContrast() -  Save current Color Contrast with invalid source input less than the lower range| SOURCE_INVALID, int ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveContrast() -  Save current Color Contrast with invalid pqmode | tv_source_input_t, -1 ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveContrast() -  Save current Color Contrast with invalid pqmode with max range| tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveContrast() -  Save current Color Contrast with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveContrast() -  Save current Color Contrast with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveContrast() -  Save current Color Contrast with invalid source input with max range| SOURCE_MAX, int ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveContrast() -  Save current Color Contrast with invalid source input less than the lower range| SOURCE_INVALID, int ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveContrast() -  Save current Color Contrast with invalid pqmode | tv_source_input_t, -1 ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveContrast() -  Save current Color Contrast with invalid pqmode with max range| tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveContrast() -  Save current Color Contrast with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveContrast() -  Save current Color Contrast with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveContrast() -  Save current Color Contrast with invalid value with with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call SaveContrast() -  Save current Color Contrast with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveContrast() -  Save current Color Contrast with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
@@ -4542,12 +4542,12 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveSaturation() -  save current TV Saturation even before tvInit() | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveSaturation() -  Save current Color Saturation with invalid source input with max range| SOURCE_MAX, int ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveSaturation() -  Save current Color Saturation with invalid source input less than the lower range| SOURCE_INVALID, int ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode less than lower range | tv_source_input_t, -1 ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode with max range | tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveSaturation() -  Save current Color Saturation with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveSaturation() -  Save current Color Saturation with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveSaturation() -  Save current Color Saturation with invalid source input with max range| SOURCE_MAX, int ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveSaturation() -  Save current Color Saturation with invalid source input less than the lower range| SOURCE_INVALID, int ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode less than lower range | tv_source_input_t, -1 ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode with max range | tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveSaturation() -  Save current Color Saturation with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveSaturation() -  Save current Color Saturation with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSaturation() -  Save current Color Saturation with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call SaveSaturation() -  Save current Color Saturation with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveSaturation() -  Save current Color Saturation with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
@@ -4600,12 +4600,12 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveSharpness() -  save current TV Sharpness even before tvInit() | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveSharpness() -  Save current Color Sharpness with invalid source input with max range| SOURCE_MAX, int ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveSharpness() -  Save current Color Sharpness with invalid source input less than the lower range| SOURCE_INVALID, int ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode less than lower range| tv_source_input_t, -1 ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode with max range | tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveSharpness() -  Save current Color Sharpness with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveSharpness() -  Save current Color Sharpness with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveSharpness() -  Save current Color Sharpness with invalid source input with max range| SOURCE_MAX, int ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveSharpness() -  Save current Color Sharpness with invalid source input less than the lower range| SOURCE_INVALID, int ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode less than lower range| tv_source_input_t, -1 ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode with max range | tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveSharpness() -  Save current Color Sharpness with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveSharpness() -  Save current Color Sharpness with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSharpness() -  Save current Color Sharpness with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call SaveSharpness() -  Save current Color Sharpness with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveSharpness() -  Save current Color Sharpness with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
@@ -4781,6 +4781,7 @@ void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 * | 07 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid hdr_type with max range| tv_source_input_t, int ,HDR_TYPE_MAX ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid value with less than the lower range| tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with invalid value with max range| tv_source_input_t, int , tvhdr_type_t ,DIMMING_MODE_MAX| tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call SaveDynamicBacklight() -  Save current Color DynamicBacklight with valid source input, pqmode, hdr_type and Diming mode value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , tvDimmingMode_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 12 | call SaveDynamicBacklight() -  save the DynamicBacklight valid arguments | tv_source_input_t , int ,tvhdr_type_t ,tvDimmingMode_t | tvERROR_INVALID_STATE | Should Pass |
@@ -5043,7 +5044,6 @@ void test_l1_tvSettings_positive_GetCurrentPQIndex (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*todo : there is no return error cases*/
 /**
 * @brief Validate GetCurrentPQIndex() for all negative invocation scenarios
 *
