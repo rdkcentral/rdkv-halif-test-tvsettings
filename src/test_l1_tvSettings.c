@@ -5012,9 +5012,8 @@ void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
 * | 01 | call GetNumberOfModesupported() -  Retrieve current Number Of TV Mode supported even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetNumberOfModesupported() -  Retrieve supported TV modes with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetNumberOfModesupported() -  Retrieve supported TV modes with valid inputs and validate modes by looping through the test specific config file values | int * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call GetNumberOfModesupported() -  Retrieve current Number Of TV Mode supported valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetNumberOfModesupported() -  Retrieve current Number Of TV Mode supported valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetNumberOfModesupported (void)
 {
