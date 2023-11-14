@@ -18,9 +18,29 @@
 */
 
 /**
+* @addtogroup HPK HPK
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings TV Settings Module
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST TV Settings HAL Test
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST_MAIN TV Settings HAL Test Main File
+* @{
+**/
+
+/**
 * @file main.c
-* @page TvSettings
-* @subpage TvSettings
+* @page TV_Settings_HALTEST_MAIN
+* @subpage TV_Settings_HALTEST_MAIN
 *
 * ## Module's Role
 * This module includes the main file for L1 and L2 tests
@@ -66,3 +86,7 @@ int main(int argc, char** argv)
 	return 0;
 
 }
+/** @} */ // End of TV_Settings_HALTEST_MAIN
+/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings
+/** @} */ // End of HPK
