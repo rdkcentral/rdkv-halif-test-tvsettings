@@ -18,8 +18,28 @@
 */
 
 /**
+* @addtogroup HPK HPK
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings TV Settings Module
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST TV Settings HAL Test
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST_L1 TV Settings HAL L1 Test Cases
+* @{
+**/
+
+/**
 * @file test_l1_tvSettings.c
-* @page tvSettings_L1_Tests TV SETTINGS Level 1 Tests
+* @page TV_Settings_HALTEST_L1  
 *
 * ## Module's Role
 * This module includes Level 1 functional tests (success and failure scenarios).
@@ -6351,3 +6371,8 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "SetGammaPattern_L1_negative" ,test_l1_tvSettings_negative_SetGammaPattern );
 	return 0;
 } 
+
+/** @} */ // End of TV_Settings_HALTEST_L1
+/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings
+/** @} */ // End of HPK
