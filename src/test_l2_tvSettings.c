@@ -18,9 +18,29 @@
 */
 
 /**
-* @file TODO: test_l2_tvSettings.c
-* @page module_name TODO: Required field, name of the main module
-* @subpage sub_page_name TODO: Add a function group if relevant
+* @addtogroup HPK HPK
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings TV Settings Module
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST TV Settings HAL Test
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST_L1 TV Settings HAL L2 Test Cases
+* @{
+**/
+
+/**
+* @file test_l2_tvSettings.c
+* @page TV_Settings_HALTEST_L1
+* @subpage TV_Settings_HALTEST_L1
 *
 * ## Module's Role
 * TODO: Explain the module's role in the system in general
@@ -75,3 +95,7 @@ int test_l2_tvSettings_register ( void )
 
 	return 0;
 } 
+/** @} */ // End of TV_Settings_HALTEST_L2
+/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings
+/** @} */ // End of HPK
