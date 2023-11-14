@@ -62,7 +62,7 @@
 *
 * Call SetColorTemperatureUser() with rgbType = valid gain data (loop from config file), "value"= invalid data
 *
-
+* @todo 2. same varaition need to update in other APIs * | 10, 11, 12 |  test_l1_tvSettings_negative_SaveBacklight()
 *
 * @todo 3.  correct range (0-100)  below ex:
 *| 02 | call GetContrast() - Retrieve the current contrast with valid arguments within the correct range (0-100)| int * | tvERROR_NONE | Should Pass |
@@ -4447,9 +4447,11 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * | 07 | call SaveBacklight() -  Save current Color Backlight with invalid hdr_type less than the lower range| tv_source_input_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveBacklight() -  Save current Color Backlight with invalid value with less than the lower range | tv_source_input_t, int , tvhdr_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveBacklight() -  Save current Color Backlight with invalid value with max range | tv_source_input_t, int , tvhdr_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveBacklight() -  Save current Color Backlight with valid source input, pqmode, hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 12 | call SaveBacklight() -  Retrieve current TV Backlight valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
+* | 10 | call SaveBacklight() -  Save current Color Backlight with valid source input value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SaveBacklight() -  Save current Color Backlight with valid  pqmode value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call SaveBacklight() -  Save current Color Backlight with valid hdr_type value but not supported by the platform by looping through the test specific config file| tv_source_input_t, int , tvhdr_type_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 14 | call SaveBacklight() -  Retrieve current TV Backlight valid arguments | tv_source_input_t, int , tvhdr_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveBacklight (void)
 {
@@ -4904,19 +4906,21 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 * | 01 | call SaveCMS() -  save the CMS even before tvInit() |  tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit()  -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SaveCMS() -  "pqmode,hdr_type,tunnel_type,color_type,value"= valid , "source"= Invalid maxrange | SOURCE_MAX, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveCMS() -  "pqmode,hdr_type,tunnel_type,color_type,value"= valid , "source"= Invalid lowerrange | SOURCE_INVALID, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveCMS() -  "pqmode,hdr_type,tunnel_type,color_type,value"= valid , "source"= Invalid lowerrange | -2, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveCMS() -  "source,hdr_type,tunnel_type,color_type,value"= valid , "pqmode"= Invalid maxrange | tv_source_input_t, PQ_MODE_MAX ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveCMS() -  "source,hdr_type,tunnel_type,color_type,value"= valid , "pqmode"= Invalid lowerrange | tv_source_input_t, -1 ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveCMS() -  "source,pqmode,tunnel_type,color_type,value"= valid , "hdr_type"= Invalid lowerrange | tv_source_input_t, int ,HDR_TYPE_MAX ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveCMS() -  "source,pqmode,tunnel_type,color_type,value"= valid , "hdr_type"= Invalid maxrange | tv_source_input_t, int ,HDR_TYPE_MAX ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveCMS() -  "source,pqmode,tunnel_type,color_type,value"= valid , "hdr_type"= Invalid lowerrange | tv_source_input_t, int ,-1 ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveCMS() -  "source,pqmode,hdr_type,color_type,value"= valid , "tunnel_type"= Invalid lowerrange | tv_source_input_t, int ,tvhdr_type_t ,TUNEL_TYPE_MAX ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveCMS() -  "source,pqmode,hdr_type,color_type,value"= valid , "tunnel_type"= Invalid maxrange | tv_source_input_t, int ,tvhdr_type_t ,TUNEL_TYPE_MAX ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call SaveCMS() -  "source,pqmode,hdr_type,color_type,value"= valid , "tunnel_type"= Invalid lowerrange | tv_source_input_t, int ,tvhdr_type_t ,-1 ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call SaveCMS() -  "source,pqmode,hdr_type,tunnel_type,value"= valid , "color_type"= Invalid lowerrange | tv_source_input_t, int ,-1 ,tvCMS_tunel_t ,COLOR_TYPE_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SaveCMS() -  "source,pqmode,hdr_type,tunnel_type,value"= valid , "color_type"= Invalid maxrange | tv_source_input_t, int ,-1 ,tvCMS_tunel_t ,COLOR_TYPE_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call SaveCMS() -  "source,pqmode,hdr_type,tunnel_type,value"= valid , "color_type"= Invalid lowerrange | tv_source_input_t, int ,-1 ,tvCMS_tunel_t ,-1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 13 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" =Hue and Saturation "value"= Invalid maxrange | SOURCE_MAX, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 14 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Hue and Saturation "value"= Invalid lowerrange | SOURCE_INVALID, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 15 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Luma "value"= Invalid maxrange | SOURCE_INVALID, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,31| tvERROR_INVALID_PARAM | Should Pass |
-* | 16 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Luma "value"= Invalid lowerrange | SOURCE_INVALID, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Saturation "value"= Invalid maxrange | SOURCE_MAX, int ,tvhdr_type_t ,COLOR_SATURATION ,tvcomponent_color_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 14 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Saturation "value"= Invalid lowerrange | SOURCE_INVALID, int ,tvhdr_type_t ,COLOR_SATURATION ,tvcomponent_color_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" =Hue  "value"= Invalid maxrange | SOURCE_MAX, int ,tvhdr_type_t ,COLOR_HUE ,tvcomponent_color_type_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 14 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Hue  "value"= Invalid lowerrange | SOURCE_INVALID, int ,tvhdr_type_t ,COLOR_HUE ,tvcomponent_color_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 15 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Luma "value"= Invalid maxrange | tv_source_input_t , int ,tvhdr_type_t ,COLOR_LUMA ,tvcomponent_color_type_t ,31| tvERROR_INVALID_PARAM | Should Pass |
+* | 16 | call SaveCMS() -  "source, pqmode,hdr_type,color_type"= valid , "tunnel_type" = Luma "value"= Invalid lowerrange |tv_source_input_t , int ,tvhdr_type_t ,COLOR_LUMA ,tvcomponent_color_type_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 17 | call SaveCMS() -  "source, pqmode,hdr_type, tunnel_type color_type"= valid (looping through the test specific config file),"value"= valid | SOURCE_INVALID, int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 18 | call tvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 19 | call SaveCMS() -  save the CMS valid arguments |  tv_source_input_t , int ,tvhdr_type_t ,tvCMS_tunel_t ,tvcomponent_color_type_t ,int| tvERROR_INVALID_STATE | Should Pass |
