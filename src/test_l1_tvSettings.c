@@ -44,6 +44,8 @@
 *
 * @todo 2. move to L2 test case GetCurrentContentFormat(), GetVideoResolution(), GetVideoFrameRate(), SetRGBPattern()
 *
+* @todo 3.  correct range (0-100)  
+*
 */
 
 /**
