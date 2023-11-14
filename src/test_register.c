@@ -17,6 +17,26 @@
 *  limitations under the License.
 */
 
+/**
+* @addtogroup HPK HPK
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings TV Settings Module
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST TV Settings HAL Test
+* @{
+**/
+ 
+/**
+* @defgroup TV_Settings_HALTEST_REGISTER TV Settings HAL Test's Registration
+* @{
+**/
+
 #include <ut.h>
 
 /**
@@ -49,3 +69,8 @@ int UT_register_APIDEF_l2_tests( void )
 
 	return registerFailed;
 }
+
+/** @} */ // End of TV_Settings_HALTEST_REGISTER
+/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings
+/** @} */ // End of HPK
