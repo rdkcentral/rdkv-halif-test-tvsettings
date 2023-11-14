@@ -58,6 +58,12 @@
 #include <ut.h>
 #include <ut_log.h>
 
+/*
+*
+* @todo 1. move to L2 test case GetCurrentContentFormat(), GetVideoResolution(), GetVideoFrameRate(), SetRGBPattern()
+*
+**/
+
 /**
 * @brief TODO: Describe the object of the test
 *
