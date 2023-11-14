@@ -4986,8 +4986,8 @@ void test_l1_tvSettings_negative_SaveDolbyMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetNumberOfModesupported() -  Retrieve the current Mode supported with valid arguments | int * | tvERROR_NONE | Should Pass |
-* | 03 | call GetNumberOfModesupported() -  Retrieve the current Mode supported with valid arguments and validate with above value | int * | tvERROR_NONE | Should Pass |
+* | 02 | call GetNumberOfModesupported() -  Retrieve the Mode count supported with valid param and validate against config pq_mode values' count | int * | tvERROR_NONE | Should Pass |
+* | 03 | call GetNumberOfModesupported() -  Retrieve the Mode count supported with valid param and validate against config pq_mode values' count. Also check against above value and confirm it is the same | int * | tvERROR_NONE | Should Pass |
 * | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
