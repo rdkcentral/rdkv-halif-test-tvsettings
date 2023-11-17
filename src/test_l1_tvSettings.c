@@ -1671,7 +1671,7 @@ void test_l1_tvSettings_negative_GetGrayPattern (void)
 * @brief Validate SetColorTemp_Rgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 87@n
+* **Test Case ID:** 63@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1702,7 +1702,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 88@n
+* **Test Case ID:** 64@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1736,7 +1736,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 * @brief Validate GetColorTemp_Rgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 89@n
+* **Test Case ID:** 65@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1762,7 +1762,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 90@n
+* **Test Case ID:** 66@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1793,7 +1793,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 * @brief Validate SetColorTemp_Ggain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 91@n
+* **Test Case ID:** 67@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1824,7 +1824,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 92@n
+* **Test Case ID:** 68@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1858,7 +1858,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 * @brief Validate GetColorTemp_Ggain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 93@n
+* **Test Case ID:** 69@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1884,7 +1884,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 94@n
+* **Test Case ID:** 70@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1915,7 +1915,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 * @brief Validate SetColorTemp_Bgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 95@n
+* **Test Case ID:** 71@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1946,7 +1946,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 96@n
+* **Test Case ID:** 72@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1980,7 +1980,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 * @brief Validate GetColorTemp_Bgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 97@n
+* **Test Case ID:** 73@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2006,7 +2006,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 98@n
+* **Test Case ID:** 74@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2036,7 +2036,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 * @brief Validate SetColorTemp_R_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 99@n
+* **Test Case ID:** 75@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2068,7 +2068,7 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 100@n
+* **Test Case ID:** 76@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2104,7 +2104,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 * @brief Validate GetColorTemp_R_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 101@n
+* **Test Case ID:** 77@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2130,7 +2130,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 * @brief Validate GetColorTemp_R_post_offset_onSource() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 102@n
+* **Test Case ID:** 78@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2161,7 +2161,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 * @brief Validate SetColorTemp_G_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 103@n
+* **Test Case ID:** 79@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2191,7 +2191,7 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 104@n
+* **Test Case ID:** 80@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2225,7 +2225,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 * @brief Validate GetColorTemp_G_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 105@n
+* **Test Case ID:** 81@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2251,7 +2251,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 * @brief Validate GetColorTemp_G_post_offset_onSource() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 106@n
+* **Test Case ID:** 82@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2282,7 +2282,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 * @brief Validate SetColorTemp_B_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 107@n
+* **Test Case ID:** 83@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2312,7 +2312,7 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 108@n
+* **Test Case ID:** 84@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2346,7 +2346,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 * @brief Validate GetColorTemp_B_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 109@n
+* **Test Case ID:** 85@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2372,7 +2372,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 110@n
+* **Test Case ID:** 86@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2403,7 +2403,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 * @brief Validate GetTVSupportedPictureModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 111@n
+* **Test Case ID:** 87@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2428,7 +2428,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 112@n
+* **Test Case ID:** 88@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2455,7 +2455,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 * @brief Validate GetTVSupportedDVModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 113@n
+* **Test Case ID:** 89@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2480,7 +2480,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDVModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 114@n
+* **Test Case ID:** 90@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2507,7 +2507,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDVModes (void)
 * @brief Validate SetTVDolbyVisionMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 115@n
+* **Test Case ID:** 91@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2532,7 +2532,7 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 116@n
+* **Test Case ID:** 92@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2558,7 +2558,7 @@ void test_l1_tvSettings_negative_SetTVDolbyVisionMode (void)
 * @brief Validate GetTVDolbyVisionMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 117@n
+* **Test Case ID:** 93@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2583,7 +2583,7 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 118@n
+* **Test Case ID:** 94@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2608,7 +2608,7 @@ void test_l1_tvSettings_negative_GetTVDolbyVisionMode (void)
 * @brief Validate SetTVHLGMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 119@n
+* **Test Case ID:** 95@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2633,7 +2633,7 @@ void test_l1_tvSettings_positive_SetTVHLGMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 120@n
+* **Test Case ID:** 96@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2659,7 +2659,7 @@ void test_l1_tvSettings_negative_SetTVHLGMode (void)
 * @brief Validate SetTVHDR10Mode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 121@n
+* **Test Case ID:** 97@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2684,7 +2684,7 @@ void test_l1_tvSettings_positive_SetTVHDR10Mode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 122@n
+* **Test Case ID:** 98@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2710,7 +2710,7 @@ void test_l1_tvSettings_negative_SetTVHDR10Mode (void)
 * @brief Validate GetTVSupportedHLGModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 123@n
+* **Test Case ID:** 99@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2736,7 +2736,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHLGModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 124@n
+* **Test Case ID:** 100@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2763,7 +2763,7 @@ void test_l1_tvSettings_negative_GetTVSupportedHLGModes (void)
 * @brief Validate GetTVSupportedHDR10Modes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 125@n
+* **Test Case ID:** 101@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2789,7 +2789,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHDR10Modes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 126@n
+* **Test Case ID:** 102@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2816,7 +2816,7 @@ void test_l1_tvSettings_negative_GetTVSupportedHDR10Modes (void)
 * @brief Validate SetDynamicContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 127@n
+* **Test Case ID:** 103@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2843,7 +2843,7 @@ void test_l1_tvSettings_positive_SetDynamicContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 128@n
+* **Test Case ID:** 104@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2867,7 +2867,7 @@ void test_l1_tvSettings_negative_SetDynamicContrast (void)
 * @brief Validate GetDynamicContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 129@n
+* **Test Case ID:** 105@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2893,7 +2893,7 @@ void test_l1_tvSettings_positive_GetDynamicContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 130@n
+* **Test Case ID:** 106@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2918,7 +2918,7 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 * @brief Validate setWBctrl() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 131@n
+* **Test Case ID:** 107@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2948,7 +2948,7 @@ void test_l1_tvSettings_positive_setWBctrl (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 132@n
+* **Test Case ID:** 108@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2986,7 +2986,7 @@ void test_l1_tvSettings_negative_setWBctrl (void)
 * @brief Validate getWBctrl() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 133@n
+* **Test Case ID:** 109@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3009,7 +3009,7 @@ void test_l1_tvSettings_positive_getWBctrl (void)
 * @brief Validate getWBctrl() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 134@n
+* **Test Case ID:** 110@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3040,7 +3040,7 @@ void test_l1_tvSettings_negative_getWBctrl (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 135@n
+* **Test Case ID:** 111@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3067,7 +3067,7 @@ void test_l1_tvSettings_positive_enableWBmode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 136@n
+* **Test Case ID:** 112@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3091,7 +3091,7 @@ void test_l1_tvSettings_negative_enableWBmode (void)
 * @brief Validate GetSupportedComponentColor() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 137@n
+* **Test Case ID:** 113@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3114,7 +3114,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 * @brief Validate GetSupportedComponentColor() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 138@n
+* **Test Case ID:** 114@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3140,7 +3140,7 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 * @brief Validate SetCurrentComponentSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 139@n
+* **Test Case ID:** 115@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3167,7 +3167,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 140@n
+* **Test Case ID:** 116@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3196,7 +3196,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 * @brief Validate GetCurrentComponentSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 141@n
+* **Test Case ID:** 117@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3219,7 +3219,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 * @brief Validate GetCurrentComponentSaturation() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 142@n
+* **Test Case ID:** 118@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3246,7 +3246,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 * @brief Validate SetCurrentComponentHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 143@n
+* **Test Case ID:** 119@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3273,7 +3273,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 144@n
+* **Test Case ID:** 120@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3302,7 +3302,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 * @brief Validate GetCurrentComponentHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 145@n
+* **Test Case ID:** 121@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3325,7 +3325,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 * @brief Validate GetCurrentComponentHue() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 146@n
+* **Test Case ID:** 122@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3352,7 +3352,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 * @brief Validate SetCurrentComponentLuma() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 147@n
+* **Test Case ID:** 123@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3378,7 +3378,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 148@n
+* **Test Case ID:** 124@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3408,7 +3408,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 * @brief Validate GetCurrentComponentLuma() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 149@n
+* **Test Case ID:** 125@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3431,7 +3431,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 * @brief Validate GetCurrentComponentLuma() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 150@n
+* **Test Case ID:** 126@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3458,7 +3458,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 * @brief Validate GetTVSupportedDimmingModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 151@n
+* **Test Case ID:** 127@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3483,7 +3483,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 152@n
+* **Test Case ID:** 128@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3509,7 +3509,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 * @brief Validate SetTVDimmingMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 153@n
+* **Test Case ID:** 129@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3534,7 +3534,7 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 154@n
+* **Test Case ID:** 130@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3560,7 +3560,7 @@ void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 * @brief Validate GetCurrentContentFormat() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 157@n
+* **Test Case ID:** 131@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3584,7 +3584,7 @@ void test_l1_tvSettings_positive_GetCurrentContentFormat (void)
 * @brief Validate GetCurrentContentFormat() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 158@n
+* **Test Case ID:** 132@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3605,7 +3605,7 @@ void test_l1_tvSettings_negative_GetCurrentContentFormat (void)
 * @brief Validate GetSupportedContentFormats() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 159@n
+* **Test Case ID:** 133@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3628,7 +3628,7 @@ void test_l1_tvSettings_positive_GetSupportedContentFormats (void)
 * @brief Validate GetSupportedContentFormats() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 160@n
+* **Test Case ID:** 134@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3654,7 +3654,7 @@ void test_l1_tvSettings_negative_GetSupportedContentFormats (void)
 * @brief Validate SaveColorTemperature() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 161@n
+* **Test Case ID:** 135@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3679,7 +3679,7 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 162@n
+* **Test Case ID:** 136@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3712,7 +3712,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 * @brief Validate SaveBacklight() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 163@n
+* **Test Case ID:** 137@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3737,7 +3737,7 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 164@n
+* **Test Case ID:** 138@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3772,7 +3772,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 * @brief Validate SaveContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 165@n
+* **Test Case ID:** 139@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3797,7 +3797,7 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 166@n
+* **Test Case ID:** 140@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3830,7 +3830,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 * @brief Validate SaveSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 167@n
+* **Test Case ID:** 141@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3855,7 +3855,7 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 168@n
+* **Test Case ID:** 142@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3888,7 +3888,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 * @brief Validate SaveSharpness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 169@n
+* **Test Case ID:** 143@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3913,7 +3913,7 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 170@n
+* **Test Case ID:** 144@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3946,7 +3946,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 * @brief Validate SaveBrightness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 171@n
+* **Test Case ID:** 145@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3971,7 +3971,7 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 172@n
+* **Test Case ID:** 146@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4004,7 +4004,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 * @brief Validate SaveHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 173@n
+* **Test Case ID:** 147@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4029,7 +4029,7 @@ void test_l1_tvSettings_positive_SaveHue (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 174@n
+* **Test Case ID:** 148@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4062,7 +4062,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 * @brief Validate SaveDynamicBacklight() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 175@n
+* **Test Case ID:** 149@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4087,7 +4087,7 @@ void test_l1_tvSettings_positive_SaveDynamicBacklight (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 176@n
+* **Test Case ID:** 150@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4120,7 +4120,7 @@ void test_l1_tvSettings_negative_SaveDynamicBacklight (void)
 * @brief Validate SaveDisplayMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 177@n
+* **Test Case ID:** 151@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4145,7 +4145,7 @@ void test_l1_tvSettings_positive_SaveDisplayMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 178@n
+* **Test Case ID:** 152@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4178,7 +4178,7 @@ void test_l1_tvSettings_negative_SaveDisplayMode (void)
 * @brief Validate SaveCMS() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 179@n
+* **Test Case ID:** 153@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4203,7 +4203,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 180@n
+* **Test Case ID:** 154@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4244,7 +4244,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 * @brief Validate SaveDolbyMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 181@n
+* **Test Case ID:** 155@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4269,7 +4269,7 @@ void test_l1_tvSettings_positive_SaveDolbyMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 182@n
+* **Test Case ID:** 156@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4302,7 +4302,7 @@ void test_l1_tvSettings_negative_SaveDolbyMode (void)
 * @brief Validate GetNumberOfModesupported() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 183@n
+* **Test Case ID:** 157@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4326,7 +4326,7 @@ void test_l1_tvSettings_positive_GetNumberOfModesupported (void)
 * @brief Validate GetNumberOfModesupported() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 184@n
+* **Test Case ID:** 158@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4351,7 +4351,7 @@ void test_l1_tvSettings_negative_GetNumberOfModesupported (void)
 * @brief Validate GetCurrentPQIndex() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 185@n
+* **Test Case ID:** 159@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4374,7 +4374,7 @@ void test_l1_tvSettings_positive_GetCurrentPQIndex (void)
 * @brief Validate GetCurrentPQIndex() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 186@n
+* **Test Case ID:** 160@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4399,7 +4399,7 @@ void test_l1_tvSettings_negative_GetCurrentPQIndex (void)
 * @brief Validate GetCMSDefault() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 189@n
+* **Test Case ID:** 161@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4424,7 +4424,7 @@ void test_l1_tvSettings_positive_GetCMSDefault (void)
 * @brief Validate GetCMSDefault() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 190@n
+* **Test Case ID:** 162@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4450,7 +4450,7 @@ void test_l1_tvSettings_negative_GetCMSDefault (void)
 * @brief Validate SetCMSState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 193@n
+* **Test Case ID:** 163@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4475,7 +4475,7 @@ void test_l1_tvSettings_positive_SetCMSState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 194@n
+* **Test Case ID:** 164@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4508,7 +4508,7 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 * @brief Validate SetColorTemperatureUser() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 195@n
+* **Test Case ID:** 165@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4533,7 +4533,7 @@ void test_l1_tvSettings_positive_SetColorTemperatureUser (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 196@n
+* **Test Case ID:** 166@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4562,7 +4562,7 @@ void test_l1_tvSettings_negative_SetColorTemperatureUser (void)
 * @brief Validate SaveColorTemperatureUser() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 197@n
+* **Test Case ID:** 167@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4587,7 +4587,7 @@ void test_l1_tvSettings_positive_SaveColorTemperatureUser (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 198@n
+* **Test Case ID:** 168@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4616,7 +4616,7 @@ void test_l1_tvSettings_negative_SaveColorTemperatureUser (void)
 * @brief Validate SetBacklightFade() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 203@n
+* **Test Case ID:** 169@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4643,7 +4643,7 @@ void test_l1_tvSettings_positive_SetBacklightFade (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 204@n
+* **Test Case ID:** 170@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4670,7 +4670,7 @@ void test_l1_tvSettings_negative_SetBacklightFade (void)
 * This test ensures that the TV Settings module is to set Gamma Mode value
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 205@n
+* **Test Case ID:** 171@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4698,7 +4698,7 @@ void test_l1_tvSettings_positive_SetGammaMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 206@n
+* **Test Case ID:** 172@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4724,7 +4724,7 @@ void test_l1_tvSettings_negative_SetGammaMode (void)
 * @brief Validate SetLocalDimmingLevel() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 207@n
+* **Test Case ID:** 173@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4751,7 +4751,7 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 208@n
+* **Test Case ID:** 174@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4777,7 +4777,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 * @brief Validate GetLocalDimmingLevel() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 209@n
+* **Test Case ID:** 175@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4800,7 +4800,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 * @brief Validate GetLocalDimmingLevel() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 210@n
+* **Test Case ID:** 176@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4825,7 +4825,7 @@ void test_l1_tvSettings_negative_GetLocalDimmingLevel (void)
 * @brief Validate SaveLocalDimmingLevel() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 211@n
+* **Test Case ID:** 177@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4850,7 +4850,7 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 212@n
+* **Test Case ID:** 178@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4883,7 +4883,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 * @brief Validate SaveLowLatencyState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 213@n
+* **Test Case ID:** 179@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4908,7 +4908,7 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 214@n
+* **Test Case ID:** 180@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4941,7 +4941,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 * @brief Validate SetLowLatencyState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 215@n
+* **Test Case ID:** 181@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4968,7 +4968,7 @@ void test_l1_tvSettings_positive_SetLowLatencyState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 216@n
+* **Test Case ID:** 182@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4994,7 +4994,7 @@ void test_l1_tvSettings_negative_SetLowLatencyState (void)
 * @brief Validate GetLowLatencyState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 217@n
+* **Test Case ID:** 183@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5019,7 +5019,7 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 218@n
+* **Test Case ID:** 184@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5045,7 +5045,7 @@ void test_l1_tvSettings_negative_GetLowLatencyState (void)
 * @brief Validate SetGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 219@n
+* **Test Case ID:** 185@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5070,7 +5070,7 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 220@n
+* **Test Case ID:** 186@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5105,7 +5105,7 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 * @brief Validate GetGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 221@n
+* **Test Case ID:** 187@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5130,7 +5130,7 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 222@n
+* **Test Case ID:** 188@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5161,7 +5161,7 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
 * @brief Validate SaveGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 223@n
+* **Test Case ID:** 189@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5186,7 +5186,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 224@n
+* **Test Case ID:** 190@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5224,7 +5224,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 * @brief Validate SetGammaPattern() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 225@n
+* **Test Case ID:** 191@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5253,7 +5253,7 @@ void test_l1_tvSettings_positive_SetGammaPattern (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 226@n
+* **Test Case ID:** 192@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5284,7 +5284,7 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
 * @brief Validate getWBInfo() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 227@n
+* **Test Case ID:** 193@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5307,7 +5307,7 @@ void test_l1_tvSettings_positive_getWBInfo (void)
 * @brief Validate getWbInfo() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 228@n
+* **Test Case ID:** 194@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5406,30 +5406,6 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "SetGrayPattern_L1_negative" ,test_l1_tvSettings_negative_SetGrayPattern );
 	UT_add_test( pSuite, "GetGrayPattern_L1_positive" ,test_l1_tvSettings_positive_GetGrayPattern );
 	UT_add_test( pSuite, "GetGrayPattern_L1_negative" ,test_l1_tvSettings_negative_GetGrayPattern );
-	UT_add_test( pSuite, "SetColorTemp_Rgain_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_Rgain );
-	UT_add_test( pSuite, "SetColorTemp_Rgain_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_Rgain );
-	UT_add_test( pSuite, "GetColorTemp_Rgain_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_Rgain );
-	UT_add_test( pSuite, "GetColorTemp_Rgain_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_Rgain );
-	UT_add_test( pSuite, "SetColorTemp_Ggain_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_Ggain );
-	UT_add_test( pSuite, "SetColorTemp_Ggain_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_Ggain );
-	UT_add_test( pSuite, "GetColorTemp_Ggain_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_Ggain );
-	UT_add_test( pSuite, "GetColorTemp_Ggain_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_Ggain );
-	UT_add_test( pSuite, "SetColorTemp_Bgain_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_Bgain );
-	UT_add_test( pSuite, "SetColorTemp_Bgain_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_Bgain );
-	UT_add_test( pSuite, "GetColorTemp_Bgain_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_Bgain );
-	UT_add_test( pSuite, "GetColorTemp_Bgain_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_Bgain );
-	UT_add_test( pSuite, "SetColorTemp_R_post_offset_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_R_post_offset );
-	UT_add_test( pSuite, "SetColorTemp_R_post_offset_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_R_post_offset );
-	UT_add_test( pSuite, "GetColorTemp_R_post_offset_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_R_post_offset );
-	UT_add_test( pSuite, "GetColorTemp_R_post_offset_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_R_post_offset );
-	UT_add_test( pSuite, "SetColorTemp_G_post_offset_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_G_post_offset );
-	UT_add_test( pSuite, "SetColorTemp_G_post_offset_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_G_post_offset );
-	UT_add_test( pSuite, "GetColorTemp_G_post_offset_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_G_post_offset );
-	UT_add_test( pSuite, "GetColorTemp_G_post_offset_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_G_post_offset );
-	UT_add_test( pSuite, "SetColorTemp_B_post_offset_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_B_post_offset );
-	UT_add_test( pSuite, "SetColorTemp_B_post_offset_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_B_post_offset );
-	UT_add_test( pSuite, "GetColorTemp_B_post_offset_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_B_post_offset );
-	UT_add_test( pSuite, "GetColorTemp_B_post_offset_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_B_post_offset );
 	UT_add_test( pSuite, "SetColorTemp_Rgain_onSource_L1_positive" ,test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource );
 	UT_add_test( pSuite, "SetColorTemp_Rgain_onSource_L1_negative" ,test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource );
 	UT_add_test( pSuite, "GetColorTemp_Rgain_onSource_L1_positive" ,test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource );
