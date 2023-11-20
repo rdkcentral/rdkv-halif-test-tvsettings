@@ -5295,7 +5295,7 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call getWBInfo() -  Retrieve the white balance info into params getWBInfo struct, selector vector, colortemp vector and input type vector| getWBInfo_t *, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_NONE | Should Pass |
+* | 02 | call getWBInfo() - Retrieve the white balance info into params getWBInfo struct, selector vector, colortemp vector and input type vector by looping through the from test specific config file | getWBInfo_t *, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_NONE | Should Pass |
 * | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_getWBInfo (void)
@@ -5319,9 +5319,13 @@ void test_l1_tvSettings_positive_getWBInfo (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call getWbInfo() -  Retrieve the white balance info even before tvInit() | getWbInfo_t *, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call getWbInfo() -  Retrieve the white balance info with invalid input of getWbInfo gain max value | getWbInfo_t *(gain:2048), vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 05 | call getWbInfo() -  Retrieve the white balance info even after tvInit() | getWbInfo_t *, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call getWbInfo() -  Retrieve the white balance info with invalid getWbInfo_t input | NULL, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call getWbInfo() -  Retrieve the white balance info with invalid selector input |  NULL, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call getWbInfo() -  Retrieve the white balance info with invalid selector input | getWbInfo_t *, NULL, vector<std::string>, vector<std::string> | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call getWbInfo() -  Retrieve the white balance info with invalid colorTmp input | getWbInfo_t *, vector<std::string>, NULL, vector<std::string> | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call getWbInfo() -  Retrieve the white balance info with invalid input address| getWbInfo_t *, vector<std::string>, vector<std::string>, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 09 | call getWbInfo() -  Retrieve the white balance info even after tvInit() | getWbInfo_t *, vector<std::string>, vector<std::string>, vector<std::string> | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_getWbInfo (void)
 {
