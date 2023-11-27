@@ -11,9 +11,12 @@
 #define HDR10_MODE_FLAG 			0x03
 #define PIC_MODE_FLAG 				0x04
 #define DIM_MODE_FLAG 				0x05
-#define VIDEO_FORMAT_MODE_FLAG 		0x06
-#define VIDEO_RESOLUTION_MODE_FLAG 	0x07
-#define FRAMERATE_MODE_FLAG 		0x08
+#define VIDEO_FORMAT_MODE_FLAG 		        0x06
+#define VIDEO_RESOLUTION_MODE_FLAG 	        0x07
+#define FRAMERATE_MODE_FLAG 		        0x08
+#define COLOR_TEMP_FLAG 		        0x09
+#define ASPECT_RATIO_FLAG 		        0x0A
+
 
 #define MAX_VIDEO_FORMAT         20
 #define MAX_DIMMING_MODES        20
@@ -33,6 +36,8 @@ struct tvSettingConf{
 	struct modes hlg_modes;
 	struct modes hdr10_modes;
 	struct modes pic_modes;
+	struct modes colorTemperature;
+	struct modes ApsectRatio;
 	char dimmode[MAX_DIMMING_MODES][MAX_NAME_SIZE];
 	char videoformat[MAX_VIDEO_FORMAT][MAX_NAME_SIZE];
 	char videoresolution[MAX_VIDEO_FORMAT][MAX_NAME_SIZE];
@@ -49,7 +54,6 @@ static void Usage()
 
 int config_read(char *filename)
 {
-
 	int i =0, mode, Count =0;
 	char buf[MAX_BUF_SIZE]={0};
 	char section[MAX_KEY_LENGTH];
@@ -69,6 +73,7 @@ int config_read(char *filename)
 		if (buf[i] == '[') {
 			mode = 0;
 			Count= 0;
+			printf("\n");
 			if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "dvmodes") == 0) {
 				mode = DV_MODE_FLAG;
 			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "hlgmodes") == 0) {
@@ -85,6 +90,10 @@ int config_read(char *filename)
 				mode = VIDEO_RESOLUTION_MODE_FLAG;
 			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "videoframerate") == 0) {
 				mode = FRAMERATE_MODE_FLAG;
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "colorTemperature") == 0) {
+				mode = COLOR_TEMP_FLAG;
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "AspectRatio") == 0) {
+				mode = ASPECT_RATIO_FLAG;
 			}
 
 		}else {
@@ -127,12 +136,20 @@ int config_read(char *filename)
 					printf("**%s ****\n", Configfile.videoframerate[Count]);
 					Count++;
 				}
+			}else if(COLOR_TEMP_FLAG == mode){
+				if (sscanf(buf, "%s %hd", Configfile.colorTemperature.modeName[Count], &Configfile.colorTemperature.modeId[Count]) == 2) {
+					printf("**%s  %d***\n", Configfile.colorTemperature.modeName[Count], Configfile.colorTemperature.modeId[Count]);
+					Count++;
+				}
+			}else if(ASPECT_RATIO_FLAG == mode){
+				if (sscanf(buf, "%s %hd", Configfile.ApsectRatio.modeName[Count], &Configfile.ApsectRatio.modeId[Count]) == 2) {
+					printf("**%s  %d***\n", Configfile.ApsectRatio.modeName[Count], Configfile.ApsectRatio.modeId[Count]);
+					Count++;
+				}
 			}
 		}
 	}
 	
 	fclose(file);
-
 	return 1;
-
 }
