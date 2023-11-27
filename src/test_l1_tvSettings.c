@@ -1800,9 +1800,9 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemperature and expecting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colortempToLoop)/sizeof(Configfile.colortempToLoop[0])); i++)
+	for (size_t i = 0; i < (sizeof(Configfile.colorTemperature.modeId)/sizeof(Configfile.colorTemperature.modeId[0])); i++)
 	{
-			result = SetColorTemperature(Configfile.colortempToLoop[i]);
+			result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemperature.modeId[i]);
 			UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 	}
 
@@ -1848,7 +1848,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	int numberofColortemp;
 
 	/* Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemperature(Configfile.colortempToLoop[0]);
+	result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemperature.modeId[0]);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings initialization and expecting the API to return success */
@@ -1864,12 +1864,12 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofColortemp = sizeof(Configfile.colortempToLoop)/sizeof(Configfile.colortempToLoop[0]);
+	numberofColortemp = sizeof(Configfile.colorTemperature.modeId)/sizeof(Configfile.colorTemperature.modeId[0]);
 	for(int i =0 ; i < numberofColortemp; i++)
 	{
 		 for(int j = i+1 ; j < numberofColortemp; j++)
 		 {
-			result = SetColorTemperature((tvColorTemp_t) (Configfile.colortempToLoop[i] | Configfile.colortempToLoop[j]));
+			result = SetColorTemperature((tvColorTemp_t) (Configfile.colorTemperature.modeId[i] | Configfile.colorTemperature.modeId[j]));
 			UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_PARAM);
 		 }
 	}
@@ -1879,7 +1879,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings the SetColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemperature(Configfile.colortempToLoop[0]);
+	result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemperature.modeId[0]);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -1921,9 +1921,9 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 	/* Calling tvsettings GetColorTemperature and expeting the API to return success */
 	result = GetColorTemperature(&tvColorTemp);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.colortempToLoop)/sizeof(Configfile.colortempToLoop[0])); i++)
+	for (size_t i = 0; i < (sizeof(Configfile.colorTemperature.modeId)/sizeof(Configfile.colorTemperature.modeId[0])); i++)
 	{
-		if (Configfile.colortempToLoop[i] == tvColorTemp) 
+		if (Configfile.colorTemperature.modeId[i] == tvColorTemp) 
 		{
 			IsColorTempValid = true;
 			break;
@@ -2024,9 +2024,9 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetAspectRatio and expecting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.displaymodeToLoop)/sizeof(Configfile.displaymodeToLoop[0])); i++)
+	for (size_t i = 0; i < (sizeof(Configfile.ApsectRatio.modeId)/sizeof(Configfile.ApsectRatio.modeId[0])); i++)
 	{
-			result = SetAspectRatio(Configfile.displaymodeToLoop[i]);
+			result = SetAspectRatio((tvDisplayMode_t)Configfile.ApsectRatio.modeId[i]);
 			UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 	}
 
@@ -2071,7 +2071,7 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 	int numberofDisplaymode;
 
 	/* Calling tvsettings SetTVAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetAspectRatio(Configfile.displaymodeToLoop[0]);
+	result = SetAspectRatio((tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings initialization and expecting the API to return success */
@@ -2087,12 +2087,12 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SetTVAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofDisplaymode = sizeof(Configfile.displaymodeToLoop)/sizeof(Configfile.displaymodeToLoop[0]);
+	numberofDisplaymode = sizeof(Configfile.ApsectRatio.modeId)/sizeof(Configfile.ApsectRatio.modeId[0]);
 	for(int i =0 ; i < numberofDisplaymode; i++)
 	{
 		 for(int j = i+1 ; j < numberofDisplaymode; j++)
 		 {
-			  result = SetAspectRatio((tvDisplayMode_t) (Configfile.displaymodeToLoop[i] | Configfile.displaymodeToLoop[j]));
+			  result = SetAspectRatio((tvDisplayMode_t) (Configfile.ApsectRatio.modeId[i] | Configfile.ApsectRatio.modeId[j]));
 			  UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_PARAM);
 		 }
 	}
@@ -2102,7 +2102,7 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings the SetTVColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetAspectRatio(Configfile.displaymodeToLoop[0]);
+	result = SetAspectRatio((tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -2144,9 +2144,9 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 	/* Calling tvsettings GetAspectRatio and expeting the API to return success */
 	result = GetAspectRatio(&tvDisplayMode);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.displaymodeToLoop)/sizeof(Configfile.displaymodeToLoop[0])); i++)
+	for (size_t i = 0; i < (sizeof(Configfile.ApsectRatio.modeId)/sizeof(Configfile.ApsectRatio.modeId[0])); i++)
 	{
-			if (Configfile.displaymodeToLoop[i] == tvDisplayMode)
+			if (Configfile.ApsectRatio.modeId[i] == tvDisplayMode)
 			{
 					isDisplayModeValid = true;
 					break;
