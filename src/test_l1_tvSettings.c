@@ -1368,19 +1368,19 @@ void test_l1_tvSettings_positive_SetSaturation (void)
 	result = tvInit();
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-	/* Calling tvsettings SetTVSaturation with Saturation value 0 and expecting the API to return success */
+	/* Calling tvsettings SetSaturation with Saturation value 0 and expecting the API to return success */
 	result = SetSaturation(0);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 
-	/* Calling tvsettings SetTVSaturation with Saturation value 50 and expecting the API to return success */
+	/* Calling tvsettings SetSaturation with Saturation value 50 and expecting the API to return success */
 	result = SetSaturation(50);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 
-	/* Calling tvsettings SetTVSaturation with Saturation value 100 and expecting the API to return success */
+	/* Calling tvsettings SetSaturation with Saturation value 100 and expecting the API to return success */
 	result = SetSaturation(100);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 
-	/* Calling tvsettings SetTVSaturation with Saturation value 100 and expecting the API to return success */
+	/* Calling tvsettings SetSaturation with Saturation value 100 and expecting the API to return success */
 	result = SetSaturation(100);
 	UT_ASSERT_EQUAL_NOT_FATAL(result, tvERROR_NONE);
 
@@ -1518,7 +1518,7 @@ void test_l1_tvSettings_positive_GetSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call GetSaturation() -  Retrieve current TV saturation even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetTVSaturation() -  Retrieve current TV Saturation with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetSaturation() -  Retrieve current TV Saturation with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 05 | call GetSaturation() -  Retrieve current TV saturation valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
