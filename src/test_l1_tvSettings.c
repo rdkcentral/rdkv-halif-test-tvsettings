@@ -2784,22 +2784,24 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SetDynamicGamma() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 105@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
-* **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetDynamicGamma() -  Set the Dynamic Gamma with valid value | 1.80 | tvERROR_NONE | Should Pass |
+* | 03 | call SetDynamicGamma() -  Reset the Dynamic Gamma with another valid value | 2.20 | tvERROR_NONE | Should Pass |
+* | 04 | call SetDynamicGamma() -  Reset the Dynamic Gamma with another valid value | 2.60 | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetDynamicGamma (void)
 {
@@ -2807,22 +2809,27 @@ void test_l1_tvSettings_positive_SetDynamicGamma (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SetDynamicGamma() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 106@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SetDynamicGamma() - Set the TV Dynamic Gamma even before TvInit() | 2.20 | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SetDynamicGamma() -  Set the TV Dynamic Gamma with less than the lower range | 1.79 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetDynamicGamma() -  Set the TV Dynamic Gamma with max range | 2.61 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call SetDynamicGamma() -  Set the TV Dynamic Gamma with valid input after TvTerm() | 2.20 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetDynamicGamma (void)
 {
@@ -2830,22 +2837,23 @@ void test_l1_tvSettings_negative_SetDynamicGamma (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetDynamicGamma() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 107@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetDynamicGamma() -  Retrieve the current Dynamic Gamma with valid arguments and validate range matching with the test specific config file | double * | tvERROR_NONE | Should Pass |
+* | 03 | call GetDynamicGamma() -  Retrieve the current Dynamic Gamma with valid arguments and validate with above value | double * | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetDynamicGamma (void)
 {
@@ -2853,22 +2861,26 @@ void test_l1_tvSettings_positive_GetDynamicGamma (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetDynamicGamma() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 108@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetDynamicGamma() -  Retrieve current TV Dynamic Gamma even before TvInit() | double * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetDynamicGamma() -  Retrieve current TV Dynamic Gamma with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetDynamicGamma() -  Retrieve current TV Dynamic Gamma valid arguments | double * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetDynamicGamma (void)
 {
@@ -2876,22 +2888,23 @@ void test_l1_tvSettings_negative_GetDynamicGamma (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVSupportedDolbyVisionModes() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 109@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVSupportedDolbyVisionModes() -  Retrieve the current Supported DolbyVision Modes and validate Supported DolbyVision modes by looping through the test specific config file | pic_modes_t *[], unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVSupportedDolbyVisionModes() -  Retrieve the current Supported VideoFormats with valid argument and validate with above value | pic_modes_t *[], unsigned short * | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 {
@@ -2899,22 +2912,25 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVSupportedDolbyVisionModes() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 110@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetTVSupportedDolbyVisionModes() -  Retrieve current TV Supported DolbyVision Modes even before tvInit() | pic_modes_t *[], unsigned short * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVSupportedDolbyVisionModes() -   Retrieve current TV Supported DolbyVision Modes with invalid input | pic_modes_t *[], NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetTVSupportedDolbyVisionModes() -   Retrieve current TV Supported DolbyVision Modes with invalid input | NULL, unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call GetTVSupportedDolbyVisionModes() -  Retrieve current TV Supported DolbyVision Modes valid arguments |pic_modes_t *[], unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 {
@@ -3024,22 +3040,22 @@ void test_l1_tvSettings_negative_GetTVDolbyVisionMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveTVDolbyVisionMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 115@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SaveTVDolbyVisionMode() -  Save the current DolbyVision Mode by looping through all the values of videosource Type, pqmode, videoFormatType, DolbyVision value from the test specific config file | tvVideoSrcType_t , int ,tvVideoFormatType_t ,int | tvERROR_NONE| Should Pass|
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 {
@@ -3047,22 +3063,34 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveTVDolbyVisionMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 116@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SaveTVDolbyVisionMode() -  save current DolbyVision Mode even before tvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t , tvMode_Max | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDolbyMode_Invalid | tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with valid value of source input, pqmode, videoFormatType but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 13 | call SaveTVDolbyVisionMode() -  save current DolbyVision Mode valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 {
@@ -3093,7 +3121,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHLGModes (void)
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/*todo : there is no return error cases*/
+/*todo : there is no return error cases*/  // change as new api change
 /**
 * @brief Validate GetTVSupportedHLGModes() for all negative invocation scenarios
 *
