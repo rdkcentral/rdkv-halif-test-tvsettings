@@ -147,7 +147,7 @@ void test_l1_tvSettings_negative_TvTerm (void)
 * @brief Validate RegisterVideoFormatChangeCB() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 195@n
+* **Test Case ID:** 05@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -171,7 +171,7 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 * @brief Validate RegisterVideoFormatChangeCB() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 196@n
+* **Test Case ID:** 06@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -197,7 +197,7 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 * @brief Validate RegisterVideoContentChangeCB() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 197@n
+* **Test Case ID:** 07@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -221,7 +221,7 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 * @brief Validate RegisterVideoContentChangeCB() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 198@n
+* **Test Case ID:** 08@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -247,7 +247,7 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 * @brief Validate RegisterVideoResolutionChangeCB() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 199@n
+* **Test Case ID:** 09@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -271,7 +271,7 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 * @brief Validate RegisterVideoResolutionChangeCB() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 200@n
+* **Test Case ID:** 10@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -298,7 +298,7 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 * @brief Validate RegisterVideoFrameRateChangeCB() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 201@n
+* **Test Case ID:** 11@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -322,7 +322,7 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 * @brief Validate RegisterVideoFrameRateChangeCB() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 202@n
+* **Test Case ID:** 12@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -348,7 +348,7 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 * @brief Validate GetTVSupportedVideoFormats() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 133@n
+* **Test Case ID:** 13@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -372,7 +372,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 * @brief Validate GetTVSupportedVideoFormats() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 134@n
+* **Test Case ID:** 14@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -398,7 +398,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats (void)
 * @brief Validate GetCurrentVideoFormat() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 47@n
+* **Test Case ID:** 15@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -422,7 +422,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 * @brief Validate GetCurrentVideoFormat() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 48@n
+* **Test Case ID:** 16@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -447,7 +447,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
 * @brief Validate GetCurrentVideoResolution() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 49@n
+* **Test Case ID:** 17@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -471,7 +471,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 * @brief Validate GetCurrentVideoResolution() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 50@n
+* **Test Case ID:** 18@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -496,7 +496,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoResolution (void)
 * @brief Validate GetCurrentVideoFrameRate() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 51@n
+* **Test Case ID:** 19@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -520,7 +520,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 * @brief Validate GetCurrentVideoFrameRate() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 52@n
+* **Test Case ID:** 20@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -542,22 +542,23 @@ void test_l1_tvSettings_negative_GetCurrentVideoFrameRate (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetCurrentVideoSource() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 21@n
+* 
+* **Pre-Conditions:** None@n
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentVideoSource() -  Retrieve the current VideoSource and validate VideoSource by looping through the test specific config file values | int *  | tvERROR_NONE | Should Pass |
+* | 03 | call GetCurrentVideoSource() -  Retrieve the current VideoSource with valid argument and validate with above value |int * | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 {
@@ -565,22 +566,24 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetCurrentVideoSource() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 22@n
+* 
+* **Pre-Conditions:** None@n
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetCurrentVideoSource() -  Retrieve current VideoSource even before tvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetCurrentVideoSource() -  Retrieve the current VideoSource with invalid arguments | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetCurrentVideoSource() -  Retrieve current VideoSource valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetCurrentVideoSource (void)
 {
@@ -588,22 +591,23 @@ void test_l1_tvSettings_negative_GetCurrentVideoSource (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVSupportedVideoSources() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 23@n
+* 
+* **Pre-Conditions:** None@n
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVSupportedVideoSources() -  Retrieve the current TV Supported VideoSources and validate TV Supported VideoSources by looping through the test specific config file | tvVideoSrcType_t *, unsigned short * | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVSupportedVideoSources() -  Retrieve the current TV Supported VideoSources with valid argument and validate with above value | tvVideoSrcType_t *, unsigned short * | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 {
@@ -611,22 +615,28 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVSupportedVideoSources() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 24@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetTVSupportedVideoSources() -  Retrieve current TV Supported VideoSources even before tvInit() | tvVideoSrcType_t *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVSupportedVideoSources() -  Retrieve supported TV VideoSources with invalid input | NULL, unsigned short * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetTVSupportedVideoSources() -  Retrieve supported TV VideoSources with invalid input |  tvVideoSrcType_t *, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetTVSupportedVideoSources() -  Retrieve supported TV VideoSources with valid inputs and validate VideoSources by looping through the test specific config file values | tvVideoSrcType_t *,  unsigned short *  | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call GetTVSupportedVideoSources() -  Retrieve current TV Supported VideoSources valid arguments | tvVideoSrcType_t *, unsigned short * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVSupportedVideoSources (void)
 {
@@ -637,7 +647,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoSources (void)
 * @brief Validate GetBacklight() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 21@n
+* **Test Case ID:** 25@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -663,7 +673,7 @@ void test_l1_tvSettings_positive_GetBacklight (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 22@n
+* **Test Case ID:** 26@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -690,7 +700,7 @@ void test_l1_tvSettings_negative_GetBacklight (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 23@n
+* **Test Case ID:** 27@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -718,7 +728,7 @@ void test_l1_tvSettings_positive_SetBacklight (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 24@n
+* **Test Case ID:** 28@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -745,7 +755,7 @@ void test_l1_tvSettings_negative_SetBacklight (void)
 * @brief Validate SaveBacklight() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 137@n
+* **Test Case ID:** 29@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -770,7 +780,7 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 138@n
+* **Test Case ID:** 30@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -785,7 +795,7 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * | 03 | call SaveBacklight() -  Save current Color Backlight with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveBacklight() -  Save current Color Backlight with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveBacklight() -  Save current Color Backlight with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveBacklight() -  Save current Color Backlight with invalid pqmode with max range| tv_sourcetvVideoSrcType_t_input_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveBacklight() -  Save current Color Backlight with invalid pqmode with max range| tv_sourcetvVideoSrcType_t_input_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveBacklight() -  Save current Color Backlight with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveBacklight() -  Save current Color Backlight with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveBacklight() -  Save current Color Backlight with invalid value with less than the lower range | tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
@@ -805,7 +815,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 * @brief Validate SetBacklightFade() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 27@n
+* **Test Case ID:** 31@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -832,7 +842,7 @@ void test_l1_tvSettings_positive_SetBacklightFade (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 28@n
+* **Test Case ID:** 32@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1010,7 +1020,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 * @brief Validate GetTVSupportedDimmingModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 127@n
+* **Test Case ID:** 39@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1036,7 +1046,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 128@n
+* **Test Case ID:** 40@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1062,7 +1072,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 * @brief Validate SetTVDimmingMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 43@n
+* **Test Case ID:** 41@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1087,7 +1097,7 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 44@n
+* **Test Case ID:** 42@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1110,22 +1120,23 @@ void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVDimmingMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 43@n
+* 
+* **Pre-Conditions:** None@n
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVDimmingMode() -  Retrieve the current TV DimmingMode and validate DimmingMode by looping through the test specific config file | const char * | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVDimmingMode() -  Retrieve the current TV DimmingMode with valid argument and validate with above value | const char * | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 {
@@ -1133,22 +1144,26 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVDimmingMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 44@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetTVDimmingMode() -  Retrieve current TV DimmingMode Mode even before tvInit() | const char * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVDimmingMode() -  Retrieve current TV DimmingMode mode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetTVDimmingMode() -  Retrieve current TV DimmingMode Mode valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVDimmingMode (void)
 {
@@ -1159,7 +1174,7 @@ void test_l1_tvSettings_negative_GetTVDimmingMode (void)
 * @brief Validate SaveTVDimmingMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 149@n
+* **Test Case ID:** 45@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1184,7 +1199,7 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 150@n
+* **Test Case ID:** 46@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1199,7 +1214,7 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 * | 03 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid pqmode with max range| tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveTVDimmingMode() -  Save current Color DynamicBacklight with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
@@ -1217,7 +1232,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 * @brief Validate SetLocalDimmingLevel() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 173@n
+* **Test Case ID:** 47@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1244,7 +1259,7 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 174@n
+* **Test Case ID:** 48@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1270,7 +1285,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 * @brief Validate GetLocalDimmingLevel() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 175@n
+* **Test Case ID:** 49@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1294,7 +1309,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 * @brief Validate GetLocalDimmingLevel() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 176@n
+* **Test Case ID:** 50@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1319,7 +1334,7 @@ void test_l1_tvSettings_negative_GetLocalDimmingLevel (void)
 * @brief Validate SaveLocalDimmingLevel() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 177@n
+* **Test Case ID:** 51@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1344,7 +1359,7 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 178@n
+* **Test Case ID:** 52@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1359,7 +1374,7 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 * | 03 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid pqmode with max range| tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t , LDIM_STATE_MAX | tvERROR_INVALID_PARAM | Should Pass |
@@ -1377,7 +1392,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 * @brief Validate SetBrightness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 55@n
+* **Test Case ID:** 53@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1405,7 +1420,7 @@ void test_l1_tvSettings_positive_SetBrightness (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 56@n
+* **Test Case ID:** 54@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1432,7 +1447,7 @@ void test_l1_tvSettings_negative_SetBrightness (void)
 * @brief Validate GetBrightness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 57@n
+* **Test Case ID:** 55@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1456,7 +1471,7 @@ void test_l1_tvSettings_positive_GetBrightness (void)
 * @brief Validate GetBrightness() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 58@n
+* **Test Case ID:** 56@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1481,7 +1496,7 @@ void test_l1_tvSettings_negative_GetBrightness (void)
 * @brief Validate SaveBrightness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 145@n
+* **Test Case ID:** 57@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1506,7 +1521,7 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 146@n
+* **Test Case ID:** 58@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1521,7 +1536,7 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 * | 03 | call SaveBrightness() -  Save current Color Brightness with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveBrightness() -  Save current Color Brightness with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveBrightness() -  Save current Color Brightness with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveBrightness() -  Save current Color Brightness with invalid pqmode with max range| tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveBrightness() -  Save current Color Brightness with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveBrightness() -  Save current Color Brightness with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveBrightness() -  Save current Color Brightness with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveBrightness() -  Save current Color Brightness with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
@@ -1539,7 +1554,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 * @brief Validate SetContrast() for all positive invocation scenarios
 *  
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 61@n
+* **Test Case ID:** 59@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1567,7 +1582,7 @@ void test_l1_tvSettings_positive_SetContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 62@n
+* **Test Case ID:** 60@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1594,7 +1609,7 @@ void test_l1_tvSettings_negative_SetContrast (void)
 * @brief Validate GetContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 63@n
+* **Test Case ID:** 61@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1618,7 +1633,7 @@ void test_l1_tvSettings_positive_GetContrast (void)
 * @brief Validate GetContrast() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 64@n
+* **Test Case ID:** 62@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1643,7 +1658,7 @@ void test_l1_tvSettings_negative_GetContrast (void)
 * @brief Validate SaveContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 139@n
+* **Test Case ID:** 63@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1668,7 +1683,7 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 140@n
+* **Test Case ID:** 64@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1683,7 +1698,7 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * | 03 | call SaveContrast() -  Save current Color Contrast with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveContrast() -  Save current Color Contrast with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveContrast() -  Save current Color Contrast with invalid pqmode | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveContrast() -  Save current Color Contrast with invalid pqmode with max range| tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveContrast() -  Save current Color Contrast with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveContrast() -  Save current Color Contrast with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveContrast() -  Save current Color Contrast with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveContrast() -  Save current Color Contrast with invalid value with with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
@@ -1701,7 +1716,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 * @brief Validate SetSharpness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 67@n
+* **Test Case ID:** 65@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1729,7 +1744,7 @@ void test_l1_tvSettings_positive_SetSharpness (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 68@n
+* **Test Case ID:** 66@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1756,7 +1771,7 @@ void test_l1_tvSettings_negative_SetSharpness (void)
 * @brief Validate GetSharpness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 69@n
+* **Test Case ID:** 67@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1780,7 +1795,7 @@ void test_l1_tvSettings_positive_GetSharpness (void)
 * @brief Validate GetSharpness() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 70@n
+* **Test Case ID:** 68@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1805,7 +1820,7 @@ void test_l1_tvSettings_negative_GetSharpness (void)
 * @brief Validate SaveSharpness() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 143@n
+* **Test Case ID:** 69@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1830,7 +1845,7 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 144@n
+* **Test Case ID:** 70@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1845,7 +1860,7 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * | 03 | call SaveSharpness() -  Save current Color Sharpness with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveSharpness() -  Save current Color Sharpness with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode less than lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode with max range | tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode with max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveSharpness() -  Save current Color Sharpness with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveSharpness() -  Save current Color Sharpness with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSharpness() -  Save current Color Sharpness with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
@@ -1863,7 +1878,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 * @brief Validate SetSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 73@n
+* **Test Case ID:** 71@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1891,7 +1906,7 @@ void test_l1_tvSettings_positive_SetSaturation (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 74@n
+* **Test Case ID:** 72@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1918,7 +1933,7 @@ void test_l1_tvSettings_negative_SetSaturation (void)
 * @brief Validate GetSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 75@n
+* **Test Case ID:** 73@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1942,7 +1957,7 @@ void test_l1_tvSettings_positive_GetSaturation (void)
 * @brief Validate GetSaturation() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 76@n
+* **Test Case ID:** 74@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1967,7 +1982,7 @@ void test_l1_tvSettings_negative_GetSaturation (void)
 * @brief Validate SaveSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 141@n
+* **Test Case ID:** 75@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -1992,7 +2007,7 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 142@n
+* **Test Case ID:** 76@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2007,7 +2022,7 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * | 03 | call SaveSaturation() -  Save current Color Saturation with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveSaturation() -  Save current Color Saturation with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode less than lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode with max range | tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode with max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveSaturation() -  Save current Color Saturation with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveSaturation() -  Save current Color Saturation with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSaturation() -  Save current Color Saturation with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
@@ -2025,7 +2040,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 * @brief Validate SetHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 79@n
+* **Test Case ID:** 77@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2053,7 +2068,7 @@ void test_l1_tvSettings_positive_SetHue (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 80@n
+* **Test Case ID:** 78@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2080,7 +2095,7 @@ void test_l1_tvSettings_negative_SetHue (void)
 * @brief Validate GetHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 81@n
+* **Test Case ID:** 79@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2104,7 +2119,7 @@ void test_l1_tvSettings_positive_GetHue (void)
 * @brief Validate GetHue() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 82@n
+* **Test Case ID:** 80@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2129,7 +2144,7 @@ void test_l1_tvSettings_negative_GetHue (void)
 * @brief Validate SaveHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 147@n
+* **Test Case ID:** 81@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2154,7 +2169,7 @@ void test_l1_tvSettings_positive_SaveHue (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 148@n
+* **Test Case ID:** 82@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2169,7 +2184,7 @@ void test_l1_tvSettings_positive_SaveHue (void)
 * | 03 | call SaveHue() -  Save current Color Hue with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveHue() -  Save current Color Hue with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveHue() -  Save current Color Hue with invalid pqmode with less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveHue() -  Save current Color Hue with invalid pqmode with max range| tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveHue() -  Save current Color Hue with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveHue() -  Save current Color Hue with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveHue() -  Save current Color Hue with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveHue() -  Save current Color Hue with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
@@ -2187,7 +2202,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 * @brief Validate SetColorTemperature() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 85@n
+* **Test Case ID:** 83@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2212,7 +2227,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 86@n
+* **Test Case ID:** 84@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2240,7 +2255,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 * @brief Validate GetColorTemperature() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 87@n
+* **Test Case ID:** 85@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2264,7 +2279,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 * @brief Validate GetColorTemperature() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 88@n
+* **Test Case ID:** 86@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2289,7 +2304,7 @@ void test_l1_tvSettings_negative_GetColorTemperature (void)
 * @brief Validate SaveColorTemperature() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 135@n
+* **Test Case ID:** 87@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2314,7 +2329,7 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 136@n
+* **Test Case ID:** 88@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2329,7 +2344,7 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 * | 03 | call SaveColorTemperature() -  Save current Color Temperature with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveColorTemperature() -  Save current Color Temperature with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveColorTemperature() -  Save current Color Temperature with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveColorTemperature() -  Save current Color Temperature with invalid pqmode with max range| tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveColorTemperature() -  Save current Color Temperature with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveColorTemperature() -  Save current Color Temperature with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveColorTemperature() -  Save current Color Temperature with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveColorTemperature() -  Save current Color Temperature with invalid colortemp with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvColorTemp_MAX| tvERROR_INVALID_PARAM | Should Pass |
@@ -2347,7 +2362,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 * @brief Validate SetAspectRatio() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 91@n
+* **Test Case ID:** 89@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2372,7 +2387,7 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 92@n
+* **Test Case ID:** 90@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2400,7 +2415,7 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 * @brief Validate GetAspectRatio() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 93@n
+* **Test Case ID:** 91@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2424,7 +2439,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 * @brief Validate GetAspectRatio() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 94@n
+* **Test Case ID:** 92@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2446,22 +2461,22 @@ void test_l1_tvSettings_negative_GetAspectRatio (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveAspectRatio() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 93@n
+* 
+* **Pre-Conditions:** None@n
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SaveAspectRatio() -  Save the current Aspect Ratio by looping through all the values of sourcetype, pqmode and video format type from the test specific config file | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDisplayMode_t | tvERROR_NONE| Should Pass|
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveAspectRatio (void)
 {
@@ -2469,22 +2484,34 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveAspectRatio() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 94@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SaveAspectRatio() -  Save the current Aspect Ratio even before tvInit() | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDisplayMode_t | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid aspectratio value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDisplayMode_MAX| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid aspectratio value less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SaveAspectRatio() -  Save current Aspect Ratio with valid source input, pqmode, videoFormatType, aspectratio value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 13 | call SaveAspectRatio() -  Save the current Aspect Ratio valid arguments | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDisplayMode_t | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveAspectRatio (void)
 {
@@ -2495,7 +2522,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 * @brief Validate SetLowLatencyState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 97@n
+* **Test Case ID:** 95@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2522,7 +2549,7 @@ void test_l1_tvSettings_positive_SetLowLatencyState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 98@n
+* **Test Case ID:** 96@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2548,7 +2575,7 @@ void test_l1_tvSettings_negative_SetLowLatencyState (void)
 * @brief Validate GetLowLatencyState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 99@n
+* **Test Case ID:** 97@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2574,7 +2601,7 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 100@n
+* **Test Case ID:** 98@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2600,7 +2627,7 @@ void test_l1_tvSettings_negative_GetLowLatencyState (void)
 * @brief Validate SaveLowLatencyState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 179@n
+* **Test Case ID:** 99@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2625,7 +2652,7 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 180@n
+* **Test Case ID:** 100@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2640,7 +2667,7 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 * | 03 | call SaveLowLatencyState() -  Save current LowLatency State with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveLowLatencyState() -  Save current LowLatency State with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SaveLowLatencyState() -  Save current LowLatency State with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveLowLatencyState() -  Save current LowLatency State with invalid pqmode with max range | tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveLowLatencyState() -  Save current LowLatency State with invalid pqmode with max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveLowLatencyState() -  Save current LowLatency State with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveLowLatencyState() -  Save current LowLatency State with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveLowLatencyState() -  Save current LowLatency State with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t , 2 | tvERROR_INVALID_PARAM | Should Pass |
@@ -2658,7 +2685,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 * @brief Validate SetDynamicContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 103@n
+* **Test Case ID:** 101@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2685,7 +2712,7 @@ void test_l1_tvSettings_positive_SetDynamicContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 104@n
+* **Test Case ID:** 102@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2709,7 +2736,7 @@ void test_l1_tvSettings_negative_SetDynamicContrast (void)
 * @brief Validate GetDynamicContrast() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 105@n
+* **Test Case ID:** 103@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2735,7 +2762,7 @@ void test_l1_tvSettings_positive_GetDynamicContrast (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 106@n
+* **Test Case ID:** 104@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2762,7 +2789,7 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 105@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -2785,7 +2812,7 @@ void test_l1_tvSettings_positive_SetDynamicGamma (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 106@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -2808,7 +2835,7 @@ void test_l1_tvSettings_negative_SetDynamicGamma (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 107@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -2831,7 +2858,7 @@ void test_l1_tvSettings_positive_GetDynamicGamma (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 108@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -2854,7 +2881,7 @@ void test_l1_tvSettings_negative_GetDynamicGamma (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 109@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -2877,7 +2904,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 110@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -2898,7 +2925,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 * @brief Validate SetTVDolbyVisionMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 113@n
+* **Test Case ID:** 111@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2923,7 +2950,7 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 114@n
+* **Test Case ID:** 112@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2949,7 +2976,7 @@ void test_l1_tvSettings_negative_SetTVDolbyVisionMode (void)
 * @brief Validate GetTVDolbyVisionMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 115@n
+* **Test Case ID:** 113@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -2975,7 +3002,7 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 116@n
+* **Test Case ID:** 114@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3002,7 +3029,7 @@ void test_l1_tvSettings_negative_GetTVDolbyVisionMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 115@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3025,7 +3052,7 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 116@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3046,7 +3073,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 * @brief Validate GetTVSupportedHLGModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 119@n
+* **Test Case ID:** 117@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3073,7 +3100,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHLGModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 120@n
+* **Test Case ID:** 118@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3100,7 +3127,7 @@ void test_l1_tvSettings_negative_GetTVSupportedHLGModes (void)
 * @brief Validate SetTVHLGMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 121@n
+* **Test Case ID:** 119@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3125,7 +3152,7 @@ void test_l1_tvSettings_positive_SetTVHLGMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 122@n
+* **Test Case ID:** 120@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3153,7 +3180,7 @@ void test_l1_tvSettings_negative_SetTVHLGMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 121@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3176,7 +3203,7 @@ void test_l1_tvSettings_positive_GetTVHLGMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 122@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3197,7 +3224,7 @@ void test_l1_tvSettings_negative_GetTVHLGMode (void)
 * @brief Validate GetTVSupportedHDR10Modes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 125@n
+* **Test Case ID:** 123@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3224,7 +3251,7 @@ void test_l1_tvSettings_positive_GetTVSupportedHDR10Modes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 126@n
+* **Test Case ID:** 124@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3251,7 +3278,7 @@ void test_l1_tvSettings_negative_GetTVSupportedHDR10Modes (void)
 * @brief Validate SetTVHDR10Mode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 127@n
+* **Test Case ID:** 125@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3276,7 +3303,7 @@ void test_l1_tvSettings_positive_SetTVHDR10Mode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 128@n
+* **Test Case ID:** 126@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3304,7 +3331,7 @@ void test_l1_tvSettings_negative_SetTVHDR10Mode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 127@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3327,7 +3354,7 @@ void test_l1_tvSettings_positive_GetTVHDR10Mode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 128@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3348,7 +3375,7 @@ void test_l1_tvSettings_negative_GetTVHDR10Mode (void)
 * @brief Validate GetTVSupportedPictureModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 131@n
+* **Test Case ID:** 129@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3374,7 +3401,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 132@n
+* **Test Case ID:** 130@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3401,7 +3428,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 * @brief Validate GetTVPictureMode() for all positive invocation scenarios
 * 
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 133@n
+* **Test Case ID:** 131@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3426,7 +3453,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 * @brief Validate GetTVPictureMode() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 134@n
+* **Test Case ID:** 132@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3451,7 +3478,7 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 * @brief Validate SetTVPictureMode() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 135@n
+* **Test Case ID:** 133@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3476,7 +3503,7 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 136@n
+* **Test Case ID:** 134@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3504,7 +3531,7 @@ void test_l1_tvSettings_negative_SetTVPictureMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 135@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3527,7 +3554,7 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 136@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -3548,7 +3575,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 * @brief Validate SetColorTemp_Rgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 139@n
+* **Test Case ID:** 137@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3579,7 +3606,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 140@n
+* **Test Case ID:** 138@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3613,7 +3640,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 * @brief Validate GetColorTemp_Rgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 141@n
+* **Test Case ID:** 139@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3639,7 +3666,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 142@n
+* **Test Case ID:** 140@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3670,7 +3697,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 * @brief Validate SetColorTemp_Ggain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 143@n
+* **Test Case ID:** 141@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3701,7 +3728,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 144@n
+* **Test Case ID:** 142@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3735,7 +3762,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 * @brief Validate GetColorTemp_Ggain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 145@n
+* **Test Case ID:** 143@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3761,7 +3788,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 146@n
+* **Test Case ID:** 144@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3791,7 +3818,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 * @brief Validate SetColorTemp_Bgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 147@n
+* **Test Case ID:** 145@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3822,7 +3849,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 148@n
+* **Test Case ID:** 146@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3856,7 +3883,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 * @brief Validate GetColorTemp_Bgain_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 149@n
+* **Test Case ID:** 147@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3882,7 +3909,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 150@n
+* **Test Case ID:** 148@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3912,7 +3939,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 * @brief Validate SetColorTemp_R_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 151@n
+* **Test Case ID:** 149@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3944,7 +3971,7 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 152@n
+* **Test Case ID:** 150@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -3980,7 +4007,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 * @brief Validate GetColorTemp_R_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 153@n
+* **Test Case ID:** 151@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4006,7 +4033,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 * @brief Validate GetColorTemp_R_post_offset_onSource() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 154@n
+* **Test Case ID:** 152@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4037,7 +4064,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 * @brief Validate SetColorTemp_G_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 155@n
+* **Test Case ID:** 153@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4067,7 +4094,7 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 156@n
+* **Test Case ID:** 154@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4101,7 +4128,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 * @brief Validate GetColorTemp_G_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 157@n
+* **Test Case ID:** 155@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4127,7 +4154,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 * @brief Validate GetColorTemp_G_post_offset_onSource() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 158@n
+* **Test Case ID:** 156@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4158,7 +4185,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 * @brief Validate SetColorTemp_B_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 159@n
+* **Test Case ID:** 157@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4188,7 +4215,7 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 160@n
+* **Test Case ID:** 158@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4222,7 +4249,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 * @brief Validate GetColorTemp_B_post_offset_onSource() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 161@n
+* **Test Case ID:** 159@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4248,7 +4275,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 162@n
+* **Test Case ID:** 160@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4281,7 +4308,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 161@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4304,7 +4331,7 @@ void test_l1_tvSettings_positive_EnableWBCalibrationMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 162@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4325,7 +4352,7 @@ void test_l1_tvSettings_negative_EnableWBCalibrationMode (void)
 * @brief Validate SetGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 171@n
+* **Test Case ID:** 163@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4350,7 +4377,7 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 172@n
+* **Test Case ID:** 164@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4385,7 +4412,7 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 * @brief Validate GetGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 173@n
+* **Test Case ID:** 165@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4411,7 +4438,7 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 174@n
+* **Test Case ID:** 166@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4442,7 +4469,7 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
 * @brief Validate SaveGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 175@n
+* **Test Case ID:** 167@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4467,7 +4494,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 176@n
+* **Test Case ID:** 168@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4507,7 +4534,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 169@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4530,7 +4557,7 @@ void test_l1_tvSettings_positive_SetDvTmaxValue (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 170@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4553,7 +4580,7 @@ void test_l1_tvSettings_negative_SetDvTmaxValue (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 171@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4576,7 +4603,7 @@ void test_l1_tvSettings_positive_GetDvTmaxValue (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 172@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4599,7 +4626,7 @@ void test_l1_tvSettings_negative_GetDvTmaxValue (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 173@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4622,7 +4649,7 @@ void test_l1_tvSettings_positive_SaveDvTmaxValue (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 174@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -4643,7 +4670,7 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 * @brief Validate GetSupportedComponentColor() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 183@n
+* **Test Case ID:** 175@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4667,7 +4694,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 * @brief Validate GetSupportedComponentColor() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 184@n
+* **Test Case ID:** 176@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4693,7 +4720,7 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 * @brief Validate SetCurrentComponentSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 185@n
+* **Test Case ID:** 177@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4720,7 +4747,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 186@n
+* **Test Case ID:** 178@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4749,7 +4776,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 * @brief Validate GetCurrentComponentSaturation() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 187@n
+* **Test Case ID:** 179@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4773,7 +4800,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 * @brief Validate GetCurrentComponentSaturation() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 188@n
+* **Test Case ID:** 180@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4800,7 +4827,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 * @brief Validate SetCurrentComponentHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 189@n
+* **Test Case ID:** 181@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4827,7 +4854,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 190@n
+* **Test Case ID:** 182@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4856,7 +4883,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 * @brief Validate GetCurrentComponentHue() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 191@n
+* **Test Case ID:** 183@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4880,7 +4907,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 * @brief Validate GetCurrentComponentHue() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 192@n
+* **Test Case ID:** 184@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4907,7 +4934,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 * @brief Validate SetCurrentComponentLuma() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 193@n
+* **Test Case ID:** 185@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4933,7 +4960,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 194@n
+* **Test Case ID:** 186@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4962,7 +4989,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 * @brief Validate GetCurrentComponentLuma() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 195@n
+* **Test Case ID:** 187@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -4986,7 +5013,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 * @brief Validate GetCurrentComponentLuma() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 196@n
+* **Test Case ID:** 188@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5013,7 +5040,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 * @brief Validate SaveCMS() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 153@n
+* **Test Case ID:** 189@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5038,7 +5065,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 154@n
+* **Test Case ID:** 190@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5052,7 +5079,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 * | 02 | call tvInit()  -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SaveCMS() -  "pqmode,videoFormatType,component_type,color_type,value"= valid , "source"= Invalid maxrange | VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SaveCMS() -  "pqmode,videoFormatType,component_type,color_type,value"= valid , "source"= Invalid lowerrange | -2 , int ,tvVideoFormatType_t ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveCMS() -  "source,videoFormatType,component_type,color_type,value"= valid , "pqmode"= Invalid maxrange | tvVideoSrcType_t, tvPictureMode_MAX ,tvVideoFormatType_t ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveCMS() -  "source,videoFormatType,component_type,color_type,value"= valid , "pqmode"= Invalid maxrange | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveCMS() -  "source,videoFormatType,component_type,color_type,value"= valid , "pqmode"= Invalid lowerrange | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveCMS() -  "source,pqmode,component_type,color_type,value"= valid , "videoFormatType"= Invalid maxrange | tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SaveCMS() -  "source,pqmode,component_type,color_type,value"= valid , "videoFormatType"= Invalid lowerrange | tvVideoSrcType_t, int ,-1 ,tvComponentType_t ,tvDataComponentColor_t ,int| tvERROR_INVALID_PARAM | Should Pass |
@@ -5079,7 +5106,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 * @brief Validate SetCMSState() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 163@n
+* **Test Case ID:** 191@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5104,7 +5131,7 @@ void test_l1_tvSettings_positive_SetCMSState (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 164@n
+* **Test Case ID:** 192@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5139,7 +5166,7 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 193@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5162,7 +5189,7 @@ void test_l1_tvSettings_positive_GetDefaultParams (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 194@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5185,7 +5212,7 @@ void test_l1_tvSettings_negative_GetDefaultParams (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 195@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5208,7 +5235,7 @@ void test_l1_tvSettings_positive_GetMaxGainValue (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 196@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5230,7 +5257,7 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 * This test ensures that the TV Settings module is to set Gamma Mode value
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 171@n
+* **Test Case ID:** 197@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5258,7 +5285,7 @@ void test_l1_tvSettings_positive_EnableGammaMode (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 172@n
+* **Test Case ID:** 198@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5284,7 +5311,7 @@ void test_l1_tvSettings_negative_EnableGammaMode (void)
 * @brief Validate SetGammaPattern() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 191@n
+* **Test Case ID:** 199@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5313,7 +5340,7 @@ void test_l1_tvSettings_positive_SetGammaPattern (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 192@n
+* **Test Case ID:** 200@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5346,7 +5373,7 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 201@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5369,7 +5396,7 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 202@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5392,7 +5419,7 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 203@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5415,7 +5442,7 @@ void test_l1_tvSettings_positive_SetGammaPatternMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 204@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5436,7 +5463,7 @@ void test_l1_tvSettings_negative_SetGammaPatternMode (void)
 * @brief Validate SetRGBPattern() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 219@n
+* **Test Case ID:** 205@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5463,7 +5490,7 @@ void test_l1_tvSettings_positive_SetRGBPattern (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 220@n
+* **Test Case ID:** 206@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5493,7 +5520,7 @@ void test_l1_tvSettings_negative_SetRGBPattern (void)
 * @brief Validate GetRGBPattern() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 221@n
+* **Test Case ID:** 207@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5517,7 +5544,7 @@ void test_l1_tvSettings_positive_GetRGBPattern (void)
 * @brief Validate GetRGBPattern() for all negative invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 222@n
+* **Test Case ID:** 208@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5544,7 +5571,7 @@ void test_l1_tvSettings_negative_GetRGBPattern (void)
 * @brief Validate SetGrayPattern() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 59@n
+* **Test Case ID:** 209@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5571,7 +5598,7 @@ void test_l1_tvSettings_positive_SetGrayPattern (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 60@n
+* **Test Case ID:** 210@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5597,7 +5624,7 @@ void test_l1_tvSettings_negative_SetGrayPattern (void)
 * @brief Validate GetGrayPattern() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 61@n
+* **Test Case ID:** 211@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5622,7 +5649,7 @@ void test_l1_tvSettings_positive_GetGrayPattern (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 62@n
+* **Test Case ID:** 212@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -5649,7 +5676,7 @@ void test_l1_tvSettings_negative_GetGrayPattern (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 213@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5672,7 +5699,7 @@ void test_l1_tvSettings_positive_GetOpenCircuitStatus (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 214@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5695,7 +5722,7 @@ void test_l1_tvSettings_negative_GetOpenCircuitStatus (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 215@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5718,7 +5745,7 @@ void test_l1_tvSettings_positive_EnableLDIMPixelCompensation (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 216@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5741,7 +5768,7 @@ void test_l1_tvSettings_negative_EnableLDIMPixelCompensation (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 217@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5764,7 +5791,7 @@ void test_l1_tvSettings_positive_EnableLDIM (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 218@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5787,7 +5814,7 @@ void test_l1_tvSettings_negative_EnableLDIM (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 219@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5810,7 +5837,7 @@ void test_l1_tvSettings_positive_StartLDIMSequenceTest (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 220@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5833,7 +5860,7 @@ void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 221@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5856,7 +5883,7 @@ void test_l1_tvSettings_positive_SetBacklightTestMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 222@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5879,7 +5906,7 @@ void test_l1_tvSettings_negative_SetBacklightTestMode (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 223@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5902,7 +5929,7 @@ void test_l1_tvSettings_positive_EnableWhiteBalance (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 224@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5925,7 +5952,7 @@ void test_l1_tvSettings_negative_EnableWhiteBalance (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 225@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5948,7 +5975,7 @@ void test_l1_tvSettings_positive_EnableDynamicContrast (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 226@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5971,7 +5998,7 @@ void test_l1_tvSettings_negative_EnableDynamicContrast (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 227@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -5994,7 +6021,7 @@ void test_l1_tvSettings_positive_EnableLocalContrast (void)
 * TODO: Add the description of what is tested and why in this test@n
 *
 * **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
-* **Test Case ID:** TODO: Add the ID of the test case so that it can be logically tracked in the logs@n
+* **Test Case ID:** 228@n
 * @n
 * **Pre-Conditions:** TODO: Add pre-conditions, if any@n
 * **Dependencies:** TODO: Add dependencies for this test, if any@n
@@ -6015,7 +6042,7 @@ void test_l1_tvSettings_negative_EnableLocalContrast (void)
 * @brief Validate SetWakeupConfig() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 53@n
+* **Test Case ID:** 229@n
 * 
 * **Pre-Conditions:** None@n
 *
@@ -6041,7 +6068,7 @@ void test_l1_tvSettings_positive_SetWakeupConfig (void)
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
 * **Test Group ID:** Basic : 01@n
-* **Test Case ID:** 54@n
+* **Test Case ID:** 230@n
 * 
 * **Pre-Conditions:** None@n
 *
