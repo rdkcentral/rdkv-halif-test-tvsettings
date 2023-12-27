@@ -2614,9 +2614,8 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 * | 01 | call GetLowLatencyState() -  Retrieve current TV LowLatency State even before TvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetLowLatencyState() -   Retrieve current TV LowLatency State with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetLowLatencyState() -   Retrieve current TV LowLatency State with invalid input | 2 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call GetLowLatencyState() -  Retrieve current TV LowLatency State valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetLowLatencyState() -  Retrieve current TV LowLatency State valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetLowLatencyState (void)
 {
@@ -4350,22 +4349,24 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate EnableWBCalibrationMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 161@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call EnableWBCalibrationMode() -  Enable the WB CalibrationMode with valid argument| true | tvERROR_NONE | Should Pass |
+* | 03 | call EnableWBCalibrationMode() -  Disable the WB CalibrationMode with valid argument| false | tvERROR_NONE | Should Pass |
+* | 04 | call EnableWBCalibrationMode() -  Enable the WB CalibrationMode with valid argument| true | tvERROR_NONE | Should Pass |
+* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_EnableWBCalibrationMode (void)
 {
@@ -4373,22 +4374,25 @@ void test_l1_tvSettings_positive_EnableWBCalibrationMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate EnableWBCalibrationMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 162@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call EnableWBCalibrationMode() - Enable WB Calibration Mode even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableWBCalibrationMode() -  Enable WB Calibration Mode with valid input after TvTerm() | false | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableWBCalibrationMode (void)
 {
@@ -4576,22 +4580,24 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SetDvTmaxValue() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 169@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetDvTmaxValue() -  Set the Dv Tmax with valid value | 0 | tvERROR_NONE | Should Pass |
+* | 03 | call SetDvTmaxValue() -  Reset the Dv Tmax  with another valid value | 5000 | tvERROR_NONE | Should Pass |
+* | 04 | call SetDvTmaxValue() -  Reset the Dv Tmax  with another valid value | 10000 | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetDvTmaxValue (void)
 {
@@ -4599,22 +4605,27 @@ void test_l1_tvSettings_positive_SetDvTmaxValue (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SetDvTmaxValue() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 170@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SetDvTmaxValue() - Set the Dv Tmax even before TvInit() | 1 | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SetDvTmaxValue() -   Set the Dv Tmax with invalid input with less than lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetDvTmaxValue() -   Set the Dv Tmax with invalid input with max range |10001 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call SetDvTmaxValue() -  Set the Dv Tmax with valid input after TvTerm() | 0 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetDvTmaxValue (void)
 {
@@ -4622,22 +4633,23 @@ void test_l1_tvSettings_negative_SetDvTmaxValue (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetDvTmaxValue() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 171@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetDvTmaxValue() -  Retrieve the current Dv Tmax Value with valid arguments and validate it againt test specific config file | int * | tvERROR_NONE | Should Pass |
+* | 03 | call GetDvTmaxValue() -  Retrieve the current Dv Tmax Value with valid argument and validate with above value | int * | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetDvTmaxValue (void)
 {
@@ -4645,22 +4657,26 @@ void test_l1_tvSettings_positive_GetDvTmaxValue (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetDvTmaxValue() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 172@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetDvTmaxValue() -  Retrieve current Dv Tmax Value even before TvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetDvTmaxValue() -   Retrieve current Dv Tmax Value with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetDvTmaxValue() -  Retrieve current Dv Tmax Value State valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetDvTmaxValue (void)
 {
@@ -4668,22 +4684,22 @@ void test_l1_tvSettings_negative_GetDvTmaxValue (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveDvTmaxValue() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 173@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SaveDvTmaxValue() -  Save the current Dv Tmax Value by looping through all the values of ldimstate level and TMax from the test specific config file  |  ldimStateLevel_t , int | tvERROR_NONE| Should Pass|
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveDvTmaxValue (void)
 {
@@ -4691,22 +4707,30 @@ void test_l1_tvSettings_positive_SaveDvTmaxValue (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveDvTmaxValue() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 174@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SaveDvTmaxValue() -  save current Dv Tmax Value even before tvInit() | ldimStateLevel_t, int | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SaveDvTmaxValue() -  Save current Dv Tmax Value with invalid source input with max range| LDIM_STATE_MAX, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveDvTmaxValue() -  Save current Dv Tmax Value with invalid source input less than the lower range| -1 , int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveDvTmaxValue() -  Save current Dv Tmax Value with invalid TMax less than the lower range| ldimStateLevel_t, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveDvTmaxValue() -  Save current Dv Tmax Value with invalid pqmode with max range | ldimStateLevel_t, 10001 | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveDvTmaxValue() -  Save current Dv Tmax Value with valid value of  ldimstate level and TMax value but not supported by the platform by looping through the test specific config file|ldimStateLevel_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 09 | call SaveDvTmaxValue() -  save current Dv Tmax Value valid arguments | ldimStateLevel_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 {
@@ -5208,22 +5232,22 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetDefaultParams() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 193@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetDefaultParams() -  Get the default value PQ parameter by looping through all the input params from test specific config file | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_NONE | Should Pass |
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetDefaultParams (void)
 {
@@ -5231,22 +5255,35 @@ void test_l1_tvSettings_positive_GetDefaultParams (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetDefaultParams() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 194@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetDefaultParams() -  Get the default value PQ parameter even before tvInit() | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit()  -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetDefaultParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid maxrange | PQ_MODE_MAX, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetDefaultParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid lowerrange |PQ_MODE_INVALID , tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetDefaultParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid maxrange | int, VIDEO_SOURCE_MAX ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetDefaultParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid lowerrange | int, -2 ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetDefaultParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid maxrange | int, tvVideoSrcType_t ,VIDEO_FORMAT_MAX , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetDefaultParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid lowerrange | int, tvVideoSrcType_t ,-1 , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid maxrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , PQ_PARAM_MAX , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid lowerrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , -1 , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid , "value"= Invalid NULL pointer | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , NULL| tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid (looping through the test specific config file),"value"= valid | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call tvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 14 | call GetDefaultParams() -  Get the default value PQ parameter valid arguments |  int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetDefaultParams (void)
 {
@@ -5254,22 +5291,23 @@ void test_l1_tvSettings_negative_GetDefaultParams (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetMaxGainValue() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 195@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetMaxGainValue() -  Retrieve the current MaxGain Value and validate it against the test specific config file values | void  | int | Should Pass |
+* | 03 | call GetMaxGainValue() -  Retrieve the current MaxGain Value with valid argument and validate with above value | void | int | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetMaxGainValue (void)
 {
@@ -5277,22 +5315,23 @@ void test_l1_tvSettings_positive_GetMaxGainValue (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetMaxGainValue() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 196@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetMaxGainValue() -  Retrieve current MaxGain Value even before TvInit() | void | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call GetMaxGainValue() -  Retrieve current MaxGain Value with valid arguments | void | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetMaxGainValue (void)
 {
