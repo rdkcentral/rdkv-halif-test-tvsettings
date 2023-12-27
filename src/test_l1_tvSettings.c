@@ -3203,22 +3203,23 @@ void test_l1_tvSettings_negative_SetTVHLGMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVHLGMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 121@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVHLGMode() -  Retrieve the current TV HLGMode with valid arguments and validate with test specific config file | char * | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVHLGMode() -  Retrieve the current TV HLGMode with valid arguments and validate with above value | char * | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVHLGMode (void)
 {
@@ -3226,22 +3227,26 @@ void test_l1_tvSettings_positive_GetTVHLGMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVHLGMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 122@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetTVHLGMode() -  Retrieve current TV HLGMode even before TvInit() | char * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVHLGMode() -  Retrieve current TV HLGMode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetTVHLGMode() -  Retrieve current TV HLGMode valid arguments | char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVHLGMode (void)
 {
@@ -3354,22 +3359,23 @@ void test_l1_tvSettings_negative_SetTVHDR10Mode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVHDR10Mode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 127@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVHDR10Mode() -  Retrieve the current TV HDR10Mode with valid arguments and validate with test specific config file | char * | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVHDR10Mode() -  Retrieve the current TV HDR10Mode with valid arguments and validate with above value | char * | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVHDR10Mode (void)
 {
@@ -3377,22 +3383,26 @@ void test_l1_tvSettings_positive_GetTVHDR10Mode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVHDR10Mode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 128@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetTVHDR10Mode() -  Retrieve current TV HDR10Mode even before TvInit() | char * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVHDR10Mode() -  Retrieve current TV HDR10Mode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetTVHDR10Mode() -  Retrieve current TV HDR10Mode valid arguments | char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVHDR10Mode (void)
 {
@@ -3554,22 +3564,22 @@ void test_l1_tvSettings_negative_SetTVPictureMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveSourcePictureMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 135@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SaveSourcePictureMode() -  Save the current Source PictureMode by looping through all the values of sourcetype, pqmode and video format type from the test specific config file | tvVideoSrcType_t , int ,tvVideoFormatType_t | tvERROR_NONE| Should Pass|
+* | 03 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 {
@@ -3577,22 +3587,32 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SaveSourcePictureMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 136@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SaveSourcePictureMode() -  Save the current Source PictureMode even before tvInit() | tvVideoSrcType_t , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid source input with max range| VIDEO_SOURCE_MAX ,tvVideoFormatType_t, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid source input less than the lower range| -2 ,tvVideoFormatType_t , int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid videoFormatType with max range| tvVideoSrcType_t ,VIDEO_FORMAT_MAX, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid videoFormatType less than the lower range| tvVideoSrcType_t, -1, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid pqmode less than the lower range | tvVideoSrcType_t,tvVideoFormatType_t, -1  | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid pqmode with max range| tvVideoSrcType_t ,tvVideoFormatType_t, PQ_MODE_MAX | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveSourcePictureMode() -  Save current Source PictureMode with valid source input, pqmode, videoFormatType but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t , tvVideoFormatType_t, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 11 | call SaveSourcePictureMode() -  Save the current Source PictureMode valid arguments | tvVideoSrcType_t  ,tvVideoFormatType_t , int| tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 {
@@ -3704,7 +3724,6 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-
 * | 01 | call GetColorTemp_Rgain_onSource() -  Retrieve current TV ColorTemp Rgain_onSource even before TvInit() | tvColorTemp_t, int *, tvColorTempSourceOffset_t  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call GetColorTemp_Rgain_onSource() -   Retrieve current TV ColorTemp Rgain_onSource with max range color temp| tvColorTemp_MAX, int *, tvColorTempSourceOffset_t | tvERROR_INVALID_PARAM | Should Pass |
