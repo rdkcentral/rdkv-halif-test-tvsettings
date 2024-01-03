@@ -5454,22 +5454,23 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVGammaTarget() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 201@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetTVGammaTarget() -  Retrieve the current Gamma Target values and validate it by looping through the test specific config file | tvColorTemp_t, double *, double *| tvERROR_NONE | Should Pass |
+* | 03 | call GetTVGammaTarget() -  Retrieve the current current Gamma Target values with valid argument and validate with above value |  tvColorTemp_t, double *, double * | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 {
@@ -5477,22 +5478,27 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetTVGammaTarget() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 202@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target even before tvInit() | tvColorTemp_t, double *, double *| tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, double *, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, NULL, double * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with max range| tvColorTemp_MAX, double *, double * | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with less than lower range| -1, double *, double * | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call GetTVSupportedVideoFormats() -  Retrieve current TV Gamma Target valid arguments | tvColorTemp_t, double *, double * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 {
@@ -5500,45 +5506,63 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SetGammaPatternMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 203@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | Call SetGammaPatternMode() - Set the Gamma Pattern Mode with valid value | 0 , 0 ,0, 0| tvERROR_NONE | Should Pass |
+* | 03 | call SetGammaPatternMode() -  Reset the Gamma Pattern Mode with another valid value | 0, 1023, 1023, 1023 | tvERROR_NONE | Should Pass |
+* | 04 | call SetGammaPatternMode() -  Reset the Gamma Pattern Mode with another valid value | 0, 500, 500, 500 | tvERROR_NONE | Should Pass |
+* | 05 | call SetGammaPatternMode() -  Reset the Gamma Pattern Mode with another valid value | 1, 0, 0, 0 | tvERROR_NONE | Should Pass |
+* | 06 | call SetGammaPatternMode() -  Reset the Gamma Pattern Mode with another valid value | 1, 1023, 1023, 1023 | tvERROR_NONE | Should Pass |
+* | 07 | call SetGammaPatternMode() -  Reset the Gamma Pattern Mode with another valid value | 1, 500, 500, 500 | tvERROR_NONE | Should Pass |
+* | 08 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetGammaPatternMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate SetGammaPatternMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 204@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call SetGammaPatternMode() - Set the Gamma Pattern Mode even before TvInit() | int, int, int, int | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SetGammaPatternMode() - "R_Value,G_Value,B_Value"= valid , "is_10_bit"= Invalid lower range | -1, 0, 0, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetGammaPatternMode() - "R_Value,G_Value,B_Value"= valid , "is_10_bit"= Invalid Maxrange  | 2, 0, 0, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SetGammaPatternMode() - "is_10_bit,G_Value,B_Value"= valid ,"R_Value"= Invalid lower range | 0, -1, 0, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetGammaPatternMode() - "is_10_bit,G_Value,B_Value"= valid ,"R_Value"= Invalid Maxrange | 0, 1024, 0, 0  | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetGammaPatternMode() - "is_10_bit,R_Value,B_Value"= valid ,"G_Value"= Invalid lower range | 0, 0, -1, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SetGammaPatternMode() - "is_10_bit,R_Value,B_Value"= valid ,"G_Value"= Invalid Maxrange | 0, 0, 1024, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetGammaPatternMode() - "is_10_bit,R_Value,G_Value"= valid ,"B_Value"= Invalid lower range | 0, 0, 0, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SetGammaPatternMode() - "is_10_bit,R_Value,G_Value"= valid ,"B_Value"= Invalid Maxrange | 0, 0, 0, 1024 | tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 12 | call SetGammaPatternMode() -  Set the TV backlight with valid input after TvTerm() | int, int, int, int | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetGammaPatternMode (void)
 {
@@ -5757,45 +5781,48 @@ void test_l1_tvSettings_negative_GetGrayPattern (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate GetOpenCircuitStatus() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 213@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetOpenCircuitStatus() -  Retrieve the OpenCircuit Status and validate it by looping through the test specific config file values | int *  | tvERROR_NONE | Should Pass |
+* | 03 | call GetOpenCircuitStatus()-  Retrieve the OpenCircuit Status with valid argument and validate with above value | int * | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetOpenCircuitStatus (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/**  
+* @brief Validate GetOpenCircuitStatus() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 214@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call GetOpenCircuitStatus() -  Retrieve current TV OpenCircuit Status even before tvInit() | tvVideoFormatType_t * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetOpenCircuitStatus() -  Retrieve current TV OpenCircuit Status with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetOpenCircuitStatus() -  Retrieve current TV OpenCircuit Status valid arguments | tvVideoFormatType_t * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetOpenCircuitStatus (void)
 {
@@ -5803,45 +5830,52 @@ void test_l1_tvSettings_negative_GetOpenCircuitStatus (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate EnableLDIMPixelCompensation() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 215@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | bool | tvERROR_NONE | Should Pass |
+* | 02 | Call EnableLDIMPixelCompensation() - Enable the LDIM Pixel Compensation with valid value | true | tvERROR_NONE | Should Pass |
+* | 03 | call EnableLDIMPixelCompensation() - Disable the LDIM Pixel Compensation with valid value | false | tvERROR_NONE | Should Pass |
+* | 04 | call EnableLDIMPixelCompensation() - Enable the LDIM Pixel Compensation valid value | true | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | bool | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_EnableLDIMPixelCompensation (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate EnableLDIMPixelCompensation() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 216@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call EnableLDIMPixelCompensation() - Enable the LDIM Pixel Compensation even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableLDIMPixelCompensation() -  Enable the LDIM Pixel Compensation valid input after TvTerm() | true | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableLDIMPixelCompensation (void)
 {
@@ -5849,45 +5883,52 @@ void test_l1_tvSettings_negative_EnableLDIMPixelCompensation (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate EnableLDIM() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 217@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | bool | tvERROR_NONE | Should Pass |
+* | 02 | Call EnableLDIM() - Enable the LDIM  with valid value | true | tvERROR_NONE | Should Pass |
+* | 03 | call EnableLDIM() - Disable the LDIM with valid value | false | tvERROR_NONE | Should Pass |
+* | 04 | call EnableLDIM() - Enable the LDIM with valid value | true | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | bool | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_EnableLDIM (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate EnableLDIM() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 218@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call EnableLDIM() - Enable the LDIM even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableLDIM() -  Enable the LDIM valid input after TvTerm() | true | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableLDIM (void)
 {
@@ -5895,45 +5936,52 @@ void test_l1_tvSettings_negative_EnableLDIM (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate StartLDIMSequenceTest() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 219@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call StartLDIMSequenceTest() -  Start the LDIM Sequence Test with valid value | 2,  100 | tvERROR_NONE | Should Pass |
+* | 03 | call StartLDIMSequenceTest() -  Restart the LDIM Sequence Test with another valid value | 2, 500 | tvERROR_NONE | Should Pass |
+* | 04 | call StartLDIMSequenceTest() -  Restart the LDIM Sequence Test with another valid value | 2, 1000 | tvERROR_NONE | Should Pass |
+* | 05 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_StartLDIMSequenceTest (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate StartLDIMSequenceTest() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 220@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call StartLDIMSequenceTest() - start the LDIM Sequence Test even before tvInit() | int , int | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call StartLDIMSequenceTest() - start the LDIM Sequence Test with invalid value | -1, 100 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call StartLDIMSequenceTest() - start the LDIM Sequence Test with invalid value with less than lower range | 2, -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call StartLDIMSequenceTest() -   start the LDIM Sequence Test with valid input after tvTerm() |  int , int | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 {
@@ -5941,45 +5989,51 @@ void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate SetBacklightTestMode() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
-*
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 221@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetBacklightTestMode() -  Start the Backlight Test Mode by looping through the test specific config file |tvBacklightTestMode_t | tvERROR_NONE | Should Pass |
+* | 03 | call SetBacklightTestMode() -  Start the Backlight Test Mode valid argument and validate with above value | tvBacklightTestMode_t | tvERROR_NONE | Should Pass |
+* | 04 | call tvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetBacklightTestMode (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate SetBacklightTestMode() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 222@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* | 01 | call SetBacklightTestMode() - start the Backlight Test Mode even before tvInit() | tvBacklightTestMode_t | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call tvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SetBacklightTestMode() - start the Backlight Test Mode with invalid value with Max range |tvBacklightTestMode_Max | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SetBacklightTestMode() - start the Backlight Test Mode with invalid value with less than lower range | -1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call tvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 06 | call SetBacklightTestMode() -   start the Backlight Test Mode with valid input after tvTerm() | tvBacklightTestMode_t | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetBacklightTestMode (void)
 {
@@ -5987,45 +6041,52 @@ void test_l1_tvSettings_negative_SetBacklightTestMode (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate EnableWhiteBalance() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 223@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | bool | tvERROR_NONE | Should Pass |
+* | 02 | Call EnableWhiteBalance() - Enable White Balance  with valid value | true | tvERROR_NONE | Should Pass |
+* | 03 | call EnableWhiteBalance() - Disable White Balance with valid value | false | tvERROR_NONE | Should Pass |
+* | 04 | call EnableWhiteBalance() - Enable White Balance with valid value | true | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | bool | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_EnableWhiteBalance (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate EnableWhiteBalance() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 224@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call EnableWhiteBalance() - Enable White Balance even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableWhiteBalance() -  Enable White Balance valid input after TvTerm() | true | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableWhiteBalance (void)
 {
@@ -6033,91 +6094,104 @@ void test_l1_tvSettings_negative_EnableWhiteBalance (void)
 }
 
 /**
-* @brief TODO: Describe the objective of the test
+* @brief Validate EnableDynamicContrast() for all positive invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 225@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | bool | tvERROR_NONE | Should Pass |
+* | 02 | Call EnableDynamicContrast() - Enable Dynamic Contrast  with valid value | true | tvERROR_NONE | Should Pass |
+* | 03 | call EnableDynamicContrast() - Disable Dynamic Contrast with valid value | false | tvERROR_NONE | Should Pass |
+* | 04 | call EnableDynamicContrast() - Enable Dynamic Contrast with valid value | true | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | bool | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_EnableDynamicContrast (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate EnableDynamicContrast() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 226@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call EnableDynamicContrast() - Enable Dynamic Contrast even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableDynamicContrast() -  Enable Dynamic Contrast valid input after TvTerm() | true | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableDynamicContrast (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate EnableLocalContrast() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 227@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call EnableLocalContrast() - Enable Local Contrast even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableLocalContrast() -  Enable Local Contrast valid input after TvTerm() | true | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_positive_EnableLocalContrast (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
-/**
-* @brief TODO: Describe the objective of the test
+/** 
+* @brief Validate EnableLocalContrast() for all negative invocation scenarios
 *
-* TODO: Add the description of what is tested and why in this test@n
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
-* **Test Group ID:** TODO: Basic (for L1): 01 / Module (L2): 02 / Stress (L2): 03)@n
+* **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 228@n
-* @n
-* **Pre-Conditions:** TODO: Add pre-conditions, if any@n
-* **Dependencies:** TODO: Add dependencies for this test, if any@n
-* **User Interaction:** TODO: Add any user interactions required during this test, if any
-* @n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
 * **Test Procedure:**@n
-* TODO: Add the steps to run this test and add a line in the below table for each input variation tried in this function.@n
-* | Variation / Step | Description | Test Data | Expected Result | Notes |
-* | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | First set of conditions | What is input data to be tested | How to gauge success, is it a success variable? | Should be successful |
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call EnableLocalContrast() - Enable Local Contrast even before TvInit() | true | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 04 | call EnableLocalContrast() -  Enable Local Contrast valid input after TvTerm() | true | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableLocalContrast (void)
 {
