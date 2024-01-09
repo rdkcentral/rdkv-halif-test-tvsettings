@@ -811,17 +811,17 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveBacklight() -  Retrieve current TV Backlight even before TvInit() |  tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveBacklight() -  Save current Color Backlight with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveBacklight() -  Save current Color Backlight with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveBacklight() -  Save current Color Backlight with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveBacklight() -  Save current Color Backlight with invalid pqmode with max range| tv_sourcetvVideoSrcType_t_input_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveBacklight() -  Save current Color Backlight with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveBacklight() -  Save current Color Backlight with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveBacklight() -  Save current Color Backlight with invalid value with less than the lower range | tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveBacklight() -  Save current Color Backlight with invalid value with max range | tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call SaveBacklight() -  Save current Color Backlight with valid source input value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call SaveBacklight() -  Save current Color Backlight with valid  pqmode value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
-* | 13 | call SaveBacklight() -  Save current Color Backlight with valid videoFormatType value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveBacklight() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveBacklight() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2 , int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveBacklight() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveBacklight() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tv_sourcetvVideoSrcType_t_input_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveBacklight() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveBacklight() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveBacklight() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range | tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveBacklight() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range | tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SaveBacklight() -  "pq_mode,videoFormatType,value"= valid, "videoSrcType"=valid(videoSrcType not supported by the platform by looping through the test specific config file)| tvVideoSrcType_t, int , tvVideoFormatType_t , int| tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call SaveBacklight() -  "videoSrcType,videoFormatType,value"= valid, "pq_mode"=valid( pq_mode not supported by the platform by looping through the test specific config file)| tvVideoSrcType_t, int , tvVideoFormatType_t , int| tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call SaveBacklight() -  "videoSrcType,pq_mode,value"= valid, "videoFormatType"=valid(videoFormatType not supported by the platform by looping through the test specific config file)| tvVideoSrcType_t, int , tvVideoFormatType_t , int| tvERROR_INVALID_PARAM | Should Pass |
 * | 14 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 15 | call SaveBacklight() -  Retrieve current TV Backlight valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -1232,14 +1232,14 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveTVDimmingMode() -  save the TV DimmingMode even before TvInit() | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDimmingMode_t | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveTVDimmingMode() -  Save current TV DimmingMode with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDimmingMode_MAX| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveTVDimmingMode() -  "pq_mode,videoFormatType,dimmingMode"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveTVDimmingMode() -  "pq_mode,videoFormatType,dimmingMode"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveTVDimmingMode() -  "videoSrcType,videoFormatType,dimmingMode"=valid, "pq_mode"=invalid lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveTVDimmingMode() -  "videoSrcType,videoFormatType,dimmingMode"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveTVDimmingMode() -  "videoSrcType,pq_mode,dimmingMode"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveTVDimmingMode() -  "videoSrcType,pq_mode,dimmingMode"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,tvDimmingMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveTVDimmingMode() -  "videoSrcType,pq_mode,videoFormatType"=valid, "dimmingMode"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveTVDimmingMode() -  "videoSrcType,pq_mode,videoFormatType"=valid, "dimmingMode"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDimmingMode_MAX| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveTVDimmingMode() -  Save current TV DimmingMode with valid source input, pqmode, videoFormatType and Diming mode value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , tvDimmingMode_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveTVDimmingMode() -  save the TV DimmingMode valid arguments | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDimmingMode_t | tvERROR_INVALID_STATE | Should Pass |
@@ -1392,14 +1392,14 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveLocalDimmingLevel() -  save current Local DimmingLevel even before TvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,ldimStateLevel_t | (tvERROR_INVALID_STATE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t , LDIM_STATE_MAX | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveLocalDimmingLevel() -  "pq_mode,videoFormatType,ldimStateLevel"=valid, "tvVideoSrcType_t"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveLocalDimmingLevel() -  "pq_mode,videoFormatType,ldimStateLevel"=valid, "tvVideoSrcType_t"=invalid lower range| -2 , int ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveLocalDimmingLevel() -  "videoSrcType,videoFormatType,ldimStateLevel"=valid, "pq_mode"=invalid lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveLocalDimmingLevel() -  "videoSrcType,videoFormatType,ldimStateLevel"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveLocalDimmingLevel() -  "videoSrcType,pq_mode,ldimStateLevel"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveLocalDimmingLevel() -  "videoSrcType,pq_mode,ldimStateLevel"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveLocalDimmingLevel() -  "videoSrcType,pq_mode,videoFormatType"=valid, "ldimStateLevel"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t , LDIM_STATE_MAX | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveLocalDimmingLevel() -  "videoSrcType,pq_mode,videoFormatType"=valid, "ldimStateLevel"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveLocalDimmingLevel() -  Save current LocalDimming Level with valid value of source input, pqmode, videoFormatType but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveLocalDimmingLevel() -  save current Local DimmingLevel valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,ldimStateLevel_t | tvERROR_INVALID_STATE | Should Pass |
@@ -1554,14 +1554,14 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveBrightness() -  save current TV Brightness even before TvInit() | tvVideoSrcType_t , int ,tvVideoFormatType_t ,int  | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveBrightness() -  Save current Color Brightness with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveBrightness() -  Save current Color Brightness with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveBrightness() -  Save current Color Brightness with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveBrightness() -  Save current Color Brightness with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveBrightness() -  Save current Color Brightness with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveBrightness() -  Save current Color Brightness with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveBrightness() -  Save current Color Brightness with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveBrightness() -  Save current Color Brightness with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveBrightness() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveBrightness() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveBrightness() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveBrightness() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveBrightness() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveBrightness() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveBrightness() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveBrightness() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveBrightness() -  Save current Color Brightness with valid source input, pqmode, videoFormatType value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveBrightness() -  save current TV Brightness valid arguments | tvVideoSrcType_t , int ,tvVideoFormatType_t ,int  | tvERROR_INVALID_STATE | Should Pass |
@@ -1716,14 +1716,14 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveContrast() -  save current TV Contrast even before TvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveContrast() -  Save current Color Contrast with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveContrast() -  Save current Color Contrast with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveContrast() -  Save current Color Contrast with invalid pqmode | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveContrast() -  Save current Color Contrast with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveContrast() -  Save current Color Contrast with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveContrast() -  Save current Color Contrast with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveContrast() -  Save current Color Contrast with invalid value with with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveContrast() -  Save current Color Contrast with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveContrast() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveContrast() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveContrast() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveContrast() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveContrast() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveContrast() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveContrast() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveContrast() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveContrast() -  Save current Color Contrast with valid source input, pqmode, videoFormatType value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveContrast() -  save current TV Contrast valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
@@ -1878,14 +1878,14 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveSharpness() -  save current TV Sharpness even before TvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveSharpness() -  Save current Color Sharpness with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveSharpness() -  Save current Color Sharpness with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode less than lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSharpness() -  Save current Color Sharpness with invalid pqmode with max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveSharpness() -  Save current Color Sharpness with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveSharpness() -  Save current Color Sharpness with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveSharpness() -  Save current Color Sharpness with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveSharpness() -  Save current Color Sharpness with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveSharpness() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveSharpness() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveSharpness() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSharpness() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveSharpness() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveSharpness() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveSharpness() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveSharpness() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveSharpness() -  Save current Color Sharpness with valid source input, pqmode, videoFormatType value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveSharpness() -  save current TV Sharpness valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
@@ -2040,14 +2040,14 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveSaturation() -  save current TV Saturation even before TvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveSaturation() -  Save current Color Saturation with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveSaturation() -  Save current Color Saturation with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode less than lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSaturation() -  Save current Color Saturation with invalid pqmode with max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveSaturation() -  Save current Color Saturation with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveSaturation() -  Save current Color Saturation with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveSaturation() -  Save current Color Saturation with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveSaturation() -  Save current Color Saturation with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveSaturation() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveSaturation() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveSaturation() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSaturation() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveSaturation() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveSaturation() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveSaturation() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveSaturation() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveSaturation() -  Save current Color Saturation with valid source input, pqmode, videoFormatType value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveSaturation() -  save current TV Saturation valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
@@ -2201,17 +2201,17 @@ void test_l1_tvSettings_positive_SaveHue (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveHue() -  save current TV Hue even before TvInit() |  tvVideoSrcType_t , int ,tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
-* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveHue() -  Save current Color Hue with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveHue() -  Save current Color Hue with invalid source input less than the lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveHue() -  Save current Color Hue with invalid pqmode with less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveHue() -  Save current Color Hue with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveHue() -  Save current Color Hue with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveHue() -  Save current Color Hue with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveHue() -  Save current Color Hue with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveHue() -  Save current Color Hue with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 02 | call TvInit() -   Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call SaveHue() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveHue() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveHue() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveHue() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveHue() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveHue() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveHue() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,101| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveHue() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveHue() -  Save current Color Hue with valid source input, pqmode, videoFormatType value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , 50| tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 12 | call TvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveHue() -  save current TV Hue valid arguments |  tvVideoSrcType_t , int ,tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SaveHue (void)
@@ -2361,14 +2361,14 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveColorTemperature() -  Save the current Color Temperature even before TvInit() | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvColorTemp_t | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveColorTemperature() -  Save current Color Temperature with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveColorTemperature() -  Save current Color Temperature with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveColorTemperature() -  Save current Color Temperature with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveColorTemperature() -  Save current Color Temperature with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveColorTemperature() -  Save current Color Temperature with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveColorTemperature() -  Save current Color Temperature with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveColorTemperature() -  Save current Color Temperature with invalid colortemp with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvColorTemp_MAX| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveColorTemperature() -  Save current Color Temperature with invalid colortemp value less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveColorTemperature() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveColorTemperature() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2 , int ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveColorTemperature() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveColorTemperature() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveColorTemperature() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveColorTemperature() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveColorTemperature() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvColorTemp_MAX| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveColorTemperature() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveColorTemperature() -  Save current Color Temperature with valid source input, pqmode, videoFormatType, colortemp value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , tvColorTemp_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveColorTemperature() -  Save the current Color Temperature valid arguments | HDMI, 0, HDR_TYPE_HLG, tvColorTemp_t | tvERROR_INVALID_STATE | Should Pass |
@@ -2520,14 +2520,14 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveAspectRatio() -  Save the current Aspect Ratio even before TvInit() | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDisplayMode_t | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid pqmode less than the lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid aspectratio value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDisplayMode_MAX| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveAspectRatio() -  Save current Aspect Ratio with invalid aspectratio value less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveAspectRatio() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveAspectRatio() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2 , int ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveAspectRatio() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveAspectRatio() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveAspectRatio() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveAspectRatio() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveAspectRatio() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDisplayMode_MAX| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveAspectRatio() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveAspectRatio() -  Save current Aspect Ratio with valid source input, pqmode, videoFormatType, aspectratio value but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t , tvDisplayMode_t| tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveAspectRatio() -  Save the current Aspect Ratio valid arguments | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvDisplayMode_t | tvERROR_INVALID_STATE | Should Pass |
@@ -2682,14 +2682,14 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveLowLatencyState() -  save current TV LowLatency even before TvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveLowLatencyState() -  Save current LowLatency State with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveLowLatencyState() -  Save current LowLatency State with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveLowLatencyState() -  Save current LowLatency State with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveLowLatencyState() -  Save current LowLatency State with invalid pqmode with max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveLowLatencyState() -  Save current LowLatency State with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveLowLatencyState() -  Save current LowLatency State with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,int | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveLowLatencyState() -  Save current LowLatency State with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t , 2 | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveLowLatencyState() -  Save current LowLatency State with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveLowLatencyState() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveLowLatencyState() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2 , int ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveLowLatencyState() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveLowLatencyState() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range | tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveLowLatencyState() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveLowLatencyState() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,int | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveLowLatencyState() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t , 2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveLowLatencyState() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-1| tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveLowLatencyState() -  Save current LowLatency State with valid value of source input, pqmode, videoFormatType but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveLowLatencyState() -  save current TV Contrast valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
@@ -3099,14 +3099,14 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveTVDolbyVisionMode() -  save current DolbyVision Mode even before TvInit() | tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid source input with max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid source input less than the lower range| -2 , int ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid pqmode less than the lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid pqmode with max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid videoFormatType with max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid videoFormatType less than the lower range| tvVideoSrcType_t, int , -1 ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid value with max range| tvVideoSrcType_t, int , tvVideoFormatType_t , tvMode_Max | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with invalid value with less than the lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-2 | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveTVDolbyVisionMode() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveTVDolbyVisionMode() -  "pq_mode,videoFormatType,value"=valid, "videoSrcType"=invalid lower range| -2 , int ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveTVDolbyVisionMode() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid lower range| tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveTVDolbyVisionMode() -  "videoSrcType,videoFormatType,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveTVDolbyVisionMode() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveTVDolbyVisionMode() -  "videoSrcType,pq_mode,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,tvDolbyMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveTVDolbyVisionMode() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t , tvMode_Max | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveTVDolbyVisionMode() -  "videoSrcType,pq_mode,videoFormatType"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,-2 | tvERROR_INVALID_PARAM | Should Pass |
 * | 11 | call SaveTVDolbyVisionMode() -  Save current DolbyVision Mode with valid value of source input, pqmode, videoFormatType but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t ,int | tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 13 | call SaveTVDolbyVisionMode() -  save current DolbyVision Mode valid arguments | tvVideoSrcType_t, int , tvVideoFormatType_t ,tvDolbyMode_t | tvERROR_INVALID_STATE | Should Pass |
@@ -3311,12 +3311,12 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveSourcePictureMode() -  Save the current Source PictureMode even before TvInit() | tvVideoSrcType_t , tvVideoFormatType_t ,int | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid source input with max range| VIDEO_SOURCE_MAX ,tvVideoFormatType_t, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid source input less than the lower range| -2 ,tvVideoFormatType_t , int | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid videoFormatType with max range| tvVideoSrcType_t ,VIDEO_FORMAT_MAX, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid videoFormatType less than the lower range| tvVideoSrcType_t, -1, int | tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid picture_mode less than the lower range | tvVideoSrcType_t,tvVideoFormatType_t, -1  | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveSourcePictureMode() -  Save current Source PictureMode with invalid picture_mode with max range| tvVideoSrcType_t ,tvVideoFormatType_t, PQ_MODE_MAX | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveSourcePictureMode() -  "videoFormatType,pictureMode"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX ,tvVideoFormatType_t, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveSourcePictureMode() -  "videoFormatType,pictureMode"=valid, "videoSrcType"=invalid lower range| -2 ,tvVideoFormatType_t , int | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveSourcePictureMode() -  "videoSrcType,pictureMode"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t ,VIDEO_FORMAT_MAX, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SaveSourcePictureMode() -  "videoSrcType,pictureMode"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, -1, int | tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SaveSourcePictureMode() -  "videoSrcType,videoFormatType"=valid, "pictureMode"=invalid lower range | tvVideoSrcType_t,tvVideoFormatType_t, -1  | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveSourcePictureMode() -  "videoSrcType,videoFormatType"=valid, "pictureMode"=invalid max range| tvVideoSrcType_t ,tvVideoFormatType_t, PQ_MODE_MAX | tvERROR_INVALID_PARAM | Should Pass |
 * | 09 | call SaveSourcePictureMode() -  Save current Source PictureMode with valid source input, picture_mode, videoFormatType but not supported by the platform by looping through the test specific config file| tvVideoSrcType_t , tvVideoFormatType_t, int | tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 11 | call SaveSourcePictureMode() -  Save the current Source PictureMode valid arguments | tvVideoSrcType_t  ,tvVideoFormatType_t , int| tvERROR_INVALID_STATE | Should Pass |
