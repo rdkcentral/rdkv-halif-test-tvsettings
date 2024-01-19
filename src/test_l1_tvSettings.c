@@ -4895,7 +4895,7 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 */
 void test_l1_tvSettings_negative_SaveColorTemperature (void)
 {
-        gTestID = 46;                                    /* It must be 46 */
+        gTestID = 88;                                    /* It must be 88 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE ;
@@ -5019,7 +5019,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 */
 void test_l1_tvSettings_positive_SetAspectRatio (void)
 {
-        gTestID = 37;                                    /* It must be 33 */
+        gTestID = 89;                                    /* It must be 89 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE ;
@@ -5068,7 +5068,7 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 */
 void test_l1_tvSettings_negative_SetAspectRatio (void)
 {
-        gTestID = 38;                                    /* It must be 38*/
+        gTestID = 90;                                    /* It must be 90*/
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE;
@@ -5133,7 +5133,7 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 */
 void test_l1_tvSettings_positive_GetAspectRatio (void)
 {
-        gTestID = 39;                                    /* It must be 39 */
+        gTestID = 91;                                    /* It must be 91 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE;
@@ -5190,7 +5190,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 */
 void test_l1_tvSettings_negative_GetAspectRatio (void)
 {
-        gTestID = 40;                                    /* It must be 40 */
+        gTestID = 92;                                    /* It must be 92 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE ;
