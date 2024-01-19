@@ -4496,7 +4496,7 @@ void test_l1_tvSettings_positive_SaveHue (void)
 */
 void test_l1_tvSettings_negative_SaveHue (void)
 {
-        gTestID = 30;                                    /* It must be 30 */
+        gTestID = 82;                                    /* It must be 82 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE ;
@@ -4657,7 +4657,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 */
 void test_l1_tvSettings_negative_SetColorTemperature (void)
 {
-        gTestID = 34;                                    /* It must be 34*/
+        gTestID = 84;                                    /* It must be 84*/
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE;
@@ -4722,7 +4722,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 */
 void test_l1_tvSettings_positive_GetColorTemperature (void)
 {
-        gTestID = 35;                                    /* It must be 35 */
+        gTestID = 85;                                    /* It must be 85 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE;
@@ -4781,7 +4781,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 */
 void test_l1_tvSettings_negative_GetColorTemperature (void)
 {
-        gTestID = 36;                                    /* It must be 36 */
+        gTestID = 86;                                    /* It must be 86 */
         UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
         tvError_t result = tvERROR_NONE;
@@ -4846,9 +4846,9 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
                 {
                         for (size_t k = 0; k < sizeof(Configfile.videoformat) / sizeof(Configfile.videoformat[0]); k++)
                         {
-                                for (size_t l = 0; l < sizeof(Configfile.dimmode.modeId) / sizeof(Configfile.dimmode.modeId[0]); l++)
+                                for (size_t l = 0; l < sizeof(Configfile.colorTemperature.modeId) / sizeof(Configfile.colorTemperature.modeId[0]); l++)
                                 {
-                                        result = SaveColorTemperature((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[j],(tvVideoFormatType_t) Configfile.videoformat[k],(tvDimmingMode_t)Configfile.dimmode.modeId[l]);
+                                        result = SaveColorTemperature((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[j],(tvVideoFormatType_t) Configfile.videoformat[k],(tvColorTemp_t)Configfile.colorTemperature.modeId[l]);
                                         CU_ASSERT_EQUAL(result, tvERROR_NONE);
                                 }
                         }
@@ -5239,7 +5239,36 @@ void test_l1_tvSettings_negative_GetAspectRatio (void)
 */
 void test_l1_tvSettings_positive_SaveAspectRatio (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 93;                                    /* It must be 93 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SaveAspectRatio for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
+        for (size_t i = 0; i < sizeof(Configfile.sourceId.modeName) / sizeof(Configfile.sourceId.modeName[0]); i++)
+        {
+                for (size_t j = 0; j < sizeof(Configfile.pic_modes.modeId) / sizeof(Configfile.pic_modes.modeId[0]); j++)
+                {
+                        for (size_t k = 0; k < sizeof(Configfile.videoformat) / sizeof(Configfile.videoformat[0]); k++)
+                        {
+                                for (size_t l = 0; l < sizeof(Configfile.ApsectRatio.modeId) / sizeof(Configfile.ApsectRatio.modeId[0]); l++)
+                                {
+                                        result = SaveAspectRatio((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[j],(tvVideoFormatType_t) Configfile.videoformat[k],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[l]);
+                                        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+                                }
+                        }
+                }
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
