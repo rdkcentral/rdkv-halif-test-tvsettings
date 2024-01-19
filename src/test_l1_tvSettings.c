@@ -886,6 +886,59 @@ void test_l1_tvSettings_negative_SetBacklightFade (void)
 }
 
 /**
+* @brief Validate GetBacklightFade() for all positive invocation scenarios
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 25@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetBacklightFade() -  Retrieve the current Backlight Fade with valid argument |int *, int*, int*| tvERROR_NONE | Should Pass |
+* | 03 | call GetBacklightFade() -  Retrieve the current Backlight Fade with valid argument and validate with above value | int *, int*, int* | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+*/
+void test_l1_tvSettings_positive_GetBacklightFade (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetBacklightFade() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 26@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call GetBacklightFade() -   Retrieve current Backlight Fade value even before TvInit() | int *, int*, int* | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetBacklightFade() -  Retrieve current Backlight Fade with invalid input | NULL, int*, int* | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetBacklightFade() -  Retrieve current Backlight Fade with invalid input | int*, NULL, int* | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetBacklightFade() -  Retrieve current Backlight Fade with invalid input | int*, int*, NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call GetBacklightFade() -  Retrieve current Backlight Fade with valid arguments | int *, int*, int* | tvERROR_INVALID_STATE | Should Pass |
+*/
+void test_l1_tvSettings_negative_GetBacklightFade (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
 * @brief Validate GetSupportedBacklightModes() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
@@ -4108,6 +4161,57 @@ void test_l1_tvSettings_negative_EnableWBCalibrationMode (void)
 }
 
 /**
+* @brief Validate GetWBCalibrationMode() for all positive invocation scenarios
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 25@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetWBCalibrationMode() -  Retrieve the current WB Calibration Mode with valid argument |bool *| tvERROR_NONE | Should Pass |
+* | 03 | call GetWBCalibrationMode() -  Retrieve the current WB Calibration Mode with valid argument and validate with above value | bool * | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+*/
+void test_l1_tvSettings_positive_GetWBCalibrationMode (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetWBCalibrationMode() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 26@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call GetWBCalibrationMode() -   Retrieve current WB Calibration Mode even before TvInit() | int * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetWBCalibrationMode() -  Retrieve current WB Calibration Mode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetWBCalibrationMode() -  Retrieve current WB Calibration Mode valid arguments | int * | tvERROR_INVALID_STATE | Should Pass |
+*/
+void test_l1_tvSettings_negative_GetWBCalibrationMode (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
 * @brief Validate SetGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
@@ -4168,6 +4272,62 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 }
 
 /**
+* @brief Validate GetDefaultGammaTable() for all positive invocation scenarios
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 153@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* | Variation / Step | Description | Test Data | Expected Result | Notes |
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetDefaultGammaTable() -  Retrieve the current Default GammaTable and validate GammaTable values for the valid colortemp by looping through the test specific config file | tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_NONE | Should Pass |
+* | 03 | call GetDefaultGammaTable() -  Retrieve the current GammaTable with valid argument and validate with above value | tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+*/
+void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetDefaultGammaTable() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 154@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* | Variation / Step | Description | Test Data | Expected Result | Notes |
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable even before TvInit() | tvColorTemp_t , unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetDefaultGammaTable() -  "pData_R, pData_G, pData_B, size"= valid , "colortemp"= Invalid maxrange | tvColorTemp_MAX ,unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetDefaultGammaTable() - "pData_R, pData_G, pData_B, size"= valid , "colortemp"= Invalid less than lower range | -1 ,unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetDefaultGammaTable() -  "colortemp, pData_G, pData_B, size"= valid , "pData_R"= Invalid | tvColorTemp_t , NULL, unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetDefaultGammaTable() -  "colortemp, pData_R, pData_B, size"= valid , "pData_G"= Invalid | tvColorTemp_t ,unsigned short *,NULL,  unsigned short *, unsigned short| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetDefaultGammaTable() -  "colortemp, pData_R, pData_G, size"= valid , "pData_B"= Invalid | tvColorTemp_t ,unsigned short *,unsigned short *, NULL, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable State with valid colortemp value but not supported by the platform by looping through the test specific config file | tvColorTemp_t , unsigned short *,  unsigned short *, unsigned short *,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 10 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable State valid arguments |tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
+*/
+void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
 * @brief Validate GetGammaTable() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
@@ -4182,8 +4342,8 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetGammaTable() -  Retrieve the current GammaTable and validate GammaTable values for the valid colortemp by looping through the test specific config file | tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_NONE | Should Pass |
-* | 03 | call GetGammaTable() -  Retrieve the current GammaTable with valid argument and validate with above value | tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_NONE | Should Pass |
+* | 02 | call GetGammaTable() -  Retrieve the current GammaTable and validate GammaTable values for the valid colortemp by looping through the test specific config file |  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_NONE | Should Pass |
+* | 03 | call GetGammaTable() -  Retrieve the current GammaTable with valid argument and validate with above value |  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_NONE | Should Pass |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_GetGammaTable (void)
@@ -4207,17 +4367,13 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetGammaTable() -  Retrieve current TV GammaTable State even before TvInit() | tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
+* | 01 | call GetGammaTable() -  Retrieve current TV GammaTable State even before TvInit() | unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from test specific config file | tvColorTemp_t ,  NULL,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from test specific config file | tvColorTemp_t , unsigned short *,  NULL, unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid input by looping through the colortemp from test specific config file | tvColorTemp_t , unsigned short *,  unsigned short *, NULL,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid colortemp with max range | tvColorTemp_MAX , unsigned short *,  unsigned short *, unsigned short *,  unsigned short| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid colortemp  less than lower range | -1 , unsigned short *,  unsigned short *, unsigned short *,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetGammaTable() -   Retrieve current TV GammaTable State with invalid size | tvColorTemp_t, unsigned short *, unsigned short *, unsigned short *, 257| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call GetGammaTable() -   Retrieve current TV GammaTable State with valid colortemp  value but not supported by the platform by looping through the test specific config file | tvColorTemp_t , unsigned short *,  unsigned short *, unsigned short *,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 11 | call GetGammaTable() -  Retrieve current TV GammaTable State valid arguments |tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
+* | 03 | call GetGammaTable() -   "pData_G, pData_B, size"= valid , "pData_R"= Invalid | NULL,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetGammaTable() -   "pData_R, pData_B, size"= valid , "pData_G"= Invalid | unsigned short *,  NULL, unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetGammaTable() -   "pData_R, pData_G, size"= valid , "pData_B"= Invalid | unsigned short *,  unsigned short *, NULL,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 07 | call GetGammaTable() -  Retrieve current TV GammaTable State valid arguments | unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetGammaTable (void)
 {
@@ -4933,7 +5089,58 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 }
 
 /**
-* @brief Validate GetDefaultParams() for all positive invocation scenarios
+* @brief Validate GetCMSState() for all positive invocation scenarios
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 25@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* |:--:|---------|----------|--------------|-----|
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetCMSState() -  Retrieve the current CMS State with valid argument |bool *| tvERROR_NONE | Should Pass |
+* | 03 | call GetCMSState() -  Retrieve the current CMS State with valid argument and validate with above value | bool * | tvERROR_NONE | Should Pass |
+* | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+*/
+void test_l1_tvSettings_positive_GetCMSState (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetCMSState() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 26@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* |Variation / Step|Description|Test Data|Expected Result|Notes|
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call GetCMSState() -   Retrieve current CMS State even before TvInit() | bool * | tvERROR_INVALID_STATE | Should Pass |
+* | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetCMSState() -  Retrieve current CMS State with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call GetCMSState() -  Retrieve current CMS State valid arguments | bool * | tvERROR_INVALID_STATE | Should Pass |
+*/
+void test_l1_tvSettings_negative_GetCMSState (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetDefaultPQParams() for all positive invocation scenarios
 *
 * **Test Group ID:** Basic : 01@n
 * **Test Case ID:** 181@n
@@ -4947,16 +5154,16 @@ void test_l1_tvSettings_negative_SetCMSState (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetDefaultParams() -  Get the default value PQ parameter by looping through all the input params from test specific config file | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+* | 02 | call GetDefaultPQParams() -  Get the default value PQ parameter by looping through all the input params from test specific config file | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
 * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
-void test_l1_tvSettings_positive_GetDefaultParams (void)
+void test_l1_tvSettings_positive_GetDefaultPQParams (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
 
 /**
-* @brief Validate GetDefaultParams() for all negative invocation scenarios
+* @brief Validate GetDefaultPQParams() for all negative invocation scenarios
 *
 * @note tvERROR_GENERAL is platform specific and cannot be simulated
 *
@@ -4971,22 +5178,81 @@ void test_l1_tvSettings_positive_GetDefaultParams (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
-* | 01 | call GetDefaultParams() -  Get the default value PQ parameter even before TvInit() | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int * | (tvERROR_INVALID_STATE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED |
+* | 01 | call GetDefaultPQParams() -  Get the default value PQ parameter even before TvInit() | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int * | (tvERROR_INVALID_STATE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED |
 * | 02 | call TvInit()  -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call GetDefaultParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid maxrange | PQ_MODE_MAX, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call GetDefaultParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid lowerrange |PQ_MODE_INVALID , tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call GetDefaultParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid maxrange | int, VIDEO_SOURCE_MAX ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call GetDefaultParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid lowerrange | int, -2 ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call GetDefaultParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid maxrange | int, tvVideoSrcType_t ,VIDEO_FORMAT_MAX , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetDefaultParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid lowerrange | int, tvVideoSrcType_t ,-1 , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid maxrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , PQ_PARAM_MAX , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid lowerrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , -1 , int *| tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid , "value"= Invalid NULL pointer | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , NULL| tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call GetDefaultParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid (looping through the test specific config file),"value"= valid | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call GetDefaultPQParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid maxrange | PQ_MODE_MAX, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetDefaultPQParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid lowerrange |PQ_MODE_INVALID , tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetDefaultPQParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid maxrange | int, VIDEO_SOURCE_MAX ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetDefaultPQParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid lowerrange | int, -2 ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetDefaultPQParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid maxrange | int, tvVideoSrcType_t ,VIDEO_FORMAT_MAX , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetDefaultPQParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid lowerrange | int, tvVideoSrcType_t ,-1 , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call GetDefaultPQParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid maxrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , PQ_PARAM_MAX , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call GetDefaultPQParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid lowerrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , -1 , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call GetDefaultPQParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid , "value"= Invalid NULL pointer | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , NULL| tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call GetDefaultPQParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid (looping through the test specific config file),"value"= valid | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
 * | 13 | call TvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 14 | call GetDefaultParams() -  Get the default value PQ parameter valid arguments |  int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_STATE | Should Pass |
+* | 14 | call GetDefaultPQParams() -  Get the default value PQ parameter valid arguments |  int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_STATE | Should Pass |
 */
-void test_l1_tvSettings_negative_GetDefaultParams (void)
+void test_l1_tvSettings_negative_GetDefaultPQParams (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetPQParams() for all positive invocation scenarios
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 181@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* | Variation / Step | Description | Test Data | Expected Result | Notes |
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call GetPQParams() -  Get the default value PQ parameter by looping through all the input params from test specific config file | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+* | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+*/
+void test_l1_tvSettings_positive_GetPQParams (void)
+{
+	UT_FAIL(This function needs to be implemented!); 
+}
+
+/**
+* @brief Validate GetPQParams() for all negative invocation scenarios
+*
+* @note tvERROR_GENERAL is platform specific and cannot be simulated
+*
+* **Test Group ID:** Basic : 01@n
+* **Test Case ID:** 182@n
+* 
+* **Pre-Conditions:** None@n
+*
+* **Dependencies:** None@n
+* **User Interaction:** None
+* 
+* **Test Procedure:**@n
+* | Variation / Step | Description | Test Data | Expected Result | Notes |
+* | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call GetPQParams() -  Get the  value PQ parameter even before TvInit() | int ,tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int * | (tvERROR_INVALID_STATE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED |
+* | 02 | call TvInit()  -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 03 | call GetPQParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid maxrange | PQ_MODE_MAX, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call GetPQParams() -  "videoSrcType,videoFormatType,pqParamIndex,value"= valid , "pqIndex"= Invalid lowerrange |PQ_MODE_INVALID , tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call GetPQParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid maxrange | int, VIDEO_SOURCE_MAX ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call GetPQParams() -  "pqIndex,videoFormatType,pqParamIndex,value"= valid , "videoSrcType"= Invalid lowerrange | int, -2 ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call GetPQParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid maxrange | int, tvVideoSrcType_t ,VIDEO_FORMAT_MAX , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call GetPQParams() -  "pqIndex,videoSrcType,pqParamIndex,value"= valid , "videoFormatType"= Invalid lowerrange | int, tvVideoSrcType_t ,-1 , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call GetPQParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid maxrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , PQ_PARAM_MAX , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call GetPQParams() -  "pqIndex,videoSrcType,videoFormatType,value"= valid , "pqParamIndex"= Invalid lowerrange |  int, tvVideoSrcType_t ,tvVideoFormatType_t , -1 , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call GetPQParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid , "value"= Invalid NULL pointer | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , NULL| tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call GetPQParams() -  "pqIndex,videoSrcType,videoFormatType,pqParamIndex"= valid (looping through the test specific config file),"value"= valid | int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call TvTerm()  -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 14 | call GetPQParams() -  Get the  value PQ parameter valid arguments |  int, tvVideoSrcType_t ,tvVideoFormatType_t , tvPQParameterIndex_t , int *| tvERROR_INVALID_STATE | Should Pass |
+*/
+void test_l1_tvSettings_negative_GetPQParams (void)
 {
 	UT_FAIL(This function needs to be implemented!); 
 }
@@ -5980,6 +6246,8 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "SaveBacklight_L1_negative" ,test_l1_tvSettings_negative_SaveBacklight );
 	UT_add_test( pSuite, "SetBacklightFade_L1_positive" ,test_l1_tvSettings_positive_SetBacklightFade );
 	UT_add_test( pSuite, "SetBacklightFade_L1_negative" ,test_l1_tvSettings_negative_SetBacklightFade );
+	UT_add_test( pSuite, "GetBacklightFade_L1_positive" ,test_l1_tvSettings_positive_GetBacklightFade );
+	UT_add_test( pSuite, "GetBacklightFade_L1_negative" ,test_l1_tvSettings_negative_GetBacklightFade );
 	UT_add_test( pSuite, "GetSupportedBacklightModes_L1_positive" ,test_l1_tvSettings_positive_GetSupportedBacklightModes );
 	UT_add_test( pSuite, "GetSupportedBacklightModes_L1_negative" ,test_l1_tvSettings_negative_GetSupportedBacklightModes );
 	UT_add_test( pSuite, "GetCurrentBacklightMode_L1_positive" ,test_l1_tvSettings_positive_GetCurrentBacklightMode );
@@ -6098,8 +6366,12 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "GetColorTemp_B_post_offset_onSource_L1_negative" ,test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource );
 	UT_add_test( pSuite, "EnableWBCalibrationMode_L1_positive" ,test_l1_tvSettings_positive_EnableWBCalibrationMode );
 	UT_add_test( pSuite, "EnableWBCalibrationMode_L1_negative" ,test_l1_tvSettings_negative_EnableWBCalibrationMode );
+	UT_add_test( pSuite, "GetWBCalibrationMode_L1_positive" ,test_l1_tvSettings_positive_GetWBCalibrationMode );
+	UT_add_test( pSuite, "GetWBCalibrationMode_L1_negative" ,test_l1_tvSettings_negative_GetWBCalibrationMode );
 	UT_add_test( pSuite, "SetGammaTable_L1_positive" ,test_l1_tvSettings_positive_SetGammaTable );
 	UT_add_test( pSuite, "SetGammaTable_L1_negative" ,test_l1_tvSettings_negative_SetGammaTable );
+	UT_add_test( pSuite, "GetDefaultGammaTable_L1_positive" ,test_l1_tvSettings_positive_GetDefaultGammaTable );
+	UT_add_test( pSuite, "GetDefaultGammaTable_L1_negative" ,test_l1_tvSettings_negative_GetDefaultGammaTable );
 	UT_add_test( pSuite, "GetGammaTable_L1_positive" ,test_l1_tvSettings_positive_GetGammaTable );
 	UT_add_test( pSuite, "GetGammaTable_L1_negative" ,test_l1_tvSettings_negative_GetGammaTable );
 	UT_add_test( pSuite, "SaveGammaTable_L1_positive" ,test_l1_tvSettings_positive_SaveGammaTable );
@@ -6128,8 +6400,12 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite, "SaveCMS_L1_negative" ,test_l1_tvSettings_negative_SaveCMS );
 	UT_add_test( pSuite, "SetCMSState_L1_positive" ,test_l1_tvSettings_positive_SetCMSState );
 	UT_add_test( pSuite, "SetCMSState_L1_negative" ,test_l1_tvSettings_negative_SetCMSState );
-	UT_add_test( pSuite, "GetDefaultParams_L1_positive" ,test_l1_tvSettings_positive_GetDefaultParams );
-	UT_add_test( pSuite, "GetDefaultParams_L1_negative" ,test_l1_tvSettings_negative_GetDefaultParams );
+	UT_add_test( pSuite, "GetCMSState_L1_positive" ,test_l1_tvSettings_positive_GetCMSState );
+	UT_add_test( pSuite, "GetCMSState_L1_negative" ,test_l1_tvSettings_negative_GetCMSState );
+	UT_add_test( pSuite, "GetDefaultPQParams_L1_positive" ,test_l1_tvSettings_positive_GetDefaultPQParams );
+	UT_add_test( pSuite, "GetDefaultPQParams_L1_negative" ,test_l1_tvSettings_negative_GetDefaultPQParams );
+	UT_add_test( pSuite, "GetPQParams_L1_positive" ,test_l1_tvSettings_positive_GetPQParams );
+	UT_add_test( pSuite, "GetPQParams_L1_negative" ,test_l1_tvSettings_negative_GetPQParams );
 	UT_add_test( pSuite, "GetMaxGainValue_L1_positive" ,test_l1_tvSettings_positive_GetMaxGainValue );
 	UT_add_test( pSuite, "GetMaxGainValue_L1_negative" ,test_l1_tvSettings_negative_GetMaxGainValue );
 	UT_add_test( pSuite, "EnableGammaMode_L1_positive" ,test_l1_tvSettings_positive_EnableGammaMode );
