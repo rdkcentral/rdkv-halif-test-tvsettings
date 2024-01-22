@@ -467,7 +467,64 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 */
 void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 13;                                    /* It must be 13 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        tvVideoFormatType_t *tvVideoFormats[MAX_VIDEO_FORMAT];
+        tvVideoFormatType_t *tvVideoFormatsRetry[MAX_VIDEO_FORMAT];
+        bool IsVideoFormatValid;
+	unsigned short sizeReceived;
+	unsigned short sizeReceivedRetry;
+	size_t sizeFromConfig;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVSupportedVideoFormats and expeting the API to return success */
+        result = GetTVSupportedVideoFormats(tvVideoFormats, &sizeReceived);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	sizeFromConfig = sizeof(Configfile.videoformat) / sizeof(Configfile.videoformat[0]);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
+
+        for (size_t i = 0; i < sizeFromConfig; i++)
+        {
+		IsVideoFormatValid = false;
+		for(unsigned short j = 0; j < sizeReceived; j++)
+		{
+			if (Configfile.videoformat[i] == *tvVideoFormats[j])
+			{
+				IsVideoFormatValid = true;
+				break;
+			}
+		}
+                CU_ASSERT_FALSE_FATAL(IsVideoFormatValid);
+        }
+
+        /* Calling tvsettings GetTVSupportedVideoFormats and expeting the API to return success */
+        result = GetTVSupportedVideoFormats(tvVideoFormatsRetry, &sizeReceivedRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, sizeReceivedRetry);
+        for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+        {
+                IsVideoFormatValid = false;
+                for(unsigned short j = 0; j < sizeReceived; j++)
+                {
+                        if (*tvVideoFormatsRetry[i] == *tvVideoFormats[j])
+                        {
+                                IsVideoFormatValid = true;
+                                break;
+                        }
+                }
+                CU_ASSERT_FALSE_FATAL(IsVideoFormatValid);
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -627,7 +684,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
 */
 void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+
 }
 
 /**
@@ -916,7 +973,64 @@ void test_l1_tvSettings_negative_GetCurrentVideoSource (void)
 */
 void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 23;                                    /* It must be 23 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        tvVideoSrcType_t *tvVideoSources[MAX_NAME_SIZE];
+        tvVideoSrcType_t *tvVideoSourcesRetry[MAX_NAME_SIZE];
+        bool IsVideoSourceValid;
+	unsigned short sizeReceived;
+	unsigned short sizeReceivedRetry;
+	size_t sizeFromConfig;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVSupportedVideoSources and expeting the API to return success */
+        result = GetTVSupportedVideoSources(tvVideoSources, &sizeReceived);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	sizeFromConfig = sizeof(Configfile.videosource) / sizeof(Configfile.videosource[0]);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
+
+        for (size_t i = 0; i < sizeFromConfig; i++)
+        {
+		IsVideoSourceValid = false;
+		for(unsigned short j = 0; j < sizeReceived; j++)
+		{
+			if (Configfile.videosource[i] == *tvVideoSources[j])
+			{
+				IsVideoSourceValid = true;
+				break;
+			}
+		}
+                CU_ASSERT_FALSE_FATAL(IsVideoSourceValid);
+        }
+
+        /* Calling tvsettings GetTVSupportedVideoSources and expeting the API to return success */
+        result = GetTVSupportedVideoSources(tvVideoSourcesRetry, &sizeReceivedRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, sizeReceivedRetry);
+        for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+        {
+                IsVideoSourceValid = false;
+                for(unsigned short j = 0; j < sizeReceived; j++)
+                {
+                        if (*tvVideoSourcesRetry[i] == *tvVideoSources[j])
+                        {
+                                IsVideoSourceValid = true;
+                                break;
+                        }
+                }
+                CU_ASSERT_FALSE_FATAL(IsVideoSourceValid);
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -1817,7 +1931,64 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 */
 void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 39;                                    /* It must be 39 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        tvDimmingMode_t *tvDimmingModes[MAX_DIMMING_MODES];
+        tvDimmingMode_t *tvDimmingModesRetry[MAX_DIMMING_MODES];
+        bool IsDimmingModeValid;
+	unsigned short sizeReceived;
+	unsigned short sizeReceivedRetry;
+	size_t sizeFromConfig;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVSupportedDimmingModes and expeting the API to return success */
+        result = GetTVSupportedDimmingModes(tvDimmingModes, &sizeReceived);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	sizeFromConfig = sizeof(Configfile.dimmode.modeId) / sizeof(Configfile.dimmode.modeId[0]);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
+
+        for (size_t i = 0; i < sizeFromConfig; i++)
+        {
+		IsDimmingModeValid = false;
+		for(unsigned short j = 0; j < sizeReceived; j++)
+		{
+			if ((tvDimmingMode_t)Configfile.dimmode.modeId[i] == *tvDimmingModes[j])
+			{
+				IsDimmingModeValid = true;
+				break;
+			}
+		}
+                CU_ASSERT_FALSE_FATAL(IsDimmingModeValid);
+        }
+
+        /* Calling tvsettings GetTVSupportedDimmingModes and expeting the API to return success */
+        result = GetTVSupportedDimmingModes(tvDimmingModesRetry, &sizeReceivedRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, sizeReceivedRetry);
+        for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+        {
+                IsDimmingModeValid = false;
+                for(unsigned short j = 0; j < sizeReceived; j++)
+                {
+                        if (*tvDimmingModesRetry[i] == *tvDimmingModes[j])
+                        {
+                                IsDimmingModeValid = true;
+                                break;
+                        }
+                }
+                CU_ASSERT_FALSE_FATAL(IsDimmingModeValid);
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5303,7 +5474,108 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 */
 void test_l1_tvSettings_negative_SaveAspectRatio (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 94;                                    /* It must be 94 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+        int numberOfSources;
+        int numberOfPqmodes;
+        int numberOfFormats;
+        int numberOfApsectRatios;
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio(VIDEO_SOURCE_MAX,Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)-2,Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],-1,(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],PQ_MODE_MAX,(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],VIDEO_FORMAT_MAX,(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)-1,(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)-1);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],tvDisplayMode_MAX);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
+        numberOfSources = sizeof(Configfile.sourceId.modeId)/sizeof(Configfile.sourceId.modeId[0]);
+        for(int i =0 ; i < numberOfSources; i++)
+        {
+                 for(int j = i+1 ; j < numberOfSources; j++)
+                 {
+                        result = SaveAspectRatio((tvVideoSrcType_t) (Configfile.sourceId.modeId[i] | Configfile.sourceId.modeId[j]),Configfile.pic_modes.modeId[i],(tvVideoFormatType_t)Configfile.videoformat[i],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[i]);
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
+        numberOfPqmodes = sizeof(Configfile.pic_modes.modeId)/sizeof(Configfile.pic_modes.modeId[0]);
+        for(int i =0 ; i < numberOfPqmodes; i++)
+        {
+                 for(int j = i+1 ; j < numberOfPqmodes; j++)
+                 {
+                        result = SaveAspectRatio((tvVideoSrcType_t) Configfile.sourceId.modeId[i],(Configfile.pic_modes.modeId[i] | Configfile.pic_modes.modeId[j]),(tvVideoFormatType_t)Configfile.videoformat[i],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[i]);
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        numberOfFormats = sizeof(Configfile.videoformat)/sizeof(Configfile.videoformat[0]);
+        for(int i =0 ; i < numberOfFormats; i++)
+        {
+                 for(int j = i+1 ; j < numberOfFormats; j++)
+                 {
+                        result = SaveAspectRatio((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[i] ,(tvVideoFormatType_t)(Configfile.videoformat[i] | Configfile.videoformat[j]),(tvDisplayMode_t)Configfile.ApsectRatio.modeId[i]);
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
+        numberOfApsectRatios = sizeof(Configfile.ApsectRatio.modeId)/sizeof(Configfile.ApsectRatio.modeId[0]);
+        for(int i =0 ; i < numberOfApsectRatios; i++)
+        {
+                 for(int j = i+1 ; j < numberOfApsectRatios; j++)
+                 {
+                        result = SaveAspectRatio((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[i] ,(tvVideoFormatType_t)Configfile.videoformat[i],(tvDisplayMode_t)(Configfile.ApsectRatio.modeId[i] | Configfile.ApsectRatio.modeId[j]));
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveAspectRatio((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],(tvDisplayMode_t)Configfile.ApsectRatio.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
+
 }
 
 /**
@@ -5328,7 +5600,32 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 */
 void test_l1_tvSettings_positive_SetLowLatencyState (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 95;                                    /* It must be 95 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetLowLatencyState with value 0 and expecting the API to return success */
+        result = SetLowLatencyState(0);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetLowLatencyState with value 1 and expecting the API to return success */
+        result = SetLowLatencyState(1);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetLowLatencyState with value 0 and expecting the API to return success */
+        result = SetLowLatencyState(0);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5356,7 +5653,36 @@ void test_l1_tvSettings_positive_SetLowLatencyState (void)
 */
 void test_l1_tvSettings_negative_SetLowLatencyState (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 96;                                    /* It must be 96 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings SetLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetLowLatencyState(0);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetLowLatencyState with value -1 and expecting the API to return tvERROR_INVALID_PARAM */
+        result = SetLowLatencyState(-1);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SetLowLatencyState with value 101 and expecting the API to return tvERROR_INVALID_PARAM */
+        result = SetLowLatencyState(2);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings the SetLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetLowLatencyState(1);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5380,7 +5706,41 @@ void test_l1_tvSettings_negative_SetLowLatencyState (void)
 */
 void test_l1_tvSettings_positive_GetLowLatencyState (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 97;                                    /* It must be 97 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        int lowLatencyState = 0;
+        int latencyStateRetry = 0;
+        bool IsLatencyStateValid = false;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetLowLatencyState and expeting the API to return success */
+        result = GetLowLatencyState(&lowLatencyState);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        for (size_t i = 0; i < (sizeof(Configfile.latencyState) / sizeof(Configfile.latencyState[0])); i++)
+        {
+                if (Configfile.latencyState[i] == lowLatencyState)
+                {
+                        IsLatencyStateValid = true;
+                        break;
+                }
+        }
+        CU_ASSERT_FALSE(IsLatencyStateValid);
+
+        /* Calling tvsettings GetLowLatencyState and expeting the API to return success */
+        result = GetLowLatencyState(&latencyStateRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        CU_ASSERT_EQUAL(lowLatencyState,latencyStateRetry);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5407,7 +5767,37 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 */
 void test_l1_tvSettings_negative_GetLowLatencyState (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 98;                                    /* It must be 98 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+        int lowLatencyState = -1;
+
+        /* Calling tvsettings GetLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetLowLatencyState(&lowLatencyState);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetLowLatencyState with invalid input and expecting the API to return tvERROR_INVALID_PARAM*/
+        result = GetLowLatencyState(NULL);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings GetLowLatencyState with value 2 and expecting the API to return tvERROR_INVALID_PARAM*/
+        result = GetLowLatencyState((int *)2);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetLowLatencyState(&lowLatencyState);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5430,7 +5820,33 @@ void test_l1_tvSettings_negative_GetLowLatencyState (void)
 */
 void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 99;                                    /* It must be 99 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SaveLowLatencyState for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
+        for (size_t i = 0; i < sizeof(Configfile.sourceId.modeName) / sizeof(Configfile.sourceId.modeName[0]); i++)
+        {
+                for (size_t j = 0; j < sizeof(Configfile.pic_modes.modeName) / sizeof(Configfile.pic_modes.modeName[0]); j++)
+                {
+                        for (size_t k = 0; k < sizeof(Configfile.videoformat) / sizeof(Configfile.videoformat[0]); k++)
+                        {
+                                result = SaveLowLatencyState((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[j],(tvVideoFormatType_t) Configfile.videoformat[k],50);
+                                CU_ASSERT_EQUAL(result, tvERROR_NONE);
+                        }
+                }
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5465,7 +5881,96 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 */
 void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 100;                                    /* It must be 100 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+        int numberOfSources;
+        int numberOfPqmodes;
+        int numberOfFormats;
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState(VIDEO_SOURCE_MAX,Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)-2,Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],-1,(tvVideoFormatType_t)Configfile.videoformat[0],50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],PQ_MODE_MAX,(tvVideoFormatType_t)Configfile.videoformat[0],50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],VIDEO_FORMAT_MAX,50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)-1,50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],-1);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],2);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
+        numberOfSources = sizeof(Configfile.sourceId.modeId)/sizeof(Configfile.sourceId.modeId[0]);
+        for(int i =0 ; i < numberOfSources; i++)
+        {
+                 for(int j = i+1 ; j < numberOfSources; j++)
+                 {
+                        result = SaveLowLatencyState((tvVideoSrcType_t) (Configfile.sourceId.modeId[i] | Configfile.sourceId.modeId[j]),Configfile.pic_modes.modeId[i],(tvVideoFormatType_t)Configfile.videoformat[i],50);
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
+        numberOfPqmodes = sizeof(Configfile.pic_modes.modeId)/sizeof(Configfile.pic_modes.modeId[0]);
+        for(int i =0 ; i < numberOfPqmodes; i++)
+        {
+                 for(int j = i+1 ; j < numberOfPqmodes; j++)
+                 {
+                        result = SaveLowLatencyState((tvVideoSrcType_t) Configfile.sourceId.modeId[i],(Configfile.pic_modes.modeId[i] | Configfile.pic_modes.modeId[j]),(tvVideoFormatType_t)Configfile.videoformat[i],50);
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
+        numberOfFormats = sizeof(Configfile.videoformat)/sizeof(Configfile.videoformat[0]);
+        for(int i =0 ; i < numberOfFormats; i++)
+        {
+                 for(int j = i+1 ; j < numberOfFormats; j++)
+                 {
+                        result = SaveLowLatencyState((tvVideoSrcType_t) Configfile.sourceId.modeId[i],Configfile.pic_modes.modeId[i] ,(tvVideoFormatType_t)(Configfile.videoformat[i] | Configfile.videoformat[j]),50);
+                        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+                 }
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveLowLatencyState((tvVideoSrcType_t)Configfile.sourceId.modeId[0],Configfile.pic_modes.modeId[0],(tvVideoFormatType_t)Configfile.videoformat[0],50);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5490,7 +5995,32 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 */
 void test_l1_tvSettings_positive_SetDynamicContrast (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 101;                                    /* It must be 101 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicContrast with valid value "enabled" and expecting the API to return success */
+        result = SetDynamicContrast("enabled");
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicContrast with valid value "disabled" and expecting the API to return success */
+        result = SetDynamicContrast("disabled");
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicContrast with valid value "enabled" and expecting the API to return success */
+        result = SetDynamicContrast("enabled");
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5517,7 +6047,32 @@ void test_l1_tvSettings_positive_SetDynamicContrast (void)
 */
 void test_l1_tvSettings_negative_SetDynamicContrast (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 102;                                    /* It must be 102 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings SetDynamicContrast with valid value "enabled" and expecting the API to return success */
+        result = SetDynamicContrast("enabled");
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicContrast with valid value "ENABLE" and expecting the API to return success */
+        result = SetDynamicContrast("ENABLE");
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicContrast with valid value "enabled" and expecting the API to return success */
+        result = SetDynamicContrast("enabled");
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5541,7 +6096,31 @@ void test_l1_tvSettings_negative_SetDynamicContrast (void)
 */
 void test_l1_tvSettings_positive_GetDynamicContrast (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 103;                                    /* It must be 103 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        char dynamicContrast[OFFSET_MAX]={'\0'};
+        char dynamicContrastRetry[OFFSET_MAX]={'\0'};
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetDynamicContrast and expeting the API to return success */
+        result = GetDynamicContrast(dynamicContrast);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetDynamicContrast and expeting the API to return success */
+        result = GetDynamicContrast(dynamicContrastRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        CU_ASSERT_STRING_EQUAL(dynamicContrastRetry, dynamicContrast);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5568,7 +6147,34 @@ void test_l1_tvSettings_positive_GetDynamicContrast (void)
 */
 void test_l1_tvSettings_negative_GetDynamicContrast (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 104;                                    /* It must be 104 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        char dynamicContrast[OFFSET_MAX]={'\0'};
+
+        /* Calling tvsettings GetDynamicContrast and expeting the API to return success */
+        result = GetDynamicContrast(dynamicContrast);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetDynamicContrast and expeting the API to return success */
+        result = GetDynamicContrast(NULL);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings GetDynamicContrast and expeting the API to return success */
+        result = GetDynamicContrast(dynamicContrast);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
+
 }
 
 /**
@@ -5593,7 +6199,33 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 */
 void test_l1_tvSettings_positive_SetDynamicGamma (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 105;                                    /* It must be 105 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicGamma with valid value "1.80" and expecting the API to return success */
+        result = SetDynamicGamma(1.80);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicGamma with valid value "2.20" and expecting the API to return success */
+        result = SetDynamicGamma(2.20);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicGamma with valid value "2.60" and expecting the API to return success */
+        result = SetDynamicGamma(2.60);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
+
 }
 
 /**
@@ -5621,7 +6253,32 @@ void test_l1_tvSettings_positive_SetDynamicGamma (void)
 */
 void test_l1_tvSettings_negative_SetDynamicGamma (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 105;                                    /* It must be 105 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings SetDynamicGamma with valid value "2.20" and expecting the API to return success */
+        result = SetDynamicGamma(2.20);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicGamma with valid value "1.79" and expecting the API to return success */
+        result = SetDynamicGamma(1.79);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetDynamicGamma with valid value "2.20" and expecting the API to return success */
+        result = SetDynamicGamma(2.20);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5645,7 +6302,31 @@ void test_l1_tvSettings_negative_SetDynamicGamma (void)
 */
 void test_l1_tvSettings_positive_GetDynamicGamma (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 107;                                    /* It must be 107 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        double dynamicGamma=0.0;
+        double dynamicGammaRetry=0.0;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetDynamicGamma and expeting the API to return success */
+        result = GetDynamicGamma(&dynamicGamma);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetDynamicGamma and expeting the API to return success */
+        result = GetDynamicGamma(&dynamicGammaRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        CU_ASSERT_EQUAL(dynamicGammaRetry, dynamicGamma);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5672,7 +6353,33 @@ void test_l1_tvSettings_positive_GetDynamicGamma (void)
 */
 void test_l1_tvSettings_negative_GetDynamicGamma (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 108;                                    /* It must be 108 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        double dynamicGamma=0.0;
+
+        /* Calling tvsettings GetDynamicGamma and expeting the API to return success */
+        result = GetDynamicGamma(&dynamicGamma);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetDynamicGamma and expeting the API to return success */
+        result = GetDynamicGamma(NULL);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings GetDynamicGamma and expeting the API to return success */
+        result = GetDynamicGamma(&dynamicGamma);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5696,7 +6403,64 @@ void test_l1_tvSettings_negative_GetDynamicGamma (void)
 */
 void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 109;                                    /* It must be 109 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        tvDimmingMode_t *tvDimmingModes[MAX_DIMMING_MODES];
+        tvDimmingMode_t *tvDimmingModesRetry[MAX_DIMMING_MODES];
+        bool IsDimmingModeValid;
+	unsigned short sizeReceived;
+	unsigned short sizeReceivedRetry;
+	size_t sizeFromConfig;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVSupportedDimmingModes and expeting the API to return success */
+        result = GetTVSupportedDimmingModes(tvDimmingModes, &sizeReceived);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	sizeFromConfig = sizeof(Configfile.dimmode.modeId) / sizeof(Configfile.dimmode.modeId[0]);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
+
+        for (size_t i = 0; i < sizeFromConfig; i++)
+        {
+		IsDimmingModeValid = false;
+		for(unsigned short j = 0; j < sizeReceived; j++)
+		{
+			if ((tvDimmingMode_t)Configfile.dimmode.modeId[i] == *tvDimmingModes[j])
+			{
+				IsDimmingModeValid = true;
+				break;
+			}
+		}
+                CU_ASSERT_FALSE_FATAL(IsDimmingModeValid);
+        }
+
+        /* Calling tvsettings GetTVSupportedDimmingModes and expeting the API to return success */
+        result = GetTVSupportedDimmingModes(tvDimmingModesRetry, &sizeReceivedRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+	CU_ASSERT_EQUAL_FATAL(sizeReceived, sizeReceivedRetry);
+        for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+        {
+                IsDimmingModeValid = false;
+                for(unsigned short j = 0; j < sizeReceived; j++)
+                {
+                        if (*tvDimmingModesRetry[i] == *tvDimmingModes[j])
+                        {
+                                IsDimmingModeValid = true;
+                                break;
+                        }
+                }
+                CU_ASSERT_FALSE_FATAL(IsDimmingModeValid);
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5745,7 +6509,27 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 */
 void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 111;                                    /* It must be 111 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings to Set the SetTVDolbyVisionMode for all the dv_modes and expecting the API to return success */
+        for (size_t i = 0; i < sizeof(Configfile.dv_modes.modeId) / sizeof(Configfile.dv_modes.modeId[0]); i++)
+        {
+                        result = SetTVDolbyVisionMode((tvDolbyMode_t)Configfile.dv_modes.modeId[i]);
+                        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5773,7 +6557,36 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 */
 void test_l1_tvSettings_negative_SetTVDolbyVisionMode (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 112;                                    /* It must be 112 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings SetTVDolbyVisionMode with valid value and expecting the API to return success */
+        result = SetTVDolbyVisionMode((tvDolbyMode_t)Configfile.dv_modes.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetTVDolbyVisionMode with valid value and expecting the API to return success */
+        result = SetTVDolbyVisionMode(tvMode_Max);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings SetTVDolbyVisionMode with valid value and expecting the API to return success */
+        result = SetTVDolbyVisionMode((tvDolbyMode_t)-2);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetTVDolbyVisionMode with valid value and expecting the API to return success */
+        result = SetTVDolbyVisionMode((tvDolbyMode_t)Configfile.dv_modes.modeId[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5960,7 +6773,41 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 */
 void test_l1_tvSettings_positive_GetTVPictureMode (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 119;                                    /* It must be 119 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE;
+        char pictureMode[PIC_MODE_NAME_MAX]={'\0'};
+        char pictureModeRetry[PIC_MODE_NAME_MAX]={'\0'};
+        bool IsPicturModeValid = false;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVPictureMode and expeting the API to return success */
+        result = GetTVPictureMode(pictureMode);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        for (size_t i = 0; i < (sizeof(Configfile.pic_modes.modeName) / sizeof(Configfile.pic_modes.modeName[0])); i++)
+        {
+                if (!strcmp(Configfile.pic_modes.modeName[i], pictureMode))
+                {
+                        IsPicturModeValid = true;
+                        break;
+                }
+        }
+        CU_ASSERT_FALSE(IsPicturModeValid);
+
+        /* Calling tvsettings GetTVPictureMode and expeting the API to return success */
+        result = GetTVPictureMode(pictureModeRetry);
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        CU_ASSERT_STRING_EQUAL(pictureModeRetry, pictureMode);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -5985,7 +6832,33 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 */
 void test_l1_tvSettings_negative_GetTVPictureMode (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 120;                                    /* It must be 120 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+        char pictureMode[PIC_MODE_NAME_MAX]={'\0'};
+
+        /* Calling tvsettings GetTVPictureMode and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVPictureMode(pictureMode);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVPictureMode and expecting the API to return tvERROR_INVALID_PARAM */
+        result = GetTVPictureMode(NULL);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings GetTVPictureMode and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVPictureMode(pictureMode);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
@@ -6008,7 +6881,28 @@ void test_l1_tvSettings_negative_GetTVPictureMode (void)
 */
 void test_l1_tvSettings_positive_SetTVPictureMode (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 121;                                    /* It must be 121 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings to Set the SetTVPictureMode for all the pic_modes and expecting the API to return success */
+        for (size_t i = 0; i < sizeof(Configfile.pic_modes.modeName) / sizeof(Configfile.pic_modes.modeName[0]); i++)
+        {
+                        result = SetTVPictureMode(Configfile.pic_modes.modeName[i]);
+                        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+        }
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        UT_LOG("Out %s",__FUNCTION__);
+
 }
 
 /**
@@ -6036,7 +6930,36 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 */
 void test_l1_tvSettings_negative_SetTVPictureMode (void)
 {
-	UT_FAIL(This function needs to be implemented!); 
+        gTestID = 122;                                    /* It must be 122 */
+        UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+        tvError_t result = tvERROR_NONE ;
+
+        /* Calling tvsettings SetTVPictureMode and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetTVPictureMode(Configfile.pic_modes.modeName[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        /* Calling tvsettings initialization and expecting the API to return success */
+        result = TvInit();
+        CU_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings SetTVPictureMode and expecting the API to return tvERROR_INVALID_PARAM */
+        result = SetTVPictureMode(NULL);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings SetTVPictureMode and expecting the API to return tvERROR_INVALID_PARAM */
+        result = SetTVPictureMode("INVALID");
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+        /* Calling tvsettings termination and expecting the API to return success */
+        result = TvTerm();
+        CU_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        /* Calling tvsettings the SetTVPictureMode and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetTVPictureMode(Configfile.pic_modes.modeName[0]);
+        CU_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+
+        UT_LOG("Out %s",__FUNCTION__);
 }
 
 /**
