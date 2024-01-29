@@ -33,6 +33,7 @@
 */
 
 #include <ut.h>
+#include "test_config_read.h"
 
 extern int UT_register_APIDEF_l1_tests( void );
 extern int UT_register_APIDEF_l2_tests( void );
@@ -44,6 +45,7 @@ int main(int argc, char** argv)
 	/* Register tests as required, then call the UT-main to support switches and triggering */
 	UT_init( argc, argv );
 
+	config_read(argv[1]);
 	/* Check if tests are registered successfully */
 
 	registerReturn = UT_register_APIDEF_l1_tests();
