@@ -5347,10 +5347,12 @@ void test_l1_tvSettings_positive_EnableGammaMode (void)
 * **Test Procedure:**@n
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
+* | 01 | call EnableGammaMode() -  Set the TV GammaMode with valid input before TvInit() | 0 | tvERROR_INVALID_STATE | Should Pass |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 02 | call EnableGammaMode() -   Set the TV GammaMode with invalid input | -1 | tvERROR_INVALID_PARAM | Should Pass |
 * | 03 | call EnableGammaMode() -   Set the TV GammaMode with invalid input | 256 | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 01 | call EnableGammaMode() -  Set the TV GammaMode with valid input after TvTerm() | 0 | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_EnableGammaMode (void)
 {
