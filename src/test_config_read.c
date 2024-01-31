@@ -47,19 +47,24 @@ int config_read(char *filename)
 			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "videoframerate") == 0) {
 				mode = FRAMERATE_MODE_FLAG;
 			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "videosource") == 0) {
-                                mode = VIDEO_SOURCE_FLAG;
-                        }else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "backlightmode") == 0) {
-                                mode = BACK_LIGHT_FLAG;
-                        }else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ldimmode") == 0) {
-                                mode = LDIM_MODE_FLAG;
-                        }
+                mode = VIDEO_SOURCE_FLAG;
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "backlightmode") == 0) {
+				mode = BACK_LIGHT_FLAG;
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ldimmode") == 0) {
+				mode = LDIM_MODE_FLAG;
+			}
 			else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "colorTemperature") == 0) {
 				mode = COLOR_TEMP_FLAG;
 			} else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "colorTempSourceOffset") == 0) {
-                                mode = COLOR_TEMPSOURCE_OFFSET_FLAG;
-                        }else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "AspectRatio") == 0) {
+                		mode = COLOR_TEMPSOURCE_OFFSET_FLAG;
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "AspectRatio") == 0) {
 				mode = ASPECT_RATIO_FLAG;
-                        }
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentColor") == 0) {
+				mode = COMPONENT_CLR_FLAG;
+			}else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturation") == 0) {
+				mode = COMPONENT_SATURATION_FLAG;
+			}
+
 
 
 		}else {
@@ -86,10 +91,9 @@ int config_read(char *filename)
 				}
 			}else if(DIM_MODE_FLAG == mode){
 				 if (sscanf(buf, "%s %hd", Configfile.videoformat.modeName[Count], &Configfile.videoformat.modeId[Count]) == 2) {
-                                        printf("**%s  %d***\n", Configfile.videoformat.modeName[Count], Configfile.videoformat.modeId[Count]);
-                                        Count++;
-                                }
-
+					printf("**%s  %d***\n", Configfile.videoformat.modeName[Count], Configfile.videoformat.modeId[Count]);
+					Count++;
+				 }
 			}else if(VIDEO_FORMAT_MODE_FLAG == mode){
 				if (sscanf(buf, "%s %hd", Configfile.videoformat.modeName[Count], &Configfile.videoformat.modeId[Count]) == 2) {
                                         printf("**%s  %d***\n", Configfile.videoformat.modeName[Count], Configfile.videoformat.modeId[Count]);
@@ -140,7 +144,21 @@ int config_read(char *filename)
 					printf("**%s  %d***\n", Configfile.AspectRatio.modeName[Count], Configfile.AspectRatio.modeId[Count]);
 					Count++;
 				}
-			}
+			}else if(COMPONENT_CLR_FLAG == mode){
+                                if (sscanf(buf, "%s %hd", Configfile.componentColor.modeName[Count], &Configfile.componentColor.modeId[Count]) == 2) {
+                                        printf("**%s  %d***\n", Configfile.componentColor.modeName[Count], Configfile.componentColor.modeId[Count]);
+                                        Count++;
+                                }
+
+                        }else if(COMPONENT_SATURATION_FLAG == mode){
+                                if (sscanf(buf, "%s %hd", Configfile.componentSaturation.modeName[Count], &Configfile.componentSaturation.modeId[Count]) == 2) {
+                                        printf("**%s  %d***\n", Configfile.componentSaturation.modeName[Count], Configfile.componentSaturation.modeId[Count]);
+                                        Count++;
+                                }
+
+                        }
+
+
 		}
 	}
 	
