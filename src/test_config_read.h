@@ -23,6 +23,11 @@
 #define  BACK_LIGHT_FLAG                        0x0C
 #define  LDIM_MODE_FLAG                        0x0D
 #define COLOR_TEMPSOURCE_OFFSET_FLAG           0x0E 
+#define COMPONENT_CLR_FLAG                     0x0F
+#define COMPONENT_SATURATION_FLAG              0x10
+#define COMPONENT_HUE_FLAG             		   0x11
+#define COMPONENT_LUMA_FLAG                    0x12
+#define COMPONENT_PQPARAM_FLAG                 0x13
 
 #define MAX_VIDEO_FORMAT         20
 #define MAX_DIMMING_MODES        20
@@ -34,54 +39,34 @@
 #define MAX_OFFSET               10
  
 struct modes {
-        char modeName[MAX_DV_MODES][MAX_NAME_SIZE];
-        short int modeId[MAX_DV_MODES];
+	char modeName[MAX_DV_MODES][MAX_NAME_SIZE];
+	short int modeId[MAX_DV_MODES];
 };
  
 struct tvSettingConf{
-#if 0
 	struct modes dv_modes;
-        struct modes hlg_modes;
-        struct modes hdr10_modes;
-        struct modes pic_modes;
-        struct modes colorTemperature;
-        struct modes wakeupconfig;
-        struct modes ApsectRatio;
-        struct modes backlight_modes;
-        struct modes sourceId;
-        //struct modes dimmode;
-        char dimmode[MAX_DIMMING_MODES][MAX_NAME_SIZE];
-        struct modes localdimmode;
-        struct modes componentLuma;
-        struct modes componentHue;
-        struct modes componentSaturation;
-        int videoformat[MAX_NAME_SIZE];
-        char videoresolution[MAX_VIDEO_FORMAT][MAX_NAME_SIZE];
-        char videoframerate[MAX_VIDEO_FORMAT][MAX_NAME_SIZE];
-        int  videosource[MAX_NAME_SIZE];
-        int sourceOffset[MAX_OFFSET];
-        int latencyState[MAX_OFFSET];
-        int backlightModes[MAX_OFFSET];
-        int componentColor[MAX_OFFSET];
-#endif
-	 struct modes dv_modes;
-        struct modes hlg_modes;
-        struct modes hdr10_modes;
-        struct modes pic_modes;
-        struct modes colorTemperature;
-        struct modes colorTempSourceOffset;
-        struct modes AspectRatio;
+	struct modes hlg_modes;
+	struct modes hdr10_modes;
+	struct modes pic_modes;
+	struct modes colorTemperature;
+	struct modes colorTempSourceOffset;
+	struct modes AspectRatio;
 	struct modes videoformat;
 	struct modes videoResolution;
 	struct modes videoframerate;
 	struct modes videoSources;
 	struct modes backlightModes;
-        struct modes dimmode;
-        struct modes ldimMode;
+	struct modes dimmode;
+	struct modes ldimMode;
+	struct modes componentColor;
+	struct modes componentSaturation;
+	struct modes componentHue;
 	struct modes componentLuma;
-        struct modes componentHue;
-        struct modes componentSaturation;
-
+	struct modes componentType;
+	struct modes componentColorType;
+	struct modes pq_paramIndex;
+	struct modes wakeupconfig;
+	struct modes backlightTestModes;
 };
  
 int config_read(char *filename);
