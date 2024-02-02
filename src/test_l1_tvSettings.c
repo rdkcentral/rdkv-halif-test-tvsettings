@@ -952,7 +952,7 @@ void test_l1_tvSettings_negative_GetBacklightFade (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes and validate SupportedBacklightModes by looping through the BacklightModes section of test specific config file values | int *  | tvERROR_NONE | Should Pass |
+* | 02 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes and validate SupportedBacklightModes by looping through the BacklightControl section of test specific config file values | int *  | tvERROR_NONE | Should Pass |
 * | 03 | call GetSupportedBacklightModes() -  Retrieve the current SupportedBacklightModes with valid argument and validate with above value | int * | tvERROR_NONE | Should Pass |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
@@ -1001,7 +1001,7 @@ void test_l1_tvSettings_negative_GetSupportedBacklightModes (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode and validate it by looping through the BacklightModes section of test specific config file values | tvBacklightMode_t *  | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode and validate it by looping through the BacklightControl section of test specific config file values | tvBacklightMode_t *  | tvERROR_NONE | Should Pass |
 * | 03 | call GetCurrentBacklightMode() -  Retrieve the CurrentBacklightMode with valid argument and validate with above value | tvBacklightMode_t * | tvERROR_NONE | Should Pass |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
@@ -1050,7 +1050,7 @@ void test_l1_tvSettings_negative_GetCurrentBacklightMode (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetCurrentBacklightMode() -  Set the TV Current Backlight mode by looping through all the values of backlight modes from the BacklightModes section of test specific config file | tvBacklightMode_t  | tvERROR_NONE | Should Pass |
+* | 02 | call SetCurrentBacklightMode() -  Set the TV Current Backlight mode by looping through all the values of backlight modes from the BacklightControl section of test specific config file | tvBacklightMode_t  | tvERROR_NONE | Should Pass |
 * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
@@ -1079,7 +1079,7 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 * | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range | tvBacklightMode_INVALID | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with less than the lower range  | -1 (tvBacklightMode_t)| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid parameter of all possible combinations  | (tvBacklightMode_t| tvBacklightMode_t) | tvERROR_INVALID_PARAM | Should Pass |
-* | 06 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with valid value but not supported by the platform by looping through the BacklightModes section test specific config file  | tvBacklightMode_t | tvERROR_INVALID_PARAM | Should Pass |
+* | 06 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with valid value but not supported by the platform by looping through the BacklightControl section test specific config file  | tvBacklightMode_t | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 08 | call SetCurrentBacklightMode() -  Set the TV CurrentBacklightMode with valid input after TvTerm() | tvBacklightMode_MANUAL | tvERROR_INVALID_STATE | Should Pass |
 */
@@ -5964,7 +5964,7 @@ void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetBacklightTestMode() -  Start the Backlight Test Mode by looping through the BacklightModes section of test specific config file |tvBacklightTestMode_t | tvERROR_NONE | Should Pass |
+* | 02 | call SetBacklightTestMode() -  Start the Backlight Test Mode by looping through the BacklightControl section of test specific config file |tvBacklightTestMode_t | tvERROR_NONE | Should Pass |
 * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetBacklightTestMode (void)
