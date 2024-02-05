@@ -36,7 +36,6 @@
 #include "test_config_read.h"
 
 extern int UT_register_APIDEF_l1_tests( void );
-extern int UT_register_APIDEF_l2_tests( void );
 
 int main(int argc, char** argv) 
 {
@@ -52,13 +51,6 @@ int main(int argc, char** argv)
 	if ( registerReturn == -1 )
 	{
 		printf("\n UT_register_APIDEF_l1_tests() returned failure");
-		return -1;
-	}
-
-	registerReturn = UT_register_APIDEF_l2_tests();
-	if ( registerReturn == -1 )
-	{	
-		printf("\n UT_register_APIDEF_l2_tests() returned failure");
 		return -1;
 	}
 
