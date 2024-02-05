@@ -28,9 +28,6 @@
 extern int test_l1_tvSettings_register( void );
 
 
-/* L2 Testing Functions */
-extern int test_l2_tvSettings_register( void );
-
 int UT_register_APIDEF_l1_tests( void )
 {
 	int registerFailed=0;
@@ -40,12 +37,3 @@ int UT_register_APIDEF_l1_tests( void )
 	return registerFailed;
 }
 
-/* Register UT Functions */
-int UT_register_APIDEF_l2_tests( void )
-{
-	int registerFailed=0;
-
-	registerFailed |= test_l2_tvSettings_register();
-
-	return registerFailed;
-}
