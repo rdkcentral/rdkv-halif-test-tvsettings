@@ -4,71 +4,177 @@
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <unistd.h>
 #include <string.h>
- 
+
 #define MAX_KEY_LENGTH 50
 #define MAX_BUF_SIZE 2048
-#define DV_MODE_FLAG                            0x01
-#define HLG_MODE_FLAG                           0x02
-#define HDR10_MODE_FLAG                         0x03
-#define PIC_MODE_FLAG                           0x04
-#define DIM_MODE_FLAG                           0x05
-#define VIDEO_FORMAT_MODE_FLAG                  0x06
-#define VIDEO_RESOLUTION_MODE_FLAG              0x07
-#define FRAMERATE_MODE_FLAG                     0x08
-#define COLOR_TEMP_FLAG                         0x09
-#define ASPECT_RATIO_FLAG                       0x0A
-#define VIDEO_SOURCE_FLAG                       0x0B
-#define  BACK_LIGHT_FLAG                        0x0C
-#define  LDIM_MODE_FLAG                        0x0D
-#define COLOR_TEMPSOURCE_OFFSET_FLAG           0x0E 
-#define COMPONENT_CLR_FLAG                     0x0F
-#define COMPONENT_SATURATION_FLAG              0x10
-#define COMPONENT_HUE_FLAG             		   0x11
-#define COMPONENT_LUMA_FLAG                    0x12
-#define COMPONENT_PQPARAM_FLAG                 0x13
 
+#define BRIGHTNESS_MODE_FLAG        0x01
+#define CONTRAST_MODE_FLAG          0x02
+#define SATURATION_MODE_FLAG        0x03
+#define SHARPNESS_MODE_FLAG         0x04
+#define HUE_MODE_FLAG               0x05
+#define BACKLIGHT_MODE_FLAG         0x06
+
+#define COMP_SATURATION_RED             0x07
+#define COMP_SATURATION_GREEN           0x08
+#define COMP_SATURATION_BLUE            0x09
+#define COMP_SATURATION_YELLOW          0x0A
+#define COMP_SATURATION_CYAN            0x0B
+#define COMP_SATURATION_MAGENTA         0x0C
+
+#define COMP_HUE_RED                    0x0D
+#define COMP_HUE_GREEN                  0x0E
+#define COMP_HUE_BLUE                   0x0F
+#define COMP_HUE_YELLOW                 0x10
+#define COMP_HUE_CYAN                   0x11
+#define COMP_HUE_MAGENTA                0x12
+
+#define COMP_LUMA_RED                    0x13
+#define COMP_LUMA_GREEN                  0x14
+#define COMP_LUMA_BLUE                   0x15
+#define COMP_LUMA_YELLOW                 0x16
+#define COMP_LUMA_CYAN                   0x17
+#define COMP_LUMA_MAGENTA                0x18
+
+#define LOW_LATENCY_STATE                0x19
+#define COLOR_TEMP_MODE                  0x1A
+#define DIMMING_MODE                     0x1B
+#define BACK_LIGHT_CTL                     0x1C
+#define DOLBY_VISION_MODE                     0x1D
+#define ASPECT_RATIO                     0x1E
+#define PICTURE_MODE_FLAG                    0x1F
+#define VIDEO_SOURCE_FLAG                    0x20
+#define VIDEO_FRMT_FLAG                    0x21
+#define VIDEO_FRAME_RATE                   0x22
+#define DIM_LEVEL_FLAG                    0x23
+#define WB_RED_FLAG                    0x24
+#define WB_GREEN_FLAG                    0x25
+#define WB_BLUE_FLAG                    0x26
+#define GAMMA_TABLE_RED                       0x27
+#define GAMMA_TABLE_GREEN                      0x28
+#define GAMMA_TABLE_BLUE                      0x29
+
+#define MAX_FRAME_RATE           20
 #define MAX_VIDEO_FORMAT         20
 #define MAX_DIMMING_MODES        20
 #define MAX_PICTURE_MODES        20
 #define MAX_HDR10_MODES          10
 #define MAX_HLG_MODES            10
 #define MAX_DV_MODES             10
+#define MAX_SOURCE               10
 #define MAX_NAME_SIZE            20
+#define MAX_COLOR_TEMP           20
 #define MAX_OFFSET               10
- 
-struct modes {
-	char modeName[MAX_DV_MODES][MAX_NAME_SIZE];
-	short int modeId[MAX_DV_MODES];
+
+struct PictureMode {
+    char pqMode[MAX_PICTURE_MODES][MAX_NAME_SIZE];
+    int  pqValue[MAX_PICTURE_MODES];
 };
- 
-struct tvSettingConf{
-	struct modes dv_modes;
-	struct modes hlg_modes;
-	struct modes hdr10_modes;
-	struct modes pic_modes;
-	struct modes colorTemperature;
-	struct modes colorTempSourceOffset;
-	struct modes AspectRatio;
-	struct modes videoformat;
-	struct modes videoResolution;
-	struct modes videoframerate;
-	struct modes videoSources;
-	struct modes backlightModes;
-	struct modes dimmode;
-	struct modes ldimMode;
-	struct modes componentColor;
-	struct modes componentSaturation;
-	struct modes componentHue;
-	struct modes componentLuma;
-	struct modes componentType;
-	struct modes componentColorType;
-	struct modes pq_paramIndex;
-	struct modes wakeupconfig;
-	struct modes backlightTestModes;
+
+struct videoSource {
+    char source[MAX_SOURCE][MAX_NAME_SIZE];
+    int  videoSourceValue[MAX_SOURCE];
 };
- 
+
+struct videoFormat {
+    char videoFormat[MAX_VIDEO_FORMAT][MAX_NAME_SIZE];
+    int  videoFormatValue[MAX_VIDEO_FORMAT];
+};
+
+struct videoFrameRate {
+    char frameRate[MAX_FRAME_RATE][MAX_NAME_SIZE];
+    int  frameRateValue[MAX_FRAME_RATE];
+};
+
+struct videoColorTemp {
+    char colorTemp[MAX_COLOR_TEMP][MAX_NAME_SIZE];
+    int  colorTempValue[MAX_COLOR_TEMP];
+};
+
+struct DisplayPictureMode {
+    int rangeFrom;
+    int rangeTo;
+    bool platformSupport;
+    struct PictureMode picmodeStruct;
+    struct videoSource videoSrcStruct;
+    struct videoFormat videoFormtStruct;
+};
+
+struct DisplayColorMode {
+    char modeName[MAX_NAME_SIZE][MAX_NAME_SIZE];
+    int modevalue[MAX_NAME_SIZE];
+    bool platformSupport;
+    struct videoColorTemp colorStruct;
+    struct PictureMode picmodeStruct;
+    struct videoSource videoSrcStruct;
+    struct videoFormat videoFormtStruct;
+};
+
+struct DimmingLevel {
+    int rangeFrom;
+    int rangeTo;
+    char dimModeName[MAX_COLOR_TEMP][MAX_NAME_SIZE];
+    int dimModevalue[MAX_COLOR_TEMP];
+    bool platformSupport;
+};
+
+struct WhiteBalanceGamma {
+    int rangeGainFrom;
+    int rangeGainTo;
+    int rangeOffsetFrom;
+    int rangeOffsetTo;
+    int gammaIndex_from;
+    int gammaIndex_to;
+    struct videoColorTemp colorStruct;
+    struct videoSource videoSrcStruct;
+    bool platformSupport;
+};
+
+struct TvSettingConfig {
+    struct DisplayPictureMode brightness;
+    struct DisplayPictureMode contrast;
+    struct DisplayPictureMode saturation;
+    struct DisplayPictureMode sharpness;
+    struct DisplayPictureMode hue;
+    struct DisplayPictureMode backlight;
+    struct DisplayPictureMode CompSaturationRed;
+    struct DisplayPictureMode CompSaturationGreen;
+    struct DisplayPictureMode CompSaturationBlue;
+    struct DisplayPictureMode CompSaturationYellow;
+    struct DisplayPictureMode CompSaturationCyan;
+    struct DisplayPictureMode CompSaturationMagenta;
+    struct DisplayPictureMode CompHueRed;
+    struct DisplayPictureMode CompHueGreen;
+    struct DisplayPictureMode CompHueBlue;
+    struct DisplayPictureMode CompHueYellow;
+    struct DisplayPictureMode CompHueCyan;
+    struct DisplayPictureMode CompHueMagenta;
+    struct DisplayPictureMode CompLumaRed;
+    struct DisplayPictureMode CompLumaGreen;
+    struct DisplayPictureMode CompLumaBlue;
+    struct DisplayPictureMode CompLumaYellow;
+    struct DisplayPictureMode CompLumaCyan;
+    struct DisplayPictureMode CompLumaMagenta;
+    struct DisplayPictureMode lowLatencyState;
+
+    struct DisplayColorMode colorTemp;
+    struct DisplayColorMode dimmingMode;
+    struct DisplayColorMode backLightCtl;
+    struct DisplayColorMode dolbyMode;
+    struct DisplayColorMode aspectRatio;
+
+    struct PictureMode picmodeStruct;
+    struct videoSource videoSrcStruct;
+    struct videoFormat videoFormtStruct;
+
+    struct videoFrameRate framerate;
+    struct DimmingLevel dimmingLevel;
+
+    struct WhiteBalanceGamma wbRGB[3];
+    struct WhiteBalanceGamma gammaRGB[3];
+};
+
 int config_read(char *filename);
 
 #endif /*TEST_CONFIG_READ_H*/
