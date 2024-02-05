@@ -265,6 +265,12 @@ void test_l1_tvSettings_negative_TvTerm (void)
 * | 03 | Simulate an video format change event, e.g., switching to a different video format | | tvERROR_NONE | The callback function should be triggered with the correct status |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
+void tvVideoFormatChangeHandler(tvVideoFormatType_t format,void *userData)
+{
+	UT_LOG("callabck : %s",__FUNCTION__);
+	callbackflag = true;
+}
+
 void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 {
 	gTestID = 5;                                    /* It must be 5 */
@@ -289,7 +295,7 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
                         break;
                 }
         }
-
+	callbackData.cb = NULL;
 	/* Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -364,6 +370,12 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 * | 03 | Simulate an video content change event, e.g., switching to a different playback FMM content | | tvERROR_NONE | The callback function should be triggered with the correct status |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
+void tvVideoContentChangeHandler(tvContentType_t content,void *userData)
+{
+	UT_LOG("callabck : %s",__FUNCTION__);
+	callbackflag = true;
+}
+
 void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 {
 	gTestID = 7;                                    /* It must be 7 */
@@ -388,7 +400,8 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 			break;
 		}
 	}
-
+	callbackData.cb = NULL;
+	
 	/* Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);	
@@ -463,6 +476,12 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 * | 03 | Simulate an video resolution change event, e.g., switching to a different video resolution | | tvERROR_NONE | The callback function should be triggered with the correct status |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
+void tvVideoResolutionChangeHandler(tvResolutionParam_t resolution,void *userData)
+{
+	UT_LOG("callabck : %s",__FUNCTION__);
+	callbackflag = true;
+}
+
 void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 {
 	gTestID = 9;                                    /* It must be 9 */
@@ -487,7 +506,7 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
                         break;
                 }
         }
-	
+	callbackData.cb = NULL;
 
 	/* Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
@@ -564,6 +583,12 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 * | 03 | Simulate an video frame rate change event, e.g., switching to a different video frame rate  | | tvERROR_NONE | The callback function should be triggered with the correct status |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
+void tvVideoFrameRateChangeHandler(tvVideoFrameRate_t framerate,void *userData)
+{
+	UT_LOG("callabck : %s",__FUNCTION__);
+	callbackflag = true;
+}
+
 void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 {
 	gTestID = 11;                                    /* It must be 11 */
@@ -581,7 +606,7 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 	RegisterVideoFrameRateChangeCB(callbackData);
 
 	callbackflag = false;
-	 for(int i =0 ; i < 1000 ; i++)
+	for(int i =0 ; i < 1000 ; i++)
         {
                 if(!callbackflag){
                         usleep(100000);
@@ -589,7 +614,7 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
                         break;
                 }
         }
-	
+	callbackData.cb = NULL;
 
 	/* Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
