@@ -92,6 +92,12 @@ struct videoColorTemp {
     int  colorTempValue[MAX_COLOR_TEMP];
 };
 
+struct ComponentColor { 
+    char modeName[MAX_COLOR_TEMP][MAX_NAME_SIZE];
+    int  modeId[MAX_COLOR_TEMP];
+
+};
+
 struct DisplayPictureMode {
     int rangeFrom;
     int rangeTo;
@@ -173,6 +179,10 @@ struct TvSettingConfig {
 
     struct WhiteBalanceGamma wbRGB[3];
     struct WhiteBalanceGamma gammaRGB[3];
+    struct ComponentColor componentColor;
+    struct ComponentColor backlightTestModes;
+    struct videoSource colorTempSourceOffset;
+    struct videoSource pq_paramIndex;
 };
 
 int config_read(char *filename);
