@@ -70,31 +70,37 @@
 struct PictureMode {
     char pqMode[MAX_PICTURE_MODES][MAX_NAME_SIZE];
     int  pqValue[MAX_PICTURE_MODES];
+    size_t size;
 };
 
 struct videoSource {
     char source[MAX_SOURCE][MAX_NAME_SIZE];
     int  videoSourceValue[MAX_SOURCE];
+    size_t size;
 };
 
 struct videoFormat {
     char videoFormat[MAX_VIDEO_FORMAT][MAX_NAME_SIZE];
     int  videoFormatValue[MAX_VIDEO_FORMAT];
+    size_t size;
 };
 
 struct videoFrameRate {
     char frameRate[MAX_FRAME_RATE][MAX_NAME_SIZE];
     int  frameRateValue[MAX_FRAME_RATE];
+    size_t size;
 };
 
 struct videoColorTemp {
     char colorTemp[MAX_COLOR_TEMP][MAX_NAME_SIZE];
     int  colorTempValue[MAX_COLOR_TEMP];
+    size_t size;
 };
 
 struct ComponentColor { 
     char modeName[MAX_COLOR_TEMP][MAX_NAME_SIZE];
     int  modeId[MAX_COLOR_TEMP];
+    size_t size;
 
 };
 
@@ -115,6 +121,7 @@ struct DisplayColorMode {
     struct PictureMode picmodeStruct;
     struct videoSource videoSrcStruct;
     struct videoFormat videoFormtStruct;
+    size_t size;
 };
 
 struct DimmingLevel {
@@ -123,6 +130,7 @@ struct DimmingLevel {
     char dimModeName[MAX_COLOR_TEMP][MAX_NAME_SIZE];
     int dimModevalue[MAX_COLOR_TEMP];
     bool platformSupport;
+    size_t size;
 };
 
 struct WhiteBalanceGamma {
