@@ -711,7 +711,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	/* Calling tvsettings GetTVSupportedVideoFormats and expeting the API to return success */
 	result = GetTVSupportedVideoFormats(tvVideoFormats, &sizeReceived);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	sizeFromConfig = sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	sizeFromConfig = Configfile.videoFormtStruct.size;
 	UT_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
 
 	for (size_t i = 0; i < sizeFromConfig; i++)
@@ -844,7 +844,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 	/* Calling tvsettings GetCurrentVideoFormat and expeting the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatType);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.videoFormtStruct.size); i++)
 	{
 		if ( Configfile.videoFormtStruct.videoFormatValue[i] == tvVideoFormatType)
 		{
@@ -1066,7 +1066,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 	result = GetCurrentVideoFrameRate(&tvVideoFramerate);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < (sizeof(Configfile.framerate.frameRateValue) / sizeof(Configfile.framerate.frameRateValue[0])); i++)
+	for (size_t i = 0; i < Configfile.framerate.size; i++)
 	{
 		if ( Configfile.framerate.frameRateValue[i] == tvVideoFramerate)
 		{
@@ -1175,7 +1175,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 	/* Calling tvsettings GetCurrentVideoSource and expeting the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSource);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
 		if (Configfile.videoSrcStruct.videoSourceValue[i] == tvVideoSource)
 		{
@@ -1289,7 +1289,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	result = GetTVSupportedVideoSources(tvVideoSources, &sizeReceived);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	sizeFromConfig = sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	sizeFromConfig = Configfile.videoSrcStruct.size;
 
 	for (size_t i = 0; i < sizeReceived; i++)
 	{
@@ -1659,11 +1659,11 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -1763,7 +1763,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -1783,7 +1783,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	}
 
 	/* Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -1803,7 +1803,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	}
 
 	/* Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -2109,7 +2109,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 
 	tvBacklightModes_bk = tvBacklightModes;
 
-	sizeFromConfig = sizeof(Configfile.backLightCtl.modevalue) / sizeof(Configfile.backLightCtl.modevalue[0]);
+	sizeFromConfig = Configfile.backLightCtl.size;
 
 	for (size_t i = 0; i < sizeFromConfig; i++)
 	{
@@ -2221,7 +2221,7 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 	/* Calling tvsettings GetCurrentBacklightMode and expeting the API to return success */
 	result = GetCurrentBacklightMode(&tvBacklightMode);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.backLightCtl.modevalue) / sizeof(Configfile.backLightCtl.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.backLightCtl.size); i++)
 	{
 		if (Configfile.backLightCtl.modevalue[i] == tvBacklightMode)
 		{
@@ -2324,7 +2324,7 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetCurrentBacklightMode and expecting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.backLightCtl.modevalue)/sizeof(Configfile.backLightCtl.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.backLightCtl.size); i++)
 	{
 		result = SetCurrentBacklightMode((tvBacklightMode_t)Configfile.backLightCtl.modevalue[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -2387,7 +2387,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 	result = SetCurrentBacklightMode(tvBacklightMode_INVALID);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 	/* Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofBacklightModes = sizeof(Configfile.backLightCtl.modevalue)/sizeof(Configfile.backLightCtl.modevalue[0]);
+	numberofBacklightModes = Configfile.backLightCtl.size;
 	for(int i =0 ; i < numberofBacklightModes; i++)
 	{
 		SupportAvailable = false;
@@ -2457,7 +2457,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 	result = GetTVSupportedDimmingModes(tvDimmingModes, &sizeReceived);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	sizeFromConfig = sizeof(Configfile.dimmingMode.modevalue) / sizeof(Configfile.dimmingMode.modevalue[0]);
+	sizeFromConfig = Configfile.dimmingMode.size;
 	UT_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
 
 	for (size_t i = 0; i < sizeFromConfig; i++)
@@ -2589,7 +2589,7 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings to Set the SetTVDimmingMode for all the pic_modes and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.dimmingMode.modevalue) / sizeof(Configfile.dimmingMode.modevalue[0]); i++)
+	for (size_t i = 0; i < Configfile.dimmingMode.size; i++)
 	{
 		result = SetTVDimmingMode(Configfile.dimmingMode.modeName[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -2691,7 +2691,7 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 	/* Calling tvsettings GetTVDimmingMode and expeting the API to return success */
 	result = GetTVDimmingMode(dimmingMode);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.dimmingMode.modeName) / sizeof(Configfile.dimmingMode.modeName[0])); i++)
+	for (size_t i = 0; i < (Configfile.dimmingMode.size); i++)
 	{
 		if (!strcmp(Configfile.dimmingMode.modeName[i], dimmingMode))
 		{
@@ -2796,13 +2796,13 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveTVDimmingMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)                
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)                
 			{
-				for (size_t l = 0; l < sizeof(Configfile.dimmingMode.modevalue) / sizeof(Configfile.dimmingMode.modevalue[0]); l++)
+				for (size_t l = 0; l < Configfile.dimmingMode.size; l++)
 				{
 					result = SaveTVDimmingMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDimmingMode_t)Configfile.dimmingMode.modevalue[l]);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -2901,7 +2901,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
@@ -2922,7 +2922,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
 	/* Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -2943,7 +2943,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 
 	}
 
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -2964,7 +2964,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
 	/* Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfDimmodes = sizeof(Configfile.dimmingMode.modevalue)/sizeof(Configfile.dimmingMode.modevalue[0]);
+	numberOfDimmodes = Configfile.dimmingMode.size;
 	for(int i =tvDimmingMode_Fixed ; i < tvDimmingMode_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3027,7 +3027,7 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetLocalDimmingLevel with input value LDIM_STATE_BOOST and expecting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.dimmingLevel.dimModevalue)/sizeof(Configfile.dimmingLevel.dimModevalue[0])); i++){
+	for (size_t i = 0; i < (Configfile.dimmingLevel.size); i++){
 		result = SetLocalDimmingLevel((ldimStateLevel_t) Configfile.dimmingLevel.dimModevalue[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 	}
@@ -3085,7 +3085,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 	for (size_t i = 0; i < LDIM_STATE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for( int j =0; j < (sizeof(Configfile.dimmingLevel.dimModevalue)/sizeof(Configfile.dimmingLevel.dimModevalue[0])) ; j++){
+		for( int j =0; j < (Configfile.dimmingLevel.size) ; j++){
 			if( Configfile.dimmingLevel.dimModevalue[j] == i)	
 			{
 				SupportAvailable = true;
@@ -3152,7 +3152,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 	/* Calling tvsettings GetLocalDimmingLevel and expeting the API to return success */
 	result = GetLocalDimmingLevel(&ldimStateLevel);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for( int j =0; j < (sizeof(Configfile.dimmingLevel.dimModevalue)/sizeof(Configfile.dimmingLevel.dimModevalue[0])) ; j++)
+	for( int j =0; j < (Configfile.dimmingLevel.size) ; j++)
 	{
 		if(Configfile.dimmingLevel.dimModevalue[j] == ldimStateLevel)
 		{
@@ -3251,13 +3251,13 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveLocalDimmingLevel for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < sizeof(Configfile.dimmingLevel.dimModevalue) / sizeof(Configfile.dimmingLevel.dimModevalue[0]); l++)
+				for (size_t l = 0; l < Configfile.dimmingLevel.size; l++)
 				{
 					result = SaveLocalDimmingLevel((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[l]);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -3356,7 +3356,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3376,7 +3376,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	}
 
 	/* Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3396,7 +3396,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	}
 
 	/* Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3416,7 +3416,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	}
 
 	/* Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfLdimmodes = sizeof(Configfile.dimmingLevel.dimModevalue)/sizeof(Configfile.dimmingLevel.dimModevalue[0]);
+	numberOfLdimmodes = Configfile.dimmingLevel.size;
 	for(int i =LDIM_STATE_NONBOOST ; i < LDIM_STATE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3694,11 +3694,11 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveBrightness for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveBrightness((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -3795,7 +3795,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3815,7 +3815,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	}
 
 	/* Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3835,7 +3835,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	}
 
 	/* Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4113,11 +4113,11 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveContrast for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveContrast((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -4214,7 +4214,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4234,7 +4234,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	}
 
 	/* Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4254,7 +4254,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	}
 
 	/* Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4530,11 +4530,11 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveSharpness for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveSharpness((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -4631,7 +4631,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4651,7 +4651,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	}
 
 	/* Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4671,7 +4671,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	}
 
 	/* Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4947,11 +4947,11 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveSaturation for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveSaturation((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -5048,7 +5048,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5068,7 +5068,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	}
 
 	/* Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5088,7 +5088,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	}
 
 	/* Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5365,11 +5365,11 @@ void test_l1_tvSettings_positive_SaveHue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveHue for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveHue((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -5466,7 +5466,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5486,7 +5486,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	}
 
 	/* Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5506,7 +5506,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	}
 
 	/* Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5566,7 +5566,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemperature and expecting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
 		result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.modevalue[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -5628,7 +5628,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofColortemp = sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0]);
+	numberofColortemp = Configfile.colorTemp.size;
 	for(int i =0 ; i < numberofColortemp; i++)
 	{
 		for(int j = i+1 ; j < numberofColortemp; j++)
@@ -5685,7 +5685,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 	/* Calling tvsettings GetColorTemperature and expeting the API to return success */
 	result = GetColorTemperature(&tvColorTemp);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
 		if (Configfile.colorTemp.modevalue[i] == tvColorTemp)
 		{
@@ -5788,13 +5788,13 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveColorTemperature for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < sizeof(Configfile.colorTemp.modevalue) / sizeof(Configfile.colorTemp.modevalue[0]); l++)
+				for (size_t l = 0; l < Configfile.colorTemp.size; l++)
 				{
 					result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvColorTemp_t)Configfile.colorTemp.modevalue[l]);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -5894,7 +5894,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5914,7 +5914,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	/* Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5934,7 +5934,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	/* Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5954,7 +5954,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	/* Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfColorTemperature = sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0]);
+	numberOfColorTemperature = Configfile.colorTemp.size;
 	for(int i =tvColorTemp_STANDARD ; i < tvColorTemp_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6015,7 +6015,7 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetAspectRatio and expecting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.aspectRatio.modevalue)/sizeof(Configfile.aspectRatio.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.aspectRatio.size); i++)
 	{
 		result = SetAspectRatio((tvDisplayMode_t)Configfile.aspectRatio.modevalue[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -6077,7 +6077,7 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SetTVAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofDisplaymode = sizeof(Configfile.aspectRatio.modevalue)/sizeof(Configfile.aspectRatio.modevalue[0]);
+	numberofDisplaymode = Configfile.aspectRatio.size;
 	for(int i =0 ; i < numberofDisplaymode; i++)
 	{
 		for(int j = i+1 ; j < numberofDisplaymode; j++)
@@ -6134,7 +6134,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 	/* Calling tvsettings GetAspectRatio and expeting the API to return success */
 	result = GetAspectRatio(&tvDisplayMode);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.aspectRatio.modevalue)/sizeof(Configfile.aspectRatio.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.aspectRatio.size); i++)
 	{
 		if (Configfile.aspectRatio.modevalue[i] == tvDisplayMode)
 		{
@@ -6235,13 +6235,13 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveAspectRatio for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < sizeof(Configfile.aspectRatio.modevalue) / sizeof(Configfile.aspectRatio.modevalue[0]); l++)
+				for (size_t l = 0; l < Configfile.aspectRatio.size; l++)
 				{
 					result = SaveAspectRatio((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDisplayMode_t)Configfile.aspectRatio.modevalue[l]);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -6340,7 +6340,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6360,7 +6360,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	/* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6380,7 +6380,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	/* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6400,7 +6400,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	/* Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfAspectRatios = sizeof(Configfile.aspectRatio.modevalue)/sizeof(Configfile.aspectRatio.modevalue[0]);
+	numberOfAspectRatios = Configfile.aspectRatio.size;
 	for(int i =tvDisplayMode_4x3 ; i < tvDisplayMode_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6669,11 +6669,11 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveLowLatencyState for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
 				result = SaveLowLatencyState((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],0);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -6770,7 +6770,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6790,7 +6790,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	}
 
 	/* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6810,7 +6810,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	}
 
 	/* Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7292,7 +7292,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	/* Calling tvsettings GetTVSupportedDolbyVisionModes and expeting the API to return success */
 	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &sizeReceived);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	sizeFromConfig = sizeof(Configfile.dolbyMode.modevalue) / sizeof(Configfile.dolbyMode.modevalue[0]);
+	sizeFromConfig = Configfile.dolbyMode.size;
 
 	for (size_t i = 0; i < sizeFromConfig; i++)
 	{
@@ -7421,7 +7421,7 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings to Set the SetTVDolbyVisionMode for all the dv_modes and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.dolbyMode.modevalue) / sizeof(Configfile.dolbyMode.modevalue[0]); i++)
+	for (size_t i = 0; i < Configfile.dolbyMode.size; i++)
 	{
 		result = SetTVDolbyVisionMode((tvDolbyMode_t)Configfile.dolbyMode.modevalue[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -7528,7 +7528,7 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 	result = GetTVDolbyVisionMode(&tvDolbyModes);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < (sizeof(Configfile.dolbyMode.modevalue) / sizeof(Configfile.dolbyMode.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.dolbyMode.size); i++)
 	{
 		if (Configfile.dolbyMode.modevalue[i] == tvDolbyModes)
 		{
@@ -7633,13 +7633,13 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveTVDimmingMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)                
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)                
 			{
-				for (size_t l = 0; l < sizeof(Configfile.dolbyMode.modevalue) / sizeof(Configfile.dolbyMode.modevalue[0]); l++)
+				for (size_t l = 0; l < Configfile.dolbyMode.size; l++)
 				{
 					result = SaveTVDimmingMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDimmingMode_t)Configfile.dolbyMode.modevalue[l]);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -7738,7 +7738,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
@@ -7759,7 +7759,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	/* Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7780,7 +7780,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 
 	}
 
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7801,7 +7801,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	/* Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfdv_modess = sizeof(Configfile.dolbyMode.modevalue)/sizeof(Configfile.dolbyMode.modevalue[0]);
+	numberOfdv_modess = Configfile.dolbyMode.size;
 	for(int i =tvDimmingMode_Fixed ; i < tvMode_Max ; i++)
 	{
 		SupportAvailable = false;
@@ -7871,7 +7871,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	/* Calling tvsettings GetTVSupportedPictureModes and expeting the API to return success */
 	result = GetTVSupportedPictureModes(tvPicModes, &sizeReceived);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	sizeFromConfig = sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]);
+	sizeFromConfig = Configfile.picmodeStruct.size;
 	UT_ASSERT_EQUAL_FATAL(sizeReceived, (unsigned short)sizeFromConfig);
 
 	for (size_t i = 0; i < sizeFromConfig; i++)
@@ -8010,7 +8010,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 	/* Calling tvsettings GetTVPictureMode and expeting the API to return success */
 	result = GetTVPictureMode(pictureMode);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0])); i++)
+	for (size_t i = 0; i < (Configfile.picmodeStruct.size); i++)
 	{
 		if (!strcmp(Configfile.picmodeStruct.pqMode[i], pictureMode))
 		{
@@ -8113,7 +8113,7 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings to Set the SetTVPictureMode for all the pic_modes and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); i++)
+	for (size_t i = 0; i < Configfile.picmodeStruct.size; i++)
 	{
 		result = SetTVPictureMode(Configfile.picmodeStruct.pqMode[i]);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -8214,11 +8214,11 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveSourcePictureMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)                
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)                
 			{
 				result = SaveSourcePictureMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k], Configfile.picmodeStruct.pqValue[j]);
 				UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -8305,7 +8305,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = sizeof(Configfile.videoSrcStruct.videoSourceValue)/sizeof(Configfile.videoSrcStruct.videoSourceValue[0]);
+	numberOfSources = Configfile.videoSrcStruct.size;
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
@@ -8325,7 +8325,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 		}
 	}
 
-	numberOfFormats = sizeof(Configfile.videoFormtStruct.videoFormatValue)/sizeof(Configfile.videoFormtStruct.videoFormatValue[0]);
+	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -8346,7 +8346,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	}
 
 	/* Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = sizeof(Configfile.picmodeStruct.pqValue)/sizeof(Configfile.picmodeStruct.pqValue[0]);
+	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -8409,9 +8409,9 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
@@ -8511,7 +8511,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -8523,7 +8523,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -8590,9 +8590,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 	UT_ASSERT_EQUAL_FATAL(rgain,rgainRetry);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
 			result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
@@ -8675,7 +8675,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain, (tvColorTempSourceOffset_t)-2);
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -8687,7 +8687,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -8746,9 +8746,9 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
@@ -8847,7 +8847,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -8859,7 +8859,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -8925,9 +8925,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 	UT_ASSERT_EQUAL_FATAL(rgain,rgainRetry);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
 			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j]);
@@ -9010,7 +9010,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain,  (tvColorTempSourceOffset_t)-2);
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9022,7 +9022,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9081,9 +9081,9 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
@@ -9182,7 +9182,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9194,7 +9194,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9260,9 +9260,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 	UT_ASSERT_EQUAL_FATAL(rgain,rgainRetry);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
 			result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
@@ -9345,7 +9345,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain, (tvColorTempSourceOffset_t)-2);
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9357,7 +9357,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9417,9 +9417,9 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
@@ -9521,7 +9521,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9533,7 +9533,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9601,9 +9601,9 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 	UT_ASSERT_EQUAL_FATAL(rpostoffset,rpostoffsetRetry);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
 			result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
@@ -9685,7 +9685,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset,(tvColorTempSourceOffset_t) -2);
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9697,7 +9697,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9755,9 +9755,9 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
@@ -9857,7 +9857,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9869,7 +9869,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -9936,9 +9936,9 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 	UT_ASSERT_EQUAL_FATAL(rpostoffset,rpostoffsetRetry);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
 			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[j] );
@@ -10020,7 +10020,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset, (tvColorTempSourceOffset_t) -2);
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -10032,7 +10032,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -10090,9 +10090,9 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
@@ -10193,7 +10193,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -10205,7 +10205,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -10271,9 +10271,9 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
 	UT_ASSERT_EQUAL_FATAL(rpostoffset,rpostoffsetRetry);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0]); j++ )
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
 			result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
@@ -10357,7 +10357,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset, (tvColorTempSourceOffset_t) -2);
 	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -10369,7 +10369,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 		}	
 	}
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTempSourceOffset.videoSourceValue)/sizeof(Configfile.colorTempSourceOffset.videoSourceValue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
@@ -10750,7 +10750,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
 		/* Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 		result = GetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, size);
@@ -10842,7 +10842,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 	result = GetGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0], pData_R_limit,pData_G_limit,NULL, NULL);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
 
 		for(int j=0; j<tvColorTemp_MAX;j++){
@@ -11025,7 +11025,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{	
 		/* Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 		result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[i], pData_R_limit,pData_G_limit,pData_B_limit, size);
@@ -11127,7 +11127,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit,pData_G_limit,pData_B_limit_error,256);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
 
 		for(int j=0; j<tvColorTemp_MAX;j++){
@@ -11391,7 +11391,7 @@ void test_l1_tvSettings_positive_SaveDvTmaxValue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveDvTmaxValue for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t j = 0; j < sizeof(Configfile.dimmingLevel.dimModevalue) / sizeof(Configfile.dimmingLevel.dimModevalue[0]); j++)
+	for (size_t j = 0; j < Configfile.dimmingLevel.size; j++)
 	{
 
 		result = SaveDvTmaxValue((ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[j], 0);
@@ -11474,7 +11474,7 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings SaveDvTmaxValue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfLdimmodes = sizeof(Configfile.dimmingLevel.dimModevalue)/sizeof(Configfile.dimmingLevel.dimModevalue[0]);
+	numberOfLdimmodes = Configfile.dimmingLevel.size;
 
 	for(int j =0 ; j < numberOfLdimmodes; j++)
 	{
@@ -11645,7 +11645,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_INVALID_STATE */
-	for (size_t i=0; i<(sizeof(Configfile.componentColor.modeId)/sizeof(Configfile.componentColor.modeId[0])); i++)
+	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -11723,7 +11723,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 
 
 	/* Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_INVALID_STATE */
-	for (size_t i=0; i<(sizeof(Configfile.componentColor.modeId)/sizeof(Configfile.componentColor.modeId[0])); i++)
+	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
 
 		for(int j =0; j < tvDataColor_MAX; j++){
@@ -11784,7 +11784,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 	UT_ASSERT_EQUAL_FATAL(saturation, saturationRetry);
 
 	/* Calling tvsettings GetCurrentComponentSaturation and expeting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0])); ++i)
+	for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
 	{
 		result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&saturation);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -11848,7 +11848,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings GetCurrentComponentSaturation and expeting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0])); ++i)
+	for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
 	{
 
 		for(int j =0; j < tvDataColor_MAX; j++){
@@ -11904,7 +11904,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetCurrentComponentHue and expecting the API to return tvERROR_INVALID_STATE */
-	for (size_t i=0; i<(sizeof(Configfile.componentColor.modeId)/sizeof(Configfile.componentColor.modeId[0])); i++)
+	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -11982,7 +11982,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 
 
 	/* Calling tvsettings SetCurrentComponentHue and expecting the API to return tvERROR_INVALID_STATE */
-	for (size_t i=0; i<(sizeof(Configfile.componentColor.modeId)/sizeof(Configfile.componentColor.modeId[0])); i++)
+	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
 
 		for(int j =0; j < tvDataColor_MAX; j++){
@@ -12043,7 +12043,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 	UT_ASSERT_EQUAL_FATAL(Hue, HueRetry);
 
 	/* Calling tvsettings GetCurrentComponentHue and expeting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0])); ++i)
+	for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
 	{
 		result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&Hue);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -12108,7 +12108,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings GetCurrentComponentHue and expeting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0])); ++i)
+	for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
 	{
 
 		for(int j =0; j < tvDataColor_MAX; j++){
@@ -12164,7 +12164,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
-	for (size_t i=0; i<(sizeof(Configfile.componentColor.modeId)/sizeof(Configfile.componentColor.modeId[0])); i++)
+	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -12242,7 +12242,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 
 
 	/* Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
-	for (size_t i=0; i<(sizeof(Configfile.componentColor.modeId)/sizeof(Configfile.componentColor.modeId[0])); i++)
+	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
 
 		for(int j =0; j < tvDataColor_MAX; j++){
@@ -12303,7 +12303,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 	UT_ASSERT_EQUAL_FATAL(Luma, LumaRetry);
 
 	/* Calling tvsettings GetCurrentComponentLuma and expeting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0])); ++i)
+	for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
 	{
 		result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&Luma);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -12367,7 +12367,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Calling tvsettings GetCurrentComponentLuma and expeting the API to return success */
-	for (size_t i = 0; i < (sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0])); ++i)
+	for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
 	{
 
 		for(int j =0; j < tvDataColor_MAX; j++){
@@ -12421,15 +12421,15 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveCMS for all the sourceId,pqmode,videoFormatType, component_type, color_type and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.source) / sizeof(Configfile.videoSrcStruct.source[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqMode) / sizeof(Configfile.picmodeStruct.pqMode[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0]); l++)
+				for (size_t l = 0; l < Configfile.componentColor.size; l++)
 				{
-					for (size_t m = 0; m < sizeof(Configfile.componentColor.modeId) / sizeof(Configfile.componentColor.modeId[0]); m++)
+					for (size_t m = 0; m < Configfile.componentColor.size; m++)
 					{
 						result = SaveCMS((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvComponentType_t)Configfile.componentColor.modeId[l],(tvDataComponentColor_t)Configfile.componentColor.modeId[m],30);
 						UT_ASSERT_EQUAL(result, tvERROR_NONE);
@@ -12721,13 +12721,13 @@ int value;
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < sizeof(Configfile.pq_paramIndex.videoSourceValue) / sizeof(Configfile.pq_paramIndex.videoSourceValue[0]); l++)
+				for (size_t l = 0; l < Configfile.pq_paramIndex.size; l++)
 				{
 					result = GetDefaultPQParams(Configfile.picmodeStruct.pqValue[j],(tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k], (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[l],&value);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -12862,13 +12862,13 @@ void test_l1_tvSettings_positive_GetPQParams (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < sizeof(Configfile.videoSrcStruct.videoSourceValue) / sizeof(Configfile.videoSrcStruct.videoSourceValue[0]); i++)
+	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
 	{
-		for (size_t j = 0; j < sizeof(Configfile.picmodeStruct.pqValue) / sizeof(Configfile.picmodeStruct.pqValue[0]); j++)
+		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
 		{
-			for (size_t k = 0; k < sizeof(Configfile.videoFormtStruct.videoFormatValue) / sizeof(Configfile.videoFormtStruct.videoFormatValue[0]); k++)
+			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < sizeof(Configfile.pq_paramIndex.videoSourceValue) / sizeof(Configfile.pq_paramIndex.videoSourceValue[0]); l++)
+				for (size_t l = 0; l < Configfile.pq_paramIndex.size; l++)
 				{
 					result = GetPQParams(Configfile.picmodeStruct.pqValue[j],(tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k], (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[l],&value);
 					UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -13345,7 +13345,7 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < (sizeof(Configfile.colorTemp.modevalue)/sizeof(Configfile.colorTemp.modevalue[0])); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
 	{
 		GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.modevalue[i], &x_Value, &y_Value);
 		UT_ASSERT_TRUE_FATAL(x_Value >= 0 && x_Value <= 1.0 );
