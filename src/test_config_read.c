@@ -29,6 +29,7 @@ void parseRange_color(const char* buf, struct DisplayColorMode* mode) {
             if (*(input+len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		mode->colorStruct.size = i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -55,6 +56,7 @@ void parseRange_mode(const char* buf, struct DisplayColorMode* mode) {
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		mode->size = i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -81,6 +83,7 @@ void parseRange_picturemode(const char* buf, struct PictureMode *picmode) {
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		picmode->size =i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -115,6 +118,7 @@ void parseRange_videoSource(const char* buf, struct videoSource *videoSrcStruct)
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		videoSrcStruct->size = i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -149,6 +153,7 @@ void parseRange_videoFormat(const char* buf, struct videoFormat* videoFormt) {
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		videoFormt->size =i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -183,6 +188,7 @@ void parseRange_videoFramerate(const char* buf, struct videoFrameRate* videoFram
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		videoFramerate->size =i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -215,6 +221,7 @@ void parseRange_dimlevel(const char* buf, struct DimmingLevel* dimlevel) {
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		dimlevel->size =i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -261,6 +268,7 @@ void parseRange_wb(const char* buf, struct WhiteBalanceGamma* wbRGBGamma)
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		wbRGBGamma->colorStruct.size =i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -279,6 +287,7 @@ void parseRange_wb(const char* buf, struct WhiteBalanceGamma* wbRGBGamma)
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
+		
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -571,7 +580,8 @@ int config_read(char *filename)
 		     mode = GAMMA_TABLE_GREEN;
 		 }else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "GammaTableBlue") == 0) {
 		      mode = GAMMA_TABLE_BLUE;
-		 } 
+		 }
+ 
 	    }
 	    else {
 		fillstructure(buf, mode);
