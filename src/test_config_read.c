@@ -428,6 +428,9 @@ int fillstructure(const char *buf , int mode)
     case  GAMMA_TABLE_BLUE:
         parseRange_wb(buf, &Configfile.gammaRGB[2]);
         break;
+    default:
+	  printf("Invalid value for mode");
+	    break;
     }
     return 0;
 }
@@ -440,9 +443,9 @@ static void Usage()
 
 int config_read(char *filename)
 {
-	int i =0, mode, Count =0;
+	int i =0, mode=0;
 	char buf[MAX_BUF_SIZE]={0};
-	char section[MAX_KEY_LENGTH];
+	char section[MAX_KEY_LENGTH]={0};
 	
 	if(filename == NULL){
 		Usage();
@@ -458,7 +461,6 @@ int config_read(char *filename)
 	while (fgets(buf, sizeof(buf), file) != NULL) {
 	    if (buf[i] == '[') {
 		mode = 0;
-		Count = 0;
 		printf("\n");
 		if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Brightness") == 0) {
 		    mode = BRIGHTNESS_MODE_FLAG;
