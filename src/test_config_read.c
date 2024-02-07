@@ -1,6 +1,9 @@
 #include "test_config_read.h"
+#include "../../include/tvTypes.h"
 
 struct TvSettingConfig Configfile = { 0 };
+int colorFlag =0;
+int paramFlag =0;
 
 void parseRange(const char* buf, struct DisplayPictureMode* mode) {
     if (sscanf(buf, "range_from = %hd", &mode->rangeFrom) == 1) {
@@ -29,7 +32,7 @@ void parseRange_color(const char* buf, struct DisplayColorMode* mode) {
             if (*(input+len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
-		mode->colorStruct.size = i;
+				mode->colorStruct.size = i;
             }
             else {
                 break;   // Exit the loop if no more commas are found
@@ -319,21 +322,40 @@ int fillstructure(const char *buf , int mode)
         break;
     case COMP_SATURATION_RED:
         parseRange(buf, &Configfile.CompSaturationRed);
+	strcpy(Configfile.componentColor.modeName[colorFlag], "RED");
+	Configfile.componentColor.modeId[colorFlag] = tvDataColor_RED ;
+	colorFlag++;
         break;
     case COMP_SATURATION_GREEN:
         parseRange(buf, &Configfile.CompSaturationGreen);
+	strcpy(Configfile.componentColor.modeName[colorFlag], "GREEN");
+        Configfile.componentColor.modeId[colorFlag] = tvDataColor_GREEN ;
+	colorFlag++;
+
         break;
     case COMP_SATURATION_BLUE:
         parseRange(buf, &Configfile.CompSaturationBlue);
+	strcpy(Configfile.componentColor.modeName[colorFlag], "BLUE");
+	Configfile.componentColor.modeId[colorFlag] = tvDataColor_BLUE;
+	colorFlag++;
         break;
     case COMP_SATURATION_YELLOW:
         parseRange(buf, &Configfile.CompSaturationYellow);
+	strcpy(Configfile.componentColor.modeName[colorFlag], "YELLOW");
+	Configfile.componentColor.modeId[colorFlag] = tvDataColor_YELLOW;
+	colorFlag++;
         break;
     case COMP_SATURATION_CYAN:
         parseRange(buf, &Configfile.CompSaturationCyan);
+	strcpy(Configfile.componentColor.modeName[colorFlag], "CYAN");
+	Configfile.componentColor.modeId[colorFlag] = tvDataColor_CYAN;
+	colorFlag++;
         break;
     case COMP_SATURATION_MAGENTA:
         parseRange(buf, &Configfile.CompSaturationMagenta);
+	 strcpy(Configfile.componentColor.modeName[colorFlag], "MAGENTA");
+	 Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
+	colorFlag++;
         break;
     case COMP_HUE_RED:
         parseRange(buf, &Configfile.CompHueRed);
@@ -464,93 +486,123 @@ int config_read(char *filename)
 		printf("\n");
 		if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Brightness") == 0) {
 		    mode = BRIGHTNESS_MODE_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_BRIGHTNESS ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Contrast") == 0) {
 		    mode = CONTRAST_MODE_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CONTRAST;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Saturation") == 0) {
 		    mode = SATURATION_MODE_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_SATURATION;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Sharpness") == 0) {
 		    mode = SHARPNESS_MODE_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_SHARPNESS ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Hue") == 0) {
 		    mode = HUE_MODE_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_HUE ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Backlight") == 0) {
 		    mode = BACKLIGHT_MODE_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_BACKLIGHT ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturationRed") == 0) {
 		    mode = COMP_SATURATION_RED;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_SATURATION_RED;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturationGreen") == 0) {
 		    mode = COMP_SATURATION_GREEN;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_SATURATION_GREEN;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturationBlue") == 0) {
 		    mode = COMP_SATURATION_BLUE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_SATURATION_BLUE;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturationYellow") == 0) {
 		    mode = COMP_SATURATION_YELLOW;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_SATURATION_YELLOW;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturationCyan") == 0) {
 		    mode = COMP_SATURATION_CYAN;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_SATURATION_CYAN;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentSaturationMagenta") == 0) {
 		    mode = COMP_SATURATION_MAGENTA;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_SATURATION_MAGENTA;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentHueRed") == 0) {
 		    mode = COMP_HUE_RED;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_HUE_RED;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentHueBlue") == 0) {
 		    mode = COMP_HUE_BLUE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_HUE_BLUE;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentHueGreen") == 0) {
 		    mode = COMP_HUE_GREEN;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_HUE_GREEN;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentHueYellow") == 0) {
 		    mode = COMP_HUE_YELLOW;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_HUE_YELLOW;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentHueCyan") == 0) {
 		    mode = COMP_HUE_CYAN;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_HUE_CYAN;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentHueMagenta") == 0) {
 		    mode = COMP_HUE_MAGENTA;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_HUE_MAGENTA;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentLumaRed") == 0) {
 		    mode = COMP_LUMA_RED;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_LUMA_RED;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentLumaBlue") == 0) {
 		    mode = COMP_LUMA_BLUE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_LUMA_BLUE;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentLumaGreen") == 0) {
 		    mode = COMP_LUMA_GREEN;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_LUMA_GREEN;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentLumaYellow") == 0) {
 		    mode = COMP_LUMA_YELLOW;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_LUMA_YELLOW;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentLumaCyan") == 0) {
 		    mode = COMP_LUMA_CYAN;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_CMS_LUMA_CYAN;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ComponentLumaMagenta") == 0) {
 		    mode = COMP_LUMA_MAGENTA;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] =PQ_PARAM_CMS_LUMA_MAGENTA;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "LowLatencyState") == 0) {
 		    mode = LOW_LATENCY_STATE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_LOWLATENCY_STATE;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "ColorTemperature") == 0) {
 		    mode = COLOR_TEMP_MODE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_COLOR_TEMPERATURE ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "DimmingMode") == 0) {
 		    mode = DIMMING_MODE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_DIMMINGMODE ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "BacklightControl") == 0) {
 		    mode = BACK_LIGHT_CTL;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_BACKLIGHT ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "DolbyVisionMode") == 0) {
 		    mode = DOLBY_VISION_MODE;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_DOLBY_MODE ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "AspectRatio") == 0) {
 		    mode = ASPECT_RATIO;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_ASPECT_RATIO ;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "PictureMode") == 0) {
 		    mode = PICTURE_MODE_FLAG;
@@ -566,6 +618,7 @@ int config_read(char *filename)
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "TMAX") == 0) {
 		    mode = DIM_LEVEL_FLAG;
+		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_LOCALDIMMING_LEVEL;
 		}
 		else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "WhiteBalanceRed") == 0) {
 		    mode = WB_RED_FLAG;
@@ -583,12 +636,15 @@ int config_read(char *filename)
 		 }else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "GammaTableBlue") == 0) {
 		      mode = GAMMA_TABLE_BLUE;
 		 }
- 
+ 		paramFlag++;
 	    }
 	    else {
 		fillstructure(buf, mode);
 	    }
-	}	
+	}
+
+	Configfile.componentColor.size = colorFlag;
+	Configfile.pq_paramIndex.size = paramFlag;
 	fclose(file);
 	return 1;
 }
