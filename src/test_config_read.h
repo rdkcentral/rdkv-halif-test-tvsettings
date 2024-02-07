@@ -62,10 +62,10 @@
 #define MAX_HDR10_MODES          10
 #define MAX_HLG_MODES            10
 #define MAX_DV_MODES             10
-#define MAX_SOURCE               10
+#define MAX_SOURCE               40
 #define MAX_NAME_SIZE            20
 #define MAX_COLOR_TEMP           20
-#define MAX_OFFSET               10
+#define MAX_OFFSET_CONF              10
 
 struct PictureMode {
     char pqMode[MAX_PICTURE_MODES][MAX_NAME_SIZE];
