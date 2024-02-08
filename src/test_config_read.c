@@ -27,7 +27,7 @@ void parseRange_color(const char* buf, struct DisplayColorMode* mode) {
             len += strlen(mode->colorStruct.colorTemp[i]);
             
             mode->colorStruct.colorTempValue[i] = i;
-            printf("Range From: %d\n", mode->colorStruct.colorTemp[i]);
+            
             // Skip the comma if present
             if (*(input+len) == ',') {
                 len++; // Move past the comma
@@ -55,7 +55,7 @@ void parseRange_mode(const char* buf, struct DisplayColorMode* mode) {
             len += strlen(mode->modeName[i]);
 
             mode->modevalue[i] = i;
-            printf("Diming mode: %d\n", mode->modevalue[i]);  // Skip the comma if present
+            
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -80,9 +80,7 @@ void parseRange_picturemode(const char* buf, struct PictureMode *picmode) {
         while (i < MAX_NAME_SIZE && sscanf(input + len, "%[^,]", &picmode->pqMode[i]) == 1) {
             // Move to the next substring after the comma
             len += strlen(picmode->pqMode[i]);
-
-            
-            printf("Diming mode: %s\n", picmode->pqMode[i]);  // Skip the comma if present
+		
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -116,9 +114,6 @@ void parseRange_videoSource(const char* buf, struct videoSource *videoSrcStruct)
             // Move to the next substring after the comma
             len += strlen(videoSrcStruct->source[i]);
 
-
-            printf("Diming mode: %s\n", videoSrcStruct->source[i]);  // Skip the comma if present
-            if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
 		videoSrcStruct->size = i;
@@ -151,8 +146,6 @@ void parseRange_videoFormat(const char* buf, struct videoFormat* videoFormt) {
             // Move to the next substring after the comma
             len += strlen(videoFormt->videoFormat[i]);
 
-
-            printf("Diming mode: %s\n", videoFormt->videoFormat[i]);  // Skip the comma if present
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -187,7 +180,7 @@ void parseRange_videoFramerate(const char* buf, struct videoFrameRate* videoFram
             len += strlen(videoFramerate->frameRate[i]);
 
             videoFramerate->frameRateValue[i] = i;
-            printf("Diming mode: %s\n", videoFramerate->frameRate[i]);  // Skip the comma if present
+
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -220,7 +213,7 @@ void parseRange_dimlevel(const char* buf, struct DimmingLevel* dimlevel) {
             len += strlen(dimlevel->dimModeName[i]);
 
             dimlevel->dimModevalue[i] = i;
-            printf("Diming mode: %s\n", dimlevel->dimModeName[i]);  // Skip the comma if present
+            
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -267,7 +260,7 @@ void parseRange_wb(const char* buf, struct WhiteBalanceGamma* wbRGBGamma)
             len += strlen(wbRGBGamma->colorStruct.colorTemp[i]);
 
             wbRGBGamma->colorStruct.colorTempValue[i] = i;
-            printf("Diming mode: %s\n", wbRGBGamma->colorStruct.colorTemp[i]);  // Skip the comma if present
+            
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -286,7 +279,7 @@ void parseRange_wb(const char* buf, struct WhiteBalanceGamma* wbRGBGamma)
             len += strlen(wbRGBGamma->videoSrcStruct.source[i]);
 
             wbRGBGamma->videoSrcStruct.videoSourceValue[i] = i;
-            printf("Diming mode: %s\n", wbRGBGamma->videoSrcStruct.source[i]);  // Skip the comma if present
+            
             if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
@@ -451,8 +444,7 @@ int fillstructure(const char *buf , int mode)
         parseRange_wb(buf, &Configfile.gammaRGB[2]);
         break;
     default:
-	  printf("Invalid value for mode");
-	    break;
+	break;
     }
     return 0;
 }
@@ -483,7 +475,7 @@ int config_read(char *filename)
 	while (fgets(buf, sizeof(buf), file) != NULL) {
 	    if (buf[i] == '[') {
 		mode = 0;
-		printf("\n");
+		
 		if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Brightness") == 0) {
 		    mode = BRIGHTNESS_MODE_FLAG;
 		    Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_BRIGHTNESS ;
