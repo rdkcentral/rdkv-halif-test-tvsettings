@@ -14750,7 +14750,7 @@ void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 
     /* Step 01: Calling tvsettings StartLDIMSequenceTest for value 2, 500 and the API to return tvERROR_INVALID_STATE */
     result = StartLDIMSequenceTest(2,500);
-    UT_ASSERT_NOT_FATAL(result, tvERROR_INVALID_STATE);
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -14778,7 +14778,7 @@ void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 
     /* Step 08: Calling tvsettings StartLDIMSequenceTest for value 2, 500 and the API to return tvERROR_INVALID_STATE */
     result = StartLDIMSequenceTest(2,500);
-    UT_ASSERT_NOT_FATAL(result, tvERROR_INVALID_STATE);
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
 }
