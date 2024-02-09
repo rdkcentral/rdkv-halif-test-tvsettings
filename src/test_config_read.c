@@ -113,7 +113,7 @@ void parseRange_videoSource(const char* buf, struct videoSource *videoSrcStruct)
         while (i < MAX_NAME_SIZE && sscanf(input + len, "%[^,]", &videoSrcStruct->source[i]) == 1) {
             // Move to the next substring after the comma
             len += strlen(videoSrcStruct->source[i]);
-
+            if (*(input + len) == ',') {
                 len++; // Move past the comma
                 i++;     // Move to the next array element
 		videoSrcStruct->size = i;
