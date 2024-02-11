@@ -913,7 +913,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IsVideoFormatValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsVideoFormatValid);
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatTypeRetry);
@@ -1020,7 +1020,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 			(tvVideoResolution.frameHeight > 0) && (tvVideoResolution.frameWidth > 0) 	) {
 		IsVideoResolutionValid = true;
 	} 
-	UT_ASSERT_AUTO_TERM_FALSE(IsVideoResolutionValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsVideoResolutionValid);
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoResolution(&tvVideoResolutionRetry);
@@ -1135,7 +1135,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IsVideoFramerateValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsVideoFramerateValid);
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
@@ -1485,7 +1485,7 @@ void test_l1_tvSettings_positive_GetBacklight (void)
 	/* Step 02: Calling tvsettings GetBacklight and expecting the API to return success */
 	result = GetBacklight(&backlight);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(backlight >= 0 && backlight <= 100);
+	UT_ASSERT_AUTO_TERM_TRUE( (backlight >= 0 && backlight <= 100 ));
 
 	/* Step 03: Calling tvsettings GetBacklight again and expecting the API to return success */
 	result = GetBacklight(&backlightRetry);
@@ -2143,7 +2143,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	int tvBacklightModes, tvBacklightModes_bk, tvBacklightModesRetry;
+	int tvBacklightModes =0, tvBacklightModes_bk =0, tvBacklightModesRetry=0;
 	size_t sizeFromConfig;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -2747,7 +2747,7 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IsDimmingModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsDimmingModeValid);
 
 	/* Step 03: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
 	result = GetTVDimmingMode(dimmingModeRetry);
@@ -3649,7 +3649,7 @@ void test_l1_tvSettings_positive_GetBrightness (void)
 	/* Step 02: Calling tvsettings GetBrightness and expecting the API to return success */
 	result = GetBrightness(&brightness);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(brightness >= 0 && brightness <= 100);
+	UT_ASSERT_AUTO_TERM_TRUE((brightness >= 0 && brightness <= 100));
 
 	/* Step 03: Calling tvsettings GetBrightness again and expecting the API to return success */
 	result = GetBrightness(&brightnessRetry);
@@ -4485,7 +4485,7 @@ void test_l1_tvSettings_positive_GetSharpness (void)
 	/* Step 02: Calling tvsettings GetSharpness and expecting the API to return success */
 	result = GetSharpness(&sharpness);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(sharpness >= 0 && sharpness <= 100);
+	UT_ASSERT_AUTO_TERM_TRUE((sharpness >= 0 && sharpness <= 100));
 
 	/* Step 03: Calling tvsettings GetSharpness again and expecting the API to return success */
 	result = GetSharpness(&sharpnessRetry);
@@ -5616,9 +5616,9 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemperature and expecting the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
-		result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.modevalue[i]);
+		result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i]);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
@@ -5662,7 +5662,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	int numberofColortemp;
 
 	/* Step 01: Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -5678,12 +5678,12 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 05: Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofColortemp = Configfile.colorTemp.size;
+	numberofColortemp = Configfile.colorTemp.colorStruct.size;
 	for(int i =0 ; i < numberofColortemp; i++)
 	{
 		for(int j = i+1 ; j < numberofColortemp; j++)
 		{
-			result = SetColorTemperature((tvColorTemp_t) (Configfile.colorTemp.modevalue[i] | Configfile.colorTemp.modevalue[j]));
+			result = SetColorTemperature((tvColorTemp_t) (Configfile.colorTemp.colorStruct.colorTempValue[i] | Configfile.colorTemp.colorStruct.colorTempValue[j]));
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5693,7 +5693,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 07: Calling tvsettings the SetColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SetColorTemperature((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -5735,15 +5735,15 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 	/* Step 02: Calling tvsettings GetColorTemperature and expectinging the API to return success */
 	result = GetColorTemperature(&tvColorTemp);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
-		if (Configfile.colorTemp.modevalue[i] == tvColorTemp)
+		if (Configfile.colorTemp.colorStruct.colorTempValue[i] == tvColorTemp)
 		{
 			IsColorTempValid = true;
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IsColorTempValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsColorTempValid);
 
 	/* Step 03: Calling tvsettings GetColorTemperature and expectinging the API to return success */
 	result = GetColorTemperature(&tvColorTempRetry);
@@ -5844,9 +5844,9 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 		{
 			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = 0; l < Configfile.colorTemp.size; l++)
+				for (size_t l = 0; l < Configfile.colorTemp.colorStruct.size; l++)
 				{
-					result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvColorTemp_t)Configfile.colorTemp.modevalue[l]);
+					result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[l]);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 				}
 			}
@@ -5904,7 +5904,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	bool SupportAvailable;
 
 	/* Step 01: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -5912,27 +5912,27 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveColorTemperature(VIDEO_SOURCE_MAX,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature(VIDEO_SOURCE_MAX,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveColorTemperature((tvVideoSrcType_t)-2,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)-2,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 05: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],-1,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],-1,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],PQ_MODE_MAX,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],PQ_MODE_MAX,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],VIDEO_FORMAT_MAX,(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],VIDEO_FORMAT_MAX,(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)-1,(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)-1,(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 09: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
@@ -5958,7 +5958,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveColorTemperature((tvVideoSrcType_t)i,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+			result = SaveColorTemperature((tvVideoSrcType_t)i,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5978,7 +5978,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],i,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+			result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],i,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5998,19 +5998,19 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)i,(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+			result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)i,(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
 	/* Step 14: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfColorTemperature = Configfile.colorTemp.size;
+	numberOfColorTemperature = Configfile.colorTemp.colorStruct.size;
 	for(int i =tvColorTemp_STANDARD ; i < tvColorTemp_MAX; i++)
 	{
 		SupportAvailable = false;
 		for(int j =0 ; j < numberOfColorTemperature; j++)
 		{
-			if(Configfile.colorTemp.modevalue[j] == i)
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == i)
 			{
 				SupportAvailable = true;
 				break;
@@ -6028,7 +6028,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 16: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.modevalue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -6192,7 +6192,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(isDisplayModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE(isDisplayModeValid);
 
 	/* Step 03: Calling tvsettings GetAspectRatio and expectinging the API to return success */
 	result = GetAspectRatio(&tvDisplayModeRetry);
@@ -7239,7 +7239,7 @@ void test_l1_tvSettings_positive_GetDynamicGamma (void)
 	/* Step 02: Calling tvsettings GetDynamicGamma and expectinging the API to return success */
 	result = GetDynamicGamma(&dynamicGamma);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( 1.80 <= dynamicGamma && dynamicGamma <= 2.60);
+	UT_ASSERT_AUTO_TERM_TRUE( (1.80 <= dynamicGamma && dynamicGamma <= 2.60));
 
 	/* Step 03: Calling tvsettings GetDynamicGamma and expectinging the API to return success */
 	result = GetDynamicGamma(&dynamicGammaRetry);
@@ -7358,7 +7358,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 				break;
 			}
 		}
-		UT_ASSERT_AUTO_TERM_FALSE(IsDolbyModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE(IsDolbyModeValid);
 	}
 
 	/* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expectinging the API to return success */
@@ -7376,7 +7376,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 				break;
 			}
 		}
-		UT_ASSERT_AUTO_TERM_FALSE(IsDolbyModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE(IsDolbyModeValid);
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -7589,7 +7589,7 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IstvDolbyModesValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IstvDolbyModesValid);
 
 	/* Step 03: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
 	result = GetTVDolbyVisionMode(&tvDolbyModesRetry);
@@ -7938,7 +7938,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 				break;
 			}
 		}
-		UT_ASSERT_AUTO_TERM_FALSE(IsPictureModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE(IsPictureModeValid);
 	}
 
 	/* Step 03: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
@@ -7956,7 +7956,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 				break;
 			}
 		}
-		UT_ASSERT_AUTO_TERM_FALSE(IsPictureModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE(IsPictureModeValid);
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -8071,7 +8071,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IsPicturModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsPicturModeValid);
 
 	/* Step 03: Calling tvsettings GetTVPictureMode and expectinging the API to return success */
 	result = GetTVPictureMode(pictureModeRetry);
@@ -8468,19 +8468,19 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
-				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],2047,(tvColorTempSourceOffset_t )Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],2047,(tvColorTempSourceOffset_t )Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],1000,(tvColorTempSourceOffset_t )Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1000,(tvColorTempSourceOffset_t )Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -8531,9 +8531,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 
 	tvError_t result = tvERROR_NONE ;
 	int numberofColortemp;
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_Rgain_onSource and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -8549,53 +8550,65 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], -1 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], -1 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 2048 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 2048 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)-2, 0);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)-2, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)j ,0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_Rgain_onSource((tvColorTemp_t)i , 0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
     /* Step 12: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, (tvColorTempSourceOffset_t)i, 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
     /* Step 13: Calling tvsettings TvTerm and the API to return success */
@@ -8603,7 +8616,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 14: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
@@ -8645,22 +8658,22 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
 
 	/* Step 03: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(rgain,rgainRetry);
 
     /* Step 04: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
-			result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
+			result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
 
@@ -8713,9 +8726,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	int sourceOffset = -1;
 	int numberofColortemp;
 	int numberofSourceOffset;
+	bool platformFlag =false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -8731,41 +8745,55 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain, (tvColorTempSourceOffset_t) MAX_OFFSET);
+	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rgain, (tvColorTempSourceOffset_t) MAX_OFFSET);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain, (tvColorTempSourceOffset_t)-2);
+	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rgain, (tvColorTempSourceOffset_t)-2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
 	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i) 
 			{
-				result = GetColorTemp_Rgain_onSource((tvColorTemp_t)j ,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
 		}	
+		if(!platformFlag) 
+		{
+			result = GetColorTemp_Rgain_onSource((tvColorTemp_t)i ,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
     /* Step 09: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,&rgain, (tvColorTempSourceOffset_t)j);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag) 
+		{					
+			result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&rgain,\
+			(tvColorTempSourceOffset_t)i);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
 	}
 
 	/* Step 10: Calling tvsettings termination and expecting the API to return success */
@@ -8815,19 +8843,19 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
-				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],2047,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],2047,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],1000,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1000,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -8878,9 +8906,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 
 	tvError_t result = tvERROR_NONE ;
 	int numberofColortemp;
-
+	bool platformFlag = false;
+	
 	/* Step 01: Calling tvsettings SetColorTemp_Ggain_onSource and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -8896,53 +8925,69 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], -1 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], -1 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 2048 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 2048 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 0, (tvColorTempSourceOffset_t) -2, 0);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 0, (tvColorTempSourceOffset_t) -2, 0);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)j ,0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_Ggain_onSource((tvColorTemp_t)i , 0, \
+							(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
 	}
 
     /* Step 12: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, \
+							(tvColorTempSourceOffset_t)i, 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
 	}
 
     /* Step 13: Calling tvsettings TvTerm and the API to return success */
@@ -8950,7 +8995,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 14: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
@@ -8991,23 +9036,23 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
 
 	/* Step 03: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(rgain,rgainRetry);
 
     /* Step 04: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
-			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j]);
+			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-			UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
+			UT_ASSERT_AUTO_TERM_TRUE( (rgain > 0 && rgain < 2048));
 
 		}	
 	}
@@ -9053,13 +9098,14 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 
 	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
-	int rgain = -1;
+	int ggain = -1;
 	int sourceOffset = -1;
 	int numberofColortemp;
 	int numberofSourceOffset;
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&ggain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -9067,49 +9113,66 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Ggain_onSource(tvColorTemp_MAX,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Ggain_onSource(tvColorTemp_MAX,&ggain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)-1,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)-1,&ggain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain,(tvColorTempSourceOffset_t) MAX_OFFSET);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &ggain,\
+						(tvColorTempSourceOffset_t) MAX_OFFSET);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain,  (tvColorTempSourceOffset_t)-2);
+	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &ggain,  \
+						(tvColorTempSourceOffset_t)-2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = GetColorTemp_Ggain_onSource((tvColorTemp_t)j ,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)i ,&ggain, \
+					(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );	
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
     /* Step 09: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,&rgain, (tvColorTempSourceOffset_t)j);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&ggain,\
+ (tvColorTempSourceOffset_t)i);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
 	}
 
 	/* Step 10: Calling tvsettings termination and expecting the API to return success */
@@ -9117,7 +9180,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 11: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_Ggain_onSource(tvColorTemp,&rgain, (tvColorTempSourceOffset_t)sourceOffset);
+	result = GetColorTemp_Ggain_onSource(tvColorTemp,&ggain, (tvColorTempSourceOffset_t)sourceOffset);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
@@ -9159,19 +9222,19 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
-				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],2047, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],2047, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],1000, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1000, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -9222,9 +9285,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 
 	tvError_t result = tvERROR_NONE ;
 	int numberofColortemp;
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_Bgain_onSource and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -9240,61 +9304,74 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], -1 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], -1 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 2048 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 2048 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) -2, 0);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) -2, 0);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)j ,0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_Bgain_onSource((tvColorTemp_t)i , 0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
-
+	
     /* Step 12: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
-	}
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, (tvColorTempSourceOffset_t)i, 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
+	}	
 
     /* Step 13: Calling tvsettings TvTerm and the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 14: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
@@ -9335,22 +9412,22 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
 
 	/* Step 03: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(rgain,rgainRetry);
 
     /* Step 04: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
-			result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
+			result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
 
@@ -9402,9 +9479,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	int sourceOffset = -1;
 	int numberofColortemp;
 	int numberofSourceOffset;
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -9420,42 +9498,55 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain,(tvColorTempSourceOffset_t) MAX_OFFSET);
+	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rgain,(tvColorTempSourceOffset_t) MAX_OFFSET);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rgain, (tvColorTempSourceOffset_t)-2);
+	result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rgain, (tvColorTempSourceOffset_t)-2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = GetColorTemp_Bgain_onSource((tvColorTemp_t)j ,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_Bgain_onSource((tvColorTemp_t)i ,&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );	
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
     /* Step 09: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,&rgain, (tvColorTempSourceOffset_t)j);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
-	}
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_Bgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&rgain, (tvColorTempSourceOffset_t)i);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
+	}	
 
 	/* Step 10: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -9505,19 +9596,19 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -9571,9 +9662,10 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 
 	tvError_t result = tvERROR_NONE ;
 	int numberofColortemp;
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_R_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -9589,61 +9681,76 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], -1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], -1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t)  MAX_OFFSET, 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t)  MAX_OFFSET, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t) -2, 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t) -2, 0);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)j ,0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)i , 0,\
+								(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
     /* Step 12: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
-	}
+		}
+		if(!platformFlag)
+		{
+			result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0,\
+ (tvColorTempSourceOffset_t)i, 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
+		}
+	}	
 
     /* Step 13: Calling tvsettings TvTerm and the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 14: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
@@ -9686,24 +9793,24 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
-	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
 
 	/* Step 03: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
-	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(rpostoffset,rpostoffsetRetry);
 
     /* Step 04: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
-			result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
+			result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-			UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
+			UT_ASSERT_AUTO_TERM_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
 
 		}	
 	}
@@ -9752,9 +9859,10 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	int sourceOffset = -1;
 	int numberofColortemp;
 	int numberofSourceOffset;
-
+	bool platformFlag = false;
+	
 	/* Step 01: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -9770,41 +9878,53 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset,(tvColorTempSourceOffset_t) MAX_OFFSET);
+	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rpostoffset,(tvColorTempSourceOffset_t) MAX_OFFSET);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset,(tvColorTempSourceOffset_t) -2);
+	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rpostoffset,(tvColorTempSourceOffset_t) -2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-				result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)j ,&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)i ,&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );	
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);			
+		}
 	}
 
     /* Step 09: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-				result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,&rpostoffset, (tvColorTempSourceOffset_t)j);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+				platformFlag = true;
+				break;
 			}
-		}	
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&rpostoffset, (tvColorTempSourceOffset_t)i);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
 	}
 
 	/* Step 10: Calling tvsettings termination and expecting the API to return success */
@@ -9853,19 +9973,19 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -9919,7 +10039,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	int numberofColortemp;
 
 	/* Step 01: Calling tvsettings SetColorTemp_G_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -9935,35 +10055,35 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], -1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], -1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) MAX_OFFSET, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) -2, 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) -2, 0);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[i] != (tvColorTemp_t)j) 
 			{
 				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)j ,0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
@@ -9978,7 +10098,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 		{
 			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
 			{
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
 		}	
@@ -9989,7 +10109,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 14: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 }
@@ -10031,24 +10151,24 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
-	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffset,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
 
 	/* Step 03: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
-	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(rpostoffset,rpostoffsetRetry);
 
     /* Step 04: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
-			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[j] );
+			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-			UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
+			UT_ASSERT_AUTO_TERM_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
 
 		}	
 	}
@@ -10099,7 +10219,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	int numberofSourceOffset;
 
 	/* Step 01: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -10115,23 +10235,23 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset, (tvColorTempSourceOffset_t) MAX_OFFSET);
+	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rpostoffset, (tvColorTempSourceOffset_t) MAX_OFFSET);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset, (tvColorTempSourceOffset_t) -2);
+	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rpostoffset, (tvColorTempSourceOffset_t) -2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[i] != (tvColorTemp_t)j) 
 			{
 				result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)j ,&rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0] );
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
@@ -10146,7 +10266,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 		{
 			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
 			{
-				result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,&rpostoffset, (tvColorTempSourceOffset_t)j);
+				result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&rpostoffset, (tvColorTempSourceOffset_t)j);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
 		}	
@@ -10198,19 +10318,19 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 			for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
 			{
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -10263,7 +10383,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	int numberofColortemp;
 
 	/* Step 01: Calling tvsettings SetColorTemp_B_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -10279,35 +10399,35 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], -1025 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], -1025 ,(tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)MAX_OFFSET, 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)MAX_OFFSET, 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) -2, 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) -2, 0);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 	
     /* Step 09: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[i] != (tvColorTemp_t)j) 
 			{
 				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)j ,0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
@@ -10322,7 +10442,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 		{
 			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
 			{
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, (tvColorTempSourceOffset_t)j, 0);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
 		}	
@@ -10333,7 +10453,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 14: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_STATE */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__); 
@@ -10374,22 +10494,22 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return success */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
 
 	/* Step 03: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return success */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(rpostoffset,rpostoffsetRetry);
 
     /* Step 04: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
 
-			result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[i], &rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
+			result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
 
@@ -10444,7 +10564,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	int numberofSourceOffset;
 
 	/* Step 01: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -10460,23 +10580,23 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset, (tvColorTempSourceOffset_t) MAX_OFFSET);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rpostoffset, (tvColorTempSourceOffset_t) MAX_OFFSET);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0], &rpostoffset, (tvColorTempSourceOffset_t) -2);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &rpostoffset, (tvColorTempSourceOffset_t) -2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[i] != (tvColorTemp_t)j) 
 			{
 				result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)j ,&rpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0] );
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
@@ -10491,7 +10611,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 		{
 			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)j) 
 			{
-				result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.modevalue[0] ,&rpostoffset, (tvColorTempSourceOffset_t)j);
+				result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&rpostoffset, (tvColorTempSourceOffset_t)j);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
 		}	
@@ -10887,7 +11007,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		result = GetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, size);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -11149,9 +11269,9 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{	
-		result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[i], pData_R_limit,pData_G_limit,pData_B_limit, size);
+		result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], pData_R_limit,pData_G_limit,pData_B_limit, size);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM)
 	}
 
@@ -11212,7 +11332,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	unsigned short pData_B_limit_error[] = {0, 100, 1025};
 
 	/* Step 01: Calling tvsettings SaveGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0], pData_R_limit ,pData_G_limit,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit ,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -11228,44 +11348,44 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 05: Calling tvsettings SaveGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL,pData_G_limit,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0], pData_R_limit,NULL,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit,NULL,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit,pData_G_limit,NULL,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit,pData_G_limit,NULL,0);  //zero size
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL,0);  //zero size
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit,pData_G_limit,NULL, 257); //MAX size
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL, 257); //MAX size
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit_error,pData_G_limit,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit_error,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 11: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit,pData_G_limit_error,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit_error,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 12: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0],pData_R_limit,pData_G_limit,pData_B_limit_error,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit_error,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 13: Calling tvsettings SaveGammaTable and expecting the API to return success */ 
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 
 		for(int j=0; j<tvColorTemp_MAX;j++){
 
-			if(Configfile.colorTemp.modevalue[i] != (tvColorTemp_t)j ){				
+			if(Configfile.colorTemp.colorStruct.colorTempValue[i] != (tvColorTemp_t)j ){				
 				result = SaveGammaTable((tvColorTemp_t)j, pData_R_limit,pData_G_limit,pData_B_limit, 256);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
@@ -11278,7 +11398,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 15: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_STATE */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.modevalue[0], pData_R_limit ,pData_G_limit,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit ,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -11426,7 +11546,7 @@ void test_l1_tvSettings_positive_GetDvTmaxValue (void)
 	/* Step 02: Calling tvsettings GetDvTmaxValue and expecting the API to return success */
 	result = GetDvTmaxValue(&tvDvTmax);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(tvDvTmax >= 0 && tvDvTmax <= 10000)
+	UT_ASSERT_AUTO_TERM_TRUE((tvDvTmax >= 0 && tvDvTmax <= 10000))
 
 	/* Step 03: Calling tvsettings GetDvTmaxValue and expecting the API to return success */
 	result = GetDvTmaxValue(&tvDvTmaxRetry);
@@ -11580,6 +11700,7 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 	int numberOfPqmodes;
 	int numberOfFormats;
 	int numberOfLdimmodes;
+	bool flag = false;
 
 	/* Step 01: Calling tvsettings SaveDvTmaxValue and expecting the API to return tvERROR_INVALID_STATE */
 	result = SaveDvTmaxValue((ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[0],500);
@@ -11608,14 +11729,19 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 	/* Step 07: Calling tvsettings SaveDvTmaxValue and expecting the API to return tvERROR_INVALID_PARAM */
 	numberOfLdimmodes = Configfile.dimmingLevel.size;
 
-	for(int j =0 ; j < numberOfLdimmodes; j++)
-	{
-		for(int i =LDIM_STATE_NONBOOST ; i < LDIM_STATE_MAX; i++){
-			if(Configfile.dimmingLevel.dimModevalue[j] != i)
+	for(int i =LDIM_STATE_NONBOOST ; i < LDIM_STATE_MAX; i++){
+		flag = false;
+		for(int j =0 ; j < numberOfLdimmodes; j++){
+			if(Configfile.dimmingLevel.dimModevalue[j] == i)
 			{
-				result = SaveDvTmaxValue((ldimStateLevel_t)i, 1000);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-			}
+				flag = true;
+				break;
+			}	
+		}
+		if(!flag)	
+		{
+			result = SaveDvTmaxValue((ldimStateLevel_t)i, 1000);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
@@ -11655,8 +11781,8 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	int tvComponentColor , tvComponentColor_bk;
-	int tvComponentColorRetry ;
+	int tvComponentColor =0, tvComponentColor_bk =0;
+	int tvComponentColorRetry =0;
 	bool IsComponentColorValid;
 	size_t sizeReceived;
 	size_t sizeReceivedRetry;
@@ -11671,6 +11797,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	tvComponentColor_bk = tvComponentColor;
 
+	sizeFromConfig = Configfile.componentColor.size;
 	for (size_t i = 0; i < sizeFromConfig; i++)
 	{
 		if(Configfile.componentColor.modeId[i] & tvComponentColor_bk)
@@ -11926,7 +12053,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 	{
 		result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&saturation);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-		UT_ASSERT_AUTO_TERM_TRUE( saturation >=0 && saturation <= 100);
+		UT_ASSERT_AUTO_TERM_TRUE( (saturation >=0 && saturation <= 100) );
 	}
 
 	/* Step 05: Calling tvsettings termination and expecting the API to return success */
@@ -13370,7 +13497,7 @@ void test_l1_tvSettings_positive_GetMaxGainValue (void)
 
 	/* Step 02: Calling tvsettings GetMaxGainValue and expectinging the API to return success */
 	maxGain = GetMaxGainValue();
-	UT_ASSERT_AUTO_TERM_TRUE(  maxGain >= 2^10 && maxGain <= (2^31)-1);
+	UT_ASSERT_AUTO_TERM_TRUE( (maxGain >= 2^10 && maxGain <= (2^31)-1) );
 
 	/* Step 03: Calling tvsettings GetMaxGainValue and expectinging the API to return success */
 	maxGainRetry = GetMaxGainValue( );
@@ -13410,24 +13537,24 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 	int maxGain = -1;
 
     /* Step 01: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
-    result = GetMaxGainValue( );
-    UT_ASSERT_FALSE(  maxGain >= 2^10 && maxGain <= (2^31)-1);
+    maxGain = GetMaxGainValue( );
+    UT_ASSERT_FALSE(  (maxGain >= 2^10 && maxGain <= (2^31)-1));
 
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
-    result = GetMaxGainValue( );
-    UT_ASSERT_FALSE(  maxGain >= 2^10 && maxGain <= (2^31)-1);
+    maxGain = GetMaxGainValue( );
+    UT_ASSERT_AUTO_TERM_TRUE(  (maxGain >= 2^10 && maxGain <= (2^31)-1));
 
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 05: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
-	result = GetMaxGainValue( );
-    UT_ASSERT_FALSE(  maxGain >= 2^10 && maxGain <= (2^31)-1);
+	maxGain = GetMaxGainValue( );
+    UT_ASSERT_FALSE( (maxGain >= 2^10 && maxGain <= (2^31)-1));
 
 	UT_LOG("Out %s",__FUNCTION__); 
 }
@@ -13717,11 +13844,11 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetTVGammaTarget and expecting the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTemp.size); i++)
+	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
-		GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.modevalue[i], &x_Value, &y_Value);
-		UT_ASSERT_AUTO_TERM_TRUE(x_Value >= 0 && x_Value <= 1.0 );
-		UT_ASSERT_AUTO_TERM_TRUE(y_Value >= 0 && y_Value <= 1.0 );
+		GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &x_Value, &y_Value);
+		UT_ASSERT_AUTO_TERM_TRUE((x_Value >= 0 && x_Value <= 1.0) );
+		UT_ASSERT_AUTO_TERM_TRUE((y_Value >= 0 && y_Value <= 1.0) );
 	}
 
 	/* Step 03: Calling tvsettings termination and expecting the API to return success */
@@ -13764,8 +13891,8 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 	double y_ValueRetry, y_Value;
 
     /* Step 01: Calling tvsettings GetTVGammaTarget before TvInit */
-	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.modevalue[0], &x_Value, &y_Value);
-	UT_ASSERT_AUTO_TERM_FALSE(x_Value >= 0 && x_Value <= 1.0 );
+	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &x_Value, &y_Value);
+	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -13773,31 +13900,31 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 
     /* Step 03: Calling tvsettings GetTVGammaTarget with invalid input*/
 	GetTVGammaTarget( (tvColorTemp_t)tvColorTemp_MAX , &x_Value, &y_Value);
-	UT_ASSERT_AUTO_TERM_FALSE(x_Value >= 0 && x_Value <= 1.0 );
-	UT_ASSERT_AUTO_TERM_FALSE(y_Value >= 0 && y_Value <= 1.0 );
+	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
+	UT_ASSERT_AUTO_TERM_FALSE((y_Value >= 0 && y_Value <= 1.0));
 
     /* Step 04: Calling tvsettings GetTVGammaTarget with invalid input*/
 	GetTVGammaTarget( (tvColorTemp_t)-1 , &x_Value, &y_Value);
-	UT_ASSERT_AUTO_TERM_FALSE(x_Value >= 0 && x_Value <= 1.0 );
-	UT_ASSERT_AUTO_TERM_FALSE(y_Value >= 0 && y_Value <= 1.0 );
+	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
+	UT_ASSERT_AUTO_TERM_FALSE((y_Value >= 0 && y_Value <= 1.0));
 
     /* Step 05: Calling tvsettings GetTVGammaTarget with invalid input*/
-	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.modevalue[0], NULL, &y_Value);
-	UT_ASSERT_AUTO_TERM_FALSE(x_Value >= 0 && x_Value <= 1.0 );
-	UT_ASSERT_AUTO_TERM_FALSE(y_Value >= 0 && y_Value <= 1.0 );
+	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL, &y_Value);
+	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
+	UT_ASSERT_AUTO_TERM_FALSE((y_Value >= 0 && y_Value <= 1.0 ));
 
     /* Step 06: Calling tvsettings GetTVGammaTarget with invalid input*/
-	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.modevalue[0], &x_Value, NULL);
-	UT_ASSERT_AUTO_TERM_FALSE(x_Value >= 0 && x_Value <= 1.0 );
-	UT_ASSERT_AUTO_TERM_FALSE(y_Value >= 0 && y_Value <= 1.0 );
+	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &x_Value, NULL);
+	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0 ));
+	UT_ASSERT_AUTO_TERM_FALSE((y_Value >= 0 && y_Value <= 1.0));
 
 	/* Step 07: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 08: Calling tvsettings GetTVGammaTarget after TvTerm*/
-	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.modevalue[0], &x_Value, &y_Value);
-	UT_ASSERT_AUTO_TERM_FALSE(x_Value >= 0 && x_Value <= 1.0 );
+	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &x_Value, &y_Value);
+	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
 
 	UT_LOG("Out %s",__FUNCTION__);
 }
