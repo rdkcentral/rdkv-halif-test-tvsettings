@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX_KEY_LENGTH 50
 #define MAX_BUF_SIZE 2048
@@ -140,6 +141,8 @@ struct WhiteBalanceGamma {
     int rangeOffsetTo;
     int gammaIndex_from;
     int gammaIndex_to;
+    int rangeFrom;
+    int rangeTo;
     struct videoColorTemp colorStruct;
     struct videoSource videoSrcStruct;
     bool platformSupport;
