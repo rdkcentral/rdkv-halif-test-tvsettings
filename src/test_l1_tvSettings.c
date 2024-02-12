@@ -3472,7 +3472,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 		SupportAvailable = false;
 		for(int j =0 ; j < numberOfLdimmodes; j++)
 		{
-			if(Configfile.dimmingLevel.dimModeName[j] == i)
+			if(Configfile.dimmingLevel.dimModevalue[j] == i)
 			{
 				SupportAvailable = true;
 				break;
@@ -13090,7 +13090,7 @@ void test_l1_tvSettings_positive_GetCMSState (void)
 
 	tvError_t result = tvERROR_NONE ;
 	bool CMSState = false;
-	bool CMSStateRetry = flase;
+	bool CMSStateRetry = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
