@@ -994,7 +994,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution by looping through the VideoResolution section of test specific config file values | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
+* | 02 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
 * | 03 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution with valid argument and validate with above value |tvResolutionParam_t * | tvERROR_NONE | Should Pass |
 * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
