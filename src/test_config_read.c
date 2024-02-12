@@ -1,5 +1,5 @@
 #include "test_config_read.h"
-#include "../../include/tvTypes.h"
+#include "tvTypes.h"
 
 struct TvSettingConfig Configfile = {0};
 int colorFlag = 0;
