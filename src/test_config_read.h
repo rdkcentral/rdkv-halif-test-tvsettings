@@ -6,6 +6,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ut.h>
+#include <ut_log.h>
 
 #define MAX_KEY_LENGTH 50
 #define MAX_BUF_SIZE 2048
