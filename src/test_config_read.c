@@ -9,11 +9,11 @@ void parseRange(const char *buf, struct DisplayPictureMode *mode)
 {
 	if (sscanf(buf, "range_from = %hd", &mode->rangeFrom) == 1)
 	{
-		printf("Range From: %d\n", mode->rangeFrom);
+		UT_LOG("\n Range From: %d\n", mode->rangeFrom);
 	}
 	else if (sscanf(buf, "range_to = %hd", &mode->rangeTo) == 1)
 	{
-		printf("Range To: %d\n", mode->rangeTo);
+		UT_LOG("\n Range To: %d\n", mode->rangeTo);
 	}
 }
 
@@ -208,11 +208,11 @@ void parseRange_dimlevel(const char *buf, struct DimmingLevel *dimlevel)
 
 	if (sscanf(buf, "range_from = %hd", &dimlevel->rangeFrom) == 1)
 	{
-		printf("Range From: %d\n", dimlevel->rangeFrom);
+		UT_LOG("\n Range From: %d\n", dimlevel->rangeFrom);
 	}
 	else if (sscanf(buf, "range_to = %hd", &dimlevel->rangeTo) == 1)
 	{
-		printf("Range To: %d\n", dimlevel->rangeTo);
+		UT_LOG("\n Range To: %d\n", dimlevel->rangeTo);
 	}
 
 	if (sscanf(buf, "DimmingLevel = %s", input) == 1)
@@ -243,38 +243,38 @@ void parseRange_wb(const char *buf, struct WhiteBalanceGamma *wbRGBGamma)
 
 	if (sscanf(buf, "range.gain.from = %d", &wbRGBGamma->rangeGainFrom) == 1)
 	{
-		printf("Range From: %d\n", wbRGBGamma->rangeGainFrom);
+		UT_LOG("\n Range From: %d\n", wbRGBGamma->rangeGainFrom);
 	}
 	else if (sscanf(buf, "range.gain.to = %d", &wbRGBGamma->rangeGainTo) == 1)
 	{
-		printf("Range To: %d\n", wbRGBGamma->rangeGainTo);
+		UT_LOG("\n Range To: %d\n", wbRGBGamma->rangeGainTo);
 	}
 
 	if (sscanf(buf, "range.offset.from = %d", &wbRGBGamma->rangeOffsetFrom) == 1)
 	{
-		printf("Range From: %d\n", wbRGBGamma->rangeOffsetFrom);
+		UT_LOG("\n Range From: %d\n", wbRGBGamma->rangeOffsetFrom);
 	}
 	else if (sscanf(buf, "range.offset.to = %d", &wbRGBGamma->rangeOffsetTo) == 1)
 	{
-		printf("Range To: %d\n", wbRGBGamma->rangeOffsetTo);
+		UT_LOG("\n Range To: %d\n", wbRGBGamma->rangeOffsetTo);
 	}
 
 	if (sscanf(buf, "gammaIndex_from = %d", &wbRGBGamma->rangeOffsetFrom) == 1)
 	{
-		printf("Range From: %d\n", wbRGBGamma->rangeOffsetFrom);
+		UT_LOG("\n Range From: %d\n", wbRGBGamma->rangeOffsetFrom);
 	}
 	else if (sscanf(buf, "gammaIndex_to = %d", &wbRGBGamma->rangeOffsetTo) == 1)
 	{
-		printf("Range To: %d\n", wbRGBGamma->rangeOffsetTo);
+		UT_LOG("\n Range To: %d\n", wbRGBGamma->rangeOffsetTo);
 	}
 
 	if (sscanf(buf, "range_from = %d", &wbRGBGamma->rangeFrom) == 1)
 	{
-		printf("Range From: %d\n", wbRGBGamma->rangeFrom);
+		UT_LOG("\n Range From: %d\n", wbRGBGamma->rangeFrom);
 	}
 	else if (sscanf(buf, "range_to = %d", &wbRGBGamma->rangeTo) == 1)
 	{
-		printf("Range To: %d\n", wbRGBGamma->rangeTo);
+		UT_LOG("\n Range To: %d\n", wbRGBGamma->rangeTo);
 	}
 
 	if (sscanf(buf, "ColorTemperature = %[^\n]", input) == 1)
@@ -662,7 +662,6 @@ int config_read(char *filename)
 			}
 			else if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "AspectRatio") == 0)
 			{
-				printf("aspect ratio \n");
 				mode = ASPECT_RATIO;
 				Configfile.pq_paramIndex.videoSourceValue[paramFlag] = PQ_PARAM_ASPECT_RATIO;
 			}
