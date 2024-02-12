@@ -59,7 +59,7 @@
 #include <ut_log.h>
 
 #include "tvError.h"
-#include "../../include/tvSettings.h"
+#include "tvSettings.h"
 #include "test_config_read.h"
 
 static int gTestGroup = 1;                                         /* Level 1 Testing -  Stress Test   */
@@ -11038,6 +11038,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 	unsigned short pData_B_limit[]={0, 100, 1023};
 	unsigned short  size;
 	bool bflag = true;
+	bool platformFlag = false;
 	tvError_t result = tvERROR_NONE ;
 
        /* Step 01: Calling tvsettings GetDefaultGammaTable before TvInit and expecting the API to return tvERROR_INVALID_STATE */
