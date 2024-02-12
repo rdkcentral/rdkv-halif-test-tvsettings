@@ -3472,7 +3472,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 		SupportAvailable = false;
 		for(int j =0 ; j < numberOfLdimmodes; j++)
 		{
-			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
+			if(Configfile.dimmingLevel.dimModeName[j] == i)
 			{
 				SupportAvailable = true;
 				break;
