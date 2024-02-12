@@ -93,7 +93,7 @@ tvError_t SetBacklightFade(int from, int to, int duration)
   return (tvError_t)0;
 }
 
-tvError_t GetBacklightFade(int from, int to, int current)
+tvError_t GetCurrentBacklightFade(int* from, int* to, int* current)
 {
   /*TODO: Implement Me!*/
   (void)from;
@@ -138,7 +138,7 @@ tvError_t SetTVDimmingMode(const char* dimmingMode)
   return (tvError_t)0;
 }
 
-tvError_t GetTVDimmingMode(const char* dimmingMode)
+tvError_t GetTVDimmingMode(char* dimmingMode)
 {
   /*TODO: Implement Me!*/
   (void)dimmingMode;
@@ -583,7 +583,7 @@ tvError_t EnableWBCalibrationMode(bool value)
   return (tvError_t)0;
 }
 
-tvError_t GetWBCalibrationMode(bool* value)
+tvError_t GetCurrentWBCalibrationMode(bool* value)
 {
   /*TODO: Implement Me!*/
   (void)value;
@@ -881,21 +881,6 @@ tvError_t EnableLocalContrast(bool mode)
 {
   /*TODO: Implement Me!*/
   (void)mode;
-  return (tvError_t)0;
-}
-
-tvError_t SetWakeupConfig(const tvWakeupSrcType_t src_type, const bool value)
-{
-  /*TODO: Implement Me!*/
-  (void)src_type;
-  (void)value;
-  return (tvError_t)0;
-}
-
-tvError_t GetCurrentSource(tvVideoSrcType_t* currentSource)
-{
-  /*TODO: Implement Me!*/
-  (void)currentSource;
   return (tvError_t)0;
 }
 
