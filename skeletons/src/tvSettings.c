@@ -138,7 +138,7 @@ tvError_t SetTVDimmingMode(const char* dimmingMode)
   return (tvError_t)0;
 }
 
-tvError_t GetTVDimmingMode(char* dimmingMode)
+tvError_t GetTVDimmingMode(const char* dimmingMode)
 {
   /*TODO: Implement Me!*/
   (void)dimmingMode;
