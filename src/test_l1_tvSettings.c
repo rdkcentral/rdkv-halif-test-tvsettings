@@ -2572,7 +2572,6 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 */
 void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 {
-	UT_FAIL("This function needs to be implemented!"); 
 	gTestID = 42;                                    /* It must be 42 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
@@ -7409,7 +7408,6 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 */
 void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 {
-	UT_FAIL("This function needs to be implemented!"); 
 	gTestID = 112;                                    /* It must be 112 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
@@ -7991,7 +7989,6 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 */
 void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 {
-	UT_FAIL("This function needs to be implemented!"); 
 	gTestID = 120;                                    /* It must be 120 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
@@ -8530,7 +8527,6 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberofColortemp = 0;
 	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_Rgain_onSource and expecting the API to return tvERROR_INVALID_STATE */
@@ -8648,8 +8644,6 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
-	tvColorTemp_t tvColorTempRetry = tvColorTemp_MAX;
 	int rgain = -1;
 	int rgainRetry = -1;
 
@@ -8724,8 +8718,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int rgain = -1;
 	int sourceOffset = -1;
-	int numberofColortemp = 0;
-	int numberofSourceOffset = 0;
 	bool platformFlag =false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -8905,7 +8897,6 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberofColortemp = 0;
 	bool platformFlag = false;
 	
 	/* Step 01: Calling tvsettings SetColorTemp_Ggain_onSource and expecting the API to return tvERROR_INVALID_STATE */
@@ -9026,8 +9017,6 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
-	tvColorTemp_t tvColorTempRetry = tvColorTemp_MAX;
 	int rgain = -1;
 	int rgainRetry = -1;
 
@@ -9100,8 +9089,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int ggain = -1;
 	int sourceOffset = -1;
-	int numberofColortemp = 0;
-	int numberofSourceOffset = 0;
 	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -9284,7 +9271,6 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberofColortemp = 0;
 	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_Bgain_onSource and expecting the API to return tvERROR_INVALID_STATE */
@@ -9402,8 +9388,6 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
-	tvColorTemp_t tvColorTempRetry = tvColorTemp_MAX;
 	int rgain = -1;
 	int rgainRetry = -1;
 
@@ -9477,8 +9461,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int rgain = -1;
 	int sourceOffset = -1;
-	int numberofColortemp = 0;
-	int numberofSourceOffset = 0;
 	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -9661,7 +9643,6 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberofColortemp = 0;
 	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_R_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
@@ -9783,8 +9764,6 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
-	tvColorTemp_t tvColorTempRetry = tvColorTemp_MAX;
 	int rpostoffset = -1;
 	int rpostoffsetRetry = -1;
 
@@ -9857,8 +9836,6 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int rpostoffset = -1;
 	int sourceOffset = -1;
-	int numberofColortemp = 0;
-	int numberofSourceOffset = 0;
 	bool platformFlag = false;
 	
 	/* Step 01: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -10036,7 +10013,6 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 
 	tvError_t result = tvERROR_NONE ;
 
-	int numberofColortemp = 0;
 
 	/* Step 01: Calling tvsettings SetColorTemp_G_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
@@ -10141,8 +10117,6 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
-	tvColorTemp_t tvColorTempRetry = tvColorTemp_MAX;
 	int rpostoffset = -1;
 	int rpostoffsetRetry = -1;
 
@@ -10215,8 +10189,6 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int rpostoffset = -1;
 	int sourceOffset = -1;
-	int numberofColortemp = 0;
-	int numberofSourceOffset = 0;
 
 	/* Step 01: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
 	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
@@ -10380,7 +10352,6 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberofColortemp = 0;
 
 	/* Step 01: Calling tvsettings SetColorTemp_B_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
@@ -10484,8 +10455,6 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
-	tvColorTemp_t tvColorTempRetry = tvColorTemp_MAX;
 	int rpostoffset = -1;
 	int rpostoffsetRetry = -1;
 
@@ -10560,8 +10529,6 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int rpostoffset = -1;
 	int sourceOffset = -1;
-	int numberofColortemp = 0;
-	int numberofSourceOffset = 0;
 
 	/* Step 01: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
 	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
@@ -11783,9 +11750,6 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	tvError_t result = tvERROR_NONE;
 	int tvComponentColor =0, tvComponentColor_bk =0;
 	int tvComponentColorRetry =0;
-	bool IsComponentColorValid = true;
-	size_t sizeReceived = 0;
-	size_t sizeReceivedRetry = 0;
 	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -11893,7 +11857,6 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
 */
 void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 {
-	UT_FAIL("This function needs to be implemented!"); 
 	gTestID = 171;                                    /* It must be 171 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
