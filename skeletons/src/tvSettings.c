@@ -16,26 +16,12 @@ tvError_t TvTerm(void)
   return (tvError_t)0;
 }
 
-tvError_t GetSupportedVideoFormatsODM(unsigned int* contentFormats, unsigned short* numberOfFormats)
-{
-  /*TODO: Implement Me!*/
-  (void)contentFormats;
-  (void)numberOfFormats;
-  return (tvError_t)0;
-}
-
-tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* count)
+tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* numberOfFormats)
 {
   /*TODO: Implement Me!*/
   (void)videoFormats;
-  (void)count;
+  (void)numberOfFormats;
   return (tvError_t)0;
-}
-
-tvVideoHDRFormat_t GetCurrentVideoFormatODM(void)
-{
-  /*TODO: Implement Me!*/
-  return (tvVideoHDRFormat_t)0;
 }
 
 tvError_t GetCurrentVideoFormat(tvVideoFormatType_t* videoFormat)
@@ -66,11 +52,11 @@ tvError_t GetCurrentVideoSource(int* currentSource)
   return (tvError_t)0;
 }
 
-tvError_t GetTVSupportedVideoSources(tvVideoSrcType_t** videoSources, unsigned short* count)
+tvError_t GetTVSupportedVideoSources(tvVideoSrcType_t** videoSources, unsigned short* numberOfSources)
 {
   /*TODO: Implement Me!*/
   (void)videoSources;
-  (void)count;
+  (void)numberOfSources;
   return (tvError_t)0;
 }
 
@@ -107,17 +93,12 @@ tvError_t SetBacklightFade(int from, int to, int duration)
   return (tvError_t)0;
 }
 
-int GetDriverEquivalentBLForCurrentFmtODM(int backlight)
+tvError_t GetBacklightFade(int from, int to, int current)
 {
   /*TODO: Implement Me!*/
-  (void)backlight;
-  return (int)0;
-}
-
-tvError_t SetBacklightInfoODM(tvBacklightInfo_t* backlightDefaults)
-{
-  /*TODO: Implement Me!*/
-  (void)backlightDefaults;
+  (void)from;
+  (void)to;
+  (void)current;
   return (tvError_t)0;
 }
 
@@ -142,19 +123,11 @@ tvError_t SetCurrentBacklightMode(tvBacklightMode_t blMode)
   return (tvError_t)0;
 }
 
-tvError_t GetTVSupportedDimmingModesODM(char** dimmingModes, unsigned short* count)
+tvError_t GetTVSupportedDimmingModes(tvDimmingMode_t** dimmingModes, unsigned short* numDimmingModes)
 {
   /*TODO: Implement Me!*/
   (void)dimmingModes;
-  (void)count;
-  return (tvError_t)0;
-}
-
-tvError_t GetTVSupportedDimmingModes(tvDimmingMode_t** dimmingModes, unsigned short* count)
-{
-  /*TODO: Implement Me!*/
-  (void)dimmingModes;
-  (void)count;
+  (void)numDimmingModes;
   return (tvError_t)0;
 }
 
@@ -172,13 +145,13 @@ tvError_t GetTVDimmingMode(const char* dimmingMode)
   return (tvError_t)0;
 }
 
-tvError_t SaveDynamicBacklight(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvDimmingMode_t value)
+tvError_t SaveTVDimmingMode(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvDimmingMode_t dimmingMode)
 {
   /*TODO: Implement Me!*/
   (void)videoSrcType;
   (void)pq_mode;
   (void)videoFormatType;
-  (void)value;
+  (void)dimmingMode;
   return (tvError_t)0;
 }
 
@@ -340,7 +313,7 @@ tvError_t GetColorTemperature(tvColorTemp_t* colorTemp)
   return (tvError_t)0;
 }
 
-tvError_t SaveColorTemperature(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, int value)
+tvError_t SaveColorTemperature(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvColorTemp_t value)
 {
   /*TODO: Implement Me!*/
   (void)videoSrcType;
@@ -426,7 +399,7 @@ tvError_t GetDynamicGamma(double* tvGammaValue)
   return (tvError_t)0;
 }
 
-tvError_t GetTVSupportedDolbyVisionModes(pic_modes_t** dvModes, unsigned short* count)
+tvError_t GetTVSupportedDolbyVisionModes(tvDolbyMode_t** dvModes, unsigned short* count)
 {
   /*TODO: Implement Me!*/
   (void)dvModes;
@@ -434,71 +407,27 @@ tvError_t GetTVSupportedDolbyVisionModes(pic_modes_t** dvModes, unsigned short* 
   return (tvError_t)0;
 }
 
-tvError_t SetTVDolbyVisionMode(const char* dolbyMode)
+tvError_t SetTVDolbyVisionMode(tvDolbyMode_t dolbyMode)
 {
   /*TODO: Implement Me!*/
   (void)dolbyMode;
   return (tvError_t)0;
 }
 
-tvError_t GetTVDolbyVisionMode(char* dolbyMode)
+tvError_t GetTVDolbyVisionMode(tvDolbyMode_t* dolbyMode)
 {
   /*TODO: Implement Me!*/
   (void)dolbyMode;
   return (tvError_t)0;
 }
 
-tvError_t SaveTVDolbyVisionMode(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, int value)
+tvError_t SaveTVDolbyVisionMode(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvDolbyMode_t value)
 {
   /*TODO: Implement Me!*/
   (void)videoSrcType;
   (void)pq_mode;
   (void)videoFormatType;
   (void)value;
-  return (tvError_t)0;
-}
-
-tvError_t GetTVSupportedHLGModes(pic_modes_t** dvModes, unsigned short* count)
-{
-  /*TODO: Implement Me!*/
-  (void)dvModes;
-  (void)count;
-  return (tvError_t)0;
-}
-
-tvError_t SetTVHLGMode(const char* hlgMode)
-{
-  /*TODO: Implement Me!*/
-  (void)hlgMode;
-  return (tvError_t)0;
-}
-
-tvError_t GetTVHLGMode(char* hlgMode)
-{
-  /*TODO: Implement Me!*/
-  (void)hlgMode;
-  return (tvError_t)0;
-}
-
-tvError_t GetTVSupportedHDR10Modes(pic_modes_t** dvModes, unsigned short* count)
-{
-  /*TODO: Implement Me!*/
-  (void)dvModes;
-  (void)count;
-  return (tvError_t)0;
-}
-
-tvError_t SetTVHDR10Mode(const char* hdr10Mode)
-{
-  /*TODO: Implement Me!*/
-  (void)hdr10Mode;
-  return (tvError_t)0;
-}
-
-tvError_t GetTVHDR10Mode(char* hdr10Mode)
-{
-  /*TODO: Implement Me!*/
-  (void)hdr10Mode;
   return (tvError_t)0;
 }
 
@@ -524,16 +453,16 @@ tvError_t SetTVPictureMode(const char* pictureMode)
   return (tvError_t)0;
 }
 
-tvError_t SaveSourcePictureMode(tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, int pq_mode)
+tvError_t SaveSourcePictureMode(tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, int pictureMode)
 {
   /*TODO: Implement Me!*/
   (void)videoSrcType;
   (void)videoFormatType;
-  (void)pq_mode;
+  (void)pictureMode;
   return (tvError_t)0;
 }
 
-tvError_t SetColorTemp_Rgain_onSource(tvColorTemp_t colorTemp, int rgain, int sourceId, int saveOnly)
+tvError_t SetColorTemp_Rgain_onSource(tvColorTemp_t colorTemp, int rgain, tvColorTempSourceOffset_t sourceId, int saveOnly)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -543,7 +472,7 @@ tvError_t SetColorTemp_Rgain_onSource(tvColorTemp_t colorTemp, int rgain, int so
   return (tvError_t)0;
 }
 
-tvError_t GetColorTemp_Rgain_onSource(tvColorTemp_t colorTemp, int* rgain, int sourceId)
+tvError_t GetColorTemp_Rgain_onSource(tvColorTemp_t colorTemp, int* rgain, tvColorTempSourceOffset_t sourceId)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -552,7 +481,7 @@ tvError_t GetColorTemp_Rgain_onSource(tvColorTemp_t colorTemp, int* rgain, int s
   return (tvError_t)0;
 }
 
-tvError_t SetColorTemp_Ggain_onSource(tvColorTemp_t colorTemp, int ggain, int sourceId, int saveOnly)
+tvError_t SetColorTemp_Ggain_onSource(tvColorTemp_t colorTemp, int ggain, tvColorTempSourceOffset_t sourceId, int saveOnly)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -562,7 +491,7 @@ tvError_t SetColorTemp_Ggain_onSource(tvColorTemp_t colorTemp, int ggain, int so
   return (tvError_t)0;
 }
 
-tvError_t GetColorTemp_Ggain_onSource(tvColorTemp_t colorTemp, int* ggain, int sourceId)
+tvError_t GetColorTemp_Ggain_onSource(tvColorTemp_t colorTemp, int* ggain, tvColorTempSourceOffset_t sourceId)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -571,7 +500,7 @@ tvError_t GetColorTemp_Ggain_onSource(tvColorTemp_t colorTemp, int* ggain, int s
   return (tvError_t)0;
 }
 
-tvError_t SetColorTemp_Bgain_onSource(tvColorTemp_t colorTemp, int bgain, int sourceId, int saveOnly)
+tvError_t SetColorTemp_Bgain_onSource(tvColorTemp_t colorTemp, int bgain, tvColorTempSourceOffset_t sourceId, int saveOnly)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -581,7 +510,7 @@ tvError_t SetColorTemp_Bgain_onSource(tvColorTemp_t colorTemp, int bgain, int so
   return (tvError_t)0;
 }
 
-tvError_t GetColorTemp_Bgain_onSource(tvColorTemp_t colorTemp, int* bgain, int sourceId)
+tvError_t GetColorTemp_Bgain_onSource(tvColorTemp_t colorTemp, int* bgain, tvColorTempSourceOffset_t sourceId)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -590,7 +519,7 @@ tvError_t GetColorTemp_Bgain_onSource(tvColorTemp_t colorTemp, int* bgain, int s
   return (tvError_t)0;
 }
 
-tvError_t SetColorTemp_R_post_offset_onSource(tvColorTemp_t colorTemp, int rpostoffset, int sourceId, int saveOnly)
+tvError_t SetColorTemp_R_post_offset_onSource(tvColorTemp_t colorTemp, int rpostoffset, tvColorTempSourceOffset_t sourceId, int saveOnly)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -600,7 +529,7 @@ tvError_t SetColorTemp_R_post_offset_onSource(tvColorTemp_t colorTemp, int rpost
   return (tvError_t)0;
 }
 
-tvError_t GetColorTemp_R_post_offset_onSource(tvColorTemp_t colorTemp, int* rpostoffset, int sourceId)
+tvError_t GetColorTemp_R_post_offset_onSource(tvColorTemp_t colorTemp, int* rpostoffset, tvColorTempSourceOffset_t sourceId)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -609,7 +538,7 @@ tvError_t GetColorTemp_R_post_offset_onSource(tvColorTemp_t colorTemp, int* rpos
   return (tvError_t)0;
 }
 
-tvError_t SetColorTemp_G_post_offset_onSource(tvColorTemp_t colorTemp, int gpostoffset, int sourceId, int saveOnly)
+tvError_t SetColorTemp_G_post_offset_onSource(tvColorTemp_t colorTemp, int gpostoffset, tvColorTempSourceOffset_t sourceId, int saveOnly)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -619,7 +548,7 @@ tvError_t SetColorTemp_G_post_offset_onSource(tvColorTemp_t colorTemp, int gpost
   return (tvError_t)0;
 }
 
-tvError_t GetColorTemp_G_post_offset_onSource(tvColorTemp_t colorTemp, int* gpostoffset, int sourceId)
+tvError_t GetColorTemp_G_post_offset_onSource(tvColorTemp_t colorTemp, int* gpostoffset, tvColorTempSourceOffset_t sourceId)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -628,7 +557,7 @@ tvError_t GetColorTemp_G_post_offset_onSource(tvColorTemp_t colorTemp, int* gpos
   return (tvError_t)0;
 }
 
-tvError_t SetColorTemp_B_post_offset_onSource(tvColorTemp_t colorTemp, int bpostoffset, int sourceId, int saveOnly)
+tvError_t SetColorTemp_B_post_offset_onSource(tvColorTemp_t colorTemp, int bpostoffset, tvColorTempSourceOffset_t sourceId, int saveOnly)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -638,7 +567,7 @@ tvError_t SetColorTemp_B_post_offset_onSource(tvColorTemp_t colorTemp, int bpost
   return (tvError_t)0;
 }
 
-tvError_t GetColorTemp_B_post_offset_onSource(tvColorTemp_t colorTemp, int* bpostoffset, int sourceId)
+tvError_t GetColorTemp_B_post_offset_onSource(tvColorTemp_t colorTemp, int* bpostoffset, tvColorTempSourceOffset_t sourceId)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -654,34 +583,10 @@ tvError_t EnableWBCalibrationMode(bool value)
   return (tvError_t)0;
 }
 
-tvError_t SetWBctrl(char* inputSrc, char* colorTemp, char* color, char* ctrl, int value)
+tvError_t GetWBCalibrationMode(bool* value)
 {
   /*TODO: Implement Me!*/
-  (void)inputSrc;
-  (void)colorTemp;
-  (void)color;
-  (void)ctrl;
   (void)value;
-  return (tvError_t)0;
-}
-
-tvError_t GetWBctrl(char* inputSrc, char* colortemp, char* color, char* ctrl, int* value)
-{
-  /*TODO: Implement Me!*/
-  (void)inputSrc;
-  (void)colortemp;
-  (void)color;
-  (void)ctrl;
-  (void)value;
-  return (tvError_t)0;
-}
-
-tvError_t SaveColorTemperatureUser(tvRGBType_t rgbType, int value, int boost)
-{
-  /*TODO: Implement Me!*/
-  (void)rgbType;
-  (void)value;
-  (void)boost;
   return (tvError_t)0;
 }
 
@@ -695,7 +600,7 @@ tvError_t SetGammaTable(unsigned short* pData_R, unsigned short* pData_G, unsign
   return (tvError_t)0;
 }
 
-tvError_t GetGammaTable(int colortemp, unsigned short* pData_R, unsigned short* pData_G, unsigned short* pData_B, unsigned short size)
+tvError_t GetDefaultGammaTable(tvColorTemp_t colortemp, unsigned short* pData_R, unsigned short* pData_G, unsigned short* pData_B, unsigned short size)
 {
   /*TODO: Implement Me!*/
   (void)colortemp;
@@ -706,7 +611,17 @@ tvError_t GetGammaTable(int colortemp, unsigned short* pData_R, unsigned short* 
   return (tvError_t)0;
 }
 
-tvError_t SaveGammaTable(int colortemp, unsigned short* pData_R, unsigned short* pData_G, unsigned short* pData_B, unsigned short size)
+tvError_t GetGammaTable(unsigned short* pData_R, unsigned short* pData_G, unsigned short* pData_B, unsigned short size)
+{
+  /*TODO: Implement Me!*/
+  (void)pData_R;
+  (void)pData_G;
+  (void)pData_B;
+  (void)size;
+  return (tvError_t)0;
+}
+
+tvError_t SaveGammaTable(tvColorTemp_t colortemp, unsigned short* pData_R, unsigned short* pData_G, unsigned short* pData_B, unsigned short size)
 {
   /*TODO: Implement Me!*/
   (void)colortemp;
@@ -794,7 +709,7 @@ tvError_t GetCurrentComponentLuma(tvDataComponentColor_t blLumaColor, int* Luma)
   return (tvError_t)0;
 }
 
-tvError_t SaveCMS(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvComponentType_t component_type, tvDataComponentColor_t color_type, int value)
+tvError_t SaveCMS(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvComponentType_t component_type, tvDataComponentColor_t color_type, int cms_value)
 {
   /*TODO: Implement Me!*/
   (void)videoSrcType;
@@ -802,7 +717,7 @@ tvError_t SaveCMS(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_
   (void)videoFormatType;
   (void)component_type;
   (void)color_type;
-  (void)value;
+  (void)cms_value;
   return (tvError_t)0;
 }
 
@@ -813,14 +728,25 @@ tvError_t SetCMSState(bool enableCMSState)
   return (tvError_t)0;
 }
 
-int GetCMSDefault(tvComponentType_t component_type)
+tvError_t GetCMSState(bool* enableCMSState)
 {
   /*TODO: Implement Me!*/
-  (void)component_type;
-  return (int)0;
+  (void)enableCMSState;
+  return (tvError_t)0;
 }
 
-tvError_t GetDefaultParams(int pqIndex, tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, tvPQParameterIndex_t pqParamIndex, int* value)
+tvError_t GetDefaultPQParams(int pqIndex, tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, tvPQParameterIndex_t pqParamIndex, int* value)
+{
+  /*TODO: Implement Me!*/
+  (void)pqIndex;
+  (void)videoSrcType;
+  (void)videoFormatType;
+  (void)pqParamIndex;
+  (void)value;
+  return (tvError_t)0;
+}
+
+tvError_t GetPQParams(int pqIndex, tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, tvPQParameterIndex_t pqParamIndex, int* value)
 {
   /*TODO: Implement Me!*/
   (void)pqIndex;
@@ -854,21 +780,7 @@ tvError_t SetGammaPattern(int is_10_bit, int R_Value, int G_Value, int B_Value)
   return (tvError_t)0;
 }
 
-void SetGammaTestPoint(int length, unsigned short* gamma)
-{
-  /*TODO: Implement Me!*/
-  (void)length;
-  (void)gamma;
-}
-
-void GetGammaTestPoint(int* length, unsigned short* gamma)
-{
-  /*TODO: Implement Me!*/
-  (void)length;
-  (void)gamma;
-}
-
-void GetTVGammaTarget(int colorTemp, double* x, double* y)
+void GetTVGammaTarget(tvColorTemp_t colorTemp, double* x, double* y)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -980,39 +892,10 @@ tvError_t SetWakeupConfig(const tvWakeupSrcType_t src_type, const bool value)
   return (tvError_t)0;
 }
 
-int GetPanelIDODM(char* panelid)
+tvError_t GetCurrentSource(tvVideoSrcType_t* currentSource)
 {
   /*TODO: Implement Me!*/
-  (void)panelid;
-  return (int)0;
-}
-
-tvError_t TvSyncCalibrationInfoODM(void)
-{
-  /*TODO: Implement Me!*/
+  (void)currentSource;
   return (tvError_t)0;
-}
-
-tvError_t ReadAllModeConfigfileODM(const char* file, char* cpybuffer, const char* searchstring)
-{
-  /*TODO: Implement Me!*/
-  (void)file;
-  (void)cpybuffer;
-  (void)searchstring;
-  return (tvError_t)0;
-}
-
-int ConvertVideoFormatToHDRFormatODM(tvVideoHDRFormat_t videoFormat)
-{
-  /*TODO: Implement Me!*/
-  (void)videoFormat;
-  return (int)0;
-}
-
-int ConvertHDRFormatToContentFormatODM(tvhdr_type_t hdrFormat)
-{
-  /*TODO: Implement Me!*/
-  (void)hdrFormat;
-  return (int)0;
 }
 
