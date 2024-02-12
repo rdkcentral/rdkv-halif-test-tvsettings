@@ -758,8 +758,8 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvVideoFormatType_t *tvVideoFormats[MAX_VIDEO_FORMAT];
-	tvVideoFormatType_t *tvVideoFormatsRetry[MAX_VIDEO_FORMAT];
+	tvVideoFormatType_t *tvVideoFormats[MAX_VIDEO_FORMAT]={0};
+	tvVideoFormatType_t *tvVideoFormatsRetry[MAX_VIDEO_FORMAT]={0};
 	bool IsVideoFormatValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
@@ -840,7 +840,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	tvVideoFormatType_t *tvVideoFormats[MAX_VIDEO_FORMAT];
+	tvVideoFormatType_t *tvVideoFormats[MAX_VIDEO_FORMAT]={0};
 	unsigned short size = 0;
 
 	/* Step 01: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
@@ -1335,8 +1335,8 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvVideoSrcType_t *tvVideoSources[MAX_NAME_SIZE];
-	tvVideoSrcType_t *tvVideoSourcesRetry[MAX_NAME_SIZE];
+	tvVideoSrcType_t *tvVideoSources[MAX_NAME_SIZE]={0};
+	tvVideoSrcType_t *tvVideoSourcesRetry[MAX_NAME_SIZE]={0};
 	bool IsVideoSourceValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
@@ -10973,10 +10973,10 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
+        /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
-		result = GetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, size);
+		result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],pData_R_limit,pData_G_limit,pData_B_limit, size);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 		for(int i =0; i <size; i++ )
@@ -11023,9 +11023,10 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 * | 05 | call GetDefaultGammaTable() -  "colortemp, pData_G, pData_B, size"= valid , "pData_R"= Invalid | tvColorTemp_t , NULL, unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call GetDefaultGammaTable() -  "colortemp, pData_R, pData_B, size"= valid , "pData_G"= Invalid | tvColorTemp_t ,unsigned short *,NULL,  unsigned short *, unsigned short| tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call GetDefaultGammaTable() -  "colortemp, pData_R, pData_G, size"= valid , "pData_B"= Invalid | tvColorTemp_t ,unsigned short *,unsigned short *, NULL, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable State with valid colortemp value but not supported by the platform by looping through the ColorTemperature section of test specific config file | tvColorTemp_t , unsigned short *,  unsigned short *, unsigned short *,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 10 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable State valid arguments |tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
+* | 08 | call GetDefaultGammaTable() -  "colortemp, pData_R, pData_G"= valid , "size"= Invalid | tvColorTemp_t ,unsigned short *,unsigned short *, NULL, unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable State with valid colortemp value but not supported by the platform by looping through the ColorTemperature section of test specific config file | tvColorTemp_t , unsigned short *,  unsigned short *, unsigned short *,  unsigned short | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 11 | call GetDefaultGammaTable() -  Retrieve current TV Default GammaTable State valid arguments |tvColorTemp_t ,  unsigned short *,  unsigned short *,  unsigned short *, unsigned short | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 {
@@ -11039,36 +11040,64 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 	bool bflag = true;
 	tvError_t result = tvERROR_NONE ;
 
-    /* Step 01: Calling tvsettings GetGammaTable before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-	result = GetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, size);
+       /* Step 01: Calling tvsettings GetDefaultGammaTable before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+	result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit, size);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetDefaultGammaTable(-1) and expecting the API to return tvERROR_INVALID_PARAM */
+	result = GetDefaultGammaTable((tvColorTemp_t)-1, pData_R_limit,pData_G_limit,pData_B_limit, size);
+	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 03: Calling tvsettings GetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetGammaTable(NULL,pData_G_limit,pData_B_limit, size);
+	/* Step 04: Calling tvsettings GetDefaultGammaTable (tvColorTemp_MAX) and expecting the API to return tvERROR_INVALID_PARAM */
+	result = GetDefaultGammaTable((tvColorTemp_t)tvColorTemp_MAX, pData_R_limit,pData_G_limit,pData_B_limit, size);
+	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
+	
+        /* Step 05: Calling tvsettings GetDefaultGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
+	result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],NULL,pData_G_limit,pData_B_limit, size);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 04: Calling tvsettings GetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetGammaTable(pData_R_limit,NULL,pData_B_limit, size);
+        /* Step 06: Calling tvsettings GetDefaultGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
+	result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,NULL,pData_B_limit, size);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 05: Calling tvsettings GetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetGammaTable(pData_R_limit,pData_G_limit,NULL, size);
+        /* Step 07: Calling tvsettings GetDefaultGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
+	result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit,pData_G_limit,NULL, size);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 06: Calling tvsettings GetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetGammaTable(pData_R_limit,pData_G_limit,NULL, -1);
+        /* Step 08: Calling tvsettings GetDefaultGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
+	result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL, -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 07: Calling tvsettings termination and expecting the API to return success */
+	/* Step 09: Calling tvsettings GetDefaultGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
+		{
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
+			{
+				platformFlag = true;
+				break;
+			}
+		}
+		if(!platformFlag)
+		{
+			result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], \
+					pData_R_limit,pData_G_limit,pData_B_limit, size);			
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
+	}
+	
+	/* Step 10: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 08: Calling tvsettings GetGammaTable after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
-	result = GetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, size);
+        /* Step 11: Calling tvsettings GetDefaultGammaTable after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+	result = GetDefaultGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit, size);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	
 	UT_LOG("Out %s",__FUNCTION__);
