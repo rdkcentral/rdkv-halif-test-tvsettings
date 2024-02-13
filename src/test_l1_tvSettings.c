@@ -10012,7 +10012,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings SetColorTemp_G_post_offset_onSource and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
@@ -10044,13 +10044,13 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 
 	/* Step 08: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
 	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) -2, 0);
-    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 09: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
+        /* Step 09: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
 	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0], 2);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 10: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
+       /* Step 10: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
 	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], -1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
@@ -10089,7 +10089,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 		if(!platformFlag)
 		{	
 				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, \
-                (tvColorTempSourceOffset_t)i, 0);
+                	(tvColorTempSourceOffset_t)i, 0);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}	
@@ -10150,16 +10150,14 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(gpostoffset,gpostoffsetRetry);
 
-    /* Step 04: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
+        /* Step 04: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
 		{
-
 			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &gpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			UT_ASSERT_AUTO_TERM_TRUE( (gpostoffset > 0 && gpostoffset < 2048));
-
 		}	
 	}
 
@@ -10240,40 +10238,39 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	{		
 		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
 		{
-			if(Configfile.colorTemp.colorStruct.colorTempValue[i] != (tvColorTemp_t)j) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] != (tvColorTemp_t)i) 
 			{
-                platformFlag = true;
-                break;
-
-            }
-        }
-        if(!platformFlag)
-        {    
-				result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)j ,&gpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0] );
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+                		platformFlag = true;
+                		break;
+			}
 		}
-	}	
+		 if(!platformFlag)
+	        {    
+			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)i ,&gpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0] );
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);	
+		}
+        }
+	
 	
 
-    /* Step 09: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
-    {
-        platformFlag = false;
-        for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
-        {		
+	/* Step 09: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
+		{		
 			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
-
-                platformFlag = true;
+				platformFlag = true;
 				break;
-
-            }
-            if(!platformFlag)
-            {
-				result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&gpostoffset, (tvColorTempSourceOffset_t)i);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
-        }
+		}
+		if(!platformFlag)
+		{
+			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,&gpostoffset, (tvColorTempSourceOffset_t)i);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		}
+	}
 
 	/* Step 10: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
