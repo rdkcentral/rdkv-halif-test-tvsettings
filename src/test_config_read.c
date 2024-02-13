@@ -5,8 +5,13 @@ struct TvSettingConfig Configfile = {0};
 int colorFlag = 0;
 int paramFlag = 0;
 
-void parseRange(const char *buf, struct DisplayPictureMode *mode)
+int parseRange(const char *buf, struct DisplayPictureMode *mode)
 {
+	if (buf == NULL || mode == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	if (sscanf(buf, "range_from = %hd", &mode->rangeFrom) == 1)
 	{
 		UT_LOG("\n Range From: %d\n", mode->rangeFrom);
@@ -15,10 +20,16 @@ void parseRange(const char *buf, struct DisplayPictureMode *mode)
 	{
 		UT_LOG("\n Range To: %d\n", mode->rangeTo);
 	}
+	return 0;
 }
 
-void parseRange_color(const char *buf, struct DisplayColorMode *mode)
+int parseRange_color(const char *buf, struct DisplayColorMode *mode)
 {
+	if (buf == NULL || mode == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -42,10 +53,16 @@ void parseRange_color(const char *buf, struct DisplayColorMode *mode)
 		}
 		mode->colorStruct.size = i + 1;
 	}
+	return 0;
 }
 
-void parseRange_mode(const char *buf, struct DisplayColorMode *mode)
+int parseRange_mode(const char *buf, struct DisplayColorMode *mode)
 {
+	if (buf == NULL || mode == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -67,10 +84,16 @@ void parseRange_mode(const char *buf, struct DisplayColorMode *mode)
 		}
 		mode->size = i + 1;
 	}
+	return 0;
 }
 
-void parseRange_picturemode(const char *buf, struct PictureMode *picmode)
+int parseRange_picturemode(const char *buf, struct PictureMode *picmode)
 {
+	if (buf == NULL || picmode == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -101,10 +124,16 @@ void parseRange_picturemode(const char *buf, struct PictureMode *picmode)
 			i++;
 		}
 	}
+	return 0;
 }
 
-void parseRange_videoSource(const char *buf, struct videoSource *videoSrcStruct)
+int parseRange_videoSource(const char *buf, struct videoSource *videoSrcStruct)
 {
+	if (buf == NULL || videoSrcStruct == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -135,10 +164,16 @@ void parseRange_videoSource(const char *buf, struct videoSource *videoSrcStruct)
 			i++;
 		}
 	}
+	return 0;
 }
 
-void parseRange_videoFormat(const char *buf, struct videoFormat *videoFormt)
+int parseRange_videoFormat(const char *buf, struct videoFormat *videoFormt)
 {
+	if (buf == NULL || videoFormt == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -170,11 +205,16 @@ void parseRange_videoFormat(const char *buf, struct videoFormat *videoFormt)
 			i++;
 		}
 	}
+	return 0;
 }
 
-void parseRange_videoFramerate(const char *buf, struct videoFrameRate *videoFramerate)
+int parseRange_videoFramerate(const char *buf, struct videoFrameRate *videoFramerate)
 {
-
+	if (buf == NULL || videoFramerate == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -197,11 +237,16 @@ void parseRange_videoFramerate(const char *buf, struct videoFrameRate *videoFram
 		}
 		videoFramerate->size = i + 1;
 	}
+	return 0;
 }
 
-void parseRange_dimlevel(const char *buf, struct DimmingLevel *dimlevel)
+int parseRange_dimlevel(const char *buf, struct DimmingLevel *dimlevel)
 {
-
+	if (buf == NULL || dimlevel == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -233,10 +278,16 @@ void parseRange_dimlevel(const char *buf, struct DimmingLevel *dimlevel)
 		}
 		dimlevel->size = i + 1;
 	}
+	return 0;
 }
 
-void parseRange_wb(const char *buf, struct WhiteBalanceGamma *wbRGBGamma)
+int parseRange_wb(const char *buf, struct WhiteBalanceGamma *wbRGBGamma)
 {
+	if (buf == NULL || wbRGBGamma == NULL)
+	{
+		fprintf(stderr, "input param is NULL - %d.\n", errno);
+		return -1;
+	}
 	char input[200] = {0};
 	int i = 0;
 	size_t len = 0;
@@ -313,32 +364,34 @@ void parseRange_wb(const char *buf, struct WhiteBalanceGamma *wbRGBGamma)
 			}
 		}
 	}
+	return 0;
 }
 
 int fillstructure(const char *buf, int mode)
 {
+	int ret = 0;
 	switch (mode)
 	{
 	case BRIGHTNESS_MODE_FLAG:
-		parseRange(buf, &Configfile.brightness);
+		ret = parseRange(buf, &Configfile.brightness);
 		break;
 	case CONTRAST_MODE_FLAG:
-		parseRange(buf, &Configfile.contrast);
+		ret = parseRange(buf, &Configfile.contrast);
 		break;
 	case SATURATION_MODE_FLAG:
-		parseRange(buf, &Configfile.saturation);
+		ret = parseRange(buf, &Configfile.saturation);
 		break;
 	case SHARPNESS_MODE_FLAG:
-		parseRange(buf, &Configfile.sharpness);
+		ret = parseRange(buf, &Configfile.sharpness);
 		break;
 	case HUE_MODE_FLAG:
-		parseRange(buf, &Configfile.hue);
+		ret = parseRange(buf, &Configfile.hue);
 		break;
 	case BACKLIGHT_MODE_FLAG:
-		parseRange(buf, &Configfile.backlight);
+		ret = parseRange(buf, &Configfile.backlight);
 		break;
 	case COMP_SATURATION_RED:
-		parseRange(buf, &Configfile.CompSaturationRed);
+		ret = parseRange(buf, &Configfile.CompSaturationRed);
 		if (strstr(buf, "range_from") != NULL)
 		{
 			strcpy(Configfile.componentColor.modeName[colorFlag], "RED");
@@ -347,7 +400,7 @@ int fillstructure(const char *buf, int mode)
 		}
 		break;
 	case COMP_SATURATION_GREEN:
-		parseRange(buf, &Configfile.CompSaturationGreen);
+		ret = parseRange(buf, &Configfile.CompSaturationGreen);
 		if (strstr(buf, "range_from") != NULL)
 		{
 			strcpy(Configfile.componentColor.modeName[colorFlag], "GREEN");
@@ -356,7 +409,7 @@ int fillstructure(const char *buf, int mode)
 		}
 		break;
 	case COMP_SATURATION_BLUE:
-		parseRange(buf, &Configfile.CompSaturationBlue);
+		ret = parseRange(buf, &Configfile.CompSaturationBlue);
 		if (strstr(buf, "range_from") != NULL)
 		{
 			strcpy(Configfile.componentColor.modeName[colorFlag], "BLUE");
@@ -365,7 +418,7 @@ int fillstructure(const char *buf, int mode)
 		}
 		break;
 	case COMP_SATURATION_YELLOW:
-		parseRange(buf, &Configfile.CompSaturationYellow);
+		ret = parseRange(buf, &Configfile.CompSaturationYellow);
 		if (strstr(buf, "range_from") != NULL)
 		{
 			strcpy(Configfile.componentColor.modeName[colorFlag], "YELLOW");
@@ -374,7 +427,7 @@ int fillstructure(const char *buf, int mode)
 		}
 		break;
 	case COMP_SATURATION_CYAN:
-		parseRange(buf, &Configfile.CompSaturationCyan);
+		ret = parseRange(buf, &Configfile.CompSaturationCyan);
 		if (strstr(buf, "range_from") != NULL)
 		{
 			strcpy(Configfile.componentColor.modeName[colorFlag], "CYAN");
@@ -383,7 +436,7 @@ int fillstructure(const char *buf, int mode)
 		}
 		break;
 	case COMP_SATURATION_MAGENTA:
-		parseRange(buf, &Configfile.CompSaturationMagenta);
+		ret = parseRange(buf, &Configfile.CompSaturationMagenta);
 		if (strstr(buf, "range_from") != NULL)
 		{
 			strcpy(Configfile.componentColor.modeName[colorFlag], "MAGENTA");
@@ -392,96 +445,100 @@ int fillstructure(const char *buf, int mode)
 		}
 		break;
 	case COMP_HUE_RED:
-		parseRange(buf, &Configfile.CompHueRed);
+		ret = parseRange(buf, &Configfile.CompHueRed);
 		break;
 	case COMP_HUE_GREEN:
-		parseRange(buf, &Configfile.CompHueGreen);
+		ret = parseRange(buf, &Configfile.CompHueGreen);
 		break;
 	case COMP_HUE_BLUE:
-		parseRange(buf, &Configfile.CompHueBlue);
+		ret = parseRange(buf, &Configfile.CompHueBlue);
 		break;
 	case COMP_HUE_YELLOW:
-		parseRange(buf, &Configfile.CompHueYellow);
+		ret = parseRange(buf, &Configfile.CompHueYellow);
 		break;
 	case COMP_HUE_CYAN:
-		parseRange(buf, &Configfile.CompHueCyan);
+		ret = parseRange(buf, &Configfile.CompHueCyan);
 		break;
 	case COMP_HUE_MAGENTA:
-		parseRange(buf, &Configfile.CompHueMagenta);
+		ret = parseRange(buf, &Configfile.CompHueMagenta);
 		break;
 	case COMP_LUMA_RED:
-		parseRange(buf, &Configfile.CompLumaRed);
+		ret = parseRange(buf, &Configfile.CompLumaRed);
 		break;
 	case COMP_LUMA_GREEN:
-		parseRange(buf, &Configfile.CompLumaGreen);
+		ret = parseRange(buf, &Configfile.CompLumaGreen);
 		break;
 	case COMP_LUMA_BLUE:
-		parseRange(buf, &Configfile.CompLumaBlue);
+		ret = parseRange(buf, &Configfile.CompLumaBlue);
 		break;
 	case COMP_LUMA_YELLOW:
-		parseRange(buf, &Configfile.CompLumaYellow);
+		ret = parseRange(buf, &Configfile.CompLumaYellow);
 		break;
 	case COMP_LUMA_CYAN:
-		parseRange(buf, &Configfile.CompLumaCyan);
+		ret = parseRange(buf, &Configfile.CompLumaCyan);
 		break;
 	case COMP_LUMA_MAGENTA:
-		parseRange(buf, &Configfile.CompLumaMagenta);
+		ret = parseRange(buf, &Configfile.CompLumaMagenta);
 		break;
 	case LOW_LATENCY_STATE:
-		parseRange(buf, &Configfile.lowLatencyState);
+		ret = parseRange(buf, &Configfile.lowLatencyState);
 		break;
 	case COLOR_TEMP_MODE:
-		parseRange_color(buf, &Configfile.colorTemp);
+		ret = parseRange_color(buf, &Configfile.colorTemp);
 		break;
 	case DIMMING_MODE:
-		parseRange_mode(buf, &Configfile.dimmingMode);
+		ret = parseRange_mode(buf, &Configfile.dimmingMode);
 		break;
 	case BACK_LIGHT_CTL:
-		parseRange_mode(buf, &Configfile.backLightCtl);
+		ret = parseRange_mode(buf, &Configfile.backLightCtl);
 		break;
 	case DOLBY_VISION_MODE:
-		parseRange_mode(buf, &Configfile.dolbyMode);
+		ret = parseRange_mode(buf, &Configfile.dolbyMode);
 		break;
 	case ASPECT_RATIO:
-		parseRange_mode(buf, &Configfile.aspectRatio);
+		ret = parseRange_mode(buf, &Configfile.aspectRatio);
 		break;
 	case PICTURE_MODE_FLAG:
-		parseRange_picturemode(buf, &Configfile.picmodeStruct);
+		ret = parseRange_picturemode(buf, &Configfile.picmodeStruct);
 		break;
 	case VIDEO_SOURCE_FLAG:
-		parseRange_videoSource(buf, &Configfile.videoSrcStruct);
+		ret = parseRange_videoSource(buf, &Configfile.videoSrcStruct);
 		break;
 	case VIDEO_FRMT_FLAG:
-		parseRange_videoFormat(buf, &Configfile.videoFormtStruct);
+		ret = parseRange_videoFormat(buf, &Configfile.videoFormtStruct);
 		break;
 	case VIDEO_FRAME_RATE:
-		parseRange_videoFramerate(buf, &Configfile.framerate);
+		ret = parseRange_videoFramerate(buf, &Configfile.framerate);
 		break;
 	case DIM_LEVEL_FLAG:
-		parseRange_dimlevel(buf, &Configfile.dimmingLevel);
+		ret = parseRange_dimlevel(buf, &Configfile.dimmingLevel);
 		break;
 	case WB_RED_FLAG:
-		parseRange_wb(buf, &Configfile.wbRGB[0]);
+		ret = parseRange_wb(buf, &Configfile.wbRGB[0]);
 		break;
 	case WB_GREEN_FLAG:
-		parseRange_wb(buf, &Configfile.wbRGB[1]);
+		ret = parseRange_wb(buf, &Configfile.wbRGB[1]);
 		break;
 	case WB_BLUE_FLAG:
-		parseRange_wb(buf, &Configfile.wbRGB[2]);
+		ret = parseRange_wb(buf, &Configfile.wbRGB[2]);
 		break;
 	case GAMMA_TABLE_RED:
-		parseRange_wb(buf, &Configfile.gammaRGB[0]);
+		ret = parseRange_wb(buf, &Configfile.gammaRGB[0]);
 		break;
 	case GAMMA_TABLE_GREEN:
-		parseRange_wb(buf, &Configfile.gammaRGB[1]);
+		ret = parseRange_wb(buf, &Configfile.gammaRGB[1]);
 		break;
 	case GAMMA_TABLE_BLUE:
-		parseRange_wb(buf, &Configfile.gammaRGB[2]);
+		ret = parseRange_wb(buf, &Configfile.gammaRGB[2]);
 		break;
 	default:
 		break;
 	}
-	return 0;
+	if (ret != 0)
+	{
+		fprintf(stderr, "Failure in parserange - %d.\n", errno);
+	}
+	return ret;
 }
 
 static void Usage()
@@ -714,7 +771,12 @@ int config_read(char *filename)
 		}
 		else
 		{
-			fillstructure(buf, mode);
+			int ret = fillstructure(buf, mode);
+			if (ret != 0)
+			{
+				fprintf(stderr, "Failure in fillstructure - %d.\n", errno);
+				return -1;
+			}
 		}
 	}
 
