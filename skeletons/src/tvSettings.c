@@ -16,6 +16,18 @@ tvError_t TvTerm(void)
   return (tvError_t)0;
 }
 
+void RegisterVideoFormatChangeCB(tvVideoFormatCallbackData& cbData){
+}
+
+void RegisterVideoContentChangeCB(tvVideoContentCallbackData &cbData){
+}
+
+void RegisterVideoResolutionChangeCB(tvVideoResolutionCallbackData& cbData){
+}
+
+void RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData& cbData){
+}
+
 tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* numberOfFormats)
 {
   /*TODO: Implement Me!*/
