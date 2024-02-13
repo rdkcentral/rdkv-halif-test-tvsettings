@@ -532,6 +532,7 @@ int fillstructure(const char *buf, int mode)
 		ret = parseRange_wb(buf, &Configfile.gammaRGB[2]);
 		break;
 	default:
+		ret = -1;
 		break;
 	}
 	if (ret != 0)
