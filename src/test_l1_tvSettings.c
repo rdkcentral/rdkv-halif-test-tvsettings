@@ -3050,15 +3050,19 @@ void test_l1_tvSettings_positive_SetLocalDimmingLevel (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 02: Calling tvsettings SetLocalDimmingLevel with input value LDIM_STATE_BOOST and expecting the API to return success */
-	result = SetLocalDimmingLevel(LDIM_STATE_BOOST);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	/* Step 03: Calling tvsettings SetLocalDimmingLevel with input value LDIM_STATE_NONBOOST and expecting the API to return success */
+	/* Step 02: Calling tvsettings SetLocalDimmingLevel with input value LDIM_STATE_NONBOOST and expecting the API to return success */
 	result = SetLocalDimmingLevel(LDIM_STATE_NONBOOST);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 04: Calling tvsettings termination and expecting the API to return success */
+	/* Step 03: Calling tvsettings SetLocalDimmingLevel with input value LDIM_STATE_BOOST and expecting the API to return success */
+	result = SetLocalDimmingLevel(LDIM_STATE_BOOST);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+	
+	/* Step 04: Calling tvsettings SetLocalDimmingLevel with input value LDIM_STATE_NONBOOST and expecting the API to return success */
+	result = SetLocalDimmingLevel(LDIM_STATE_NONBOOST);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	/* Step 05: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
