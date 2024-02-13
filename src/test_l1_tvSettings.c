@@ -9452,7 +9452,7 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
@@ -9531,7 +9531,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
@@ -9823,7 +9823,7 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
@@ -9899,7 +9899,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
@@ -10195,7 +10195,7 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],0, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
@@ -10271,7 +10271,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
-	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1024 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
+	result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], 1025 , (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0], 0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return tvERROR_INVALID_PARAM */
@@ -13660,11 +13660,11 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
 	result = SetGammaPattern(-1,-1,-1,-1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings to Set the SetGammaPattern for value -1,100,100,100 and the API to return tvERROR_INVALID_PARAM */
-	result = SetGammaPattern(2,100,100,100);
+	/* Step 04: Calling tvsettings to Set the SetGammaPattern for value -1 ,1025, 1025, 1025 and the API to return tvERROR_INVALID_PARAM */
+	result = SetGammaPattern(-1,1025,1025,1025);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings to Set the SetGammaPattern for value -1,0,0,0 and the API to return tvERROR_INVALID_PARAM */
+	/* Step 05: Calling tvsettings to Set the SetGammaPattern for value -1,1025,0,0 and the API to return tvERROR_INVALID_PARAM */
 	result = SetGammaPattern(-1,0,0,0);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
