@@ -10441,7 +10441,6 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
-	}
 
     /* Step 12: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
 	for (size_t i = 0; i < MAX_OFFSET; i++)
@@ -10574,9 +10573,10 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE;
 	int bpostoffset = -1;
 	int sourceOffset = -1;
+	bool platformFlag = false;
 
 	/* Step 01: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
+	result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&bpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
