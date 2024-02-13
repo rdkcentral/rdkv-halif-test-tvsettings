@@ -1851,7 +1851,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)i,50);
+			result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -3428,7 +3428,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveLocalDimmingLevel((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],i,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[0]);
+			result = SaveLocalDimmingLevel((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,(ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[0]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5095,7 +5095,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveSaturation((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)i,50);
+			result = SaveSaturation((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5507,7 +5507,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveHue((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)i,50);
+			result = SaveHue((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5928,7 +5928,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)i,(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
+			result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -5947,7 +5947,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[i],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)i);
+			result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)i);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
