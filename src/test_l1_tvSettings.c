@@ -10647,7 +10647,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 11: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-	result = GetColorTemp_B_post_offset_onSource(tvColorTemp,&rpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
+	result = GetColorTemp_B_post_offset_onSource(tvColorTemp,&bpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	
 	UT_LOG("Out %s",__FUNCTION__);
