@@ -7227,8 +7227,8 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	tvDolbyMode_t *tvDolbyModes[MAX_DV_MODES];
-	tvDolbyMode_t *tvDolbyModesRetry[MAX_DV_MODES];
+	tvDolbyMode_t *tvDolbyModes = NULL;
+	tvDolbyMode_t *tvDolbyModesRetry = NULL;
 	bool IsDolbyModeValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
@@ -7238,7 +7238,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetTVSupportedDolbyVisionModes and expectinging the API to return success */
-	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &sizeReceived);
+	result = GetTVSupportedDolbyVisionModes(&tvDolbyModes, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	for (size_t i = 0; i < Configfile.dolbyMode.size; i++)
@@ -7246,7 +7246,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 		IsDolbyModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
 		{
-			if ((tvDolbyMode_t)Configfile.dolbyMode.modevalue[i] == *tvDolbyModes[j])
+			if ((tvDolbyMode_t)Configfile.dolbyMode.modevalue[i] == tvDolbyModes[j])
 			{
 				IsDolbyModeValid = true;
 				break;
@@ -7256,7 +7256,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	}
 
 	/* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expectinging the API to return success */
-	result = GetTVSupportedDolbyVisionModes(tvDolbyModesRetry, &sizeReceivedRetry);
+	result = GetTVSupportedDolbyVisionModes(&tvDolbyModesRetry, &sizeReceivedRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	for (unsigned short i = 0; i < sizeReceivedRetry; i++)
@@ -7264,7 +7264,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 		IsDolbyModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
 		{
-			if (*tvDolbyModesRetry[i] == *tvDolbyModes[j])
+			if (tvDolbyModesRetry[i] == tvDolbyModes[j])
 			{
 				IsDolbyModeValid = true;
 				break;
@@ -7307,11 +7307,11 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	tvDolbyMode_t *tvDolbyModes[MAX_VIDEO_FORMAT];
+	tvDolbyMode_t *tvDolbyModes = NULL;
 	unsigned short size = 0;
 
 	/* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
-	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
+	result = GetTVSupportedDolbyVisionModes(&tvDolbyModes, &size);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -7319,7 +7319,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, NULL);
+	result = GetTVSupportedDolbyVisionModes(&tvDolbyModes, NULL);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
@@ -7331,7 +7331,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 06: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
-	result = GetTVSupportedDolbyVisionModes(tvDolbyModes,&size);
+	result = GetTVSupportedDolbyVisionModes(&tvDolbyModes,&size);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -7794,8 +7794,8 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	pic_modes_t *tvPicModes[PIC_MODE_NAME_MAX];
-	pic_modes_t *tvPicModesRetry[PIC_MODE_NAME_MAX];
+	pic_modes_t *tvPicModes= NULL;
+	pic_modes_t *tvPicModesRetry= NULL;
 	bool IsPictureModeValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
@@ -7805,7 +7805,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
-	result = GetTVSupportedPictureModes(tvPicModes, &sizeReceived);
+	result = GetTVSupportedPictureModes(&tvPicModes, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)Configfile.picmodeStruct.size);
 
@@ -7814,7 +7814,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 		IsPictureModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
 		{
-			if (Configfile.picmodeStruct.pqValue[i] == (int)tvPicModes[j]->value)
+			if (Configfile.picmodeStruct.pqValue[i] == (int)tvPicModes[j].value)
 			{
 				IsPictureModeValid = true;
 				break;
@@ -7824,7 +7824,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	}
 
 	/* Step 03: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
-	result = GetTVSupportedPictureModes(tvPicModesRetry, &sizeReceivedRetry);
+	result = GetTVSupportedPictureModes(&tvPicModesRetry, &sizeReceivedRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, sizeReceivedRetry);
 	for (unsigned short i = 0; i < sizeReceivedRetry; i++)
@@ -7832,7 +7832,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 		IsPictureModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
 		{
-			if (tvPicModesRetry[i]->value == tvPicModes[j]->value)
+			if (tvPicModesRetry[i].value == tvPicModes[j].value)
 			{
 				IsPictureModeValid = true;
 				break;
@@ -7877,11 +7877,11 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	pic_modes_t *pic_modes[MAX_PICTURE_MODES];
+	pic_modes_t *pic_modes=NULL;
 	unsigned short size = 0;
 
 	/* Step 01: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_STATE */
-	result = GetTVSupportedPictureModes(pic_modes, &size);
+	result = GetTVSupportedPictureModes(&pic_modes, &size);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -7889,7 +7889,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetTVSupportedPictureModes(pic_modes, NULL);
+	result = GetTVSupportedPictureModes(&pic_modes, NULL);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_PARAM */
@@ -7901,7 +7901,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	/* Step 06: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_STATE */
-	result = GetTVSupportedPictureModes(pic_modes,&size);
+	result = GetTVSupportedPictureModes(&pic_modes,&size);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -14834,32 +14834,31 @@ void test_l1_tvSettings_positive_SetBacklightTestMode (void)
 
 	tvError_t result = tvERROR_NONE ;
 
-	/* Step 01: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetBacklightTestMode((tvBacklightTestMode_t)Configfile.backlightTestModes.modeId[0]);
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
-
-	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SetBacklightTestMode(tvBacklightTestMode_Max);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	/* Step 02: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
+	result = SetBacklightTestMode(tvBacklightTestMode_Normal);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 04: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SetBacklightTestMode((tvBacklightTestMode_t)-1);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	/* Step 02: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
+	result = SetBacklightTestMode(tvBacklightTestMode_Boost);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 02: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
+	result = SetBacklightTestMode(tvBacklightTestMode_Burst);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	/* Step 02: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
+	result = SetBacklightTestMode(tvBacklightTestMode_Reset);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 06: Calling tvsettings the SetBacklightTestMode and expecting the API to return tvERROR_INVALID_STATE */
-	result = SetBacklightTestMode( (tvBacklightTestMode_t)Configfile.backlightTestModes.modeId[0]);
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
-
 	UT_LOG("Out %s",__FUNCTION__);
-
 }
 
 /** 
