@@ -8898,17 +8898,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 02: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&ggain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( (ggain > 0 && ggain < 2048));
-
-	/* Step 03: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
-	result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&ggainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(ggain,ggainRetry);
-
-    /* Step 04: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
+    /* Step 02-03: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
@@ -8916,6 +8906,10 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &ggain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j]);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			UT_ASSERT_AUTO_TERM_TRUE( (ggain > 0 && ggain < 2048));
+
+			result = GetColorTemp_Ggain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &ggain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j]);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(ggain,ggainRetry);
 
 		}	
 	}
@@ -10795,11 +10789,11 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 * | 04 | call SetGammaTable() -   Set the TV GammaTable with invalid input | unsigned short *, NULL, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetGammaTable() -   Set the TV GammaTable with invalid input | unsigned short *, unsigned short *, NULL, 256| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | -1, unsigned short *, unsigned short *, 256| tvERROR_INVALID_PARAM | Should Pass |
-* | 07 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | 1023, unsigned short *, unsigned short *, 256| tvERROR_INVALID_PARAM | Should Pass |
+* | 07 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | 1025, unsigned short *, unsigned short *, 256| tvERROR_INVALID_PARAM | Should Pass |
 * | 08 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | unsigned short *, -1, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | unsigned short *, 1023, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | unsigned short *, 1025, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
 * | 10 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | unsigned short *, unsigned short *, -1, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | unsigned short *, unsigned short *, 1023, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SetGammaTable() -   Set the TV GammaTable with invalid input for few elements of the array | unsigned short *, unsigned short *, 1025, 256 | tvERROR_INVALID_PARAM | Should Pass |
 * | 12 | call SetGammaTable() -   Set the TV GammaTable with invalid input | unsigned short *, unsigned short *, unsigned short *, -1| tvERROR_INVALID_PARAM | Should Pass |
 * | 13 | call SetGammaTable() -   Set the TV GammaTable with invalid input | unsigned short *, unsigned short *, unsigned short *, 257| tvERROR_INVALID_PARAM | Should Pass |
 * | 14 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
@@ -10815,9 +10809,13 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 	unsigned short pData_G_limit[] = {0, 100, 1023};
 	unsigned short pData_B_limit[] = {0, 100, 1023};
 
-	unsigned short pData_R_limit_error[] = {1025, 100, 1023};
-	unsigned short pData_G_limit_error[] = {0, 1025, 1023};
-	unsigned short pData_B_limit_error[] = {0, 100, 1025};
+	unsigned short pData_R_limit_error1[] = {-1, 100, 1023};
+	unsigned short pData_G_limit_error1[] = {0, -1, 1023};
+	unsigned short pData_B_limit_error1[] = {0, 100, -1};
+	
+	unsigned short pData_R_limit_error2[] = {1025, 100, 1023};
+	unsigned short pData_G_limit_error2[] = {0, 1025, 1023};
+	unsigned short pData_B_limit_error2[] = {0, 100, 1025};
 
 	/* Step 01: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit,256);
@@ -10827,7 +10825,7 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
+	/* Step 03: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	result = SetGammaTable(NULL,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
@@ -10840,30 +10838,39 @@ void test_l1_tvSettings_negative_SetGammaTable (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SetGammaTable(pData_R_limit,pData_G_limit,NULL,0);  //zero size
+	result = SetGammaTable(pData_R_limit_error1,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
-    /* Step 07: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SetGammaTable(pData_R_limit,pData_G_limit,NULL, 257); //MAX size
+   /* Step 07: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SetGammaTable(pData_R_limit_error2,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SetGammaTable(pData_R_limit_error,pData_G_limit,pData_B_limit,256);
+	result = SetGammaTable(pData_R_limit,pData_G_limit_error1,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
-    /* Step 09: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SetGammaTable(pData_R_limit,pData_G_limit_error,pData_B_limit,256);
+	/* Step 09: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SetGammaTable(pData_R_limit,pData_G_limit_error2,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
+	
     /* Step 10: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit_error,256);
+	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit_error1,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
-	/* Step 11: Calling tvsettings termination and expecting the API to return success */
+	/* Step 11: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit_error2,256);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 12: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, -1);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 13: Calling tvsettings SetGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit, 257); //MAX size
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 14: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 12: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
+	/* Step 15: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
