@@ -9452,10 +9452,10 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -9823,10 +9823,10 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
@@ -10195,10 +10195,10 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],-1024, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],1023, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
+				result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i],500, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j], k);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}	
