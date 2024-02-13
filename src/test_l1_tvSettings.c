@@ -763,7 +763,6 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	bool IsVideoFormatValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -772,10 +771,9 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	/* Step 02: Calling tvsettings GetTVSupportedVideoFormats and expectinging the API to return success */
 	result = GetTVSupportedVideoFormats(tvVideoFormats, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	sizeFromConfig = Configfile.videoFormtStruct.size;
-	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)sizeFromConfig);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)Configfile.videoFormtStruct.size);
 
-	for (size_t i = 0; i < sizeFromConfig; i++)
+	for (size_t i = 0; i < Configfile.videoFormtStruct.size; i++)
 	{
 		IsVideoFormatValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
@@ -1340,7 +1338,6 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	bool IsVideoSourceValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1350,12 +1347,11 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	result = GetTVSupportedVideoSources(tvVideoSources, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	sizeFromConfig = Configfile.videoSrcStruct.size;
 
 	for (size_t i = 0; i < sizeReceived; i++)
 	{
 		IsVideoSourceValid = false;
-		for(unsigned short j = 0; j < sizeFromConfig; j++)
+		for(unsigned short j = 0; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if (Configfile.videoSrcStruct.videoSourceValue[j] == *tvVideoSources[i])
 			{
@@ -1760,9 +1756,6 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_STATE */
@@ -1807,11 +1800,10 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -1827,11 +1819,10 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -1847,11 +1838,10 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -2144,7 +2134,6 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 
 	tvError_t result = tvERROR_NONE;
 	int tvBacklightModes =0, tvBacklightModes_bk =0, tvBacklightModesRetry=0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2156,9 +2145,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 
 	tvBacklightModes_bk = tvBacklightModes;
 
-	sizeFromConfig = Configfile.backLightCtl.size;
-
-	for (size_t i = 0; i < sizeFromConfig; i++)
+	for (size_t i = 0; i < Configfile.backLightCtl.size; i++)
 	{
 		if(Configfile.backLightCtl.modevalue[i] & tvBacklightModes_bk)
 		{
@@ -2495,7 +2482,6 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 	bool IsDimmingModeValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2505,10 +2491,9 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 	result = GetTVSupportedDimmingModes(tvDimmingModes, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	sizeFromConfig = Configfile.dimmingMode.size;
-	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)sizeFromConfig);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)Configfile.dimmingMode.size);
 
-	for (size_t i = 0; i < sizeFromConfig; i++)
+	for (size_t i = 0; i < Configfile.dimmingMode.size; i++)
 	{
 		IsDimmingModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
@@ -2900,10 +2885,6 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfDimmodes = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_STATE */
@@ -2947,11 +2928,10 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -2968,11 +2948,10 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -2990,11 +2969,10 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
     /* Step 13: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -3011,11 +2989,10 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
 	/* Step 14: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfDimmodes = Configfile.dimmingMode.size;
 	for(int i =tvDimmingMode_Fixed ; i < tvDimmingMode_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfDimmodes; j++)
+		for(int j =0 ; j < Configfile.dimmingMode.size; j++)
 		{
 			if(Configfile.dimmingMode.modevalue[j] == i)
 			{
@@ -3358,10 +3335,6 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfLdimmodes = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_STATE */
@@ -3405,11 +3378,10 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -3424,12 +3396,10 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 		}
 	}
 
-	/* Step 12: Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -3445,11 +3415,10 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -3465,11 +3434,10 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	}
 
 	/* Step 14: Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfLdimmodes = Configfile.dimmingLevel.size;
 	for(int i =LDIM_STATE_NONBOOST ; i < LDIM_STATE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfLdimmodes; j++)
+		for(int j =0 ; j < Configfile.dimmingLevel.size; j++)
 		{
 			if(Configfile.dimmingLevel.dimModevalue[j] == i)
 			{
@@ -3798,9 +3766,6 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_STATE */
@@ -3844,11 +3809,10 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -3864,11 +3828,10 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -3884,11 +3847,10 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -4217,9 +4179,6 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_STATE */
@@ -4263,11 +4222,10 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -4283,11 +4241,10 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -4303,11 +4260,10 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -4634,9 +4590,6 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_STATE */
@@ -4680,11 +4633,10 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -4700,11 +4652,10 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -4720,11 +4671,10 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -5051,9 +5001,6 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_STATE */
@@ -5097,11 +5044,10 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -5117,11 +5063,10 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -5137,11 +5082,10 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -5469,9 +5413,6 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_STATE */
@@ -5515,11 +5456,10 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -5535,11 +5475,10 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -5555,11 +5494,10 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -5896,10 +5834,6 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfDimmodes = 0, numberOfColorTemperature = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
@@ -5943,11 +5877,10 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -5963,11 +5896,10 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -5983,11 +5915,10 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -6003,11 +5934,10 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	/* Step 14: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfColorTemperature = Configfile.colorTemp.colorStruct.size;
 	for(int i =tvColorTemp_STANDARD ; i < tvColorTemp_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfColorTemperature; j++)
+		for(int j =0 ; j < Configfile.colorTemp.colorStruct.size; j++)
 		{
 			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == i)
 			{
@@ -6342,10 +6272,6 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfAspectRatios = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
@@ -6389,11 +6315,10 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -6409,11 +6334,10 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -6429,11 +6353,10 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -6449,11 +6372,10 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	/* Step 14: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfAspectRatios = Configfile.aspectRatio.size;
 	for(int i =tvDisplayMode_4x3 ; i < tvDisplayMode_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfAspectRatios; j++)
+		for(int j =0 ; j < Configfile.aspectRatio.size; j++)
 		{
 			if(Configfile.aspectRatio.modevalue[j] == i)
 			{
@@ -6774,9 +6696,6 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_STATE */
@@ -6820,11 +6739,10 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -6840,11 +6758,10 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -6860,11 +6777,10 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -7335,7 +7251,6 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	bool IsDolbyModeValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -7344,9 +7259,8 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	/* Step 02: Calling tvsettings GetTVSupportedDolbyVisionModes and expectinging the API to return success */
 	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	sizeFromConfig = Configfile.dolbyMode.size;
 
-	for (size_t i = 0; i < sizeFromConfig; i++)
+	for (size_t i = 0; i < Configfile.dolbyMode.size; i++)
 	{
 		IsDolbyModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
@@ -7742,10 +7656,6 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfdv_modess = 0;
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_STATE */
@@ -7789,11 +7699,10 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -7810,11 +7719,10 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -7831,11 +7739,10 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 
 	}
 
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -7852,11 +7759,10 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	/* Step 13: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfdv_modess = Configfile.dolbyMode.size;
 	for(int i =tvDimmingMode_Fixed ; i < tvMode_Max ; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfdv_modess; j++)
+		for(int j =0 ; j < Configfile.dolbyMode.size; j++)
 		{
 			if(Configfile.dolbyMode.modevalue[j] == i)
 			{
@@ -7913,7 +7819,6 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	bool IsPictureModeValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -7922,10 +7827,9 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	/* Step 02: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
 	result = GetTVSupportedPictureModes(tvPicModes, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	sizeFromConfig = Configfile.picmodeStruct.size;
-	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)sizeFromConfig);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)Configfile.picmodeStruct.size);
 
-	for (size_t i = 0; i < sizeFromConfig; i++)
+	for (size_t i = 0; i < Configfile.picmodeStruct.size; i++)
 	{
 		IsPictureModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
@@ -8317,9 +8221,6 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
 	bool SupportAvailable = true;
 	
 	/* Step 01: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_STATE */
@@ -8355,11 +8256,10 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 09: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfSources; j++)
+		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -8376,11 +8276,10 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	}
 
     /* Step 10: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats = Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfFormats; j++)
+		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -8397,11 +8296,10 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	}
 
 	/* Step 11: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes = Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < numberOfPqmodes; j++)
+		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -10076,23 +9974,26 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	
 
     /* Step 12: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
-	for (size_t i = 0; i < (Configfile.colorTempSourceOffset.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < MAX_OFFSET; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size ; j++ )
 		{
-			if(Configfile.colorTempSourceOffset.videoSourceValue[i] != (tvColorTempSourceOffset_t)i) 
+			if(Configfile.colorTempSourceOffset.videoSourceValue[j] == (tvColorTempSourceOffset_t)i)
 			{
 				platformFlag = true;
 				break;
 			}
 		}
 		if(!platformFlag)
-		{	
-				result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0, \
-                	(tvColorTempSourceOffset_t)i, 0);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+		{
+			result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0] ,0,\
+ (tvColorTempSourceOffset_t)i, 0);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			
 		}
-	}	
+	}
+	
 	
 
     /* Step 13: Calling tvsettings TvTerm and the API to return success */
@@ -10234,22 +10135,24 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
-	{		
-		for (size_t j = 0; j < tvColorTemp_MAX ; j++ )
+	for (size_t i = 0; i < tvColorTemp_MAX; i++)
+	{
+		platformFlag = false;
+		for (size_t j = 0; j < Configfile.colorTemp.colorStruct.size ; j++ )
 		{
-			if(Configfile.colorTemp.colorStruct.colorTempValue[j] != (tvColorTemp_t)i) 
+			if(Configfile.colorTemp.colorStruct.colorTempValue[j] == (tvColorTemp_t)i)
 			{
-                		platformFlag = true;
-                		break;
+				platformFlag = true;
+				break;
 			}
 		}
-		 if(!platformFlag)
-	        {    
-			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)i ,&gpostoffset, (tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0] );
-			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);	
+		if(!platformFlag)
+		{
+			result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)i ,&gpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0] );	
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);			
 		}
-        }
+	}
+
 	
 	
 
@@ -11751,10 +11654,6 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfLdimmodes = 0;
 	bool flag = false;
 
 	/* Step 01: Calling tvsettings SaveDvTmaxValue and expecting the API to return tvERROR_INVALID_STATE */
@@ -11782,11 +11681,10 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SaveDvTmaxValue and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfLdimmodes = Configfile.dimmingLevel.size;
 
 	for(int i =LDIM_STATE_NONBOOST ; i < LDIM_STATE_MAX; i++){
 		flag = false;
-		for(int j =0 ; j < numberOfLdimmodes; j++){
+		for(int j =0 ; j < Configfile.dimmingLevel.size; j++){
 			if(Configfile.dimmingLevel.dimModevalue[j] == i)
 			{
 				flag = true;
@@ -11838,7 +11736,6 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	tvError_t result = tvERROR_NONE;
 	int tvComponentColor =0, tvComponentColor_bk =0;
 	int tvComponentColorRetry =0;
-	size_t sizeFromConfig = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -11849,8 +11746,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	tvComponentColor_bk = tvComponentColor;
 
-	sizeFromConfig = Configfile.componentColor.size;
-	for (size_t i = 0; i < sizeFromConfig; i++)
+	for (size_t i = 0; i < Configfile.componentColor.size; i++)
 	{
 		if(Configfile.componentColor.modeId[i] & tvComponentColor_bk)
 		{
@@ -12820,12 +12716,6 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSources = 0;
-	int numberOfPqmodes = 0;
-	int numberOfFormats = 0;
-	int numberOfComponentTypes = 0;
-	int numberOfColorTypes = 0;
-	int componentColorType = 0;
 	bool SupportAvailable = true;
   
 
@@ -12902,11 +12792,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 19: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfSources = Configfile.videoSrcStruct.size;
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 			SupportAvailable = false;
-			for(int j =0 ; j < numberOfSources; j++)
+			for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
 			{
 					if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 					{
@@ -12922,11 +12811,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	}
 
 	/* Step 20: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfPqmodes =  Configfile.picmodeStruct.size;
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 			SupportAvailable = false;
-			for(int j =0 ; j < numberOfPqmodes; j++)
+			for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
 			{
 					if(Configfile.picmodeStruct.pqValue[j] == i)
 					{
@@ -12942,11 +12830,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	}
 
 	/* Step 21: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfFormats =  Configfile.videoFormtStruct.size;
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 			SupportAvailable = false;
-			for(int j =0 ; j < numberOfFormats; j++)
+			for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
 			{
 					if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 					{
@@ -12962,12 +12849,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	}
 
 	/* Step 22: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfComponentTypes = Configfile.componentColor.size;
-
 	for(int i =COMP_NONE ; i < COMP_MAX; i++)
 	{
 			SupportAvailable = false;
-			for(int j =0 ; j < numberOfComponentTypes; j++)
+			for(int j =0 ; j < Configfile.componentColor.size; j++)
 			{
 					if(Configfile.componentColor.modeId[j] == i)
 					{
@@ -12983,11 +12868,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	}
 
 	/* Step 23: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	numberOfColorTypes = Configfile.componentColor.size;
 	for(int i =COMP_NONE ; i < COMP_MAX; i++)
 	{
 			SupportAvailable = false;
-			for(int j =0 ; j < numberOfColorTypes; j++)
+			for(int j =0 ; j < Configfile.componentColor.size; j++)
 			{
 					if(Configfile.componentColor.modeId[j] == i)
 					{
