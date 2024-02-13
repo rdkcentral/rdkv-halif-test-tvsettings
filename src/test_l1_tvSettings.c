@@ -11236,19 +11236,19 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SaveGammaTable() - save the current GammaTable State even before TvInit() | tvColorTemp_t, unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, NULL, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *, NULL, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *, unsigned short *, NULL, 256| tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SaveGammaTable() -   save the current GammaTable State with invalid input | tvColorTemp_t, NULL, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 04 | call SaveGammaTable() -   save the current GammaTable State with invalid input | tvColorTemp_t, unsigned short *, NULL, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 05 | call SaveGammaTable() -   save the current GammaTable State with invalid input | tvColorTemp_t, unsigned short *, unsigned short *, NULL, 256| tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SaveGammaTable() -   save the current GammaTable State with invalid colortemp with max range | tvColorTemp_MAX , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
 * | 07 | call SaveGammaTable() -   save the current GammaTable State with invalid colortemp  less than lower range| -1 , unsigned short *,  unsigned short *, unsigned short *,  int | tvERROR_INVALID_PARAM | Should Pass |
-* | 08 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, -1,  unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 09 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, 1023,  unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 10 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *,  -1, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 11 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *,  1023, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 12 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *,  unsigned short *, -1, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 13 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *,  unsigned short *, 1023, 256 | tvERROR_INVALID_PARAM | Should Pass |
-* | 14 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *,  unsigned short *, unsigned short *, 0 | tvERROR_INVALID_PARAM | Should Pass |
-* | 15 | call SaveGammaTable() -   save the current GammaTable State with invalid input by looping through the colortemp from ColorTemperature section of test specific config file| tvColorTemp_t, unsigned short *,  unsigned short *, unsigned short *, 257 | tvERROR_INVALID_PARAM | Should Pass |
+* | 08 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array | tvColorTemp_t, -1,  unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 09 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array | tvColorTemp_t, 1025,  unsigned short *, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 10 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array | tvColorTemp_t, unsigned short *,  -1, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 11 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array | tvColorTemp_t, unsigned short *,  1025, unsigned short *, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 12 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array | tvColorTemp_t, unsigned short *,  unsigned short *, -1, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 13 | call SaveGammaTable() -   save the current GammaTable State with invalid input for few elements of the array | tvColorTemp_t, unsigned short *,  unsigned short *, 1025, 256 | tvERROR_INVALID_PARAM | Should Pass |
+* | 14 | call SaveGammaTable() -   save the current GammaTable State with invalid input | tvColorTemp_t, unsigned short *,  unsigned short *, unsigned short *, 0 | tvERROR_INVALID_PARAM | Should Pass |
+* | 15 | call SaveGammaTable() -   save the current GammaTable State with invalid input | tvColorTemp_t, unsigned short *,  unsigned short *, unsigned short *, 257 | tvERROR_INVALID_PARAM | Should Pass |
 * | 16 | call SaveGammaTable() -   save the current GammaTable State with valid colortemp  value but not supported by the platform by looping through the ColorTemperature section of test specific config file | tvColorTemp_t , unsigned short *,  unsigned short *, unsigned short *, unsigned short| tvERROR_INVALID_PARAM | Should Pass |
 * | 17 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 18 | call SaveGammaTable() -  Set the current GammaTable State with valid input after TvTerm() | tvColorTemp_t, unsigned short *, unsigned short *, unsigned short *, 256 | tvERROR_INVALID_STATE | Should Pass |
@@ -11263,9 +11263,13 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	unsigned short pData_G_limit[] = {0, 100, 1023};
 	unsigned short pData_B_limit[] = {0, 100, 1023};
 
-	unsigned short pData_R_limit_error[] = {1025, 100, 1023};
-	unsigned short pData_G_limit_error[] = {0, 1025, 1023};
-	unsigned short pData_B_limit_error[] = {0, 100, 1025};
+	unsigned short pData_R_limit_error1[] = {-1, 100, 1023};
+	unsigned short pData_G_limit_error1[] = {0, -1, 1023};
+	unsigned short pData_B_limit_error1[] = {0, 100, -1};
+	
+	unsigned short pData_R_limit_error2[] = {1025, 100, 1023};
+	unsigned short pData_G_limit_error2[] = {0, 1025, 1023};
+	unsigned short pData_B_limit_error2[] = {0, 100, 1025};
 
 	/* Step 01: Calling tvsettings SaveGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit ,pData_G_limit,pData_B_limit,256);
@@ -11275,47 +11279,56 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 03: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable(tvColorTemp_MAX, pData_R_limit,pData_G_limit,pData_B_limit,256);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
-    /* Step 04: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)-1, pData_R_limit,pData_G_limit,pData_B_limit,256);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
-	/* Step 05: Calling tvsettings SaveGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
+	/* Step 03: Calling tvsettings SaveGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], NULL,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 06: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+    /* Step 04: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
 	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit,NULL,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 07: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+    /* Step 05: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
 	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 08: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL,0);  //zero size
+    /* Step 06: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SaveGammaTable((tvColorTemp_t)-1, pData_R_limit,pData_G_limit,pData_B_limit,256);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 07: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SaveGammaTable(tvColorTemp_MAX, pData_R_limit,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
+    /* Step 08: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit_error1,pData_G_limit,pData_B_limit,256);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
     /* Step 09: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,NULL, 257); //MAX size
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit_error2,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit_error,pData_G_limit,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit_error1,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-
     /* Step 11: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit_error,pData_B_limit,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit_error2,pData_B_limit,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 12: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
-	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit_error,256);
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit_error1,256);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    /* Step 13: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit_error2,256);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 13: Calling tvsettings SaveGammaTable and expecting the API to return success */ 
+    /* Step 14: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit,-1);  //zero size
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 15: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_PARAM */ 
+	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],pData_R_limit,pData_G_limit,pData_B_limit, 257); //MAX size
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 16: Calling tvsettings SaveGammaTable and expecting the API to return success */ 
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 
@@ -11329,11 +11342,11 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 
 	}
 
-	/* Step 14: Calling tvsettings termination and expecting the API to return success */
+	/* Step 17: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 15: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_STATE */ 
+    /* Step 18: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_STATE */ 
 	result = SaveGammaTable((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], pData_R_limit ,pData_G_limit,pData_B_limit,256);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
