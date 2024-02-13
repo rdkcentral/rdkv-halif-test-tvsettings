@@ -14822,8 +14822,10 @@ void test_l1_tvSettings_negative_StartLDIMSequenceTest (void)
 * | Variation / Step | Description | Test Data | Expected Result | Notes |
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 02 | call SetBacklightTestMode() -  Start the Backlight Test Mode by looping through the BacklightControl section of test specific config file |tvBacklightTestMode_t | tvERROR_NONE | Should Pass |
-* | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 02 | call SetBacklightTestMode() -  Start the Backlight Test Mode a valid value |tvBacklightTestMode_Normal | tvERROR_NONE | Should Pass |
+* | 03 | call SetBacklightTestMode() -  Start the Backlight Test Mode a valid value |tvBacklightTestMode_Boost | tvERROR_NONE | Should Pass |
+* | 04 | call SetBacklightTestMode() -  Start the Backlight Test Mode a valid value |tvBacklightTestMode_Reset | tvERROR_NONE | Should Pass |
+* | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
 */
 void test_l1_tvSettings_positive_SetBacklightTestMode (void)
 {
@@ -14840,7 +14842,7 @@ void test_l1_tvSettings_positive_SetBacklightTestMode (void)
 	result = SetBacklightTestMode(tvBacklightTestMode_Normal);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 02: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
+	/* Step 03: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
 	result = SetBacklightTestMode(tvBacklightTestMode_Boost);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
@@ -14848,11 +14850,11 @@ void test_l1_tvSettings_positive_SetBacklightTestMode (void)
 	result = SetBacklightTestMode(tvBacklightTestMode_Burst);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 02: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
+	/* Step 04: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_PARAM */
 	result = SetBacklightTestMode(tvBacklightTestMode_Reset);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 04: Calling tvsettings termination and expecting the API to return success */
+	/* Step 05: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
