@@ -6351,7 +6351,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 
 		if(!SupportAvailable){
 			result = SaveAspectRatio((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,(tvDisplayMode_t)Configfile.aspectRatio.modevalue[0]);
-			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM)0
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
@@ -9278,7 +9278,6 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(bgain,bgainRetry);
 
-    /* Step 04: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return success */
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
@@ -9406,7 +9405,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 11: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
+	/* Step 10: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
 	result = GetColorTemp_Bgain_onSource(tvColorTemp,&bgain, (tvColorTempSourceOffset_t)sourceOffset);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
@@ -9449,7 +9448,7 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 02 - 08: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
+	/* Step 02 - 07: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
@@ -9468,7 +9467,7 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 		}	
 	}
 
-	/* Step 09: Calling tvsettings termination and expecting the API to return success */
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -10024,7 +10023,6 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(gpostoffset,gpostoffsetRetry);
 
-        /* Step 04: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		for (size_t j = 0; j < Configfile.colorTempSourceOffset.size; j++ )
