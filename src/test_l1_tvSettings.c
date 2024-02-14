@@ -803,7 +803,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 					free ( tvVideoFormats[0] );
 				}
     	}
-		UT_ASSERT_AUTO_TERM_TRUE(IsVideoFormatValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsVideoFormatValid));
 	}
 
 	tvVideoFormatsRetry[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvVideoFormatType_t));
@@ -859,7 +859,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 				}
 		}
 
-		UT_ASSERT_AUTO_TERM_TRUE(IsVideoFormatValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsVideoFormatValid));
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -916,7 +916,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats (void)
 	unsigned short size = 0;
 
 	tvVideoFormats[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT*sizeof(tvVideoFormatType_t));
-	UT_ASSERT_AUTO_TERM_FALSE( tvVideoFormats[0] == NULL);
+	UT_ASSERT_AUTO_TERM_FALSE( (tvVideoFormats[0] == NULL) );
 
 	/* Step 01: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
 	result = GetTVSupportedVideoFormats(tvVideoFormats, &size);
@@ -1022,7 +1022,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsVideoFormatValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsVideoFormatValid));
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatTypeRetry);
@@ -1129,7 +1129,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 			(tvVideoResolution.frameHeight > 0) && (tvVideoResolution.frameWidth > 0) 	) {
 		IsVideoResolutionValid = true;
 	} 
-	UT_ASSERT_AUTO_TERM_TRUE(IsVideoResolutionValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsVideoResolutionValid));
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoResolution(&tvVideoResolutionRetry);
@@ -1244,7 +1244,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsVideoFramerateValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsVideoFramerateValid));
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
@@ -1353,7 +1353,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsVideoSourceValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsVideoSourceValid));
 
 	/* Step 03: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSourceRetry);
@@ -1489,7 +1489,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 					free ( tvVideoSources[0] );
 				}
     		}
-		UT_ASSERT_AUTO_TERM_TRUE(IsVideoSourceValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsVideoSourceValid));
 	}
 	
 	tvVideoSourcesRetry[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvVideoSrcType_t));
@@ -1532,7 +1532,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 					free ( tvVideoSourcesRetry[0] );
 				}
 		}
-		UT_ASSERT_AUTO_TERM_TRUE(IsVideoSourceValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsVideoSourceValid));
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -1589,7 +1589,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoSources (void)
 	unsigned short numberOfSources = 0;
 
 	tvVideoSrcType[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT*sizeof(tvVideoSrcType_t));
-	UT_ASSERT_AUTO_TERM_FALSE( tvVideoSrcType[0] == NULL);	
+	UT_ASSERT_AUTO_TERM_FALSE( (tvVideoSrcType[0] == NULL));	
 	
 	/* Step 01: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_STATE */
 	result = GetTVSupportedVideoSources(tvVideoSrcType,&numberOfSources);
@@ -2232,9 +2232,9 @@ void test_l1_tvSettings_positive_GetCurrentBacklightFade (void)
 	/* Step 02: Calling tvsettings GetBacklight and expecting the API to return success */
 	result = GetCurrentBacklightFade(&from, &to, &current);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(from >= 0 && from <= 100);
-	UT_ASSERT_AUTO_TERM_TRUE(to >= 0 && to <= 100);
-	UT_ASSERT_AUTO_TERM_TRUE(current >= 0 && current <= 10000);
+	UT_ASSERT_AUTO_TERM_TRUE((from >= 0 && from <= 100));
+	UT_ASSERT_AUTO_TERM_TRUE((to >= 0 && to <= 100));
+	UT_ASSERT_AUTO_TERM_TRUE((current >= 0 && current <= 10000));
 
 	/* Step 03: Calling tvsettings GetBacklight again and expecting the API to return success */
 	result = GetCurrentBacklightFade(&fromRetry , &toRetry ,&currentRetry);
@@ -2359,7 +2359,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 		}
 	}
 
-	UT_ASSERT_AUTO_TERM_FALSE(tvBacklightModes_bk);
+	UT_ASSERT_AUTO_TERM_FALSE((tvBacklightModes_bk));
 
 	/* Step 03: Calling tvsettings GetSupportedBacklightModes and expectinging the API to return success */
 	result = GetSupportedBacklightModes(&tvBacklightModesRetry);
@@ -2470,7 +2470,7 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 		}
 	}
 
-	UT_ASSERT_AUTO_TERM_TRUE(IsBacklightModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsBacklightModeValid));
 
 	/* Step 03: Calling tvsettings GetCurrentBacklightMode and expectinging the API to return success */
 	result = GetCurrentBacklightMode(&tvBacklightModeRetry);
@@ -2731,7 +2731,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 					free ( tvDimmingModes[0] );
 				}
     	}
-		UT_ASSERT_AUTO_TERM_TRUE(IsDimmingModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsDimmingModeValid));
 	}
 
 	tvDimmingModesRetry[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDimmingMode_t));
@@ -2787,7 +2787,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 			}
 		}
 
-		UT_ASSERT_AUTO_TERM_TRUE(IsDimmingModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsDimmingModeValid));
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -2846,7 +2846,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 	unsigned short size = 0;
 
 	tvDimmingModes[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDimmingMode_t));
-	UT_ASSERT_AUTO_TERM_FALSE( tvDimmingModes[0] == NULL);
+	UT_ASSERT_AUTO_TERM_FALSE( (tvDimmingModes[0] == NULL));
 
 	/* Step 01: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_STATE */
 	result = GetTVSupportedDimmingModes(tvDimmingModes, &size);
@@ -3047,7 +3047,7 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsDimmingModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsDimmingModeValid));
 
 	/* Step 03: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
 	result = GetTVDimmingMode(dimmingModeRetry);
@@ -3503,7 +3503,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 			IsLdimValid = true;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsLdimValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsLdimValid));
 
 	/* Step 03: Calling tvsettings GetLocalDimmingLevel and expectinging the API to return success */
 	result = GetLocalDimmingLevel(&ldimStateLevelRetry);
@@ -4347,7 +4347,7 @@ void test_l1_tvSettings_positive_GetContrast (void)
 	/* Step 02: Calling tvsettings GetContrast and expecting the API to return success */
 	result = GetContrast(&contrast);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(contrast >= 0 && contrast <= 100);
+	UT_ASSERT_AUTO_TERM_TRUE((contrast >= 0 && contrast <= 100));
 
 	/* Step 03: Calling tvsettings GetContrast again and expecting the API to return success */
 	result = GetContrast(&contrastRetry);
@@ -5165,7 +5165,7 @@ void test_l1_tvSettings_positive_GetSaturation (void)
 	/* Step 02: Calling tvsettings GetSaturation and expecting the API to return success */
 	result = GetSaturation(&saturation);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(saturation >= 0 && saturation <= 100);
+	UT_ASSERT_AUTO_TERM_TRUE((saturation >= 0 && saturation <= 100));
 
 	/* Step 03: Calling tvsettings GetSaturation again and expecting the API to return success */
 	result = GetSaturation(&saturationRetry);
@@ -5575,7 +5575,7 @@ void test_l1_tvSettings_positive_GetHue (void)
 	/* Step 02: Calling tvsettings GetHue and expecting the API to return success */
 	result = GetHue(&hue);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(hue >= 0 && hue <= 100);
+	UT_ASSERT_AUTO_TERM_TRUE((hue >= 0 && hue <= 100));
 
 	/* Step 03: Calling tvsettings GetHue again and expecting the API to return success */
 	result = GetHue(&hueRetry);
@@ -5990,7 +5990,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsColorTempValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsColorTempValid));
 
 	/* Step 03: Calling tvsettings GetColorTemperature and expectinging the API to return success */
 	result = GetColorTemperature(&tvColorTempRetry);
@@ -6430,7 +6430,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(isDisplayModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE((isDisplayModeValid));
 
 	/* Step 03: Calling tvsettings GetAspectRatio and expectinging the API to return success */
 	result = GetAspectRatio(&tvDisplayModeRetry);
@@ -6852,7 +6852,7 @@ void test_l1_tvSettings_positive_GetLowLatencyState (void)
 	/* Step 02: Calling tvsettings GetLowLatencyState and expectinging the API to return success */
 	result = GetLowLatencyState(&lowLatencyState);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( lowLatencyState == 1 || lowLatencyState == 0);
+	UT_ASSERT_AUTO_TERM_TRUE( (lowLatencyState == 1 || lowLatencyState == 0));
 
 	/* Step 03: Calling tvsettings GetLowLatencyState and expectinging the API to return success */
 	result = GetLowLatencyState(&latencyStateRetry);
@@ -7249,7 +7249,7 @@ void test_l1_tvSettings_positive_GetDynamicContrast (void)
 	/* Step 02: Calling tvsettings GetDynamicContrast and expectinging the API to return success */
 	result = GetDynamicContrast(dynamicContrast);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(!strcmp(dynamicContrast, "enabled") || !strcmp(dynamicContrast, "disabled"));
+	UT_ASSERT_AUTO_TERM_TRUE((!strcmp(dynamicContrast, "enabled") || !strcmp(dynamicContrast, "disabled")));
 
 	/* Step 03: Calling tvsettings GetDynamicContrast and expectinging the API to return success */
 	result = GetDynamicContrast(dynamicContrastRetry);
@@ -7597,7 +7597,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 					free ( tvDolbyModes[0] );
 				}
     	}
-		UT_ASSERT_AUTO_TERM_TRUE(IsDolbyModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsDolbyModeValid));
 	}
 
 	tvDolbyModesRetry[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDolbyMode_t));
@@ -7653,7 +7653,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 			}
 		}
 
-		UT_ASSERT_AUTO_TERM_TRUE(IsDolbyModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsDolbyModeValid));
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -7710,7 +7710,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	unsigned short size = 0;
 
 	tvDolbyModes[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDolbyMode_t));
-	UT_ASSERT_AUTO_TERM_FALSE( tvDolbyModes[0] == NULL);
+	UT_ASSERT_AUTO_TERM_FALSE( (tvDolbyModes[0] == NULL));
 
 	/* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
 	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
@@ -7917,7 +7917,7 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IstvDolbyModesValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IstvDolbyModesValid));
 
 	/* Step 03: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
 	result = GetTVDolbyVisionMode(&tvDolbyModesRetry);
@@ -8257,7 +8257,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 				break;
 			}
 		}
-		UT_ASSERT_AUTO_TERM_TRUE(IsPictureModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsPictureModeValid));
 	}
 
 	/* Step 03: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
@@ -8275,7 +8275,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 				break;
 			}
 		}
-		UT_ASSERT_AUTO_TERM_TRUE(IsPictureModeValid);
+		UT_ASSERT_AUTO_TERM_TRUE((IsPictureModeValid));
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -8389,7 +8389,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(IsPicturModeValid);
+	UT_ASSERT_AUTO_TERM_TRUE((IsPicturModeValid));
 
 	/* Step 03: Calling tvsettings GetTVPictureMode and expectinging the API to return success */
 	result = GetTVPictureMode(pictureModeRetry);
@@ -8967,7 +8967,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 	/* Step 02: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
 	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
+	UT_ASSERT_AUTO_TERM_TRUE( (rgain > 0 && rgain < 2048));
 
 	/* Step 03: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
 	result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rgainRetry, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
@@ -8981,7 +8981,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 
 			result = GetColorTemp_Rgain_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &rgain, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[j] );
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-			UT_ASSERT_AUTO_TERM_TRUE( rgain > 0 && rgain < 2048);
+			UT_ASSERT_AUTO_TERM_TRUE( (rgain > 0 && rgain < 2048));
 
 		}	
 	}
@@ -10076,7 +10076,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 	/* Step 02: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
 	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffset, (tvColorTempSourceOffset_t)Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( rpostoffset > 0 && rpostoffset < 2048);
+	UT_ASSERT_AUTO_TERM_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
 
 	/* Step 03: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
 	result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&rpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
@@ -10447,7 +10447,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	/* Step 02: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
 	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&gpostoffset,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( gpostoffset > 0 && gpostoffset < 2048);
+	UT_ASSERT_AUTO_TERM_TRUE( (gpostoffset > 0 && gpostoffset < 2048));
 
 	/* Step 03: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
 	result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0],&gpostoffsetRetry,(tvColorTempSourceOffset_t) Configfile.colorTempSourceOffset.videoSourceValue[0]);
@@ -11350,7 +11350,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 			}
 		}
 
-		UT_ASSERT_AUTO_TERM_TRUE(bflag);
+		UT_ASSERT_AUTO_TERM_TRUE((bflag));
 	}
 
 	/* Step 03: Calling tvsettings termination and expecting the API to return success */
@@ -11516,7 +11516,7 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_TRUE(bflag);
+	UT_ASSERT_AUTO_TERM_TRUE((bflag));
 	
 	/* Step 03: Retrieve tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
 	result = GetGammaTable(pData_R_limit_retry,pData_G_limit_retry,pData_B_limit_retry, size);
@@ -11533,7 +11533,7 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 		}
 	}
 
-	UT_ASSERT_AUTO_TERM_TRUE(bflag);
+	UT_ASSERT_AUTO_TERM_TRUE((bflag));
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -12169,7 +12169,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 		}
 	}
 
-	UT_ASSERT_AUTO_TERM_FALSE(tvComponentColor_bk);
+	UT_ASSERT_AUTO_TERM_FALSE((tvComponentColor_bk));
 
 	/* Step 03: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
 	result = GetSupportedComponentColor(&tvComponentColorRetry);
@@ -12679,7 +12679,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 	{
 		result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&Hue);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-		UT_ASSERT_AUTO_TERM_TRUE( Hue >=0 && Hue <= 100);
+		UT_ASSERT_AUTO_TERM_TRUE( (Hue >=0 && Hue <= 100));
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -12943,7 +12943,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 	{
 		result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&Luma);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-		UT_ASSERT_AUTO_TERM_TRUE( Luma >=0 && Luma <= 100);
+		UT_ASSERT_AUTO_TERM_TRUE( (Luma >=0 && Luma <= 100) );
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -13577,7 +13577,7 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
 					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_HUE) || \
 					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BACKLIGHT) )
 					{
-						UT_ASSERT_AUTO_TERM_TRUE(value >= 0 && value <= 100);
+						UT_ASSERT_AUTO_TERM_TRUE((value >= 0 && value <= 100));
 					}
 				}
 			}
@@ -13749,7 +13749,7 @@ void test_l1_tvSettings_positive_GetPQParams (void)
 					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_HUE) || \
 					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BACKLIGHT) )
 					{
-						UT_ASSERT_AUTO_TERM_TRUE(value >= 0 && value <= 100);
+						UT_ASSERT_AUTO_TERM_TRUE((value >= 0 && value <= 100));
 					}
 				}
 			}
@@ -14597,9 +14597,9 @@ void test_l1_tvSettings_positive_GetRGBPattern (void)
 	/* Step 02: Calling tvsettings GetRGBPattern and expecting the API to return success */
 	result = GetRGBPattern(&red,&green,&blue);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( red >= 0 && red <= 255);
-	UT_ASSERT_AUTO_TERM_TRUE( green >= 0 && green <= 255);
-	UT_ASSERT_AUTO_TERM_TRUE( blue >= 0 && blue <= 255);
+	UT_ASSERT_AUTO_TERM_TRUE( (red >= 0 && red <= 255));
+	UT_ASSERT_AUTO_TERM_TRUE( (green >= 0 && green <= 255));
+	UT_ASSERT_AUTO_TERM_TRUE( (blue >= 0 && blue <= 255));
 
 	/* Step 03: Calling tvsettings GetRGBPattern again and expecting the API to return success */
 	result = GetRGBPattern(&redRetry,&greenRetry,&blueRetry);
@@ -14818,7 +14818,7 @@ void test_l1_tvSettings_positive_GetGrayPattern (void)
 	/* Step 02: Calling tvsettings GetBacklight and the API to return success */
 	result = GetGrayPattern(&grayPattern);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE( grayPattern >= 0 && grayPattern <= 255);
+	UT_ASSERT_AUTO_TERM_TRUE( (grayPattern >= 0 && grayPattern <= 255));
 
 	/* Step 03: Calling tvsettings GetBacklight again and the API to return success */
 	result = GetGrayPattern(&grayPatternRetry);
@@ -14920,7 +14920,7 @@ void test_l1_tvSettings_positive_GetOpenCircuitStatus (void)
 	/* Step 02: Calling tvsettings GetBacklight and the API to return success */
 	result = GetOpenCircuitStatus(&OpenCircuitStatus);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	UT_ASSERT_AUTO_TERM_TRUE(OpenCircuitStatus >= 0);
+	UT_ASSERT_AUTO_TERM_TRUE((OpenCircuitStatus >= 0));
 
 	/* Step 03: Calling tvsettings GetBacklight again and the API to return success */
 	result = GetOpenCircuitStatus(&OpenCircuitStatusRetry);
