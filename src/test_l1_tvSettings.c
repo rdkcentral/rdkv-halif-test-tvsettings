@@ -13552,6 +13552,33 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
 				{
 					result = GetDefaultPQParams(Configfile.picmodeStruct.pqValue[j],(tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k], (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[l],&value);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+						if( (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_RED) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_GREEN)  || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_BLUE)  || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_CYAN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_RED) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_GREEN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_BLUE) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_YELLOW) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_CYAN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_MAGENTA) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_RED) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_GREEN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_BLUE) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_YELLOW) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_CYAN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_MAGENTA) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BRIGHTNESS) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CONTRAST) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SATURATION) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SHARPNESS) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_HUE) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BACKLIGHT) )
+					{
+						UT_ASSERT_AUTO_TERM_TRUE(value >= 0 && value <= 100);
+					}
 				}
 			}
 		}
@@ -13697,6 +13724,33 @@ void test_l1_tvSettings_positive_GetPQParams (void)
 				{
 					result = GetPQParams(Configfile.picmodeStruct.pqValue[j],(tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k], (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[l],&value);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+					if( (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_RED) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_GREEN)  || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_BLUE)  || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_CYAN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_RED) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_GREEN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_BLUE) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_YELLOW) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_CYAN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_MAGENTA) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_RED) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_GREEN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_BLUE) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_YELLOW) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_CYAN) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_MAGENTA) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BRIGHTNESS) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CONTRAST) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SATURATION) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SHARPNESS) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_HUE) || \
+					(Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BACKLIGHT) )
+					{
+						UT_ASSERT_AUTO_TERM_TRUE(value >= 0 && value <= 100);
+					}
 				}
 			}
 		}
