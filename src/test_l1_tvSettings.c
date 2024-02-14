@@ -1353,7 +1353,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 			break;
 		}
 	}
-	UT_ASSERT_AUTO_TERM_FALSE(IsVideoSourceValid);
+	UT_ASSERT_AUTO_TERM_TRUE(IsVideoSourceValid);
 
 	/* Step 03: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSourceRetry);
@@ -1488,8 +1488,8 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 				if ( tvVideoSources[0] ){
 					free ( tvVideoSources[0] );
 				}
-    	}
-		UT_ASSERT_AUTO_TERM_FALSE(IsVideoSourceValid);
+    		}
+		UT_ASSERT_AUTO_TERM_TRUE(IsVideoSourceValid);
 	}
 	
 	tvVideoSourcesRetry[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvVideoSrcType_t));
@@ -1532,7 +1532,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 					free ( tvVideoSourcesRetry[0] );
 				}
 		}
-		UT_ASSERT_AUTO_TERM_FALSE(IsVideoSourceValid);
+		UT_ASSERT_AUTO_TERM_TRUE(IsVideoSourceValid);
 	}
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -2468,7 +2468,6 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 		}
 	}
 
-	//TODO: check crash happens here, whether HAL or UT
 	UT_ASSERT_AUTO_TERM_TRUE(IsBacklightModeValid);
 
 	/* Step 03: Calling tvsettings GetCurrentBacklightMode and expectinging the API to return success */
