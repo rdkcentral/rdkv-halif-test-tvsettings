@@ -2625,7 +2625,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 	
 	/* Step 05: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SetCurrentBacklightMode((tvBacklightMode_t)tvBacklightMode_INVALID | tvBacklightMode_AMBIENT);
+	result = SetCurrentBacklightMode((tvBacklightMode_t)(tvBacklightMode_INVALID | tvBacklightMode_AMBIENT));
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
