@@ -2593,7 +2593,7 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 * | :-------: | ------------- | --------- | --------------- | ----- |
 * | 01 | call SetCurrentBacklightMode() - Set the TV CurrentBacklightMode even before TvInit() | tvBacklightMode_AMBIENT | tvERROR_INVALID_STATE | Should Pass |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range | tvBacklightMode_INVALID | tvERROR_INVALID_PARAM | Should Pass |
+* | 03 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with max range | tvBacklightMode_MAX | tvERROR_INVALID_PARAM | Should Pass |
 * | 04 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with less than the lower range  | -1 (tvBacklightMode_t)| tvERROR_INVALID_PARAM | Should Pass |
 * | 05 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with invalid parameter of all possible combinations  | (tvBacklightMode_t| tvBacklightMode_t) | tvERROR_INVALID_PARAM | Should Pass |
 * | 06 | call SetCurrentBacklightMode() -   Set the TV CurrentBacklightMode with valid value but not supported by the platform by looping through the BacklightControl section test specific config file  | tvBacklightMode_t | tvERROR_INVALID_PARAM | Should Pass |
@@ -2618,14 +2618,18 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SetCurrentBacklightMode((tvBacklightMode_t)-1);
+	result = SetCurrentBacklightMode(tvBacklightMode_MAX);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SetCurrentBacklightMode(tvBacklightMode_INVALID);
+	result = SetCurrentBacklightMode((tvBacklightMode_t)-1);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 05: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+	result = SetCurrentBacklightMode((tvBacklightMode_t)tvBacklightMode_INVALID | tvBacklightMode_AMBIENT);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+	/* Step 06: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
 	numberofBacklightModes = Configfile.backLightCtl.size;
 	for(int i =0 ; i < numberofBacklightModes; i++)
 	{
@@ -2645,11 +2649,11 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 		}
 	}
 
-	/* Step 06: Calling tvsettings termination and expecting the API to return success */
+	/* Step 07: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 07: Calling tvsettings the SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_STATE */
+	/* Step 08: Calling tvsettings the SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentBacklightMode((tvBacklightMode_t)Configfile.backLightCtl.modevalue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
@@ -2965,9 +2969,8 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 * | 01 | call SetTVDimmingMode() -  Set TV Dimming Mode even before TvInit() | const char * | (tvERROR_INVALID_STATE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED |
 * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
 * | 03 | call SetTVDimmingMode() -   Set TV Dimming Mode with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
-* | 04 | call SetTVDimmingMode() -   Set TV Dimming Mode with valid value but not supported by the platform by looping through the DimmingMode section of test specific config file | const char * | tvERROR_INVALID_PARAM | Should Pass |
-* | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
-* | 06 | call SetTVDimmingMode() -  Set TV Dimming Mode valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
+* | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+* | 05 | call SetTVDimmingMode() -  Set TV Dimming Mode valid arguments | const char * | tvERROR_INVALID_STATE | Should Pass |
 */
 void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 {
@@ -11475,10 +11478,13 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 	gTestID = 159;                                    /* It must be 159 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	unsigned short pData_R_limit[]={0, 100, 1023};
-	unsigned short pData_G_limit[]={0, 100, 1023};
-	unsigned short pData_B_limit[]={0, 100, 1023};
-	unsigned short  size = 0;
+	unsigned short pData_R_limit[256]={0};
+	unsigned short pData_G_limit[256]={0};
+	unsigned short pData_B_limit[256]={0};
+	unsigned short pData_R_limit_retry[256]={0};
+	unsigned short pData_G_limit_retry[256]={0};
+	unsigned short pData_B_limit_retry[256]={0};
+	unsigned short  size = 256;
 	bool bflag = true;
 	tvError_t result = tvERROR_NONE ;
 
@@ -11500,10 +11506,26 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 			break;
 		}
 	}
+	UT_ASSERT_AUTO_TERM_TRUE(bflag);
+	
+	/* Step 03: Retrieve tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
+	result = GetGammaTable(pData_R_limit_retry,pData_G_limit_retry,pData_B_limit_retry, size);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	for(int i =0; i <size;i++ )
+	{
+		if( ( pData_R_limit[i] == pData_R_limit_retry[i])&&  \
+				(pData_G_limit[i] == pData_G_limit_retry[i] )|| \
+				(pData_B_limit[i] == pData_B_limit_retry[i] ) ){
+
+			bflag = false;
+			break;
+		}
+	}
 
 	UT_ASSERT_AUTO_TERM_TRUE(bflag);
 
-	/* Step 03: Calling tvsettings termination and expecting the API to return success */
+	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -14152,12 +14174,15 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 02: Calling tvsettings GetTVGammaTarget and expecting the API to return success */
+    /* Step 02-03: Calling tvsettings GetTVGammaTarget and expecting the API to return success */
 	for (size_t i = 0; i < (Configfile.colorTemp.colorStruct.size); i++)
 	{
 		GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &x_Value, &y_Value);
 		UT_ASSERT_AUTO_TERM_TRUE((x_Value >= 0 && x_Value <= 1.0) );
 		UT_ASSERT_AUTO_TERM_TRUE((y_Value >= 0 && y_Value <= 1.0) );
+		
+		GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[i], &x_ValueRetry, &y_ValueRetry);
+		UT_ASSERT_AUTO_TERM_TRUE((x_Value == x_ValueRetry && y_Value == y_ValueRetry) );
 	}
 
 	/* Step 03: Calling tvsettings termination and expecting the API to return success */
