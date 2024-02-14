@@ -915,7 +915,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats (void)
 	tvVideoFormatType_t *tvVideoFormats[1]={0};
 	unsigned short size = 0;
 
-	tvVideoFormats[0] = (tvVideoFormatType_t *)malloc(sizeof(tvVideoFormatType_t));
+	tvVideoFormats[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT*sizeof(tvVideoFormatType_t));
 	UT_ASSERT_AUTO_TERM_FALSE( tvVideoFormats[0] == NULL);
 
 	/* Step 01: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
@@ -2844,7 +2844,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 	tvDimmingMode_t *tvDimmingModes[1]={0};
 	unsigned short size = 0;
 
-	tvDimmingModes[0] = (tvDimmingMode_t *)malloc(sizeof(tvDimmingMode_t));
+	tvDimmingModes[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDimmingMode_t));
 	UT_ASSERT_AUTO_TERM_FALSE( tvDimmingModes[0] == NULL);
 
 	/* Step 01: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_STATE */
@@ -7701,7 +7701,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	tvDolbyMode_t *tvDolbyModes[1]={0};
 	unsigned short size = 0;
 
-	tvDolbyModes[0] = (tvDolbyMode_t *)malloc(sizeof(tvDolbyMode_t));
+	tvDolbyModes[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDolbyMode_t));
 	UT_ASSERT_AUTO_TERM_FALSE( tvDolbyModes[0] == NULL);
 
 	/* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
