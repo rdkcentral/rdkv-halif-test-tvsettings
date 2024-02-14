@@ -372,168 +372,168 @@ int fillstructure(const char *buf, int mode)
 	int ret = 0;
 	switch (mode)
 	{
-	case BRIGHTNESS_MODE_FLAG:
-		ret = parseRange(buf, &Configfile.brightness);
-		break;
-	case CONTRAST_MODE_FLAG:
-		ret = parseRange(buf, &Configfile.contrast);
-		break;
-	case SATURATION_MODE_FLAG:
-		ret = parseRange(buf, &Configfile.saturation);
-		break;
-	case SHARPNESS_MODE_FLAG:
-		ret = parseRange(buf, &Configfile.sharpness);
-		break;
-	case HUE_MODE_FLAG:
-		ret = parseRange(buf, &Configfile.hue);
-		break;
-	case BACKLIGHT_MODE_FLAG:
-		ret = parseRange(buf, &Configfile.backlight);
-		break;
-	case COMP_SATURATION_RED:
-		ret = parseRange(buf, &Configfile.CompSaturationRed);
-		if (strstr(buf, "range_from") != NULL)
-		{
-			strcpy(Configfile.componentColor.modeName[colorFlag], "RED");
-			Configfile.componentColor.modeId[colorFlag] = tvDataColor_RED;
-			colorFlag++;
-		}
-		break;
-	case COMP_SATURATION_GREEN:
-		ret = parseRange(buf, &Configfile.CompSaturationGreen);
-		if (strstr(buf, "range_from") != NULL)
-		{
-			strcpy(Configfile.componentColor.modeName[colorFlag], "GREEN");
-			Configfile.componentColor.modeId[colorFlag] = tvDataColor_GREEN;
-			colorFlag++;
-		}
-		break;
-	case COMP_SATURATION_BLUE:
-		ret = parseRange(buf, &Configfile.CompSaturationBlue);
-		if (strstr(buf, "range_from") != NULL)
-		{
-			strcpy(Configfile.componentColor.modeName[colorFlag], "BLUE");
-			Configfile.componentColor.modeId[colorFlag] = tvDataColor_BLUE;
-			colorFlag++;
-		}
-		break;
-	case COMP_SATURATION_YELLOW:
-		ret = parseRange(buf, &Configfile.CompSaturationYellow);
-		if (strstr(buf, "range_from") != NULL)
-		{
-			strcpy(Configfile.componentColor.modeName[colorFlag], "YELLOW");
-			Configfile.componentColor.modeId[colorFlag] = tvDataColor_YELLOW;
-			colorFlag++;
-		}
-		break;
-	case COMP_SATURATION_CYAN:
-		ret = parseRange(buf, &Configfile.CompSaturationCyan);
-		if (strstr(buf, "range_from") != NULL)
-		{
-			strcpy(Configfile.componentColor.modeName[colorFlag], "CYAN");
-			Configfile.componentColor.modeId[colorFlag] = tvDataColor_CYAN;
-			colorFlag++;
-		}
-		break;
-	case COMP_SATURATION_MAGENTA:
-		ret = parseRange(buf, &Configfile.CompSaturationMagenta);
-		if (strstr(buf, "range_from") != NULL)
-		{
-			strcpy(Configfile.componentColor.modeName[colorFlag], "MAGENTA");
-			Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
-			colorFlag++;
-		}
-		break;
-	case COMP_HUE_RED:
-		ret = parseRange(buf, &Configfile.CompHueRed);
-		break;
-	case COMP_HUE_GREEN:
-		ret = parseRange(buf, &Configfile.CompHueGreen);
-		break;
-	case COMP_HUE_BLUE:
-		ret = parseRange(buf, &Configfile.CompHueBlue);
-		break;
-	case COMP_HUE_YELLOW:
-		ret = parseRange(buf, &Configfile.CompHueYellow);
-		break;
-	case COMP_HUE_CYAN:
-		ret = parseRange(buf, &Configfile.CompHueCyan);
-		break;
-	case COMP_HUE_MAGENTA:
-		ret = parseRange(buf, &Configfile.CompHueMagenta);
-		break;
-	case COMP_LUMA_RED:
-		ret = parseRange(buf, &Configfile.CompLumaRed);
-		break;
-	case COMP_LUMA_GREEN:
-		ret = parseRange(buf, &Configfile.CompLumaGreen);
-		break;
-	case COMP_LUMA_BLUE:
-		ret = parseRange(buf, &Configfile.CompLumaBlue);
-		break;
-	case COMP_LUMA_YELLOW:
-		ret = parseRange(buf, &Configfile.CompLumaYellow);
-		break;
-	case COMP_LUMA_CYAN:
-		ret = parseRange(buf, &Configfile.CompLumaCyan);
-		break;
-	case COMP_LUMA_MAGENTA:
-		ret = parseRange(buf, &Configfile.CompLumaMagenta);
-		break;
-	case LOW_LATENCY_STATE:
-		ret = parseRange(buf, &Configfile.lowLatencyState);
-		break;
-	case COLOR_TEMP_MODE:
-		ret = parseRange_color(buf, &Configfile.colorTemp);
-		break;
-	case DIMMING_MODE:
-		ret = parseRange_mode(buf, &Configfile.dimmingMode);
-		break;
-	case BACK_LIGHT_CTL:
-		ret = parseRange_mode(buf, &Configfile.backLightCtl);
-		break;
-	case DOLBY_VISION_MODE:
-		ret = parseRange_mode(buf, &Configfile.dolbyMode);
-		break;
-	case ASPECT_RATIO:
-		ret = parseRange_mode(buf, &Configfile.aspectRatio);
-		break;
-	case PICTURE_MODE_FLAG:
-		ret = parseRange_picturemode(buf, &Configfile.picmodeStruct);
-		break;
-	case VIDEO_SOURCE_FLAG:
-		ret = parseRange_videoSource(buf, &Configfile.videoSrcStruct);
-		break;
-	case VIDEO_FRMT_FLAG:
-		ret = parseRange_videoFormat(buf, &Configfile.videoFormtStruct);
-		break;
-	case VIDEO_FRAME_RATE:
-		ret = parseRange_videoFramerate(buf, &Configfile.framerate);
-		break;
-	case DIM_LEVEL_FLAG:
-		ret = parseRange_dimlevel(buf, &Configfile.dimmingLevel);
-		break;
-	case WB_RED_FLAG:
-		ret = parseRange_wb(buf, &Configfile.wbRGB[0]);
-		break;
-	case WB_GREEN_FLAG:
-		ret = parseRange_wb(buf, &Configfile.wbRGB[1]);
-		break;
-	case WB_BLUE_FLAG:
-		ret = parseRange_wb(buf, &Configfile.wbRGB[2]);
-		break;
-	case GAMMA_TABLE_RED:
-		ret = parseRange_wb(buf, &Configfile.gammaRGB[0]);
-		break;
-	case GAMMA_TABLE_GREEN:
-		ret = parseRange_wb(buf, &Configfile.gammaRGB[1]);
-		break;
-	case GAMMA_TABLE_BLUE:
-		ret = parseRange_wb(buf, &Configfile.gammaRGB[2]);
-		break;
-	default:
-		ret = -1;
-		break;
+		case BRIGHTNESS_MODE_FLAG:
+			ret = parseRange(buf, &Configfile.brightness);
+			break;
+		case CONTRAST_MODE_FLAG:
+			ret = parseRange(buf, &Configfile.contrast);
+			break;
+		case SATURATION_MODE_FLAG:
+			ret = parseRange(buf, &Configfile.saturation);
+			break;
+		case SHARPNESS_MODE_FLAG:
+			ret = parseRange(buf, &Configfile.sharpness);
+			break;
+		case HUE_MODE_FLAG:
+			ret = parseRange(buf, &Configfile.hue);
+			break;
+		case BACKLIGHT_MODE_FLAG:
+			ret = parseRange(buf, &Configfile.backlight);
+			break;
+		case COMP_SATURATION_RED:
+			ret = parseRange(buf, &Configfile.CompSaturationRed);
+			if (strstr(buf, "range_from") != NULL)
+			{
+				strcpy(Configfile.componentColor.modeName[colorFlag], "RED");
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_RED;
+				colorFlag++;
+			}
+			break;
+		case COMP_SATURATION_GREEN:
+			ret = parseRange(buf, &Configfile.CompSaturationGreen);
+			if (strstr(buf, "range_from") != NULL)
+			{
+				strcpy(Configfile.componentColor.modeName[colorFlag], "GREEN");
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_GREEN;
+				colorFlag++;
+			}
+			break;
+		case COMP_SATURATION_BLUE:
+			ret = parseRange(buf, &Configfile.CompSaturationBlue);
+			if (strstr(buf, "range_from") != NULL)
+			{
+				strcpy(Configfile.componentColor.modeName[colorFlag], "BLUE");
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_BLUE;
+				colorFlag++;
+			}
+			break;
+		case COMP_SATURATION_YELLOW:
+			ret = parseRange(buf, &Configfile.CompSaturationYellow);
+			if (strstr(buf, "range_from") != NULL)
+			{
+				strcpy(Configfile.componentColor.modeName[colorFlag], "YELLOW");
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_YELLOW;
+				colorFlag++;
+			}
+			break;
+		case COMP_SATURATION_CYAN:
+			ret = parseRange(buf, &Configfile.CompSaturationCyan);
+			if (strstr(buf, "range_from") != NULL)
+			{
+				strcpy(Configfile.componentColor.modeName[colorFlag], "CYAN");
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_CYAN;
+				colorFlag++;
+			}
+			break;
+		case COMP_SATURATION_MAGENTA:
+			ret = parseRange(buf, &Configfile.CompSaturationMagenta);
+			if (strstr(buf, "range_from") != NULL)
+			{
+				strcpy(Configfile.componentColor.modeName[colorFlag], "MAGENTA");
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
+				colorFlag++;
+			}
+			break;
+		case COMP_HUE_RED:
+			ret = parseRange(buf, &Configfile.CompHueRed);
+			break;
+		case COMP_HUE_GREEN:
+			ret = parseRange(buf, &Configfile.CompHueGreen);
+			break;
+		case COMP_HUE_BLUE:
+			ret = parseRange(buf, &Configfile.CompHueBlue);
+			break;
+		case COMP_HUE_YELLOW:
+			ret = parseRange(buf, &Configfile.CompHueYellow);
+			break;
+		case COMP_HUE_CYAN:
+			ret = parseRange(buf, &Configfile.CompHueCyan);
+			break;
+		case COMP_HUE_MAGENTA:
+			ret = parseRange(buf, &Configfile.CompHueMagenta);
+			break;
+		case COMP_LUMA_RED:
+			ret = parseRange(buf, &Configfile.CompLumaRed);
+			break;
+		case COMP_LUMA_GREEN:
+			ret = parseRange(buf, &Configfile.CompLumaGreen);
+			break;
+		case COMP_LUMA_BLUE:
+			ret = parseRange(buf, &Configfile.CompLumaBlue);
+			break;
+		case COMP_LUMA_YELLOW:
+			ret = parseRange(buf, &Configfile.CompLumaYellow);
+			break;
+		case COMP_LUMA_CYAN:
+			ret = parseRange(buf, &Configfile.CompLumaCyan);
+			break;
+		case COMP_LUMA_MAGENTA:
+			ret = parseRange(buf, &Configfile.CompLumaMagenta);
+			break;
+		case LOW_LATENCY_STATE:
+			ret = parseRange(buf, &Configfile.lowLatencyState);
+			break;
+		case COLOR_TEMP_MODE:
+			ret = parseRange_color(buf, &Configfile.colorTemp);
+			break;
+		case DIMMING_MODE:
+			ret = parseRange_mode(buf, &Configfile.dimmingMode);
+			break;
+		case BACK_LIGHT_CTL:
+			ret = parseRange_mode(buf, &Configfile.backLightCtl);
+			break;
+		case DOLBY_VISION_MODE:
+			ret = parseRange_mode(buf, &Configfile.dolbyMode);
+			break;
+		case ASPECT_RATIO:
+			ret = parseRange_mode(buf, &Configfile.aspectRatio);
+			break;
+		case PICTURE_MODE_FLAG:
+			ret = parseRange_picturemode(buf, &Configfile.picmodeStruct);
+			break;
+		case VIDEO_SOURCE_FLAG:
+			ret = parseRange_videoSource(buf, &Configfile.videoSrcStruct);
+			break;
+		case VIDEO_FRMT_FLAG:
+			ret = parseRange_videoFormat(buf, &Configfile.videoFormtStruct);
+			break;
+		case VIDEO_FRAME_RATE:
+			ret = parseRange_videoFramerate(buf, &Configfile.framerate);
+			break;
+		case DIM_LEVEL_FLAG:
+			ret = parseRange_dimlevel(buf, &Configfile.dimmingLevel);
+			break;
+		case WB_RED_FLAG:
+			ret = parseRange_wb(buf, &Configfile.wbRGB[0]);
+			break;
+		case WB_GREEN_FLAG:
+			ret = parseRange_wb(buf, &Configfile.wbRGB[1]);
+			break;
+		case WB_BLUE_FLAG:
+			ret = parseRange_wb(buf, &Configfile.wbRGB[2]);
+			break;
+		case GAMMA_TABLE_RED:
+			ret = parseRange_wb(buf, &Configfile.gammaRGB[0]);
+			break;
+		case GAMMA_TABLE_GREEN:
+			ret = parseRange_wb(buf, &Configfile.gammaRGB[1]);
+			break;
+		case GAMMA_TABLE_BLUE:
+			ret = parseRange_wb(buf, &Configfile.gammaRGB[2]);
+			break;
+		default:
+			ret = -1;
+			break;
 	}
 	if (ret != 0)
 	{
