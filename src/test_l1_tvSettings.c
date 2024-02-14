@@ -1911,7 +1911,8 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 		{
 			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
+				result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
+					               (tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}
@@ -1965,7 +1966,8 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],\
+		              (tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -3149,7 +3151,8 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 			{
 				for (size_t l = 0; l < Configfile.dimmingMode.size; l++)
 				{
-					result = SaveTVDimmingMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDimmingMode_t)Configfile.dimmingMode.modevalue[l]);
+					result = SaveTVDimmingMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
+						 		  (tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDimmingMode_t)Configfile.dimmingMode.modevalue[l]);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 				}
 			}
@@ -3202,7 +3205,8 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveTVDimmingMode((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvDimmingMode_t)Configfile.dimmingMode.modevalue[0]);
+	result = SaveTVDimmingMode((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],\
+				(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvDimmingMode_t)Configfile.dimmingMode.modevalue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -3602,7 +3606,8 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 			{
 				for (size_t l = 0; l < Configfile.dimmingLevel.size; l++)
 				{
-					result = SaveLocalDimmingLevel((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[l]);
+					result = SaveLocalDimmingLevel((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
+						                      (tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[l]);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 				}
 			}
@@ -6088,7 +6093,8 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 			{
 				for (size_t l = 0; l < Configfile.colorTemp.colorStruct.size; l++)
 				{
-					result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[l]);
+					result = SaveColorTemperature((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
+									(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[l]);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 				}
 			}
@@ -6142,7 +6148,8 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
+	result = SaveColorTemperature((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],\
+					(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -6524,7 +6531,8 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 			{
 				for (size_t l = 0; l < Configfile.aspectRatio.size; l++)
 				{
-					result = SaveAspectRatio((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDisplayMode_t)Configfile.aspectRatio.modevalue[l]);
+					result = SaveAspectRatio((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
+						 		(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDisplayMode_t)Configfile.aspectRatio.modevalue[l]);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 				}
 			}
@@ -6577,7 +6585,8 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveAspectRatio((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvDisplayMode_t)Configfile.aspectRatio.modevalue[0]);
+	result = SaveAspectRatio((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],\
+				(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvDisplayMode_t)Configfile.aspectRatio.modevalue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
@@ -8013,7 +8022,8 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 			{
 				for (size_t l = 0; l < Configfile.dolbyMode.size; l++)
 				{
-					result = SaveTVDimmingMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDimmingMode_t)Configfile.dolbyMode.modevalue[l]);
+					result = SaveTVDimmingMode((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
+									(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvDimmingMode_t)Configfile.dolbyMode.modevalue[l]);
 					UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 				}
 			}
@@ -8066,7 +8076,8 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	bool SupportAvailable = true;
 
 	/* Step 01: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_STATE */
-	result = SaveTVDolbyVisionMode((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvDolbyMode_t)Configfile.dolbyMode.modevalue[0]);
+	result = SaveTVDolbyVisionMode((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],\
+					(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvDolbyMode_t)Configfile.dolbyMode.modevalue[0]);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
