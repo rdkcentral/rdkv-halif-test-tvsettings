@@ -67,6 +67,9 @@ int gTestID = 1;
 extern struct TvSettingConfig Configfile;
 volatile bool callbackflag = false;
 
+#define UT_VERSION_MAJOR  1
+#define UT_VERSION_MINOR  0
+
 #define UT_ASSERT_AUTO_TERM_NUMERICAL(value, comparison){\
 	if(value != comparison){\
 		UT_LOG("\n In %s Comparison: [%d = %d]\n", __FUNCTION__, value, comparison);\
@@ -15746,6 +15749,7 @@ static UT_test_suite_t * pSuite_B11 = NULL;
  */
 int test_l1_tvSettings_register ( void )
 {
+	UT_LOG("\n*******UT version Number : %d.%d*********\n", UT_VERSION_MAJOR, UT_VERSION_MINOR);
 	/* add a suite to the registry */
 	pSuite = UT_add_suite( "[L1 tvSettings - Bank 0]", NULL, NULL );
 	if ( NULL == pSuite )
