@@ -13497,9 +13497,8 @@ void test_l1_tvSettings_positive_GetCMSState (void)
  * | 01 | call GetCMSState() -   Retrieve current CMS State even before TvInit() | bool * | tvERROR_INVALID_STATE | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
  * | 03 | call GetCMSState() -  Retrieve current CMS State with invalid input | NULL | tvERROR_INVALID_PARAM | Should Pass |
- * | 04 | call GetCMSState() -  Retrieve current CMS State valid arguments | bool * | tvERROR_NONE | Should Pass |
- * | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 06 | call GetCMSState() -  Retrieve current CMS State valid arguments | bool * | tvERROR_INVALID_STATE | Should Pass |
+ * | 04 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 05 | call GetCMSState() -  Retrieve current CMS State valid arguments | bool * | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_GetCMSState (void)
 {
@@ -13521,15 +13520,11 @@ void test_l1_tvSettings_negative_GetCMSState (void)
 	result = GetCMSState(NULL);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings to Set the GetCMSState for value true and the API to return success */
-	result = GetCMSState(&CMSState);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 06: Calling tvsettings to Set the GetCMSState for value true and the API to return tvERROR_INVALID_STATE */
+	/* Step 05: Calling tvsettings to Set the GetCMSState for value true and the API to return tvERROR_INVALID_STATE */
 	result = GetCMSState(&CMSState);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 
