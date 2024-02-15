@@ -16,16 +16,16 @@ tvError_t TvTerm(void)
   return (tvError_t)0;
 }
 
-void RegisterVideoFormatChangeCB(tvVideoFormatCallbackData *cbData){
+tvError_t RegisterVideoFormatChangeCB(tvVideoFormatCallbackData *cbData){
 }
 
-void RegisterVideoContentChangeCB(tvVideoContentCallbackData *cbData){
+tvError_t RegisterVideoContentChangeCB(tvVideoContentCallbackData *cbData){
 }
 
-void RegisterVideoResolutionChangeCB(tvVideoResolutionCallbackData *cbData){
+tvError_t RegisterVideoResolutionChangeCB(tvVideoResolutionCallbackData *cbData){
 }
 
-void RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData *cbData){
+tvError_t RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData *cbData){
 }
 
 tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* numberOfFormats)
