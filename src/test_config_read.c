@@ -32,12 +32,31 @@
  */
 
 /**
+ * @addtogroup HPK Hardware Porting Kit
+ * @{
+ * @par The Hardware Porting Kit
+ * HPK is the next evolution of the well-defined Hardware Abstraction Layer
+ * (HAL), but augmented with more comprehensive documentation and test suites
+ * that OEM or SOC vendors can use to self-certify their ports before taking
+ * them to RDKM for validation or to an operator for final integration and
+ * deployment. The Hardware Porting Kit effectively enables an OEM and/or SOC
+ * vendor to self-certify their own Video Accelerator devices, with minimal RDKM
+ * assistance.
+ *
+ */
+
+/**
  * @addtogroup TV_Settings TV Settings Module
+ * @par Application API Specification
+ * Described herein are the TV Settings HAL types and functions that are part of
+ * the Host subsystem. The Host subsystem manages system-specific HAL operations.
  * @{
  */
 
 /**
-* @addtogroup TV_Settings_HAL TV Settings HAL
+* @addtogroup TV_Settings_HAL TV Settings HALTEST
+* @par Application API Specification
+* TvSettings HAL provides an interface for managing the TV settings for the TV settings module
 * @{
 */
 
@@ -57,7 +76,7 @@
  * **Pre-Conditions:**  None@n
  * **Dependencies:** None@n
  *
- * Ref to API Definition specification documentation : [halSpec.md](../../../docs/halSpec.md)
+ * Ref to API Definition specification documentation : [tv-settings_halSpec.md](../../../docs/tv-settings_halSpec.md)
  */
 
 #include "test_config_read.h"
