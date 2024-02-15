@@ -17,6 +17,40 @@
 *  limitations under the License.
 */
 
+/**
+ * @addtogroup TV_Settings TV Settings Module
+ * @par Application API Specification
+ * Described herein are the TV Settings HAL types and functions that are part of
+ * the Host subsystem. The Host subsystem manages system-specific HAL operations.
+ * @{
+ */
+
+/**
+* @addtogroup TV_Settings_HAL TV Settings HALTEST
+* @par Application API Specification
+* TvSettings HAL provides an interface for managing the TV settings for the TV settings module
+* @{
+*/
+
+/**
+* @defgroup TV_Settings_HALTEST TV Settings HAL Test Cases
+* @{
+*/
+
+/**
+ * @file test_register.c
+ * @page TV_Settings_HALTEST  
+ *
+ * ## Module's Role
+ * This module includes Level 1 and 2 functional tests (success and failure scenarios).
+ * This is to ensure that the API meets the operational requirements of the TV SETTINGS across all vendors.
+ *
+ * **Pre-Conditions:**  None@n
+ * **Dependencies:** None@n
+ *
+ * Ref to API Definition specification documentation : [tv-settings_halSpec.md](../../../docs/tv-settings_halSpec.md)
+ */
+
 #include <ut.h>
 
 /**
@@ -36,4 +70,7 @@ int UT_register_APIDEF_l1_tests( void )
 
 	return registerFailed;
 }
-
+/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings_HAL
+/** @} */ // End of TV_Settings
+/** @} */ // End of HPK
