@@ -33,11 +33,16 @@
 
 /**
  * @addtogroup TV_Settings TV Settings Module
+ * @par Application API Specification
+ * Described herein are the TV Settings HAL types and functions that are part of
+ * the Host subsystem. The Host subsystem manages system-specific HAL operations.
  * @{
  */
 
 /**
-* @addtogroup TV_Settings_HAL TV Settings HAL
+* @addtogroup TV_Settings_HAL TV Settings HALTEST
+* @par Application API Specification
+* TvSettings HAL provides an interface for managing the TV settings for the TV settings module
 * @{
 */
 
