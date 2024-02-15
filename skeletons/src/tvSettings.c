@@ -16,16 +16,16 @@ tvError_t TvTerm(void)
   return (tvError_t)0;
 }
 
-void RegisterVideoFormatChangeCB(tvVideoFormatCallbackData& cbData){
+void RegisterVideoFormatChangeCB(tvVideoFormatCallbackData *cbData){
 }
 
-void RegisterVideoContentChangeCB(tvVideoContentCallbackData &cbData){
+void RegisterVideoContentChangeCB(tvVideoContentCallbackData *cbData){
 }
 
-void RegisterVideoResolutionChangeCB(tvVideoResolutionCallbackData& cbData){
+void RegisterVideoResolutionChangeCB(tvVideoResolutionCallbackData *cbData){
 }
 
-void RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData& cbData){
+void RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData *cbData){
 }
 
 tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* numberOfFormats)
@@ -150,7 +150,7 @@ tvError_t SetTVDimmingMode(const char* dimmingMode)
   return (tvError_t)0;
 }
 
-tvError_t GetTVDimmingMode(const char* dimmingMode)
+tvError_t GetTVDimmingMode(char* dimmingMode)
 {
   /*TODO: Implement Me!*/
   (void)dimmingMode;
