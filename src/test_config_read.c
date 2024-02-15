@@ -18,24 +18,33 @@
  */
 
 /**
- * @addtogroup HPK HPK
+ * @addtogroup HPK Hardware Porting Kit
  * @{
- **/
+ * @par The Hardware Porting Kit
+ * HPK is the next evolution of the well-defined Hardware Abstraction Layer
+ * (HAL), but augmented with more comprehensive documentation and test suites
+ * that OEM or SOC vendors can use to self-certify their ports before taking
+ * them to RDKM for validation or to an operator for final integration and
+ * deployment. The Hardware Porting Kit effectively enables an OEM and/or SOC
+ * vendor to self-certify their own Video Accelerator devices, with minimal RDKM
+ * assistance.
+ *
+ */
 
 /**
- * @defgroup TV_Settings TV Settings Module
+ * @addtogroup TV_Settings TV Settings Module
  * @{
- **/
+ */
 
 /**
- * @defgroup TV_Settings_HALTEST TV Settings HAL Test
- * @{
- **/
+* @addtogroup TV_Settings_HAL TV Settings HAL
+* @{
+*/
 
 /**
- * @defgroup TV_Settings_HALTEST_L1 TV Settings HAL L1 Test Cases
- * @{
- **/
+* @defgroup TV_Settings_HALTEST_L1 TV Settings HAL L1 Test Cases
+* @{
+*/
 
 /**
  * @file test_config_read.c
@@ -851,6 +860,6 @@ int config_read(char *filename)
 	return 1;
 }
 /** @} */ // End of TV_Settings_HALTEST_L1
-/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings_HAL
 /** @} */ // End of TV_Settings
 /** @} */ // End of HPK
