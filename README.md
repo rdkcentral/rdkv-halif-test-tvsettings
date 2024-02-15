@@ -1,4 +1,4 @@
-# Unit Testing Suite For < TODO: `HAL` Name > `HAL`
+# Unit Testing Suite For TV Settings HAL
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@
 
 ## Description
 
-This repository contains the Unit Test Suites (L1 and L2) for < TODO: `HAL` Name > `HAL`.
+This repository contains the Unit Test Suites L1 for TV Settings HAL.
 
 ## Reference Documents
 
@@ -22,7 +22,8 @@ This repository contains the Unit Test Suites (L1 and L2) for < TODO: `HAL` Name
 |SNo|Document Name|Document Description|Document Link|
 |---|-------------|--------------------|-------------|
 |1|`HAL` Specification Document|This document provides specific information on the APIs for which tests are written in this module|[< TODO: Name of halSpec.md >](< TODO: Link to `HAL`'s halSpec.md file in url > "< TODO: Name of halSpec.md >" )|
-|2|`L2` Test Specification Document|This document provides information on the `L2` tests required for this module|[< TODO: Name of `L2` Test Specification Document >](< TODO: Link to `L2` Test Specification Document in url > "< TODO: Name of `L2` Test Specification Document >" )|
-|3|`L1` Tests | `L1` Test Case File for this module |[< TODO: Name of L1 Source File >](< TODO: Link to `L1` Source File in url > "< TODO: Name of `L1` Source File>" )|
-|4|`L2` Tests |`L2` Test Case File for this module|[< TODO: Name of `L2` Source File >](< TODO: Link to L2 Source File in url > "< TODO: Name of `L2` Source File>" )|
+|2|`L1` Tests | `L1` Test Case File for this module | [test_l1_tvSettings.c]( https://github.com/comcast-sky/rdk-components-haltest-tvsettings/blob/master/src/test_l1_tvsettings.c         "test_l1_tvSettings.c" )|
 
+## Note
+
+- To run the binary, ensure that you pass the configuration file as an argument. The following example demonstrates how to do this:                             ./hal_test pq_capablities.ini
