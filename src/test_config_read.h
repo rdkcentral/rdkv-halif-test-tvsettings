@@ -62,7 +62,7 @@
  * **Pre-Conditions:**  None@n
  * **Dependencies:** None@n
  *
- * Ref to API Definition specification documentation : [halSpec.md](../../../docs/halSpec.md)
+ * Ref to API Definition specification documentation : [tv-settings_halSpec.md](../../../docs/tv-settings_halSpec.md)
  */
 
 #ifndef TEST_CONFIG_READ_H
