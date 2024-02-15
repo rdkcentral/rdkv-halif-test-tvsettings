@@ -18,18 +18,50 @@
 */
 
 /**
-* @file TODO: main.c
-* @page module_name TODO: Required field, name of the main module
-* @subpage sub_page_name TODO: Add a function group if relevant
+ * @addtogroup HPK Hardware Porting Kit
+ * @{
+ * @par The Hardware Porting Kit
+ * HPK is the next evolution of the well-defined Hardware Abstraction Layer
+ * (HAL), but augmented with more comprehensive documentation and test suites
+ * that OEM or SOC vendors can use to self-certify their ports before taking
+ * them to RDKM for validation or to an operator for final integration and
+ * deployment. The Hardware Porting Kit effectively enables an OEM and/or SOC
+ * vendor to self-certify their own Video Accelerator devices, with minimal RDKM
+ * assistance.
+ *
+ */
+
+/**
+ * @addtogroup TV_Settings TV Settings Module
+ * @{
+ */
+
+/**
+ * @addtogroup TV_Settings_HALTEST TV Settings HAL Tests
+ * @{
+ */
+
+/**
+ * @defgroup TV_Settings_HALTEST_MAIN TV Settings HAL Tests Main File
+ *  @{
+ * @parblock
+ *
+ * ### Tests for TV_Settings HAL :
+ *
+ * This is to ensure that the API meets the operational requirements of the module across all vendors.
+ *
+ * **Pre-Conditions:** None @n
+ * **Dependencies:** None @n
+ *
+ * Refer to Device Settings HAL Documentation Guide : [tv-settings_halSpec.md](../../docs/pages/tv-settings_halSpec.md)
+ *
+ * @endparblock
+ */
+
+
+/**
+* @file main.c
 *
-* ## Module's Role
-* TODO: Explain the module's role in the system in general
-* This is to ensure that the API meets the operational requirements of the module across all vendors.
-*
-* **Pre-Conditions:**  TODO: Add pre-conditions if any@n
-* **Dependencies:** TODO: Add dependencies if any@n
-*
-* Ref to API Definition specification documentation : [halSpec.md](../../../docs/halSpec.md)
 */
 
 #include <ut.h>
@@ -60,3 +92,7 @@ int main(int argc, char** argv)
 	return 0;
 
 }
+/** @} */ // End of TV_Settings_HALTEST_MAIN
+/** @} */ // End of TV_Settings_HALTEST
+/** @} */ // End of TV_Settings
+/** @} */ // End of HPK

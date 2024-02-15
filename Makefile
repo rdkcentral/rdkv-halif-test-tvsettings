@@ -25,7 +25,7 @@ TOP_DIR := $(ROOT_DIR)
 
 SRC_DIRS = $(ROOT_DIR)/src
 INC_DIRS := $(ROOT_DIR)/../include
-INC_DIRS += $(ROOT_DIR)/profiles/include
+INC_DIRS += $(ROOT_DIR)/include
 HAL_LIB := tvsettings-hal
 SKELETON_SRCS := $(ROOT_DIR)/skeletons/src/tvSettings.c
 

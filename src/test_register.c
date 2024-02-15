@@ -18,38 +18,50 @@
 */
 
 /**
+ * @addtogroup HPK Hardware Porting Kit
+ * @{
+ * @par The Hardware Porting Kit
+ * HPK is the next evolution of the well-defined Hardware Abstraction Layer
+ * (HAL), but augmented with more comprehensive documentation and test suites
+ * that OEM or SOC vendors can use to self-certify their ports before taking
+ * them to RDKM for validation or to an operator for final integration and
+ * deployment. The Hardware Porting Kit effectively enables an OEM and/or SOC
+ * vendor to self-certify their own Video Accelerator devices, with minimal RDKM
+ * assistance.
+ *
+ */
+
+/**
  * @addtogroup TV_Settings TV Settings Module
- * @par Application API Specification
- * Described herein are the TV Settings HAL types and functions that are part of
- * the Host subsystem. The Host subsystem manages system-specific HAL operations.
  * @{
  */
 
 /**
-* @addtogroup TV_Settings_HAL TV Settings HALTEST
-* @par Application API Specification
-* TvSettings HAL provides an interface for managing the TV settings for the TV settings module
-* @{
-*/
-
-/**
-* @defgroup TV_Settings_HALTEST TV Settings HAL Test Cases
-* @{
-*/
-
-/**
- * @file test_register.c
- * @page TV_Settings_HALTEST  
- *
- * ## Module's Role
- * This module includes Level 1 and 2 functional tests (success and failure scenarios).
- * This is to ensure that the API meets the operational requirements of the TV SETTINGS across all vendors.
- *
- * **Pre-Conditions:**  None@n
- * **Dependencies:** None@n
- *
- * Ref to API Definition specification documentation : [tv-settings_halSpec.md](../../../docs/tv-settings_halSpec.md)
+ * @addtogroup TV_Settings_HALTEST TV Settings HAL Tests
+ * @{
  */
+
+/**
+ * @defgroup TV_Settings_HALTEST_REGISTRATION Settings HAL Tests Registration File
+ *  @{
+ * @parblock
+ *
+ * ### Registration of tests for TV_Settings HAL :
+ *
+ * This is to ensure that the API meets the operational requirements of the module across all vendors.
+ *
+ * **Pre-Conditions:** None @n
+ * **Dependencies:** None @n
+ *
+ * Refer to Device Settings HAL Documentation Guide : [tv-settings_halSpec.md](../../docs/pages/tv-settings_halSpec.md)
+ *
+ * @endparblock
+ */
+
+/**
+* @file test_register.c
+*
+*/
 
 #include <ut.h>
 
@@ -70,7 +82,7 @@ int UT_register_APIDEF_l1_tests( void )
 
 	return registerFailed;
 }
+/** @} */ // End of TV_Settings_HALTEST_REGISTRATION
 /** @} */ // End of TV_Settings_HALTEST
-/** @} */ // End of TV_Settings_HAL
 /** @} */ // End of TV_Settings
 /** @} */ // End of HPK
