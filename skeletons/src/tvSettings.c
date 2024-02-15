@@ -17,15 +17,19 @@ tvError_t TvTerm(void)
 }
 
 tvError_t RegisterVideoFormatChangeCB(tvVideoFormatCallbackData *cbData){
+  return (tvError_t)0;
 }
 
 tvError_t RegisterVideoContentChangeCB(tvVideoContentCallbackData *cbData){
+  return (tvError_t)0;
 }
 
 tvError_t RegisterVideoResolutionChangeCB(tvVideoResolutionCallbackData *cbData){
+  return (tvError_t)0;
 }
 
 tvError_t RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData *cbData){
+  return (tvError_t)0;
 }
 
 tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* numberOfFormats)
