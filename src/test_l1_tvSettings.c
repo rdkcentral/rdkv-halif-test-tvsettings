@@ -146,7 +146,6 @@ void test_l1_tvSettings_positive_TvInit (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_INVALID_STATE ;
-	char pictureMode[PIC_MODE_NAME_MAX]={'\0'};
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1823,7 +1822,6 @@ void test_l1_tvSettings_positive_SetBacklight (void)
 	gTestID = 27;                                    /* It must be 27 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	int backlight = -1;
 	tvError_t result = tvERROR_NONE ;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -11365,7 +11363,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 	unsigned short pData_R_limit[]={0, 100, 1023};
 	unsigned short pData_G_limit[]={0, 100, 1023};
 	unsigned short pData_B_limit[]={0, 100, 1023};
-	unsigned short  size;
+	unsigned short  size =256;
 	bool bflag = true;
 	tvError_t result = tvERROR_NONE ;
 
@@ -11436,8 +11434,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 	unsigned short pData_R_limit[] ={0, 100, 1023};
 	unsigned short pData_G_limit[] ={0, 100, 1023};
 	unsigned short pData_B_limit[]={0, 100, 1023};
-	unsigned short  size;
-	bool bflag = true;
+	unsigned short  size = 255;
 	bool platformFlag = false;
 	tvError_t result = tvERROR_NONE ;
 
@@ -11564,9 +11561,9 @@ void test_l1_tvSettings_positive_GetGammaTable (void)
 
 	for(int i =0; i <size;i++ )
 	{
-		if( ( pData_R_limit[i] == pData_R_limit_retry[i])&&  \
-				(pData_G_limit[i] == pData_G_limit_retry[i] )|| \
-				(pData_B_limit[i] == pData_B_limit_retry[i] ) ){
+		if( ( pData_R_limit[i] != pData_R_limit_retry[i]) ||  \
+				(pData_G_limit[i] != pData_G_limit_retry[i] )|| \
+				(pData_B_limit[i] != pData_B_limit_retry[i] ) ){
 
 			bflag = false;
 			break;
@@ -12359,7 +12356,6 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSaturation = 0;
 
 	/* Step 01: Calling tvsettings SetCurrentComponentSaturation before TvInit and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],10);
@@ -12624,7 +12620,6 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSaturation = 0;
 
 	/* Step 01: Calling tvsettings SetCurrentComponentHue before TvInit and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],10);
@@ -12888,7 +12883,6 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	int numberOfSaturation = 0;
 
 	/* Step 01: Calling tvsettings SetCurrentComponentLuma before TvInit and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0],10);
@@ -13927,7 +13921,7 @@ void test_l1_tvSettings_positive_GetMaxGainValue (void)
 
 	/* Step 02: Calling tvsettings GetMaxGainValue and expectinging the API to return success */
 	maxGain = GetMaxGainValue();
-	UT_ASSERT_AUTO_TERM_TRUE( (maxGain >= 2^10 && maxGain <= (2^31)-1) );
+	UT_ASSERT_AUTO_TERM_TRUE( (maxGain >= (2^10)) && ( maxGain <= (2^31)-1) );
 
 	/* Step 03: Calling tvsettings GetMaxGainValue and expectinging the API to return success */
 	maxGainRetry = GetMaxGainValue( );
@@ -13968,7 +13962,7 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 
 	/* Step 01: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
 	maxGain = GetMaxGainValue( );
-	UT_ASSERT_FALSE(  (maxGain >= 2^10 && maxGain <= (2^31)-1));
+	UT_ASSERT_FALSE(  (maxGain >= (2^10)) && (maxGain <= (2^31)-1));
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -13976,7 +13970,7 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 
 	/* Step 03: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
 	maxGain = GetMaxGainValue( );
-	UT_ASSERT_AUTO_TERM_TRUE(  (maxGain >= 2^10 && maxGain <= (2^31)-1));
+	UT_ASSERT_AUTO_TERM_TRUE(  (maxGain >= (2^10)) && (maxGain <= (2^31)-1));
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -13984,7 +13978,7 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 
 	/* Step 05: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
 	maxGain = GetMaxGainValue( );
-	UT_ASSERT_FALSE( (maxGain >= 2^10 && maxGain <= (2^31)-1));
+	UT_ASSERT_FALSE( (maxGain >= (2^10)) && (maxGain <= (2^31)-1));
 
 	UT_LOG("Out %s",__FUNCTION__); 
 }
@@ -14320,8 +14314,8 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	double x_ValueRetry = 0.0, x_Value = 0.0;
-	double y_ValueRetry = 0.0, y_Value = 0.0;
+	double x_Value = 0.0;
+	double y_Value = 0.0;
 
 	/* Step 01: Calling tvsettings GetTVGammaTarget before TvInit */
 	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &x_Value, &y_Value);
@@ -15771,8 +15765,7 @@ static UT_test_suite_t * pSuite_B6 = NULL;
 static UT_test_suite_t * pSuite_B7 = NULL;
 static UT_test_suite_t * pSuite_B8 = NULL;
 static UT_test_suite_t * pSuite_B9 = NULL;
-static UT_test_suite_t * pSuite_B10 = NULL;
-static UT_test_suite_t * pSuite_B11 = NULL;
+//static UT_test_suite_t * pSuite_B10 = NULL;
 
 /**
  * @brief Register the main test(s) for this module
@@ -16083,6 +16076,6 @@ int test_l1_tvSettings_register ( void )
 } 
 
 /** @} */ // End of TV_Settings_HALTEST_L1
-/** @} */ // End of TV_Settings_HAL
+/** @} */ // End of TV_Settings_HALTEST
 /** @} */ // End of TV_Settings
 /** @} */ // End of HPK
