@@ -27,7 +27,7 @@ This repository contains the Unit Test Suites L1 for TV Settings HAL.
 |SNo|Document Name|Document Description|Document Link|
 |---|-------------|--------------------|-------------|
 |1|`HAL` Specification Document|This document provides specific information on the APIs for which tests are written in this module|[tv-settings_halSpec](https://github.com/comcast-sky/rdk-components-hal-tvsettings/blob/develop/docs/pages/tv-settings_halSpec.md "tv-settings_halSpec" )|
-|2|`L1` Tests | `L1` Test Case File for this module | [test_l1_tvSettings.c]( https://github.com/comcast-sky/rdk-components-haltest-tvsettings/blob/master/src/test_l1_tvsettings.c         "test_l1_tvSettings.c" )|
+|2|`L1` Tests | `L1` Test Case File for this module | [test_l1_tvSettings.c]( https://github.com/comcast-sky/rdk-components-haltest-tvsettings/blob/master/src/test_l1_tvSettings.c         "test_l1_tvSettings.c" )|
 
 ## Note
 
