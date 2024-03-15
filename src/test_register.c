@@ -72,13 +72,15 @@
 
 /* L1 Testing Functions */
 extern int test_l1_tvSettings_register( void );
-
+extern int test_l2_tvSettings_register( void );
 
 int UT_register_APIDEF_l1_tests( void )
 {
 	int registerFailed=0;
 
 	registerFailed |= test_l1_tvSettings_register();
+	registerFailed |= test_l2_tvSettings_register();
+
 
 	return registerFailed;
 }
