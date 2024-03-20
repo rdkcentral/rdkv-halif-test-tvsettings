@@ -307,13 +307,12 @@ void test_l1_tvSettings_negative_TvTerm (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | Call RegisterVideoFormatChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoFormatCallbackData& | void | tvERROR_NONE | Should Pass |
+ * | 02 | Call RegisterVideoFormatChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoFormatCallbackData * | void | tvERROR_NONE | Should Pass |
  * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void tvVideoFormatChangeHandler(tvVideoFormatType_t format,void *userData)
 {
 	UT_LOG("callabck : %s",__FUNCTION__);
-	callbackflag = true;
 }
 
 void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
@@ -332,19 +331,8 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	callbackflag = false;
-
-	for(int i =0 ; i < 1000 ; i++)
-	{
-		if(!callbackflag){
-			usleep(100000);
-		}else{
-			break;
-		}
-	}
-
 	callbackData.cb = NULL;
+	
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -366,12 +354,13 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call RegisterVideoFormatChangeCB() -  Register the callback function even before TvInit() | tvVideoFormatCallbackData& | void | tvERROR_INVALID_STATE | Should Pass |
+ * | 01 | call RegisterVideoFormatChangeCB() -  Register the callback function even before TvInit() | tvVideoFormatCallbackData * | void | tvERROR_INVALID_STATE | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call RegisterVideoFormatChangeCB() -  Register using a NULL data handle | tvVideoFormatCallbackData&(NULL, tvVideoFormatChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 04 | call RegisterVideoFormatChangeCB() -  Register using a NULL callback function | tvVideoFormatCallbackData&(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 06 | call RegisterVideoFormatChangeCB() -  Register the callback function even after TvInit() | tvVideoFormatCallbackData& | void | tvERROR_INVALID_STATE | Should Pass |
+ * | 03 | call RegisterVideoFormatChangeCB() -  Register using a NULL pointer | RegisterVideoFormatChangeCB(NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call RegisterVideoFormatChangeCB() -  Register using a callback data with NULL callback function | tvVideoFormatCallbackData(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call RegisterVideoFormatChangeCB() -  Register using a callback data with NULL user data handle | tvVideoFormatCallbackData(NULL, tvVideoFormatChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 07 | call RegisterVideoFormatChangeCB() -  Register the callback function even after TvInit() | tvVideoFormatCallbackData * | void | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 {
@@ -390,21 +379,26 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
-	callbackData.cb = NULL;
-	result = RegisterVideoFormatChangeCB(&callbackData);
-    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	 /* Step 03: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	result = RegisterVideoFormatChangeCB(NULL);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
-	callbackData.userdata = NULL;
+	callbackData.cb = NULL;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings initialization and expecting the API to return success */
+	/* Step 05: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	callbackData.userdata = NULL;
+	callbackData.cb = tvVideoFormatChangeHandler;
+	result = RegisterVideoFormatChangeCB(&callbackData);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+
+	/* Step 06: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 06: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -427,13 +421,12 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | Call RegisterVideoContentChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoContentCallbackData& | void | tvERROR_NONE | Should Pass |
+ * | 02 | Call RegisterVideoContentChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoContentCallbackData * | void | tvERROR_NONE | Should Pass |
  * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void tvVideoContentChangeHandler(tvContentType_t content,void *userData)
 {
 	UT_LOG("callabck : %s",__FUNCTION__);
-	callbackflag = true;
 }
 
 void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
@@ -452,16 +445,6 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 	callbackData.cb = tvVideoContentChangeHandler;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	callbackflag = false;
-	for(int i =0 ; i < 1000 ; i++)
-	{
-		if(!callbackflag){
-			usleep(100000); 
-		}else{
-			break;
-		}
-	}
 	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -485,12 +468,13 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call RegisterVideoContentChangeCB() -  Register the callback function even before TvInit() | tvVideoContentCallbackData& | void | tvERROR_INVALID_STATE | | Should Pass || Should Pass |
+ * | 01 | call RegisterVideoContentChangeCB() -  Register the callback function even before TvInit() | tvVideoContentCallbackData * | void | tvERROR_INVALID_STATE | | Should Pass || Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call RegisterVideoContentChangeCB() -  Register using a NULL data handle | tvVideoContentCallbackData&(NULL, tvVideoFormatChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 04 | call RegisterVideoContentChangeCB() -  Register using a NULL callback function | tvVideoContentCallbackData&(void*, NULL) | void | tvERROR_INVALID_PARA | Should Pass |
- * | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 06 | call RegisterVideoContentChangeCB() -  Register the callback function even after TvInit() | tvVideoContentCallbackData& | void | tvERROR_INVALID_STATE | Should Pass |
+ * | 03 | call RegisterVideoContentChangeCB() -  Register using a NULL pointer | RegisterVideoContentChangeCB(NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call RegisterVideoContentChangeCB() -  Register using a callback data with NULL callback function | tvVideoContentCallbackData(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call RegisterVideoContentChangeCB() -  Register using a callback data with NULL user data handle | tvVideoContentCallbackData(NULL, tvVideoVideoContentChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass | 
+ * | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 07 | call RegisterVideoContentChangeCB() -  Register the callback function even after TvInit() | tvVideoContentCallbackData * | void | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 {
@@ -510,20 +494,25 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	result = RegisterVideoContentChangeCB(NULL);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+
+	/* Step 04: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
 	callbackData.cb = NULL;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
 	callbackData.userdata = NULL;
+	callbackData.cb = tvVideoContentChangeHandler;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings initialization and expecting the API to return success */
+	/* Step 06: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE); 
 
-	/* Step 06: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
 	callbackData.cb = tvVideoContentChangeHandler;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -546,13 +535,12 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | Call RegisterVideoResolutionChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoResolutionCallbackData& | void | tvERROR_NONE | Should Pass |
+ * | 02 | Call RegisterVideoResolutionChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoResolutionCallbackData * | void | tvERROR_NONE | Should Pass |
  * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void tvVideoResolutionChangeHandler(tvResolutionParam_t resolution,void *userData)
 {
-	UT_LOG("callabck : %s",__FUNCTION__);
-	callbackflag = true;
+	UT_LOG("callback : %s",__FUNCTION__);
 }
 
 void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
@@ -571,16 +559,6 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 	callbackData.cb = tvVideoResolutionChangeHandler;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	callbackflag = false;
-	for(int i =0 ; i < 1000 ; i++)
-	{
-		if(!callbackflag){
-			usleep(100000);
-		}else{
-			break;
-		}
-	}
 	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -604,12 +582,13 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call RegisterVideoResolutionChangeCB() -  Register the callback function even before TvInit() | tvVideoResolutionCallbackData& | void | tvERROR_INVALID_STATE | | Should Pass |
+ * | 01 | call RegisterVideoResolutionChangeCB() -  Register the callback function even before TvInit() | tvVideoResolutionCallbackData * | void | tvERROR_INVALID_STATE | | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call RegisterVideoResolutionChangeCB() -  Register using a NULL data handle | tvVideoResolutionCallbackData&(NULL, tvVideoFormatChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 04 | call RegisterVideoResolutionChangeCB() -  Register using a NULL callback function | tvVideoResolutionCallbackData&(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 06 | call RegisterVideoResolutionChangeCB() -  Register the callback function even after TvInit() | tvVideoResolutionCallbackData& | void | tvERROR_INVALID_STATE | Should Pass |
+ * | 03 | call RegisterVideoResolutionChangeCB() -  Register using a NULL pointer | RegisterVideoResolutionChangeCB(NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call RegisterVideoResolutionChangeCB() -  Register using a callback data with NULL callback function | tvVideoResolutionCallback(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call RegisterVideoResolutionChangeCB() -  Register using a callback data with NULL user data handle | tvVideoResolutionCallbackData(NULL, tvVideoResolutionChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 07 | call RegisterVideoResolutionChangeCB() -  Register the callback function even after TvInit() | tvVideoResolutionCallbackData * | void | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 {
@@ -629,20 +608,25 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	result = RegisterVideoResolutionChangeCB(NULL);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 04: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
 	callbackData.cb = NULL;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
 	callbackData.userdata = NULL;
+	callbackData.cb = tvVideoResolutionChangeHandler;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings initialization and expecting the API to return success */
+	/* Step 06: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 06: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
 	callbackData.cb = tvVideoResolutionChangeHandler;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -666,13 +650,12 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | Call RegisterVideoFrameRateChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoFrameRateCallbackData& | void | tvERROR_NONE | Should Pass |
+ * | 02 | Call RegisterVideoFrameRateChangeCB() - Register with the obtained data handle and a valid callback function | tvVideoFrameRateCallbackData * | void | tvERROR_NONE | Should Pass |
  * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void tvVideoFrameRateChangeHandler(tvVideoFrameRate_t framerate,void *userData)
 {
-	UT_LOG("callabck : %s",__FUNCTION__);
-	callbackflag = true;
+	UT_LOG("callback : %s",__FUNCTION__);
 }
 
 void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
@@ -691,16 +674,6 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 	callbackData.cb = tvVideoFrameRateChangeHandler;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	callbackflag = false;
-	for(int i =0 ; i < 1000 ; i++)
-	{
-		if(!callbackflag){
-			usleep(100000);
-		}else{
-			break;
-		}
-	}
 	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -724,12 +697,13 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call RegisterVideoFrameRateChangeCB() -  Register the callback function even before TvInit() | tvVideoFrameRateCallbackData& | void | tvERROR_INVALID_STATE | Should Pass |
+ * | 01 | call RegisterVideoFrameRateChangeCB() -  Register the callback function even before TvInit() | tvVideoFrameRateCallbackData * | void | tvERROR_INVALID_STATE | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call RegisterVideoFrameRateChangeCB() -  Register using a NULL data handle | tvVideoFrameRateCallbackData&(NULL, tvVideoFormatChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 04 | call RegisterVideoFrameRateChangeCB() -  Register using a NULL callback function | tvVideoFrameRateCallbackData&(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
- * | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 06 | call RegisterVideoFrameRateChangeCB() -  Register the callback function even after TvInit() | tvVideoFrameRateCallbackData& | void | tvERROR_INVALID_STATE | Should Pass |
+ * | 03 | call RegisterVideoFrameRateChangeCB() -  Register using a NULL pointer | RegisterVideoFrameRateChangeCB(NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call RegisterVideoFrameRateChangeCB() -  Register using a callback data with NULL callback function | tvVideoFrameRateCallbackData(void*, NULL) | void | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call RegisterVideoFrameRateChangeCB() -  Register using a callback data with NULL user data handle | tvVideoFrameRateCallbackData(NULL, tvVideoFrameRateChangeCB) | void | tvERROR_INVALID_PARAM | Should Pass | 
+ * | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 07 | call RegisterVideoFrameRateChangeCB() -  Register the callback function even after TvInit() | tvVideoFrameRateCallbackData * | void | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 {
@@ -749,20 +723,25 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+        result = RegisterVideoFrameRateChangeCB(NULL);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+
+	/* Step 04: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
 	callbackData.cb = NULL;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
 	callbackData.userdata = NULL;
+	callbackData.cb = tvVideoFrameRateChangeHandler;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings initialization and expecting the API to return success */
+	/* Step 06: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 06: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
 	callbackData.cb = tvVideoFrameRateChangeHandler;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -15763,7 +15742,7 @@ static UT_test_suite_t * pSuite_B6 = NULL;
 static UT_test_suite_t * pSuite_B7 = NULL;
 static UT_test_suite_t * pSuite_B8 = NULL;
 static UT_test_suite_t * pSuite_B9 = NULL;
-//static UT_test_suite_t * pSuite_B10 = NULL;
+static UT_test_suite_t * pSuite_B10 = NULL;
 
 /**
  * @brief Register the main test(s) for this module
@@ -16055,7 +16034,6 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite_B9, "EnableLocalContrast_L1_positive" ,test_l1_tvSettings_positive_EnableLocalContrast );
 	UT_add_test( pSuite_B9, "EnableLocalContrast_L1_negative" ,test_l1_tvSettings_negative_EnableLocalContrast );
 
-#if 0
 	pSuite_B10= UT_add_suite( "[L1 tvSettings - Bank10]", NULL, NULL );
 	if ( NULL == pSuite_B10 )
 	{
@@ -16069,7 +16047,6 @@ int test_l1_tvSettings_register ( void )
 	UT_add_test( pSuite_B10, "RegisterVideoResolutionChangeCB_L1_negative" ,test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB );
 	UT_add_test( pSuite_B10, "RegisterVideoFrameRateChangeCB_L1_positive" ,test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB );
 	UT_add_test( pSuite_B10, "RegisterVideoFrameRateChangeCB_L1_negative" ,test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB );
-#endif
 	return 0;
 } 
 
