@@ -370,7 +370,7 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 	tvError_t result = tvERROR_NONE ;
 	tvVideoFormatCallbackData callbackData;
 
-	/* Step 01: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	/* Step 01: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return invalid state*/
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -379,16 +379,16 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	 /* Step 03: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	 /* Step 03: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return invalid param*/
 	result = RegisterVideoFormatChangeCB(NULL);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	/* Step 04: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return  invalid param*/
 	callbackData.cb = NULL;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return  invalid param*/
 	callbackData.userdata = NULL;
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
@@ -398,7 +398,7 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 07: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -484,7 +484,7 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 	tvError_t result = tvERROR_NONE ;
 	tvVideoContentCallbackData callbackData;
 
-	/* Step 01: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 01: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoContentChangeHandler;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -493,16 +493,16 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 03: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return  invalid param*/
 	result = RegisterVideoContentChangeCB(NULL);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 04: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return  invalid param*/
 	callbackData.cb = NULL;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return  invalid param*/
 	callbackData.userdata = NULL;
 	callbackData.cb = tvVideoContentChangeHandler;
 	result = RegisterVideoContentChangeCB(&callbackData);
@@ -512,7 +512,7 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE); 
 
-	/* Step 07: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoContentChangeHandler;
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -598,7 +598,7 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 	tvError_t result = tvERROR_NONE ;
 	tvVideoResolutionCallbackData callbackData;
 
-	/* Step 01: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 01: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoResolutionChangeHandler;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -607,16 +607,16 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 03: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return  invalid param*/
 	result = RegisterVideoResolutionChangeCB(NULL);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 	
-	/* Step 04: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 04: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return  invalid param*/
 	callbackData.cb = NULL;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return  invalid param*/
 	callbackData.userdata = NULL;
 	callbackData.cb = tvVideoResolutionChangeHandler;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
@@ -626,7 +626,7 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 07: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoResolutionChangeHandler;
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -713,7 +713,7 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 	tvError_t result = tvERROR_NONE ;
 	tvVideoFrameRateCallbackData callbackData;
 
-	/* Step 01: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 01: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoFrameRateChangeHandler;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
@@ -722,16 +722,16 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 03: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return  invalid param*/
         result = RegisterVideoFrameRateChangeCB(NULL);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 04: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 04: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return  invalid param*/
 	callbackData.cb = NULL;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
-	/* Step 05: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 05: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return  invalid param*/
 	callbackData.userdata = NULL;
 	callbackData.cb = tvVideoFrameRateChangeHandler;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
@@ -741,7 +741,7 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 07: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	/* Step 07: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoFrameRateChangeHandler;
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
