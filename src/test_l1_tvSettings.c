@@ -328,9 +328,18 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
+	callbackData.userdata = (char *)malloc(10);
+        if(callbackData.userdata){
+                strcpy(callbackData.userdata, "TestData");
+        }
 	callbackData.cb = tvVideoFormatChangeHandler;
+	
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+	if(callbackData.userdata){
+                free(callbackData.userdata);
+                callbackData.userdata = NULL;
+        }
 	callbackData.cb = NULL;
 	
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -442,9 +451,18 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
+	callbackData.userdata = (char *)malloc(10);
+        if(callbackData.userdata){
+                strcpy(callbackData.userdata, "TestData");
+        }
 	callbackData.cb = tvVideoContentChangeHandler;
+	
 	result = RegisterVideoContentChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+	if(callbackData.userdata){
+                free(callbackData.userdata);
+                callbackData.userdata = NULL;
+        }
 	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -556,9 +574,18 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
+	callbackData.userdata = (char *)malloc(10);
+        if(callbackData.userdata){
+                strcpy(callbackData.userdata, "TestData");
+        }
 	callbackData.cb = tvVideoResolutionChangeHandler;
+	
 	result = RegisterVideoResolutionChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+	if(callbackData.userdata){
+                free(callbackData.userdata);
+                callbackData.userdata = NULL;
+        }
 	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -671,9 +698,18 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
+	callbackData.userdata = (char *)malloc(10);
+        if(callbackData.userdata){
+                strcpy(callbackData.userdata, "TestData");
+        }
 	callbackData.cb = tvVideoFrameRateChangeHandler;
+	
 	result = RegisterVideoFrameRateChangeCB(&callbackData);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+	if(callbackData.userdata){
+                free(callbackData.userdata);
+                callbackData.userdata = NULL;
+        }
 	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
