@@ -166,12 +166,15 @@ struct videoColorTemp {
     int  colorTempValue[MAX_COLOR_TEMP];
     size_t size;
 };
-
 struct ComponentColor { 
     char modeName[MAX_COLOR_TEMP][MAX_NAME_SIZE];
     int  modeId[MAX_COLOR_TEMP];
     size_t size;
-
+};
+//TODO :-  remove this and move platform Support to Component Color structure
+struct ComponentColorTypeAndName {
+    bool  platformSupport[MAX_COLOR_TEMP][MAX_NAME_SIZE];
+    size_t size;
 };
 
 struct DisplayPictureMode {
@@ -261,6 +264,7 @@ struct TvSettingConfig {
     struct WhiteBalanceGamma gammaRGB[3];
     struct ComponentColor componentColor;
     struct ComponentColor backlightTestModes;
+    struct ComponentColorTypeAndName ColorTypeAndName;
     struct videoSource colorTempSourceOffset;
     struct videoSource pq_paramIndex;
 };
