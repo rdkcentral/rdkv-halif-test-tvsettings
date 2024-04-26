@@ -478,42 +478,54 @@ int fillstructure(const char *buf, int mode)
 			ret = parseRange(buf, &Configfile.CompSaturationRed);
 			if (strstr(buf, "range_from") != NULL)
 			{
-		        Configfile.ColorTypeAndName.platformSupport[COMP_SATURATION][tvDataColor_RED] = platformsupport(buf, &Configfile.CompSaturationRed);
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_RED;
+				colorFlag++;
+		        Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_RED] = platformsupport(buf, &Configfile.CompSaturationRed);
 			}
 			break;
 		case COMP_SATURATION_GREEN:
 			ret = parseRange(buf, &Configfile.CompSaturationGreen);
 			if (strstr(buf, "range_from") != NULL)
 			{
-				Configfile.ColorTypeAndName.platformSupport[COMP_SATURATION][tvDataColor_GREEN] = platformsupport(buf, &Configfile.CompSaturationGreen);
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_GREEN;
+				colorFlag++;
+				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_GREEN] = platformsupport(buf, &Configfile.CompSaturationGreen);
 			}
 			break;
 		case COMP_SATURATION_BLUE:
 			ret = parseRange(buf, &Configfile.CompSaturationBlue);
 			if (strstr(buf, "range_from") != NULL)
 			{
-				Configfile.ColorTypeAndName.platformSupport[COMP_SATURATION][tvDataColor_BLUE] = platformsupport(buf, &Configfile.CompSaturationBlue)
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_BLUE;
+				colorFlag++;
+				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_BLUE] = platformsupport(buf, &Configfile.CompSaturationBlue);
 			}
 			break;
 		case COMP_SATURATION_YELLOW:
 			ret = parseRange(buf, &Configfile.CompSaturationYellow);
 			if (strstr(buf, "range_from") != NULL)
 			{
-				Configfile.ColorTypeAndName.platformSupport[COMP_SATURATION][tvDataColor_YELLOW] = platformsupport(buf, &Configfile.CompSaturationYellow)
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_YELLOW;
+				colorFlag++;
+				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_YELLOW] = platformsupport(buf, &Configfile.CompSaturationYellow);
 			}
 			break;
 		case COMP_SATURATION_CYAN:
 			ret = parseRange(buf, &Configfile.CompSaturationCyan);
 			if (strstr(buf, "range_from") != NULL)
 			{
-				Configfile.ColorTypeAndName.platformSupport[COMP_SATURATION][tvDataColor_CYAN] = platformsupport(buf, &Configfile.CompSaturationCyan)
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_CYAN;
+				colorFlag++;
+				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_CYAN] = platformsupport(buf, &Configfile.CompSaturationCyan);
 			}
 			break;
 		case COMP_SATURATION_MAGENTA:
 			ret = parseRange(buf, &Configfile.CompSaturationMagenta);
 			if (strstr(buf, "range_from") != NULL)
 			{
-				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_MAGENTA] = platformsupport(buf, &Configfile.CompSaturationMagenta)
+				Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
+				colorFlag++
+				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_MAGENTA] = platformsupport(buf, &Configfile.CompSaturationMagenta);
 			}
 			break;
 		case COMP_HUE_RED:
@@ -912,6 +924,7 @@ int config_read(char *filename)
 	Configfile.colorTempSourceOffset.videoSourceValue[3] = AV_OFFSET;
 	Configfile.colorTempSourceOffset.size = MAX_OFFSET + 1; // ALL source start with -1
 
+    Configfile.componentColor.size = colorFlag;
 	Configfile.pq_paramIndex.size = paramFlag;
 	fclose(file);
 	return 1;

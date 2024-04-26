@@ -13129,9 +13129,9 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 		{
 			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = COMP_NONE; l < COMP_MAX; l++)
+				for (size_t l = COMP_NONE + 1; l < COMP_MAX; l++)
 				{
-					for (size_t m = tvDataColor_NONE; m < tvDataColor_NONE; m++)
+					for (size_t m = tvDataColor_NONE + 1; m < tvDataColor_NONE; m++)
 					{
 						SupportAvailable = false;
 						if(Configfile.ColorTypeAndName.platformSupport[l][m] == true)
@@ -13326,49 +13326,11 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
-//TODO:- Remove this logic if new Save CMS logic works
-#if 0
-	for(int i =COMP_NONE ; i < COMP_MAX; i++)
-	{
-		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.componentColor.size; j++)
-		{
-			if(Configfile.componentColor.modeId[j] == i)
-			{
-				SupportAvailable = true;
-				break;
-			}
-		}
-
-		if(!SupportAvailable){
-			result = SaveCMS((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvComponentType_t)i, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
-			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-		}
-	}
-
-	for(int i =COMP_NONE ; i < COMP_MAX; i++)
-	{
-		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.componentColor.size; j++)
-		{
-			if(Configfile.componentColor.modeId[j] == i)
-			{
-				SupportAvailable = true;
-				break;
-			}
-		}
-
-		if(!SupportAvailable){
-			result = SaveCMS((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)i,1);
-			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-		}
-	}
-#endif
 //TODO:- alternate logic negative CMS 
-	for(int i =COMP_NONE ; i < COMP_MAX; i++)
+	for(int i = COMP_NONE + 1 ; i < COMP_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j = tvDataColor_NONE ; j < tvDataColor_MAX; j++)
+		for(int j = tvDataColor_NONE + 1 ; j < tvDataColor_MAX; j++)
 		{
 			if(Configfile.componentColor.platformSupport[i][j] == true)
 			{
