@@ -13129,12 +13129,12 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 		{
 			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = COMP_NONE + 1; l < COMP_MAX; l++)
+				for (size_t l = COMP_NONE; l < COMP_MAX; l++)
 				{
-					for (size_t m = tvDataColor_NONE + 1; m < tvDataColor_NONE; m++)
+					for (size_t m = tvDataColor_NONE; m < tvDataColor_NONE; m++)
 					{
 						SupportAvailable = false;
-						if(Configfile.ColorTypeAndName.platformSupport[l][m] == true)
+						if(Configfile.componentColor.platformSupport[l][m] == true)
 						{
 						    result = SaveCMS((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],(tvComponentType_t)l, (tvDataComponentColor_t)m,30);
 						    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -13198,6 +13198,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 
 	tvError_t result = tvERROR_NONE ;
 	bool SupportAvailable = true;
+	int i = 0, j = 0 ;
 
 
 	/* Step 01: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_STATE */
@@ -13273,10 +13274,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 19: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
+	for( i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
+		for( j =0 ; j < Configfile.videoSrcStruct.size; j++)
 		{
 			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
 			{
@@ -13291,10 +13292,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 		}
 	}
 
-	for(int i =0 ; i < PQ_MODE_MAX; i++)
+	for( i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
+		for( j =0 ; j < Configfile.picmodeStruct.size; j++)
 		{
 			if(Configfile.picmodeStruct.pqValue[j] == i)
 			{
@@ -13309,10 +13310,10 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 		}
 	}
 
-	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
+	for( i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
+		for( j =0 ; j < Configfile.videoFormtStruct.size; j++)
 		{
 			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
 			{
@@ -13326,11 +13327,11 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
-//TODO:- alternate logic negative CMS 
-	for(int i = COMP_NONE + 1 ; i < COMP_MAX; i++)
+
+	for( i =COMP_NONE + 1; i < COMP_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j = tvDataColor_NONE + 1 ; j < tvDataColor_MAX; j++)
+		for( j = tvDataColor_NONE + 1 ; j < tvDataColor_MAX; j++)
 		{
 			if(Configfile.componentColor.platformSupport[i][j] == true)
 			{

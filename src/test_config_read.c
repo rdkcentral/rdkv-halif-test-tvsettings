@@ -439,11 +439,11 @@ static bool platformsupport(const char *buf, struct DisplayPictureMode *mode)
 		fprintf(stderr, "input param is NULL - %d.\n", errno);
 		return false;
 	}
-	if (sscanf(buf, "platformsupport = %s", &mode->platformsupport) == 1)
+	if (sscanf(buf, "platformsupport = %s", &mode->platformSupport) == 1)
 	{
-	    if(strncmp(mode->platformsupport , "true", strlen("true")) == 0)
+	    if(mode->platformSupport == true)
 		{
-            UT_LOG("\n platform support: %s\n", mode->platformsupport);
+            UT_LOG("\n platform support: %s\n", mode->platformSupport);
 			return true;
 		}
 	}
@@ -524,7 +524,7 @@ int fillstructure(const char *buf, int mode)
 			if (strstr(buf, "range_from") != NULL)
 			{
 				Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
-				colorFlag++
+				colorFlag++;
 				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_MAGENTA] = platformsupport(buf, &Configfile.CompSaturationMagenta);
 			}
 			break;
