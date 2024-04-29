@@ -8713,7 +8713,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveSourcePictureMode((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],VIDEO_FORMAT_MAX);
+	result = SaveSourcePictureMode((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],PQ_MODE_MAX);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
@@ -11236,13 +11236,14 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 	short unsigned pData_R_limit[] = {0, 100, 1023};
 	short unsigned pData_G_limit[] = {0, 100, 1023};
 	short unsigned pData_B_limit[] = {0, 100, 1023};
+	unsigned short  size =256;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit,256);
+	result = SetGammaTable(pData_R_limit,pData_G_limit,pData_B_limit,size);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings termination and expecting the API to return success */
@@ -11444,7 +11445,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 	unsigned short pData_R_limit[] ={0, 100, 1023};
 	unsigned short pData_G_limit[] ={0, 100, 1023};
 	unsigned short pData_B_limit[]={0, 100, 1023};
-	unsigned short  size = 255;
+	unsigned short  size = 256;
 	bool platformFlag = false;
 	tvError_t result = tvERROR_NONE ;
 
@@ -11621,7 +11622,7 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
 	unsigned short pData_R_limit[]={0, 100, 1023};
 	unsigned short pData_G_limit[]={0, 100, 1023};
 	unsigned short pData_B_limit[]={0, 100, 1023};
-	unsigned short  size = 0;
+	unsigned short  size = 256;
 	tvError_t result = tvERROR_NONE ;
 
 	/* Step 01: Calling tvsettings GetGammaTable before TvInit and expecting the API to return tvERROR_INVALID_STATE */
@@ -11685,7 +11686,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 	unsigned short pData_R_limit[] = {0, 100, 1023};
 	unsigned short pData_G_limit[] = {0, 100, 1023};
 	unsigned short pData_B_limit[] = {0, 100, 1023};
-	unsigned short size = 0;
+	unsigned short size = 256;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -12366,6 +12367,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
+	bool bModeMatched = false;
 
 	/* Step 01: Calling tvsettings SetCurrentComponentSaturation before TvInit and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],10);
@@ -12392,15 +12394,21 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	for (size_t i=0; i<(Configfile.componentColor.size); i++)
+	for (int i=0; i< tvDataColor_MAX; i++)
 	{
+		bModeMatched = false;
+		for(size_t j =0; j < (Configfile.componentColor.size); j++){
 
-		for(int j =0; j < tvDataColor_MAX; j++){
-
-			if((tvDataComponentColor_t) Configfile.componentColor.modeId[i] !=(tvDataComponentColor_t) j){
-				result = SetCurrentComponentSaturation((tvDataComponentColor_t)j,10);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t) i)
+			{
+				bModeMatched = true;
+				break;
 			}
+		}
+		if(!bModeMatched)
+		{
+			result = SetCurrentComponentSaturation((tvDataComponentColor_t)i,10);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
@@ -12638,6 +12646,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
+	bool bModeMatched = false;
 
 	/* Step 01: Calling tvsettings SetCurrentComponentHue before TvInit and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],10);
@@ -12664,15 +12673,21 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetCurrentComponentHue and expecting the API to return tvERROR_INVALID_PARAM */
-	for (size_t i=0; i<(Configfile.componentColor.size); i++)
+	for (int i=0; i<tvDataColor_MAX; i++)
 	{
+		bModeMatched = false;
+		for(size_t j =0; j < (Configfile.componentColor.size); j++){
 
-		for(int j =0; j < tvDataColor_MAX; j++){
-
-			if((tvDataComponentColor_t) Configfile.componentColor.modeId[i] !=(tvDataComponentColor_t) j){
-				result = SetCurrentComponentHue((tvDataComponentColor_t)j,10);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t) i)
+			{
+				bModeMatched = true;
+				break;
 			}
+		}
+		if(!bModeMatched)
+		{
+			result = SetCurrentComponentHue((tvDataComponentColor_t)i,10);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
@@ -12908,6 +12923,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
+	bool bModeMatched = false;
 
 	/* Step 01: Calling tvsettings SetCurrentComponentLuma before TvInit and expecting the API to return tvERROR_INVALID_STATE */
 	result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0],10);
@@ -12934,15 +12950,22 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_PARAM */
-	for (size_t i=0; i<(Configfile.componentColor.size); i++)
+	for (int i=0; i<tvDataColor_MAX; i++)
 	{
+		bModeMatched = false;
+		for(size_t j =0; j < (Configfile.componentColor.size); j++){
 
-		for(int j =0; j < tvDataColor_MAX; j++){
+			if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t) i)
+			{
+				bModeMatched = false;
+				break;
 
-			if((tvDataComponentColor_t) Configfile.componentColor.modeId[i] !=(tvDataComponentColor_t) j){
-				result = SetCurrentComponentLuma((tvDataComponentColor_t)j,10);
-				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 			}
+		}
+		if(!bModeMatched)
+		{
+			result = SetCurrentComponentLuma((tvDataComponentColor_t)i,10);
+			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 

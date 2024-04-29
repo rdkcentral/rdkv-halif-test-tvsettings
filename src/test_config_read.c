@@ -119,6 +119,15 @@ int parseRange_color(const char *buf, struct DisplayColorMode *mode)
 		}
 		mode->colorStruct.size = i + 1;
 	}
+	if (sscanf(buf, "index = %[^\n]", input) == 1)
+    {
+        len = 0;
+        while (i < MAX_NAME_SIZE && sscanf(input + len, "%d,", &mode->colorStruct.colorTempValue[i]) == 1)
+        {
+            len += strcspn(input + len, ",") + 1;
+            i++;
+        }
+    }
 	return 0;
 }
 
@@ -137,7 +146,6 @@ int parseRange_mode(const char *buf, struct DisplayColorMode *mode)
 		while (i < MAX_NAME_SIZE && sscanf(input + len, "%[^,]", &mode->modeName[i]) == 1)
 		{
 			len += strlen(mode->modeName[i]);
-			mode->modevalue[i] = i;
 			if (*(input + len) == ',')
 			{
 				len++;  
@@ -150,6 +158,15 @@ int parseRange_mode(const char *buf, struct DisplayColorMode *mode)
 		}
 		mode->size = i + 1;
 	}
+	if (sscanf(buf, "index = %s", input) == 1)
+    {
+        len = 0;
+        while (i < MAX_NAME_SIZE && sscanf(input + len, "%d,", &mode->modevalue[i]) == 1)
+        {
+            len += strcspn(input + len, ",") + 1;
+            i++;
+        }
+    }
 	return 0;
 }
 
