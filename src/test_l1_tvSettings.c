@@ -2678,7 +2678,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 05: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SetCurrentBacklightMode((tvBacklightMode_t)(tvBacklightMode_INVALID | tvBacklightMode_AMBIENT));
+	result = SetCurrentBacklightMode((tvBacklightMode_t)(tvBacklightMode_MAX | tvBacklightMode_AMBIENT));
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
@@ -13152,9 +13152,9 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 		{
 			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
 			{
-				for (size_t l = COMP_NONE; l < COMP_MAX; l++)
+				for (size_t l = COMP_NONE+1; l < COMP_MAX; l++)
 				{
-					for (size_t m = tvDataColor_NONE; m < tvDataColor_NONE; m++)
+					for (size_t m = tvDataColor_NONE+1; m < tvDataColor_MAX; m++)
 					{
 						SupportAvailable = false;
 						if(Configfile.componentColor.platformSupport[l][m] == true)
