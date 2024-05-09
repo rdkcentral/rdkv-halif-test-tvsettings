@@ -196,11 +196,11 @@ void test_l1_tvSettings_negative_TvInit (void)
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
+#ifdef DISABLE_ENHANCED_ERROR_CODE
 	/* Step 02: Calling tvsettings Re-initialization and expecting the API to return tvERROR_INVALID_STATE */
 	result = TvInit();
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_STATE);
-
+#endif
 	/* Step 03: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -272,11 +272,11 @@ void test_l1_tvSettings_negative_TvTerm (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-
+#ifdef DISABLE_ENHANCED_ERROR_CODE
 	/* Step 01: Calling tvsettings termination and expecting the API to return tvERROR_INVALID_STATE */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
-
+#endif
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -284,11 +284,11 @@ void test_l1_tvSettings_negative_TvTerm (void)
 	/* Step 03: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
+#ifdef DISABLE_ENHANCED_ERROR_CODE
 	/* Step 04: Calling tvsettings termination and expecting the API to return tvERROR_INVALID_STATE */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
-
+#endif
 	UT_LOG("Out %s",__FUNCTION__);
 }
 
@@ -378,11 +378,12 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 
 	tvError_t result = tvERROR_NONE ;
 	tvVideoFormatCallbackData callbackData;
-
+#ifdef DISABLE_ENHANCED_ERROR_CODE
 	/* Step 01: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return invalid state*/
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
+#endif
 
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -406,11 +407,12 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
 	/* Step 06: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
+#ifdef DISABLE_ENHANCED_ERROR_CODE
 	/* Step 07: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return  invalid state*/
 	callbackData.cb = tvVideoFormatChangeHandler;
 	result = RegisterVideoFormatChangeCB(&callbackData);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
+#endif
 
 	UT_LOG("Out %s",__FUNCTION__);
 }
