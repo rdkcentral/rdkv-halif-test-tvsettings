@@ -458,7 +458,7 @@ static bool platformsupport(const char *buf, struct DisplayPictureMode *mode)
 	}
 	if (sscanf(buf, "platformsupport = %s", &mode->platformSupport) == 1)
 	{
-	    if(mode->platformSupport == true)
+	    if(strcmp(mode->platformSupport, "true") == 0)
 		{
             UT_LOG("\n platform support: %s\n", mode->platformSupport);
 			return true;
@@ -493,138 +493,138 @@ int fillstructure(const char *buf, int mode)
 			break;
 		case COMP_SATURATION_RED:
 			ret = parseRange(buf, &Configfile.CompSaturationRed);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
-				Configfile.componentColor.modeId[colorFlag] = tvDataColor_RED;
-				colorFlag++;
-		        Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_RED] = platformsupport(buf, &Configfile.CompSaturationRed);
+				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_RED] = platformsupport(buf, &Configfile.CompSaturationRed);
 			}
+			Configfile.componentColor.modeId[colorFlag] = tvDataColor_RED;
+			colorFlag++;
 			break;
 		case COMP_SATURATION_GREEN:
 			ret = parseRange(buf, &Configfile.CompSaturationGreen);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
-				Configfile.componentColor.modeId[colorFlag] = tvDataColor_GREEN;
-				colorFlag++;
 				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_GREEN] = platformsupport(buf, &Configfile.CompSaturationGreen);
 			}
+			Configfile.componentColor.modeId[colorFlag] = tvDataColor_GREEN;
+			colorFlag++;
 			break;
 		case COMP_SATURATION_BLUE:
 			ret = parseRange(buf, &Configfile.CompSaturationBlue);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
-				Configfile.componentColor.modeId[colorFlag] = tvDataColor_BLUE;
-				colorFlag++;
 				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_BLUE] = platformsupport(buf, &Configfile.CompSaturationBlue);
 			}
+			Configfile.componentColor.modeId[colorFlag] = tvDataColor_BLUE;
+			colorFlag++;
 			break;
 		case COMP_SATURATION_YELLOW:
 			ret = parseRange(buf, &Configfile.CompSaturationYellow);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
-				Configfile.componentColor.modeId[colorFlag] = tvDataColor_YELLOW;
-				colorFlag++;
 				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_YELLOW] = platformsupport(buf, &Configfile.CompSaturationYellow);
 			}
+			Configfile.componentColor.modeId[colorFlag] = tvDataColor_YELLOW;
+			colorFlag++;
 			break;
 		case COMP_SATURATION_CYAN:
 			ret = parseRange(buf, &Configfile.CompSaturationCyan);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
-				Configfile.componentColor.modeId[colorFlag] = tvDataColor_CYAN;
-				colorFlag++;
 				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_CYAN] = platformsupport(buf, &Configfile.CompSaturationCyan);
 			}
+			Configfile.componentColor.modeId[colorFlag] = tvDataColor_CYAN;
+			colorFlag++;
 			break;
 		case COMP_SATURATION_MAGENTA:
 			ret = parseRange(buf, &Configfile.CompSaturationMagenta);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
-				Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
-				colorFlag++;
 				Configfile.componentColor.platformSupport[COMP_SATURATION][tvDataColor_MAGENTA] = platformsupport(buf, &Configfile.CompSaturationMagenta);
 			}
+			Configfile.componentColor.modeId[colorFlag] = tvDataColor_MAGENTA;
+			colorFlag++;
 			break;
 		case COMP_HUE_RED:
 			ret = parseRange(buf, &Configfile.CompHueRed);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_HUE][tvDataColor_RED] = platformsupport(buf, &Configfile.CompHueRed);
 			}
 			break;
 		case COMP_HUE_GREEN:
 			ret = parseRange(buf, &Configfile.CompHueGreen);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_HUE][tvDataColor_GREEN] = platformsupport(buf, &Configfile.CompHueGreen);
 			}
 			break;
 		case COMP_HUE_BLUE:
 			ret = parseRange(buf, &Configfile.CompHueBlue);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_HUE][tvDataColor_BLUE] = platformsupport(buf, &Configfile.CompHueBlue);
 			}
 			break;
 		case COMP_HUE_YELLOW:
 			ret = parseRange(buf, &Configfile.CompHueYellow);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_HUE][tvDataColor_YELLOW] = platformsupport(buf, &Configfile.CompHueYellow);
 			}
 			break;
 		case COMP_HUE_CYAN:
 			ret = parseRange(buf, &Configfile.CompHueCyan);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_HUE][tvDataColor_CYAN] = platformsupport(buf, &Configfile.CompHueCyan);
 			}
 			break;
 		case COMP_HUE_MAGENTA:
 			ret = parseRange(buf, &Configfile.CompHueMagenta);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_HUE][tvDataColor_MAGENTA] = platformsupport(buf, &Configfile.CompHueMagenta);
 			}
 			break;
 		case COMP_LUMA_RED:
 			ret = parseRange(buf, &Configfile.CompLumaRed);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_LUMA][tvDataColor_RED] = platformsupport(buf, &Configfile.CompLumaRed);
 			}
 			break;
 		case COMP_LUMA_GREEN:
 			ret = parseRange(buf, &Configfile.CompLumaGreen);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_LUMA][tvDataColor_GREEN] = platformsupport(buf, &Configfile.CompLumaGreen);
 			}
 			break;
 		case COMP_LUMA_BLUE:
 			ret = parseRange(buf, &Configfile.CompLumaBlue);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_LUMA][tvDataColor_BLUE] = platformsupport(buf, &Configfile.CompLumaBlue);
 			}
 			break;
 		case COMP_LUMA_YELLOW:
 			ret = parseRange(buf, &Configfile.CompLumaYellow);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_LUMA][tvDataColor_YELLOW] = platformsupport(buf, &Configfile.CompLumaYellow);
 			}
 			break;
 		case COMP_LUMA_CYAN:
 			ret = parseRange(buf, &Configfile.CompLumaCyan);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_LUMA][tvDataColor_CYAN] = platformsupport(buf, &Configfile.CompLumaYellow);
 			}
 			break;
 		case COMP_LUMA_MAGENTA:
 			ret = parseRange(buf, &Configfile.CompLumaMagenta);
-			if (strstr(buf, "range_from") != NULL)
+			if (strstr(buf, "platformsupport") != NULL)
 			{
 				Configfile.componentColor.platformSupport[COMP_LUMA][tvDataColor_MAGENTA] = platformsupport(buf, &Configfile.CompLumaMagenta);
 			}
@@ -721,7 +721,6 @@ int config_read(char *filename)
 		if (buf[i] == '[')
 		{
 			mode = 0;
-
 			if (sscanf(buf + i, "[%[^]]]", section) == 1 && strcmp(section, "Brightness") == 0)
 			{
 				mode = BRIGHTNESS_MODE_FLAG;

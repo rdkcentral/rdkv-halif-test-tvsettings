@@ -176,7 +176,7 @@ struct ComponentColor {
 struct DisplayPictureMode {
     int rangeFrom;
     int rangeTo;
-    bool platformSupport;
+    char platformSupport[MAX_NAME_SIZE];
     struct PictureMode picmodeStruct;
     struct videoSource videoSrcStruct;
     struct videoFormat videoFormtStruct;
