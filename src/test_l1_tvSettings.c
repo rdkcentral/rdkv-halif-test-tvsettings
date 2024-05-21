@@ -7558,7 +7558,7 @@ void test_l1_tvSettings_negative_GetDynamicContrast (void)
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
+	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 #ifdef ENABLE_ENHANCED_ERROR_CODE
 	/* Step 05: Calling tvsettings GetDynamicContrast and expectinging the API to return tvERROR_INVALID_STATE */
@@ -14346,11 +14346,11 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 
 	tvError_t result = tvERROR_NONE ;
 	int maxGain = -1;
-
+#ifdef ENABLE_ENHANCED_ERROR_CODE 
 	/* Step 01: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
 	maxGain = GetMaxGainValue( );
 	UT_ASSERT_FALSE(  (maxGain >= (2^10)) && (maxGain <= (2^31)-1));
-
+#endif
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -14363,10 +14363,11 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+#ifdef ENABLE_ENHANCED_ERROR_CODE
 	/* Step 05: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
 	maxGain = GetMaxGainValue( );
 	UT_ASSERT_FALSE( (maxGain >= (2^10)) && (maxGain <= (2^31)-1));
-
+#endif
 	UT_LOG("Out %s",__FUNCTION__); 
 }
 
@@ -14451,11 +14452,11 @@ void test_l1_tvSettings_negative_EnableGammaMode (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-
+#ifdef ENABLE_ENHANCED_ERROR_CODE 
 	/* Step 01: Calling tvsettings EnableGammaMode before TvInit and expecting the API to return tvERROR_GENERAL */
 	result = EnableGammaMode(1);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_GENERAL);
-
+#endif
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -14472,10 +14473,11 @@ void test_l1_tvSettings_negative_EnableGammaMode (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+#ifdef ENABLE_ENHANCED_ERROR_CODE
 	/* Step 06: Calling tvsettings EnableGammaMode after TvTerm and expecting the API to return tvERROR_GENERAL */
 	result = EnableGammaMode(1);
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_GENERAL);
-
+#endif
 	UT_LOG("Out %s",__FUNCTION__); 
 }
 
@@ -14707,11 +14709,11 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 	tvError_t result = tvERROR_NONE ;
 	double x_Value = 0.0;
 	double y_Value = 0.0;
-
+#ifdef ENABLE_ENHANCED_ERROR_CODE
 	/* Step 01: Calling tvsettings GetTVGammaTarget before TvInit */
 	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &x_Value, &y_Value);
 	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
-
+#endif
 	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -14740,10 +14742,11 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+#ifdef ENABLE_ENHANCED_ERROR_CODE
 	/* Step 08: Calling tvsettings GetTVGammaTarget after TvTerm*/
 	GetTVGammaTarget( (tvColorTemp_t)Configfile.colorTemp.colorStruct.colorTempValue[0], &x_Value, &y_Value);
 	UT_ASSERT_AUTO_TERM_FALSE((x_Value >= 0 && x_Value <= 1.0));
-
+#endif
 	UT_LOG("Out %s",__FUNCTION__);
 }
 
