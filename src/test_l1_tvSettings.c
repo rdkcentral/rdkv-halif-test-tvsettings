@@ -117,7 +117,7 @@ volatile bool callbackflag = false;
 
 
 /* Global flags to support features */
-static bool extendedEnumsSupported=false; # Default to not supported
+static bool extendedEnumsSupported=false;
 
 /**
  * @brief Validate TvInit() for all positive invocation scenarios
@@ -16464,7 +16464,7 @@ static UT_test_suite_t * pSuite_B10 = NULL;
 int test_l1_tvSettings_register ( void )
 {
 	UT_LOG("\n*******UT version Number : %d.%d*********\n", UT_VERSION_MAJOR, UT_VERSION_MINOR);
-	extendedEnumsSupported = ut_kvp_getBoolField( ut_kvp_profile_getInstance(), ""tvsettings/features/extendedEnumsSupported" );
+	extendedEnumsSupported = ut_kvp_getBoolField( ut_kvp_profile_getInstance(), "tvsettings/features/extendedEnumsSupported" );
 	/* add a suite to the registry */
 	pSuite = UT_add_suite( "[L1 tvSettings - Bank 0]", NULL, NULL );
 	if ( NULL == pSuite )
