@@ -26,5 +26,6 @@ This repository contains the Unit Test Suites L1 for TV Settings `HAL`.
 ## Notes
 
 - Building against the actual library may introduce SOC dependencies. Hence, a template SKELETON library is created without SOC dependencies. On the real platform (target), it can be mounted, copied and bound with the actual library.
-- To run the binary, ensure that you pass the configuration file as an argument. The following example demonstrates how to do this:  ./hal_test pq_capablities.ini
-- Template avaliable in [pq_capablities.ini](https://github.com/rdkcentral/rdkv-halif-tvsettings/tree/main/config/pq_capablities.ini "pq_capablities.ini")
+- To run the binary, ensure that you pass the configuration and profile file as an argument. The following example demonstrates how to do this:  ./hal_test pq_capablities.ini -p tvSettingsExtendedEnumsNotSupported.yaml
+- Template available in [pq_capablities.ini](https://github.com/rdkcentral/rdkv-halif-tvsettings/tree/main/config/pq_capablities.ini "pq_capablities.ini")
+- Profiles file available in [profile yaml file](./profiles/tvSettingsExtendedEnumsNotSupported.yaml)
