@@ -307,7 +307,7 @@ int parseRange_videoFramerate(const char *buf, struct videoFrameRate *videoFrame
 		while (i < MAX_NAME_SIZE && sscanf(input + len, "%[^,]", &videoFramerate->frameRate[i]) == 1)
 		{
 			len += strlen(videoFramerate->frameRate[i]);
-			videoFramerate->frameRateValue[i] = i + 1;
+			sscanf(videoFramerate->frameRate[i], "%lf", &videoFramerate->frameRateValue[i]);
 			if (*(input + len) == ',')
 			{
 				len++;  

@@ -157,7 +157,7 @@ struct videoFormat {
 
 struct videoFrameRate {
     char frameRate[MAX_FRAME_RATE][MAX_NAME_SIZE];
-    int  frameRateValue[MAX_FRAME_RATE];
+    double  frameRateValue[MAX_FRAME_RATE];
     size_t size;
 };
 
