@@ -1,4 +1,1342 @@
 ---
+Device:
+  Type: sink
+  Name: element
+
+# tvDataColor_NONE    = 0x00, //!< No color
+# tvDataColor_RED     = 0x01, //!< Color is Red
+# tvDataColor_GREEN   = 0x02, //!< Color is Green
+# tvDataColor_BLUE    = 0x04, //!< Color is Blue
+# tvDataColor_YELLOW  = 0x08, //!< Color is Yellow
+# tvDataColor_CYAN    = 0x10, //!< Color is Cyan
+# tvDataColor_MAGENTA = 0x20, //!< Color is Magenta
+# tvDataColor_MAX     = 0x40  //!< End of enum
+SupportedComponentColor:
+  - 0x00 # tvDataColor_NONE
+  - 0x01 # tvDataColor_RED
+  - 0x02 # tvDataColor_GREEN
+  - 0x04 # tvDataColor_BLUE
+  - 0x08 # tvDataColor_YELLOW
+  - 0x10 # tvDataColor_CYAN
+  - 0x20 # tvDataColor_MAGENTA
+ 
+Brightness:
+  range_from: 0
+  range_to: 100
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS
+  # DV  
+  # PRIMESL
+  # HLG    
+  # SDR
+  # MVC
+  format:
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1
+  # COMPOSITE2
+  # YPBPR1
+  # YPBPR2
+  # HDMI1
+  # HDMI2
+  # HDMI£
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+  
+
+Contrast:
+  range_from: 0
+  range_to: 100
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker  
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+
+Saturation:
+  range_from: 0
+  range_to: 100
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker  
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+
+Sharpness:
+  range_from: 0
+  range_to: 100
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+
+Hue:
+  range_from: 0
+  range_to: 100
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker  
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+
+ColorTemperature:
+  # STANDARD
+  # WARM
+  # COLD
+  # USER
+  # BOOST_STANDARD
+  # BOOST_WARM
+  # BOOST_COLD
+  # BOOST_USER
+  # SUPERCOLD
+  # BOOST_SUPERCOLD
+  range: 
+    - Standard
+    - Warm
+    - Cold
+    - User Defined
+# tvColorTemp_STANDARD       = 0x00, //!< Color Temperature is Standard
+# tvColorTemp_WARM           = 0x01, //!< Color Temperature is Warm
+# tvColorTemp_COLD           = 0x02, //!< Color Temperature is Cold
+# tvColorTemp_USER           = 0x03, //!< User defined color temperature
+# tvColorTemp_BOOST_STANDARD = 0x04, //!< Color Temperature is Standard for boost mode
+# tvColorTemp_BOOST_WARM     = 0x05, //!< Color Temperature is Warm for boost mode
+# tvColorTemp_BOOST_COLD     = 0x06, //!< Color Temperature is Cold for boost mode
+# tvColorTemp_BOOST_USER     = 0x07, //!< User defined color temperature for boost mode
+# tvColorTemp_SUPERCOLD      = 0x08, //!< Color Temperature is Supercold
+# tvColorTemp_BOOST_SUPERCOLD= 0x09, //!< Color Temperature is Supercold for boost mode
+# tvColorTemp_MAX            = 0x0A  //!< End of enum
+  index:
+    - 0x00 # STANDARD
+    - 0x01 # WARM
+    - 0x02 # COLD
+    - 0x03 # USER
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker    
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+
+WhiteBalanceRed:
+  range.gain.from: 0
+  range.gain.to: 2047
+  range.offset.from: -1024
+  range.offset.to: 1023
+  # STANDARD
+  # WARM
+  # COLD
+  # USER
+  # BOOST_STANDARD
+  # BOOST_WARM
+  # BOOST_COLD
+  # BOOST_USER
+  # SUPERCOLD
+  # BOOST_SUPERCOLD
+  ColorTemperature: 
+    - Standard
+    - Warm
+    - Cold
+    - User Defined
+  pqmode: none
+  format: none
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+  platformsupport: true
+
+GammaTableRed:
+  range_from: 0
+  range_to: 1023
+  gammaIndex_from: 0
+  gammaIndex_to: 255
+  # STANDARD
+  # WARM
+  # COLD
+  # USER
+  # BOOST_STANDARD
+  # BOOST_WARM
+  # BOOST_COLD
+  # BOOST_USER
+  # SUPERCOLD
+  # BOOST_SUPERCOLD
+  ColorTemperature: 
+    - Standard
+    - Warm
+    - Cold
+    - User Defined
+  pqmode: none
+  format: none
+  source: none
+  platformsupport: true
+
+GammaTableBlue:
+  range_from: 0
+  range_to: 1023
+  gammaIndex_from: 0
+  gammaIndex_to: 255
+  # STANDARD
+  # WARM
+  # COLD
+  # USER
+  # BOOST_STANDARD
+  # BOOST_WARM
+  # BOOST_COLD
+  # BOOST_USER
+  # SUPERCOLD
+  # BOOST_SUPERCOLD
+  ColorTemperature: 
+    - Standard
+    - Warm
+    - Cold
+    - User Defined
+  pqmode: none
+  format: none
+  source: none
+  platformsupport: true
+
+GammaTableGreen:
+  range_from: 0
+  range_to: 1023
+  gammaIndex_from: 0
+  gammaIndex_to: 255
+  # STANDARD
+  # WARM
+  # COLD
+  # USER
+  # BOOST_STANDARD
+  # BOOST_WARM
+  # BOOST_COLD
+  # BOOST_USER
+  # SUPERCOLD
+  # BOOST_SUPERCOLD
+  ColorTemperature: 
+    - Standard
+    - Warm
+    - Cold
+    - User Defined
+  pqmode: none
+  format: none
+  source: none
+  platformsupport: true
+
+# tvBacklightMode_NONE       = 0x00,         //!< No backlight
+# tvBacklightMode_MANUAL     = 0x01,         //!< backlight mode is manual
+# tvBacklightMode_AMBIENT    = 0x02,         //!< backlight mode is ambient
+# tvBacklightMode_ECO        = 0x04,         //!< backlight mode is eco
+# tvBacklightMode_INVALID    = 0x08,         //!< backlight mode is invalid
+# tvBacklightMode_MAX        = 0x10          //!< End of enum
+BacklightControl:
+  range: 
+    - manual
+    - ambient
+  index: 
+    - 0x01 #tvBacklightMode_MANUAL
+    - 0x02 #tvBacklightMode_AMBIENT
+  pqmode: none
+  source: none
+  format: none
+
+  AspectRatio:
+ # 4x3
+ # 16x9
+ # FULL
+ # NORMAL
+ # AUTO
+ # DIRECT
+ # ZOOM 
+  range: 
+    - TV AUTO
+    - TV DIRECT
+    - TV NORMAL
+    - TV 16X9 STRETCH
+    - TV 4X3 PILLARBOX
+    - TV ZOOM
+#    tvDisplayMode_4x3     = 0x00,                      //!< Display mode is 4x3
+#    tvDisplayMode_16x9    = 0x01,                      //!< Display mode is 16x9
+#    tvDisplayMode_FULL    = 0x02,                      //!< Display mode is Full
+#    tvDisplayMode_NORMAL  = 0x03,                      //!< Display mode is Normal
+#    tvDisplayMode_AUTO    = 0x04,                      //!< Display mode is Auto
+#    tvDisplayMode_DIRECT  = 0x05,                      //!< Display mode is Direct
+#    tvDisplayMode_ZOOM    = 0x06,                      //!< Display mode is Zoom
+#    tvDisplayMode_MAX     = 0x07                       //!< End of enum
+  index: 
+    - 0x04 #AUTO
+    - 0x05 #DIRECT
+    - 0x03 #NORMAL
+    - 0x01 #16x9
+    - 0x00 #4x3
+    - 0x06 #ZOOM
+  pqmode: none
+  source: none
+  format: none
+
+LowLatencyState:
+  range_from: 0
+  range_to: 1
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  source: none
+
+# VIDEO_SOURCE_ALL        = 0xFFFFFFFF, //!< Video source is All
+# VIDEO_SOURCE_ANALOGUE   = 0x00,        //!< Video source is Analogue
+# VIDEO_SOURCE_COMPOSITE1 = 0x01,        //!< Video source is Composite1
+# VIDEO_SOURCE_COMPOSITE2 = 0x02,        //!< Video source is Composite2
+# VIDEO_SOURCE_YPBPR1     = 0x03,        //!< Video source is YPbPr1
+# VIDEO_SOURCE_YPBPR2     = 0x04,        //!< Video source is YPbPr2
+# VIDEO_SOURCE_HDMI1      = 0x05,        //!< Video source is HDMI1
+# VIDEO_SOURCE_HDMI2      = 0x06,        //!< Video source is HDMI2
+# VIDEO_SOURCE_HDMI3      = 0x07,        //!< Video source is HDMI3
+# VIDEO_SOURCE_HDMI4      = 0x08,        //!< Video source is HDMI4
+# VIDEO_SOURCE_VGA        = 0x09,        //!< Video source is VGA
+# VIDEO_SOURCE_IP         = 0x0A,        //!< Video source is IP
+# VIDEO_SOURCE_TUNER      = 0x0B,        //!< Video source is Tuner
+# VIDEO_SOURCE_SVIDEO     = 0x0C,        //!< Video source is SVideo
+# VIDEO_SOURCE_RESERVED   = 0x0D,        //!< Video source reserved
+# VIDEO_SOURCE_RESERVED1  = 0x0E,        //!< Video source reserved
+# VIDEO_SOURCE_RESERVED2  = 0x0F,        //!< Video source reserved
+# VIDEO_SOURCE_RESERVED3  = 0x10,        //!< Video source reserved
+# VIDEO_SOURCE_MAX        = 0x11         //!< End of enum
+VideoSource:
+  range: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+  index: 
+    - 0x01 #VIDEO_SOURCE_COMPOSITE1
+    - 0x05 #VIDEO_SOURCE_HDMI1
+    - 0x06 #VIDEO_SOURCE_HDMI2
+    - 0x07 #VIDEO_SOURCE_HDMI3
+    - 0x0A #VIDEO_SOURCE_IP
+    - 0x0B #VIDEO_SOURCE_TUNER
+  pqmode: none
+  format: none
+  source: none
+  numberOfFormats: 6 #count of the formats
+
+# VIDEO_FORMAT_NONE       = 0x00,   //!< No video format
+# VIDEO_FORMAT_HDR10      = 0x01,   //!< Video format is HDR10
+# VIDEO_FORMAT_HDR10PLUS  = 0x02,   //!< Video format is HDR10 plus
+# VIDEO_FORMAT_DV         = 0x03,   //!< Video format is Dolby Vision
+# VIDEO_FORMAT_PRIMESL    = 0x04,   //!< Video format is PRIMESL
+# VIDEO_FORMAT_HLG        = 0x05,   //!< Video format is HLG
+# VIDEO_FORMAT_SDR        = 0x06,   //!< Video format is SDR
+# VIDEO_FORMAT_MVC        = 0x07,   //!< Video format is MVC
+# VIDEO_FORMAT_MAX        = 0x08    //!< End of enum
+VideoFormat:
+  range: 
+    - HDR10
+    - DV
+    - HLG
+    - SDR
+  index: 
+    - 0x06 # VIDEO_FORMAT_SDR
+    - 0x01 # VIDEO_FORMAT_HDR10
+    - 0x05 # VIDEO_FORMAT_HLG
+    - 0x03 # VIDEO_FORMAT_DV
+  pqmode: none
+  format: none
+  source: none
+  numberOfFormats: 4 #count of the formats
+
+VideoFrameRate:
+#  tvVideoFrameRate_NONE     : 0x00        # No frame rate
+#  tvVideoFrameRate_24       : 0x01        # Frame rate is 24
+#  tvVideoFrameRate_25       : 0x02        # Frame rate is 25
+#  tvVideoFrameRate_30       : 0x03        # Frame rate is 30
+#  tvVideoFrameRate_50       : 0x04        # Frame rate is 50
+#  tvVideoFrameRate_60       : 0x05        # Frame rate is 60
+#  tvVideoFrameRate_23dot98  : 0x06        # Frame rate is 23.98
+#  tvVideoFrameRate_29dot97  : 0x07        # Frame rate is 29.97
+#  tvVideoFrameRate_59dot94  : 0x08        # Frame rate is 59.94
+#  tvVideoFrameRate_MAX      : 0x09        # End of enum
+  range: 
+    - 0
+    - 24
+    - 25
+    - 30
+    - 50
+    - 60
+    - 23.98
+    - 29.97
+    - 59.94
+  pqmode: none
+  format: none
+  source: none
+
+TMAX:
+  range_from: 0
+  range_to: 1000
+  DimmingLevel: 
+    - nonboost
+    - boost
+    - burst
+  pqmode: none
+  format: none
+  source: none
+  isPlatformSupport: true
+
+# tvDimmingMode_Fixed   = 0x00, //!< Dimming Mode is Fixed
+# tvDimmingMode_Local   = 0x01, //!< Dimming Mode is Local
+# tvDimmingMode_Global  = 0x02, //!< Dimming Mode is Global
+# tvDimmingMode_MAX     = 0x03  //!< End of enum
+DimmingMode:
+  range: 
+    - local
+    - fixed
+  index: 
+    - 0x01 #tvDimmingMode_Local
+    - 0x00 #tvDimmingMode_Fixed
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker
+  pqmode: 
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format: 
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source: 
+    - Composite1
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner  
+
+
+DolbyVisionMode:
+  range:
+    - Dark
+    - Bright
+  index:
+    # tvDolbyMode_Invalid   = 0xFFFFFFFF, //!< Dolby mode is invalid
+    # tvDolbyMode_Dark      = 0x00,       //!< Dolby mode is Dolby Dark
+    # tvDolbyMode_Bright    = 0x01,       //!< Dolby mode is Dolby Bright
+    # tvDolbyMode_Reserved1 = 0x02,       //!< Dolby mode is reserved
+    # tvHDR10Mode_Dark      = 0x03,       //!< Dolby mode is HDR10 Dark
+    # tvHDR10Mode_Bright    = 0x04,       //!< Dolby mode is HDR10 Bright
+    # tvHDR10Mode_Reserved2 = 0x05,       //!< Dolby mode is Reserved
+    # tvHLGMode_Dark        = 0x06,       //!< Dolby mode is HLG Dark
+    # tvHLGMode_Bright      = 0x07,       //!< Dolby mode is HLG Bright
+    # tvHLGMode_Reserved3   = 0x08,       //!< Dolby mode is reserved
+    # tvMode_Max            = 0x1C        //!< End of enum (28 in decimal) 
+    - 0x00 # tvDolbyMode_Dark
+    - 0x01 # tvDolbyMode_Bright
+    - 0x03 # tvHDR10Mode_Dark
+    - 0x04 # tvHDR10Mode_Bright
+    - 0x06 # tvHLGMode_Dark
+    - 0x07 # tvHLGMode_Bright
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker
+  pqmode:
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  format: none
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source:
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+    - Composite1
+  platformsupport: true    
+
+PictureMode:
+  # Entertainment
+  # Dynamic
+  # Energy saving
+  # Expert
+  # Movie
+  # Sports
+  # Game
+  # Filmmaker  
+  range:
+    - Entertainment
+    - Dynamic
+    - Expert
+    - Movie
+    - Sports
+  # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
+  # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
+  # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"
+  # PQ_MODE_ENERGY_SAVING  = 0x02,       //!< Picture mode is "Energysaving"
+  # PQ_MODE_CUSTOM         = 0x03,       //!< Picture mode is "Custom" or "Expert"
+  # PQ_MODE_THEATER        = 0x04,       //!< Picture mode is "Theater" or "Movie"
+  # PQ_MODE_RESERVED1      = 0x05,       //!< Picture mode is Reserved
+  # PQ_MODE_RESERVED2      = 0x06,       //!< Picture mode is Reserved
+  # PQ_MODE_GAME           = 0x07,       //!< Picture mode is "Game"
+  # PQ_MODE_SPORTS         = 0x08,       //!< Picture mode is "Sports"
+  # PQ_MODE_GRAPHICS       = 0x09,       //!< Picture mode is "Graphics"
+  # PQ_MODE_FMM            = 0x0A,       //!< Picture mode is "Filmmaker"
+  # PQ_MODE_MAX            = 0x0F        //!< End of enum (15 in decimal)
+  index:
+    - 0x00 # PQ_MODE_STANDARD
+    - 0x01 # PQ_MODE_VIVID
+    - 0x03 # PQ_MODE_CUSTOM
+    - 0x04 # PQ_MODE_THEATER
+    - 0x08 # PQ_MODE_SPORTS
+    - 0x09 # PQ_MODE_GRAPHICS
+  pqmode: none
+  # HDR10
+  # HDR10PLUS  
+  # DV         
+  # PRIMESL    
+  # HLG        
+  # SDR        
+  # MVC   
+  format:
+    - SDR
+    - HDR10
+    - HLG
+    - DV
+  # ANALOGUE
+  # COMPOSITE1 
+  # COMPOSITE2 
+  # YPBPR1 
+  # YPBPR2
+  # HDMI1  
+  # HDMI2  
+  # HDMI3 
+  # HDMI4 
+  # VGA  
+  # IP   
+  # TUNER   
+  # SVIDEO   
+  source:
+    - HDMI1
+    - HDMI2
+    - HDMI3
+    - IP
+    - Tuner
+    - Composite1  
+
+- ComponentSaturationRed:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentSaturationBlue:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentSaturationGreen:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentSaturationYellow:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentSaturationCyan:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentSaturationMagenta:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentHueRed:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentHueBlue:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentHueGreen:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1 
+    # COMPOSITE2 
+    # YPBPR1 
+    # YPBPR2
+    # HDMI1  
+    # HDMI2  
+    # HDMI3 
+    # HDMI4 
+    # VGA  
+    # IP   
+    # TUNER   
+    # SVIDEO   
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    platformsupport: true
+
+- ComponentHueYellow:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker 
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS  
+    # DV         
+    # PRIMESL    
+    # HLG        
+    # SDR        
+    # MVC   
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
 tvsettings:
   features:
     extendedEnumsSupported: false
