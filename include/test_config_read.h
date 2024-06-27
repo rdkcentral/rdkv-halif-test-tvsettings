@@ -157,7 +157,7 @@ struct videoFormat {
 
 struct videoFrameRate {
     char frameRate[MAX_FRAME_RATE][MAX_NAME_SIZE];
-    int  frameRateValue[MAX_FRAME_RATE];
+    double  frameRateValue[MAX_FRAME_RATE];
     size_t size;
 };
 
@@ -166,18 +166,17 @@ struct videoColorTemp {
     int  colorTempValue[MAX_COLOR_TEMP];
     size_t size;
 };
-
 struct ComponentColor { 
     char modeName[MAX_COLOR_TEMP][MAX_NAME_SIZE];
     int  modeId[MAX_COLOR_TEMP];
+    bool  platformSupport[MAX_COLOR_TEMP][MAX_NAME_SIZE];
     size_t size;
-
 };
 
 struct DisplayPictureMode {
     int rangeFrom;
     int rangeTo;
-    bool platformSupport;
+    char platformSupport[MAX_NAME_SIZE];
     struct PictureMode picmodeStruct;
     struct videoSource videoSrcStruct;
     struct videoFormat videoFormtStruct;
@@ -256,7 +255,6 @@ struct TvSettingConfig {
 
     struct videoFrameRate framerate;
     struct DimmingLevel dimmingLevel;
-
     struct WhiteBalanceGamma wbRGB[3];
     struct WhiteBalanceGamma gammaRGB[3];
     struct ComponentColor componentColor;
