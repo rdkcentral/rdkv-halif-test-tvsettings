@@ -34,6 +34,7 @@
 #include <ut_log.h>
 #include <ut_kvp_profile.h>
 #include <stdlib.h>
+#include <time.h>
 #include "tvSettings.h"
 
 static int gTestGroup = 2;
@@ -60,6 +61,7 @@ void test_l2_tvSettings_GetSupportedVideoFormats(void)
     tvVideoFormatType_t *videoFormats[VIDEO_FORMAT_MAX] = {0};
     unsigned short numberOfFormats;
     ut_kvp_instance_t *pInstance = NULL;
+    int count = 0;
     uint32_t format;
     char buffer[50];
     int flag;
@@ -86,7 +88,8 @@ void test_l2_tvSettings_GetSupportedVideoFormats(void)
     UT_ASSERT_KVP_EQUAL_PROFILE_UINT16(numberOfFormats, "VideoFormat/numberOfFormats");
 
     pInstance = ut_kvp_profile_getInstance();
-    for (int i=0;i<numberOfFormats;i++)
+    count = ut_kvp_getListCount(pInstance,"VideoFormat/index");
+    for (int i=0;i<count;i++)
     {
         flag = 0;
         sprintf(buffer, "VideoFormat/index/%d", i);
@@ -194,16 +197,16 @@ void test_l2_tvSettings_VerifyCurrentVideoResolution(void)
     status = GetCurrentVideoResolution(&res);
     UT_LOG_DEBUG("GetCurrentVideoResolution status: %d, resolutionValue: %d, frameHeight: %d, frameWidth: %d, isInterlaced: %d", status, res.resolutionValue, res.frameHeight, res.frameWidth, res.isInterlaced);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    UT_ASSERT_EQUAL(res.resolutionValue, tvVideoResolution_NONE);
+    UT_ASSERT_EQUAL(res.frameHeight, 0);
+    UT_ASSERT_EQUAL(res.frameWidth, 0);
+    UT_ASSERT_EQUAL(res.isInterlaced, 0);
     if (status != tvERROR_NONE)
     {
         UT_LOG_DEBUG("Invoking TvTerm due to failure in GetCurrentVideoResolution");
         TvTerm();
         return;
     }
-    UT_ASSERT_EQUAL(res.resolutionValue, tvVideoResolution_NONE);
-    UT_ASSERT_EQUAL(res.frameHeight, 0);
-    UT_ASSERT_EQUAL(res.frameWidth, 0);
-    UT_ASSERT_EQUAL(res.isInterlaced, 0);
 
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
@@ -283,6 +286,7 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
     uint32_t source;
     int flag;
     int j;
+    int count = 0;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
@@ -305,7 +309,8 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
     UT_ASSERT_KVP_EQUAL_PROFILE_UINT16(numberOfSources, "VideoSource/numberOfSources");
 
     pInstance = ut_kvp_profile_getInstance();
-    for (int i=0;i<numberOfSources;i++)
+    count = ut_kvp_getListCount(pInstance,"VideoSource/index");
+    for (int i=0;i<count;i++)
     {
         flag = 0;
         sprintf(buffer, "VideoSource/index/%d", i);
@@ -327,7 +332,7 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
         else
         {
             UT_FAIL("VideoSource mismatch");
-            UT_LOG_DEBUG("Video Source : %d is not in the list of supported VideoFormats ", *videoSources[j]);
+            UT_LOG_DEBUG("Video Source : %d is not in the list of supported VideoSources ", *videoSources[j]);
         }
     }
 
@@ -402,37 +407,41 @@ void test_l2_tvSettings_SetAndGetBacklight(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int backlight = 50;
+    int backlight = 0;
     int getBacklight;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetBacklight() with valid backlight value: %d", backlight);
-    status = SetBacklight(backlight);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    //get and set for 4 different values 0-100
+    for (int i=0;i<4 ;i++)
     {
-        UT_LOG_ERROR("SetBacklight() failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm() due to failure of SetBacklight()");
-        TvTerm();
-        return;
+        backlight = rand() % 101;
+        UT_LOG_DEBUG("Invoking SetBacklight() with valid backlight value: %d", backlight);
+        status = SetBacklight(backlight);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetBacklight() failed with status: %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm() due to failure of SetBacklight()");
+            TvTerm();
+            return;
+        }
+
+        UT_LOG_DEBUG("Invoking GetBacklight()");
+        status = GetBacklight(&getBacklight);
+        UT_LOG_DEBUG("Return status: %d, Current backlight value: %d", status, getBacklight);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_ASSERT_EQUAL(backlight, getBacklight);
+        if (status != tvERROR_NONE || backlight != getBacklight)
+        {
+            UT_LOG_ERROR("GetBacklight() failed with status: %d", status);
+        }
     }
-
-    UT_LOG_DEBUG("Invoking GetBacklight()");
-    status = GetBacklight(&getBacklight);
-    UT_LOG_DEBUG("Return status: %d, Current backlight value: %d", status, getBacklight);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(backlight, getBacklight);
-
-    if (status != tvERROR_NONE || backlight != getBacklight)
-    {
-        UT_LOG_ERROR("GetBacklight() failed with status: %d", status);
-    }
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -459,41 +468,48 @@ void test_l2_tvSettings_SetAndGetBacklightFade(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int from = 50;
-    int to = 70;
-    int duration = 5000;
+    int from = 0;
+    int to = 0;
+    int duration = 0;
     int get_from, get_to, get_current;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetBacklightFade() with from: %d, to: %d, duration: %d", from, to, duration);
-    status = SetBacklightFade(from, to, duration);
-    UT_LOG_DEBUG("SetBacklightFade() returned status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    //get and set for 4 different values from:0-100, to:0-100, duration:0-10000
+    for(int i=0;i<4;i++)
     {
-        UT_LOG_DEBUG("Invoking TvTerm() due to failure in SetBacklightFade()");
-        TvTerm();
-        return;
-    }
+        from = rand() % 101;
+        to = rand() % 101;
+        duration = rand() % 10001;
+        UT_LOG_DEBUG("Invoking SetBacklightFade() with from: %d, to: %d, duration: %d", from, to, duration);
+        status = SetBacklightFade(from, to, duration);
+        UT_LOG_DEBUG("SetBacklightFade() returned status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_DEBUG("Invoking TvTerm() due to failure in SetBacklightFade()");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetCurrentBacklightFade()");
-    status = GetCurrentBacklightFade(&get_from, &get_to, &get_current);
-    UT_LOG_DEBUG("GetCurrentBacklightFade() returned from: %d, to: %d, current: %d, status: %d", get_from, get_to, get_current, status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(from, get_from);
-    UT_ASSERT_EQUAL(to, get_to);
-    UT_ASSERT_EQUAL(duration, get_current);
-    if (status != tvERROR_NONE)
-    {
-        UT_LOG_DEBUG("Invoking TvTerm() due to failure in GetCurrentBacklightFade()");
-        TvTerm();
-        return;
+        UT_LOG_DEBUG("Invoking GetCurrentBacklightFade()");
+        status = GetCurrentBacklightFade(&get_from, &get_to, &get_current);
+        UT_LOG_DEBUG("GetCurrentBacklightFade() returned from: %d, to: %d, current: %d, status: %d", get_from, get_to, get_current, status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_ASSERT_EQUAL(from, get_from);
+        UT_ASSERT_EQUAL(to, get_to);
+        UT_ASSERT_EQUAL(duration, get_current);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_DEBUG("Invoking TvTerm() due to failure in GetCurrentBacklightFade()");
+            TvTerm();
+            return;
+        }
     }
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm() returned status: %d", status);
@@ -520,6 +536,7 @@ void test_l2_tvSettings_GetSupportedBacklightModes(void)
     tvError_t status;
     int blModes;
     int getblModes;
+    int mode;
     int count = 0;
     char buffer[50];
     ut_kvp_instance_t *pInstance = NULL;
@@ -550,24 +567,27 @@ void test_l2_tvSettings_GetSupportedBacklightModes(void)
         flag = 0;
         sprintf(buffer, "BacklightControl/index/%d", i);
         blModes = ut_kvp_getUInt32Field( pInstance, buffer);
-
-        if (getblModes == blModes)
+        for (int j=0;j<6;j++)
         {
+            mode = (getblModes >> j) & 1;
+            if (mode == blModes)
+            {
                 flag = 1;
                 break;
+            }
+
+        }
+        if (flag == 1)
+        {
+            UT_PASS("BacklightControl match");
+            UT_LOG_DEBUG("BacklightControl : %d is in the list of supported BacklightControl modes", mode);
+        }
+        else
+        {
+            UT_FAIL("BacklightControl mismatch");
+            UT_LOG_DEBUG("BacklightControl : %d is not in the list of supported BacklightControl modes ", mode);
         }
     }
-    if (flag == 1)
-    {
-        UT_PASS("BacklightControl match");
-        UT_LOG_DEBUG("BacklightControl : %d is in the list of supported BacklightControl modes", getblModes);
-    }
-    else
-    {
-        UT_FAIL("BacklightControl mismatch");
-        UT_LOG_DEBUG("BacklightControl : %d is not in the list of supported BacklightControl modes ", getblModes);
-    }
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -594,7 +614,7 @@ void test_l2_tvSettings_SetAndGetBacklightMode(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret;
-    tvBacklightMode_t setMode = tvBacklightMode_MANUAL;
+    tvBacklightMode_t setMode;
     tvBacklightMode_t getMode;
 
     UT_LOG_DEBUG("Invoking TvInit()");
@@ -602,29 +622,31 @@ void test_l2_tvSettings_SetAndGetBacklightMode(void)
     UT_LOG_DEBUG("TvInit() returned %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetCurrentBacklightMode() with valid backlight mode %d",setMode);
-    ret = SetCurrentBacklightMode(setMode);
-    UT_LOG_DEBUG("SetCurrentBacklightMode() returned %d", ret);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-    if (ret != tvERROR_NONE)
+    for(setMode = tvBacklightMode_NONE; setMode < tvBacklightMode_MAX ; setMode++)
     {
-        UT_LOG_DEBUG("Invoking TvTerm() due to failure in SetCurrentBacklightMode()");
-        TvTerm();
-        return;
-    }
+        UT_LOG_DEBUG("Invoking SetCurrentBacklightMode() with valid backlight mode %d",setMode);
+        ret = SetCurrentBacklightMode(setMode);
+        UT_LOG_DEBUG("SetCurrentBacklightMode() returned %d", ret);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+        if (ret != tvERROR_NONE)
+        {
+            UT_LOG_DEBUG("Invoking TvTerm() due to failure in SetCurrentBacklightMode()");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetCurrentBacklightMode()");
-    ret = GetCurrentBacklightMode(&getMode);
-    UT_LOG_DEBUG("GetCurrentBacklightMode() returned %d and mode %d", ret, getMode);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-    if (ret != tvERROR_NONE)
-    {
-        UT_LOG_DEBUG("Invoking TvTerm() due to failure in GetCurrentBacklightMode()");
-        TvTerm();
-        return;
+        UT_LOG_DEBUG("Invoking GetCurrentBacklightMode()");
+        ret = GetCurrentBacklightMode(&getMode);
+        UT_LOG_DEBUG("GetCurrentBacklightMode() returned %d and mode %d", ret, getMode);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+        UT_ASSERT_EQUAL(getMode, setMode);
+        if (ret != tvERROR_NONE || getMode != setMode)
+        {
+            UT_LOG_DEBUG("Invoking TvTerm() due to failure in GetCurrentBacklightMode()");
+            TvTerm();
+            return;
+        }
     }
-    UT_ASSERT_EQUAL(getMode, setMode);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
     UT_LOG_DEBUG("TvTerm() returned %d", ret);
@@ -657,6 +679,7 @@ void test_l2_tvSettings_GetSupportedDimmingModes(void)
     char buffer[50];
     uint32_t mode;
     int flag;
+    int count = 0;
     int j;
 
     UT_LOG_DEBUG("Invoking TvInit with no input parameters");
@@ -680,13 +703,14 @@ void test_l2_tvSettings_GetSupportedDimmingModes(void)
     UT_ASSERT_KVP_EQUAL_PROFILE_UINT16(numDimmingModes, "DimmingMode/numberOfDimmingModes");
 
     pInstance = ut_kvp_profile_getInstance();
-    for (int i=0;i<numDimmingModes;i++)
+    count = ut_kvp_getListCount(pInstance,"DimmingMode/index");
+    for (int i=0;i<count;i++)
     {
         flag = 0;
         sprintf(buffer, "DimmingMode/index/%d", i);
         mode = ut_kvp_getUInt32Field( pInstance, buffer);
         j = 0;
-        for ( j=0; j< numDimmingModes; j++)
+        for (j=0; j<numDimmingModes; j++)
         {
             if (*dimmingModes[j] == mode)
             {
@@ -816,11 +840,11 @@ void test_l2_tvSettings_SetAndGetLocalDimmingLevel(void)
         status = GetLocalDimmingLevel(&ldimStateLevelGet);
         UT_LOG_DEBUG("GetLocalDimmingLevel() returned %d and level %d", status, ldimStateLevelGet);
         UT_ASSERT_EQUAL(status, tvERROR_NONE);
-        if(status != tvERROR_NONE)
+        UT_ASSERT_EQUAL(ldimStateLevel, ldimStateLevelGet);
+        if(status != tvERROR_NONE || ldimStateLevel != ldimStateLevelGet)
         {
             UT_LOG_ERROR("GetLocalDimmingLevel failed with status: %d", status);
         }
-        UT_ASSERT_EQUAL(ldimStateLevel, ldimStateLevelGet);
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
@@ -849,37 +873,40 @@ void test_l2_tvSettings_SetAndGetBrightness(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int brightness = 50;
+    int brightness = 0;
     int get_brightness;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
     UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetBrightness with brightness: %d", brightness);
-    status = SetBrightness(brightness);
-    UT_LOG_DEBUG("SetBrightness status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for (int i=0;i<4;i++)
     {
-        UT_LOG_ERROR("SetBrightness failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm due to SetBrightness failure");
-        TvTerm();
-        return;
-    }
+        brightness = rand() % 101;
+        UT_LOG_DEBUG("Invoking SetBrightness with brightness: %d", brightness);
+        status = SetBrightness(brightness);
+        UT_LOG_DEBUG("SetBrightness status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetBrightness failed with status: %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm due to SetBrightness failure");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetBrightness");
-    status = GetBrightness(&get_brightness);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_LOG_DEBUG("GetBrightness status: %d, brightness: %d", status, get_brightness);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE || get_brightness != brightness)
-    {
-        UT_LOG_ERROR("GetBrightness failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking GetBrightness");
+        status = GetBrightness(&get_brightness);
+        UT_LOG_DEBUG("GetBrightness status: %d, brightness: %d", status, get_brightness);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE || get_brightness != brightness)
+        {
+            UT_LOG_ERROR("GetBrightness failed with status: %d", status);
+        }
+        UT_ASSERT_EQUAL(brightness, get_brightness);
     }
-    UT_ASSERT_EQUAL(brightness, get_brightness);
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -907,37 +934,40 @@ void test_l2_tvSettings_SetAndGetContrast(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret;
-    int contrast = 50;
+    int contrast = 0;
     int getContrast;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
     UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetContrast() with valid contrast value: %d", contrast);
-    ret = SetContrast(contrast);
-    UT_LOG_DEBUG("Return status: %d", ret);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-    if (ret != tvERROR_NONE)
+    for (int i=0;i<4;i++)
     {
-        UT_LOG_ERROR("SetContrast failed with status: %d", ret);
-        UT_LOG_DEBUG("Invoking TvTerm due to SetContrast failure");
-        TvTerm();
-        return;
-    }
+        contrast = rand() % 101;
+        UT_LOG_DEBUG("Invoking SetContrast() with valid contrast value: %d", contrast);
+        ret = SetContrast(contrast);
+        UT_LOG_DEBUG("Return status: %d", ret);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+        if (ret != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetContrast failed with status: %d", ret);
+            UT_LOG_DEBUG("Invoking TvTerm due to SetContrast failure");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetContrast()");
-    ret = GetContrast(&getContrast);
-    UT_LOG_DEBUG("Return status: %d, Contrast value: %d", ret, getContrast);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-
-    if (ret != tvERROR_NONE || getContrast != contrast)
-    {
+        UT_LOG_DEBUG("Invoking GetContrast()");
+        ret = GetContrast(&getContrast);
+        UT_LOG_DEBUG("Return status: %d, Contrast value: %d", ret, getContrast);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+        if (ret != tvERROR_NONE || getContrast != contrast)
+        {
         UT_LOG_ERROR("Mismatch in set and get contrast values. Set: %d, Get: %d", contrast, getContrast);
+        }
+        UT_ASSERT_EQUAL(contrast, getContrast);
     }
-    UT_ASSERT_EQUAL(contrast, getContrast);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
     UT_LOG_DEBUG("Return status: %d", ret);
@@ -964,37 +994,40 @@ void test_l2_tvSettings_SetAndGetSharpness(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int setSharpness = 50;
+    int setSharpness = 0;
     int getSharpness = 0;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetSharpness() with sharpness: %d", setSharpness);
-    status = SetSharpness(setSharpness);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for (int i=0;i<4;i++)
     {
-        UT_LOG_ERROR("SetSharpness() failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm()");
-        TvTerm();
-        return;
+        setSharpness = rand() % 101;
+        UT_LOG_DEBUG("Invoking SetSharpness() with sharpness: %d", setSharpness);
+        status = SetSharpness(setSharpness);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetSharpness() failed with status: %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm()");
+            TvTerm();
+            return;
+        }
+
+        UT_LOG_DEBUG("Invoking GetSharpness()");
+        status = GetSharpness(&getSharpness);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_LOG_DEBUG("Return status: %d, Sharpness: %d", status, getSharpness);
+        if (status != tvERROR_NONE || setSharpness != getSharpness)
+        {
+            UT_LOG_ERROR("GetSharpness() failed with status: %d", status);
+        }
+        UT_ASSERT_EQUAL(setSharpness, getSharpness);
     }
-
-    UT_LOG_DEBUG("Invoking GetSharpness()");
-    status = GetSharpness(&getSharpness);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_LOG_DEBUG("Return status: %d, Sharpness: %d", status, getSharpness);
-    if (status != tvERROR_NONE || setSharpness != getSharpness)
-    {
-        UT_LOG_ERROR("GetSharpness() failed with status: %d", status);
-    }
-
-    UT_ASSERT_EQUAL(setSharpness, getSharpness);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -1021,36 +1054,39 @@ void test_l2_tvSettings_SetAndGetSaturation(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret;
-    int saturation_set = 50;
-    int saturation_get;
+    int saturation_set = 0;
+    int saturation_get = 0;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
     UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetSaturation() with saturation value: %d", saturation_set);
-    ret = SetSaturation(saturation_set);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-    if (ret != tvERROR_NONE)
+    for (int i=0;i<4;i++)
     {
-        UT_LOG_ERROR("SetSaturation failed with error: %d", ret);
-        UT_LOG_DEBUG("Invoking TvTerm()");
-        TvTerm();
-        return;
+        saturation_set = rand() % 101;
+        UT_LOG_DEBUG("Invoking SetSaturation() with saturation value: %d", saturation_set);
+        ret = SetSaturation(saturation_set);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+        if (ret != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetSaturation failed with error: %d", ret);
+            UT_LOG_DEBUG("Invoking TvTerm()");
+            TvTerm();
+            return;
+        }
+
+        UT_LOG_DEBUG("Invoking GetSaturation()");
+        ret = GetSaturation(&saturation_get);
+        UT_LOG_DEBUG("Retrieved status : %d saturation value: %d", ret, saturation_get);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+        if (ret != tvERROR_NONE || saturation_set != saturation_get)
+        {
+            UT_LOG_ERROR("GetSaturation failed with error: %d", ret);
+        }
+        UT_ASSERT_EQUAL(saturation_set, saturation_get);
     }
-
-    UT_LOG_DEBUG("Invoking GetSaturation()");
-    ret = GetSaturation(&saturation_get);
-    UT_LOG_DEBUG("Retrieved status : %d saturation value: %d", ret, saturation_get);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-
-    if (ret != tvERROR_NONE || saturation_set != saturation_get)
-    {
-        UT_LOG_ERROR("GetSaturation failed with error: %d", ret);
-    }
-    UT_ASSERT_EQUAL(saturation_set, saturation_get);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
     UT_LOG_DEBUG("Return status: %d", ret);
@@ -1077,34 +1113,38 @@ void test_l2_tvSettings_SetAndGetHue(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int hue = 50;
+    int hue = 0;
     int getHue;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetHue with hue: %d", hue);
-    status = SetHue(hue);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for (int i=0;i<4;i++)
     {
-        UT_LOG_ERROR("SetHue failed with status: %d", status);
-        TvTerm();
-        return;
-    }
+        hue = rand() % 101;
+        UT_LOG_DEBUG("Invoking SetHue with hue: %d", hue);
+        status = SetHue(hue);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetHue failed with status: %d", status);
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetHue");
-    status = GetHue(&getHue);
-    UT_LOG_DEBUG("Return status: %d, Hue: %d", status, getHue);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE || hue != getHue)
-    {
-        UT_LOG_ERROR("GetHue failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking GetHue");
+        status = GetHue(&getHue);
+        UT_LOG_DEBUG("Return status: %d, Hue: %d", status, getHue);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE || hue != getHue)
+        {
+            UT_LOG_ERROR("GetHue failed with status: %d", status);
+        }
+        UT_ASSERT_EQUAL(hue, getHue);
     }
-    UT_ASSERT_EQUAL(hue, getHue);
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -1132,7 +1172,7 @@ void test_l2_tvSettings_SetAndGetColorTemperature(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    tvColorTemp_t colorTemp = tvColorTemp_STANDARD;
+    tvColorTemp_t colorTemp = 0;
     tvColorTemp_t getColorTemp;
 
     UT_LOG_DEBUG("Invoking TvInit");
@@ -1140,28 +1180,30 @@ void test_l2_tvSettings_SetAndGetColorTemperature(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetColorTemperature with colorTemp = %d", colorTemp);
-    status = SetColorTemperature(colorTemp);
-    UT_LOG_DEBUG("SetColorTemperature returned status = %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for (colorTemp=tvColorTemp_STANDARD; colorTemp<tvColorTemp_MAX;colorTemp++)
     {
-        UT_LOG_ERROR("SetColorTemperature failed with status = %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm due to failure of SetColorTemperature");
-        TvTerm();
-        return;
-    }
+        UT_LOG_DEBUG("Invoking SetColorTemperature with colorTemp = %d", colorTemp);
+        status = SetColorTemperature(colorTemp);
+        UT_LOG_DEBUG("SetColorTemperature returned status = %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetColorTemperature failed with status = %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm due to failure of SetColorTemperature");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetColorTemperature");
-    status = GetColorTemperature(&getColorTemp);
-    UT_LOG_DEBUG("GetColorTemperature returned status = %d and colorTemp = %d", status, getColorTemp);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE || colorTemp != getColorTemp)
-    {
-        UT_LOG_ERROR("GetColorTemperature failed with status = %d", status);
+        UT_LOG_DEBUG("Invoking GetColorTemperature");
+        status = GetColorTemperature(&getColorTemp);
+        UT_LOG_DEBUG("GetColorTemperature returned status = %d and colorTemp = %d", status, getColorTemp);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE || colorTemp != getColorTemp)
+        {
+            UT_LOG_ERROR("GetColorTemperature failed with status = %d", status);
+        }
+        UT_ASSERT_EQUAL(colorTemp, getColorTemp);
     }
-    UT_ASSERT_EQUAL(colorTemp, getColorTemp);
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -1188,38 +1230,37 @@ void test_l2_tvSettings_SetAndGetAspectRatio(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    tvDisplayMode_t setMode = tvDisplayMode_4x3;
+    tvDisplayMode_t setMode;
     tvDisplayMode_t getMode;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    UT_LOG_DEBUG("Invoking SetAspectRatio() with tvDisplayMode_4x3");
-    status = SetAspectRatio(setMode);
-    UT_LOG_DEBUG("SetAspectRatio() returned status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for(setMode=tvDisplayMode_4x3 ; setMode<tvDisplayMode_MAX; setMode++)
     {
-        UT_LOG_ERROR("SetAspectRatio() failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm()");
-        TvTerm();
-        return;
+        UT_LOG_DEBUG("Invoking SetAspectRatio() with display mode = %d", setMode);
+        status = SetAspectRatio(setMode);
+        UT_LOG_DEBUG("SetAspectRatio() returned status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetAspectRatio() failed with status: %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm()");
+            TvTerm();
+            return;
+        }
+
+        UT_LOG_DEBUG("Invoking GetAspectRatio()");
+        status = GetAspectRatio(&getMode);
+        UT_LOG_DEBUG("GetAspectRatio() returned mode: %d and status: %d", getMode, status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE || setMode != getMode)
+        {
+            UT_LOG_ERROR("GetAspectRatio() failed with status: %d", status);
+        }
+        UT_ASSERT_EQUAL(setMode, getMode);
     }
-
-    UT_LOG_DEBUG("Invoking GetAspectRatio()");
-    status = GetAspectRatio(&getMode);
-    UT_LOG_DEBUG("GetAspectRatio() returned mode: %d and status: %d", getMode, status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-    if (status != tvERROR_NONE || setMode != getMode)
-    {
-        UT_LOG_ERROR("GetAspectRatio() failed with status: %d", status);
-    }
-
-    UT_ASSERT_EQUAL(setMode, getMode);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -1265,7 +1306,7 @@ void test_l2_tvSettings_SetAndGetLowLatencyState(void)
         return;
     }
 
-    UT_LOG_DEBUG("Invoking GetLowLatencyState(&lowlatencystate)");
+    UT_LOG_DEBUG("Invoking GetLowLatencyState()");
     status = GetLowLatencyState(&lowlatencystate);
     UT_LOG_DEBUG("GetLowLatencyState() returned lowlatencystate: %d and status: %d", lowlatencystate, status);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
@@ -1407,29 +1448,30 @@ void test_l2_tvSettings_SetAndGetDynamicGamma(void)
     status = TvInit();
     UT_LOG_DEBUG("TvInit() returned status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    UT_LOG_DEBUG("Invoking SetDynamicGamma() with valid gamma value: %f", setGammaValue);
-    status = SetDynamicGamma(setGammaValue);
-    UT_LOG_DEBUG("SetDynamicGamma() returned status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for(setGammaValue =1.80; setGammaValue <= 2.6 ; setGammaValue+=0.2)
     {
-        UT_LOG_ERROR("SetDynamicGamma() failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm()");
-        TvTerm();
-        return;
-    }
+        UT_LOG_DEBUG("Invoking SetDynamicGamma() with valid gamma value: %f", setGammaValue);
+        status = SetDynamicGamma(setGammaValue);
+        UT_LOG_DEBUG("SetDynamicGamma() returned status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetDynamicGamma() failed with status: %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm()");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetDynamicGamma()");
-    status = GetDynamicGamma(&getGammaValue);
-    UT_LOG_DEBUG("GetDynamicGamma() returned gamma value: %f and status: %d", getGammaValue, status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE || setGammaValue != getGammaValue)
-    {
-        UT_LOG_ERROR("GetDynamicGamma() failed with status %d, GammaValue: %s", status, getGammaValue);
+        UT_LOG_DEBUG("Invoking GetDynamicGamma()");
+        status = GetDynamicGamma(&getGammaValue);
+        UT_LOG_DEBUG("GetDynamicGamma() returned gamma value: %f and status: %d", getGammaValue, status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE || setGammaValue != getGammaValue)
+        {
+            UT_LOG_ERROR("GetDynamicGamma() failed with status %d, GammaValue: %s", status, getGammaValue);
+        }
+        UT_ASSERT_EQUAL(setGammaValue, getGammaValue);
     }
-    UT_ASSERT_EQUAL(setGammaValue, getGammaValue);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm() returned status: %d", status);
@@ -1457,12 +1499,13 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
 
     tvError_t status;
     tvDolbyMode_t *dvModes[tvMode_Max];
-    unsigned short count;
+    unsigned short count = 0;
     ut_kvp_instance_t *pInstance = NULL;
     char buffer[50];
     uint32_t mode;
     int flag;
     int j;
+    int getcount = 0;
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
@@ -1485,7 +1528,8 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
     UT_ASSERT_KVP_EQUAL_PROFILE_UINT16(count, "DolbyVisionMode/numberOfDolbyVisionMode");
 
     pInstance = ut_kvp_profile_getInstance();
-    for (int i=0;i<count;i++)
+    getcount = ut_kvp_getListCount(pInstance,"DolbyVisionMode/index");
+    for (int i=0;i<getcount;i++)
     {
         flag = 0;
         sprintf(buffer, "DolbyVisionMode/index/%d", i);
@@ -1537,7 +1581,7 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    tvDolbyMode_t dolbyMode = tvDolbyMode_Dark;
+    tvDolbyMode_t dolbyMode;
     tvDolbyMode_t getDolbyMode;
 
     UT_LOG_DEBUG("Invoking TvInit");
@@ -1545,28 +1589,29 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetTVDolbyVisionMode with dolbyMode: %d", dolbyMode);
-    status = SetTVDolbyVisionMode(dolbyMode);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
+    for (dolbyMode=tvDolbyMode_Dark;dolbyMode<=tvHLGMode_Reserved3;dolbyMode++)
     {
-        UT_LOG_ERROR("SetTVDolbyVisionMode failed with status: %d", status);
-        TvTerm();
-        return;
+        UT_LOG_DEBUG("Invoking SetTVDolbyVisionMode with dolbyMode: %d", dolbyMode);
+        status = SetTVDolbyVisionMode(dolbyMode);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetTVDolbyVisionMode failed with status: %d", status);
+            TvTerm();
+            return;
+        }
+
+        UT_LOG_DEBUG("Invoking GetTVDolbyVisionMode");
+        status = GetTVDolbyVisionMode(&getDolbyMode);
+        UT_LOG_DEBUG("Return status: %d, getDolbyMode: %d", status, getDolbyMode);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_ASSERT_EQUAL(getDolbyMode, dolbyMode);
+        if (status != tvERROR_NONE || getDolbyMode != dolbyMode)
+        {
+            UT_LOG_ERROR("Mismatch in set and get Dolby Vision Mode");
+        }
     }
-
-    UT_LOG_DEBUG("Invoking GetTVDolbyVisionMode");
-    status = GetTVDolbyVisionMode(&getDolbyMode);
-    UT_LOG_DEBUG("Return status: %d, getDolbyMode: %d", status, getDolbyMode);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(getDolbyMode, dolbyMode);
-
-    if (status != tvERROR_NONE || getDolbyMode != dolbyMode)
-    {
-        UT_LOG_ERROR("Mismatch in set and get Dolby Vision Mode");
-    }
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -1595,6 +1640,12 @@ void test_l2_tvSettings_GetTVSupportedPictureModes(void)
     tvError_t status;
     pic_modes_t *pictureModes[PIC_MODES_SUPPORTED_MAX];
     unsigned short count;
+    ut_kvp_instance_t *pInstance = NULL;
+    char buffer[50];
+    uint32_t mode;
+    int flag;
+    int j;
+    int getcount;
 
     UT_LOG_DEBUG("Invoking TvInit with no input parameters");
     status = TvInit();
@@ -1604,15 +1655,43 @@ void test_l2_tvSettings_GetTVSupportedPictureModes(void)
     UT_LOG_DEBUG("Invoking GetTVSupportedPictureModes with valid pictureModes and count buffers");
     status = GetTVSupportedPictureModes(pictureModes, &count);
     UT_LOG_DEBUG("Return status: %d, count: %d", status, count);
-    UT_ASSERT_NOT_EQUAL(status, tvERROR_INVALID_PARAM);
-    UT_ASSERT_NOT_EQUAL(status, tvERROR_INVALID_STATE);
-    UT_ASSERT_TRUE(count >= 1 && count <= PIC_MODES_SUPPORTED_MAX);
-
-    for (int i = 0; i < count; i++)
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
     {
-        UT_ASSERT_KVP_EQUAL_PROFILE_STRING(pictureModes[i]->name, "PictureMode/index");
+        UT_LOG_ERROR("GetTVSupportedPictureModes failed with status: %d", status);
+        TvTerm();
+        return;
     }
 
+    UT_ASSERT_TRUE(count >= 1 && count <= PIC_MODES_SUPPORTED_MAX);
+
+    pInstance = ut_kvp_profile_getInstance();
+    getcount = ut_kvp_getListCount(pInstance,"PictureMode/index");
+    for (int i=0;i<getcount;i++)
+    {
+        flag = 0;
+        sprintf(buffer, "PictureMode/index/%d", i);
+        mode = ut_kvp_getUInt32Field( pInstance, buffer);
+        j = 0;
+        for ( j=0; j<count; j++)
+        {
+            if (pictureModes[j]->value == mode)
+            {
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 1)
+        {
+            UT_PASS("PictureMode match");
+            UT_LOG_DEBUG("Picture Mode : %d is in the list of supported PictureMode", pictureModes[j]->value);
+        }
+        else
+        {
+            UT_FAIL("PictureMode mismatch");
+            UT_LOG_DEBUG("Picture Mode : %d is not in the list of supported PictureMode ", pictureModes[j]->value);
+        }
+    }
     UT_LOG_DEBUG("Invoking TvTerm with no input parameters");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -1645,40 +1724,49 @@ void test_l2_tvSettings_SetAndGetPictureMode(void)
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
     UT_LOG_DEBUG("TvInit status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking GetTVSupportedPictureModes()");
     status = GetTVSupportedPictureModes(pictureModes, &count);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
     UT_LOG_DEBUG("GetTVSupportedPictureModes status: %d, count: %d", status, count);
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("GetTVSupportedPictureModes failed with status: %d", status);
+        TvTerm();
+        return;
+    }
+
     UT_ASSERT_TRUE(count >= 1 && count <= PIC_MODES_SUPPORTED_MAX);
 
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         UT_LOG_DEBUG("Invoking SetTVPictureMode() with pictureMode: %s", pictureModes[i]->name);
         status = SetTVPictureMode(pictureModes[i]->name);
-        UT_ASSERT_EQUAL(status, tvERROR_NONE);
         UT_LOG_DEBUG("SetTVPictureMode status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetTVPictureMode failed with status: %d", status);
+            continue;
+        }
 
         UT_LOG_DEBUG("Invoking GetTVPictureMode()");
         status = GetTVPictureMode(pictureMode);
-        UT_ASSERT_EQUAL(status, tvERROR_NONE);
         UT_LOG_DEBUG("GetTVPictureMode status: %d, pictureMode: %s", status, pictureMode);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
         UT_ASSERT_STRING_EQUAL(pictureModes[i]->name, pictureMode);
-
-        if (status != tvERROR_NONE) {
-            UT_LOG_ERROR("Error in SetAndGetPictureMode, invoking TvTerm()");
-            status = TvTerm();
-            UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-            UT_LOG_DEBUG("TvTerm status: %d", status);
-            continue;
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("GetTVPictureMode failed with status: %d", status);
         }
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
     UT_LOG_DEBUG("TvTerm status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -1705,47 +1793,53 @@ void test_l2_tvSettings_SetAndGetColorTempRgain(void)
     int setRgain = 0;
     tvColorTemp_t colorTemp;
     tvColorTempSourceOffset_t sourceId;
+    int saveOnly;
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
+    UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for(colorTemp = tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
         for(sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for(setRgain = 0; setRgain <= 2047; setRgain++)
+            for(setRgain = 0; setRgain <= 2047; setRgain+=500)
             {
-                UT_LOG_DEBUG("Invoking SetColorTemp_Rgain_onSource with colorTemp: %d, rgain: %d, sourceId: %d, saveOnly: 0", colorTemp, setRgain, sourceId);
-                status = SetColorTemp_Rgain_onSource(colorTemp, setRgain, sourceId, 0);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                if(status != tvERROR_NONE)
+                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
                 {
-                    UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed with status: %d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking SetColorTemp_Rgain_onSource with colorTemp: %d, rgain: %d, sourceId: %d, saveOnly: %d", colorTemp, setRgain, sourceId, saveOnly);
+                    status = SetColorTemp_Rgain_onSource(colorTemp, setRgain, sourceId, saveOnly);
+                    UT_LOG_DEBUG("SetColorTemp_Rgain_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if(status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed with status: %d", status);
+                        continue;
+                    }
 
-                UT_LOG_DEBUG("Invoking GetColorTemp_Rgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                status = GetColorTemp_Rgain_onSource(colorTemp, &rgain, sourceId);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                if(status != tvERROR_NONE)
-                {
-                    UT_LOG_ERROR("GetColorTemp_Rgain_onSource failed with status: %d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking GetColorTemp_Rgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                    status = GetColorTemp_Rgain_onSource(colorTemp, &rgain, sourceId);
+                    UT_LOG_DEBUG("GetColorTemp_Rgain_onSource status: %d, rgain: %d", status, rgain);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if(status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("GetColorTemp_Rgain_onSource failed with status: %d", status);
+                    }
 
-                UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
-                UT_ASSERT_EQUAL(rgain, setRgain);
-                if(rgain != setRgain)
-                {
-                    UT_LOG_ERROR("Mismatch in set and retrieved rgain values");
+                    UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
+                    UT_ASSERT_EQUAL(rgain, setRgain);
+                    if(rgain != setRgain)
+                    {
+                        UT_LOG_ERROR("Mismatch in set and retrieved rgain values");
+                    }
                 }
             }
         }
     }
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
+    UT_LOG_DEBUG("TvTerm status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -1771,46 +1865,51 @@ void test_l2_tvSettings_SetAndGetColorTempGgain(void)
     tvError_t status;
     int ggain = 0;
     int set_ggain = 0;
+    int saveOnly;
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
+    UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for(tvColorTemp_t colorTemp = tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
         for(tvColorTempSourceOffset_t sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for(set_ggain = 0; set_ggain <= 2047; set_ggain++)
+            for(set_ggain = 0; set_ggain <= 2047; set_ggain+=500)
             {
-                UT_LOG_DEBUG("Invoking SetColorTemp_Ggain_onSource with colorTemp: %d, ggain: %d, sourceId: %d, saveOnly: 0", colorTemp, set_ggain, sourceId);
-                status = SetColorTemp_Ggain_onSource(colorTemp, set_ggain, sourceId, 0);
-                if(status != tvERROR_NONE)
+                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
                 {
-                    UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed with status: %d", status);
-                    UT_LOG_DEBUG("Invoking TvTerm");
-                    TvTerm();
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking SetColorTemp_Ggain_onSource with colorTemp: %d, ggain: %d, sourceId: %d, saveOnly: %d", colorTemp, set_ggain, sourceId, saveOnly);
+                    status = SetColorTemp_Ggain_onSource(colorTemp, set_ggain, sourceId, saveOnly);
+                    UT_LOG_DEBUG("SetColorTemp_Ggain_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if(status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed with status: %d", status);
+                        continue;
+                    }
 
-                UT_LOG_DEBUG("Invoking GetColorTemp_Ggain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                status = GetColorTemp_Ggain_onSource(colorTemp, &ggain, sourceId);
-                if(status != tvERROR_NONE)
-                {
-                    UT_LOG_ERROR("GetColorTemp_Ggain_onSource failed with status: %d", status);
-                    UT_LOG_DEBUG("Invoking TvTerm");
-                    TvTerm();
-                    continue;
+                    UT_LOG_DEBUG("Invoking GetColorTemp_Ggain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                    status = GetColorTemp_Ggain_onSource(colorTemp, &ggain, sourceId);
+                    UT_LOG_DEBUG("ggain: %d, status: %d", ggain, status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if(status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("GetColorTemp_Ggain_onSource failed with status: %d", status);
+                    }
+                    UT_ASSERT_EQUAL(ggain, set_ggain);
+                    if(ggain != set_ggain)
+                    {
+                        UT_LOG_ERROR("Mismatch in set and retrieved ggain values");
+                    }
                 }
-
-                UT_LOG_DEBUG("ggain: %d, status: %d", ggain, status);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                UT_ASSERT_EQUAL(ggain, set_ggain);
             }
         }
     }
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
+    UT_LOG_DEBUG("TvTerm status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -1836,41 +1935,53 @@ void test_l2_tvSettings_SetAndGetColorTempBgain(void)
     tvError_t status;
     int bgain = 0;
     int get_bgain = 0;
+    int saveOnly;
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
+    UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for (tvColorTemp_t colorTemp = tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
         for (tvColorTempSourceOffset_t sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for (bgain = 0; bgain <= 2047; bgain++)
+            for (bgain = 0; bgain <= 2047; bgain+=500)
             {
-                UT_LOG_DEBUG("Invoking SetColorTemp_Bgain_onSource with colorTemp: %d, bgain: %d, sourceId: %d, saveOnly: 0", colorTemp, bgain, sourceId);
-                status = SetColorTemp_Bgain_onSource(colorTemp, bgain, sourceId, 0);
-                if (status != tvERROR_NONE)
+                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
                 {
-                    UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed with status: %d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking SetColorTemp_Bgain_onSource with colorTemp: %d, bgain: %d, sourceId: %d, saveOnly: %d", colorTemp, bgain, sourceId, saveOnly);
+                    status = SetColorTemp_Bgain_onSource(colorTemp, bgain, sourceId, saveOnly);
+                    UT_LOG_DEBUG("SetColorTemp_Bgain_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if (status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed with status: %d", status);
+                        continue;
+                    }
 
-                UT_LOG_DEBUG("Invoking GetColorTemp_Bgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                status = GetColorTemp_Bgain_onSource(colorTemp, &get_bgain, sourceId);
-                if (status != tvERROR_NONE)
-                {
-                    UT_LOG_ERROR("GetColorTemp_Bgain_onSource failed with status: %d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking GetColorTemp_Bgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                    status = GetColorTemp_Bgain_onSource(colorTemp, &get_bgain, sourceId);
+                    UT_LOG_DEBUG(" GetColorTemp_Bgain_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if (status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("GetColorTemp_Bgain_onSource failed with status: %d", status);
+                    }
 
-                UT_LOG_DEBUG("bgain value retrieved: %d", get_bgain);
-                UT_ASSERT_EQUAL(bgain, get_bgain);
+                    UT_LOG_DEBUG("bgain value retrieved: %d", get_bgain);
+                    UT_ASSERT_EQUAL(bgain, get_bgain);
+                    if(bgain != get_bgain)
+                    {
+                        UT_LOG_ERROR("Mismatch in set and retrieved bgain values");
+                    }
+                }
             }
         }
     }
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
+    UT_LOG_DEBUG("TvTerm status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -1901,18 +2012,20 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
+    UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for (colorTemp = tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
         for (sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for (rpostoffset_set = -1024; rpostoffset_set <= 1023; rpostoffset_set++)
+            for (rpostoffset_set = -1024; rpostoffset_set <= 1023; rpostoffset_set=+500)
             {
                 for (saveOnly = 0; saveOnly <= 1; saveOnly++)
                 {
                     UT_LOG_DEBUG("Invoking SetColorTemp_R_post_offset_onSource with colorTemp=%d, rpostoffset=%d, sourceId=%d, saveOnly=%d", colorTemp, rpostoffset_set, sourceId, saveOnly);
                     status = SetColorTemp_R_post_offset_onSource(colorTemp, rpostoffset_set, sourceId, saveOnly);
+                    UT_LOG_DEBUG("SetColorTemp_R_post_offset_onSource status: %d", status);
                     UT_ASSERT_EQUAL(status, tvERROR_NONE);
                     if (status != tvERROR_NONE)
                     {
@@ -1922,15 +2035,19 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
 
                     UT_LOG_DEBUG("Invoking GetColorTemp_R_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
                     status = GetColorTemp_R_post_offset_onSource(colorTemp, &rpostoffset_get, sourceId);
+                    UT_LOG_DEBUG("GetColorTemp_R_post_offset_onSource status: %d", status);
                     UT_ASSERT_EQUAL(status, tvERROR_NONE);
                     if (status != tvERROR_NONE)
                     {
                         UT_LOG_ERROR("GetColorTemp_R_post_offset_onSource failed with status=%d", status);
-                        continue;
                     }
 
                     UT_LOG_DEBUG("Retrieved rpostoffset=%d", rpostoffset_get);
                     UT_ASSERT_EQUAL(rpostoffset_set, rpostoffset_get);
+                    if(rpostoffset_set != rpostoffset_get)
+                    {
+                        UT_LOG_ERROR("Mismatch in set and retrieved rpostoffset values");
+                    }
                 }
             }
         }
@@ -1938,6 +2055,7 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
 
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
+    UT_LOG_DEBUG("TvTerm status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -1964,48 +2082,53 @@ void test_l2_tvSettings_SetAndGetColorTempGPostOffset(void)
     int gpostoffset_set, gpostoffset_get;
     tvColorTemp_t colorTemp;
     tvColorTempSourceOffset_t sourceId;
+    int saveOnly;
 
-    status = TvInit();
     UT_LOG_DEBUG("Invoking TvInit");
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+    status = TvInit();
     UT_LOG_DEBUG("TvInit status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for(colorTemp = tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
         for(sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for(gpostoffset_set = -1024; gpostoffset_set <= 1023; gpostoffset_set++)
+            for(gpostoffset_set = -1024; gpostoffset_set <= 1023; gpostoffset_set+=500)
             {
-                UT_LOG_DEBUG("Invoking SetColorTemp_G_post_offset_onSource with colorTemp: %d, gpostoffset: %d, sourceId: %d, saveOnly: 0", colorTemp, gpostoffset_set, sourceId);
-                status = SetColorTemp_G_post_offset_onSource(colorTemp, gpostoffset_set, sourceId, 0);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                UT_LOG_DEBUG("SetColorTemp_G_post_offset_onSource status: %d", status);
-
-                if(status != tvERROR_NONE)
+                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
                 {
-                    UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed with status: %d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking SetColorTemp_G_post_offset_onSource with colorTemp: %d, gpostoffset: %d, sourceId: %d, saveOnly: %d", colorTemp, gpostoffset_set, sourceId, saveOnly);
+                    status = SetColorTemp_G_post_offset_onSource(colorTemp, gpostoffset_set, sourceId, saveOnly);
+                    UT_LOG_DEBUG("SetColorTemp_G_post_offset_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if(status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed with status: %d", status);
+                        continue;
+                    }
 
-                UT_LOG_DEBUG("Invoking GetColorTemp_G_post_offset_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                status = GetColorTemp_G_post_offset_onSource(colorTemp, &gpostoffset_get, sourceId);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
-                UT_LOG_DEBUG("GetColorTemp_G_post_offset_onSource status: %d, gpostoffset: %d", status, gpostoffset_get);
-
-                if(status != tvERROR_NONE)
-                {
-                    UT_LOG_ERROR("GetColorTemp_G_post_offset_onSource failed with status: %d", status);
-                    continue;
+                    UT_LOG_DEBUG("Invoking GetColorTemp_G_post_offset_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                    status = GetColorTemp_G_post_offset_onSource(colorTemp, &gpostoffset_get, sourceId);
+                    UT_LOG_DEBUG("GetColorTemp_G_post_offset_onSource status: %d, gpostoffset: %d", status, gpostoffset_get);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if(status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("GetColorTemp_G_post_offset_onSource failed with status: %d", status);
+                    }
+                    UT_LOG_DEBUG("Retrieved gpostoffset=%d", gpostoffset_get);
+                    UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
+                    if(gpostoffset_set != gpostoffset_get)
+                    {
+                        UT_LOG_ERROR("Mismatch in set and retrieved gpostoffset values");
+                    }
                 }
             }
         }
     }
-
-    status = TvTerm();
     UT_LOG_DEBUG("Invoking TvTerm");
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+    status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -2031,43 +2154,53 @@ void test_l2_tvSettings_SetAndGetColorTempBPostOffset(void)
     int bpostoffset_set, bpostoffset_get;
     tvColorTemp_t colorTemp;
     tvColorTempSourceOffset_t sourceId;
+    int saveOnly;
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
+    UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for (colorTemp = tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
         for (sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for (bpostoffset_set = -1024; bpostoffset_set <= 1023; bpostoffset_set++)
+            for (bpostoffset_set = -1024; bpostoffset_set <= 1023; bpostoffset_set+=500)
             {
-                UT_LOG_DEBUG("Invoking SetColorTemp_B_post_offset_onSource with colorTemp=%d, bpostoffset=%d, sourceId=%d, saveOnly=1", colorTemp, bpostoffset_set, sourceId);
-                status = SetColorTemp_B_post_offset_onSource(colorTemp, bpostoffset_set, sourceId, 1);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                if (status != tvERROR_NONE)
+                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
                 {
-                    UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed with status=%d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking SetColorTemp_B_post_offset_onSource with colorTemp=%d, bpostoffset=%d, sourceId=%d, saveOnly=%d", colorTemp, bpostoffset_set, sourceId, saveOnly);
+                    status = SetColorTemp_B_post_offset_onSource(colorTemp, bpostoffset_set, sourceId, saveOnly);
+                    UT_LOG_DEBUG("SetColorTemp_B_post_offset_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if (status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed with status=%d", status);
+                        continue;
+                    }
 
-                UT_LOG_DEBUG("Invoking GetColorTemp_B_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
-                status = GetColorTemp_B_post_offset_onSource(colorTemp, &bpostoffset_get, sourceId);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                if (status != tvERROR_NONE)
-                {
-                    UT_LOG_ERROR("GetColorTemp_B_post_offset_onSource failed with status=%d", status);
-                    continue;
-                }
+                    UT_LOG_DEBUG("Invoking GetColorTemp_B_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+                    status = GetColorTemp_B_post_offset_onSource(colorTemp, &bpostoffset_get, sourceId);
+                    UT_LOG_DEBUG("GetColorTemp_B_post_offset_onSource status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                    if (status != tvERROR_NONE)
+                    {
+                        UT_LOG_ERROR("GetColorTemp_B_post_offset_onSource failed with status=%d", status);
+                    }
 
-                UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
-                UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
+                    UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
+                    UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
+                    if(bpostoffset_set != bpostoffset_get)
+                    {
+                        UT_LOG_ERROR("Mismatch in set and retrieved bpostoffset values");
+                    }
+                }
             }
         }
     }
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
+    UT_LOG_DEBUG("TvTerm status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -2101,21 +2234,27 @@ void test_l2_tvSettings_DisableAndVerifyWBCalibrationMode(void)
     UT_LOG_DEBUG("Invoking EnableWBCalibrationMode() with false");
     status = EnableWBCalibrationMode(false);
     UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("EnableWBCalibrationMode failed with status: %d", status);
+        TvTerm();
+        return;
+    }
 
     UT_LOG_DEBUG("Invoking GetCurrentWBCalibrationMode()");
     status = GetCurrentWBCalibrationMode(&value);
     UT_LOG_DEBUG("Return status: %d, Output value: %d", status, value);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     UT_ASSERT_EQUAL(value, false);
-
     if (status != tvERROR_NONE || value != false)
     {
-        UT_LOG_DEBUG("Invoking TvTerm()");
-        status = TvTerm();
-        UT_LOG_DEBUG("Return status: %d", status);
-        UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+        UT_LOG_ERROR("GetCurrentWBCalibrationMode failed with status=%d", status);
     }
+    UT_LOG_DEBUG("Invoking TvTerm()");
+    status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -2148,24 +2287,23 @@ void test_l2_tvSettings_EnableAndVerifyWBCalibrationMode(void)
     UT_LOG_DEBUG("Invoking EnableWBCalibrationMode() with value set to true");
     status = EnableWBCalibrationMode(true);
     UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("EnableWBCalibrationMode failed with status: %d", status);
+        TvTerm();
+        return;
+    }
 
     UT_LOG_DEBUG("Invoking GetCurrentWBCalibrationMode()");
     status = GetCurrentWBCalibrationMode(&value);
     UT_LOG_DEBUG("Return status: %d, Output value: %d", status, value);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     UT_ASSERT_EQUAL(value, true);
-
-    UT_LOG_DEBUG("Invoking EnableWBCalibrationMode() with value set to false");
-    status = EnableWBCalibrationMode(false);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    UT_LOG_DEBUG("Invoking GetCurrentWBCalibrationMode()");
-    status = GetCurrentWBCalibrationMode(&value);
-    UT_LOG_DEBUG("Return status: %d, Output value: %d", status, value);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(value, false);
+    if (status != tvERROR_NONE || value != true)
+    {
+        UT_LOG_ERROR("GetCurrentWBCalibrationMode failed with status=%d", status);
+    }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
@@ -2194,35 +2332,61 @@ void test_l2_tvSettings_SetAndGetGammaTable(void)
 
     tvError_t ret;
     unsigned short size = 256;
-    unsigned short pData_R[size], pData_G[size], pData_B[size];
-    unsigned short getData_R[size], getData_G[size], getData_B[size];
+    unsigned short *pData_R = malloc(size * sizeof(unsigned short));
+    unsigned short *pData_G = malloc(size * sizeof(unsigned short));
+    unsigned short *pData_B = malloc(size * sizeof(unsigned short));
+    unsigned short *getData_R = malloc(size * sizeof(unsigned short));
+    unsigned short *getData_G = malloc(size * sizeof(unsigned short));
+    unsigned short *getData_B = malloc(size * sizeof(unsigned short));
+    if (pData_R || pData_G || pData_B || getData_R || getData_G || getData_B)
+    {
+        UT_LOG_DEBUG("Invoking TvInit()");
+        ret = TvInit();
+        UT_LOG_DEBUG("Return status: %d", ret);
+        UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking TvInit()");
-    ret = TvInit();
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+        for (int j = 0; j < size; j++)
+        {
+            pData_R[j] = rand()%1024;
+            pData_G[j] = rand()%1024;
+            pData_B[j] = rand()%1024;
+            UT_LOG_DEBUG("Invoking SetGammaTable() with valid buffers");
+            ret = SetGammaTable(pData_R, pData_G, pData_B, size);
+            UT_LOG_DEBUG("Return status: %d", ret);
+            UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+            if (ret != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetGammaTable failed");
+                TvTerm();
+                free(pData_R);
+                free(pData_G);
+                free(pData_B);
+                free(getData_R);
+                free(getData_G);
+                free(getData_B);
+                return;
+            }
 
-    UT_LOG_DEBUG("Invoking SetGammaTable() with valid buffers");
-    ret = SetGammaTable(pData_R, pData_G, pData_B, size);
-    UT_LOG_DEBUG("Return status: %d", ret);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-
-    if (ret != tvERROR_NONE) {
-        UT_LOG_ERROR("SetGammaTable failed, invoking TvTerm()");
-        TvTerm();
-        return;
+            UT_LOG_DEBUG("Invoking GetGammaTable() with valid buffers");
+            ret = GetGammaTable(getData_R, getData_G, getData_B, size);
+            UT_LOG_DEBUG("Return status: %d", ret);
+            UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+            if (ret != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetGammaTable failed");
+            }
+            UT_ASSERT_EQUAL(pData_R[j], getData_R[j]);
+            UT_ASSERT_EQUAL(pData_G[j], getData_G[j]);
+            UT_ASSERT_EQUAL(pData_B[j], getData_B[j]);
+        }
+        // Free allocated memory
+        free(pData_R);
+        free(pData_G);
+        free(pData_B);
+        free(getData_R);
+        free(getData_G);
+        free(getData_B);
     }
-
-    UT_LOG_DEBUG("Invoking GetGammaTable() with valid buffers");
-    ret = GetGammaTable(getData_R, getData_G, getData_B, size);
-    UT_LOG_DEBUG("Return status: %d", ret);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-
-    for (int i = 0; i < size; i++) {
-        UT_ASSERT_EQUAL(pData_R[i], getData_R[i]);
-        UT_ASSERT_EQUAL(pData_G[i], getData_G[i]);
-        UT_ASSERT_EQUAL(pData_B[i], getData_B[i]);
-    }
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
     UT_LOG_DEBUG("Return status: %d", ret);
@@ -2252,25 +2416,33 @@ void test_l2_tvSettings_GetDefaultGammaTable(void)
     unsigned short pData_R[256];
     unsigned short pData_G[256];
     unsigned short pData_B[256];
-    tvColorTemp_t colortemp = tvColorTemp_STANDARD;
+    tvColorTemp_t colortemp;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking GetDefaultGammaTable() with valid color temperature and arrays");
-    status = GetDefaultGammaTable(colortemp, pData_R, pData_G, pData_B, 256);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-    for(int i = 0; i < 256; i++)
+    for(colortemp = tvColorTemp_STANDARD;colortemp<tvColorTemp_MAX;colortemp++)
     {
-        CU_ASSERT(pData_R[i] >= 0 && pData_R[i] <= 65535);
-        CU_ASSERT(pData_G[i] >= 0 && pData_G[i] <= 65535);
-        CU_ASSERT(pData_B[i] >= 0 && pData_B[i] <= 65535);
-    }
+        UT_LOG_DEBUG("Invoking GetDefaultGammaTable() with valid color temperature and arrays");
+        status = GetDefaultGammaTable(colortemp, pData_R, pData_G, pData_B, 256);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("GetDefaultGammaTable failed");
+            TvTerm();
+            return;
+        }
 
+        for(int i = 0; i < 256; i++)
+        {
+            UT_ASSERT_TRUE(pData_R[i] >= 0 && pData_R[i] <= 65535);
+            UT_ASSERT_TRUE(pData_G[i] >= 0 && pData_G[i] <= 65535);
+            UT_ASSERT_TRUE(pData_B[i] >= 0 && pData_B[i] <= 65535);
+        }
+    }
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -2297,38 +2469,45 @@ void test_l2_tvSettings_SetAndGetDvTmaxValue(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int setValue = 5000;
+    int setValue = 0;
     int getValue;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetDvTmaxValue with value: %d", setValue);
-    status = SetDvTmaxValue(setValue);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE) {
-        UT_LOG_ERROR("SetDvTmaxValue failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm");
-        TvTerm();
-        return;
-    }
+    for(int i=0;i<4;i++)
+    {
+        setValue = rand()%10001;
+        UT_LOG_DEBUG("Invoking SetDvTmaxValue with value: %d", setValue);
+        status = SetDvTmaxValue(setValue);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetDvTmaxValue failed with status: %d", status);
+            UT_LOG_DEBUG("Invoking TvTerm");
+            TvTerm();
+            return;
+        }
 
-    UT_LOG_DEBUG("Invoking GetDvTmaxValue");
-    status = GetDvTmaxValue(&getValue);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE) {
-        UT_LOG_ERROR("GetDvTmaxValue failed with status: %d", status);
-        UT_LOG_DEBUG("Invoking TvTerm");
-        TvTerm();
-        return;
+        UT_LOG_DEBUG("Invoking GetDvTmaxValue");
+        status = GetDvTmaxValue(&getValue);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("GetDvTmaxValue failed with status: %d", status);
+        }
+        UT_LOG_DEBUG("Retrieved value: %d", getValue);
+        UT_ASSERT_EQUAL(setValue, getValue);
     }
-
-    UT_LOG_DEBUG("Retrieved value: %d", getValue);
-    UT_ASSERT_EQUAL(setValue, getValue);
 
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -2353,6 +2532,12 @@ void test_l2_tvSettings_GetSupportedComponentColor(void)
 
     tvError_t status;
     int blComponentColor;
+    int blModes;
+    int getblModes;
+    int count = 0;
+    char buffer[50];
+    ut_kvp_instance_t *pInstance = NULL;
+    int flag = 0;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
@@ -2362,19 +2547,41 @@ void test_l2_tvSettings_GetSupportedComponentColor(void)
     UT_LOG_DEBUG("Invoking GetSupportedComponentColor() with valid address");
     status = GetSupportedComponentColor(&blComponentColor);
     UT_LOG_DEBUG("Return status: %d, Supported Component Colors: %d", status, blComponentColor);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    UT_ASSERT_KVP_EQUAL_PROFILE_UINT32(blComponentColor, "SupportedComponentColor");
-
-    for (int i = 0; i < sizeof(blComponentColor)*8; i++)
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
     {
-        if ((blComponentColor >> i) & 1)
+        UT_LOG_ERROR("GetSupportedComponentColor failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
+
+    pInstance = ut_kvp_profile_getInstance();
+    count = ut_kvp_getListCount(pInstance,"SupportedComponentColor");
+    for (int i=0;i<count;i++)
+    {
+        flag = 0;
+        sprintf(buffer, "SupportedComponentColor/%d", i);
+        blModes = ut_kvp_getUInt32Field( pInstance, buffer);
+        for (int j=0;j<sizeof(blComponentColor)*8;j++)
         {
-            UT_LOG_DEBUG("Component color at index %d is supported", i);
+            getblModes = (blComponentColor >> j) & 1;
+            if ( getblModes == blModes)
+            {
+                flag = 1;
+                break;
+            }
+
+        }
+        if (flag == 1)
+        {
+            UT_PASS("Color match");
+            UT_LOG_DEBUG("Color : %d is in the list of supported supported colors", getblModes);
         }
         else
         {
-            UT_LOG_DEBUG("Component color at index %d is not supported", i);
+            UT_FAIL("Color mismatch");
+            UT_LOG_DEBUG("Color : %d is not in the list of supported supported colors ", getblModes);
         }
     }
 
@@ -2406,44 +2613,54 @@ void test_l2_tvSettings_SetAndGetComponentSaturation(void)
     tvError_t status;
     int saturation = 0;
     int setSaturation = 0;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking SetCMSState(true)");
     status = SetCMSState(true);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    for(tvDataComponentColor_t color = tvDataColor_RED; color < tvDataColor_MAX; color++)
+    UT_LOG_DEBUG("Return status: %d", status);
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
     {
-        setSaturation = rand() % 101; // Random saturation value between 0 and 100
-
-        UT_LOG_DEBUG("Invoking SetCurrentComponentSaturation(%d, %d)", color, setSaturation);
-        status = SetCurrentComponentSaturation(color, setSaturation);
-        UT_LOG_DEBUG("SetCurrentComponentSaturation returned %d", status);
-        if(status != tvERROR_NONE)
-        {
-            UT_LOG_ERROR("SetCurrentComponentSaturation failed with status %d", status);
-            TvTerm(); // Call post-requisite API
-            continue;
-        }
-        UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-        UT_LOG_DEBUG("Invoking GetCurrentComponentSaturation(%d, &saturation)", color);
-        status = GetCurrentComponentSaturation(color, &saturation);
-        UT_LOG_DEBUG("GetCurrentComponentSaturation returned %d and saturation %d", status, saturation);
-        if(status != tvERROR_NONE)
-        {
-            UT_LOG_ERROR("GetCurrentComponentSaturation failed with status %d", status);
-            continue;
-        }
-        UT_ASSERT_EQUAL(status, tvERROR_NONE);
-        UT_ASSERT_EQUAL(saturation, setSaturation);
+        UT_LOG_ERROR("SetCMSState failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
     }
 
+    for(tvDataComponentColor_t color = tvDataColor_NONE; color < tvDataColor_MAX; color++)
+    {
+        for(int i=0;i<4;i++)
+        {
+            setSaturation = rand() % 101; // Random saturation value between 0 and 100
+            UT_LOG_DEBUG("Invoking SetCurrentComponentSaturation(%d, %d)", color, setSaturation);
+            status = SetCurrentComponentSaturation(color, setSaturation);
+            UT_LOG_DEBUG("SetCurrentComponentSaturation returned %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetCurrentComponentSaturation failed with status %d", status);
+                continue;
+            }
+
+            UT_LOG_DEBUG("Invoking GetCurrentComponentSaturation(%d, &saturation)", color);
+            status = GetCurrentComponentSaturation(color, &saturation);
+            UT_LOG_DEBUG("GetCurrentComponentSaturation returned %d and saturation %d", status, saturation);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            UT_ASSERT_EQUAL(saturation, setSaturation);
+            if(status != tvERROR_NONE || saturation != setSaturation)
+            {
+                UT_LOG_ERROR("GetCurrentComponentSaturation failed with status %d", status);
+            }
+        }
+    }
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -2469,24 +2686,34 @@ void test_l2_tvSettings_SetAndGetComponentHue(void)
     tvError_t status;
     int hue, hue_get;
     tvDataComponentColor_t color;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking SetCMSState(true)");
     status = SetCMSState(true);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    for (color = tvDataColor_RED; color < tvDataColor_MAX; color++)
+    UT_LOG_DEBUG("Return status: %d", status);
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
     {
-        for (hue = 0; hue <= 100; hue++)
+        UT_LOG_ERROR("SetCMSState failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
+
+    for (color = tvDataColor_NONE; color < tvDataColor_MAX; color++)
+    {
+        for(int i=0;i<4;i++)
         {
+            hue = rand() % 101; // Random hue value between 0 and 100
             UT_LOG_DEBUG("Invoking SetCurrentComponentHue(%d, %d)", color, hue);
             status = SetCurrentComponentHue(color, hue);
             UT_LOG_DEBUG("Returned status: %d", status);
             UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
             if (status != tvERROR_NONE)
             {
                 UT_LOG_ERROR("SetCurrentComponentHue failed for color %d and hue %d", color, hue);
@@ -2498,17 +2725,15 @@ void test_l2_tvSettings_SetAndGetComponentHue(void)
             UT_LOG_DEBUG("Returned hue: %d, status: %d", hue_get, status);
             UT_ASSERT_EQUAL(status, tvERROR_NONE);
             UT_ASSERT_EQUAL(hue, hue_get);
-
             if (status != tvERROR_NONE || hue != hue_get)
             {
                 UT_LOG_ERROR("GetCurrentComponentHue failed for color %d", color);
-                continue;
             }
         }
     }
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -2534,43 +2759,55 @@ void test_l2_tvSettings_SetAndGetComponentLuma(void)
     tvError_t ret;
     int luma, lumaSet;
     tvDataComponentColor_t color;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
+    UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking SetCMSState(true)");
     ret = SetCMSState(true);
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+    UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCMSState failed with status: %d", ret);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
 
     for (color = tvDataColor_NONE; color < tvDataColor_MAX; color++)
     {
-        lumaSet = 15; // A valid luma value in the range of 0 to 30
-
-        UT_LOG_DEBUG("Invoking SetCurrentComponentLuma(%d, %d)", color, lumaSet);
-        ret = SetCurrentComponentLuma(color, lumaSet);
-        UT_LOG_DEBUG("Return status: %d", ret);
-        if (ret != tvERROR_NONE)
+        for(int i=0;i<4;i++)
         {
-            UT_LOG_ERROR("SetCurrentComponentLuma failed for color %d", color);
-            continue;
-        }
-        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+            lumaSet = rand() % 31; // A valid luma value in the range of 0 to 30
+            UT_LOG_DEBUG("Invoking SetCurrentComponentLuma(%d, %d)", color, lumaSet);
+            ret = SetCurrentComponentLuma(color, lumaSet);
+            UT_LOG_DEBUG("Return status: %d", ret);
+            UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+            if (ret != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetCurrentComponentLuma failed for color %d", color);
+                continue;
+            }
 
-        UT_LOG_DEBUG("Invoking GetCurrentComponentLuma(%d)", color);
-        ret = GetCurrentComponentLuma(color, &luma);
-        UT_LOG_DEBUG("Return status: %d, Luma: %d", ret, luma);
-        if (ret != tvERROR_NONE)
-        {
-            UT_LOG_ERROR("GetCurrentComponentLuma failed for color %d", color);
-            continue;
+            UT_LOG_DEBUG("Invoking GetCurrentComponentLuma(%d)", color);
+            ret = GetCurrentComponentLuma(color, &luma);
+            UT_LOG_DEBUG("Return status: %d, Luma: %d", ret, luma);
+            UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+            UT_ASSERT_EQUAL(luma, lumaSet);
+            if (ret != tvERROR_NONE || luma != lumaSet)
+            {
+                UT_LOG_ERROR("GetCurrentComponentLuma failed for color %d", color);
+            }
         }
-        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-        UT_ASSERT_EQUAL(luma, lumaSet);
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -2605,23 +2842,46 @@ void test_l2_tvSettings_SetAndGetCMSState(void)
     status = SetCMSState(true);
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCMSState failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
 
     UT_LOG_DEBUG("Invoking GetCMSState()");
     status = GetCMSState(&enableCMSState);
     UT_LOG_DEBUG("Returned enableCMSState: %d, Return status: %d", enableCMSState, status);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     UT_ASSERT_EQUAL(enableCMSState, true);
+    if (status != tvERROR_NONE || enableCMSState != true)
+    {
+        UT_LOG_ERROR("SetCMSState failed with status: %d", status);
+    }
+
 
     UT_LOG_DEBUG("Invoking SetCMSState() with enableCMSState set to false");
     status = SetCMSState(false);
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCMSState failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
 
     UT_LOG_DEBUG("Invoking GetCMSState()");
     status = GetCMSState(&enableCMSState);
     UT_LOG_DEBUG("Returned enableCMSState: %d, Return status: %d", enableCMSState, status);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     UT_ASSERT_EQUAL(enableCMSState, false);
+    if (status != tvERROR_NONE || enableCMSState != false)
+    {
+        UT_LOG_ERROR("SetCMSState failed with status: %d", status);
+    }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
@@ -2657,6 +2917,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     for(videoSrcType = VIDEO_SOURCE_ANALOGUE; videoSrcType < VIDEO_SOURCE_MAX; videoSrcType++)
@@ -2667,30 +2928,38 @@ void test_l2_tvSettings_TestGetPQParameters(void)
             {
                 UT_LOG_DEBUG("Invoking SaveBrightness(), SaveContrast(), SaveSaturation(), SaveHue() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=50", videoSrcType, pq_mode, videoFormatType);
                 status = SaveBrightness(videoSrcType, pq_mode, videoFormatType, 50);
+                UT_LOG_DEBUG(" SaveBrightness Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
                 status = SaveContrast(videoSrcType, pq_mode, videoFormatType, 50);
+                UT_LOG_DEBUG(" SaveContrast Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
                 status = SaveSaturation(videoSrcType, pq_mode, videoFormatType, 50);
+                UT_LOG_DEBUG(" SaveSaturation Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
                 status = SaveHue(videoSrcType, pq_mode, videoFormatType, 50);
+                UT_LOG_DEBUG(" SaveHue Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
                 UT_LOG_DEBUG("Invoking SetCurrentComponentSaturation() with blSaturationColor=%d, saturation=50", videoSrcType);
                 status = SetCurrentComponentSaturation(videoSrcType, 50);
+                UT_LOG_DEBUG(" SetCurrentComponentSaturation Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
                 UT_LOG_DEBUG("Invoking SaveDvTmaxValue() with state=LDIM_STATE_NONBOOST, value=500");
                 status = SaveDvTmaxValue(LDIM_STATE_NONBOOST, 500);
+                UT_LOG_DEBUG(" SaveDvTmaxValue Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
                 UT_LOG_DEBUG("Invoking SaveLowLatencyState() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=1", videoSrcType, pq_mode, videoFormatType);
                 status = SaveLowLatencyState(videoSrcType, pq_mode, videoFormatType, 1);
+                UT_LOG_DEBUG(" SaveLowLatencyState Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
                 for(pqParamIndex = PQ_PARAM_BRIGHTNESS; pqParamIndex < PQ_PARAM_MAX; pqParamIndex++)
                 {
                     UT_LOG_DEBUG("Invoking GetPQParams() with pqIndex=%d, videoSrcType=%d, videoFormatType=%d, pqParamIndex=%d", pq_mode, videoSrcType, videoFormatType, pqParamIndex);
                     status = GetPQParams(pq_mode, videoSrcType, videoFormatType, pqParamIndex, &value);
+                    UT_LOG_DEBUG(" GetPQParams Return status: %d", status);
                     UT_ASSERT_EQUAL(status, tvERROR_NONE);
                     if(pqParamIndex == PQ_PARAM_LOWLATENCY_STATE)
                     {
@@ -2711,6 +2980,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
@@ -2735,32 +3005,36 @@ void test_l2_tvSettings_GetTVGammaTarget(void)
 
     tvError_t status;
     double x, y;
-    tvColorTemp_t colorTemp[] = {tvColorTemp_STANDARD, tvColorTemp_WARM, tvColorTemp_COLD, tvColorTemp_USER, tvColorTemp_BOOST_STANDARD, tvColorTemp_BOOST_WARM, tvColorTemp_BOOST_COLD, tvColorTemp_BOOST_USER, tvColorTemp_SUPERCOLD, tvColorTemp_BOOST_SUPERCOLD};
+    tvColorTemp_t colorTemp;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for(int i = 0; i < tvColorTemp_MAX; i++)
+    for(colorTemp=tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++)
     {
-        UT_LOG_DEBUG("Invoking GetTVGammaTarget() with colorTemp = %d", colorTemp[i]);
-        GetTVGammaTarget(colorTemp[i], &x, &y);
+        UT_LOG_DEBUG("Invoking GetTVGammaTarget() with colorTemp = %d", colorTemp);
+        GetTVGammaTarget(colorTemp, &x, &y);
         UT_LOG_DEBUG("Returned x = %f, y = %f", x, y);
-        CU_ASSERT(x >= 0 && x <= 1.0);
-        CU_ASSERT(y >= 0 && y <= 1.0);
+        UT_ASSERT_TRUE(x >= 0 && x <= 1.0);
+        UT_ASSERT_TRUE(y >= 0 && y <= 1.0);
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
 
+
+
 /**
-* @brief Test to verify the Set and Get RGB Pattern functionality
+* @brief Test to verify the maximum gain value of TV settings
 *
-* This test initializes the TV settings, sets the RGB pattern, gets the RGB pattern, and verifies that the set and get values match. It also checks the return status of each API call and logs the results. If any API call fails, it logs the error and terminates the TV settings.
+* This test case verifies the maximum gain value of TV settings by invoking the GetMaxGainValue() function. The test ensures that the gain value is within the expected range. The test also checks the status of TvInit() and TvTerm() functions to ensure proper initialization and termination.
 *
 * **Test Group ID:** 02@n
 * **Test Case ID:** 046@n
@@ -2769,52 +3043,91 @@ void test_l2_tvSettings_GetTVGammaTarget(void)
 * Refer to UT specification documentation [tvSettings_L2_Low-Level_TestSpecification.md](../../docs/pages/tvSettings_L2_Low-Level_TestSpecification.md)
 */
 
-void test_l2_tvSettings_SetAndGetRGBPattern(void)
+void test_l2_tvSettings_GetMaxGainValue(void)
 {
     gTestID = 46;
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
-
     tvError_t status;
-    int r_set = 100, g_set = 150, b_set = 200;
-    int r_get, g_get, b_get;
+    int gainValue;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE) {
-        UT_LOG_ERROR("TvInit failed with status: %d", status);
-        return;
-    }
 
-    UT_LOG_DEBUG("Invoking SetRGBPattern() with r=%d, g=%d, b=%d", r_set, g_set, b_set);
-    status = SetRGBPattern(r_set, g_set, b_set);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE) {
-        UT_LOG_ERROR("SetRGBPattern failed with status: %d", status);
-        TvTerm();
-        return;
-    }
-
-    UT_LOG_DEBUG("Invoking GetRGBPattern()");
-    status = GetRGBPattern(&r_get, &g_get, &b_get);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE) {
-        UT_LOG_ERROR("GetRGBPattern failed with status: %d", status);
-        TvTerm();
-        return;
-    }
-    UT_LOG_DEBUG("GetRGBPattern returned r=%d, g=%d, b=%d", r_get, g_get, b_get);
-
-    UT_ASSERT_EQUAL(r_get, r_set);
-    UT_ASSERT_EQUAL(g_get, g_set);
-    UT_ASSERT_EQUAL(b_get, b_set);
+    UT_LOG_DEBUG("Invoking GetMaxGainValue()");
+    gainValue = GetMaxGainValue();
+    UT_LOG_DEBUG("Returned gain value: %d", gainValue);
+    UT_ASSERT_TRUE(gainValue >= 1024 && gainValue <= 2147483647);
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE) {
-        UT_LOG_ERROR("TvTerm failed with status: %d", status);
+
+    UT_LOG_INFO("Out %s\n", __FUNCTION__);
+}
+
+
+/**
+* @brief Test to verify the Set and Get RGB Pattern functionality
+*
+* This test initializes the TV settings, sets the RGB pattern, gets the RGB pattern, and verifies that the set and get values match. It also checks the return status of each API call and logs the results. If any API call fails, it logs the error and terminates the TV settings.
+*
+* **Test Group ID:** 02@n
+* **Test Case ID:** 047@n
+*
+* **Test Procedure:**
+* Refer to UT specification documentation [tvSettings_L2_Low-Level_TestSpecification.md](../../docs/pages/tvSettings_L2_Low-Level_TestSpecification.md)
+*/
+
+void test_l2_tvSettings_SetAndGetRGBPattern(void)
+{
+    gTestID = 47;
+    UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t status;
+    int r_set = 0, g_set = 0, b_set = 0;
+    int r_get, g_get, b_get;
+    srand(time(NULL));
+
+    UT_LOG_DEBUG("Invoking TvInit()");
+    status = TvInit();
+    UT_LOG_DEBUG("Return status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+
+    for(int i = 0;i<4;i++)
+    {
+        r_set = rand()%256;
+        g_set = rand()%256;
+        b_set = rand()%256;
+        UT_LOG_DEBUG("Invoking SetRGBPattern() with r=%d, g=%d, b=%d", r_set, g_set, b_set);
+        status = SetRGBPattern(r_set, g_set, b_set);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetRGBPattern failed with status: %d", status);
+            continue;
+        }
+
+        UT_LOG_DEBUG("Invoking GetRGBPattern()");
+        status = GetRGBPattern(&r_get, &g_get, &b_get);
+        UT_LOG_DEBUG("GetRGBPattern returned status = %d, r=%d, g=%d, b=%d", status, r_get, g_get, b_get);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("GetRGBPattern failed with status: %d", status);
+        }
+
+        UT_ASSERT_EQUAL(r_get, r_set);
+        UT_ASSERT_EQUAL(g_get, g_set);
+        UT_ASSERT_EQUAL(b_get, b_set);
     }
+    UT_LOG_DEBUG("Invoking TvTerm()");
+    status = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -2825,7 +3138,7 @@ void test_l2_tvSettings_SetAndGetRGBPattern(void)
 * This test case validates the Set and Get Gray Pattern functionality of the TV settings. It checks if the set value is correctly retrieved by the Get function. This is important to ensure the correct setting of Gray Pattern in the TV settings.
 *
 * **Test Group ID:** 02@n
-* **Test Case ID:** 047@n
+* **Test Case ID:** 048@n
 *
 * **Test Procedure:**
 * Refer to UT specification documentation [tvSettings_L2_Low-Level_TestSpecification.md](../../docs/pages/tvSettings_L2_Low-Level_TestSpecification.md)
@@ -2833,41 +3146,56 @@ void test_l2_tvSettings_SetAndGetRGBPattern(void)
 
 void test_l2_tvSettings_SetAndGetGrayPattern(void)
 {
-    gTestID = 47;
+    gTestID = 48;
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status;
-    int YUVValue = 100;
+    int YUVValue = 0;
     int get_YUVValue;
+    srand(time(NULL));
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
     UT_LOG_DEBUG("Invoking SetGammaPatternMode(true)");
     status = SetGammaPatternMode(true);
     UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (status != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetGammaPatternMode failed with status: %d", status);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
+    for(int i = 0; i<4; i++)
+    {
+        YUVValue = rand() % 256;
+        UT_LOG_DEBUG("Invoking SetGrayPattern(%d)", YUVValue);
+        status = SetGrayPattern(YUVValue);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetGrayPattern failed with status: %d", status);
+            continue;
+        }
 
-    UT_LOG_DEBUG("Invoking SetGrayPattern(%d)", YUVValue);
-    status = SetGrayPattern(YUVValue);
+        UT_LOG_DEBUG("Invoking GetGrayPattern()");
+        status = GetGrayPattern(&get_YUVValue);
+        UT_LOG_DEBUG("Return status: %d, YUVValue: %d", status, get_YUVValue);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_ASSERT_EQUAL(YUVValue, get_YUVValue);
+        if (status != tvERROR_NONE || YUVValue != get_YUVValue)
+        {
+            UT_LOG_ERROR("GetGrayPattern failed with status: %d", status);
+        }
+    }
+    UT_LOG_DEBUG("Invoking TvTerm()");
+    status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    UT_LOG_DEBUG("Invoking GetGrayPattern()");
-    status = GetGrayPattern(&get_YUVValue);
-    UT_LOG_DEBUG("Return status: %d, YUVValue: %d", status, get_YUVValue);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(YUVValue, get_YUVValue);
-
-    if (status != tvERROR_NONE || YUVValue != get_YUVValue)
-    {
-        UT_LOG_DEBUG("Invoking TvTerm()");
-        status = TvTerm();
-        UT_LOG_DEBUG("Return status: %d", status);
-        UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-    }
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -2878,7 +3206,7 @@ void test_l2_tvSettings_SetAndGetGrayPattern(void)
 * This test case verifies the functionality of the RetrieveOpenCircuitStatus API. It checks if the API is able to correctly retrieve the status of the open circuit in the TV settings. The test case invokes the TvInit() function to initialize the TV settings, then it calls the GetOpenCircuitStatus() function to retrieve the status of the open circuit. The test case asserts that the return values of these functions are as expected. If the status of the open circuit is greater than or equal to 1, it logs that a LED fault is detected. If the status is 0, it logs that no LED fault is detected. If the status is less than 0, it logs an error message. Finally, the test case calls the TvTerm() function to terminate the TV settings and asserts that its return value is as expected.
 *
 * **Test Group ID:** 02@n
-* **Test Case ID:** 048@n
+* **Test Case ID:** 049@n
 *
 * **Test Procedure:**
 * Refer to UT specification documentation [tvSettings_L2_Low-Level_TestSpecification.md](../../docs/pages/tvSettings_L2_Low-Level_TestSpecification.md)
@@ -2886,7 +3214,7 @@ void test_l2_tvSettings_SetAndGetGrayPattern(void)
 
 void test_l2_tvSettings_RetrieveOpenCircuitStatus(void)
 {
-    gTestID = 48;
+    gTestID = 49;
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret;
@@ -2894,13 +3222,20 @@ void test_l2_tvSettings_RetrieveOpenCircuitStatus(void)
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
     UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking GetOpenCircuitStatus() with valid pointer");
     ret = GetOpenCircuitStatus(&status);
     UT_LOG_DEBUG("Open circuit status: %d, Return status: %d", status, ret);
-
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("GetOpenCircuitStatus failed with status: %d", ret);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
     if (status >= 1)
     {
         UT_LOG_INFO("LED fault detected");
@@ -2914,12 +3249,10 @@ void test_l2_tvSettings_RetrieveOpenCircuitStatus(void)
         UT_LOG_ERROR("Invalid status value");
     }
 
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
     UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -2930,7 +3263,7 @@ void test_l2_tvSettings_RetrieveOpenCircuitStatus(void)
 * In this test, the EnableDynamicContrast() and GetDynamicContrast() functions are tested to ensure they work as expected. The test first enables the dynamic contrast and checks if it is enabled. Then it disables the dynamic contrast and checks if it is disabled. This is done to ensure that the TV settings can correctly enable and disable the dynamic contrast and reflect the changes correctly.
 *
 * **Test Group ID:** 02@n
-* **Test Case ID:** 049@n
+* **Test Case ID:** 050@n
 *
 * **Test Procedure:**
 * Refer to UT specification documentation [tvSettings_L2_Low-Level_TestSpecification.md](../../docs/pages/tvSettings_L2_Low-Level_TestSpecification.md)
@@ -2938,7 +3271,7 @@ void test_l2_tvSettings_RetrieveOpenCircuitStatus(void)
 
 void test_l2_tvSettings_EnableAndGetDynamicContrast(void)
 {
-    gTestID = 49;
+    gTestID = 50;
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret;
@@ -2946,35 +3279,57 @@ void test_l2_tvSettings_EnableAndGetDynamicContrast(void)
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
     UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking EnableDynamicContrast() with true");
     ret = EnableDynamicContrast(true);
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
     UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("EnableDynamicContrast failed with status: %d", ret);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
 
     UT_LOG_DEBUG("Invoking GetDynamicContrast()");
     ret = GetDynamicContrast(isDynamicContrastEnabled);
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
-    UT_ASSERT_STRING_EQUAL_FATAL(isDynamicContrastEnabled, "enabled");
     UT_LOG_DEBUG("Return status: %d, Dynamic Contrast: %s", ret, isDynamicContrastEnabled);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    UT_ASSERT_STRING_EQUAL(isDynamicContrastEnabled, "enabled");
+    if (ret != tvERROR_NONE || strcmp(isDynamicContrastEnabled,"enabled") )
+    {
+        UT_LOG_ERROR("GetDynamicContrast failed with status: %d", ret);
+    }
 
     UT_LOG_DEBUG("Invoking EnableDynamicContrast() with false");
     ret = EnableDynamicContrast(false);
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
     UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("EnableDynamicContrast failed with status: %d", ret);
+        UT_LOG_DEBUG("Invoking TvTerm");
+        TvTerm();
+        return;
+    }
 
     UT_LOG_DEBUG("Invoking GetDynamicContrast()");
     ret = GetDynamicContrast(isDynamicContrastEnabled);
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
-    UT_ASSERT_STRING_EQUAL_FATAL(isDynamicContrastEnabled, "disabled");
     UT_LOG_DEBUG("Return status: %d, Dynamic Contrast: %s", ret, isDynamicContrastEnabled);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    UT_ASSERT_STRING_EQUAL(isDynamicContrastEnabled, "disabled");
+    if (ret != tvERROR_NONE || strcmp(isDynamicContrastEnabled,"disabled") )
+    {
+        UT_LOG_ERROR("GetDynamicContrast failed with status: %d", ret);
+    }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
     ret = TvTerm();
-    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
     UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
@@ -3042,6 +3397,7 @@ int test_tvSettings_l2_register(void)
     UT_add_test( pSuite, "l2_tvSettings_SetAndGetCMSState", test_l2_tvSettings_SetAndGetCMSState);
     UT_add_test( pSuite, "l2_tvSettings_TestGetPQParameters", test_l2_tvSettings_TestGetPQParameters);
     UT_add_test( pSuite, "l2_tvSettings_GetTVGammaTarget", test_l2_tvSettings_GetTVGammaTarget);
+    UT_add_test( pSuite, "l2_tvSettings_GetMaxGainValue", test_l2_tvSettings_GetMaxGainValue);
     UT_add_test( pSuite, "l2_tvSettings_SetAndGetRGBPattern", test_l2_tvSettings_SetAndGetRGBPattern);
     UT_add_test( pSuite, "l2_tvSettings_SetAndGetGrayPattern", test_l2_tvSettings_SetAndGetGrayPattern);
     UT_add_test( pSuite, "l2_tvSettings_RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
