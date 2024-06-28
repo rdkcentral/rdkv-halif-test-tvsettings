@@ -411,7 +411,7 @@ graph TB
     C -->|match| D[TvTerm API Call]
     D -->|tvERROR_NONE| E[Test Case Success]
     D -->|Not tvERROR_NONE| D1[Test Case Fail]
-
+```
 
 ### Test 10
 
@@ -833,7 +833,7 @@ If user chose to run the test in interactive mode, then the test case has to be 
 ```mermaid
 graph TB
     A[TvInit API Call] -->|Success| Loop{Iterate through various <br> Color temperature}
-    Loop -->B[SetColorTemperature API Call]
+    Loop --> B[SetColorTemperature API Call]
     A -->|Failure| A1[Test case fail]
     B -->|Success| D[GetColorTemperature API Call]
     D -->| Success <br> Get and set matches|Loop
@@ -1329,10 +1329,10 @@ graph TB
     B -->|End of Loop| G[TvTerm]
     G -->|Success| H[Test case pass]
     G -->|Failure| G1[Test case fail]
+```
 
 
-
-###Test 31
+### Test 31
 
 |Title|Details|
 |--|--|
