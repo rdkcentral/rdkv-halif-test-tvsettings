@@ -25,7 +25,7 @@ TOP_DIR := $(ROOT_DIR)
 
 SRC_DIRS = $(ROOT_DIR)/src
 INC_DIRS := $(ROOT_DIR)/../include
-INC_DIRS += $(ROOT_DIR)/include
+INC_DIRS += $(ROOT_DIR)/profiles/include
 HAL_LIB := tvsettings-hal
 SKELETON_SRCS := $(ROOT_DIR)/skeletons/src/tvSettings.c
 
@@ -70,10 +70,9 @@ skeleton:
 
 list:
 	@echo UT [$@]
-	make -C ./ut-core list
+	make -C ./ut-core framework
+	make -C ./ut-core test
 
 clean:
 	@echo UT [$@]
-	make -C ./ut-core clean
-	rm -rf $(BIN_DIR)/lib$(HAL_LIB).so
-	rm -rf $(ROOT_DIR)/libs/lib$(HAL_LIB).so
+	make -C ./ut-core cleanall
