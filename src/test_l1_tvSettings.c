@@ -12701,9 +12701,10 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor and validate Supported ComponentColor by looping through the ComponentColor section of test specific config file | int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
- * | 03 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor with valid argument and validate with above value | int * | tvERROR_NONE | Should Pass |
- * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCMSState() - Set the CMSState with valid value | true | tvERROR_NONE | Should Pass |
+ * | 03 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor and validate Supported ComponentColor by looping through the ComponentColor section of test specific config file | int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 04 | call GetSupportedComponentColor() -  Retrieve the current Supported ComponentColor with valid argument and validate with above value | int * | tvERROR_NONE | Should Pass |
+ * | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 {
@@ -12716,9 +12717,13 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);	
 
-	/* Step 02: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
+	/* Step 02: Calling tvsettings to Set the SetCMSState for value true and the API to return success */
+	result = SetCMSState(true);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	/* Step 03: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
 	result = GetSupportedComponentColor(&tvComponentColor);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	tvComponentColor_bk = tvComponentColor;
@@ -12733,12 +12738,12 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 
 	UT_ASSERT_AUTO_TERM_FALSE((tvComponentColor_bk));
 
-	/* Step 03: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
+	/* Step 04: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
 	result = GetSupportedComponentColor(&tvComponentColorRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(tvComponentColorRetry, tvComponentColor);
 
-	/* Step 04: Calling tvsettings termination and expecting the API to return success */
+	/* Step 05: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -12963,9 +12968,10 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid arguments by looping through all the values of DataComponentColor from ComponentColor section of test specific config file | tvDataComponentColor_t, int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
- * | 03 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid argument and validate with above value | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
- * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCMSState() - Set the CMSState with valid value | true | tvERROR_NONE | Should Pass |
+ * | 03 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid arguments by looping through all the values of DataComponentColor from ComponentColor section of test specific config file | tvDataComponentColor_t, int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 04 | call GetCurrentComponentSaturation() -  Retrieve the current Component Saturation with valid argument and validate with above value | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
+ * | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 {
@@ -12980,11 +12986,15 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 02: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
-	result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturation);
+	/* Step 02: Calling tvsettings to Set the SetCMSState for value true and the API to return success */
+	result = SetCMSState(true);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
+	result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturation);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	/* Step 04: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
 	result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturationRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
@@ -12997,7 +13007,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 		UT_ASSERT_AUTO_TERM_TRUE( (saturation >=0 && saturation <= 100) );
 	}
 
-	/* Step 04: Calling tvsettings termination and expecting the API to return success */
+	/* Step 05: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -13254,9 +13264,10 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentComponentHue() - Retrieve the current Component Hue with valid arguments by looping through all the values of DataComponentColor from ComponentColor section of test specific config file | tvDataComponentColor_t, int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
- * | 03 | call GetCurrentComponentHue() -  Retrieve the current Component Hue with valid argument and validate with above value | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
- * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCMSState() -  Set the CMSState with valid value | true | tvERROR_NONE | Should Pass |
+ * | 03 | call GetCurrentComponentHue() - Retrieve the current Component Hue with valid arguments by looping through all the values of DataComponentColor from ComponentColor section of test specific config file | tvDataComponentColor_t, int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 04 | call GetCurrentComponentHue() -  Retrieve the current Component Hue with valid argument and validate with above value | tvDataComponentColor_t, int * | tvERROR_NONE | Should Pass |
+ * | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 {
@@ -13271,11 +13282,15 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 02: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
-	result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&Hue);
+	/* Step 02: Calling tvsettings to Set the SetCMSState for value true and the API to return success */
+	result = SetCMSState(true);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
+	result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&Hue);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
+	/* Step 04: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
 	result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&HueRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
@@ -13288,7 +13303,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 		UT_ASSERT_AUTO_TERM_TRUE( (Hue >=0 && Hue <= 100));
 	}
 
-	/* Step 04: Calling tvsettings termination and expecting the API to return success */
+	/* Step 05: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
