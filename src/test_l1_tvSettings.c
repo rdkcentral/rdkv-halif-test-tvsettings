@@ -1085,7 +1085,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat and validate CurrentVideoFormat by looping through the VideoFormat section of test specific config file values | tvVideoFormatType_t *  | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat and validate CurrentVideoFormat with default value VIDEO_FORMAT_SDR | tvVideoFormatType_t *  | tvERROR_NONE | Should Pass |
  * | 03 | call GetCurrentVideoFormat()-  Retrieve the CurrentVideoFormat with valid argument and validate with above value | tvVideoFormatType_t * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
@@ -1193,7 +1193,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution with default value tvVideoResolution_NONE | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
  * | 03 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution with valid argument and validate with above value |tvResolutionParam_t * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
@@ -1303,7 +1303,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoResolution (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentVideoFrameRate() -  Retrieve the current VideoFrameRate and validate VideoFrameRate by looping through the VideoFramerate section of test specific config file values | tvVideoFrameRate_t *  | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCurrentVideoFrameRate() -  Retrieve the current VideoFrameRate and validate VideoFrameRate with default value tvVideoFrameRate_NONE | tvVideoFrameRate_t *  | tvERROR_NONE | Should Pass |
  * | 03 | call GetCurrentVideoFrameRate() -  Retrieve the current VideoFrameRate with valid argument and validate with above value | tvVideoFrameRate_t * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
