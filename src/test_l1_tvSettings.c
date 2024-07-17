@@ -12686,8 +12686,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);	
 
-
-	/* Step 03: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
+	/* Step 02: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
 	result = GetSupportedComponentColor(&tvComponentColor);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	tvComponentColor_bk = tvComponentColor;
@@ -12702,12 +12701,12 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 
 	UT_ASSERT_AUTO_TERM_FALSE((tvComponentColor_bk));
 
-	/* Step 04: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
+	/* Step 03: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
 	result = GetSupportedComponentColor(&tvComponentColorRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(tvComponentColorRetry, tvComponentColor);
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -12809,20 +12808,20 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 
 	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
-		/* Step 02: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
+		/* Step 03: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 03: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
+		/* Step 04: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],100);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 04: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
+		/* Step 05: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],50);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -12954,11 +12953,11 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
+	/* Step 02: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
 	result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturation);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 04: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
+	/* Step 03: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
 	result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturationRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
@@ -12971,7 +12970,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 		UT_ASSERT_AUTO_TERM_TRUE( (saturation >=0 && saturation <= 100) );
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -13105,20 +13104,20 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 
 	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
-		/* Step 02: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
+		/* Step 03: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 03: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
+		/* Step 04: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],100);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 04: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
+		/* Step 05: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],50);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -13250,11 +13249,11 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
+	/* Step 02: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
 	result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&Hue);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	/* Step 04: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
+	/* Step 03: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
 	result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&HueRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
@@ -13267,7 +13266,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 		UT_ASSERT_AUTO_TERM_TRUE( (Hue >=0 && Hue <= 100));
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -13400,20 +13399,20 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 
 	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
-		/* Step 02: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
+		/* Step 03: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 03: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
+		/* Step 04: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],30);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 04: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
+		/* Step 05: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],15);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
