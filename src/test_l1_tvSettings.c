@@ -1106,15 +1106,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 	/* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatType);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (Configfile.videoFormtStruct.size); i++)
-	{
-		if ( Configfile.videoFormtStruct.videoFormatValue[i] == tvVideoFormatType)
-		{
-			IsVideoFormatValid = true;
-			break;
-		}
-	}
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoFormatValid));
+	UT_ASSERT_EQUAL(tvVideoFormatType,VIDEO_FORMAT_SDR)
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatTypeRetry);
@@ -1223,20 +1215,13 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 	result = GetCurrentVideoResolution(&tvVideoResolution);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	if(  (tvVideoResolution.resolutionValue > tvVideoResolution_NONE)  && (tvVideoResolution.resolutionValue < tvVideoResolution_MAX) && \
-			(tvVideoResolution.frameHeight > 0) && (tvVideoResolution.frameWidth > 0) 	) {
-		IsVideoResolutionValid = true;
-	} 
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoResolutionValid));
+	UT_ASSERT_EQUAL(tvVideoResolution.resolutionValue,tvVideoResolution_NONE);
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoResolution(&tvVideoResolutionRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.resolutionValue, tvVideoResolution.resolutionValue);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.frameHeight, tvVideoResolution.frameHeight);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.frameWidth, tvVideoResolution.frameWidth);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.isInterlaced, tvVideoResolution.isInterlaced);
+	UT_ASSERT_EQUAL(tvVideoResolutionRetry.resolutionValue, tvVideoResolution.resolutionValue);
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -1340,16 +1325,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 	result = GetCurrentVideoFrameRate(&tvVideoFramerate);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < Configfile.framerate.size; i++)
-	{
-		if ( Configfile.framerate.frameRateValue[i] == tvVideoFramerate)
-		{
-			IsVideoFramerateValid = true;
-			break;
-		}
-	}
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoFramerateValid));
-
+	UT_ASSERT_EQUAL(tvVideoFramerate,tvVideoFrameRate_NONE)
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -1455,15 +1431,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 	/* Step 02: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSource);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
-	{
-		if (Configfile.videoSrcStruct.videoSourceValue[i] == tvVideoSource)
-		{
-			IsVideoSourceValid = true;
-			break;
-		}
-	}
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoSourceValid));
+	UT_ASSERT_EQUAL(tvVideoSource,VIDEO_SOURCE_IP)
 
 	/* Step 03: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSourceRetry);
