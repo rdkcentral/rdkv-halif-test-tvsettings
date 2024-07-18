@@ -1097,7 +1097,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 	tvError_t result = tvERROR_NONE;
 	tvVideoFormatType_t tvVideoFormatType = VIDEO_FORMAT_MAX;
 	tvVideoFormatType_t tvVideoFormatTypeRetry = VIDEO_FORMAT_MAX;
-	bool IsVideoFormatValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1205,7 +1204,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 	tvError_t result = tvERROR_NONE;
 	tvResolutionParam_t  tvVideoResolution;
 	tvResolutionParam_t  tvVideoResolutionRetry;
-	bool IsVideoResolutionValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1315,7 +1313,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 	tvError_t result = tvERROR_NONE;
 	tvVideoFrameRate_t tvVideoFramerate = tvVideoFrameRate_MAX;
 	tvVideoFrameRate_t tvVideoFramerateRetry = tvVideoFrameRate_MAX;
-	bool IsVideoFramerateValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1422,7 +1419,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 	tvError_t result = tvERROR_NONE;
 	int tvVideoSource = 0;
 	int tvVideoSourceRetry = 0;
-	bool IsVideoSourceValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
