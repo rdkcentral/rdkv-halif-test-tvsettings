@@ -1085,7 +1085,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat and validate CurrentVideoFormat by looping through the VideoFormat section of test specific config file values | tvVideoFormatType_t *  | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCurrentVideoFormat() -  Retrieve the CurrentVideoFormat and validate CurrentVideoFormat with default value VIDEO_FORMAT_SDR | tvVideoFormatType_t *  | tvERROR_NONE | Should Pass |
  * | 03 | call GetCurrentVideoFormat()-  Retrieve the CurrentVideoFormat with valid argument and validate with above value | tvVideoFormatType_t * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
@@ -1097,7 +1097,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 	tvError_t result = tvERROR_NONE;
 	tvVideoFormatType_t tvVideoFormatType = VIDEO_FORMAT_MAX;
 	tvVideoFormatType_t tvVideoFormatTypeRetry = VIDEO_FORMAT_MAX;
-	bool IsVideoFormatValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1106,15 +1105,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
 	/* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatType);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < (Configfile.videoFormtStruct.size); i++)
-	{
-		if ( Configfile.videoFormtStruct.videoFormatValue[i] == tvVideoFormatType)
-		{
-			IsVideoFormatValid = true;
-			break;
-		}
-	}
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoFormatValid));
+	UT_ASSERT_EQUAL(tvVideoFormatType,VIDEO_FORMAT_SDR)
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFormat(&tvVideoFormatTypeRetry);
@@ -1201,7 +1192,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoFormat (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution and validate VideoResolution with default value tvVideoResolution_NONE | tvResolutionParam_t *  | tvERROR_NONE | Should Pass |
  * | 03 | call GetCurrentVideoResolution() -  Retrieve the current VideoResolution with valid argument and validate with above value |tvResolutionParam_t * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
@@ -1213,7 +1204,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 	tvError_t result = tvERROR_NONE;
 	tvResolutionParam_t  tvVideoResolution;
 	tvResolutionParam_t  tvVideoResolutionRetry;
-	bool IsVideoResolutionValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1223,20 +1213,13 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
 	result = GetCurrentVideoResolution(&tvVideoResolution);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	if(  (tvVideoResolution.resolutionValue > tvVideoResolution_NONE)  && (tvVideoResolution.resolutionValue < tvVideoResolution_MAX) && \
-			(tvVideoResolution.frameHeight > 0) && (tvVideoResolution.frameWidth > 0) 	) {
-		IsVideoResolutionValid = true;
-	} 
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoResolutionValid));
+	UT_ASSERT_EQUAL(tvVideoResolution.resolutionValue,tvVideoResolution_NONE);
 
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoResolution(&tvVideoResolutionRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.resolutionValue, tvVideoResolution.resolutionValue);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.frameHeight, tvVideoResolution.frameHeight);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.frameWidth, tvVideoResolution.frameWidth);
-	UT_ASSERT_AUTO_TERM_NUMERICAL(tvVideoResolutionRetry.isInterlaced, tvVideoResolution.isInterlaced);
+	UT_ASSERT_EQUAL(tvVideoResolutionRetry.resolutionValue, tvVideoResolution.resolutionValue);
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -1318,7 +1301,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoResolution (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetCurrentVideoFrameRate() -  Retrieve the current VideoFrameRate and validate VideoFrameRate by looping through the VideoFramerate section of test specific config file values | tvVideoFrameRate_t *  | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCurrentVideoFrameRate() -  Retrieve the current VideoFrameRate and validate VideoFrameRate with default value tvVideoFrameRate_NONE | tvVideoFrameRate_t *  | tvERROR_NONE | Should Pass |
  * | 03 | call GetCurrentVideoFrameRate() -  Retrieve the current VideoFrameRate with valid argument and validate with above value | tvVideoFrameRate_t * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
@@ -1330,7 +1313,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 	tvError_t result = tvERROR_NONE;
 	tvVideoFrameRate_t tvVideoFramerate = tvVideoFrameRate_MAX;
 	tvVideoFrameRate_t tvVideoFramerateRetry = tvVideoFrameRate_MAX;
-	bool IsVideoFramerateValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1340,16 +1322,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
 	result = GetCurrentVideoFrameRate(&tvVideoFramerate);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	for (size_t i = 0; i < Configfile.framerate.size; i++)
-	{
-		if ( Configfile.framerate.frameRateValue[i] == tvVideoFramerate)
-		{
-			IsVideoFramerateValid = true;
-			break;
-		}
-	}
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoFramerateValid));
-
+	UT_ASSERT_EQUAL(tvVideoFramerate,tvVideoFrameRate_NONE)
 	/* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
 	result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -1446,7 +1419,6 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 	tvError_t result = tvERROR_NONE;
 	int tvVideoSource = 0;
 	int tvVideoSourceRetry = 0;
-	bool IsVideoSourceValid = false;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1455,15 +1427,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
 	/* Step 02: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSource);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
-	{
-		if (Configfile.videoSrcStruct.videoSourceValue[i] == tvVideoSource)
-		{
-			IsVideoSourceValid = true;
-			break;
-		}
-	}
-	UT_ASSERT_AUTO_TERM_TRUE((IsVideoSourceValid));
+	UT_ASSERT_EQUAL(tvVideoSource,VIDEO_SOURCE_IP)
 
 	/* Step 03: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
 	result = GetCurrentVideoSource(&tvVideoSourceRetry);
@@ -12716,7 +12680,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);	
 
 	/* Step 02: Calling tvsettings GetSupportedComponentColor and expectinging the API to return success */
 	result = GetSupportedComponentColor(&tvComponentColor);
@@ -12817,10 +12781,11 @@ void test_l1_tvSettings_negative_GetSupportedComponentColor (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from ComponentColor section of test specific config file| tvDataComponentColor_t  ,0 | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
- * | 03 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from ComponentColor section of test specific config file| tvDataComponentColor_t ,100 | tvERROR_NONE | Should Pass |
- * | 04 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from ComponentColor section of test specific config file| tvDataComponentColor_t  ,50 | tvERROR_NONE | Should Pass |
- * | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCMSState() - Set the CMSState with valid value | true | tvERROR_NONE | Should Pass |
+ * | 03 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from ComponentColor section of test specific config file| tvDataComponentColor_t  ,0 | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 04 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from ComponentColor section of test specific config file| tvDataComponentColor_t ,100 | tvERROR_NONE | Should Pass |
+ * | 05 | call SetCurrentComponentSaturation() -  Set the TV component saturation by looping through all the values of saturation from ComponentColor section of test specific config file| tvDataComponentColor_t  ,50 | tvERROR_NONE | Should Pass |
+ * | 06 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 {
@@ -12833,22 +12798,26 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	/* Step 02: Calling tvsettings to Set the SetCMSState for value true and the API to return success */
+	result = SetCMSState(true);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
 	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
-		/* Step 02: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
+		/* Step 03: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 03: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
+		/* Step 04: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],100);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 04: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
+		/* Step 05: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
 		result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],50);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -13108,10 +13077,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from ComponentColor section of test specific config file| tvDataComponentColor_t , 0 | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
- * | 03 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from ComponentColor section of test specific config file| tvDataComponentColor_t , 100 | tvERROR_NONE | Should Pass |
- * | 04 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from ComponentColor section of test specific config file| tvDataComponentColor_t , 50 | tvERROR_NONE | Should Pass |
- * | 05 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCMSState() - Set the CMSState with valid value | true | tvERROR_NONE | Should Pass |
+ * | 03 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from ComponentColor section of test specific config file| tvDataComponentColor_t , 0 | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 04 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from ComponentColor section of test specific config file| tvDataComponentColor_t , 100 | tvERROR_NONE | Should Pass |
+ * | 05 | call SetCurrentComponentHue() -  Set the TV component hue by looping through all the values of component hue from ComponentColor section of test specific config file| tvDataComponentColor_t , 50 | tvERROR_NONE | Should Pass |
+ * | 06 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 {
@@ -13124,22 +13094,26 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	/* Step 02: Calling tvsettings to Set the SetCMSState for value true and the API to return success */
+	result = SetCMSState(true);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
 	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
-		/* Step 02: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
+		/* Step 03: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 03: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
+		/* Step 04: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],100);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 04: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
+		/* Step 05: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
 		result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],50);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -13397,10 +13371,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from ComponentColor section of test specific config file| tvDataComponentColor_t , 0 | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
- * | 03 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from ComponentColor section of test specific config file| tvDataComponentColor_t , 30 | tvERROR_NONE | Should Pass |
- * | 04 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from ComponentColor section of test specific config file| tvDataComponentColor_t , 15 | tvERROR_NONE | Should Pass |* | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 05 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCMSState() -  Set the CMSState with valid value | true | tvERROR_NONE | Should Pass |
+ * | 03 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from ComponentColor section of test specific config file| tvDataComponentColor_t , 0 | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 04 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from ComponentColor section of test specific config file| tvDataComponentColor_t , 30 | tvERROR_NONE | Should Pass |
+ * | 05 | call SetCurrentComponentLuma() -  Set the TV component hue by looping through all the values of component Luma from ComponentColor section of test specific config file| tvDataComponentColor_t , 15 | tvERROR_NONE | Should Pass |* | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 {
@@ -13413,22 +13388,27 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	/* Step 02: Calling tvsettings to Set the SetCMSState for value true and the API to return success */
+	result = SetCMSState(true);
+
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+
 	for (size_t i=0; i<(Configfile.componentColor.size); i++)
 	{
-		/* Step 02: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
+		/* Step 03: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 03: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
+		/* Step 04: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],30);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-		/* Step 04: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
+		/* Step 05: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
 		result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],15);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	}
 
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
