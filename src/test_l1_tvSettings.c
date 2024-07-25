@@ -82,6 +82,7 @@ volatile bool callbackflag = false;
 
 #define UT_VERSION_MAJOR  1
 #define UT_VERSION_MINOR  0
+#define TV_SETTINGS_KVP_SIZE 128
 
 #define UT_ASSERT_AUTO_TERM_NUMERICAL(value, comparison){\
 	if(value != comparison){\
@@ -840,11 +841,14 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
+	char key_string[UT_KVP_MAX_ELEMENT_SIZE];
 	tvVideoFormatType_t *tvVideoFormats[1]={0};
 	tvVideoFormatType_t *tvVideoFormatsRetry[1]={0};
 	bool IsVideoFormatValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
+	int size = 0;
+	int index = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -861,20 +865,22 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 		}
 	}
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-
-	if (sizeReceived != (unsigned short)Configfile.videoFormtStruct.size){
+    size = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index")
+	if (sizeReceived != size){
 		if ( tvVideoFormats[0] ){
 			free ( tvVideoFormats[0] );
 		}
 	}
-	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)Configfile.videoFormtStruct.size);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, size);
 
-	for (size_t i = 0; i < Configfile.videoFormtStruct.size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		IsVideoFormatValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
 		{
-			if (Configfile.videoFormtStruct.videoFormatValue[i] == tvVideoFormats[0][j])
+			snprintf(key_string, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/VideoFormat/index/%d" , i);
+			index = UT_KVP_PROFILE_GET_UINT32(key_string);
+			if (index == tvVideoFormats[0][j])
 			{
 				IsVideoFormatValid = true;
 				break;
@@ -1529,6 +1535,9 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	bool IsVideoSourceValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    uint32_t format = 0;
+	int count = 0;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -1545,20 +1554,23 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 		}
 	}
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 
-	if (sizeReceived != (unsigned short)Configfile.videoSrcStruct.size){
+	if (sizeReceived != count){
 		if ( tvVideoSources[0] ){
 			free ( tvVideoSources[0] );
 		}
 	}
-	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)Configfile.videoSrcStruct.size);
+    UT_ASSERT_EQUAL(sizeReceived, count);
 
 	for (size_t i = 0; i < sizeReceived; i++)
 	{
 		IsVideoSourceValid = false;
-		for(unsigned short j = 0; j < Configfile.videoSrcStruct.size; j++)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        format = UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for(unsigned short j = 0; j < count; j++)
 		{
-			if (Configfile.videoSrcStruct.videoSourceValue[j] == tvVideoSources[0][i])
+			if (format == tvVideoSources[0][j])
 			{
 				IsVideoSourceValid = true;
 				break;
@@ -2000,20 +2012,35 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
+	int videoSource = 0;
+	int pqValue = 0;
+	int videoFormat = 0;
+	int videoSrcCount = 0;
+	int pqValueCount = 0;
+	int videoFmtCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	pqValueCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
 	/* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	for (size_t i = 0; i < Configfile.videoSrcStruct.size; i++)
+	for (size_t i = 0; i < videoSrcCount; i++)
 	{
-		for (size_t j = 0; j < Configfile.picmodeStruct.size; j++)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for (size_t j = 0; j < pqValueCount; j++)
 		{
-			for (size_t k = 0; k < Configfile.videoFormtStruct.size; k++)
+        	snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+        	pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+			for (size_t k = 0; k < videoFmtCount; k++)
 			{
-				result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[i],Configfile.picmodeStruct.pqValue[j],\
-						(tvVideoFormatType_t) Configfile.videoFormtStruct.videoFormatValue[k],50);
+        		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+        		videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
+				result = SaveBacklight((tvVideoSrcType_t) videoSource,pqValue, \
+											(tvVideoFormatType_t)videoFormat,50);
 				UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 			}
 		}
@@ -2064,13 +2091,21 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
+	int videoSource = 0;
+	int pqValue = 0;
+	int videoFormat = 0;
+	int count = 0;
 	bool SupportAvailable = true;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 01: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_STATE */
-		result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0], Configfile.picmodeStruct.pqValue[0],
-							   (tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0], 50);
+		result = SaveBacklight((tvVideoSrcType_t)videoSource, pqValue,
+							   (tvVideoFormatType_t)videoFormat, 50);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -2079,45 +2114,48 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 03: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight(VIDEO_SOURCE_MAX,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+	result = SaveBacklight(VIDEO_SOURCE_MAX,pqValue,(tvVideoFormatType_t)videoFormat,50);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 04: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)-2,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+	result = SaveBacklight((tvVideoSrcType_t)-2,pqValue,(tvVideoFormatType_t)videoFormat,50);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 05: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],-1,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+	result = SaveBacklight((tvVideoSrcType_t)videoSource,-1,(tvVideoFormatType_t)videoFormat,50);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],PQ_MODE_MAX,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+	result = SaveBacklight((tvVideoSrcType_t)videoSource,PQ_MODE_MAX,(tvVideoFormatType_t)videoFormat,50);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 07: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],VIDEO_FORMAT_MAX,50);
+	result = SaveBacklight((tvVideoSrcType_t)videoSource,pqValue,VIDEO_FORMAT_MAX,50);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 08: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)-1,50);
+	result = SaveBacklight((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)-1,50);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 09: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],-1);
+	result = SaveBacklight((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,-1);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 
 	/* Step 10: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],101);
+	result = SaveBacklight((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,101);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.videoSrcStruct.size; j++)
+		for(int j =0 ; j < count; j++)
 		{
-			if(Configfile.videoSrcStruct.videoSourceValue[j] == i)
+        	snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", j);
+        	videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
+			if(videoSource == i)
 			{
 				SupportAvailable = true;
 				break;
@@ -2125,18 +2163,22 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveBacklight((tvVideoSrcType_t)i,Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+			result = SaveBacklight((tvVideoSrcType_t)i,pqValue,(tvVideoFormatType_t)videoFormat,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
 	/* Step 12: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.picmodeStruct.size; j++)
+		for(int j =0 ; j < count; j++)
 		{
-			if(Configfile.picmodeStruct.pqValue[j] == i)
+        	snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+        	pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+			if(pqValue == i)
 			{
 				SupportAvailable = true;
 				break;
@@ -2144,18 +2186,23 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0],i,(tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0],50);
+			result = SaveBacklight((tvVideoSrcType_t)videoSource,i,(tvVideoFormatType_t)videoFormat,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
 	/* Step 13: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
-		for(int j =0 ; j < Configfile.videoFormtStruct.size; j++)
+		for(int j =0 ; j < count; j++)
 		{
-			if(Configfile.videoFormtStruct.videoFormatValue[j] == i)
+        	snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", j);
+        	pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+			if(pqValue == i)
 			{
 				SupportAvailable = true;
 				break;
@@ -2163,7 +2210,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 		}
 
 		if(!SupportAvailable){
-			result = SaveBacklight((tvVideoSrcType_t) Configfile.videoSrcStruct.videoSourceValue[0],Configfile.picmodeStruct.pqValue[0],(tvVideoFormatType_t)i,50);
+			result = SaveBacklight((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t)i,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
@@ -2172,10 +2219,11 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 15: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_STATE */
-		result = SaveBacklight((tvVideoSrcType_t)Configfile.videoSrcStruct.videoSourceValue[0], Configfile.picmodeStruct.pqValue[0], (tvVideoFormatType_t)Configfile.videoFormtStruct.videoFormatValue[0], 50);
+		result = SaveBacklight((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, 50);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -2459,6 +2507,9 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 
 	tvError_t result = tvERROR_NONE;
 	int tvBacklightModes =0, tvBacklightModes_bk =0, tvBacklightModesRetry=0;
+	int count = 0;
+	int modeValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2469,12 +2520,14 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	tvBacklightModes_bk = tvBacklightModes;
-
-	for (size_t i = 0; i < Configfile.backLightCtl.size; i++)
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index")
+	for (size_t i = 0; i < count; i++)
 	{
-		if(Configfile.backLightCtl.modevalue[i] & tvBacklightModes_bk)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", j);
+        modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+		if(modevalue & tvBacklightModes_bk)
 		{
-			tvBacklightModes_bk &= (~Configfile.backLightCtl.modevalue[i]);
+			tvBacklightModes_bk &= (~modevalue);
 		}
 	}
 
