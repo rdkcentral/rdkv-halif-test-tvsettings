@@ -864,7 +864,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
         }
     }
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-    size = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index")
+    size = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
     if (sizeReceived != size){
         if ( tvVideoFormats[0] ){
             free ( tvVideoFormats[0] );
@@ -872,13 +872,13 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
     }
     UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, size);
 
-    for (size_t i = 0; i < size; i++)
+    for (unsigned short i = 0; i < size; i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/VideoFormat/index/%d" , i);
+        index = UT_KVP_PROFILE_GET_UINT32(keyValue);
         IsVideoFormatValid = false;
         for(unsigned short j = 0; j < sizeReceived; j++)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/VideoFormat/index/%d" , i);
-            index = UT_KVP_PROFILE_GET_UINT32(keyValue);
             if (index == tvVideoFormats[0][j])
             {
                 IsVideoFormatValid = true;
@@ -1532,7 +1532,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
     tvVideoSrcType_t *tvVideoSources[1]={0};
     tvVideoSrcType_t *tvVideoSourcesRetry[1]={0};
     bool IsVideoSourceValid = true;
-    unsigned short sizeReceived = 0;
+    size_t sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
     uint32_t format = 0;
@@ -1562,7 +1562,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
     }
     UT_ASSERT_EQUAL(sizeReceived, count);
 
-    for (size_t i = 0; i < sizeReceived; i++)
+    for (unsigned int i = 0; i < sizeReceived; i++)
     {
         IsVideoSourceValid = false;
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -2026,15 +2026,15 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
     /* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -2200,8 +2200,8 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
         for(int j =0 ; j < count; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", j);
-            pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if(pqValue == i)
+            videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(videoFormat == i)
             {
                 SupportAvailable = true;
                 break;
@@ -2519,14 +2519,14 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     tvBacklightModes_bk = tvBacklightModes;
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index")
-    for (size_t i = 0; i < count; i++)
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+    for (unsigned int i = 0; i < count; i++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", j);
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
         modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        if(modevalue & tvBacklightModes_bk)
+        if(modeValue & tvBacklightModes_bk)
         {
-            tvBacklightModes_bk &= (~modevalue);
+            tvBacklightModes_bk &= (~modeValue);
         }
     }
 
@@ -2641,12 +2641,12 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
     /* Step 02: Calling tvsettings GetCurrentBacklightMode and expectinging the API to return success */
     result = GetCurrentBacklightMode(&tvBacklightMode);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index")
-    for (size_t i = 0; i < count; i++)
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+    for (unsigned int i = 0; i < count; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
         modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        if (modevalue == tvBacklightMode)
+        if (modeValue == tvBacklightMode)
         {
             IsBacklightModeValid = true;
             break;
@@ -2755,8 +2755,8 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SetCurrentBacklightMode and expecting the API to return success */
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index")
-    for (size_t i = 0; i < (count); i++)
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+    for (unsigned int i = 0; i < (count); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
         modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -2807,12 +2807,12 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
     int modeValue = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
-    modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/index/0")
+    modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/index/0");
 
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentBacklightMode((tvBacklightMode_t)modevalue);
+        result = SetCurrentBacklightMode((tvBacklightMode_t)modeValue);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -2837,11 +2837,11 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
     for(int i =0 ; i < numberofBacklightModes; i++)
     {
         SupportAvailable = false;
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
+        modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
         for(int j = tvBacklightMode_NONE  ; j < tvBacklightMode_MAX ; j++)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
-            modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if(modevalue == j)
+            if(modeValue == j)
             {
                 SupportAvailable = true;
                 break;
@@ -2861,8 +2861,8 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 08: Calling tvsettings the SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_STATE */
-        modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/index/0")
-        result = SetCurrentBacklightMode((tvBacklightMode_t)modevalue);
+        modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/index/0");
+        result = SetCurrentBacklightMode((tvBacklightMode_t)modeValue);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -2918,7 +2918,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
         }
     }
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index")
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
     if (sizeReceived != (unsigned short)count){
         if ( tvDimmingModes[0] ){
             free ( tvDimmingModes[0] );
@@ -2926,14 +2926,14 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
     }
     UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)count);
 
-    for (size_t i = 0; i < count; i++)
+    for (unsigned int i = 0; i < count; i++)
     {
         IsDimmingModeValid = false;
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", i);
+        modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
         for(unsigned short j = 0; j < sizeReceived; j++)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", i);
-            modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if (modevalue == tvDimmingModes[0][j])
+            if (modeValue == tvDimmingModes[0][j])
             {
                 IsDimmingModeValid = true;
                 break;
@@ -3164,8 +3164,8 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings to Set the SetTVDimmingMode for all the pic_modes and expecting the API to return success */
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/range")
-    for (size_t i = 0; i < count; i++)
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/range");
+    for (unsigned int i = 0; i < count; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/range/%d", i);
         UT_KVP_PROFILE_GET_STRING(keyValue,modeName);
@@ -3279,8 +3279,8 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
     /* Step 02: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
     result = GetTVDimmingMode(dimmingMode);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/range")
-    for (size_t i = 0; i < (count); i++)
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/range");
+    for (unsigned int i = 0; i < (count); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/range/%d", i);
         UT_KVP_PROFILE_GET_STRING(keyValue,modeName);
@@ -3404,25 +3404,25 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index")
-    for (size_t i = 0; i < videoSrcCount; i++)
+    dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)                
+            for (unsigned int k = 0; k < videoFmtCount; k++)                
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (size_t l = 0; l < dimmingModeCount; l++)
+                for (unsigned int l = 0; l < dimmingModeCount; l++)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", l);
-                    modeValue = UT_KVP_PROFILE_GET_STRING(keyValue);
-                    result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,pqValu,\
-                            (tvVideoFormatType_t) videoFormat,(tvDimmingMode_t)modevalue);
+                    modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,pqValue,\
+                            (tvVideoFormatType_t) videoFormat,(tvDimmingMode_t)modeValue);
                     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
                 }
             }
@@ -3480,18 +3480,18 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
     int videoSource = 0;
     int pqValue = 0;
     int videoFormat = 0;
-    int modevalue = 0 ;
+    int modeValue = 0 ;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
     pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
     videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-    modevalue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/index/0");
+    modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_STATE */
         result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource, pqValue,
-                                   (tvVideoFormatType_t)videoFormat, (tvDimmingMode_t)modevalue);
+                                   (tvVideoFormatType_t)videoFormat, (tvDimmingMode_t)modeValue);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -3500,27 +3500,27 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveTVDimmingMode(VIDEO_SOURCE_MAX,pqValue,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modevalue);
+    result = SaveTVDimmingMode(VIDEO_SOURCE_MAX,pqValue,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modeValue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveTVDimmingMode((tvVideoSrcType_t)-2,pqValue,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modevalue);
+    result = SaveTVDimmingMode((tvVideoSrcType_t)-2,pqValue,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modeValue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,-1,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modevalue);
+    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,-1,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modeValue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,PQ_MODE_MAX,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modevalue);
+    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,PQ_MODE_MAX,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modeValue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,pqValue,VIDEO_FORMAT_MAX,(tvDimmingMode_t)modevalue);
+    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,pqValue,VIDEO_FORMAT_MAX,(tvDimmingMode_t)modeValue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)-1,(tvDimmingMode_t)modevalue);
+    result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)-1,(tvDimmingMode_t)modeValue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
@@ -3540,7 +3540,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", j);
             videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if(VideoSource == i)
+            if(videoSource == i)
             {
                 SupportAvailable = true;
                 break;  
@@ -3549,7 +3549,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveTVDimmingMode((tvVideoSrcType_t)i,pqValue,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modevalue);
+            result = SaveTVDimmingMode((tvVideoSrcType_t)i,pqValue,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modeValue);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -3572,7 +3572,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,i,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modevalue);
+            result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,i,(tvVideoFormatType_t)videoFormat,(tvDimmingMode_t)modeValue);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
         }
 
@@ -3596,21 +3596,21 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) i,(tvDimmingMode_t)modevalue);
+            result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) i,(tvDimmingMode_t)modeValue);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
         }
     }
 
     videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-    dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index")
+    dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
     for(int i =tvDimmingMode_Fixed ; i < tvDimmingMode_MAX; i++)
     {
         SupportAvailable = false;
         for(int j =0 ; j < dimmingModeCount; j++)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", l);
-            modeValue = UT_KVP_PROFILE_GET_STRING(keyValue);
-            if(modevalue == i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", j);
+            modeValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(modeValue == i)
             {
                 SupportAvailable = true;
                 break;
@@ -3628,11 +3628,11 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    modevalue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/index/0");
+    modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 13: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_STATE */
-        result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, (tvDimmingMode_t)modevalue);
+        result = SaveTVDimmingMode((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, (tvDimmingMode_t)modeValue);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -3744,7 +3744,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     dimmingLevelCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/TMAX/DimmingLevel/index");
-    for (size_t i = 0; i < LDIM_STATE_MAX; i++)
+    for (unsigned int i = 0; i < LDIM_STATE_MAX; i++)
     {
         SupportAvailable = false;
         for( int j =0; j < (dimmingLevelCount) ; j++){
@@ -3930,7 +3930,6 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
     int videoSrcCount = 0;
     int pqCount = 0;
     int videoFmtCount = 0;
-    int modeValue = 0;
     int dimmingLevel = 0;
     int dimmingLevelCount = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
@@ -3943,24 +3942,24 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (size_t l = 0; l < dimmingLevelCount; l++)
+                for (unsigned int l = 0; l < dimmingLevelCount; l++)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/TMAX/DimmingLevel/index/%d", l);
                     dimmingLevel = UT_KVP_PROFILE_GET_UINT32(keyValue);
                     result = SaveLocalDimmingLevel((tvVideoSrcType_t) videoSource,pqValue,\
-                            (tvVideoFormatType_t) videoFormat,(ldimStateLevel_t)Configfile.dimmingLevel.dimModevalue[l]);
+                            (tvVideoFormatType_t) videoFormat,(ldimStateLevel_t)dimmingLevel);
                     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
                 }
             }
@@ -4018,9 +4017,9 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
     int videoSource = 0;
     int pqValue = 0;
     int videoFormat = 0;
-    int modevalue = 0 ;
     int dimmingLevel = 0;
     int dimmingLevelCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
     pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -4436,7 +4435,6 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
     int videoSrcCount = 0;
     int pqCount = 0;
     int videoFmtCount = 0;
-    int modeValue = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -4447,15 +4445,15 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -4916,15 +4914,15 @@ void test_l1_tvSettings_positive_SaveContrast (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -5385,15 +5383,15 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -5854,15 +5852,15 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -6324,15 +6322,15 @@ void test_l1_tvSettings_positive_SaveHue (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -6555,7 +6553,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 
     /* Step 02: Calling tvsettings SetColorTemperature and expecting the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < colorTempCount; i++)
+    for (unsigned int i = 0; i < colorTempCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -6685,6 +6683,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
     bool IsColorTempValid = false;
     int colorTempCount = 0;
     int colorTempValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -6694,7 +6693,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
     result = GetColorTemperature(&tvColorTemp);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -6818,19 +6817,19 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (size_t l = 0; l < colorTempCount; l++)
+                for (unsigned int l = 0; l < colorTempCount; l++)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", l);
                     colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -7083,7 +7082,7 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 
     /* Step 02: Calling tvsettings SetAspectRatio and expecting the API to return success */
     aspectRatioCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
-    for (size_t i = 0; i < (aspectRatioCount); i++)
+    for (unsigned int i = 0; i < (aspectRatioCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/AspectRatio/index/%d", i);
         aspectRatioValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -7129,7 +7128,6 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 
     tvError_t result = tvERROR_NONE;
     int numberofDisplaymode = 0;
-    int aspectRatioCount = 0;
     int aspectRatioValue = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
@@ -7218,7 +7216,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
     result = GetAspectRatio(&tvDisplayMode);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
     aspectRatioCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
-    for (size_t i = 0; i < (aspectRatioCount); i++)
+    for (unsigned int i = 0; i < (aspectRatioCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/AspectRatio/index/%d", i);
         aspectRatioValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -7340,19 +7338,19 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
     aspectRatioCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (size_t l = 0; l < aspectRatioCount; l++)
+                for (unsigned int l = 0; l < aspectRatioCount; l++)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/AspectRatio/index/%d", l);
                     aspectRatioValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -7821,6 +7819,7 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
     int videoSrcCount = 0;
     int pqCount = 0;
     int videoFmtCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -7830,15 +7829,15 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -8516,7 +8515,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
     }
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index")
+    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
     if (sizeReceived != (unsigned short)dolbyVisonModeCount){
         if ( tvDolbyModes[0] ){
             free ( tvDolbyModes[0] );
@@ -8524,7 +8523,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
     }
     UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)dolbyVisonModeCount);
 
-    for (size_t i = 0; i < dolbyVisonModeCount; i++)
+    for (unsigned int i = 0; i < dolbyVisonModeCount; i++)
     {
         IsDolbyModeValid = false;
         for(unsigned short j = 0; j < sizeReceived; j++)
@@ -8760,8 +8759,8 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings to Set the SetTVDolbyVisionMode for all the dv_modes and expecting the API to return success */
-    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index")
-    for (size_t i = 0; i < dolbyVisonModeCount; i++)
+    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+    for (unsigned int i = 0; i < dolbyVisonModeCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , i);
         dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -8881,8 +8880,8 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
     result = GetTVDolbyVisionMode(&tvDolbyModes);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index")
-    for (size_t i = 0; i < (dolbyVisonModeCount); i++)
+    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+    for (unsigned int i = 0; i < (dolbyVisonModeCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , i);
         dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -9007,20 +9006,20 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index")
-    for (size_t i = 0; i < videoSrcCount; i++)
+    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)                
+            for (unsigned int k = 0; k < videoFmtCount; k++)                
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (size_t l = 0; l < dolbyVisonModeCount; l++)
+                for (unsigned int l = 0; l < dolbyVisonModeCount; l++)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , l);
                     dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -9206,7 +9205,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
     }
 
     videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index")
+    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
     for(int i =tvDimmingMode_Fixed ; i < tvMode_Max ; i++)
     {
         SupportAvailable = false;
@@ -9287,7 +9286,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)pqCount);
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
 
-    for (size_t i = 0; i < pqCount; i++)
+    for (unsigned int i = 0; i < pqCount; i++)
     {
         IsPictureModeValid = false;
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", i);
@@ -9434,7 +9433,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/range");
     result = GetTVPictureMode(pictureMode);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-    for (size_t i = 0; i < (pqCount); i++)
+    for (unsigned int i = 0; i < (pqCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/range/%d", i);
         UT_KVP_PROFILE_GET_STRING(keyValue,pqMode);
@@ -9549,7 +9548,7 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 
     /* Step 02: Calling tvsettings to Set the SetTVPictureMode for all the pic_modes and expecting the API to return success */
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/range");
-    for (size_t i = 0; i < pqCount; i++)
+    for (unsigned int i = 0; i < pqCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/range/%d", i);
         UT_KVP_PROFILE_GET_STRING(keyValue,pqMode);
@@ -9660,7 +9659,6 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
     int videoSrcCount = 0;
     int pqCount = 0;
     int videoFmtCount = 0;
-    int modeValue = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -9671,15 +9669,15 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-    for (size_t i = 0; i < videoSrcCount; i++)
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < pqCount; j++)
+        for (unsigned int j = 0; j < pqCount; j++)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
             pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (size_t k = 0; k < videoFmtCount; k++)                
+            for (unsigned int k = 0; k < videoFmtCount; k++)                
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -9902,13 +9900,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 
     /* Step 02 - 08: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = HDMI_OFFSET; j < MAX_OFFSET; j++ )
+        for (unsigned int j = HDMI_OFFSET; j < MAX_OFFSET; j++ )
         {
-            for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
+            for (unsigned int k = 0; k < 2; k++ )   //(0 -set 1-save)
             {
                 result = SetColorTemp_Rgain_onSource((tvColorTemp_t)colorTempValue,0,(tvColorTempSourceOffset_t)j, k);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -10017,10 +10015,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 
     /* Step 11: Calling tvsettings SetColorTemp_Rgain_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10100,11 +10098,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(rgain,rgainRetry);
 
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
 
             result = GetColorTemp_Rgain_onSource((tvColorTemp_t)colorTempValue, &rgain, (tvColorTempSourceOffset_t)j );
@@ -10197,10 +10195,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 
     /* Step 08: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {       
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10217,10 +10215,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
         }
     }
 
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -10292,13 +10290,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 
     /* Step 02 - 08: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
-            for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
+            for (unsigned int k = 0; k < 2; k++ )   //(0 -set 1-save)
             {
                 result = SetColorTemp_Ggain_onSource((tvColorTemp_t)colorTempValue,0, (tvColorTempSourceOffset_t)j, k);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -10407,10 +10405,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 
     /* Step 11: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10430,10 +10428,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
     }
 
     /* Step 12: Calling tvsettings SetColorTemp_Ggain_onSource and the API to return success */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -10502,11 +10500,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 
     /* Step 02-03: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
             result = GetColorTemp_Ggain_onSource((tvColorTemp_t)colorTempValue, &ggain, (tvColorTempSourceOffset_t)j);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -10603,10 +10601,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 
     /* Step 08: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10624,10 +10622,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
         }
     }
 
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -10699,13 +10697,13 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 
     /* Step 02 - 08: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
-            for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
+            for (unsigned int k = 0; k < 2; k++ )   //(0 -set 1-save)
             {
                 result = SetColorTemp_Bgain_onSource((tvColorTemp_t)colorTempValue,0, (tvColorTempSourceOffset_t)j, k);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -10814,10 +10812,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 
     /* Step 11: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10835,10 +10833,10 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
     }
 
     /* Step 12: Calling tvsettings SetColorTemp_Bgain_onSource and the API to return success */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -10916,11 +10914,11 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(bgain,bgainRetry);
 
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
 
             result = GetColorTemp_Bgain_onSource((tvColorTemp_t)colorTempValue, &bgain, (tvColorTempSourceOffset_t)j );
@@ -11012,10 +11010,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 
     /* Step 08: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -11032,10 +11030,10 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
         }
     }
 
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -11106,13 +11104,13 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 
     /* Step 02 - 07: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
-            for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
+            for (unsigned int k = 0; k < 2; k++ )   //(0 -set 1-save)
             {
                 result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)colorTempValue,-1024, (tvColorTempSourceOffset_t)j, k);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -11224,10 +11222,10 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 
     /* Step 11: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -11246,10 +11244,10 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
     }
 
     /* Step 12: Calling tvsettings SetColorTemp_R_post_offset_onSource and the API to return success */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -11330,11 +11328,11 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(rpostoffset,rpostoffsetRetry);
 
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
 
             result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)colorTempValue, &rpostoffset, (tvColorTempSourceOffset_t)j );
@@ -11425,10 +11423,10 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 
     /* Step 08: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -11446,10 +11444,10 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
     }
 
     /* Step 09: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -11518,13 +11516,13 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 
     /* Step 02 - 07: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
-            for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
+            for (unsigned int k = 0; k < 2; k++ )   //(0 -set 1-save)
             {
                 result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)colorTempValue,-1024, (tvColorTempSourceOffset_t)j, k);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -11633,10 +11631,10 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 
     /* Step 11: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {       
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -11656,10 +11654,10 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 
 
     /* Step 12: Calling tvsettings SetColorTemp_G_post_offset_onSource and the API to return success */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -11742,11 +11740,11 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(gpostoffset,gpostoffsetRetry);
 
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
             result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)colorTempValue, &gpostoffset, (tvColorTempSourceOffset_t) j );
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -11835,10 +11833,10 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 
     /* Step 08: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -11859,10 +11857,10 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 
 
     /* Step 09: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {       
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -11931,13 +11929,13 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 
     /* Step 02 - 07: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
-            for (size_t k = 0; k < 2; k++ )   //(0 -set 1-save)
+            for (unsigned int k = 0; k < 2; k++ )   //(0 -set 1-save)
             {
                 result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)colorTempValue,-1024, (tvColorTempSourceOffset_t)j, k);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -12046,10 +12044,10 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 
     /* Step 11: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -12068,10 +12066,10 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
     }
 
     /* Step 12: Calling tvsettings SetColorTemp_B_post_offset_onSource and the API to return success */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -12151,11 +12149,11 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 
     /* Step 04: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < (colorTempCount); i++)
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (size_t j = 0; j < MAX_OFFSET; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET; j++ )
         {
 
             result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)colorTempValue, &bpostoffset, (tvColorTempSourceOffset_t)j );
@@ -12248,10 +12246,10 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 
     /* Step 08: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
             colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -12269,10 +12267,10 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
     }
 
     /* Step 09: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_PARAM */
-    for (size_t i = 0; i < MAX_OFFSET; i++)
+    for (unsigned int i = 0; i < MAX_OFFSET; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < MAX_OFFSET ; j++ )
+        for (unsigned int j = 0; j < MAX_OFFSET ; j++ )
         {
             if(j == (tvColorTempSourceOffset_t)i)
             {
@@ -12691,6 +12689,9 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
     unsigned short pData_B_limit[]={0, 100, 1023};
     unsigned short  size =256;
     bool bflag = true;
+    int colorTempCount = 0;
+    int colorTempValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
     tvError_t result = tvERROR_NONE ;
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -12698,8 +12699,11 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-    for (size_t i = 0; i < (colorTempCount); i++)
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+        colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
         result = GetDefaultGammaTable((tvColorTemp_t)colorTempValue,pData_R_limit,pData_G_limit,pData_B_limit, size);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
@@ -12763,7 +12767,11 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
     unsigned short  size = 256;
     bool platformFlag = false;
     tvError_t result = tvERROR_NONE ;
+    int colorTempCount = 0;
+    int colorTempValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetDefaultGammaTable before TvInit and expecting the API to return tvERROR_INVALID_STATE */
@@ -12800,11 +12808,14 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings GetDefaultGammaTable and expecting the API to return tvERROR_INVALID_PARAM */
-    for (size_t i = 0; i < tvColorTemp_MAX; i++)
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (size_t j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
                 platformFlag = true;
@@ -12823,6 +12834,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 11: Calling tvsettings GetDefaultGammaTable after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
@@ -13014,14 +13026,20 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
     unsigned short pData_G_limit[] = {0, 100, 1023};
     unsigned short pData_B_limit[] = {0, 100, 1023};
     unsigned short size = 256;
+    int colorTempCount = 0;
+    int colorTempValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */ 
-    for (size_t i = 0; i < (colorTempCount); i++)
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {   
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+        colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
         result = SaveGammaTable((tvColorTemp_t)colorTempValue, pData_R_limit,pData_G_limit,pData_B_limit, size);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM)
     }
@@ -13078,7 +13096,11 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
     unsigned short pData_R_limit_error2[] = {1025, 100, 1023};
     unsigned short pData_G_limit_error2[] = {0, 1025, 1023};
     unsigned short pData_B_limit_error2[] = {0, 100, 1025};
+    int colorTempCount = 0;
+    int colorTempValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SaveGammaTable for all the valid arguments of colortemp and expecting the API to return success */
@@ -13131,11 +13153,14 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 13: Calling tvsettings SaveGammaTable and expecting the API to return success */ 
-    for (size_t i = 0; i < (colorTempCount); i++)
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
 
         for(int j=0; j<tvColorTemp_MAX;j++){
 
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue != (tvColorTemp_t)j ){                
                 result = SaveGammaTable((tvColorTemp_t)j, pData_R_limit,pData_G_limit,pData_B_limit, 256);
                 UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
@@ -13148,6 +13173,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 15: Calling tvsettings SaveGammaTable and expecting the API to return tvERROR_INVALID_STATE */
@@ -13413,7 +13439,7 @@ void test_l1_tvSettings_positive_SaveDvTmaxValue (void)
 
     /* Step 02: Calling tvsettings SaveDvTmaxValue for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
     dimmingLevelCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/TMAX/DimmingLevel/index");
-    for (size_t j = 0; j < dimmingLevelCount; j++)
+    for (unsigned int j = 0; j < dimmingLevelCount; j++)
     {
 
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/TMAX/DimmingLevel/index/%d", j);
@@ -13564,6 +13590,10 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
     tvError_t result = tvERROR_NONE;
     int tvComponentColor =0, tvComponentColor_bk =0;
     int tvComponentColorRetry =0;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -13573,12 +13603,14 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
     result = GetSupportedComponentColor(&tvComponentColor);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
     tvComponentColor_bk = tvComponentColor;
-
-    for (size_t i = 0; i < Configfile.componentColor.size; i++)
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for (unsigned int i = 0; i < componentColorCount; i++)
     {
-        if(Configfile.componentColor.modeId[i] & tvComponentColor_bk)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        if(componentColor & tvComponentColor_bk)
         {
-            tvComponentColor_bk &= (~Configfile.componentColor.modeId[i]);
+            tvComponentColor_bk &= (~componentColor);
         }
     }
 
@@ -13680,6 +13712,9 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -13689,18 +13724,21 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
     result = SetCMSState(true);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-    for (size_t i=0; i<(Configfile.componentColor.size); i++)
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for (unsigned int i=0; i< componentColorCount; i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
         /* Step 03: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
-        result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
+        result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,0);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
         /* Step 04: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
-        result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],100);
+        result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,100);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
         /* Step 05: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_NONE */
-        result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],50);
+        result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,50);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
     }
 
@@ -13744,11 +13782,15 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 
     tvError_t result = tvERROR_NONE ;
     bool bModeMatched = false;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SetCurrentComponentSaturation before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0], 10);
+        result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor, 10);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -13765,20 +13807,23 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0] ,101);
+    result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor ,101);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0] ,-1);
+    result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor ,-1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings SetCurrentComponentSaturation and expecting the API to return tvERROR_INVALID_PARAM */
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for (int i=0; i< tvDataColor_MAX; i++)
     {
         bModeMatched = false;
-        for(size_t j =0; j < (Configfile.componentColor.size); j++){
+        for(unsigned int j =0; j < componentColorCount; j++){
 
-            if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t) i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
             {
                 bModeMatched = true;
                 break;
@@ -13795,10 +13840,11 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 09: Calling tvsettings SetCurrentComponentSaturation after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0], 10);
+        result = SetCurrentComponentSaturation((tvDataComponentColor_t)componentColor, 10);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
@@ -13831,24 +13877,30 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
     tvError_t result = tvERROR_NONE;
     int saturation = 0;
     int saturationRetry = 0;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
-    result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturation);
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
+    result = GetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,&saturation);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetCurrentComponentSaturation and expecting the API to return success */
-    result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&saturationRetry);
+    result = GetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,&saturationRetry);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     UT_ASSERT_AUTO_TERM_NUMERICAL(saturation, saturationRetry);
 
-    for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
+    for (unsigned int i = 0; i < componentColorCount; ++i)
     {
-        result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&saturation);
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        result = GetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,&saturation);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
         UT_ASSERT_AUTO_TERM_TRUE( (saturation >=0 && saturation <= 100) );
     }
@@ -13890,11 +13942,15 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
     tvError_t result = tvERROR_NONE;
     int saturation = 0;
     bool bModeMatched = false;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetCurrentComponentSaturation before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0], &saturation);
+        result = GetCurrentComponentSaturation((tvDataComponentColor_t)componentColor, &saturation);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -13912,15 +13968,18 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetCurrentComponentSaturation and expectinging the API to return tvERROR_INVALID_PARAM */
-    result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0],NULL);
+    result = GetCurrentComponentSaturation((tvDataComponentColor_t)componentColor,NULL);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for(int i = 0; i < tvDataColor_MAX; i++)
     {
         bModeMatched = false;
-        for (size_t j = 0; j < (Configfile.componentColor.size); ++j)
+        for (unsigned int j = 0; j < componentColorCount; ++j)
         {
-            if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] == (tvDataComponentColor_t)i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvDataComponentColor_t) componentColor == (tvDataComponentColor_t)i)
             {
                 bModeMatched = true;
                 break;
@@ -13939,10 +13998,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 07 Calling tvsettings GetCurrentComponentSaturation and expectinging the API to return tvERROR_INVALID_STATE */
-        result = GetCurrentComponentSaturation((tvDataComponentColor_t)Configfile.componentColor.modeId[0], &saturation);
+        result = GetCurrentComponentSaturation((tvDataComponentColor_t)componentColor, &saturation);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -13976,6 +14036,9 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -13985,18 +14048,21 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
     result = SetCMSState(true);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-    for (size_t i=0; i<(Configfile.componentColor.size); i++)
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for (unsigned int i=0; i<componentColorCount; i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
         /* Step 03: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
-        result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
+        result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor,0);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
         /* Step 04: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
-        result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],100);
+        result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor,100);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
         /* Step 05: Calling tvsettings SetCurrentComponentHue and expecting the API to return success */
-        result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[i],50);
+        result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor,50);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
     }
 
@@ -14040,11 +14106,15 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 
     tvError_t result = tvERROR_NONE ;
     bool bModeMatched = false;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SetCurrentComponentHue before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0], 10);
+        result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor, 10);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14061,20 +14131,23 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetCurrentComponentHue and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0] ,101);
+    result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor ,101);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SetCurrentComponentHue and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0] ,-1);
+    result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor ,-1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings SetCurrentComponentHue and expecting the API to return tvERROR_INVALID_PARAM */
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for (int i=0; i<tvDataColor_MAX; i++)
     {
         bModeMatched = false;
-        for(size_t j =0; j < (Configfile.componentColor.size); j++){
+        for(unsigned int j =0; j < componentColorCount; j++){
 
-            if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t) i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
             {
                 bModeMatched = true;
                 break;
@@ -14091,10 +14164,11 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 09: Calling tvsettings SetCurrentComponentHue after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0], 10);
+        result = SetCurrentComponentHue((tvDataComponentColor_t)componentColor, 10);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
@@ -14127,24 +14201,31 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
     tvError_t result = tvERROR_NONE;
     int Hue = 0;
     int HueRetry = 0;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
-    result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&Hue);
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
+    result = GetCurrentComponentHue((tvDataComponentColor_t)componentColor,&Hue);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetCurrentComponentHue and expecting the API to return success */
-    result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&HueRetry);
+    result = GetCurrentComponentHue((tvDataComponentColor_t)componentColor,&HueRetry);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     UT_ASSERT_AUTO_TERM_NUMERICAL(Hue, HueRetry);
 
-    for (size_t j = 0; j < (Configfile.componentColor.size); ++j)
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for (unsigned int j = 0; j < componentColorCount; ++j)
     {
-        result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[j],&Hue);
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        result = GetCurrentComponentHue((tvDataComponentColor_t)componentColor,&Hue);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
         UT_ASSERT_AUTO_TERM_TRUE( (Hue >=0 && Hue <= 100));
     }
@@ -14187,11 +14268,15 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
     tvError_t result = tvERROR_NONE;
     int Hue = 0;
     bool bModeMatched = false;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetCurrentComponentHue before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0], &Hue);
+        result = GetCurrentComponentHue((tvDataComponentColor_t)componentColor, &Hue);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14208,15 +14293,18 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetCurrentComponentHue and expectinging the API to return tvERROR_INVALID_PARAM */
-    result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0],NULL);
+    result = GetCurrentComponentHue((tvDataComponentColor_t)componentColor,NULL);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for (int i =0; i < tvDataColor_MAX; i++)
     {
         bModeMatched = false;
-        for(size_t j = 0; j < (Configfile.componentColor.size); ++j){
+        for(unsigned int j = 0; j < componentColorCount; ++j){
 
-            if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] == (tvDataComponentColor_t) i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvDataComponentColor_t) componentColor == (tvDataComponentColor_t) i)
             {
                 bModeMatched = true;
                 break;
@@ -14233,10 +14321,11 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 07: Calling tvsettings GetCurrentComponentHue and expectinging the API to return success */
-        result = GetCurrentComponentHue((tvDataComponentColor_t)Configfile.componentColor.modeId[0], &Hue);
+        result = GetCurrentComponentHue((tvDataComponentColor_t)componentColor, &Hue);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14270,6 +14359,9 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -14280,18 +14372,21 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-    for (size_t i=0; i<(Configfile.componentColor.size); i++)
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for (unsigned int i=0; i<componentColorCount; i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
         /* Step 03: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],0);
+        result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor,0);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
         /* Step 04: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],30);
+        result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor,30);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
         /* Step 05: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],15);
+        result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor,15);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
     }
 
@@ -14335,11 +14430,15 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 
     tvError_t result = tvERROR_NONE ;
     bool bModeMatched = false;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SetCurrentComponentLuma before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0], 10);
+        result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor, 10);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14356,20 +14455,23 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0] ,31);
+    result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor ,31);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0] ,-1);
+    result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor ,-1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings SetCurrentComponentLuma and expecting the API to return tvERROR_INVALID_PARAM */
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for (int i=0; i<tvDataColor_MAX; i++)
     {
         bModeMatched = false;
-        for(size_t j =0; j < (Configfile.componentColor.size); j++){
+        for(unsigned int j =0; j < componentColorCount; j++){
 
-            if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t) i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
             {
                 bModeMatched = false;
                 break;
@@ -14387,10 +14489,11 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 09: Calling tvsettings SetCurrentComponentLuma after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0], 10);
+        result = SetCurrentComponentLuma((tvDataComponentColor_t)componentColor, 10);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
@@ -14423,24 +14526,31 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
     tvError_t result = tvERROR_NONE;
     int Luma = 0;
     int LumaRetry = 0;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetCurrentComponentLuma and expecting the API to return success */
-    result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&Luma);
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
+    result = GetCurrentComponentLuma((tvDataComponentColor_t)componentColor,&Luma);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetCurrentComponentLuma and expecting the API to return success */
-    result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0],&LumaRetry);
+    result = GetCurrentComponentLuma((tvDataComponentColor_t)componentColor,&LumaRetry);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
     UT_ASSERT_AUTO_TERM_NUMERICAL(Luma, LumaRetry);
 
-    for (size_t i = 0; i < (Configfile.componentColor.size); ++i)
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for (unsigned int i = 0; i < componentColorCount; ++i)
     {
-        result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[i],&Luma);
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
+        componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        result = GetCurrentComponentLuma((tvDataComponentColor_t)componentColor,&Luma);
         UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
         UT_ASSERT_AUTO_TERM_TRUE( (Luma >=0 && Luma <= 30) );
     }
@@ -14482,11 +14592,15 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
     tvError_t result = tvERROR_NONE;
     int Luma = 0;
     bool bModeMatched = false;
+    int componentColorCount = 0;
+    int componentColor = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetCurrentComponentLuma before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0], &Luma);
+        result = GetCurrentComponentLuma((tvDataComponentColor_t)componentColor, &Luma);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14503,15 +14617,18 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetCurrentComponentLuma and expectinging the API to return tvERROR_INVALID_PARAM */
-    result = GetCurrentComponentLuma((tvDataComponentColor_t) Configfile.componentColor.modeId[0],NULL);
+    result = GetCurrentComponentLuma((tvDataComponentColor_t) componentColor,NULL);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for (int i =0; i < tvDataColor_MAX; i++)
     {
         bModeMatched = false;
-        for(size_t j = 0; j < (Configfile.componentColor.size); ++j)
+        for(unsigned int j = 0; j < componentColorCount; ++j)
         {
-            if((tvDataComponentColor_t) Configfile.componentColor.modeId[j] !=(tvDataComponentColor_t)i)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            componentColor = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t)i)
             {
                 bModeMatched = true;
                 break;
@@ -14531,7 +14648,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 07: Calling tvsettings GetCurrentComponentLuma after TvTerm and expectinging the API to return tvERROR_INVALID_STATE */
-        result = GetCurrentComponentLuma((tvDataComponentColor_t)Configfile.componentColor.modeId[0], &Luma);
+        result = GetCurrentComponentLuma((tvDataComponentColor_t)componentColor, &Luma);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14562,31 +14679,123 @@ void test_l1_tvSettings_positive_SaveCMS (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
-    bool SupportAvailable = false;
+    int videoSource = 0;
+    int pqValue = 0;
+    int videoFormat = 0;
+    int videoSrcCount = 0;
+    int pqCount = 0;
+    int videoFmtCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SaveCMS for all the sourceId,pqmode,videoFormatType, component_type, color_type and expecting the API to return success */
-    for (size_t i = 0; i < videoSrcCount; i++)
+    videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
-        for (size_t j = 0; j < pqCount; j++)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned int j = 0; j < pqCount; j++)
         {
-            for (size_t k = 0; k < videoFmtCount; k++)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
-                for (size_t l = COMP_NONE+1; l < COMP_MAX; l++)
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationRed/platformsupport") == true)
                 {
-                    for (size_t m = tvDataColor_NONE+1; m < tvDataColor_MAX; m++)
-                    {
-                        SupportAvailable = false;
-                        if(Configfile.componentColor.platformSupport[l][m] == true)
-                        {
-                            result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,(tvComponentType_t)l, (tvDataComponentColor_t)m,30);
-                            UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-                            SupportAvailable = false;
-                        }
-                    }
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_RED,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationBlue/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_BLUE,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationGreen/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_GREEN,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationYellow/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_YELLOW,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationCyan/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_CYAN,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationMagenta/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_MAGENTA,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueRed/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_RED,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueBlue/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_BLUE,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueGreen/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_GREEN,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueYellow/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagentha/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueCyan/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_CYAN,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaRed/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_RED,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaBlue/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_BLUE,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaGreen/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_GREEN,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaYellow/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_YELLOW,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaMagenta/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_MAGENTA,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+                }
+                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaCyan/platformsupport") == true)
+                {
+                    result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_CYAN,30);
+                    UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
                 }
             }
         }
@@ -14645,11 +14854,21 @@ void test_l1_tvSettings_negative_SaveCMS (void)
     tvError_t result = tvERROR_NONE ;
     bool SupportAvailable = true;
     int i = 0, j = 0 ;
+    int videoSource = 0;
+    int pqValue = 0;
+    int videoFormat = 0;
+    int videoSrcCount = 0;
+    int pqCount = 0;
+    int videoFmtCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_STATE */
-        result = SaveCMS((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, (tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0], 1);
+        result = SaveCMS((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, COMP_HUE, tvDataColor_RED, 1);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -14658,75 +14877,78 @@ void test_l1_tvSettings_negative_SaveCMS (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS(VIDEO_SOURCE_MAX,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS(VIDEO_SOURCE_MAX,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)-2,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)-2,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,-1,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,-1,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,PQ_MODE_MAX,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,PQ_MODE_MAX,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,VIDEO_FORMAT_MAX,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,VIDEO_FORMAT_MAX,COMP_HUE, tvDataColor_RED,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)-1,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)-1,COMP_HUE, tvDataColor_RED,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_STATE */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_MAX, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_MAX, tvDataColor_RED,1);
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 10: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)-1, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)-1, tvDataColor_RED,1);
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 11: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], tvDataColor_MAX,1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_MAX,1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 12: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)-1, 1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, (tvDataComponentColor_t)-1, 1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 13: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_SATURATION, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],-1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_SATURATION, tvDataColor_RED,-1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 14: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_SATURATION, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],101);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_SATURATION, tvDataColor_RED,101);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 15: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],-1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,-1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 16: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],101);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,101);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 17: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_LUMA, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],-1);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_LUMA, tvDataColor_RED,-1);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 18: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_LUMA, (tvDataComponentColor_t)Configfile.componentColor.modeId[0],31);
+    result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,COMP_LUMA, tvDataColor_RED,31);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 19: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
+    videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
     for( i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
     {
         SupportAvailable = false;
         for( j =0 ; j < videoSrcCount; j++)
         {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", j);
+            videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(videoSource == i)
             {
                 SupportAvailable = true;
@@ -14735,16 +14957,20 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         }
 
         if(!SupportAvailable){
-            result = SaveCMS((tvVideoSrcType_t)i,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+            result = SaveCMS((tvVideoSrcType_t)i,pqValue,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,1);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
         }
     }
 
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
     for( i =0 ; i < PQ_MODE_MAX; i++)
     {
         SupportAvailable = false;
         for( j =0 ; j < pqCount; j++)
         {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(pqValue == i)
             {
                 SupportAvailable = true;
@@ -14753,16 +14979,20 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         }
 
         if(!SupportAvailable){
-            result = SaveCMS((tvVideoSrcType_t)videoSource,i,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+            result = SaveCMS((tvVideoSrcType_t)videoSource,i,(tvVideoFormatType_t)videoFormat,COMP_HUE, tvDataColor_RED,1);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
         }
     }
 
+    pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
     for( i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
     {
         SupportAvailable = false;
         for( j =0 ; j < videoFmtCount; j++)
         {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", j);
+            videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(videoFormat == i)
             {
                 SupportAvailable = true;
@@ -14771,28 +15001,103 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         }
 
         if(!SupportAvailable){
-            result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)i,(tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0],1);
+            result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)i,COMP_HUE, tvDataColor_RED,1);
             UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
         }
     }
 
-    for( i =COMP_NONE + 1; i < COMP_MAX; i++)
+    videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationRed/platformsupport") == false)
     {
-        SupportAvailable = false;
-        for( j = tvDataColor_NONE + 1 ; j < tvDataColor_MAX; j++)
-        {
-            if(Configfile.componentColor.platformSupport[i][j] == true)
-            {
-                SupportAvailable = true;
-                break;
-            }
-        }
-
-        if(!SupportAvailable){
-            result = SaveCMS((tvVideoSrcType_t)videoSource,pqValue,(tvVideoFormatType_t)videoFormat,(tvComponentType_t)i, (tvDataComponentColor_t)j, 1);
-            UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
-        }
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_RED,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
     }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationBlue/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_BLUE,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationGreen/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_GREEN,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationYellow/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_YELLOW,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationCyan/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_CYAN,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationMagenta/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_SATURATION, tvDataColor_MAGENTA,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueRed/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_RED,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueBlue/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_BLUE,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueGreen/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_GREEN,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueYellow/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagentha/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueCyan/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_HUE, tvDataColor_CYAN,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaRed/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_RED,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaBlue/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_BLUE,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaGreen/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_GREEN,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaYellow/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_YELLOW,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaMagenta/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_MAGENTA,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaCyan/platformsupport") == false)
+    {
+        result = SaveCMS((tvVideoSrcType_t) videoSource,pqValue,(tvVideoFormatType_t) videoFormat,COMP_LUMA, tvDataColor_CYAN,30);
+        UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+    }
+
 
     /* Step 20: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
@@ -14801,7 +15106,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 21: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_STATE */
-        result = SaveCMS((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, (tvComponentType_t)Configfile.componentColor.modeId[0], (tvDataComponentColor_t)Configfile.componentColor.modeId[0], 1);
+        result = SaveCMS((tvVideoSrcType_t)videoSource, pqValue, (tvVideoFormatType_t)videoFormat, COMP_HUE, tvDataColor_RED, 1);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -15049,46 +15354,62 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
 
     tvError_t result = tvERROR_NONE ;
     int value = 0;
+    int videoSource = 0;
+    int pqValue = 0;
+    int videoFormat = 0;
+    int videoSrcCount = 0;
+    int pqCount = 0;
+    int videoFmtCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-    for (size_t i = 0; i < videoSrcCount; i++)
+    videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
-        for (size_t j = 0; j < pqCount; j++)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned int j = 0; j < pqCount; j++)
         {
-            for (size_t k = 0; k < videoFmtCount; k++)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
-                for (size_t l = 0; l < Configfile.pq_paramIndex.size; l++)
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int l = 0; l < PQ_PARAM_MAX; l++)
                 {
-                    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[l],&value);
+                    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)l,&value);
                     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-                    if( (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_RED) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_GREEN)  || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_BLUE)  || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_CYAN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_RED) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_GREEN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_BLUE) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_YELLOW) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_CYAN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_MAGENTA) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_RED) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_GREEN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_BLUE) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_YELLOW) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_CYAN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_MAGENTA) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BRIGHTNESS) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CONTRAST) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SATURATION) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SHARPNESS) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_HUE) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BACKLIGHT) )
+                    if( (l == PQ_PARAM_CMS_SATURATION_RED) || \
+                            (l == PQ_PARAM_CMS_SATURATION_GREEN)  || \
+                            (l == PQ_PARAM_CMS_SATURATION_BLUE)  || \
+                            (l == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
+                            (l == PQ_PARAM_CMS_SATURATION_CYAN) || \
+                            (l == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
+                            (l == PQ_PARAM_CMS_HUE_RED) || \
+                            (l == PQ_PARAM_CMS_HUE_GREEN) || \
+                            (l == PQ_PARAM_CMS_HUE_BLUE) || \
+                            (l == PQ_PARAM_CMS_HUE_YELLOW) || \
+                            (l == PQ_PARAM_CMS_HUE_CYAN) || \
+                            (l == PQ_PARAM_CMS_HUE_MAGENTA) || \
+                            (l == PQ_PARAM_CMS_LUMA_RED) || \
+                            (l == PQ_PARAM_CMS_LUMA_GREEN) || \
+                            (l == PQ_PARAM_CMS_LUMA_BLUE) || \
+                            (l == PQ_PARAM_CMS_LUMA_YELLOW) || \
+                            (l == PQ_PARAM_CMS_LUMA_CYAN) || \
+                            (l == PQ_PARAM_CMS_LUMA_MAGENTA) || \
+                            (l == PQ_PARAM_BRIGHTNESS) || \
+                            (l == PQ_PARAM_CONTRAST) || \
+                            (l == PQ_PARAM_SATURATION) || \
+                            (l == PQ_PARAM_SHARPNESS) || \
+                            (l == PQ_PARAM_HUE) || \
+                            (l == PQ_PARAM_BACKLIGHT) )
                             {
                                 UT_ASSERT_AUTO_TERM_TRUE((value >= 0 && value <= 100));
                             }
@@ -15140,11 +15461,17 @@ void test_l1_tvSettings_negative_GetDefaultPQParams (void)
 
     tvError_t result = tvERROR_NONE ;
     int value = 0;
+    int videoSource = 0;
+    int pqValue = 0;
+    int videoFormat = 0;
 
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetDefaultPQParams before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetDefaultPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+        result = GetDefaultPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -15153,27 +15480,27 @@ void test_l1_tvSettings_negative_GetDefaultPQParams (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(-1, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+    result = GetDefaultPQParams(-1, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(PQ_MODE_MAX, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+    result = GetDefaultPQParams(PQ_MODE_MAX, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) VIDEO_SOURCE_MAX,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) VIDEO_SOURCE_MAX,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) -2,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) -2,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) VIDEO_FORMAT_MAX, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) VIDEO_FORMAT_MAX, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) -1, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) -1, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
@@ -15185,7 +15512,7 @@ void test_l1_tvSettings_negative_GetDefaultPQParams (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 11: Calling tvsettings GetDefaultPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], NULL);
+    result = GetDefaultPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, NULL);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 12: Calling tvsettings termination and expecting the API to return success */
@@ -15195,7 +15522,7 @@ void test_l1_tvSettings_negative_GetDefaultPQParams (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 13: Calling tvsettings GetDefaultPQParams after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetDefaultPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+        result = GetDefaultPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
@@ -15227,46 +15554,62 @@ void test_l1_tvSettings_positive_GetPQParams (void)
 
     tvError_t result = tvERROR_NONE ;
     int value = 0;
+    int videoSource = 0;
+    int pqValue = 0;
+    int videoFormat = 0;
+    int videoSrcCount = 0;
+    int pqCount = 0;
+    int videoFmtCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-    for (size_t i = 0; i < videoSrcCount; i++)
+    videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+    for (unsigned int i = 0; i < videoSrcCount; i++)
     {
-        for (size_t j = 0; j < pqCount; j++)
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned int j = 0; j < pqCount; j++)
         {
-            for (size_t k = 0; k < videoFmtCount; k++)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int k = 0; k < videoFmtCount; k++)
             {
-                for (size_t l = 0; l < Configfile.pq_paramIndex.size; l++)
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int l = 0; l < PQ_PARAM_MAX; l++)
                 {
-                    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[l],&value);
+                    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)l,&value);
                     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-                    if( (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_RED) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_GREEN)  || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_BLUE)  || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_CYAN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_RED) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_GREEN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_BLUE) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_YELLOW) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_CYAN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_HUE_MAGENTA) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_RED) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_GREEN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_BLUE) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_YELLOW) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_CYAN) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CMS_LUMA_MAGENTA) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BRIGHTNESS) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_CONTRAST) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SATURATION) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_SHARPNESS) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_HUE) || \
-                            (Configfile.pq_paramIndex.videoSourceValue[l] == PQ_PARAM_BACKLIGHT) )
+                    if( (l == PQ_PARAM_CMS_SATURATION_RED) || \
+                            (l == PQ_PARAM_CMS_SATURATION_GREEN)  || \
+                            (l == PQ_PARAM_CMS_SATURATION_BLUE)  || \
+                            (l == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
+                            (l == PQ_PARAM_CMS_SATURATION_CYAN) || \
+                            (l == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
+                            (l == PQ_PARAM_CMS_HUE_RED) || \
+                            (l == PQ_PARAM_CMS_HUE_GREEN) || \
+                            (l == PQ_PARAM_CMS_HUE_BLUE) || \
+                            (l == PQ_PARAM_CMS_HUE_YELLOW) || \
+                            (l == PQ_PARAM_CMS_HUE_CYAN) || \
+                            (l == PQ_PARAM_CMS_HUE_MAGENTA) || \
+                            (l == PQ_PARAM_CMS_LUMA_RED) || \
+                            (l == PQ_PARAM_CMS_LUMA_GREEN) || \
+                            (l == PQ_PARAM_CMS_LUMA_BLUE) || \
+                            (l == PQ_PARAM_CMS_LUMA_YELLOW) || \
+                            (l == PQ_PARAM_CMS_LUMA_CYAN) || \
+                            (l == PQ_PARAM_CMS_LUMA_MAGENTA) || \
+                            (l == PQ_PARAM_BRIGHTNESS) || \
+                            (l == PQ_PARAM_CONTRAST) || \
+                            (l == PQ_PARAM_SATURATION) || \
+                            (l == PQ_PARAM_SHARPNESS) || \
+                            (l == PQ_PARAM_HUE) || \
+                            (l == PQ_PARAM_BACKLIGHT) )
                             {
                                 UT_ASSERT_AUTO_TERM_TRUE((value >= 0 && value <= 100));
                             }
@@ -15319,11 +15662,17 @@ void test_l1_tvSettings_negative_GetPQParams (void)
 
     tvError_t result = tvERROR_NONE ;
     int value = 0;
+    int videoSource = 0;
+    int pqValue = 0;
+    int videoFormat = 0;
 
+    videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetPQParams before TvInit and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+        result = GetPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -15332,27 +15681,27 @@ void test_l1_tvSettings_negative_GetPQParams (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(-1, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+    result = GetPQParams(-1, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(PQ_MODE_MAX, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+    result = GetPQParams(PQ_MODE_MAX, (tvVideoSrcType_t) videoSource,(tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(pqValue,(tvVideoSrcType_t) VIDEO_SOURCE_MAX,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetPQParams(pqValue,(tvVideoSrcType_t) VIDEO_SOURCE_MAX,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(pqValue,(tvVideoSrcType_t) -2,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetPQParams(pqValue,(tvVideoSrcType_t) -2,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) VIDEO_FORMAT_MAX, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) VIDEO_FORMAT_MAX, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 08: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) -1, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0],&value);
+    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) -1, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS,&value);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 09: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
@@ -15364,7 +15713,7 @@ void test_l1_tvSettings_negative_GetPQParams (void)
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 11: Calling tvsettings GetPQParams and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], NULL);
+    result = GetPQParams(pqValue,(tvVideoSrcType_t) videoSource,(tvVideoFormatType_t) videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, NULL);
     UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 12: Calling tvsettings termination and expecting the API to return success */
@@ -15374,7 +15723,7 @@ void test_l1_tvSettings_negative_GetPQParams (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 13: Calling tvsettings GetPQParams after TvTermm and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)Configfile.pq_paramIndex.videoSourceValue[0], &value);
+        result = GetPQParams(pqValue, (tvVideoSrcType_t)videoSource, (tvVideoFormatType_t)videoFormat, (tvPQParameterIndex_t)PQ_PARAM_BRIGHTNESS, &value);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -15768,6 +16117,9 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
     tvError_t result = tvERROR_NONE ;
     double x_ValueRetry = 0.0, x_Value = 0.0;
     double y_ValueRetry = 0.0, y_Value = 0.0;
+    int colorTempCount = 0;
+    int colorTempValue = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -15775,8 +16127,11 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02-03: Calling tvsettings GetTVGammaTarget and expecting the API to return success */
-    for (size_t i = 0; i < (colorTempCount); i++)
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < (colorTempCount); i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+        colorTempValue = UT_KVP_PROFILE_GET_UINT32(keyValue);
         GetTVGammaTarget( (tvColorTemp_t)colorTempValue, &x_Value, &y_Value);
         UT_ASSERT_AUTO_TERM_TRUE((x_Value >= 0 && x_Value <= 1.0) );
         UT_ASSERT_AUTO_TERM_TRUE((y_Value >= 0 && y_Value <= 1.0) );
@@ -15823,6 +16178,9 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
     tvError_t result = tvERROR_NONE ;
     double x_Value = 0.0;
     double y_Value = 0.0;
+    int colorTempValue = 0;
+
+    colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetTVGammaTarget before TvInit */
@@ -16988,7 +17346,7 @@ void test_l1_tvSettings_negative_SetBacklightTestMode (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SetBacklightTestMode and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetBacklightTestMode((tvBacklightTestMode_t)Configfile.backlightTestModes.modeId[0]);
+        result = SetBacklightTestMode(tvBacklightTestMode_Normal);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -17011,7 +17369,7 @@ void test_l1_tvSettings_negative_SetBacklightTestMode (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 06: Calling tvsettings the SetBacklightTestMode and expecting the API to return tvERROR_INVALID_STATE */
-        result = SetBacklightTestMode((tvBacklightTestMode_t)Configfile.backlightTestModes.modeId[0]);
+        result = SetBacklightTestMode(tvBacklightTestMode_Normal);
         UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
     }
 
