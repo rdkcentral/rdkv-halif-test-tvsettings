@@ -610,9 +610,14 @@ tvSettings:
     range_from: 0
     range_to: 1000
     DimmingLevel:
-      - nonboost
-      - boost
-      - burst
+      range:
+        - nonboost
+        - boost
+        - burst
+      index:
+        - 0x00
+        - 0x01
+        - 0x02
     pqmode: none
     format: none
     source: none
