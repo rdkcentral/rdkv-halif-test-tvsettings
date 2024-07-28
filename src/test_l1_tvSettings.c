@@ -2191,7 +2191,6 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 
 	/* Step 13: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
 	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
