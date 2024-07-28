@@ -2,6 +2,8 @@ tvSettings:
   Device:
     Type: sink
     Name: Panel_4k
+  features:
+    extendedEnumsSupported: false
 
   # tvDataColor_NONE    = 0x00, //!< No color
   # tvDataColor_RED     = 0x01, //!< Color is Red

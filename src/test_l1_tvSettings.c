@@ -864,7 +864,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 		}
 	}
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	size = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	size = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	if (sizeReceived != size){
 		if ( tvVideoFormats[0] ){
 			free ( tvVideoFormats[0] );
@@ -874,7 +874,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 
 	for (unsigned short i = 0; i < size; i++)
 	{
-		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/VideoFormat/index/%d" , i);
+		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d" , i);
 		index = UT_KVP_PROFILE_GET_UINT32(keyValue);
 		IsVideoFormatValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
@@ -1532,7 +1532,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	tvVideoSrcType_t *tvVideoSources[1]={0};
 	tvVideoSrcType_t *tvVideoSourcesRetry[1]={0};
 	bool IsVideoSourceValid = true;
-	size_t sizeReceived = 0;
+	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	uint32_t format = 0;
@@ -1546,21 +1546,21 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	UT_ASSERT_AUTO_TERM_FALSE( (tvVideoSources[0] == NULL ));
 
 	/* Step 02: Calling tvsettings GetTVSupportedVideoSources and expectinging the API to return success */
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	result = GetTVSupportedVideoSources(tvVideoSources, &sizeReceived);
 	if (result != tvERROR_NONE){
 		if ( tvVideoSources[0] ){
 			free ( tvVideoSources[0] );
 		}
 	}
-	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 
 	if (sizeReceived != count){
 		if ( tvVideoSources[0] ){
 			free ( tvVideoSources[0] );
 		}
 	}
-	UT_ASSERT_EQUAL(sizeReceived, count);
+	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
+	UT_ASSERT_EQUAL_FATAL(sizeReceived, count);
 
 	for (unsigned int i = 0; i < sizeReceived; i++)
 	{
@@ -2022,9 +2022,9 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	/* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
@@ -2168,7 +2168,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveBacklight and expecting the API to return tvERROR_INVALID_PARAM */
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+	count = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
@@ -2519,7 +2519,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
 	tvBacklightModes_bk = tvBacklightModes;
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
 	for (unsigned int i = 0; i < count; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
@@ -2641,7 +2641,7 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 	/* Step 02: Calling tvsettings GetCurrentBacklightMode and expectinging the API to return success */
 	result = GetCurrentBacklightMode(&tvBacklightMode);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
 	for (unsigned int i = 0; i < count; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
@@ -2755,7 +2755,7 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SetCurrentBacklightMode and expecting the API to return success */
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
 	for (unsigned int i = 0; i < (count); i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
@@ -2833,7 +2833,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 06: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
-	numberofBacklightModes = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/BacklightControl/index");
+	numberofBacklightModes = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
 	for(int i =0 ; i < numberofBacklightModes; i++)
 	{
 		SupportAvailable = false;
@@ -2918,7 +2918,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 		}
 	}
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
+	count = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/numberOfDimmingModes");
 	if (sizeReceived != (unsigned short)count){
 		if ( tvDimmingModes[0] ){
 			free ( tvDimmingModes[0] );
@@ -3164,7 +3164,7 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings to Set the SetTVDimmingMode for all the pic_modes and expecting the API to return success */
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/range");
+	count = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/numberOfDimmingModes");
 	for (unsigned int i = 0; i < count; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/range/%d", i);
@@ -3279,7 +3279,7 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 	/* Step 02: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
 	result = GetTVDimmingMode(dimmingMode);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/range");
+	count = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/numberOfDimmingModes");
 	for (unsigned int i = 0; i < (count); i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/range/%d", i);
@@ -3401,10 +3401,10 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveTVDimmingMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-	dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+	dimmingModeCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/numberOfDimmingModes");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -3483,7 +3483,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	int modeValue = 0 ;
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
 	videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
 	modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/index/0");
@@ -3532,7 +3532,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveTVDimmingMode and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
@@ -3554,8 +3554,8 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3579,7 +3579,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3602,7 +3602,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	}
 
 	videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-	dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
+	dimmingModeCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/numberOfDimmingModes");
 	for(int i =tvDimmingMode_Fixed ; i < tvDimmingMode_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -3939,9 +3939,9 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveLocalDimmingLevel for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -4021,7 +4021,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	int dimmingLevelCount = 0;
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
 	videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
 	dimmingLevel = UT_KVP_PROFILE_GET_UINT32("tvSettings/TMAX/DimmingLevel/index/0");
@@ -4069,7 +4069,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveLocalDimmingLevel and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4090,8 +4090,8 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4113,7 +4113,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4442,9 +4442,9 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveBrightness for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -4560,7 +4560,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveBrightness and expecting the API to return tvERROR_INVALID_PARAM */
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4581,8 +4581,8 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	count = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4604,7 +4604,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -4911,9 +4911,9 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveContrast for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -5031,7 +5031,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveContrast and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5052,8 +5052,8 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5075,7 +5075,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5380,9 +5380,9 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveSharpness for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -5500,7 +5500,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveSharpness and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5521,8 +5521,8 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5544,7 +5544,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5849,9 +5849,9 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveSaturation for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -5969,7 +5969,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveSaturation and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -5990,8 +5990,8 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6013,7 +6013,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6319,9 +6319,9 @@ void test_l1_tvSettings_positive_SaveHue (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveHue for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -6439,7 +6439,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveHue and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6460,8 +6460,8 @@ void test_l1_tvSettings_negative_SaveHue (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6483,7 +6483,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6813,9 +6813,9 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveColorTemperature for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
@@ -6945,7 +6945,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6966,8 +6966,8 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -6989,7 +6989,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7334,9 +7334,9 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveAspectRatio for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	aspectRatioCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
@@ -7465,7 +7465,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveAspectRatio and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7486,8 +7486,8 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7509,7 +7509,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7826,9 +7826,9 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveLowLatencyState for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -7946,7 +7946,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveLowLatencyState and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7967,8 +7967,8 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -7990,7 +7990,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -8515,7 +8515,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	}
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
 	if (sizeReceived != (unsigned short)dolbyVisonModeCount){
 		if ( tvDolbyModes[0] ){
 			free ( tvDolbyModes[0] );
@@ -8528,7 +8528,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 		IsDolbyModeValid = false;
 		for(unsigned short j = 0; j < sizeReceived; j++)
 		{
-			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , i);
+			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d" , i);
 			dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
 			if (dolbyVisionModevalue == tvDolbyModes[0][j])
 			{
@@ -8759,10 +8759,10 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings to Set the SetTVDolbyVisionMode for all the dv_modes and expecting the API to return success */
-	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
 	for (unsigned int i = 0; i < dolbyVisonModeCount; i++)
 	{
-		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , i);
+		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d" , i);
 		dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
 		result = SetTVDolbyVisionMode((tvDolbyMode_t)dolbyVisionModevalue);
 		UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
@@ -8806,7 +8806,7 @@ void test_l1_tvSettings_negative_SetTVDolbyVisionMode (void)
 	tvError_t result = tvERROR_NONE ;
 	int dolbyVisionModevalue = 0;
 
-	dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32("tvsettings/DolbyVisionMode/index/0");
+	dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DolbyVisionMode/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 01: Calling tvsettings SetTVDolbyVisionMode with valid value and expecting the API to return tvERROR_INVALID_STATE */
@@ -8880,10 +8880,10 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 	result = GetTVDolbyVisionMode(&tvDolbyModes);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 
-	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
 	for (unsigned int i = 0; i < (dolbyVisonModeCount); i++)
 	{
-		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , i);
+		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d" , i);
 		dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
 		if (dolbyVisionModevalue == tvDolbyModes)
 		{
@@ -9003,10 +9003,10 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveTVDimmingMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
-	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -9021,7 +9021,7 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 				videoFormat = UT_KVP_PROFILE_GET_UINT32(keyValue);
 				for (unsigned int l = 0; l < dolbyVisonModeCount; l++)
 				{
-					snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , l);
+					snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d" , l);
 					dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
 					result = SaveTVDimmingMode((tvVideoSrcType_t) videoSource,pqValue,\
 							(tvVideoFormatType_t) videoFormat,(tvDolbyMode_t)dolbyVisionModevalue);
@@ -9088,7 +9088,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
 	videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-	dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32("tvsettings/DolbyVisionMode/index/0");
+	dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DolbyVisionMode/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 01: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_STATE */
@@ -9134,7 +9134,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 11: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
@@ -9157,8 +9157,8 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	/* Step 12: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -9182,7 +9182,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -9205,13 +9205,13 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	}
 
 	videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/DolbyVisionMode/index");
+	dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
 	for(int i =tvDimmingMode_Fixed ; i < tvMode_Max ; i++)
 	{
 		SupportAvailable = false;
 		for(int j =0 ; j < dolbyVisonModeCount; j++)
 		{
-			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvsettings/DolbyVisionMode/index/%d" , j);
+			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d" , j);
 			dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32(keyValue);
 			if(dolbyVisionModevalue == i)
 			{
@@ -9231,7 +9231,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32("tvsettings/DolbyVisionMode/index/0");
+	dolbyVisionModevalue = UT_KVP_PROFILE_GET_UINT32("tvSettings/DolbyVisionMode/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 13: Calling tvsettings SaveTVDolbyVisionMode and expecting the API to return tvERROR_INVALID_STATE */
@@ -9284,7 +9284,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	result = GetTVSupportedPictureModes(&tvPicModes, &sizeReceived);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(sizeReceived, (unsigned short)pqCount);
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 
 	for (unsigned int i = 0; i < pqCount; i++)
 	{
@@ -9430,7 +9430,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings GetTVPictureMode and expectinging the API to return success */
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/range");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/range");
 	result = GetTVPictureMode(pictureMode);
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_NONE);
 	for (unsigned int i = 0; i < (pqCount); i++)
@@ -9547,7 +9547,7 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings to Set the SetTVPictureMode for all the pic_modes and expecting the API to return success */
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/range");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/range");
 	for (unsigned int i = 0; i < pqCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/range/%d", i);
@@ -9666,9 +9666,9 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveSourcePictureMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -9776,7 +9776,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 09: Calling tvsettings SaveSourcePictureMode and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for( int i = VIDEO_SOURCE_ALL  ; i < VIDEO_SOURCE_MAX ; i++)
 	{
 		SupportAvailable = false;
@@ -9798,8 +9798,8 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -9822,7 +9822,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	}
 
 	videoFormat = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for(int i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -14692,9 +14692,9 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveCMS for all the sourceId,pqmode,videoFormatType, component_type, color_type and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -14941,7 +14941,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 
 	/* Step 19: Calling tvsettings SaveCMS and expecting the API to return tvERROR_INVALID_PARAM */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
 	for( i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -14962,8 +14962,8 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 		}
 	}
 
-	videoSource = UT_KVP_PROFILE_GET_UINT32("tvsettings/VideoSource/index/0");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
+	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
 	for( i =0 ; i < PQ_MODE_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -14985,7 +14985,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	}
 
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for( i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
 	{
 		SupportAvailable = false;
@@ -15367,9 +15367,9 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -15567,9 +15567,9 @@ void test_l1_tvSettings_positive_GetPQParams (void)
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
 	/* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
-	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoSource/index");
-	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/PictureMode/index");
-	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvsettings/VideoFormat/index");
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/numberOfPictureModes");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 	for (unsigned int i = 0; i < videoSrcCount; i++)
 	{
 		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -17721,7 +17721,7 @@ static UT_test_suite_t * pSuite_B10 = NULL;
 int test_l1_tvSettings_register ( void )
 {
 	UT_LOG("\n*******UT version Number : %d.%d*********\n", UT_VERSION_MAJOR, UT_VERSION_MINOR);
-	extendedEnumsSupported = ut_kvp_getBoolField( ut_kvp_profile_getInstance(), "tvsettings/features/extendedEnumsSupported" );
+	extendedEnumsSupported = UT_KVP_PROFILE_GET_BOOL("tvSettings/features/extendedEnumsSupported" );
 	/* add a suite to the registry */
 	pSuite = UT_add_suite( "[L1 tvSettings - Bank 0]", NULL, NULL );
 	if ( NULL == pSuite )
