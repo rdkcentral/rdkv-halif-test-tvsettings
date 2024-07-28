@@ -839,7 +839,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	tvVideoFormatType_t *tvVideoFormats[1]={0};
 	tvVideoFormatType_t *tvVideoFormatsRetry[1]={0};
 	bool IsVideoFormatValid = true;
@@ -1533,7 +1533,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	bool IsVideoSourceValid = true;
 	unsigned short sizeReceived = 0;
 	unsigned short sizeReceivedRetry = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	uint32_t format = 0;
 	uint32_t count = 0;
 
@@ -2016,7 +2016,7 @@ void test_l1_tvSettings_positive_SaveBacklight (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2094,7 +2094,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 	uint32_t videoFormat = 0;
 	uint32_t count = 0;
 	bool SupportAvailable = true;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -2507,7 +2507,7 @@ void test_l1_tvSettings_positive_GetSupportedBacklightModes (void)
 	int tvBacklightModes =0, tvBacklightModes_bk =0, tvBacklightModesRetry=0;
 	uint32_t count = 0;
 	uint32_t modeValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2631,7 +2631,7 @@ void test_l1_tvSettings_positive_GetCurrentBacklightMode (void)
 	bool IsBacklightModeValid = false;
 	uint32_t count = 0;
 	uint32_t modeValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2747,7 +2747,7 @@ void test_l1_tvSettings_positive_SetCurrentBacklightMode (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t count = 0;
 	uint32_t modeValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -2804,7 +2804,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 	int numberofBacklightModes = 0;
 	bool SupportAvailable = true;
 	uint32_t modeValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	modeValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/index/0");
 
@@ -2900,7 +2900,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 	unsigned short sizeReceivedRetry = 0;
 	uint32_t count = 0;
 	uint32_t modeValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -3155,8 +3155,8 @@ void test_l1_tvSettings_positive_SetTVDimmingMode (void)
 
 	tvError_t result = tvERROR_NONE ;
 	uint32_t count = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
-	uint8_t modeName[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char modeName[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -3207,7 +3207,7 @@ void test_l1_tvSettings_negative_SetTVDimmingMode (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	uint8_t modeName[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char modeName[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	if (extendedEnumsSupported == true)
 	{
@@ -3268,8 +3268,8 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 	char dimmingModeRetry[MAX_DIMMING_MODES]={'\0'};
 	bool IsDimmingModeValid = false;
 	uint32_t count = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
-	uint8_t modeName[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char modeName[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -3393,7 +3393,7 @@ void test_l1_tvSettings_positive_SaveTVDimmingMode (void)
 	uint32_t videoFmtCount = 0;
 	uint32_t dimmingModeCount = 0;
 	uint32_t modeValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -3480,7 +3480,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 	uint32_t pqValue = 0;
 	uint32_t videoFormat = 0;
 	uint32_t modeValue = 0 ;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -3720,7 +3720,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
 	bool SupportAvailable = false;
 	uint32_t dimmingLevel = 0;
 	uint32_t dimmingLevelCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	dimmingLevel = UT_KVP_PROFILE_GET_UINT32("tvSettings/TMAX/DimmingLevel/index/0");
 	if (extendedEnumsSupported == true)
@@ -3808,7 +3808,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
 	bool IsLdimValid = false;
 	uint32_t dimmingLevel = 0;
 	uint32_t dimmingLevelCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -3931,7 +3931,7 @@ void test_l1_tvSettings_positive_SaveLocalDimmingLevel (void)
 	uint32_t videoFmtCount = 0;
 	uint32_t dimmingLevel = 0;
 	uint32_t dimmingLevelCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -4018,7 +4018,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
 	uint32_t videoFormat = 0;
 	uint32_t dimmingLevel = 0;
 	uint32_t dimmingLevelCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -4434,7 +4434,7 @@ void test_l1_tvSettings_positive_SaveBrightness (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -4510,7 +4510,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
 	uint32_t pqValue = 0;
 	uint32_t videoFormat = 0;
 	uint32_t count = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -4903,7 +4903,7 @@ void test_l1_tvSettings_positive_SaveContrast (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -4981,7 +4981,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -5372,7 +5372,7 @@ void test_l1_tvSettings_positive_SaveSharpness (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -5450,7 +5450,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -5841,7 +5841,7 @@ void test_l1_tvSettings_positive_SaveSaturation (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -5919,7 +5919,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -6311,7 +6311,7 @@ void test_l1_tvSettings_positive_SaveHue (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -6389,7 +6389,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -6544,7 +6544,7 @@ void test_l1_tvSettings_positive_SetColorTemperature (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -6600,7 +6600,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	uint32_t numberofColortemp = 0;
 	uint32_t colorTempValue = 0;
 	uint32_t colorTempValue_next = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -6682,7 +6682,7 @@ void test_l1_tvSettings_positive_GetColorTemperature (void)
 	bool IsColorTempValid = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -6805,7 +6805,7 @@ void test_l1_tvSettings_positive_SaveColorTemperature (void)
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
 	uint32_t colorTempCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -6893,7 +6893,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
 	uint32_t colorTempCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -7073,7 +7073,7 @@ void test_l1_tvSettings_positive_SetAspectRatio (void)
 	tvError_t result = tvERROR_NONE ;
 	int aspectRatioCount = 0;
 	int aspectRatioValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -7128,7 +7128,7 @@ void test_l1_tvSettings_negative_SetAspectRatio (void)
 	tvError_t result = tvERROR_NONE;
 	int numberofDisplaymode = 0;
 	int aspectRatioValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	aspectRatioValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/AspectRatio/index/0");
 	if (extendedEnumsSupported == true)
@@ -7205,7 +7205,7 @@ void test_l1_tvSettings_positive_GetAspectRatio (void)
 	bool isDisplayModeValid = false;
 	int aspectRatioCount = 0;
 	int aspectRatioValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -7326,7 +7326,7 @@ void test_l1_tvSettings_positive_SaveAspectRatio (void)
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
 	int aspectRatioCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -7413,7 +7413,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
 	int aspectRatioCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -7818,7 +7818,7 @@ void test_l1_tvSettings_positive_SaveLowLatencyState (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -7896,7 +7896,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -8496,7 +8496,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	unsigned short sizeReceivedRetry = 0;
 	uint32_t dolbyVisonModeCount = 0;
 	uint32_t dolbyVisionModevalue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -8751,7 +8751,7 @@ void test_l1_tvSettings_positive_SetTVDolbyVisionMode (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t dolbyVisonModeCount = 0;
 	uint32_t dolbyVisionModevalue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -8869,7 +8869,7 @@ void test_l1_tvSettings_positive_GetTVDolbyVisionMode (void)
 	bool IstvDolbyModesValid = false;
 	uint32_t dolbyVisonModeCount = 0;
 	uint32_t dolbyVisionModevalue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -8995,7 +8995,7 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
 	uint32_t videoFmtCount = 0;
 	uint32_t dolbyVisonModeCount = 0;
 	uint32_t dolbyVisionModevalue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -9082,7 +9082,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 	uint32_t videoFmtCount = 0;
 	uint32_t dolbyVisonModeCount = 0;
 	uint32_t dolbyVisionModevalue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -9273,7 +9273,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 	unsigned short sizeReceivedRetry = 0;
 	uint32_t pqCount = 0;
 	uint32_t pqValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -9421,8 +9421,8 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 	char pictureModeRetry[PIC_MODE_NAME_MAX]={'\0'};
 	bool IsPicturModeValid = false;
 	uint32_t pqCount = 0;
-	uint8_t pqMode[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char pqMode[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -9538,8 +9538,8 @@ void test_l1_tvSettings_positive_SetTVPictureMode (void)
 
 	tvError_t result = tvERROR_NONE ;
 	uint32_t pqCount = 0;
-	uint8_t pqMode[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char pqMode[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -9592,7 +9592,7 @@ void test_l1_tvSettings_negative_SetTVPictureMode (void)
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
 	tvError_t result = tvERROR_NONE ;
-	uint8_t pqMode[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char pqMode[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	UT_KVP_PROFILE_GET_STRING("tvSettings/PictureMode/range/0",pqMode);
 	if (extendedEnumsSupported == true)
@@ -9658,7 +9658,7 @@ void test_l1_tvSettings_positive_SaveSourcePictureMode (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -9734,7 +9734,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -9891,7 +9891,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Rgain_onSource (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -9966,7 +9966,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -10079,7 +10079,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 	int rgainRetry = -1;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -10158,7 +10158,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	bool platformFlag =false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -10281,7 +10281,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Ggain_onSource (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -10356,7 +10356,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -10491,7 +10491,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
 	int ggainRetry = -1;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -10562,7 +10562,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -10688,7 +10688,7 @@ void test_l1_tvSettings_positive_SetColorTemp_Bgain_onSource (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -10763,7 +10763,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -10895,7 +10895,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 	int bgainRetry = -1;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -10973,7 +10973,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -11095,7 +11095,7 @@ void test_l1_tvSettings_positive_SetColorTemp_R_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -11173,7 +11173,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -11309,7 +11309,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 	int rpostoffsetRetry = -1;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -11386,7 +11386,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -11507,7 +11507,7 @@ void test_l1_tvSettings_positive_SetColorTemp_G_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -11582,7 +11582,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -11721,7 +11721,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
 	int gpostoffsetRetry = -1;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -11796,7 +11796,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -11920,7 +11920,7 @@ void test_l1_tvSettings_positive_SetColorTemp_B_post_offset_onSource (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -11995,7 +11995,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -12129,7 +12129,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 	int bpostoffsetRetry = -1;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -12209,7 +12209,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	bool platformFlag = false;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -12690,7 +12690,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 	bool bflag = true;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	tvError_t result = tvERROR_NONE ;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -12768,7 +12768,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -13027,7 +13027,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
 	unsigned short size = 256;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -13097,7 +13097,7 @@ void test_l1_tvSettings_negative_SaveGammaTable (void)
 	unsigned short pData_B_limit_error2[] = {0, 100, 1025};
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	colorTempValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -13430,7 +13430,7 @@ void test_l1_tvSettings_positive_SaveDvTmaxValue (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t dimmingLevel = 0;
 	uint32_t dimmingLevelCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -13496,7 +13496,7 @@ void test_l1_tvSettings_negative_SaveDvTmaxValue (void)
 	bool flag = false;
 	uint32_t dimmingLevel = 0;
 	uint32_t dimmingLevelCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	dimmingLevel = UT_KVP_PROFILE_GET_UINT32("tvSettings/TMAX/DimmingLevel/index/0");
 	if (extendedEnumsSupported == true)
@@ -13591,7 +13591,7 @@ void test_l1_tvSettings_positive_GetSupportedComponentColor (void)
 	int tvComponentColorRetry =0;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -13713,7 +13713,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentSaturation (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -13783,7 +13783,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 	bool bModeMatched = false;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
 	if (extendedEnumsSupported == true)
@@ -13878,7 +13878,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 	int saturationRetry = 0;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -13943,7 +13943,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
 	bool bModeMatched = false;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
 	if (extendedEnumsSupported == true)
@@ -14037,7 +14037,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentHue (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -14107,7 +14107,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 	bool bModeMatched = false;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
 	if (extendedEnumsSupported == true)
@@ -14202,7 +14202,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentHue (void)
 	int HueRetry = 0;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -14269,7 +14269,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
 	bool bModeMatched = false;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
 	if (extendedEnumsSupported == true)
@@ -14360,7 +14360,7 @@ void test_l1_tvSettings_positive_SetCurrentComponentLuma (void)
 	tvError_t result = tvERROR_NONE ;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -14431,7 +14431,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 	bool bModeMatched = false;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
 	if (extendedEnumsSupported == true)
@@ -14527,7 +14527,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentLuma (void)
 	int LumaRetry = 0;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -14593,7 +14593,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentLuma (void)
 	bool bModeMatched = false;
 	uint32_t componentColorCount = 0;
 	uint32_t componentColor = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	componentColor = UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentColor/0");
 	if (extendedEnumsSupported == true)
@@ -14684,7 +14684,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -14859,7 +14859,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	videoSource = UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
 	pqValue = UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
@@ -15359,7 +15359,7 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -15559,7 +15559,7 @@ void test_l1_tvSettings_positive_GetPQParams (void)
 	uint32_t videoSrcCount = 0;
 	uint32_t pqCount = 0;
 	uint32_t videoFmtCount = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
@@ -16118,7 +16118,7 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
 	double y_ValueRetry = 0.0, y_Value = 0.0;
 	uint32_t colorTempCount = 0;
 	uint32_t colorTempValue = 0;
-	uint8_t keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
