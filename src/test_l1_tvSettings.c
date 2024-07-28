@@ -77,7 +77,6 @@
 
 static int gTestGroup = 1;                                         /* Level 1 Testing -  Stress Test   */
 int gTestID = 1;
-extern struct TvSettingConfig Configfile;
 volatile bool callbackflag = false;
 
 #define UT_VERSION_MAJOR  1
