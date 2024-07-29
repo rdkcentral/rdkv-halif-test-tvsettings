@@ -682,8 +682,6 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
-    numberOfDimmingModes: 2 #local #fixed
-
 
   DolbyVisionMode:
     range:
@@ -739,7 +737,6 @@ tvSettings:
       - Tuner
       - Composite1
     platformsupport: true
-    numberOfDolbyVisionMode : 6
 
   PictureMode:
     # Entertainment
@@ -812,7 +809,6 @@ tvSettings:
       - IP
       - Tuner
       - Composite1
-    numberOfPictureModes: 6
 
   ComponentSaturationRed:
     # range from 0 to 100
