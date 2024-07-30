@@ -10264,7 +10264,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 10: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -10671,7 +10670,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 10: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -11491,7 +11489,6 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 11: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
@@ -11904,11 +11901,10 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 11: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_G_post_offset_onSource(colorTempValue, &gpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_G_post_offset_onSource(tvColorTemp, &gpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -12315,7 +12311,6 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 11: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
