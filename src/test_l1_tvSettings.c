@@ -10177,7 +10177,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	gTestID = 130;                                    /* It must be 130 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
 	int rgain = -1;
 	int sourceOffset = -1;
@@ -10264,10 +10263,11 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 10: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_Rgain_onSource(tvColorTemp, &rgain, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_Rgain_onSource(colorTempValue, &rgain, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -10580,7 +10580,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	gTestID = 134;                                    /* It must be 134 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
 	int ggain = -1;
 	int sourceOffset = -1;
@@ -10670,10 +10669,11 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 10: Calling tvsettings GetColorTemp_Ggain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_Ggain_onSource(tvColorTemp, &ggain, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_Ggain_onSource(colorTempValue, &ggain, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -10990,7 +10990,6 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	gTestID = 138;                                    /* It must be 138 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
 	int bgain = -1;
 	int sourceOffset = -1;
@@ -11076,10 +11075,11 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 10: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_Bgain_onSource(tvColorTemp, &bgain, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_Bgain_onSource(colorTempValue, &bgain, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -11403,7 +11403,6 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	gTestID = 142;                                    /* It must be 142 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
 	int rpostoffset = -1;
 	int sourceOffset = -1;
@@ -11489,10 +11488,11 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 11: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_R_post_offset_onSource(tvColorTemp, &rpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_R_post_offset_onSource(colorTempValue, &rpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -11812,7 +11812,6 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	gTestID = 146;                                    /* It must be 146 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
 	int gpostoffset = -1;
 	int sourceOffset = -1;
@@ -11901,10 +11900,11 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 11: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_G_post_offset_onSource(tvColorTemp, &gpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_G_post_offset_onSource(colorTempValue, &gpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
@@ -12224,7 +12224,6 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	gTestID = 150;                                    /* It must be 150 */
 	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
-	tvColorTemp_t tvColorTemp = tvColorTemp_MAX;
 	tvError_t result = tvERROR_NONE;
 	int bpostoffset = -1;
 	int sourceOffset = -1;
@@ -12311,10 +12310,11 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
 	result = TvTerm();
 	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
 	{
 		/* Step 11: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return tvERROR_INVALID_STATE */
-		result = GetColorTemp_B_post_offset_onSource(tvColorTemp, &bpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
+		result = GetColorTemp_B_post_offset_onSource(colorTempValue, &bpostoffset, (tvColorTempSourceOffset_t)sourceOffset);
 		UT_ASSERT_EQUAL_FATAL(result, tvERROR_INVALID_STATE);
 	}
 
