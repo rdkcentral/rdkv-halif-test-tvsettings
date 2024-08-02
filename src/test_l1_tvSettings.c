@@ -73,7 +73,6 @@
 
 #include "tvError.h"
 #include "tvSettings.h"
-#include "test_config_read.h"
 
 static int gTestGroup = 1;                                         /* Level 1 Testing -  Stress Test   */
 int gTestID = 1;
@@ -2186,6 +2185,8 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
 		}
 
 		if(!SupportAvailable){
+			/* TODO: Review this and similar tests, all functionality must be called to the backend API, 
+			it's the API that should decide if it's supported or not, not the test */
 			result = SaveBacklight(videoSource,i,videoFormat,50);
 			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
 		}
