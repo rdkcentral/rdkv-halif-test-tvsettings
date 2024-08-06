@@ -81,17 +81,8 @@ volatile bool callbackflag = false;
 #define UT_VERSION_MAJOR  1
 #define UT_VERSION_MINOR  0
 //TODO: During cleanup identif proper values and remove the macros.
-#define MAX_FRAME_RATE           20
 #define MAX_VIDEO_FORMAT         20
 #define MAX_DIMMING_MODES        20
-#define MAX_PICTURE_MODES        20
-#define MAX_HDR10_MODES          10
-#define MAX_HLG_MODES            10
-#define MAX_DV_MODES             10
-#define MAX_SOURCE               40
-#define MAX_NAME_SIZE            20
-#define MAX_COLOR_TEMP           20
-#define MAX_OFFSET_CONF              10
 
 
 #define UT_ASSERT_AUTO_TERM_NUMERICAL(value, comparison){\
