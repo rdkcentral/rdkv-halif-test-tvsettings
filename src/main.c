@@ -65,7 +65,6 @@
 */
 
 #include <ut.h>
-#include "test_config_read.h"
 
 extern int UT_register_APIDEF_l1_tests( void );
 
