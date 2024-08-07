@@ -12568,7 +12568,7 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
 	short unsigned pData_R_limit[] = {0, 100, 1023};
 	short unsigned pData_G_limit[] = {0, 100, 1023};
 	short unsigned pData_B_limit[] = {0, 100, 1023};
-	unsigned short  size =256;
+	unsigned short  size =3;
 
 	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
 	result = TvInit();
