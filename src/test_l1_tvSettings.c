@@ -6621,6 +6621,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 	tvColorTemp_t colorTempValue = tvColorTemp_STANDARD;
 	tvColorTemp_t colorTempValue_next = tvColorTemp_STANDARD;
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	bool SupportAvailable = true;
 
 	colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
 	if (extendedEnumsSupported == true)
@@ -6644,16 +6645,23 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 
 	/* Step 05: Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
 	numberofColortemp = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-	for(int i =0 ; i < numberofColortemp; i++)
+	for(int i =tvColorTemp_STANDARD ; i < tvColorTemp_MAX; i++)
 	{
-		snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-		colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-		for(int j = i+1 ; j < numberofColortemp; j++)
+		SupportAvailable = false;
+		for(int j =0 ; j < numberofColortemp; j++)
 		{
 			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
-			colorTempValue_next = UT_KVP_PROFILE_GET_UINT32(keyValue);
-			result = SetColorTemperature((tvColorTemp_t) (colorTempValue | colorTempValue_next));
-			UT_ASSERT_AUTO_TERM_NUMERICAL(result, tvERROR_INVALID_PARAM);
+			colorTempValue = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			if(colorTempValue == i)
+			{
+				SupportAvailable = true;
+				break;
+			}
+		}
+
+		if(!SupportAvailable){
+			result = SetColorTemperature((tvColorTemp_t)i);
+			UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 		}
 	}
 
