@@ -3266,7 +3266,7 @@ void test_l1_tvSettings_positive_GetTVDimmingMode (void)
 	/* Step 03: Calling tvsettings GetTVDimmingMode and expectinging the API to return success */
 	result = GetTVDimmingMode(dimmingModeRetry);
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
-	UT_ASSERT_STRING(dimmingModeRetry,dimmingMode);
+	UT_ASSERT_STRING_EQUAL(dimmingModeRetry,dimmingMode);
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -8165,7 +8165,7 @@ void test_l1_tvSettings_positive_GetDynamicContrast (void)
 	/* Step 03: Calling tvsettings GetDynamicContrast and expectinging the API to return success */
 	result = GetDynamicContrast(dynamicContrastRetry);
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
-	UT_ASSERT_STRING(dynamicContrastRetry, dynamicContrast);
+	UT_ASSERT_STRING_EQUAL(dynamicContrastRetry, dynamicContrast);
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
@@ -9442,7 +9442,7 @@ void test_l1_tvSettings_positive_GetTVPictureMode (void)
 	/* Step 03: Calling tvsettings GetTVPictureMode and expectinging the API to return success */
 	result = GetTVPictureMode(pictureModeRetry);
 	UT_ASSERT_EQUAL(result, tvERROR_NONE);
-	UT_ASSERT_STRING(pictureModeRetry, pictureMode);
+	UT_ASSERT_STRING_EQUAL(pictureModeRetry, pictureMode);
 
 	/* Step 04: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
