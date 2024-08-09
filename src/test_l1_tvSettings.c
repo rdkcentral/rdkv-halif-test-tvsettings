@@ -80,7 +80,6 @@ volatile bool callbackflag = false;
 
 #define UT_VERSION_MAJOR  1
 #define UT_VERSION_MINOR  0
-//TODO: During cleanup identif proper values and remove the macros.
 #define MAX_VIDEO_FORMAT         20
 #define MAX_DIMMING_MODES        20
 #define USER_DATA_SIZE           10
