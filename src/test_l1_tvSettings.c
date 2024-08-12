@@ -308,15 +308,13 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 		callbackData.cb = tvVideoFormatChangeHandler;
 		result = RegisterVideoFormatChangeCB(&callbackData);
 		UT_ASSERT_EQUAL(result, tvERROR_NONE);
+		free(callbackData.userdata);
+		callbackData.userdata = NULL;
+		callbackData.cb = NULL;
 	}
 	else {
 		UT_FAIL("Error: Memory Allocation Failed\n");
 	}
-	if(callbackData.userdata){
-		free(callbackData.userdata);
-		callbackData.userdata = NULL;
-	}
-	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
@@ -437,15 +435,13 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 		callbackData.cb = tvVideoContentChangeHandler;
 		result = RegisterVideoContentChangeCB(&callbackData);
 		UT_ASSERT_EQUAL(result, tvERROR_NONE);
+		free(callbackData.userdata);
+		callbackData.userdata = NULL;
+		callbackData.cb = NULL;
 	}
 	else {
 		UT_FAIL("Error: Memory Allocation Failed\n");
 	}
-	if(callbackData.userdata){
-		free(callbackData.userdata);
-		callbackData.userdata = NULL;
-	}
-	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
@@ -568,15 +564,13 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 		callbackData.cb = tvVideoResolutionChangeHandler;
 		result = RegisterVideoResolutionChangeCB(&callbackData);
 		UT_ASSERT_EQUAL(result, tvERROR_NONE);
+		free(callbackData.userdata);
+		callbackData.userdata = NULL;
+		callbackData.cb = NULL;
 	}
 	else {
 		UT_FAIL("Error: Memory Allocation Failed\n");
 	}
-	if(callbackData.userdata){
-		free(callbackData.userdata);
-		callbackData.userdata = NULL;
-	}
-	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
@@ -700,15 +694,13 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 		callbackData.cb = tvVideoFrameRateChangeHandler;
 		result = RegisterVideoFrameRateChangeCB(&callbackData);
 		UT_ASSERT_EQUAL(result, tvERROR_NONE);
+		free(callbackData.userdata);
+		callbackData.userdata = NULL;
+		callbackData.cb = NULL;
 	}
 	else {
 		UT_FAIL("Error: Memory Allocation Failed\n");
 	}
-	if(callbackData.userdata){
-		free(callbackData.userdata);
-		callbackData.userdata = NULL;
-	}
-	callbackData.cb = NULL;
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
 	result = TvTerm();
@@ -8417,51 +8409,57 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	unsigned short size = 0;
 
 	tvDolbyModes[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDolbyMode_t));
-	if( (tvDolbyModes[0] != NULL)){
-
-	if (extendedEnumsSupported == true)
+	if ((tvDolbyModes[0] != NULL))
 	{
-		/* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
-		result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
-		UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-	}
 
-	/* Step 02: Calling tvsettings initialization and expecting the API to return success */
-	result = TvInit();
-	if (result != tvERROR_NONE){
-		if ( tvDolbyModes[0] ){
-			free ( tvDolbyModes[0] );
+		if (extendedEnumsSupported == true)
+		{
+			/* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
+			result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
+			UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
 		}
-	}
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	/* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetTVSupportedDolbyVisionModes(tvDolbyModes, NULL);
-	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-	/* Step 04: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
-	result = GetTVSupportedDolbyVisionModes(NULL,&size);
-	UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-	/* Step 05: Calling tvsettings termination and expecting the API to return success */
-	result = TvTerm();
-	if (result != tvERROR_NONE){
-		if ( tvDolbyModes[0] ){
-			free ( tvDolbyModes[0] );
+		/* Step 02: Calling tvsettings initialization and expecting the API to return success */
+		result = TvInit();
+		if (result != tvERROR_NONE)
+		{
+			if (tvDolbyModes[0])
+			{
+				free(tvDolbyModes[0]);
+			}
 		}
-	}
-	UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-	if (extendedEnumsSupported == true)
-	{
-		/* Step 06: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
-		result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
-		UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-	}
+		/* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
+		result = GetTVSupportedDolbyVisionModes(tvDolbyModes, NULL);
+		UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-	if ( tvDolbyModes[0] ){
-		free ( tvDolbyModes[0] );
-	}
+		/* Step 04: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
+		result = GetTVSupportedDolbyVisionModes(NULL, &size);
+		UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+		/* Step 05: Calling tvsettings termination and expecting the API to return success */
+		result = TvTerm();
+		if (result != tvERROR_NONE)
+		{
+			if (tvDolbyModes[0])
+			{
+				free(tvDolbyModes[0]);
+			}
+		}
+		UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+		if (extendedEnumsSupported == true)
+		{
+			/* Step 06: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
+			result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
+			UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+		}
+
+		if (tvDolbyModes[0])
+		{
+			free(tvDolbyModes[0]);
+		}
 	}
 	else
 	{
