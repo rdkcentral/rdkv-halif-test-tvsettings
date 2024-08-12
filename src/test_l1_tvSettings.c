@@ -14516,7 +14516,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
 					result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
 					UT_ASSERT_EQUAL(result, tvERROR_NONE);
 				}
-				if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagentha/platformsupport") == true)
+				if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagenta/platformsupport") == true)
 				{
 					result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
 					UT_ASSERT_EQUAL(result, tvERROR_NONE);

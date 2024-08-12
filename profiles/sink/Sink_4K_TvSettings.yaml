@@ -1313,7 +1313,7 @@ tvSettings:
       - DV
     platformsupport: true
 
-  ComponentHueMagentha:
+  ComponentHueMagenta:
     # range from 0 to 100
     range_from: 0
     range_to: 100
