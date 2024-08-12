@@ -313,7 +313,7 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 		callbackData.cb = NULL;
 	}
 	else {
-		UT_FAIL("Error: Memory Allocation Failed\n");
+		UT_LOG_ERROR("Error: Memory Allocation Failed\n");
 	}
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -440,7 +440,7 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 		callbackData.cb = NULL;
 	}
 	else {
-		UT_FAIL("Error: Memory Allocation Failed\n");
+		UT_LOG_ERROR("Error: Memory Allocation Failed\n");
 	}
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -569,7 +569,7 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 		callbackData.cb = NULL;
 	}
 	else {
-		UT_FAIL("Error: Memory Allocation Failed\n");
+		UT_LOG_ERROR("Error: Memory Allocation Failed\n");
 	}
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -699,7 +699,7 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 		callbackData.cb = NULL;
 	}
 	else {
-		UT_FAIL("Error: Memory Allocation Failed\n");
+		UT_LOG_ERROR("Error: Memory Allocation Failed\n");
 	}
 
 	/* Step 03: Calling tvsettings initialization and expecting the API to return success */
@@ -970,7 +970,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats(void)
 	}
 	else
 	{
-		UT_LOG("Memory Allocation Failed");
+		UT_LOG_ERROR("Memory Allocation Failed");
 	}
 	UT_LOG("Out %s", __FUNCTION__);
 }
@@ -1492,7 +1492,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 	}
 	else
 	{
-		UT_LOG("Memory Allocation Failed");
+		UT_LOG_ERROR("Memory Allocation Failed");
 	}
 	if ( tvVideoSources[0] ){
 		free ( tvVideoSources[0] );
@@ -1595,7 +1595,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoSources (void)
 	}
 	else
 	{
-		UT_LOG("Memory Allocation Failed");
+		UT_LOG_ERROR("Memory Allocation Failed");
 	}
 
 	UT_LOG("Out %s",__FUNCTION__);
@@ -2809,7 +2809,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 	}
 	else
 	{
-		UT_LOG("Memory Allocation Failed");
+		UT_LOG_ERROR("Memory Allocation Failed");
 	}
 	if ( tvDimmingModes[0] ){
 		free ( tvDimmingModes[0] );
@@ -8362,7 +8362,7 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 	}
 	else
 	{
-		UT_LOG("Memory Allocation failed");
+		UT_LOG_ERROR("Memory Allocation failed");
 	}
 	if ( tvDolbyModes[0] ){
 		free ( tvDolbyModes[0] );
@@ -8463,7 +8463,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 	}
 	else
 	{
-		UT_LOG("Memory Allocaiton failed");
+		UT_LOG_ERROR("Memory Allocaiton failed");
 	}
 	UT_LOG("Out %s",__FUNCTION__);
 }
