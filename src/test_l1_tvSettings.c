@@ -71,12 +71,10 @@
 #include <ut_log.h>
 #include <ut_kvp_profile.h>
 
-#include "tvError.h"
 #include "tvSettings.h"
 
 static int gTestGroup = 1;                                         /* Level 1 Testing -  Stress Test   */
 int gTestID = 1;
-volatile bool callbackflag = false;
 
 #define UT_VERSION_MAJOR  1
 #define UT_VERSION_MINOR  0
