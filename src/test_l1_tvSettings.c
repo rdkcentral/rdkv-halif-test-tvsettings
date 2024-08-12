@@ -845,6 +845,10 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 			UT_ASSERT_TRUE((IsVideoFormatValid));
 		}
 	}
+	else
+	{
+		UT_LOG_ERROR("Memory Allocation failed");
+	}
 	tvVideoFormatsRetry[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvVideoFormatType_t));
 	if ((tvVideoFormatsRetry[0] != NULL) && (tvVideoFormats[0] != NULL))
 	{
@@ -869,7 +873,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 	}
 	else
 	{
-		UT_LOG ("Memory Allocation failed");
+		UT_LOG_ERROR("Memory Allocation failed");
 	}
 	if ( tvVideoFormats[0] ){
 		free ( tvVideoFormats[0] );
@@ -1467,6 +1471,10 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
 			}
 			UT_ASSERT_TRUE((IsVideoSourceValid));
 		}
+	}
+	else
+	{
+		UT_LOG_ERROR("Memory Allocation Failed");
 	}
 	tvVideoSourcesRetry[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvVideoSrcType_t));
 	if ((tvVideoSourcesRetry[0] != NULL) && (tvVideoSources[0] != NULL))
@@ -2784,6 +2792,10 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 			UT_ASSERT_TRUE((IsDimmingModeValid));
 		}
 	}
+	else
+	{
+		UT_LOG_ERROR("Memory Allocation Failed");
+	}
 	tvDimmingModesRetry[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvDimmingMode_t));
 	if ((tvDimmingModesRetry[0] != NULL) && (tvDimmingModes[0] != NULL))
 	{
@@ -2912,7 +2924,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 	}
 	else
 	{
-		UT_LOG ("Memory Allocaiton Failed");
+		UT_LOG_ERROR("Memory Allocaiton Failed");
 	}
 	UT_LOG("Out %s",__FUNCTION__);
 }
@@ -8335,6 +8347,10 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 			}
 			UT_ASSERT_TRUE((IsDolbyModeValid));
 		}
+	}
+	else
+	{
+		UT_LOG_ERROR("Memory Allocation failed");
 	}
 	tvDolbyModesRetry[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvDolbyMode_t));
 	if ((tvDolbyModesRetry[0] != NULL) && (tvDolbyModes[0] != NULL))
