@@ -2,6 +2,8 @@ tvSettings:
   Device:
     Type: sink
     Name: Panel_4k
+  features:
+    extendedEnumsSupported: false
 
   # tvDataColor_NONE    = 0x00, //!< No color
   # tvDataColor_RED     = 0x01, //!< Color is Red
@@ -48,7 +50,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -98,7 +99,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -148,7 +148,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -198,7 +197,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -248,7 +246,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -311,7 +308,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -528,7 +524,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     source: none
 
   # VIDEO_SOURCE_ALL        = 0xFFFFFFFF, //!< Video source is All
@@ -610,9 +605,14 @@ tvSettings:
     range_from: 0
     range_to: 1000
     DimmingLevel:
-      - nonboost
-      - boost
-      - burst
+      range:
+        - nonboost
+        - boost
+        - burst
+      index:
+        - 0x00
+        - 0x01
+        - 0x02
     pqmode: none
     format: none
     source: none
@@ -654,7 +654,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -784,7 +783,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -805,7 +803,6 @@ tvSettings:
       - IP
       - Tuner
       - Composite1
-    numberOfPictureModes: 6
 
   ComponentSaturationRed:
     # range from 0 to 100
@@ -836,7 +833,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -888,7 +884,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -940,7 +935,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -992,7 +986,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1044,7 +1037,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSTE2
@@ -1096,7 +1088,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1148,7 +1139,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1200,7 +1190,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1252,7 +1241,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1304,4 +1292,252 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
+    platformsupport: true
+
+  ComponentHueMagenta:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentHueCyan:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentLumaRed:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentLumaBlue:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentLumaGreen:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentLumaYellow:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentLumaMagenta:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true
+
+  ComponentLumaCyan:
+    # range from 0 to 100
+    range_from: 0
+    range_to: 100
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    platformsupport: true

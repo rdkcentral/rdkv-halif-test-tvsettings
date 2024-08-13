@@ -9,23 +9,37 @@
 
 ## Acronyms, Terms and Abbreviations
 
-- `L1` - Functional Tests
 - `HAL`- Hardware Abstraction Layer
+- `L2` - Functional Tests
+- `L1` - Functional Tests
+- `High-Level Test Specification` : These specification will provide a broad overview of the system's functionality from the callers' perspective. It focuses on major use cases, system behavior, and overall caller experience.
+- `Low-Level Test Specification` : These specification will delve deeper into the technical details. They will define specific test cases with inputs, expected outputs, and pass/fail criteria for individual functionalities, modules, or APIs.
 
 ## Description
 
-This repository contains the Unit Test Suites L1 for TV Settings `HAL`.
+This repository contains the Unit Test Suites (L1 & L2) for TV Settings `HAL`.
 
 ## Reference Documents
 
-|SNo|Document Name|Document Description|Document Link|
+|#|Document Name|Document Description|Document Link|
 |---|-------------|--------------------|-------------|
 |1|`HAL` Specification Document|This document provides specific information on the APIs for which tests are written in this module|[tv-settings_halSpec](https://github.com/rdkcentral/rdkv-halif-tvsettings/blob/main/docs/pages/tv-settings_halSpec.md "tv-settings_halSpec" )|
-|2|`L1` Tests | `L1` Test Case File for this module | [test_l1_tvSettings.c]( https://github.com/rdkcentral/rdkv-halif-test-tvsettings/blob/main/src/test_l1_tvSettings.c         "test_l1_tvSettings.c" )|
+|2|High-Level Test Spec |High Level Test Specification Documentation|[tv-settings_High_Level_Test_Spec.md]( docs/pages/tv-settings_High_Level_Test_Spec.md)|
+|3|`L2` Low Level Test Spec |`L2` Low Level Test Specification and Procedure Documentation|[tv-settings_L2_Low_Level_Test_Spec.md]( docs/pages/tv-settings_L2_Low_Level_Test_Spec.md)|
 
 ## Notes
 
 - Building against the actual library may introduce SOC dependencies. Hence, a template SKELETON library is created without SOC dependencies. On the real platform (target), it can be mounted, copied and bound with the actual library.
-- To run the binary, ensure that you pass the configuration and profile file as an argument. The following example demonstrates how to do this:  ./hal_test pq_capablities.ini -p tvSettingsExtendedEnumsNotSupported.yaml
-- Template available in [pq_capablities.ini](https://github.com/rdkcentral/rdkv-halif-tvsettings/tree/main/config/pq_capablities.ini "pq_capablities.ini")
-- Profiles file available in [profile yaml file](./profiles/tvSettingsExtendedEnumsNotSupported.yaml)
+- When executing the binary, ensure to include a platform-specific profile file as an argument for the designated test cases. The following example illustrates this:
+
+```bash
+ ./hal_test -p Sink_4K_TvSettings.yaml
+ ```
+
+Alternatively, use the run.sh script with the profile file:
+
+```bash
+./run.sh -p /absolute/path/to/profile/file
+ ```
+
+- Profiles file available in [profile yaml file](./profiles/)
