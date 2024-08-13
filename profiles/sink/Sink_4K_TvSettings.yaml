@@ -50,7 +50,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -100,7 +99,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -150,7 +148,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -200,7 +197,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -250,7 +246,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -313,7 +308,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -530,7 +524,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     source: none
 
   # VIDEO_SOURCE_ALL        = 0xFFFFFFFF, //!< Video source is All
@@ -661,7 +654,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -791,7 +783,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -842,7 +833,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -894,7 +884,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -946,7 +935,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -998,7 +986,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1050,7 +1037,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSTE2
@@ -1102,7 +1088,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1154,7 +1139,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1206,7 +1190,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1258,7 +1241,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     # ANALOGUE
     # COMPOSITE1
     # COMPOSITE2
@@ -1310,7 +1292,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentHueMagenta:
@@ -1342,7 +1323,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentHueCyan:
@@ -1374,7 +1354,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentLumaRed:
@@ -1406,7 +1385,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentLumaBlue:
@@ -1438,7 +1416,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentLumaGreen:
@@ -1470,7 +1447,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentLumaYellow:
@@ -1502,7 +1478,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentLumaMagenta:
@@ -1534,7 +1509,6 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true
 
   ComponentLumaCyan:
@@ -1566,5 +1540,4 @@ tvSettings:
       - SDR
       - HDR10
       - HLG
-      - DV
     platformsupport: true

@@ -2019,7 +2019,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
         }
 
         if(!SupportAvailable){
-            result = SaveBacklight(videoSource,pqValue,videoFormat,50);
+            result = SaveBacklight((tvVideoSrcType_t)i,pqValue,videoFormat,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -2068,7 +2068,7 @@ void test_l1_tvSettings_negative_SaveBacklight (void)
         }
 
         if(!SupportAvailable){
-            result = SaveBacklight(videoSource,pqValue,videoFormat,50);
+            result = SaveBacklight(videoSource,pqValue,(tvVideoFormatType_t)i,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -2693,14 +2693,14 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
 
     /* Step 06: Calling tvsettings SetCurrentBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
     numberofBacklightModes = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
-    for(int i =0 ; i < numberofBacklightModes; i++)
+    for(int i =tvBacklightMode_NONE ; i < tvBacklightMode_MAX; i++)
     {
         SupportAvailable = false;
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", i);
-        modeValue = (tvBacklightMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for(int j = tvBacklightMode_NONE  ; j < tvBacklightMode_MAX ; j++)
+        for(int j = 0  ; j < numberofBacklightModes ; j++)
         {
-            if(modeValue == j)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", j);
+            modeValue = (tvBacklightMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(modeValue == i)
             {
                 SupportAvailable = true;
                 break;
@@ -2708,7 +2708,7 @@ void test_l1_tvSettings_negative_SetCurrentBacklightMode (void)
         }
 
         if(!SupportAvailable){
-            result = SetCurrentBacklightMode(modeValue);
+            result = SetCurrentBacklightMode((tvBacklightMode_t)i);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -3348,7 +3348,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveTVDimmingMode(videoSource,pqValue,videoFormat,modeValue);
+            result = SaveTVDimmingMode((tvVideoSrcType_t)i,pqValue,videoFormat,modeValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -3419,7 +3419,7 @@ void test_l1_tvSettings_negative_SaveTVDimmingMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveTVDimmingMode(videoSource,pqValue,videoFormat, modeValue);
+            result = SaveTVDimmingMode(videoSource,pqValue,videoFormat, (tvDimmingMode_t)i);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -3544,7 +3544,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     dimmingLevelCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/TMAX/DimmingLevel/index");
-    for (unsigned int i = 0; i < LDIM_STATE_MAX; i++)
+    for (unsigned int i = LDIM_STATE_NONBOOST; i < LDIM_STATE_MAX; i++)
     {
         SupportAvailable = false;
         for( int j =0; j < (dimmingLevelCount) ; j++){
@@ -3558,7 +3558,7 @@ void test_l1_tvSettings_negative_SetLocalDimmingLevel (void)
         }
 
         if(!SupportAvailable){
-            result = SetLocalDimmingLevel( (ldimStateLevel_t )dimmingLevel);
+            result = SetLocalDimmingLevel( (ldimStateLevel_t )i);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -3886,7 +3886,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
         }
 
         if(!SupportAvailable){
-            result = SaveLocalDimmingLevel(videoSource,pqValue,videoFormat,dimmingLevel);
+            result = SaveLocalDimmingLevel((tvVideoSrcType_t)i,pqValue,videoFormat,dimmingLevel);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -3931,7 +3931,7 @@ void test_l1_tvSettings_negative_SaveLocalDimmingLevel (void)
         }
 
         if(!SupportAvailable){
-            result = SaveLocalDimmingLevel(videoSource,pqValue,videoFormat,dimmingLevel);
+            result = SaveLocalDimmingLevel(videoSource,pqValue,(tvVideoFormatType_t)i,dimmingLevel);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -4379,7 +4379,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
         }
 
         if(!SupportAvailable){
-            result = SaveBrightness(videoSource,pqValue,videoFormat,50);
+            result = SaveBrightness((tvVideoSrcType_t)i,pqValue,videoFormat,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -4424,7 +4424,7 @@ void test_l1_tvSettings_negative_SaveBrightness (void)
         }
 
         if(!SupportAvailable){
-            result = SaveBrightness(videoSource,pqValue,videoFormat,50);
+            result = SaveBrightness(videoSource,pqValue,(tvVideoFormatType_t)i,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -4852,7 +4852,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
         }
 
         if(!SupportAvailable){
-            result = SaveContrast(videoSource,pqValue,videoFormat,50);
+            result = SaveContrast((tvVideoSrcType_t)i,pqValue,videoFormat,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -4897,7 +4897,7 @@ void test_l1_tvSettings_negative_SaveContrast (void)
         }
 
         if(!SupportAvailable){
-            result = SaveContrast(videoSource,pqValue,videoFormat,50);
+            result = SaveContrast(videoSource,pqValue,(tvVideoFormatType_t)i,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -5323,7 +5323,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
         }
 
         if(!SupportAvailable){
-            result = SaveSharpness(videoSource,pqValue,videoFormat,50);
+            result = SaveSharpness((tvVideoSrcType_t)i,pqValue,videoFormat,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -5368,7 +5368,7 @@ void test_l1_tvSettings_negative_SaveSharpness (void)
         }
 
         if(!SupportAvailable){
-            result = SaveSharpness(videoSource,pqValue,videoFormat,50);
+            result = SaveSharpness(videoSource,pqValue,(tvVideoFormatType_t)i,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -5794,7 +5794,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
         }
 
         if(!SupportAvailable){
-            result = SaveSaturation(videoSource,pqValue,videoFormat,50);
+            result = SaveSaturation((tvVideoSrcType_t)i,pqValue,videoFormat,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -5829,8 +5829,8 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
         SupportAvailable = false;
         for(int j =0 ; j < videoFmtCount; j++)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-            pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", j);
+            videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(videoFormat == i)
             {
                 SupportAvailable = true;
@@ -5839,7 +5839,7 @@ void test_l1_tvSettings_negative_SaveSaturation (void)
         }
 
         if(!SupportAvailable){
-            result = SaveSaturation(videoSource,pqValue,videoFormat,50);
+            result = SaveSaturation(videoSource,pqValue,(tvVideoFormatType_t)i,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -6266,7 +6266,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
         }
 
         if(!SupportAvailable){
-            result = SaveHue(videoSource,pqValue,videoFormat,50);
+            result = SaveHue((tvVideoSrcType_t)i,pqValue,videoFormat,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -6311,7 +6311,7 @@ void test_l1_tvSettings_negative_SaveHue (void)
         }
 
         if(!SupportAvailable){
-            result = SaveHue(videoSource,pqValue,videoFormat,50);
+            result = SaveHue(videoSource,pqValue,(tvVideoFormatType_t)i,50);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -6412,8 +6412,8 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
     tvError_t result = tvERROR_NONE;
     uint32_t numberofColortemp = 0;
     tvColorTemp_t colorTempValue = tvColorTemp_STANDARD;
-    tvColorTemp_t colorTempValue_next = tvColorTemp_STANDARD;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    bool SupportAvailable = true;
 
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     if (extendedEnumsSupported == true)
@@ -6437,18 +6437,26 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 
     /* Step 05: Calling tvsettings SetColorTemperature and expecting the API to return tvERROR_INVALID_PARAM */
     numberofColortemp = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    for(int i =0 ; i < numberofColortemp; i++)
-    {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for(int j = i+1 ; j < numberofColortemp; j++)
-        {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
-            colorTempValue_next = UT_KVP_PROFILE_GET_UINT32(keyValue);
-            result = SetColorTemperature((tvColorTemp_t) (colorTempValue | colorTempValue_next));
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-        }
-    }
+
+	for(int i =tvColorTemp_STANDARD ; i < tvColorTemp_MAX; i++)
+	{
+		SupportAvailable = false;
+		for(int j =0 ; j < numberofColortemp; j++)
+		{
+			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
+			colorTempValue = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			if(colorTempValue == i)
+			{
+				SupportAvailable = true;
+				break;
+			}
+		}
+
+		if(!SupportAvailable){
+			result = SetColorTemperature((tvColorTemp_t)i);
+			UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+		}
+	}
 
     /* Step 06: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
@@ -6774,7 +6782,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
         }
 
         if(!SupportAvailable){
-            result = SaveColorTemperature(videoSource,pqValue,videoFormat,colorTempValue);
+            result = SaveColorTemperature((tvVideoSrcType_t)i,pqValue,videoFormat,colorTempValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -6819,7 +6827,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
         }
 
         if(!SupportAvailable){
-            result = SaveColorTemperature(videoSource,pqValue,videoFormat,colorTempValue);
+            result = SaveColorTemperature(videoSource,pqValue,(tvVideoFormatType_t)i,colorTempValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -6841,7 +6849,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
         }
 
         if(!SupportAvailable){
-            result = SaveColorTemperature(videoSource,pqValue,videoFormat,colorTempValue );
+            result = SaveColorTemperature(videoSource,pqValue,videoFormat,(tvColorTemp_t)i );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -7296,7 +7304,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
         }
 
         if(!SupportAvailable){
-            result = SaveAspectRatio(videoSource,pqValue,videoFormat,(tvDisplayMode_t)aspectRatioValue);
+            result = SaveAspectRatio((tvVideoSrcType_t)i,pqValue,videoFormat,(tvDisplayMode_t)aspectRatioValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -7341,7 +7349,7 @@ void test_l1_tvSettings_negative_SaveAspectRatio (void)
         }
 
         if(!SupportAvailable){
-            result = SaveAspectRatio(videoSource,pqValue,videoFormat,(tvDisplayMode_t)aspectRatioValue);
+            result = SaveAspectRatio(videoSource,pqValue,(tvVideoFormatType_t)i,(tvDisplayMode_t)aspectRatioValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -7779,7 +7787,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
         }
 
         if(!SupportAvailable){
-            result = SaveLowLatencyState(videoSource,pqValue,videoFormat,0);
+            result = SaveLowLatencyState((tvVideoSrcType_t)i,pqValue,videoFormat,0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -7824,7 +7832,7 @@ void test_l1_tvSettings_negative_SaveLowLatencyState (void)
         }
 
         if(!SupportAvailable){
-            result = SaveLowLatencyState(videoSource,pqValue,videoFormat,0);
+            result = SaveLowLatencyState(videoSource,pqValue,(tvVideoFormatType_t)i,0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -8910,7 +8918,7 @@ void test_l1_tvSettings_negative_SaveTVDolbyVisionMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveTVDolbyVisionMode(videoSource,pqValue,videoFormat,dolbyVisionModevalue);
+            result = SaveTVDolbyVisionMode((tvVideoSrcType_t)i,pqValue,videoFormat,dolbyVisionModevalue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -9555,7 +9563,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveSourcePictureMode(videoSource,videoFormat, pqValue);
+            result = SaveSourcePictureMode((tvVideoSrcType_t)i,videoFormat, pqValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -9578,7 +9586,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveSourcePictureMode(videoSource, videoFormat, pqValue);
+            result = SaveSourcePictureMode(videoSource, i, pqValue);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -9602,7 +9610,7 @@ void test_l1_tvSettings_negative_SaveSourcePictureMode (void)
 
         if(!SupportAvailable){
 
-            result = SaveSourcePictureMode(videoSource,videoFormat,i);
+            result = SaveSourcePictureMode(videoSource,(tvVideoFormatType_t)videoFormat,i);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
 
@@ -12301,7 +12309,7 @@ void test_l1_tvSettings_positive_SetGammaTable (void)
     short unsigned pData_R_limit[] = {0, 100, 1023};
     short unsigned pData_G_limit[] = {0, 100, 1023};
     short unsigned pData_B_limit[] = {0, 100, 1023};
-    unsigned short  size =256;
+    unsigned short  size =3;
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -14716,7 +14724,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         }
 
         if(!SupportAvailable){
-            result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_RED,1);
+            result = SaveCMS((tvVideoSrcType_t)i,pqValue,videoFormat,COMP_HUE, tvDataColor_RED,1);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -14761,7 +14769,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         }
 
         if(!SupportAvailable){
-            result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_RED,1);
+            result = SaveCMS(videoSource,pqValue,(tvVideoFormatType_t)i,COMP_HUE, tvDataColor_RED,1);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
