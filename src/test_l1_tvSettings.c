@@ -17547,8 +17547,9 @@ void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
  * | 03 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input status | unsigned char *, int, NULL | tvERROR_INVALID_PARAM | Should Pass |
  * | 04 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input shortCircuitlist | NULL , int, int* | tvERROR_INVALID_PARAM | Should Pass |
  * | 05 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, 0 , int* | tvERROR_INVALID_PARAM | Should Pass |
- * | 06 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 07 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status valid arguments | unsigned char *, int, int* | tvERROR_INVALID_STATE | Should Pass |
+ * | 06 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, -1 , int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 08 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status valid arguments | unsigned char *, int, int* | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
 {
@@ -17580,6 +17581,9 @@ void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         /* Step 05: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
         result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 06: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, -1, &shortCircuitStatus);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
     } else {
         result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
