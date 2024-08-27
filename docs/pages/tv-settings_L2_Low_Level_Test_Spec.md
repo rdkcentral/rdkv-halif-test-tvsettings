@@ -1044,7 +1044,7 @@ If user chose to run the test in interactive mode, then the test case has to be 
 | Variation / Steps | Description | Test Data | Expected Result | Notes|
 | -- | --------- | ---------- | -------------- | ----- |
 | 01 | Initialize the TV using TvInit | None | tvERROR_NONE | Should be successful |
-| 02 | Set the TV Dolby Vision mode using SetTVDolbyVisionMode | dolbyMode = tvDolbyMode_Dark to tvHLGMode_Game | tvERROR_NONE | Should be successful |
+| 02 | Set the TV Dolby Vision mode using SetTVDolbyVisionMode | dolbyMode = value retrieved from GetTVSupportedDolbyVisionModes. | tvERROR_NONE | Should be successful |
 | 03 | Get the TV Dolby Vision mode using GetTVDolbyVisionMode and verify | getDolbyMode = valid buffer | tvERROR_NONE, getDolbyMode = dolbyMode | Should be successful |
 | 04 | Terminate the TV using TvTerm | None | tvERROR_NONE | Should be successful |
 
