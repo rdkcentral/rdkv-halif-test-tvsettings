@@ -3664,8 +3664,16 @@ void test_l2_tvSettings_RetrieveLDIMShortCircuitStatus(void)
 
     tvError_t ret = tvERROR_NONE;
     int shortCircuitStatus = -1;
-    int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCiuitStatus/size");
+    int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
     unsigned char shortcircuitlist[listsize];
+    // Initialize array elements to 0
+    if (listsize > 0) {
+        for (int i = 0; i < listsize; i++ ) {
+            shortcircuitlist[i] = 0;
+        }
+    } else {
+        UT_LOG_ERROR("Invalid or zero list size, proceeding with the logic but array won't be used.");
+    }
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
@@ -3675,13 +3683,13 @@ void test_l2_tvSettings_RetrieveLDIMShortCircuitStatus(void)
     UT_LOG_DEBUG("Invoking GetLdimZoneShortCircuitStatus() with valid pointer");
     ret = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
     UT_LOG_DEBUG("Short circuit status: %d, Return status: %d", shortCircuitStatus, ret);
-    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCiuitStatus/enable") == true) {
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
         UT_ASSERT_EQUAL(ret, tvERROR_NONE);
     } else {
         UT_ASSERT_EQUAL(ret, tvERROR_OPERATION_NOT_SUPPORTED);
     }
 
-    if ((ret != tvERROR_NONE) | (ret != tvERROR_OPERATION_NOT_SUPPORTED)) {
+    if ((ret != tvERROR_NONE) && (ret != tvERROR_OPERATION_NOT_SUPPORTED)) {
         UT_LOG_ERROR("GetLdimZoneShortCircuitStatus failed with status: %d", ret);
     }
 
