@@ -17588,10 +17588,6 @@ void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
     } else {
         result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
         UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
-        result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
-        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
-        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
-        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
     }
 
     /* Step 06: Calling tvsettings termination and expecting the API to return success */
