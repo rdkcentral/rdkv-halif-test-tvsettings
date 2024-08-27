@@ -3626,6 +3626,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
         if(dimmingLevel == ldimStateLevel)
         {
             IsLdimValid = true;
+            break;
         }
     }
     UT_ASSERT_TRUE((IsLdimValid));
@@ -6445,7 +6446,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 		{
 			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
 			colorTempValue = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-			if(colorTempValue == i)
+			if(colorTempValue == (tvColorTemp_t)i)
 			{
 				SupportAvailable = true;
 				break;
@@ -6841,7 +6842,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if(colorTempValue == i)
+            if(colorTempValue == (tvColorTemp_t)i)
             {
                 SupportAvailable = true;
                 break;
@@ -9968,9 +9969,9 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
     for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (unsigned int j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -10178,7 +10179,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
     for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (unsigned int j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10783,7 +10784,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -11196,7 +11197,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -11605,7 +11606,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -12015,10 +12016,10 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
     for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
+            colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
                 platformFlag = true;
@@ -12466,13 +12467,13 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 
     /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    size = sizeof(pData_R_limit);
     for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
         result = GetDefaultGammaTable(colorTempValue,pData_R_limit,pData_G_limit,pData_B_limit, size);
         UT_ASSERT_EQUAL(result, tvERROR_NONE);
-
         for(int i =0; i <size; i++ )
         {
             if(   (pData_R_limit[i] < 0 ||  pData_R_limit[i] > 1023) || \
@@ -12580,7 +12581,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
