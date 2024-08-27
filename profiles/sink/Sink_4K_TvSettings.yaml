@@ -1540,6 +1540,6 @@ tvSettings:
       - HDR10
       - HLG
     platformsupport: true
-  LDIMShortCiuitStatus:
+  LDIMShortCircuitStatus:
     enable: true
     size : 160
