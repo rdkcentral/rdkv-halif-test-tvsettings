@@ -17499,16 +17499,12 @@ void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
     int shortCircuitStatus = -1;
     int shortCircuitStatusRetry = -1;
     int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
-    unsigned char shortcircuitlist[listsize];
-    unsigned char shortcircuitlistRetry[listsize];
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
+    unsigned char shortcircuitlistRetry[listsize > 0? listsize: 1];
     // Initialize array elements to 0
-    if (listsize > 0) {
-        for (int i = 0; i < listsize; i++ ) {
-            shortcircuitlist[i] = 0; 
-            shortcircuitlistRetry[i] = 0;
-        }
-    } else {
-        UT_LOG_ERROR("Invalid or zero list size, proceeding with the logic but array won't be used.");
+    for (int i = 0; i < listsize; i++ ) {
+        shortcircuitlist[i] = 0; 
+        shortcircuitlistRetry[i] = 0;
     }
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -17568,10 +17564,10 @@ void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
     tvError_t result = tvERROR_NONE ;
     int shortCircuitStatus = -1;
     int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
-    unsigned char shortcircuitlist[listsize];
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
     // Initialize array elements to 0
     for (int i = 0; i < listsize; i++ ) {
-        shortcircuitlist[i] = 0;
+        shortcircuitlist[i] = 0; 
     }
 
     if (extendedEnumsSupported == true)
