@@ -17575,21 +17575,28 @@ void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
         /* Step 03: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid status */
         result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-        /* Step 05: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid shortcircuitlist */
+        /* Step 04: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid shortcircuitlist */
         result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-        /* Step 06: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
+        /* Step 05: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
         result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+    } else {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+        result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
     }
 
-    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    /* Step 06: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     if (extendedEnumsSupported == true)
     {
-        /* Step 05: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return tvERROR_INVALID_STATE */
+        /* Step 07: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return tvERROR_INVALID_STATE */
         result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
