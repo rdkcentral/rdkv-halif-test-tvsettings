@@ -17517,7 +17517,7 @@ void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
         UT_ASSERT_EQUAL(result, tvERROR_NONE);
         UT_ASSERT_EQUAL(shortCircuitStatus, shortCircuitStatusRetry);
     } else {
-        result = GetOpenCircuitStatus(&shortCircuitStatus);
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
         UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
     }
 
