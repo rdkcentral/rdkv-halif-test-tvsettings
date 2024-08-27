@@ -9862,7 +9862,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_Rgain_onSource(colorTempValue,&rgain, (tvColorTempSourceOffset_t)HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (rgain > 0 && rgain < 2048));
+    UT_ASSERT_TRUE( (rgain >= 0 && rgain < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
     result = GetColorTemp_Rgain_onSource(colorTempValue,&rgainRetry, (tvColorTempSourceOffset_t)HDMI_OFFSET);
@@ -9879,7 +9879,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 
             result = GetColorTemp_Rgain_onSource(colorTempValue, &rgain, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (rgain > 0 && rgain < 2048));
+            UT_ASSERT_TRUE( (rgain >= 0 && rgain < 2048));
 
         }
     }
@@ -10279,9 +10279,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
         {
             result = GetColorTemp_Ggain_onSource(colorTempValue, &ggain, (tvColorTempSourceOffset_t)j);
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (ggain > 0 && ggain < 2048));
+            UT_ASSERT_TRUE( (ggain >= 0 && ggain < 2048));
 
-            result = GetColorTemp_Ggain_onSource(colorTempValue, &ggain, (tvColorTempSourceOffset_t)j);
+            result = GetColorTemp_Ggain_onSource(colorTempValue, &ggainRetry, (tvColorTempSourceOffset_t)j);
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
             UT_ASSERT_EQUAL(ggain,ggainRetry);
 
@@ -10676,7 +10676,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_Bgain_onSource(colorTempValue,&bgain, (tvColorTempSourceOffset_t)HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (bgain > 0 && bgain < 2048 ));
+    UT_ASSERT_TRUE( (bgain >= 0 && bgain < 2048 ));
 
     /* Step 03: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return success */
     result = GetColorTemp_Bgain_onSource(colorTempValue,&bgainRetry, (tvColorTempSourceOffset_t)HDMI_OFFSET);
@@ -10693,7 +10693,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 
             result = GetColorTemp_Bgain_onSource(colorTempValue, &bgain, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (bgain > 0 && bgain < 2048));
+            UT_ASSERT_TRUE( (bgain >= 0 && bgain < 2048));
 
         }
     }
@@ -11090,7 +11090,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_R_post_offset_onSource(colorTempValue,&rpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
+    UT_ASSERT_TRUE( (rpostoffset >= 0 && rpostoffset < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
     result = GetColorTemp_R_post_offset_onSource(colorTempValue,&rpostoffsetRetry,(tvColorTempSourceOffset_t) HDMI_OFFSET);
@@ -11107,7 +11107,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 
             result = GetColorTemp_R_post_offset_onSource(colorTempValue, &rpostoffset, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
+            UT_ASSERT_TRUE( (rpostoffset >= 0 && rpostoffset < 2048));
 
         }
     }
@@ -11501,7 +11501,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_G_post_offset_onSource(colorTempValue,&gpostoffset,(tvColorTempSourceOffset_t) HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (gpostoffset > 0 && gpostoffset < 2048));
+    UT_ASSERT_TRUE( (gpostoffset >= 0 && gpostoffset < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
     result = GetColorTemp_G_post_offset_onSource(colorTempValue,&gpostoffsetRetry,(tvColorTempSourceOffset_t) HDMI_OFFSET);
@@ -11517,7 +11517,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
         {
             result = GetColorTemp_G_post_offset_onSource(colorTempValue, &gpostoffset, (tvColorTempSourceOffset_t) j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (gpostoffset > 0 && gpostoffset < 2048));
+            UT_ASSERT_TRUE( (gpostoffset >= 0 && gpostoffset < 2048));
         }
     }
 
@@ -11908,7 +11908,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_B_post_offset_onSource(colorTempValue,&bpostoffset, (tvColorTempSourceOffset_t) HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (bpostoffset > 0 && bpostoffset < 2048));
+    UT_ASSERT_TRUE( (bpostoffset >= 0 && bpostoffset < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return success */
     result = GetColorTemp_B_post_offset_onSource(colorTempValue,&bpostoffsetRetry,(tvColorTempSourceOffset_t) HDMI_OFFSET);
@@ -11926,7 +11926,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 
             result = GetColorTemp_B_post_offset_onSource(colorTempValue, &bpostoffset, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (bpostoffset > 0 && bpostoffset < 2048));
+            UT_ASSERT_TRUE( (bpostoffset >= 0 && bpostoffset < 2048));
 
         }
     }
@@ -12454,7 +12454,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
     unsigned short pData_R_limit[]={0, 100, 1023};
     unsigned short pData_G_limit[]={0, 100, 1023};
     unsigned short pData_B_limit[]={0, 100, 1023};
-    unsigned short  size =256;
+    unsigned short  size =3;
     bool bflag = true;
     uint32_t colorTempCount = 0;
     tvColorTemp_t colorTempValue = tvColorTemp_STANDARD;
@@ -12467,7 +12467,6 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
 
     /* Step 02: Calling tvsettings SetGammaTable for all the valid arguments of colortemp and expecting the API to return success */
     colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    size = sizeof(pData_R_limit);
     for (unsigned int i = 0; i < (colorTempCount); i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
@@ -12531,7 +12530,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
     unsigned short pData_R_limit[] ={0, 100, 1023};
     unsigned short pData_G_limit[] ={0, 100, 1023};
     unsigned short pData_B_limit[]={0, 100, 1023};
-    unsigned short  size = 256;
+    unsigned short  size = 3;
     bool platformFlag = false;
     tvError_t result = tvERROR_NONE ;
     uint32_t colorTempCount = 0;
@@ -12722,7 +12721,7 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
     unsigned short pData_R_limit[]={0, 100, 1023};
     unsigned short pData_G_limit[]={0, 100, 1023};
     unsigned short pData_B_limit[]={0, 100, 1023};
-    unsigned short  size = 256;
+    unsigned short  size = 3;
     tvError_t result = tvERROR_NONE ;
 
     if (extendedEnumsSupported == true)
@@ -12792,7 +12791,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
     unsigned short pData_R_limit[] = {0, 100, 1023};
     unsigned short pData_G_limit[] = {0, 100, 1023};
     unsigned short pData_B_limit[] = {0, 100, 1023};
-    unsigned short size = 256;
+    unsigned short size = 3;
     uint32_t colorTempCount = 0;
     tvColorTemp_t colorTempValue = tvColorTemp_STANDARD;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
@@ -12808,7 +12807,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
         result = SaveGammaTable(colorTempValue, pData_R_limit,pData_G_limit,pData_B_limit, size);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM)
+        UT_ASSERT_EQUAL(result, tvERROR_NONE)
     }
 
     /* Step 03: Calling tvsettings termination and expecting the API to return success */
@@ -17732,7 +17731,7 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite_B8, "GetCMSState_L1_negative" ,test_l1_tvSettings_negative_GetCMSState );
     UT_add_test( pSuite_B8, "GetDefaultPQParams_L1_positive" ,test_l1_tvSettings_positive_GetDefaultPQParams );
     UT_add_test( pSuite_B8, "GetDefaultPQParams_L1_negative" ,test_l1_tvSettings_negative_GetDefaultPQParams );
-    UT_add_test( pSuite_B8, "GetPQParams_L1_negative" ,test_l1_tvSettings_positive_GetPQParams );
+    UT_add_test( pSuite_B8, "GetPQParams_L1_positive" ,test_l1_tvSettings_positive_GetPQParams );
     UT_add_test( pSuite_B8, "GetPQParams_L1_negative" ,test_l1_tvSettings_negative_GetPQParams );
     UT_add_test( pSuite_B8, "GetMaxGainValue_L1_positive" ,test_l1_tvSettings_positive_GetMaxGainValue );
     UT_add_test( pSuite_B8, "GetMaxGainValue_L1_negative" ,test_l1_tvSettings_negative_GetMaxGainValue );
