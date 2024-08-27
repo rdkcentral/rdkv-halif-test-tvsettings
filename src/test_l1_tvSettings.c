@@ -9802,7 +9802,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_Rgain_onSource(colorTempValue , 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
+            result = SetColorTemp_Rgain_onSource((tvColorTemp_t)i , 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -9981,7 +9981,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_Rgain_onSource(colorTempValue ,&rgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_Rgain_onSource((tvColorTemp_t)i ,&rgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -10191,7 +10191,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_Ggain_onSource(colorTempValue , 0, \
+            result = SetColorTemp_Ggain_onSource((tvColorTemp_t)i, 0, \
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
@@ -10386,7 +10386,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_Ggain_onSource(colorTempValue ,&ggain, \
+            result = GetColorTemp_Ggain_onSource((tvColorTemp_t)i ,&ggain, \
                     (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -10597,7 +10597,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_Bgain_onSource(colorTempValue , 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
+            result = SetColorTemp_Bgain_onSource((tvColorTemp_t)i, 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -10794,7 +10794,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_Bgain_onSource(colorTempValue ,&bgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_Bgain_onSource((tvColorTemp_t)i,&bgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -11007,7 +11007,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_R_post_offset_onSource(colorTempValue , 0,\
+            result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)i , 0,\
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -11207,7 +11207,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_R_post_offset_onSource(colorTempValue ,&rpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)i ,&rpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -11415,7 +11415,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_G_post_offset_onSource(colorTempValue , 0,\
+            result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)i , 0,\
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -11616,7 +11616,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_G_post_offset_onSource(colorTempValue ,&gpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)i ,&gpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -11827,7 +11827,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_B_post_offset_onSource(colorTempValue , 0,\
+            result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)i , 0,\
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -12028,7 +12028,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_B_post_offset_onSource(colorTempValue ,&bpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)i ,&bpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -12590,7 +12590,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
         }
         if(!platformFlag)
         {
-            result = GetDefaultGammaTable(colorTempValue, \
+            result = GetDefaultGammaTable((tvColorTemp_t)i, \
                     pData_R_limit,pData_G_limit,pData_B_limit, size);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
