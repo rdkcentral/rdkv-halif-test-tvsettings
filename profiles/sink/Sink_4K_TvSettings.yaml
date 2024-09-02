@@ -14,7 +14,6 @@ tvSettings:
   # tvDataColor_MAGENTA = 0x20, //!< Color is Magenta
   # tvDataColor_MAX     = 0x40  //!< End of enum
   SupportedComponentColor:
-    - 0x00 # tvDataColor_NONE
     - 0x01 # tvDataColor_RED
     - 0x02 # tvDataColor_GREEN
     - 0x04 # tvDataColor_BLUE
