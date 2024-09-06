@@ -761,6 +761,7 @@ tvSettings:
     # PQ_MODE_SPORTS         = 0x08,       //!< Picture mode is "Sports"
     # PQ_MODE_GRAPHICS       = 0x09,       //!< Picture mode is "Graphics"
     # PQ_MODE_FMM            = 0x0A,       //!< Picture mode is "Filmmaker"
+    # PQ_MODE_VIVID2         = 0x0B,       //!< Picture mode is "Vivid2  or Dynamic2" */
     # PQ_MODE_MAX            = 0x0F        //!< End of enum (15 in decimal)
     index:
       - 0x00 # PQ_MODE_STANDARD
