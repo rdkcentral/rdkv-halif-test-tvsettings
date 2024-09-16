@@ -17471,6 +17471,112 @@ void test_l1_tvSettings_negative_EnableLocalContrast (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+/**
+ * @brief Validate GetNumberOfDimmingZones() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 227@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | unsigned int* | tvERROR_NONE | Should Pass |
+ * | 02 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status | unsigned int*  | tvERROR_NONE | Should Pass |
+ * | 03 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status with valid argument and validate with above value | unsigned int* | tvERROR_NONE | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetNumberOfDimmingZones (void)
+{
+	gTestID = 227;   /* It must be 227 */
+	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    unsigned int number_of_dimming_zones = 0;
+    unsigned int number_of_dimming_zones_retry = 0;
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetNumberOfDimmingZones and the API to return success */
+    result = GetNumberOfDimmingZones(&number_of_dimming_zones);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_TRUE((number_of_dimming_zones >= 0));
+
+    /* Step 03: Retry tvsettings GetNumberOfDimmingZones and the API to return success */
+    result = GetNumberOfDimmingZones(&number_of_dimming_zones_retry);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_TRUE((number_of_dimming_zones_retry >= 0));
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+/**
+ * @brief Validate GetNumberOfDimmingZones() for all negative invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 228@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status before TvInit() | unsigned int*  | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status with invalid argument and | NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 05 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status with valid argument | unsigned int* | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetNumberOfDimmingZones (void)
+{
+	gTestID = 228;   /* It must be 228 */
+	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    unsigned int number_of_dimming_zones = 0;
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings tvERROR_INVALID_STATE and the API to return tvERROR_INVALID_STATE */
+        result = GetNumberOfDimmingZones(&number_of_dimming_zones);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetNumberOfDimmingZones and the API to return tvERROR_INVALID_PARAM */
+    result = GetNumberOfDimmingZones(NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 05: Retry tvsettings GetNumberOfDimmingZones and the API to return tvERROR_INVALID_STATE */
+        result = GetNumberOfDimmingZones(&number_of_dimming_zones);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
 static UT_test_suite_t * pSuite = NULL;
 static UT_test_suite_t * pSuite_B1 = NULL;
 static UT_test_suite_t * pSuite_B2 = NULL;
@@ -17588,6 +17694,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite_B3, "GetSaturation_L1_negative" ,test_l1_tvSettings_negative_GetSaturation );
     UT_add_test( pSuite_B3, "SaveSaturation_L1_positive" ,test_l1_tvSettings_positive_SaveSaturation );
     UT_add_test( pSuite_B3, "SaveSaturation_L1_negative" ,test_l1_tvSettings_negative_SaveSaturation );
+    UT_add_test( pSuite_B3, "GetNumberOfDimmingZones_L1_positive" ,test_l1_tvSettings_positive_GetNumberOfDimmingZones );
+    UT_add_test( pSuite_B3, "GetNumberOfDimmingZones_L1_negative" ,test_l1_tvSettings_negative_GetNumberOfDimmingZones );
 
     pSuite_B4 = UT_add_suite( "[L1 tvSettings - Bank4]", NULL, NULL );
     if ( NULL == pSuite_B4 )
