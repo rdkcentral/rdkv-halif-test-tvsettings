@@ -919,3 +919,9 @@ tvError_t EnableLocalContrast(bool mode)
   return (tvError_t)0;
 }
 
+tvError_t GetNumberOfDimmingZones(unsigned int* number_of_dimming_zones)
+{
+  /*TODO: Implement Me!*/
+  (void)number_of_dimming_zones;
+  return (tvError_t)0;  
+}
