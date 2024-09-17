@@ -3635,6 +3635,67 @@ void test_l2_tvSettings_EnableAndGetDynamicContrast(void)
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
 
+/**
+* @brief Test to verify the functionality of GetNumberOfDimmingZones API
+*
+* This test case verifies the functionality of the GetNumberOfDimmingZones API.
+* It checks if the API is able to correctly retrieve the  dimming zone count
+* in the TV settings. The test case invokes the TvInit() function to initialise the
+* TV settings, then it calls the GetNumberOfDimmingZones() function to get the
+* number of zones supported in current platform.
+* Finally, the test case calls the TvTerm() function to terminate the TV settings
+* and asserts that its return value is as expected.
+*
+* **Test Group ID:** 02@n
+* **Test Case ID:** 051@n
+*
+* **Test Procedure:**
+* Refer to Test specification documentation [tv-settings_L2_Low_Level_Test_Spec.md](../docs/pages/tv-settings_L2_Low_Level_Test_Spec.md)
+*/
+
+void test_l2_tvSettings_GetNumberOfDimmingZones(void)
+{
+    gTestID = 51;
+    UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t ret = tvERROR_NONE;
+    int zoneCount_actual = 0;
+    int zoneCount_expected = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMNumberOfDimmingZones/zone_count");
+
+    UT_LOG_DEBUG("Invoking TvInit()");
+    ret = TvInit();
+    UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+
+    UT_LOG_DEBUG("Invoking GetNumberOfDimmingZones() with valid pointer");
+    ret = GetNumberOfDimmingZones(&zoneCount_actual);
+    UT_LOG_DEBUG("GetNumberOfDimmingZones: zoneCount_actual: %d, API Return status: %d", zoneCount_actual, ret);
+    UT_LOG_DEBUG("GetNumberOfDimmingZones: zoneCount_expected: %d", zoneCount_expected);
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    } else {
+        UT_ASSERT_EQUAL(ret, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    if ((ret != tvERROR_NONE) && (ret != tvERROR_OPERATION_NOT_SUPPORTED)) {
+        UT_LOG_ERROR("GetNumberOfDimmingZones failed with status: %d", ret);
+    }
+
+    if (zoneCount_expected == zoneCount_actual)
+    {
+        UT_LOG_INFO("Expected zone count matches the actual read value");
+    } else {
+        UT_LOG_ERROR("\n Expected zone count DID NOT matches the actual read value");
+    }
+
+    UT_LOG_DEBUG("Invoking TvTerm()");
+    ret = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+
+    UT_LOG_INFO("Out %s\n", __FUNCTION__);
+}
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -3702,6 +3763,7 @@ int32_t test_l2_tvSettings_register(void)
     UT_add_test( pSuite, "L2_SetAndGetGrayPattern", test_l2_tvSettings_SetAndGetGrayPattern);
     UT_add_test( pSuite, "L2_RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
     UT_add_test( pSuite, "L2_EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
+    UT_add_test( pSuite, "L2_GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
 
     return 0;
 }
