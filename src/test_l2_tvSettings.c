@@ -3664,7 +3664,7 @@ void test_l2_tvSettings_RetrieveLDIMShortCircuitStatus(void)
 
     tvError_t ret = tvERROR_NONE;
     int shortCircuitStatus = -1;
-    int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
+    unsigned int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
     unsigned char shortcircuitlist[listsize > 0? listsize: 1];
     // Initialize array elements to 0
     for (int i = 0; i < listsize; i++ ) {
