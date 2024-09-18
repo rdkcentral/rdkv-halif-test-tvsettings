@@ -69,6 +69,7 @@ High level overview:
 |25|[Set Backlight Test Mode](#set-backlight-test-mode)|This test verifies the functionality of setting the backlight test mode. It ensures that the backlight hardware can be configured correctly for calibration purposes based on the specified test mode.|
 |26|[Enable and Disable White Balance - Dynamic Contrast and Local Contrast](#enable-and-disable-white-balance---dynamic-contrast-and-local-contrast)|This test verifies the functionality of enabling or disabling the white balance, dynamic contrast and local contrast module. It ensures that the white balance, dynamic contrast and local contrast module can be successfully enabled or disabled as intended.|
 |27|[Test the save setting values](#test-the-save-setting-values)|This test verifies the functionality of saving all persistence settings by rebooting the test case.|
+|29|[Get number of dimming zones](#get-number-of-dimming-zones)|This test verifies the functionality of retrieving the dimming zone count.|
 -----------
 
 ### Test Start up Requirement
