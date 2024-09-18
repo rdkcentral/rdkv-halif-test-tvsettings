@@ -3671,7 +3671,7 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
     ret = GetNumberOfDimmingZones(&zoneCount_actual);
     UT_LOG_DEBUG("GetNumberOfDimmingZones: zoneCount_actual: %d, API Return status: %d", zoneCount_actual, ret);
     UT_LOG_DEBUG("GetNumberOfDimmingZones: zoneCount_expected: %d", zoneCount_expected);
-    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/size") == true) {
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
         UT_ASSERT_EQUAL(ret, tvERROR_NONE);
     } else {
         UT_ASSERT_EQUAL(ret, tvERROR_OPERATION_NOT_SUPPORTED);
