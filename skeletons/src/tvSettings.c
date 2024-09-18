@@ -919,7 +919,7 @@ tvError_t EnableLocalContrast(bool mode)
   return (tvError_t)0;
 }
 
-tvError_t GetLdimZoneShortCircuitStatus(unsigned char* shortcircuit_zone_list, int size, int* status)
+tvError_t GetLdimZoneShortCircuitStatus(unsigned char* shortcircuit_zone_list, unsigned int size, int* status)
 {
   /*TODO: Implement Me!*/
   (void)shortcircuit_zone_list;
