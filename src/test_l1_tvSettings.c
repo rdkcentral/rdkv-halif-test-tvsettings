@@ -17486,8 +17486,8 @@ void test_l1_tvSettings_negative_EnableLocalContrast (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetLdimZoneShortCircuitStatus() -  Retrieve the shortCircuit Status | unsigned char *, int, int *  | tvERROR_NONE | Should Pass |
- * | 03 | call GetLdimZoneShortCircuitStatus()-  Retrieve the shortCircuit Status with valid argument and validate with above value | unsigned char *, int, int * | tvERROR_NONE | Should Pass |
+ * | 02 | call GetLdimZoneShortCircuitStatus() -  Retrieve the shortCircuit Status | unsigned char *, unsigned int, int *  | tvERROR_NONE | Should Pass |
+ * | 03 | call GetLdimZoneShortCircuitStatus()-  Retrieve the shortCircuit Status with valid argument and validate with above value | unsigned char *, unsigned int, int * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
@@ -17547,14 +17547,14 @@ void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status even before TvInit() | unsigned char *, int, int * | tvERROR_INVALID_STATE | Should Pass |
+ * | 01 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status even before TvInit() | unsigned char *, unsigned int, int * | tvERROR_INVALID_STATE | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input status | unsigned char *, int, NULL | tvERROR_INVALID_PARAM | Should Pass |
- * | 04 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input shortCircuitlist | NULL , int, int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 03 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input status | unsigned char *, unsigned int, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input shortCircuitlist | NULL , unsigned int, int* | tvERROR_INVALID_PARAM | Should Pass |
  * | 05 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, 0 , int* | tvERROR_INVALID_PARAM | Should Pass |
  * | 06 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, -1 , int* | tvERROR_INVALID_PARAM | Should Pass |
  * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 08 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status valid arguments | unsigned char *, int, int* | tvERROR_INVALID_STATE | Should Pass |
+ * | 08 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status valid arguments | unsigned char *, unsigned int, int* | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
 {
