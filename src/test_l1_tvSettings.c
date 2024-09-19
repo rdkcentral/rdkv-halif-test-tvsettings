@@ -17471,6 +17471,150 @@ void test_l1_tvSettings_negative_EnableLocalContrast (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+/**
+ * @brief Validate GetLdimZoneShortCircuitStatus() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 227@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call GetLdimZoneShortCircuitStatus() -  Retrieve the shortCircuit Status | unsigned char *, unsigned int, int *  | tvERROR_NONE | Should Pass |
+ * | 03 | call GetLdimZoneShortCircuitStatus()-  Retrieve the shortCircuit Status with valid argument and validate with above value | unsigned char *, unsigned int, int * | tvERROR_NONE | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
+{
+    gTestID = 227;                                    /* It must be 227 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int shortCircuitStatus = -1;
+    int shortCircuitStatusRetry = -1;
+    unsigned int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
+    unsigned char shortcircuitlistRetry[listsize > 0? listsize: 1];
+    // Initialize array elements to 0
+    for (int i = 0; i < listsize; i++ ) {
+        shortcircuitlist[i] = 0; 
+        shortcircuitlistRetry[i] = 0;
+    }
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return success */
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+        UT_ASSERT_TRUE((shortCircuitStatus >= 0));
+
+        /* Step 03: Calling tvsettings GetLdimZoneShortCircuitStatus again and the API to return success */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlistRetry, listsize, &shortCircuitStatusRetry);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+        UT_ASSERT_EQUAL(shortCircuitStatus, shortCircuitStatusRetry);
+    } else {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+/**
+ * @brief Validate GetLdimZoneShortCircuitStatus() for all negative invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 228@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status even before TvInit() | unsigned char *, unsigned int, int * | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input status | unsigned char *, unsigned int, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input shortCircuitlist | NULL , unsigned int, int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, 0 , int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, -1 , int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 08 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status valid arguments | unsigned char *, unsigned int, int* | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
+{
+    gTestID = 228;                                    /* It must be 228 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int shortCircuitStatus = -1;
+    unsigned int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
+    // Initialize array elements to 0
+    for (int i = 0; i < listsize; i++ ) {
+        shortcircuitlist[i] = 0; 
+    }
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return tvERROR_INVALID_STATE */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        /* Step 03: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid status */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 04: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid shortcircuitlist */
+        result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 05: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 06: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, -1, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+    } else {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+        result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 06: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 07: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return tvERROR_INVALID_STATE */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+}
+
 static UT_test_suite_t * pSuite = NULL;
 static UT_test_suite_t * pSuite_B1 = NULL;
 static UT_test_suite_t * pSuite_B2 = NULL;
@@ -17773,6 +17917,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite_B9, "EnableDynamicContrast_L1_negative" ,test_l1_tvSettings_negative_EnableDynamicContrast );
     UT_add_test( pSuite_B9, "EnableLocalContrast_L1_positive" ,test_l1_tvSettings_positive_EnableLocalContrast );
     UT_add_test( pSuite_B9, "EnableLocalContrast_L1_negative" ,test_l1_tvSettings_negative_EnableLocalContrast );
+    UT_add_test( pSuite_B9, "GetLdimZoneShortCircuitStatus_L1_positive" ,test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus );
+    UT_add_test( pSuite_B9, "GetLdimZoneShortCircuitStatus_L1_negative" ,test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus );
 
     pSuite_B10= UT_add_suite( "[L1 tvSettings - Bank10]", NULL, NULL );
     if ( NULL == pSuite_B10 )
