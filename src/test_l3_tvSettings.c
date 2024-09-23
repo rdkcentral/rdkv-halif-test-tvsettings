@@ -65,19 +65,12 @@
 #include <ut.h>
 #include <ut_log.h>
 #include <ut_kvp_profile.h>
+#include <ut_control_plane.h>
 #include <stdlib.h>
 #include <time.h>
 #include "tvSettings.h"
 
-#define KEY_VALUE_SIZE 64
-
 /* Type Definitions */
-
-typedef struct _ut_control_keyMapTable_t
-{
-    char* string;
-    int32_t key;
-} ut_control_keyMapTable_t;
 
 /* Global Variables */
 static int32_t gTestGroup = 3;
@@ -85,10 +78,18 @@ static int32_t gTestID    = 1;
 
 #define UT_LOG_MENU_INFO UT_LOG_INFO
 #define ASSERT assert
-
+#define ASSERT_COMPARE(var1, var2) \
+    do \
+    { \
+        if ((var1) != (var2)) \
+        { \
+            UT_LOG_ERROR("Mismatch: %s != %s at %s:%d\n", #var1, #var2, __FILE__, __LINE__); \
+        } \
+    } while (0)
 
 /* tvBacklightTestMode_t */
-const static ut_control_keyMapTable_t tvBacklightTestMode_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvBacklightTestMode_mapTable [] =
+{
     { "tvBacklightTestMode_Normal", (int32_t)tvBacklightTestMode_Normal },
     { "tvBacklightTestMode_Boost",  (int32_t)tvBacklightTestMode_Boost  },
     { "tvBacklightTestMode_Burst",  (int32_t)tvBacklightTestMode_Burst  },
@@ -98,7 +99,8 @@ const static ut_control_keyMapTable_t tvBacklightTestMode_mapTable [] = {
 };
 
 /*tvDataComponentColor_t*/
-const static ut_control_keyMapTable_t tvDataComponentColor_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvDataComponentColor_mapTable [] =
+{
     { "tvDataColor_NONE",     (int32_t)tvDataColor_NONE     },
     { "tvDataColor_RED",      (int32_t)tvDataColor_RED      },
     { "tvDataColor_GREEN",    (int32_t)tvDataColor_GREEN    },
@@ -111,7 +113,8 @@ const static ut_control_keyMapTable_t tvDataComponentColor_mapTable [] = {
 };
 
 /* tvColorTempSourceOffset_t */
-const static ut_control_keyMapTable_t tvColorTempSourceOffset_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvColorTempSourceOffset_mapTable [] =
+{
     { "ALL_SRC_OFFSET",   (int32_t)ALL_SRC_OFFSET   },
     { "HDMI_OFFSET",      (int32_t)HDMI_OFFSET      },
     { "TV_OFFSET",        (int32_t)TV_OFFSET        },
@@ -121,7 +124,8 @@ const static ut_control_keyMapTable_t tvColorTempSourceOffset_mapTable [] = {
 };
 
 /* tvDolbyMode_t */
-const static ut_control_keyMapTable_t tvDolbyMode_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvDolbyMode_mapTable [] =
+{
     { "tvDolbyMode_Invalid",         (int32_t)tvDolbyMode_Invalid         },
     { "tvDolbyMode_Dark",            (int32_t)tvDolbyMode_Dark            },
     { "tvDolbyMode_Bright",          (int32_t)tvDolbyMode_Bright          },
@@ -137,7 +141,8 @@ const static ut_control_keyMapTable_t tvDolbyMode_mapTable [] = {
 };
 
 /* tvDisplayMode_t */
-const static ut_control_keyMapTable_t tvDisplayMode_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvDisplayMode_mapTable [] =
+{
     { "tvDisplayMode_4x3",        (int32_t)tvDisplayMode_4x3        },
     { "tvDisplayMode_16x9",       (int32_t)tvDisplayMode_16x9       },
     { "tvDisplayMode_FULL",       (int32_t)tvDisplayMode_FULL       },
@@ -150,7 +155,8 @@ const static ut_control_keyMapTable_t tvDisplayMode_mapTable [] = {
 };
 
 /* ldimStateLevel_t */
-const static ut_control_keyMapTable_t ldimStateLevel_mapTable[] = {
+const static ut_control_keyStringMapping_t  ldimStateLevel_mapTable[] =
+{
     { "LDIM_STATE_NONBOOST", (int32_t)LDIM_STATE_NONBOOST },
     { "LDIM_STATE_BOOST",    (int32_t)LDIM_STATE_BOOST    },
     { "LDIM_STATE_BURST",    (int32_t)LDIM_STATE_BURST    },
@@ -159,7 +165,8 @@ const static ut_control_keyMapTable_t ldimStateLevel_mapTable[] = {
 };
 
 /* tvBacklightMode_t  */
-const static ut_control_keyMapTable_t tvBacklightMode_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvBacklightMode_mapTable [] =
+{
     { "tvBacklightMode_NONE",     (int32_t)tvBacklightMode_NONE     },
     { "tvBacklightMode_MANUAL",   (int32_t)tvBacklightMode_MANUAL   },
     { "tvBacklightMode_AMBIENT",  (int32_t)tvBacklightMode_AMBIENT  },
@@ -170,7 +177,8 @@ const static ut_control_keyMapTable_t tvBacklightMode_mapTable [] = {
 };
 
 /* tvVideoSrcType_t */
-const static ut_control_keyMapTable_t tvVideoSrcType_mapTable[] = {
+const static ut_control_keyStringMapping_t  tvVideoSrcType_mapTable[] =
+{
     { "VIDEO_SOURCE_ALL",        (int32_t)VIDEO_SOURCE_ALL        },
     { "VIDEO_SOURCE_ANALOGUE",   (int32_t)VIDEO_SOURCE_ANALOGUE   },
     { "VIDEO_SOURCE_COMPOSITE1", (int32_t)VIDEO_SOURCE_COMPOSITE1 },
@@ -194,7 +202,8 @@ const static ut_control_keyMapTable_t tvVideoSrcType_mapTable[] = {
 };
 
 /* tvVideoFrameRate_t */
-const static ut_control_keyMapTable_t tvVideoFrameRate_mapTable[] = {
+const static ut_control_keyStringMapping_t  tvVideoFrameRate_mapTable[] =
+{
     { "tvVideoFrameRate_NONE",    (int32_t)tvVideoFrameRate_NONE    },
     { "tvVideoFrameRate_24",      (int32_t)tvVideoFrameRate_24      },
     { "tvVideoFrameRate_25",      (int32_t)tvVideoFrameRate_25      },
@@ -209,7 +218,8 @@ const static ut_control_keyMapTable_t tvVideoFrameRate_mapTable[] = {
 };
 
 /* tvVideoResolution_t */
-const static ut_control_keyMapTable_t tvVideoResolution_mapTable[] = {
+const static ut_control_keyStringMapping_t  tvVideoResolution_mapTable[] =
+{
     { "tvVideoResolution_NONE",        (int32_t)tvVideoResolution_NONE        },
     { "tvVideoResolution_720x240",     (int32_t)tvVideoResolution_720x240     },
     { "tvVideoResolution_2880x240",    (int32_t)tvVideoResolution_2880x240    },
@@ -256,7 +266,8 @@ const static ut_control_keyMapTable_t tvVideoResolution_mapTable[] = {
 };
 
 /* tvContentType_t */
-const static ut_control_keyMapTable_t tvContentType_mapTable[] = {
+const static ut_control_keyStringMapping_t  tvContentType_mapTable[] =
+{
     { "tvContentType_NONE", (int32_t)tvContentType_NONE },
     { "tvContentType_FMM",  (int32_t)tvContentType_FMM  },
     { "tvContentType_MAX",  (int32_t)tvContentType_MAX  },
@@ -264,7 +275,8 @@ const static ut_control_keyMapTable_t tvContentType_mapTable[] = {
 };
 
 /* tvVideoFormatType_t */
-const static ut_control_keyMapTable_t tvVideoFormatType_mapTable[] = {
+const static ut_control_keyStringMapping_t  tvVideoFormatType_mapTable[] =
+{
     { "VIDEO_FORMAT_NONE",       (int32_t)VIDEO_FORMAT_NONE       },
     { "VIDEO_FORMAT_HDR10",      (int32_t)VIDEO_FORMAT_HDR10      },
     { "VIDEO_FORMAT_HDR10PLUS",  (int32_t)VIDEO_FORMAT_HDR10PLUS  },
@@ -278,7 +290,8 @@ const static ut_control_keyMapTable_t tvVideoFormatType_mapTable[] = {
 };
 
 /* tvError_t */
-const static ut_control_keyMapTable_t tvError_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvError_mapTable [] =
+{
   { "tvERROR_NONE",                      (int32_t)tvERROR_NONE                     },
   { "tvERROR_GENERAL",                   (int32_t)tvERROR_GENERAL                  },
   { "tvERROR_OPERATION_NOT_SUPPORTED",   (int32_t)tvERROR_OPERATION_NOT_SUPPORTED  },
@@ -287,7 +300,8 @@ const static ut_control_keyMapTable_t tvError_mapTable [] = {
 };
 
 /* tvColorTemp_t */
-const static ut_control_keyMapTable_t tvColorTemp_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvColorTemp_mapTable [] =
+{
     { "tvColorTemp_STANDARD",         (int32_t)tvColorTemp_STANDARD         },
     { "tvColorTemp_WARM",             (int32_t)tvColorTemp_WARM             },
     { "tvColorTemp_COLD",             (int32_t)tvColorTemp_COLD             },
@@ -303,7 +317,8 @@ const static ut_control_keyMapTable_t tvColorTemp_mapTable [] = {
 };
 
 /* tvDimmingMode_t */
-const static ut_control_keyMapTable_t tvDimmingMode_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvDimmingMode_mapTable [] =
+{
     { "tvDimmingMode_Fixed",   (int32_t)tvDimmingMode_Fixed   },
     { "tvDimmingMode_Local",   (int32_t)tvDimmingMode_Local   },
     { "tvDimmingMode_Global",  (int32_t)tvDimmingMode_Global  },
@@ -312,7 +327,8 @@ const static ut_control_keyMapTable_t tvDimmingMode_mapTable [] = {
 };
 
 /* tvPQModeIndex_t */
-const static ut_control_keyMapTable_t tvPQModeIndex_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvPQModeIndex_mapTable [] =
+{
     { "PQ_MODE_INVALID",         (int32_t)PQ_MODE_INVALID         },
     { "PQ_MODE_STANDARD",        (int32_t)PQ_MODE_STANDARD        },
     { "PQ_MODE_VIVID",           (int32_t)PQ_MODE_VIVID           },
@@ -325,12 +341,32 @@ const static ut_control_keyMapTable_t tvPQModeIndex_mapTable [] = {
     { "PQ_MODE_SPORTS",          (int32_t)PQ_MODE_SPORTS          },
     { "PQ_MODE_GRAPHICS",        (int32_t)PQ_MODE_GRAPHICS        },
     { "PQ_MODE_FMM",             (int32_t)PQ_MODE_FMM             },
+    { "PQ_MODE_VIVID2",          (int32_t)PQ_MODE_VIVID2          },
     { "PQ_MODE_MAX",             (int32_t)PQ_MODE_MAX             },
     {  NULL,                     -1                               }
 };
 
+/* tvPQModeIndex_t */
+const static ut_control_keyStringMapping_t  tvPQModeRange_mapTable [] =
+{
+    { "standard",        (int32_t)PQ_MODE_STANDARD        },
+    { "vivid",           (int32_t)PQ_MODE_VIVID           },
+    { "energysaving",    (int32_t)PQ_MODE_ENERGY_SAVING   },
+    { "custom",          (int32_t)PQ_MODE_CUSTOM          },
+    { "theater",         (int32_t)PQ_MODE_THEATER         },
+    { "reserved1",       (int32_t)PQ_MODE_RESERVED1       },
+    { "reserved2",       (int32_t)PQ_MODE_RESERVED2       },
+    { "game",            (int32_t)PQ_MODE_GAME            },
+    { "sports",          (int32_t)PQ_MODE_SPORTS          },
+    { "graphics",        (int32_t)PQ_MODE_GRAPHICS        },
+    { "fmm",             (int32_t)PQ_MODE_FMM             },
+    { "vivid2",          (int32_t)PQ_MODE_VIVID2          },
+    {  NULL,             -1                               }
+};
+
 /* tvComponentType_t */
-const static ut_control_keyMapTable_t tvComponentType_mapTable [] = {
+const static ut_control_keyStringMapping_t  tvComponentType_mapTable [] =
+{
     { "COMP_NONE",        (int32_t)COMP_NONE        },
     { "COMP_HUE",         (int32_t)COMP_HUE         },
     { "COMP_SATURATION",  (int32_t)COMP_SATURATION  },
@@ -340,43 +376,52 @@ const static ut_control_keyMapTable_t tvComponentType_mapTable [] = {
 };
 
 /**
- * @brief This functions gets the Enum mapping string.
- *
- * This functions gets the Enum mapping string.
- * &Todo: replace with ut control function
- */
-static char* ut_control_GetMapString(const ut_control_keyMapTable_t *conversionMap, int32_t key)
-{
-    int32_t count = 0;
-    while(conversionMap[count].string != NULL){
-        if(conversionMap[count].key == key) {
-            return conversionMap[count].string;
-        }
-        count++;
-    }
-    return "";
-}
-
-/**
  * @brief This function clears the stdin buffer.
  *
  * This function clears the stdin buffer.
  */
-void readAndDiscardRestOfLine(FILE* in)
+static void readAndDiscardRestOfLine(FILE* in)
 {
-   int c;
+   int32_t c;
    while ( (c = fgetc(in)) != EOF && c != '\n');
 }
-
+/**
+ * @brief This function gets the integer Input value.
+ *
+ */
+static void readInt(int32_t *choice)
+{
+    scanf("%d", choice);
+    readAndDiscardRestOfLine(stdin);
+}
+/**
+ * @brief This function gets the double Input value.
+ *
+ */
+static void readDouble(double *choice)
+{
+    scanf("%lf", choice);
+    readAndDiscardRestOfLine(stdin);
+}
+/**
+ * @brief This function gets the string Input value.
+ *
+ */
+static void readString(char *choice)
+{
+    fgets(choice, 4, stdin);
+    readAndDiscardRestOfLine(stdin);
+}
 
 /**
  * @brief Callback function for change in the video format.
  *
  * This function is invoked whenever a change occurs in the Video Format.
  */
-static void videoFormatChangeCB (tvVideoFormatType_t format, void *userData){
-    UT_LOG_INFO("Received Video Format Change callback format:[%s], userData[%s][%p]",
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, format),userData,userData);
+static void videoFormatChangeCB (tvVideoFormatType_t format, void *userData)
+{
+    UT_LOG_INFO("Received Video Format Change callback format:[%s], userData[%s][0x%0X]",
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, format),(char *)userData,userData);
 }
 
 /**
@@ -384,9 +429,10 @@ static void videoFormatChangeCB (tvVideoFormatType_t format, void *userData){
  *
  * This function is invoked whenever a change occurs in the video content.
  */
-static void videoContentChangeCB (tvContentType_t mode, void *userData){
-    UT_LOG_INFO("Received Video Content Change callback format:[%s], userData[%s][%p]",
-                 ut_control_GetMapString(tvContentType_mapTable, mode),userData,userData);
+static void videoContentChangeCB (tvContentType_t mode, void *userData)
+{
+    UT_LOG_INFO("Received Video Content Change callback format:[%s], userData[%s][0x%0X]",
+                 UT_Control_GetMapString(tvContentType_mapTable, mode),(char *)userData,userData);
 }
 
 /**
@@ -394,9 +440,15 @@ static void videoContentChangeCB (tvContentType_t mode, void *userData){
  *
  * This function is invoked whenever a change occurs in the video Resolution.
  */
-static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void *userData){
-    UT_LOG_INFO("Received Video Resolution Change callback Frame heightxwidth:[%dx%d], IsIntercaed[%d] Res:[%s], userData[%s][%p]",
-                 resolutionStruct.frameHeight, resolutionStruct.frameWidth, resolutionStruct.isInterlaced, ut_control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue) ,userData,userData);
+static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void *userData)
+{
+    UT_LOG_INFO("Received Video Resolution Change callback Frame heightxwidth:[%dx%d], IsIntercaed[%d] Res:[%s], userData[%s][0x%0X]",
+                 resolutionStruct.frameHeight,
+                 resolutionStruct.frameWidth,
+                resolutionStruct.isInterlaced,
+                UT_Control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue),
+                (char *)userData,
+                userData);
 }
 
 /**
@@ -404,9 +456,10 @@ static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void 
  *
  * This function is invoked whenever a change occurs in the video Frame Rate.
  */
-static void videoFrameRateChangeCB (tvVideoFrameRate_t frameRate, void *userData){
-    UT_LOG_INFO("Received Video Frame Rate Change callback format:[%s], userData[%s][%p]",
-                 ut_control_GetMapString(tvVideoFrameRate_mapTable, frameRate),userData,userData);
+static void videoFrameRateChangeCB (tvVideoFrameRate_t frameRate, void *userData)
+{
+    UT_LOG_INFO("Received Video Frame Rate Change callback format:[%s], userData[%s][0x%0X]",
+                 UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate),(char *)userData,userData);
 }
 
 /**
@@ -440,46 +493,46 @@ void test_l3_tvSettings_initialize(void)
     UT_LOG_INFO("Calling tvSettingsInit()");
     ret = TvInit();
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result tvSettingsInit(OUT:tvError_t:[%s])", ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result tvSettingsInit tvError_t:[%s]", UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for the Video Format */
     videoFormatCallbackData.userdata = videoFormatChangeData;
     videoFormatCallbackData.cb = videoFormatChangeCB;
-    UT_LOG_INFO("Calling RegisterVideoFormatChangeCB(IN:UserData:[%s][%p], IN:CBFunc:[0x%0X])", videoFormatCallbackData.userdata, videoFormatCallbackData.userdata, videoFormatCallbackData.cb);
+    UT_LOG_INFO("Calling RegisterVideoFormatChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *)videoFormatCallbackData.userdata, videoFormatCallbackData.userdata, videoFormatCallbackData.cb);
     ret = RegisterVideoFormatChangeCB(&videoFormatCallbackData);
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoFormatChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X], OUT:tvError_t:[%s])",
-                videoFormatCallbackData.userdata, videoFormatCallbackData.cb, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result RegisterVideoFormatChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+               (char *) videoFormatCallbackData.userdata, videoFormatCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for the Video Content */
     videoContentCallbackData.userdata = videoContentData;
     videoContentCallbackData.cb = videoContentChangeCB;
-    UT_LOG_INFO("Calling RegisterVideoContentChangeCB(IN:UserData:[%s][%p], IN:CBFunc:[0x%0X])",
+    UT_LOG_INFO("Calling RegisterVideoContentChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])",
                 videoContentCallbackData.userdata,
                 videoContentCallbackData.userdata,
                 videoContentCallbackData.cb);
     ret = RegisterVideoContentChangeCB(&videoContentCallbackData);
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoContentChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X], OUT:tvError_t:[%s])",
-                videoContentCallbackData.userdata, videoContentCallbackData.cb, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result RegisterVideoContentChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+               (char *) videoContentCallbackData.userdata, videoContentCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for Video Resolution */
     videoResolutionCallbackData.userdata = videoResolutionData;
     videoResolutionCallbackData.cb = videoResolutionChangeCB;
-    UT_LOG_INFO("Calling RegisterVideoResolutionChangeCB(IN:UserData:[%s][%p], IN:CBFunc:[0x%0X])", videoResolutionCallbackData.userdata, videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb);
+    UT_LOG_INFO("Calling RegisterVideoResolutionChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *) videoResolutionCallbackData.userdata, videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb);
     ret = RegisterVideoResolutionChangeCB(&videoResolutionCallbackData);
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoResolutionChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X], OUT:tvError_t:[%s])",
-                videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result RegisterVideoResolutionChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+                (char *)videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for Video Frame Rate Change */
     videoFrameRateCallbackData.userdata = videoFrameRateData;
     videoFrameRateCallbackData.cb = videoFrameRateChangeCB;
-    UT_LOG_INFO("Calling RegisterVideoFrameRateChangeCB(IN:UserData:[%s][%p], IN:CBFunc:[0x%0X])", videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb);
+    UT_LOG_INFO("Calling RegisterVideoFrameRateChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *)videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb);
     ret = RegisterVideoFrameRateChangeCB(&videoFrameRateCallbackData);
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoFrameRateChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X], OUT:tvError_t:[%s])",
-                videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result RegisterVideoFrameRateChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+               (char *) videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -505,7 +558,7 @@ void test_l3_tvSettings_terminate(void)
     UT_LOG_INFO("Calling tvSettingsTerm()");
     ret = TvTerm();
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result tvSettingsTerm(OUT:tvError_t:[%s])", ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result tvSettingsTerm tvError_t:[%s]", UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -532,8 +585,9 @@ void test_l3_tvSettings_GetVideoFormat(void)
     UT_LOG_INFO("Calling GetCurrentVideoFormat(OUT:videoFormat:[])");
     ret = GetCurrentVideoFormat(&videoFormat);
     ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result GetCurrentVideoFormat(tvError_t:[%s], OUT:Video Format:[%s])",
-                ut_control_GetMapString(tvError_mapTable, ret), ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat));
+    UT_LOG_INFO("Result GetCurrentVideoFormat(OUT:Video Format:[%s]), tvError_t:[%s]",
+                UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -561,8 +615,10 @@ void test_l3_tvSettings_GetCurrentVideoResolution(void)
     ret = GetCurrentVideoResolution(&resolution);
     ASSERT(ret == tvERROR_NONE);
 
-    UT_LOG_INFO("Result GetCurrentVideoResolution(tvError_t:[%s], OUT:Resolution:[%dx%d], OUT:isInterlaced:[%d], OUT:res value:[%s])",
-                ut_control_GetMapString(tvError_mapTable, ret), resolution.frameHeight, resolution.frameWidth, resolution.isInterlaced, ut_control_GetMapString(tvVideoResolution_mapTable, resolution.resolutionValue));
+    UT_LOG_INFO("Result GetCurrentVideoResolution(OUT:Resolution:[%dx%d], OUT:isInterlaced:[%d], OUT:res value:[%s]),tvError_t:[%s]",
+                resolution.frameHeight, resolution.frameWidth, resolution.isInterlaced,
+                UT_Control_GetMapString(tvVideoResolution_mapTable, resolution.resolutionValue),
+                UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -590,8 +646,9 @@ void test_l3_tvSettings_GetCurrentVideoFrameRate(void)
     ret = GetCurrentVideoFrameRate(&frameRate);
     ASSERT(ret == tvERROR_NONE);
 
-    UT_LOG_INFO("Result GetCurrentVideoFrameRate(tvError_t:[%s], OUT:Frame Rate:[%s])",
-                ut_control_GetMapString(tvError_mapTable, ret), ut_control_GetMapString(tvVideoFrameRate_mapTable, frameRate));
+    UT_LOG_INFO("Result GetCurrentVideoFrameRate(OUT:Frame Rate:[%s]),tvError_t:[%s]"
+                , UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate)
+                , UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -613,14 +670,14 @@ void test_l3_tvSettings_GetCurrentVideoSource(void)
     gTestID = 6;
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
     tvError_t ret = tvERROR_NONE;
-    int currentSource = 0;
+    int32_t currentSource = 0;
 
     UT_LOG_INFO("Calling GetCurrentVideoSource(OUT:currentSource:[])");
     ret = GetCurrentVideoSource(&currentSource);
     ASSERT(ret == tvERROR_NONE);
 
-    UT_LOG_INFO("Result GetCurrentVideoSource(tvError_t:[%s], OUT:Current Source:[%s])",
-                ut_control_GetMapString(tvError_mapTable, ret), ut_control_GetMapString(tvVideoSrcType_mapTable, currentSource));
+    UT_LOG_INFO("Result GetCurrentVideoSource(OUT:Current Source:[%s]), tvError_t:[%s]",
+                UT_Control_GetMapString(tvVideoSrcType_mapTable, currentSource), UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -642,13 +699,12 @@ void test_l3_tvSettings_backlight(void)
     gTestID = 7;
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
     tvError_t ret = tvERROR_NONE;
-    int backlightValue = -1;
-    int currentBacklight = -1;
+    int32_t backlightValue = -1;
+    int32_t currentBacklight = -1;
 
     // Prompt the user for the backlight value
     UT_LOG_MENU_INFO("Enter the backlight value to set (0 - 100): ");
-    scanf("%d", &backlightValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&backlightValue);
 
     if (backlightValue < 0 || backlightValue > 100)
     {
@@ -660,14 +716,16 @@ void test_l3_tvSettings_backlight(void)
     // Set the backlight value
     UT_LOG_INFO("Calling SetBacklight(IN:backlight:[%d])", backlightValue);
     ret = SetBacklight(backlightValue);
-    UT_LOG_INFO("Result SetBacklight(IN:backlight:[%d], tvError_t:[%s])", backlightValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetBacklight(IN:backlight:[%d]), tvError_t:[%s]", backlightValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Get the backlight value to confirm
     UT_LOG_INFO("Calling GetBacklight(OUT:backlight:[])");
     ret = GetBacklight(&currentBacklight);
-    UT_LOG_INFO("Result GetBacklight(OUT:backlight:[%d], tvError_t:[%s])", currentBacklight, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetBacklight(OUT:backlight:[%d]), tvError_t:[%s]", currentBacklight, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+
+    ASSERT_COMPARE(backlightValue,currentBacklight);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -689,21 +747,18 @@ void test_l3_tvSettings_backlightFade(void)
     gTestID = 8;
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
     tvError_t ret = tvERROR_NONE;
-    int fromValue, toValue, durationValue;
-    int currentFrom = -1, currentTo = -1, currentProgress = -1;
+    int32_t fromValue, toValue, durationValue;
+    int32_t currentFrom = -1, currentTo = -1, currentProgress = -1;
 
     // Prompt the user for input values
     UT_LOG_MENU_INFO("Enter the 'from' backlight value (0-100): ");
-    scanf("%d", &fromValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&fromValue);
 
     UT_LOG_MENU_INFO("Enter the 'to' backlight value (0-100): ");
-    scanf("%d", &toValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&toValue);
 
     UT_LOG_MENU_INFO("Enter the fade duration (0-1000 ms): ");
-    scanf("%d", &durationValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&durationValue);
 
     // Validate the input values
     if (fromValue < 0 || fromValue > 100)
@@ -730,14 +785,17 @@ void test_l3_tvSettings_backlightFade(void)
     // Set the backlight fade settings
     UT_LOG_INFO("Calling SetBacklightFade(IN:from:[%d], IN:to:[%d], IN:duration:[%d] ms)", fromValue, toValue, durationValue);
     ret = SetBacklightFade(fromValue, toValue, durationValue);
-    UT_LOG_INFO("Result SetBacklightFade(IN:from:[%d], IN:to:[%d], IN:duration:[%d] ms, tvError_t:[%s])", fromValue, toValue, durationValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetBacklightFade(IN:from:[%d], IN:to:[%d], IN:duration:[%d] ms), tvError_t:[%s]", fromValue, toValue, durationValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Get the backlight fade settings to confirm
     UT_LOG_INFO("Calling GetCurrentBacklightFade(OUT:from:[], OUT:to:[], OUT:current:[])");
     ret = GetCurrentBacklightFade(&currentFrom, &currentTo, &currentProgress);
-    UT_LOG_INFO("Result GetCurrentBacklightFade(OUT:from:[%d], OUT:to:[%d], OUT:current:[%d], tvError_t:[%s])", currentFrom, currentTo, currentProgress, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetCurrentBacklightFade(OUT:from:[%d], OUT:to:[%d], OUT:current:[%d]), tvError_t:[%s]", currentFrom, currentTo, currentProgress, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+
+    ASSERT_COMPARE(fromValue,currentFrom);
+    ASSERT_COMPARE(toValue,currentTo);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -761,53 +819,51 @@ void test_l3_tvSettings_backlightMode(void)
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret = tvERROR_NONE;
-    int count = 0;
-    int userChoice = 0;
-    int selectedMode = 0;
+    int32_t userChoice = 0;
+    int32_t selectedMode = 0;
     tvBacklightMode_t currentMode = tvBacklightMode_INVALID;
-    char keyValue[KEY_VALUE_SIZE] = {0};
-
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
+    int32_t menuIndex = 1;
 
     // Display available modes to the user
-    UT_LOG_INFO("Supported Backlight Modes:");
-    for (int i = 0; i < count; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Backlight Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Backlight Modes");
+    for (int32_t i = tvBacklightMode_MANUAL; i < tvBacklightMode_MAX; i <<= 1)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/BacklightControl/index/%d", i);
-        int mode = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_INFO("%d:[%s]", i + 1, ut_control_GetMapString(tvBacklightMode_mapTable, mode));
+        UT_LOG_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvBacklightMode_mapTable, i));
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Get user input for selecting a mode
     UT_LOG_MENU_INFO("Enter the number corresponding to the Backlight Mode: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
-    // Validate user input using if condition and return
-    if (userChoice < 1 || userChoice > count) {
+    // Validate user input: must be between 1 and tvBacklightMode_MAX - 1
+    if (userChoice < 1 || userChoice > (tvBacklightMode_MAX - 1))
+    {
         UT_LOG_ERROR("Invalid Backlight Mode selection: %d. Exiting function.", userChoice);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/BacklightControl/index/%d", userChoice - 1);
-    selectedMode = UT_KVP_PROFILE_GET_UINT32(keyValue);
+    selectedMode = userChoice - 1;
 
     // Set the selected backlight mode
-    UT_LOG_INFO("Setting BacklightMode (IN:mode:[0x%02X])", selectedMode);
-    ret = SetCurrentBacklightMode((tvBacklightMode_t)selectedMode);
-    UT_LOG_INFO("Result SetCurrentBacklightMode(IN:mode:[%s]),tvError_t:[%s]",
-        ut_control_GetMapString(tvBacklightMode_mapTable, selectedMode), ut_control_GetMapString(tvError_mapTable, ret));
-
+    UT_LOG_INFO("Setting BacklightMode (IN: mode:[%s])", UT_Control_GetMapString(tvBacklightMode_mapTable, selectedMode));
+    ret = SetCurrentBacklightMode(selectedMode);  // Removed the redundant cast
+    UT_LOG_INFO("Result Backlight mode set to: SetCurrentBacklightMode(IN: mode[%s])", UT_Control_GetMapString(tvBacklightMode_mapTable, selectedMode));
     ASSERT(ret == tvERROR_NONE);
 
     // Get the current backlight mode to confirm
-    UT_LOG_INFO("Calling GetCurrentBacklightMode(OUT:currentMode:[])");
+    UT_LOG_INFO("Calling GetCurrentBacklightMode(OUT: currentMode:[])");
     ret = GetCurrentBacklightMode(&currentMode);
-    UT_LOG_INFO("Result Got BacklightMode (OUT:currentMode:[%s]),tvError_t:[%s]",
-        ut_control_GetMapString(tvBacklightMode_mapTable, currentMode), ut_control_GetMapString(tvError_mapTable, ret));
-
+    UT_LOG_INFO("Got current BacklightMode (OUT: currentMode:[%s])tvError[%s]",
+        UT_Control_GetMapString(tvBacklightMode_mapTable, currentMode),
+        UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+
+    ASSERT_COMPARE(currentMode,selectedMode);  // Ensure the mode was set correctly
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -831,44 +887,35 @@ void test_l3_tvSettings_TVDimmingMode(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int count = 0;
-    int userChoice = 0;
-    int supportedModesArray[10] = {0}; // Adjust size if necessary
+    int32_t userChoice = 0;
     tvDimmingMode_t selectedMode = tvDimmingMode_MAX;
-    char keyValue[KEY_VALUE_SIZE] = {0};
     char currentMode[16] = {0};
     char *modeStr = NULL;
 
-    // Reading supported dimming modes from YAML
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-
-    for (int i = 0; i < count; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tDimmingMode");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","DimmingMode");
+    for (int32_t i = tvDimmingMode_Fixed; i < tvDimmingMode_MAX; i++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/DimmingMode/index/%d", i);
-        supportedModesArray[i] = UT_KVP_PROFILE_GET_UINT32(keyValue);
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvDimmingMode_mapTable, i));
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
-    // Display available dimming modes to the user
-    UT_LOG_INFO("Supported Dimming Modes:");
-    for (int i = 0; i < count; i++)
-    {
-        UT_LOG_INFO("%d:[%s]", i + 1, ut_control_GetMapString(tvDimmingMode_mapTable, supportedModesArray[i]));
-    }
 
     // Get user input for selecting a mode
     UT_LOG_MENU_INFO("Enter the number corresponding to the Dimming Mode: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Use if condition for user choice validation and return on failure
-    if (userChoice < 1 || userChoice > count)
+    if (userChoice < 1 || userChoice > tvDimmingMode_MAX)
     {
         UT_LOG_ERROR("Invalid dimming mode choice entered.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    selectedMode = (tvDimmingMode_t)supportedModesArray[userChoice - 1];
+    selectedMode = (tvDimmingMode_t)(userChoice - 1);
 
     // Map the selected mode to a string
     switch (selectedMode)
@@ -891,14 +938,15 @@ void test_l3_tvSettings_TVDimmingMode(void)
     // Set the selected dimming mode
     UT_LOG_INFO("Setting dimming mode to (IN:mode:[%s])", modeStr);
     ret = SetTVDimmingMode(modeStr);
-    UT_LOG_INFO("Result SetTVDimmingMode(IN:mode:[%s]),tvError_t:[%s]", modeStr, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetTVDimmingMode(IN:mode:[%s]),tvError_t:[%s]", modeStr, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Get and verify the current dimming mode
     UT_LOG_INFO("Calling GetTVDimmingMode(OUT:currentMode:[])");
     ret = GetTVDimmingMode(currentMode);
-    UT_LOG_INFO("Result Got TVDimmingMode (OUT:currentMode:[%s]),tvError_t:[%s]", currentMode, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result Got TVDimmingMode (OUT:currentMode:[%s]),tvError_t:[%s]", currentMode, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(modeStr,currentMode);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -923,23 +971,26 @@ void test_l3_tvSettings_LocalDimmingLevel(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int userChoice = 0;
+    int32_t userChoice = 0;
     ldimStateLevel_t levels[] = {LDIM_STATE_NONBOOST, LDIM_STATE_BOOST, LDIM_STATE_BURST};
     ldimStateLevel_t selectedLevel = LDIM_STATE_NONBOOST;
     ldimStateLevel_t currentLevel = LDIM_STATE_NONBOOST;
-    int numLevels = sizeof(levels) / sizeof(levels[0]);
+    int32_t numLevels = sizeof(levels) / sizeof(levels[0]);
 
     // Display available dimming levels to the user
-    UT_LOG_INFO("Available Local Dimming Levels:");
-    for (int i = 0; i < numLevels; ++i)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tLocalDimmingLevel");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","LocalDimmingLevel");
+    for (int32_t i = 0; i < numLevels; ++i)
     {
-        UT_LOG_INFO("%d:[%s]", i + 1, ut_control_GetMapString(ldimStateLevel_mapTable, levels[i]));
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(ldimStateLevel_mapTable, levels[i]));
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Get user input for selecting a dimming level
     UT_LOG_MENU_INFO("Enter the number corresponding to the desired Local Dimming Level: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user input and return on failure
     if (userChoice < 1 || userChoice > numLevels)
@@ -952,18 +1003,19 @@ void test_l3_tvSettings_LocalDimmingLevel(void)
     selectedLevel = levels[userChoice - 1];
 
     // Set the selected dimming level
-    UT_LOG_INFO("Calling SetLocalDimmingLevel(IN:ldimStateLevel:[%s])", ut_control_GetMapString(ldimStateLevel_mapTable, selectedLevel));
+    UT_LOG_INFO("Calling SetLocalDimmingLevel(IN:ldimStateLevel:[%s])", UT_Control_GetMapString(ldimStateLevel_mapTable, selectedLevel));
     ret = SetLocalDimmingLevel(selectedLevel);
-    UT_LOG_INFO("Result SetLocalDimmingLevel(IN:ldimStateLevel:[%s]),tvError_t:[%s]", ut_control_GetMapString(ldimStateLevel_mapTable, selectedLevel), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetLocalDimmingLevel(IN:ldimStateLevel:[%s]),tvError_t:[%s]", UT_Control_GetMapString(ldimStateLevel_mapTable, selectedLevel), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get and verify the current dimming level
     UT_LOG_INFO("Calling GetLocalDimmingLevel()");
     ret = GetLocalDimmingLevel(&currentLevel);
-    UT_LOG_INFO("Result Got LocalDimmingLevel (OUT:CurrentLevel:[%s]),tvError_t:[%s]", ut_control_GetMapString(ldimStateLevel_mapTable, currentLevel), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result Got LocalDimmingLevel (OUT:CurrentLevel:[%s]),tvError_t:[%s]", UT_Control_GetMapString(ldimStateLevel_mapTable, currentLevel), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(selectedLevel, currentLevel);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -986,13 +1038,17 @@ void test_l3_tvSettings_Brightness(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int brightness = 0;
-    int currentBrightness = 0;
+    int32_t brightness = 0;
+    int32_t currentBrightness = 0;
 
     // Prompt the user to input the desired brightness value
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tbrightness");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","brightness");
     UT_LOG_MENU_INFO("Enter the desired brightness value (0-100): ");
-    scanf("%d", &brightness);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&brightness);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Validate brightness value and return on failure
     if (brightness < 0 || brightness > 100)
@@ -1005,16 +1061,17 @@ void test_l3_tvSettings_Brightness(void)
     // Set the brightness value
     UT_LOG_INFO("Calling SetBrightness(IN:brightness:[%d])", brightness);
     ret = SetBrightness(brightness);
-    UT_LOG_INFO("Result SetBrightness(IN:brightness:[%d]),tvError_t:[%s]", brightness, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetBrightness(IN:brightness:[%d]),tvError_t:[%s]", brightness, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get the brightness value
     UT_LOG_INFO("Calling GetBrightness(OUT:brightness:[])");
     ret = GetBrightness(&currentBrightness);
-    UT_LOG_INFO("Result GotBrightness(OUT:brightness:[%d]),tvError_t:[%s]", currentBrightness, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotBrightness(OUT:brightness:[%d]),tvError_t:[%s]", currentBrightness, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(brightness, currentBrightness);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1038,13 +1095,19 @@ void test_l3_tvSettings_Contrast(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int contrast = 0;
-    int currentContrast = 0;
+    int32_t contrast = 0;
+    int32_t currentContrast = 0;
 
     // Prompt the user to input the desired contrast value
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tContrast");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","contrast");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter the desired contrast value (0-100): ");
-    scanf("%d", &contrast);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&contrast);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+
 
     // Validate contrast value and return on failure
     if (contrast < 0 || contrast > 100)
@@ -1057,16 +1120,17 @@ void test_l3_tvSettings_Contrast(void)
     // Set the contrast value
     UT_LOG_INFO("Calling SetContrast(IN:contrast:[%d])", contrast);
     ret = SetContrast(contrast);
-    UT_LOG_INFO("Result SetContrast(IN:contrast:[%d]),tvError_t:[%s]", contrast, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetContrast(IN:contrast:[%d]),tvError_t:[%s]", contrast, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get the current contrast value
     UT_LOG_INFO("Calling GetContrast(OUT:contrast:[])");
     ret = GetContrast(&currentContrast);
-    UT_LOG_INFO("Result GotContrast(OUT:contrast:[%d]),tvError_t:[%s]", currentContrast, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotContrast(OUT:contrast:[%d]),tvError_t:[%s]", currentContrast, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(contrast, currentContrast);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1090,13 +1154,18 @@ void test_l3_tvSettings_Sharpness(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int sharpness = 0;
-    int currentSharpness = 0;
+    int32_t sharpness = 0;
+    int32_t currentSharpness = 0;
 
     // Prompt the user to input the desired sharpness value
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSharpness");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Sharpness");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter the desired sharpness value (0-100): ");
-    scanf("%d", &sharpness);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&sharpness);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Validate sharpness value and return on failure
     if (sharpness < 0 || sharpness > 100)
@@ -1109,16 +1178,17 @@ void test_l3_tvSettings_Sharpness(void)
     // Set the sharpness value
     UT_LOG_INFO("Calling SetSharpness(IN:sharpness:[%d])", sharpness);
     ret = SetSharpness(sharpness);
-    UT_LOG_INFO("Result SetSharpness(IN:sharpness:[%d]),tvError_t:[%s]", sharpness, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetSharpness(IN:sharpness:[%d]),tvError_t:[%s]", sharpness, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get the current sharpness value
     UT_LOG_INFO("Calling GetSharpness(OUT:sharpness:[])");
     ret = GetSharpness(&currentSharpness);
-    UT_LOG_INFO("Result GotSharpness(OUT:sharpness:[%d]),tvError_t:[%s]", currentSharpness, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotSharpness(OUT:sharpness:[%d]),tvError_t:[%s]", currentSharpness, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(sharpness, currentSharpness);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1142,13 +1212,18 @@ void test_l3_tvSettings_Saturation(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int saturation = 0;
-    int currentSaturation = 0;
+    int32_t saturation = 0;
+    int32_t currentSaturation = 0;
 
     // Prompt the user to input the desired saturation value
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tsaturation");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","saturation");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter the desired saturation value (0-100): ");
-    scanf("%d", &saturation);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&saturation);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Validate saturation value and return on failure
     if (saturation < 0 || saturation > 100)
@@ -1161,16 +1236,17 @@ void test_l3_tvSettings_Saturation(void)
     // Set the saturation value
     UT_LOG_INFO("Calling SetSaturation(IN:saturation:[%d])", saturation);
     ret = SetSaturation(saturation);
-    UT_LOG_INFO("Result SetSaturation(IN:saturation:[%d]),tvError_t:[%s]", saturation, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetSaturation(IN:saturation:[%d]),tvError_t:[%s]", saturation, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get the current saturation value
     UT_LOG_INFO("Calling GetSaturation(OUT:saturation:[])");
     ret = GetSaturation(&currentSaturation);
-    UT_LOG_INFO("Result GotSaturation(OUT:saturation:[%d]),tvError_t:[%s]", currentSaturation, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotSaturation(OUT:saturation:[%d]),tvError_t:[%s]", currentSaturation, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(saturation, currentSaturation);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1193,13 +1269,18 @@ void test_l3_tvSettings_Hue(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int hue = 0;
-    int currentHue = 0;
+    int32_t hue = 0;
+    int32_t currentHue = 0;
 
     // Prompt the user to input the desired hue value
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\thue");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","hue");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter the desired hue value (0-100): ");
-    scanf("%d", &hue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&hue);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Validate hue value and return on failure
     if (hue < 0 || hue > 100)
@@ -1212,16 +1293,17 @@ void test_l3_tvSettings_Hue(void)
     // Set the hue value
     UT_LOG_INFO("Calling SetHue(IN:hue:[%d])", hue);
     ret = SetHue(hue);
-    UT_LOG_INFO("Result SetHue(IN:hue:[%d]),tvError_t:[%s]", hue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetHue(IN:hue:[%d]),tvError_t:[%s]", hue, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get the current hue value
     UT_LOG_INFO("Calling GetHue(OUT:hue:[])");
     ret = GetHue(&currentHue);
-    UT_LOG_INFO("Result GotHue(OUT:hue:[%d]),tvError_t:[%s]", currentHue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotHue(OUT:hue:[%d]),tvError_t:[%s]", currentHue, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(hue, currentHue);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1245,49 +1327,48 @@ void test_l3_tvSettings_ColorTemperature(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[KEY_VALUE_SIZE] = {0};
-    tvColorTemp_t supportedTemperaturesArray[tvColorTemp_MAX];
     tvColorTemp_t currentTemperature = tvColorTemp_MAX;
     tvColorTemp_t selectedTemperature = tvColorTemp_MAX;
-    int userChoice = 0;
-    int count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    int32_t userChoice = 0;
 
     // Retrieve and display supported color temperatures
-    for (int i = 0; i < count; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tcolor temperature.");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","color temperature.");
+    for (int32_t i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        supportedTemperaturesArray[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedTemperaturesArray[i]));
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the desired color temperature. value: ");
     // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice and handle invalid choice
-    if (userChoice < 1 || userChoice > count)
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid color temperature.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    selectedTemperature = supportedTemperaturesArray[userChoice - 1];
+    selectedTemperature = (userChoice - 1);
 
     // Set the selected color temperature
-    UT_LOG_INFO("Calling SetColorTemperature(IN:SelectedTemperature:[%s])", ut_control_GetMapString(tvColorTemp_mapTable, selectedTemperature));
+    UT_LOG_INFO("Calling SetColorTemperature(IN:SelectedTemperature:[%s])", UT_Control_GetMapString(tvColorTemp_mapTable, selectedTemperature));
     ret = SetColorTemperature(selectedTemperature);
-    UT_LOG_INFO("Result SetColorTemperature(IN:SelectedTemperature:[%s]),tvError_t:[%s]", ut_control_GetMapString(tvColorTemp_mapTable, selectedTemperature), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetColorTemperature(IN:SelectedTemperature:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvColorTemp_mapTable, selectedTemperature), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the current color temperature
     UT_LOG_INFO("Calling GetColorTemperature(OUT:colorTemperature:[])");
     ret = GetColorTemperature(&currentTemperature);
-    UT_LOG_INFO("Result GotColorTemperature(OUT:colorTemperature:[%s]),tvError_t:[%s]", ut_control_GetMapString(tvColorTemp_mapTable, currentTemperature), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetColorTemperature(OUT:colorTemperature:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvColorTemp_mapTable, currentTemperature), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(selectedTemperature, currentTemperature);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1311,49 +1392,47 @@ void test_l3_tvSettings_AspectRatio(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[KEY_VALUE_SIZE] = {0};
-    tvDisplayMode_t supportedAspectRatiosArray[tvDisplayMode_MAX];
     tvDisplayMode_t currentAspectRatio = tvDisplayMode_MAX;
     tvDisplayMode_t selectedAspectRatio = tvDisplayMode_MAX;
-    int userChoice = 0;
-    int count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
+    int32_t userChoice = 0;
 
     // Retrieve and display supported aspect ratios
-    for (int i = 0; i < count; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tAspect Ratio");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Aspect Ratio");
+    for (int32_t i = tvDisplayMode_4x3; i < tvDisplayMode_MAX; i++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/AspectRatio/index/%d", i);
-        supportedAspectRatiosArray[i] = (tvDisplayMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvDisplayMode_mapTable, supportedAspectRatiosArray[i]));
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvDisplayMode_mapTable, i));
     }
-
-    // Get user input for selecting an aspect ratio
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter the number corresponding to the Aspect Ratio: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice and handle invalid choice
-    if (userChoice < 1 || userChoice > count)
+    if (userChoice < 1 || userChoice > tvDisplayMode_MAX)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid aspect ratio.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    selectedAspectRatio = supportedAspectRatiosArray[userChoice - 1];
+    selectedAspectRatio = (userChoice - 1);
 
     // Set the selected aspect ratio
-    UT_LOG_INFO("Calling SetAspectRatio(IN:AspectRatio:[%s])", ut_control_GetMapString(tvDisplayMode_mapTable, selectedAspectRatio));
+    UT_LOG_INFO("Calling SetAspectRatio(IN:AspectRatio:[%s])", UT_Control_GetMapString(tvDisplayMode_mapTable, selectedAspectRatio));
     ret = SetAspectRatio(selectedAspectRatio);
-    UT_LOG_INFO("Result SetAspectRatio(IN:AspectRatio:[%s]),tvError_t:[%s]", ut_control_GetMapString(tvDisplayMode_mapTable, selectedAspectRatio), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetAspectRatio(IN:AspectRatio:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvDisplayMode_mapTable, selectedAspectRatio), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the current aspect ratio
     UT_LOG_INFO("Calling GetAspectRatio(OUT:aspectRatio:[])");
     ret = GetAspectRatio(&currentAspectRatio);
-    UT_LOG_INFO("Result GotAspectRatio(OUT:aspectRatio:[%s]),tvError_t:[%s]", ut_control_GetMapString(tvDisplayMode_mapTable, currentAspectRatio), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotAspectRatio(OUT:aspectRatio:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvDisplayMode_mapTable, currentAspectRatio), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(selectedAspectRatio, currentAspectRatio);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1378,18 +1457,17 @@ void test_l3_tvSettings_LowLatencyState(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int currentLowLatencyState = -1;
-    int userChoice = 0;
+    int32_t currentLowLatencyState = -1;
+    int32_t userChoice = 0;
 
     // Display available low latency states to the user
     UT_LOG_INFO("Available Low Latency States:");
-    UT_LOG_INFO("0: Disable");
-    UT_LOG_INFO("1: Enable");
+    UT_LOG_INFO("0. Disable");
+    UT_LOG_INFO("1. Enable");
 
     // Get user input for selecting a low latency state
     UT_LOG_MENU_INFO("Enter 0 to Disable or 1 to Enable Low Latency: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice and handle invalid input
     if (userChoice < 0 || userChoice > 1)
@@ -1402,16 +1480,17 @@ void test_l3_tvSettings_LowLatencyState(void)
     // Set the selected low latency state
     UT_LOG_INFO("Calling SetLowLatencyState(IN:LowLatencyState:[%d])", userChoice);
     ret = SetLowLatencyState(userChoice);
-    UT_LOG_INFO("Result SetLowLatencyState(IN:LowLatencyState:[%d]),tvError_t:[%s]", userChoice, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetLowLatencyState(IN:LowLatencyState:[%d]),tvError_t:[%s]", userChoice, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the current low latency state
     UT_LOG_INFO("Calling GetLowLatencyState(OUT:LowLatencyState:[])");
     ret = GetLowLatencyState(&currentLowLatencyState);
-    UT_LOG_INFO("Result GotLowLatencyState(OUT:LowLatencyState:[%d]),tvError_t:[%s]", currentLowLatencyState, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotLowLatencyState(OUT:LowLatencyState:[%d]),tvError_t:[%s]", currentLowLatencyState, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(userChoice, currentLowLatencyState);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1441,13 +1520,12 @@ void test_l3_tvSettings_DynamicContrast(void)
 
     // Display available dynamic contrast states to the user
     UT_LOG_INFO("Available Dynamic Contrast States:");
-    UT_LOG_INFO("enabled: Enable Dynamic Contrast");
-    UT_LOG_INFO("disabled: Disable Dynamic Contrast");
+    UT_LOG_INFO("enabled. Enable Dynamic Contrast");
+    UT_LOG_INFO("disabled. Disable Dynamic Contrast");
 
     // Get user input for selecting a dynamic contrast mode
     UT_LOG_MENU_INFO("Enter 'enabled' to Enable or 'disabled' to Disable Dynamic Contrast: ");
-    scanf("%s", userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readString(userChoice);
 
     // Validate user input and handle invalid choices
     if (strcmp(userChoice, "enabled") != 0 && strcmp(userChoice, "disabled") != 0)
@@ -1460,7 +1538,7 @@ void test_l3_tvSettings_DynamicContrast(void)
     // Set the selected dynamic contrast mode
     UT_LOG_INFO("Calling SetDynamicContrast(IN:DynamicContrastMode:[%s])", userChoice);
     ret = SetDynamicContrast(userChoice);
-    UT_LOG_INFO("Result SetDynamicContrast(IN:DynamicContrastMode:[%s]),tvError_t:[%s]", userChoice, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetDynamicContrast(IN:DynamicContrastMode:[%s]),tvError_t:[%s]", userChoice, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
@@ -1470,6 +1548,7 @@ void test_l3_tvSettings_DynamicContrast(void)
     UT_LOG_INFO("Result GotDynamicContrast(OUT:DynamicContrastMode:[%s])", currentDynamicContrast);
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(userChoice, currentDynamicContrast);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1503,8 +1582,7 @@ void test_l3_tvSettings_DynamicGamma(void)
 
     // Get user input for selecting a dynamic gamma value
     UT_LOG_MENU_INFO("Enter a dynamic gamma value (1.80 to 2.60): ");
-    scanf("%lf", &userGammaValue);
-    readAndDiscardRestOfLine(stdin);
+    readDouble(&userGammaValue);
 
     // Validate gamma value and handle invalid input
     if (userGammaValue < 1.80 || userGammaValue > 2.60)
@@ -1517,16 +1595,17 @@ void test_l3_tvSettings_DynamicGamma(void)
     // Set the selected dynamic gamma value
     UT_LOG_INFO("Calling SetDynamicGamma(IN: gammaValue:[%.2f])", userGammaValue);
     ret = SetDynamicGamma(userGammaValue);
-    UT_LOG_INFO("Result SetDynamicGamma(IN: gammaValue:[%.2f]),tvError_t:[%s]", userGammaValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetDynamicGamma(IN: gammaValue:[%.2f]),tvError_t:[%s]", userGammaValue, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get the current dynamic gamma value to confirm
     UT_LOG_INFO("Calling GetDynamicGamma(OUT: dynamicGamma:[])");
     ret = GetDynamicGamma(&currentDynamicGamma);
-    UT_LOG_INFO("Result GotDynamicGamma(OUT: dynamicGamma:[%.2f]),tvError_t:[%s]", currentDynamicGamma, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GotDynamicGamma(OUT: dynamicGamma:[%.2f]),tvError_t:[%s]", currentDynamicGamma, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(userGammaValue, currentDynamicGamma);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1553,48 +1632,47 @@ void test_l3_tvSettings_DolbyVisionMode(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvDolbyMode_t currentDolbyMode = tvDolbyMode_Invalid;
-    tvDolbyMode_t supportedModesArray[10];
     tvDolbyMode_t selectedMode = tvDolbyMode_Invalid;
-    int userChoice = 0;
-    char keyValue[KEY_VALUE_SIZE] = {0};
-    int count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
+    int32_t userChoice = 0;
 
     // Retrieve and display supported Dolby Vision modes
-    for (int i = 0; i < count; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tDolby Vision Mode");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Dolby Vision Mode");
+    for (int32_t i = tvDolbyMode_Dark; i <= tvHLGMode_Game; i++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/DolbyVisionMode/index/%d", i);
-        supportedModesArray[i] = (tvDolbyMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvDolbyMode_mapTable, supportedModesArray[i]));
+        UT_LOG_INFO("%d. %s]", i + 1, UT_Control_GetMapString(tvDolbyMode_mapTable, i));
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     // Get user input for selecting a mode
     UT_LOG_MENU_INFO("Enter the number corresponding to the Dolby Vision Mode: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
-    if (userChoice < 1 || userChoice > count)
+    if (userChoice < 1 || userChoice > tvMode_Max)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid Dolby Vision mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    selectedMode = supportedModesArray[userChoice - 1];
+    selectedMode = userChoice - 1;
 
     // Set the selected Dolby Vision mode
-    UT_LOG_INFO("Calling SetTVDolbyVisionMode(IN: DolbyVisionMode: [%s])", ut_control_GetMapString(tvDolbyMode_mapTable, selectedMode));
+    UT_LOG_INFO("Calling SetTVDolbyVisionMode(IN: DolbyVisionMode: [%s])", UT_Control_GetMapString(tvDolbyMode_mapTable, selectedMode));
     ret = SetTVDolbyVisionMode(selectedMode);
-    UT_LOG_INFO("Result confirmed Dolby Vision Mode: IN:DolbyVisionMode[%s],tvError_t:[%s]",
-                ut_control_GetMapString(tvDolbyMode_mapTable, currentDolbyMode), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetTVDolbyVisionMode (IN:DolbyVisionMode[%s]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvDolbyMode_mapTable, currentDolbyMode), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the current Dolby Vision mode
     UT_LOG_INFO("Calling GetTVDolbyVisionMode(OUT: dolbyMode:[])");
     ret = GetTVDolbyVisionMode(&currentDolbyMode);
-    UT_LOG_INFO("Result confirmed Dolby Vision Mode: OUT:[%s],tvError_t:[%s]",
-                ut_control_GetMapString(tvDolbyMode_mapTable, currentDolbyMode), ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetTVDolbyVisionMode(OUT:dolbyMode[%s]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvDolbyMode_mapTable, currentDolbyMode), UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(selectedMode, currentDolbyMode);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1622,56 +1700,58 @@ void test_l3_tvSettings_PictureMode(void)
     tvError_t ret = tvERROR_NONE;
     char currentPictureMode[PIC_MODE_NAME_MAX] = {0};
     char selectedPictureMode[PIC_MODE_NAME_MAX] = {0};
-    char supportedModesArray[10][PIC_MODE_NAME_MAX] = {0}; // Adjust size as needed
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
-    char pqMode[PIC_MODE_NAME_MAX] = {0};
-    unsigned int pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/range");
-    int userChoice = 0;
+    int32_t userChoice = 0;
 
-    // Retrieve and display supported picture modes
-    for (unsigned int i = 0; i < pqCount; i++)
+    // Display available modes from the tvPQModeIndex enum
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tPicture Mode");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Picture Mode");
+    for (int32_t i = PQ_MODE_STANDARD; i <= PQ_MODE_VIVID2; i++)
     {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/PictureMode/range/%d", i);
-        if (ut_kvp_getStringField(ut_kvp_profile_getInstance(), keyValue, pqMode, sizeof(pqMode)) == UT_KVP_STATUS_SUCCESS)
+        const char* modeName = UT_Control_GetMapString(tvPQModeRange_mapTable, i);
+        if (modeName != NULL)
         {
-            strncpy(supportedModesArray[i], pqMode, sizeof(supportedModesArray[i]) - 1);
+            UT_LOG_INFO("%d. %s", i, modeName);
         }
     }
-
-    // Display available modes to the user
-    UT_LOG_INFO("Supported Picture Modes:");
-    for (unsigned int i = 0; i < pqCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, supportedModesArray[i]);
-    }
-
-    // Get user input for selecting a mode
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a mode by enum value
     UT_LOG_MENU_INFO("Enter the number corresponding to the Picture Mode: ");
     scanf("%d", &userChoice);
     readAndDiscardRestOfLine(stdin);
 
-    if (userChoice < 1 || userChoice > pqCount)
+    // Validate user choice
+    if (userChoice < PQ_MODE_STANDARD || userChoice > PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid picture mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    strncpy(selectedPictureMode, supportedModesArray[userChoice - 1], sizeof(selectedPictureMode) - 1);
+    // Convert enum value to the corresponding picture mode string using the map table
+    const char* modeString = UT_Control_GetMapString(tvPQModeRange_mapTable, userChoice);
+    if (modeString == NULL)
+    {
+        UT_LOG_ERROR("Invalid picture mode selected.");
+        return;
+    }
+    strncpy(selectedPictureMode, modeString, sizeof(selectedPictureMode) - 1);
 
     // Set the selected picture mode
-    UT_LOG_INFO("Calling SetTVPictureMode(IN: %s)", selectedPictureMode);
+    UT_LOG_INFO("Calling SetTVPictureMode(IN: selectedPictureMode[%s])", selectedPictureMode);
     ret = SetTVPictureMode(selectedPictureMode);
-    UT_LOG_INFO("Result set Picture Mode to IN: [%s],tvError_t:[%s]", selectedPictureMode, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetTVPictureMode( IN: selectedPictureMode[%s]), tvError_t:[%s]", selectedPictureMode, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the current picture mode
-    UT_LOG_INFO("Calling GetTVPictureMode(OUT: currentPictureMode: [])");
+    UT_LOG_INFO("Calling GetTVPictureMode(OUT: currentPictureMode[])");
     ret = GetTVPictureMode(currentPictureMode);
-    UT_LOG_INFO("Result confirmed Picture Mode: OUT:[%s],tvError_t:[%s]", currentPictureMode, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetTVPictureMode(OUT:currentPictureMode[%s]), tvError_t:[%s]", currentPictureMode, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(selectedPictureMode, currentPictureMode);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1692,65 +1772,72 @@ void test_l3_tvSettings_PictureMode(void)
 void test_l3_tvSettings_ColorTempRgain(void)
 {
     // Initialize test ID and log entry
-    gTestID = 27;
+    gTestID = 24;
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
     tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
-    int rgainValue = 0;
-    int retrievedRgain = 0;
-    int saveOnly = 0; // 0 for set, 1 for save
-    unsigned int colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    tvColorTemp_t supportedColorTemps[10]; // Adjust size as needed
-    unsigned int i;
-    int userChoice = 0;
-
-    // Retrieve and display supported color temperatures
-    for (i = 0; i < colorTempCount; i++)
-    {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/ColorTemperature/index/%d", i);
-        supportedColorTemps[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
-
-    UT_LOG_INFO("Supported Color Temperatures:");
-    for (i = 0; i < colorTempCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedColorTemps[i]));
-    }
-
-    // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
-
-    if (userChoice < 1 || userChoice > colorTempCount)
-    {
-        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    selectedColorTemp = supportedColorTemps[userChoice - 1];
+    int32_t rgainValue = 0;
+    int32_t retrievedRgain = 0;
+    int32_t saveOnly = 0; // 0 for set, 1 for save
+    uint32_t i;
+    int32_t userChoice = 0;
 
     // Get user input for selecting a source
-    UT_LOG_MENU_INFO("Enter the Source ID (0 for HDMI, 1 for TV, 2 for AV, -1 for All Sources): ");
-    scanf("%d", (int*)&selectedSourceId);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSource Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
+    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
+    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
 
-    if (selectedSourceId < -1 || selectedSourceId > 2)
+    readInt(&selectedSourceId);
+
+    if (selectedSourceId < 0 || selectedSourceId > 3)
     {
         UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","ColorTemperature");
+    for (i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
     // Get user input for rgain value
     UT_LOG_MENU_INFO("Enter the Rgain Value (0 - 2047): ");
-    scanf("%d", &rgainValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&rgainValue);
 
     if (rgainValue < 0 || rgainValue > 2047)
     {
@@ -1760,38 +1847,51 @@ void test_l3_tvSettings_ColorTempRgain(void)
     }
 
     // Get user input for saveOnly flag
-    UT_LOG_MENU_INFO("Enter SaveOnly flag (0 for Set, 1 for Save): ");
-    scanf("%d", &saveOnly);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSaveOnly Flag Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","SaveOnly Flag");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "Set");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "Save");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the Flag Selection:");
+
+    readInt(&saveOnly);
 
     if (saveOnly < 0 || saveOnly > 1)
     {
-        UT_LOG_ERROR("Invalid SaveOnly value: [%d]", saveOnly);
+        UT_LOG_ERROR("Invalid SaveOnly flag: [%d]", saveOnly);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
     // Set the rgain value
     UT_LOG_INFO("Calling SetColorTemp_Rgain_onSource(IN:Color Temperature:[%s], IN:Rgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d])",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 rgainValue,
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_Rgain_onSource(selectedColorTemp, rgainValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result set Rgain Value to IN:Color Temperature:[%s], IN:Rgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+    UT_LOG_INFO("Result SetColorTemp_Rgain_onSource(IN:Color Temperature:[%s], IN:Rgain:[%d], IN:Source ID:[%s],IN:SaveOnly:[%d]), tvError_t:[%s]",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 rgainValue,
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
-                saveOnly);
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                saveOnly,
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the rgain value
     UT_LOG_INFO("Calling GetColorTemp_Rgain_onSource(IN:Color Temperature:[%s], OUT:rgain[], IN:Source ID:[%s])",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ret = GetColorTemp_Rgain_onSource(selectedColorTemp, &retrievedRgain, selectedSourceId);
-    UT_LOG_INFO("Result confirmed Rgain Value: OUT:[%d]IN:Color Temperature:[%s],IN:Source ID:[%s],tvError_t:[%s]", retrievedRgain,selectedColorTemp,selectedSourceId,ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetColorTemp_Rgain_onSource(OUT:[%d]IN:Color Temperature:[%s],IN:Source ID:[%s]),tvError_t:[%s]",
+                  retrievedRgain,
+                  UT_Control_GetMapString(tvColorTemp_mapTable,selectedColorTemp),
+                  UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                  UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(rgainValue, retrievedRgain);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1812,65 +1912,72 @@ void test_l3_tvSettings_ColorTempRgain(void)
 void test_l3_tvSettings_ColorTempGgain(void)
 {
     // Initialize test ID and log entry
-    gTestID = 25;
+    gTestID = 25;  // Adjust Test ID for Ggain
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
     tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
-    int ggainValue = 0;
-    int retrievedGgain = 0;
-    int saveOnly = 0;
-    unsigned int colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    tvColorTemp_t supportedColorTemps[10]; // Adjust size as needed
-    unsigned int i;
-    int userChoice = 0;
-
-    // Retrieve and display supported color temperatures
-    for (i = 0; i < colorTempCount; i++)
-    {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/ColorTemperature/index/%d", i);
-        supportedColorTemps[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
-
-    UT_LOG_INFO("Supported Color Temperatures:");
-    for (i = 0; i < colorTempCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedColorTemps[i]));
-    }
-
-    // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
-
-    if (userChoice < 1 || userChoice > colorTempCount)
-    {
-        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    selectedColorTemp = supportedColorTemps[userChoice - 1];
+    int32_t ggainValue = 0;
+    int32_t retrievedGgain = 0;
+    int32_t saveOnly = 0; // 0 for set, 1 for save
+    uint32_t i;
+    int32_t userChoice = 0;
 
     // Get user input for selecting a source
-    UT_LOG_MENU_INFO("Enter the Source ID (0 for HDMI, 1 for TV, 2 for AV, -1 for All Sources): ");
-    scanf("%d", (int*)&selectedSourceId);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSource Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
+    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
+    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
 
-    if (selectedSourceId < -1 || selectedSourceId > 2)
+    readInt(&selectedSourceId);
+
+    if (selectedSourceId < 0 || selectedSourceId > 3)
     {
         UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Get user input for ggain value
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","ColorTemperature");
+    for (i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
+    // Get user input for Ggain value
     UT_LOG_MENU_INFO("Enter the Ggain Value (0 - 2047): ");
-    scanf("%d", &ggainValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&ggainValue);
 
     if (ggainValue < 0 || ggainValue > 2047)
     {
@@ -1880,43 +1987,51 @@ void test_l3_tvSettings_ColorTempGgain(void)
     }
 
     // Get user input for saveOnly flag
-    UT_LOG_MENU_INFO("Enter SaveOnly flag (0 for Set, 1 for Save): ");
-    scanf("%d", &saveOnly);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSaveOnly Flag Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","SaveOnly Flag");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "Set");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "Save");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the Flag Selection:");
+
+    readInt(&saveOnly);
 
     if (saveOnly < 0 || saveOnly > 1)
     {
-        UT_LOG_ERROR("Invalid SaveOnly value: [%d]", saveOnly);
+        UT_LOG_ERROR("Invalid SaveOnly flag: [%d]", saveOnly);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Set the ggain value
-    UT_LOG_INFO("Setting Ggain Value IN:ColorTemperature:[%s], IN:Ggain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+    // Set the Ggain value
+    UT_LOG_INFO("Calling SetColorTemp_Ggain_onSource(IN:Color Temperature:[%s], IN:Ggain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 ggainValue,
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_Ggain_onSource(selectedColorTemp, ggainValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result Set Ggain Value IN:ColorTemperature:[%s], IN:Ggain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+    UT_LOG_INFO("Result SetColorTemp_Ggain_onSource( IN:Color Temperature:[%s], IN:Ggain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%s]), tvError_t:[%d]",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 ggainValue,
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
-                ut_control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ASSERT(ret == tvERROR_NONE);
 
-    // Verify the ggain value
-    UT_LOG_INFO("Getting Ggain Value IN:ColorTemperature:[%s],OUT:Ggain[], IN:Source ID:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+    // Get and confirm the Ggain value
+    UT_LOG_INFO("Calling GetColorTemp_Ggain_onSource(IN:Color Temperature:[%s], OUT:ggain[], IN:Source ID:[%s])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ret = GetColorTemp_Ggain_onSource(selectedColorTemp, &retrievedGgain, selectedSourceId);
-    UT_LOG_INFO("Result Got Ggain Value IN:ColorTemperature:[%s], IN:Source ID:[%s], OUT:Ggain:[%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+    UT_LOG_INFO("Result GetColorTemp_Ggain_onSource( IN:Color Temperature:[%s],OUT:ggain[%d] , IN:Source ID:[%s]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 retrievedGgain,
-                ut_control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(ggainValue,retrievedGgain);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1937,65 +2052,72 @@ void test_l3_tvSettings_ColorTempGgain(void)
 void test_l3_tvSettings_ColorTempBgain(void)
 {
     // Initialize test ID and log entry
-    gTestID = 26;
+    gTestID = 26;  // Adjust Test ID for Bgain
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
     tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
-    int bgainValue = 0;
-    int retrievedBgain = 0;
-    int saveOnly = 0;
-    unsigned int colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-    tvColorTemp_t supportedColorTemps[10]; // Adjust size as needed
-    unsigned int i;
-    int userChoice = 0;
-
-    // Retrieve and display supported color temperatures
-    for (i = 0; i < colorTempCount; i++)
-    {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/ColorTemperature/index/%d", i);
-        supportedColorTemps[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
-
-    UT_LOG_INFO("Supported Color Temperatures:");
-    for (i = 0; i < colorTempCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedColorTemps[i]));
-    }
-
-    // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
-
-    if (userChoice < 1 || userChoice > colorTempCount)
-    {
-        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    selectedColorTemp = supportedColorTemps[userChoice - 1];
+    int32_t bgainValue = 0;
+    int32_t retrievedBgain = 0;
+    int32_t saveOnly = 0; // 0 for set, 1 for save
+    uint32_t i;
+    int32_t userChoice = 0;
 
     // Get user input for selecting a source
-    UT_LOG_MENU_INFO("Enter the Source ID (0 for HDMI, 1 for TV, 2 for AV, -1 for All Sources): ");
-    scanf("%d", (int*)&selectedSourceId);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSource Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
+    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
+    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
 
-    if (selectedSourceId < -1 || selectedSourceId > 2)
+    readInt(&selectedSourceId);
+
+    if (selectedSourceId < 0 || selectedSourceId > 3)
     {
         UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Get user input for bgain value
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","ColorTemperature");
+    for (i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
+    // Get user input for Bgain value
     UT_LOG_MENU_INFO("Enter the Bgain Value (0 - 2047): ");
-    scanf("%d", &bgainValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&bgainValue);
 
     if (bgainValue < 0 || bgainValue > 2047)
     {
@@ -2005,43 +2127,50 @@ void test_l3_tvSettings_ColorTempBgain(void)
     }
 
     // Get user input for saveOnly flag
-    UT_LOG_MENU_INFO("Enter SaveOnly flag (0 for Set, 1 for Save): ");
-    scanf("%d", &saveOnly);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSaveOnly Flag Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","SaveOnly Flag");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "Set");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "Save");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the Flag Selection:");
+
+    readInt(&saveOnly);
 
     if (saveOnly < 0 || saveOnly > 1)
     {
-        UT_LOG_ERROR("Invalid SaveOnly value: [%d]", saveOnly);
+        UT_LOG_ERROR("Invalid SaveOnly flag: [%d]", saveOnly);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Set the bgain value
-    UT_LOG_INFO("Setting Bgain Value IN:ColorTemperature:[%s], IN:Bgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+    // Set the Bgain value
+    UT_LOG_INFO("Calling SetColorTemp_Bgain_onSource(IN:Color Temperature:[%s], IN:Bgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 bgainValue,
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_Bgain_onSource(selectedColorTemp, bgainValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result Set Bgain Value IN:ColorTemperature:[%s], IN:Bgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+    UT_LOG_INFO("Result SetColorTemp_Bgain_onSource(IN:Color Temperature:[%s], IN:Bgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 bgainValue,
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
-                ut_control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ASSERT(ret == tvERROR_NONE);
 
-    // Verify the bgain value
-    UT_LOG_INFO("Getting Bgain Value IN:ColorTemperature:[%s],OUT:Bgain[] IN:Source ID:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+    // Get and confirm the Bgain value
+    UT_LOG_INFO("Calling GetColorTemp_Bgain_onSource(IN:Color Temperature:[%s], OUT:bgain[], IN:Source ID:[%s])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ret = GetColorTemp_Bgain_onSource(selectedColorTemp, &retrievedBgain, selectedSourceId);
-    UT_LOG_INFO("Result Got Bgain Value IN:ColorTemperature:[%s], IN:Source ID:[%s], OUT:Bgain:[%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+    UT_LOG_INFO("Result GetColorTemp_Bgain_onSource(IN:Color Temperature:[%s],OUT:bgain[%d], IN:Source ID:[%s]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 retrievedBgain,
-                ut_control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(bgainValue, retrievedBgain);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2068,63 +2197,67 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
     tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
-    int rpostoffsetValue = 0;
-    int retrievedRpostoffset = 0;
-    int saveOnly = 0;
-    int userChoice = 0;
-    unsigned int colorTempCount = 0;
-    tvColorTemp_t supportedColorTemps[10]; // Adjust size as needed
-    unsigned int i = 0;
-
-    // Check if there are supported color temperatures
-    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-
-    // Retrieve and display supported color temperatures
-    for (i = 0; i < colorTempCount; i++)
-    {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/ColorTemperature/index/%d", i);
-        supportedColorTemps[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
-
-    UT_LOG_INFO("Supported Color Temperatures:");
-    for (i = 0; i < colorTempCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedColorTemps[i]));
-    }
-
-    // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
-
-    if (userChoice < 1 || userChoice > colorTempCount)
-    {
-        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    selectedColorTemp = supportedColorTemps[userChoice - 1];
+    int32_t rpostoffsetValue = 0;
+    int32_t retrievedRpostoffset = 0;
+    int32_t saveOnly = 0; // 0 for set, 1 for save
+    uint32_t i;
+    int32_t userChoice = 0;
 
     // Get user input for selecting a source
-    UT_LOG_MENU_INFO("Enter the Source ID (0 for HDMI, 1 for TV, 2 for AV, -1 for All Sources): ");
-    scanf("%d", (int*)&selectedSourceId);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSource Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
+    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
+    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
 
-    if (selectedSourceId < -1 || selectedSourceId > 2)
+    readInt(&selectedSourceId);
+
+    if (selectedSourceId < 0 || selectedSourceId > 3)
     {
         UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "ColorTemperature");
+    for (i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
     // Get user input for rpostoffset value
     UT_LOG_MENU_INFO("Enter the Rpostoffset Value (-1024 to 1023): ");
-    scanf("%d", &rpostoffsetValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&rpostoffsetValue);
 
     if (rpostoffsetValue < -1024 || rpostoffsetValue > 1023)
     {
@@ -2134,40 +2267,48 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
     }
 
     // Get user input for saveOnly flag
-    UT_LOG_MENU_INFO("Enter SaveOnly flag (0 for Set, 1 for Save): ");
-    scanf("%d", &saveOnly);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSaveOnly Flag Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","SaveOnly Flag");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "Set");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "Save");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the Flag Selection:");
+
+    readInt(&saveOnly);
 
     if (saveOnly < 0 || saveOnly > 1)
     {
-        UT_LOG_ERROR("Invalid SaveOnly value: [%d]", saveOnly);
+        UT_LOG_ERROR("Invalid SaveOnly flag: [%d]", saveOnly);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
     // Set the rpostoffset value
-    UT_LOG_INFO("Setting Rpostoffset Value IN:rpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d]",
+    UT_LOG_INFO("Calling  SetColorTemp_R_post_offset_onSource(IN:rpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d])",
                 rpostoffsetValue,
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_R_post_offset_onSource(selectedColorTemp, rpostoffsetValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result Set Rpostoffset Value IN:rpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d],tvError_t:[%s]",
-            rpostoffsetValue,
-            ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-            ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
-            saveOnly,
-            ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetColorTemp_R_post_offset_onSource(IN:rpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d]),tvError_t:[%s]",
+                rpostoffsetValue,
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                saveOnly,
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the rpostoffset value
-    UT_LOG_INFO("Getting Rpostoffset Value IN:ColorTemperature:[%s], OUT:Rpostoffset[], IN:Source ID:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+    UT_LOG_INFO("calling GetColorTemp_R_post_offset_onSource(IN:ColorTemperature:[%s], OUT:Rpostoffset[], IN:Source ID:[%s])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ret = GetColorTemp_R_post_offset_onSource(selectedColorTemp, &retrievedRpostoffset, selectedSourceId);
-    UT_LOG_INFO("Result Got Rpostoffset Value IN:rpostoffset:[%d], OUT:rpostoffset:[%d]",
-            rpostoffsetValue, retrievedRpostoffset);
+    UT_LOG_INFO("Result GetColorTemp_R_post_offset_onSource(IN:rpostoffset:[%d], OUT:rpostoffset:[%d])tvError_t[%s]",
+                rpostoffsetValue, retrievedRpostoffset,UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(rpostoffsetValue, retrievedRpostoffset);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2189,68 +2330,72 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
 void test_l3_tvSettings_ColorTempGpostoffset(void)
 {
     // Initialize test ID and log entry
-    gTestID = 28;
+    gTestID = 28; // Update the test ID as needed
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
     tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
-    int gpostoffsetValue = 0;
-    int retrievedGpostoffset = 0;
-    int saveOnly = 0;
-    int userChoice = 0;
-    unsigned int colorTempCount = 0;
-    tvColorTemp_t supportedColorTemps[10]; // Adjust size as needed
-    unsigned int i = 0;
-
-    // Check if there are supported color temperatures
-    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-
-    // Retrieve and display supported color temperatures
-    for (i = 0; i < colorTempCount; i++)
-    {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/ColorTemperature/index/%d", i);
-        supportedColorTemps[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
-
-    UT_LOG_INFO("Supported Color Temperatures:");
-    for (i = 0; i < colorTempCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedColorTemps[i]));
-    }
-
-    // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
-
-    if (userChoice < 1 || userChoice > colorTempCount)
-    {
-        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    selectedColorTemp = supportedColorTemps[userChoice - 1];
+    int32_t gpostoffsetValue = 0;
+    int32_t retrievedGpostoffset = 0;
+    int32_t saveOnly = 0; // 0 for set, 1 for save
+    uint32_t i;
+    int32_t userChoice = 0;
 
     // Get user input for selecting a source
-    UT_LOG_MENU_INFO("Enter the Source ID (0 for HDMI, 1 for TV, 2 for AV, -1 for All Sources): ");
-    scanf("%d", (int*)&selectedSourceId);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSource Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
+    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
+    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
 
-    if (selectedSourceId < -1 || selectedSourceId > 2)
+    readInt(&selectedSourceId);
+
+    if (selectedSourceId < 0 || selectedSourceId > 3)
     {
         UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "ColorTemperature");
+    for (i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
     // Get user input for gpostoffset value
     UT_LOG_MENU_INFO("Enter the Gpostoffset Value (-1024 to 1023): ");
-    scanf("%d", &gpostoffsetValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&gpostoffsetValue);
 
     if (gpostoffsetValue < -1024 || gpostoffsetValue > 1023)
     {
@@ -2259,41 +2404,48 @@ void test_l3_tvSettings_ColorTempGpostoffset(void)
         return;
     }
 
-    // Get user input for saveOnly flag
-    UT_LOG_MENU_INFO("Enter SaveOnly flag (0 for Set, 1 for Save): ");
-    scanf("%d", &saveOnly);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSaveOnly Flag Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","SaveOnly Flag");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "Set");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "Save");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the Flag Selection:");
+
+    readInt(&saveOnly);
 
     if (saveOnly < 0 || saveOnly > 1)
     {
-        UT_LOG_ERROR("Invalid SaveOnly value: [%d]", saveOnly);
+        UT_LOG_ERROR("Invalid SaveOnly flag: [%d]", saveOnly);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
     // Set the gpostoffset value
-    UT_LOG_INFO("Setting Gpostoffset Value IN:gpostoffset:[%d], IN:Color Temperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d]",
+    UT_LOG_INFO("Calling SetColorTemp_G_post_offset_onSource(IN:gpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d])",
                 gpostoffsetValue,
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_G_post_offset_onSource(selectedColorTemp, gpostoffsetValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result Set Gpostoffset Value IN:gpostoffset:[%d], IN:Color Temperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d],tvError_t:[%s]",
+    UT_LOG_INFO("Result SetColorTemp_G_post_offset_onSource(IN:gpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d]),tvError_t:[%s]",
                 gpostoffsetValue,
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
-                ut_control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the gpostoffset value
-    UT_LOG_INFO("Getting Gpostoffset Value IN:Color Temperature:[%s], OUT:Gpostoffset[], IN:Source ID:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+    UT_LOG_INFO("Calling GetColorTemp_G_post_offset_onSource(IN:ColorTemperature:[%s], OUT:Gpostoffset[], IN:Source ID:[%s])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ret = GetColorTemp_G_post_offset_onSource(selectedColorTemp, &retrievedGpostoffset, selectedSourceId);
-    UT_LOG_INFO("Result Got Gpostoffset Value IN:gpostoffset:[%d], OUT:gpostoffset:[%d],tvError_t:[%s]",
-                gpostoffsetValue, retrievedGpostoffset, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetColorTemp_G_post_offset_onSource(IN:gpostoffset:[%d], OUT:gpostoffset:[%d])tvError_t:[%s]",
+                gpostoffsetValue, retrievedGpostoffset,UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(gpostoffsetValue, retrievedGpostoffset);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2315,68 +2467,77 @@ void test_l3_tvSettings_ColorTempGpostoffset(void)
 void test_l3_tvSettings_ColorTempBpostoffset(void)
 {
     // Initialize test ID and log entry
-    gTestID = 29;
+    gTestID = 29; // Update the test ID as needed
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
     tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
-    int bpostoffsetValue = 0;
-    int retrievedBpostoffset = 0;
-    int saveOnly = 0;
-    int userChoice = 0;
-    unsigned int colorTempCount = 0;
-    tvColorTemp_t supportedColorTemps[10]; // Adjust size as needed
-    unsigned int i = 0;
-
-    // Check if there are supported color temperatures
-    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-
-    // Retrieve and display supported color temperatures
-    for (i = 0; i < colorTempCount; i++)
-    {
-        snprintf(keyValue, sizeof(keyValue), "tvSettings/ColorTemperature/index/%d", i);
-        supportedColorTemps[i] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
-
-    UT_LOG_INFO("Supported Color Temperatures:");
-    for (i = 0; i < colorTempCount; i++)
-    {
-        UT_LOG_INFO("%d: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedColorTemps[i]));
-    }
-
-    // Get user input for selecting a color temperature
-    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
-
-    if (userChoice < 1 || userChoice > colorTempCount)
-    {
-        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    selectedColorTemp = supportedColorTemps[userChoice - 1];
+    int32_t bpostoffsetValue = 0;
+    int32_t retrievedBpostoffset = 0;
+    int32_t saveOnly = 0; // 0 for set, 1 for save
+    int32_t userChoice = 0;
 
     // Get user input for selecting a source
-    UT_LOG_MENU_INFO("Enter the Source ID (0 for HDMI, 1 for TV, 2 for AV, -1 for All Sources): ");
-    scanf("%d", (int*)&selectedSourceId);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSource Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
+    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
+    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
 
-    if (selectedSourceId < -1 || selectedSourceId > 2)
+    readInt(&selectedSourceId);
+
+    if (selectedSourceId < 0 || selectedSourceId > 3)
     {
         UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Convert 3 (All Sources) to -1 before passing it to the function
+    if (selectedSourceId == 3)
+    {
+        selectedSourceId = -1;
+    }
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "ColorTemperature");
+    for (uint32_t i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
     // Get user input for bpostoffset value
     UT_LOG_MENU_INFO("Enter the Bpostoffset Value (-1024 to 1023): ");
-    scanf("%d", &bpostoffsetValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&bpostoffsetValue);
 
     if (bpostoffsetValue < -1024 || bpostoffsetValue > 1023)
     {
@@ -2386,40 +2547,48 @@ void test_l3_tvSettings_ColorTempBpostoffset(void)
     }
 
     // Get user input for saveOnly flag
-    UT_LOG_MENU_INFO("Enter SaveOnly flag (0 for Set, 1 for Save): ");
-    scanf("%d", &saveOnly);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSaveOnly Flag Selection");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s","SaveOnly Flag");
+    UT_LOG_MENU_INFO("\t0.  %-30s", "Set");
+    UT_LOG_MENU_INFO("\t1.  %-30s", "Save");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter the Flag Selection:");
+
+    readInt(&saveOnly);
 
     if (saveOnly < 0 || saveOnly > 1)
     {
-        UT_LOG_ERROR("Invalid SaveOnly value: [%d]", saveOnly);
+        UT_LOG_ERROR("Invalid SaveOnly flag: [%d]", saveOnly);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
     // Set the bpostoffset value
-    UT_LOG_INFO("Setting Bpostoffset Value IN:bpostoffset:[%d], IN:Color Temperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d]",
+    UT_LOG_INFO("Calling SetColorTemp_B_post_offset_onSource(IN:bpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d])",
                 bpostoffsetValue,
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_B_post_offset_onSource(selectedColorTemp, bpostoffsetValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result Set Bpostoffset Value IN:bpostoffset:[%d], IN:Color Temperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d],tvError_t:[%s]",
+    UT_LOG_INFO("Result SetColorTemp_B_post_offset_onSource(IN:bpostoffset:[%d], IN:ColorTemperature:[%s], IN:Source ID:[%s], IN:SaveOnly:[%d]),tvError_t:[%s]",
                 bpostoffsetValue,
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
-                ut_control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the bpostoffset value
-    UT_LOG_INFO("Getting Bpostoffset Value IN:Color Temperature:[%s], OUT:bpostoffset[], IN:Source ID:[%s]",
-                ut_control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
-                ut_control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+    UT_LOG_INFO("Calling GetColorTemp_B_post_offset_onSource ( IN:ColorTemperature:[%s], OUT:Bpostoffset[], IN:Source ID:[%s])",
+                UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
     ret = GetColorTemp_B_post_offset_onSource(selectedColorTemp, &retrievedBpostoffset, selectedSourceId);
-    UT_LOG_INFO("Result Got Bpostoffset Value IN:bpostoffset:[%d], OUT:bpostoffset:[%d],tvError_t:[%s]",
-                bpostoffsetValue, retrievedBpostoffset, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetColorTemp_B_post_offset_onSource(IN:bpostoffset:[%d], OUT:bpostoffset:[%d]) tvError_t[%s]",
+                bpostoffsetValue, retrievedBpostoffset,UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(bpostoffsetValue, retrievedBpostoffset);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2449,10 +2618,9 @@ void test_l3_tvSettings_WBCalibrationMode(void)
     bool retrievedWbMode = false;
 
     // Get user input for enabling or disabling WB mode
-    int userChoice = 0;
+    int32_t userChoice = 0;
     UT_LOG_MENU_INFO("Enter 1 to Enable WB Calibration Mode, 0 to Disable: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     if (userChoice != 0 && userChoice != 1)
     {
@@ -2464,16 +2632,17 @@ void test_l3_tvSettings_WBCalibrationMode(void)
     setWbMode = (userChoice == 1);
 
     // Enable or Disable WB Calibration Mode
-    UT_LOG_INFO("Setting WB Calibration Mode to IN: [%s]", setWbMode ? "Enabled" : "Disabled");
+    UT_LOG_INFO("Calling EnableWBCalibrationMode (IN: setWbMode[%s])", setWbMode ? "Enabled" : "Disabled");
     ret = EnableWBCalibrationMode(setWbMode);
-    UT_LOG_INFO("Result Set WB Calibration Mode IN: [%s],tvError_t:[%s]", setWbMode ? "Enabled" : "Disabled", ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result EnableWBCalibrationMode (IN: setWbMode[%s]),tvError_t:[%s]", setWbMode ? "Enabled" : "Disabled", UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the current WB mode
-    UT_LOG_INFO("Getting Current WB Calibration Mode");
+    UT_LOG_INFO("Calling GetCurrentWBCalibrationMode(OUT:[])");
     ret = GetCurrentWBCalibrationMode(&retrievedWbMode);
-    UT_LOG_INFO("Result Got WB Calibration Mode OUT: [%s],tvError_t:[%s]", retrievedWbMode ? "Enabled" : "Disabled", ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetCurrentWBCalibrationMode(OUT: retrievedWbMode[%s]),tvError_t:[%s]", retrievedWbMode ? "Enabled" : "Disabled", UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(setWbMode, retrievedWbMode);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2507,12 +2676,10 @@ void test_l3_tvSettings_GammaTable(void)
     unsigned short retrievedData_R[256] = {0};
     unsigned short retrievedData_G[256] = {0};
     unsigned short retrievedData_B[256] = {0};
-    bool match = true;
 
     // Get user input for the size of the gamma table
     UT_LOG_MENU_INFO("Enter the size of the gamma table (1 - 255): ");
-    scanf("%hu", &size);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int32_t*)&size);
 
     if (size < 1 || size > 255)
     {
@@ -2526,7 +2693,8 @@ void test_l3_tvSettings_GammaTable(void)
     for (unsigned short i = 0; i < size; i++)
     {
         scanf("%hu", &pData_R[i]);
-        if (pData_R[i] > 1023) {
+        if (pData_R[i] > 1023)
+        {
             UT_LOG_ERROR("Invalid value for Red at position %hu! Please enter a value between 0 and 1023.", i + 1);
             UT_LOG_INFO("Out %s", __FUNCTION__);
             return;
@@ -2553,7 +2721,8 @@ void test_l3_tvSettings_GammaTable(void)
     for (unsigned short i = 0; i < size; i++)
     {
         scanf("%hu", &pData_B[i]);
-        if (pData_B[i] > 1023) {
+        if (pData_B[i] > 1023)
+        {
             UT_LOG_ERROR("Invalid value for Blue at position %hu! Please enter a value between 0 and 1023.", i + 1);
             UT_LOG_INFO("Out %s", __FUNCTION__);
             return;
@@ -2562,16 +2731,19 @@ void test_l3_tvSettings_GammaTable(void)
     readAndDiscardRestOfLine(stdin);
 
     // Set the gamma table values
-    UT_LOG_INFO("Setting Gamma Table Values IN: size[%hu]", size);
+    UT_LOG_INFO("Calling SetGammaTable( IN: size[%hu])", size);
     ret = SetGammaTable(pData_R, pData_G, pData_B, size);
-    UT_LOG_INFO("Result Set Gamma Table Values IN:size:[%hu],tvError_t:[%s]", size, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetGammaTable(IN:size:[%hu]),tvError_t:[%s]", size, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the gamma table values
-    UT_LOG_INFO("Getting Gamma Table Values OUT: size[%hu]", size);
+    UT_LOG_INFO("Calling  GetGammaTable (OUT: size[%hu])", size);
     ret = GetGammaTable(retrievedData_R, retrievedData_G, retrievedData_B, size);
-    UT_LOG_INFO("Result Got Gamma Table Values OUT: size[%hu],tvError_t:[%s]", size, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetGammaTable( OUT: size[%hu]),tvError_t:[%s]", size, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(pData_R, retrievedData_R);
+    ASSERT_COMPARE(pData_G, retrievedData_G);
+    ASSERT_COMPARE(pData_B, retrievedData_B);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -2597,13 +2769,12 @@ void test_l3_tvSettings_DvTmaxValue(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    int tmaxValue = 0;
-    int retrievedTmaxValue = 0;
+    int32_t tmaxValue = 0;
+    int32_t retrievedTmaxValue = 0;
 
     // Get user input for the TMAX value
     UT_LOG_MENU_INFO("Enter the Dolby Vision TMAX value (0 - 10000): ");
-    scanf("%d", &tmaxValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&tmaxValue);
 
     if (tmaxValue < 0 || tmaxValue > 10000)
     {
@@ -2613,16 +2784,17 @@ void test_l3_tvSettings_DvTmaxValue(void)
     }
 
     // Set the Dolby Vision TMAX value
-    UT_LOG_INFO("Setting Dolby Vision TMAX value IN: [%d],tvError_t:[%s]", tmaxValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Calling SetDvTmaxValue(IN: tmaxValue[%d])", tmaxValue);
     ret = SetDvTmaxValue(tmaxValue);
-    UT_LOG_INFO("Result Set Dolby Vision TMAX value IN: [%d]", tmaxValue);
+    UT_LOG_INFO("Result SetDvTmaxValue(IN:tmaxValue [%d]),tvError_t[%s]", tmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the Dolby Vision TMAX value
-    UT_LOG_INFO("Getting Dolby Vision TMAX value OUT");
+    UT_LOG_INFO("Calling GetDvTmaxValue(OUT:retrievedTmaxValue[]");
     ret = GetDvTmaxValue(&retrievedTmaxValue);
-    UT_LOG_INFO("Result Got Dolby Vision TMAX value OUT: [%d],tvError_t:[%s]", retrievedTmaxValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetDvTmaxValue(OUT: retrievedTmaxValue[%d]),tvError_t:[%s]", retrievedTmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(tmaxValue, retrievedTmaxValue);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2650,12 +2822,11 @@ void test_l3_tvSettings_CMSState(void)
     tvError_t ret = tvERROR_NONE;
     bool enableCMSState = false;
     bool retrievedCMSState = false;
-    int userChoice = 0;
+    int32_t userChoice = 0;
 
     // Get user input to set CMS state
     UT_LOG_MENU_INFO("Enter CMS state to set (1 for Enable, 0 for Disable): ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     if (userChoice == 1)
     {
@@ -2671,16 +2842,17 @@ void test_l3_tvSettings_CMSState(void)
     }
 
     // Set the CMS state
-    UT_LOG_INFO("Setting CMS state IN: [%d]", enableCMSState);
+    UT_LOG_INFO("Calling SetCMSState(IN: enableCMSState[%d])", enableCMSState);
     ret = SetCMSState(enableCMSState);
-    UT_LOG_INFO("Result Set CMS state IN: [%d], tvError_t:[%s]", enableCMSState, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetCMSState(IN: enableCMSState[%d]), tvError_t:[%s]", enableCMSState, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Retrieve and validate the CMS state
-    UT_LOG_INFO("Getting current CMS state OUT");
+    UT_LOG_INFO("Calling GetCMSState OUT:retrievedCMSState[]");
     ret = GetCMSState(&retrievedCMSState);
-    UT_LOG_INFO("Result Got CMS state OUT: [%s]", retrievedCMSState ? "Enabled" : "Disabled, tvError_t:[%s]", ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetCMSState(OUT: retrievedCMSState[%s]), tvError_t:[%s]", retrievedCMSState ? "Enabled" : "Disabled", UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(enableCMSState, retrievedCMSState);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2710,65 +2882,64 @@ void test_l3_tvSettings_ComponentSaturation(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvDataComponentColor_t blSaturationColor = tvDataColor_NONE;
-    int saturationValue = 0;
-    int retrievedSaturationValue = 0;
-    int userColorChoice = 0;
-    unsigned int componentColorCount = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
-
-    // Retrieve the count of supported component colors from YAML
-    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    int32_t saturationValue = 0;
+    int32_t retrievedSaturationValue = 0;
+    int32_t userColorChoice = 0;
+    int32_t menuIndex = 1;
 
     // Display supported colors
-    UT_LOG_MENU_INFO("Supported Component Colors:");
-    for (unsigned int i = 0; i < componentColorCount; i++) {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
-        blSaturationColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("%d :[%s]", i, ut_control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor));
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Component Color");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
+    for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
+    {
+        UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Get user input for component color
-    UT_LOG_MENU_INFO("Enter the component color index (0 - [%d]): ", componentColorCount - 1);
-    scanf("%d", &userColorChoice);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("Enter the component color index: ");
 
-    if (userColorChoice < 0 || userColorChoice >= componentColorCount) {
+    readInt(&userColorChoice);
+
+    if (userColorChoice < tvDataColor_NONE || userColorChoice >= tvDataColor_MAX)
+    {
         UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Get the selected component color from YAML
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", userColorChoice);
-    blSaturationColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    blSaturationColor = userColorChoice - 1;
 
     // Get user input for saturation value
     UT_LOG_MENU_INFO("Enter the saturation value (0 - 100): ");
-    scanf("%d", &saturationValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&saturationValue);
 
     // Validate saturation value
-    if (saturationValue < 0 || saturationValue > 100) {
+    if (saturationValue < 0 || saturationValue > 100)
+    {
         UT_LOG_ERROR("Invalid saturation value! Please enter a value between 0 and 100.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
     // Set the component saturation value
-    UT_LOG_INFO("Setting component saturation value for color [%s] IN: [%d]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), saturationValue);
+    UT_LOG_INFO("Calling SetCurrentComponentSaturation( IN: color [%s] IN: value[%d])",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), saturationValue);
     ret = SetCurrentComponentSaturation(blSaturationColor, saturationValue);
-    UT_LOG_INFO("Result Set component saturation value for color [%s] IN: [%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), saturationValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetCurrentComponentSaturation( IN:color[%s] IN: value[%d]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), saturationValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the component saturation value
-    UT_LOG_INFO("Getting component saturation value for color [%s] OUT",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor));
+    UT_LOG_INFO("Calling GetCurrentComponentSaturation (IN:color [%s] OUT: value[])",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor));
     ret = GetCurrentComponentSaturation(blSaturationColor, &retrievedSaturationValue);
-    UT_LOG_INFO("Result Got component saturation value for color [%s] OUT: [%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), retrievedSaturationValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetCurrentComponentSaturation (IN:color [%s] OUT: value[%d]),tvError_t:[%s]",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), retrievedSaturationValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(saturationValue, retrievedSaturationValue);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2796,46 +2967,41 @@ void test_l3_tvSettings_ComponentHue(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvDataComponentColor_t blHueColor = tvDataColor_NONE;
-    int hueValue = 0;
-    int retrievedHueValue = 0;
-    int userColorChoice = 0;
-    unsigned int componentColorCount = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
-
-    // Retrieve the count of supported component colors from YAML
-    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    int32_t hueValue = 0;
+    int32_t retrievedHueValue = 0;
+    int32_t userColorChoice = 0;
+    int32_t menuIndex = 1;
 
     // Display supported colors
-    UT_LOG_MENU_INFO("Supported Component Colors:");
-
-    for (unsigned int i = 0; i < componentColorCount; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Component Color");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
+    for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
-        blHueColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("%d :[%s]", i, ut_control_GetMapString(tvDataComponentColor_mapTable, blHueColor));
+        UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Get user input for component color
-    UT_LOG_MENU_INFO("Enter the component color index (0 - [%d]): ", componentColorCount - 1);
-    scanf("%d", &userColorChoice);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("Enter the component color index: ");
+
+    readInt(&userColorChoice);
 
     // Validate color index
-    if (userColorChoice < 0 || userColorChoice >= componentColorCount)
+    if (userColorChoice < tvDataColor_NONE || userColorChoice >= tvDataColor_MAX)
     {
         UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Get the selected component color from YAML
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", userColorChoice);
-    blHueColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    // Set the selected component color based on user choice
+    blHueColor = (tvDataComponentColor_t)(userColorChoice - 1); // Adjust for 0-based indexing
 
     // Get user input for hue value
     UT_LOG_MENU_INFO("Enter the hue value (0 - 360): ");
-    scanf("%d", &hueValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&hueValue);
 
     // Validate hue value
     if (hueValue < 0 || hueValue > 360)
@@ -2846,20 +3012,21 @@ void test_l3_tvSettings_ComponentHue(void)
     }
 
     // Set the component hue value
-    UT_LOG_INFO("Setting component hue value for color [%s] IN: [%d]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blHueColor), hueValue);
+    UT_LOG_INFO("Calling SetCurrentComponentHue(IN:color [%s] IN: huevalue[%d])",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blHueColor), hueValue);
     ret = SetCurrentComponentHue(blHueColor, hueValue);
-    UT_LOG_INFO("Result Set component hue value for color [%s] IN: [%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blHueColor), hueValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetCurrentComponentHue(IN:color [%s] IN: huevalue[%d]) tvError_t:[%s]",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blHueColor), hueValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the component hue value
-    UT_LOG_INFO("Getting component hue value for color [%s] OUT",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blHueColor));
+    UT_LOG_INFO("Calling GetCurrentComponentHue(IN:color [%s] OUT:value[])",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blHueColor));
     ret = GetCurrentComponentHue(blHueColor, &retrievedHueValue);
-    UT_LOG_INFO("Result Got component hue value for color [%s] OUT: [%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blHueColor), retrievedHueValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetCurrentComponentHue(IN:color [%s] OUT:value[%d]), tvError_t:[%s]",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blHueColor), retrievedHueValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(hueValue, retrievedHueValue);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2887,46 +3054,41 @@ void test_l3_tvSettings_ComponentLuma(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvDataComponentColor_t blLumaColor = tvDataColor_NONE;
-    int lumaValue = 0;
-    int retrievedLumaValue = 0;
-    int userColorChoice = 0;
-    unsigned int componentColorCount = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
-
-    // Retrieve the count of supported component colors from YAML
-    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    int32_t lumaValue = 0;
+    int32_t retrievedLumaValue = 0;
+    int32_t userColorChoice = 0;
+    int32_t menuIndex = 1;
 
     // Display supported colors
-    UT_LOG_MENU_INFO("Supported Component Colors:");
-
-    for (unsigned int i = 0; i < componentColorCount; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Component Color");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
+    for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
-        blLumaColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("%d :[%s]", i, ut_control_GetMapString(tvDataComponentColor_mapTable, blLumaColor));
+        UT_LOG_MENU_INFO("%d :[%s]", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Get user input for component color
-    UT_LOG_MENU_INFO("Enter the component color index (0 - [%d]): ", componentColorCount - 1);
-    scanf("%d", &userColorChoice);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("Enter the component color index: ");
+
+    readInt(&userColorChoice);
 
     // Validate color index
-    if (userColorChoice < 0 || userColorChoice >= componentColorCount)
+    if (userColorChoice < tvDataColor_NONE || userColorChoice >= tvDataColor_MAX)
     {
         UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Get the selected component color from YAML
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", userColorChoice);
-    blLumaColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    // Set the selected component color based on user choice
+    blLumaColor = (tvDataComponentColor_t)(userColorChoice); // No need to adjust for 0-based indexing
 
     // Get user input for luma value
     UT_LOG_MENU_INFO("Enter the luma value (0 - 30): ");
-    scanf("%d", &lumaValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&lumaValue);
 
     // Validate luma value
     if (lumaValue < 0 || lumaValue > 30)
@@ -2937,20 +3099,21 @@ void test_l3_tvSettings_ComponentLuma(void)
     }
 
     // Set the component luma value
-    UT_LOG_INFO("Setting component luma value for color [%s] IN: [%d]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), lumaValue);
+    UT_LOG_INFO("Calling SetCurrentComponentLuma (IN:color [%s] IN: lumaValue[%d])",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), lumaValue);
     ret = SetCurrentComponentLuma(blLumaColor, lumaValue);
-    UT_LOG_INFO("Result Set component luma value for color [%s] IN: [%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), lumaValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetCurrentComponentLuma (IN:color [%s] IN: lumaValue[%d]), tvError_t:[%s]",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), lumaValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Verify the component luma value
-    UT_LOG_INFO("Getting component luma value for color [%s] OUT",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blLumaColor));
+    UT_LOG_INFO("Calling GetCurrentComponentLuma (IN:color [%s] OUT:value[])",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blLumaColor));
     ret = GetCurrentComponentLuma(blLumaColor, &retrievedLumaValue);
-    UT_LOG_INFO("Result Got component luma value for color [%s] OUT: [%d],tvError_t:[%s]",
-                ut_control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), retrievedLumaValue, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetCurrentComponentLuma (IN:color [%s] OUT:value[%d]), tvError_t:[%s]",
+                UT_Control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), retrievedLumaValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(lumaValue, retrievedLumaValue);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2976,16 +3139,15 @@ void test_l3_tvSettings_EnableGammaMode(void)
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret = tvERROR_NONE;
-    int mode = 0; // Default value for mode
+    int32_t mode = 0; // Default value for mode
 
     // User input for enabling or disabling the gamma module
     UT_LOG_MENU_INFO("Enter mode (0 to disable, 1 to enable): ");
-    scanf("%d", &mode);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&mode);
 
     UT_LOG_INFO("Calling EnableGammaMode(IN:Mode:[%d])", mode);
     ret = EnableGammaMode(mode);
-    UT_LOG_INFO("Result executed EnableGammaMode() IN:Mode:[%d] tvError_t:[%s]", mode, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result  EnableGammaMode(IN:Mode:[%d]) tvError_t:[%s]", mode, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3015,8 +3177,7 @@ void test_l3_tvSettings_SetGammaPatternMode(void)
 
     // User input for enabling or disabling gamma pattern mode
     UT_LOG_MENU_INFO("Enter mode (0 to disable, 1 to enable): ");
-    scanf("%d", (int*)&mode);  // Casting to (int*) as scanf reads int
-    readAndDiscardRestOfLine(stdin);
+    readInt((int32_t*)&mode);
 
     // Validate user input
     if (mode != 0 && mode != 1)
@@ -3028,7 +3189,7 @@ void test_l3_tvSettings_SetGammaPatternMode(void)
 
     UT_LOG_INFO("Calling SetGammaPatternMode(IN:Mode:[%d])", mode);
     ret = SetGammaPatternMode(mode);
-    UT_LOG_INFO("Result executed SetGammaPatternMode() IN:Mode:[%d] tvError_t:[%s]", mode, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetGammaPatternMode(IN:Mode:[%d]) tvError_t:[%s]", mode, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
@@ -3055,8 +3216,8 @@ void test_l3_tvSettings_SetGammaPattern(void)
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t ret = tvERROR_NONE;
-    int is_10_bit = 0;
-    int R_Value = 0, G_Value = 0, B_Value = 0;
+    int32_t is_10_bit = 0;
+    int32_t R_Value = 0, G_Value = 0, B_Value = 0;
 
     // User input for gamma pattern settings
     UT_LOG_MENU_INFO("Enter bit resolution (0 for 10-bit, 1 for 8-bit): ");
@@ -3072,8 +3233,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     }
 
     UT_LOG_MENU_INFO("Enter Red level (0 - 1023 for 10-bit, 0 - 255 for 8-bit): ");
-    scanf("%d", &R_Value);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&R_Value);
 
     // Validate Red value
     if (is_10_bit == 0)
@@ -3096,8 +3256,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     }
 
     UT_LOG_MENU_INFO("Enter Green level (0 - 1023 for 10-bit, 0 - 255 for 8-bit): ");
-    scanf("%d", &G_Value);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&G_Value);
 
     // Validate Green value
     if (is_10_bit == 0)
@@ -3120,8 +3279,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     }
 
     UT_LOG_MENU_INFO("Enter Blue level (0 - 1023 for 10-bit, 0 - 255 for 8-bit): ");
-    scanf("%d", &B_Value);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&B_Value);
 
     // Validate Blue value
     if (is_10_bit == 0)
@@ -3143,9 +3301,9 @@ void test_l3_tvSettings_SetGammaPattern(void)
         }
     }
 
-    UT_LOG_INFO("Calling SetRGBPattern(IN:R:[%d], IN:G:[%d], IN:B:[%d])", R_Value, G_Value, B_Value);
-    ret = SetRGBPattern(R_Value, G_Value, B_Value);
-    UT_LOG_INFO("Result executed SetGammaPattern() IN:R:[%d], IN:G:[%d], IN:B:[%d], tvError_t:[%s]", R_Value, G_Value, B_Value, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Calling SetRGBPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d])", is_10_bit, R_Value, G_Value, B_Value);
+    ret = SetGammaPattern(is_10_bit, R_Value, G_Value, B_Value);
+    UT_LOG_INFO("Result SetGammaPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d]), tvError_t:[%s]", is_10_bit, R_Value, G_Value, B_Value, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Log function exit
@@ -3173,13 +3331,12 @@ void test_l3_tvSettings_RGBPattern(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int r = 0, g = 0, b = 0;
-    int r_get = 0, g_get = 0, b_get = 0;
+    int32_t r = 0, g = 0, b = 0;
+    int32_t r_get = 0, g_get = 0, b_get = 0;
 
     // User input for RGB pattern settings
     UT_LOG_MENU_INFO("Enter Red level (0 - 255): ");
-    scanf("%d", &r);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&r);
 
     if (r < 0 || r > 255)
     {
@@ -3189,8 +3346,7 @@ void test_l3_tvSettings_RGBPattern(void)
     }
 
     UT_LOG_MENU_INFO("Enter Green level (0 - 255): ");
-    scanf("%d", &g);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&g);
 
     if (g < 0 || g > 255)
     {
@@ -3200,8 +3356,7 @@ void test_l3_tvSettings_RGBPattern(void)
     }
 
     UT_LOG_MENU_INFO("Enter Blue level (0 - 255): ");
-    scanf("%d", &b);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&b);
 
     if (b < 0 || b > 255)
     {
@@ -3212,13 +3367,16 @@ void test_l3_tvSettings_RGBPattern(void)
 
     UT_LOG_INFO("Calling SetRGBPattern(IN:R:[%d], IN:G:[%d], IN:B:[%d])", r, g, b);
     ret = SetRGBPattern(r, g, b);
-    UT_LOG_INFO("Result executed SetRGBPattern() IN:R:[%d], IN:G:[%d], IN:B:[%d] tvError_t:[%s]", r, g, b, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetRGBPattern(IN:R:[%d], IN:G:[%d], IN:B:[%d]) tvError_t:[%s]", r, g, b, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Calling GetRGBPattern(OUT:R:[], OUT:G:[], OUT:B:[])");
     ret = GetRGBPattern(&r_get, &g_get, &b_get);
-    UT_LOG_INFO("Result executed GetRGBPattern() OUT:R:[%d], OUT:G:[%d], OUT:B:[%d] tvError_t:[%s]", r_get, g_get, b_get, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetRGBPattern(OUT:R:[%d], OUT:G:[%d], OUT:B:[%d]) tvError_t:[%s]", r_get, g_get, b_get, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(r,r_get);
+    ASSERT_COMPARE(g,b_get);
+    ASSERT_COMPARE(b,b_get);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3243,13 +3401,12 @@ void test_l3_tvSettings_GrayPattern(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int YUVValue = 0;
-    int YUVValue_get = 0;
+    int32_t YUVValue = 0;
+    int32_t YUVValue_get = 0;
 
     // User input for gray pattern setting
     UT_LOG_MENU_INFO("Enter Gray level (0 - 255): ");
-    scanf("%d", &YUVValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&YUVValue);
 
     if (YUVValue < 0 || YUVValue > 255)
     {
@@ -3260,13 +3417,14 @@ void test_l3_tvSettings_GrayPattern(void)
 
     UT_LOG_INFO("Calling SetGrayPattern(IN:YUVValue:[%d])", YUVValue);
     ret = SetGrayPattern(YUVValue);
-    UT_LOG_INFO("Result executed SetGrayPattern() IN:YUVValue:[%d] tvError_t:[%s]", YUVValue,ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetGrayPattern(IN:YUVValue:[%d]) tvError_t:[%s]", YUVValue,UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Calling GetGrayPattern(OUT:YUVValue:[])");
     ret = GetGrayPattern(&YUVValue_get);
-    UT_LOG_INFO("Result executed GetGrayPattern() OUT:YUVValue:[%d] tvError_t:[%s]",YUVValue_get, ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetGrayPattern(OUT:YUVValue:[%d]) tvError_t:[%s]",YUVValue_get, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
+    ASSERT_COMPARE(YUVValue, YUVValue_get);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3290,12 +3448,11 @@ void test_l3_tvSettings_EnableLDIMPixelCompensation(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int input_mode = 0;  // Use an int to read user input
+    int32_t input_mode = 0;  // Use an int32_t to read user input
 
     // User input for enabling or disabling pixel compensation
     UT_LOG_MENU_INFO("Enter mode for pixel compensation (1 to enable, 0 to disable): ");
-    scanf("%d", &input_mode);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&input_mode);
 
     // Validate user input
     if (input_mode != 0 && input_mode != 1)
@@ -3310,7 +3467,7 @@ void test_l3_tvSettings_EnableLDIMPixelCompensation(void)
 
     UT_LOG_INFO("Calling EnableLDIMPixelCompensation(IN:Mode:[%s])", enable ? "true" : "false");
     ret = EnableLDIMPixelCompensation(enable);
-    UT_LOG_INFO("Result executed EnableLDIMPixelCompensation(IN:Mode:[%s]) tvError_t:[%s]", enable ? "true" : "false", ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result EnableLDIMPixelCompensation(IN:Mode:[%s]) tvError_t:[%s]", enable ? "true" : "false", UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Log function exit
@@ -3336,12 +3493,11 @@ void test_l3_tvSettings_EnableLDIM(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int input_mode = 0;  // Use an int to read user input
+    int32_t input_mode = 0;  // Use an int32_t to read user input
 
     // User input for enabling or disabling local dimming
     UT_LOG_MENU_INFO("Enter mode for local dimming (1 to enable, 0 to disable): ");
-    scanf("%d", &input_mode);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&input_mode);
 
     // Validate user input
     if (input_mode != 0 && input_mode != 1)
@@ -3356,7 +3512,7 @@ void test_l3_tvSettings_EnableLDIM(void)
     ret = EnableLDIM(enable);
     UT_LOG_INFO("Result EnableLDIM(IN:Mode:[%s]) tvError_t:[%s]",
                  enable ? "true" : "false",
-                 ut_control_GetMapString(tvError_mapTable, ret));
+                 UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Log function exit
@@ -3383,46 +3539,45 @@ void test_l3_tvSettings_SetBacklightTestMode(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int input_mode = 0;
-    tvBacklightTestMode_t mode;
+    int32_t input_mode = 0;
+    ldimStateLevel_t mode;
+
+    // Display supported backlight test modes
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Backlight Test Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Backlight Test Mode");
+    for (int32_t i = LDIM_STATE_NONBOOST; i < LDIM_STATE_MAX; i++)
+    {
+        UT_LOG_MENU_INFO("%d : [%s]", i + 1, UT_Control_GetMapString(tvBacklightTestMode_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // User input for setting backlight test mode
-    UT_LOG_MENU_INFO("Enter backlight test mode (0: Normal, 1: Boost, 2: Burst, 3: Reset): ");
-    scanf("%d", &input_mode);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("Enter backlight test mode: ");
+    readInt(&input_mode);
 
-    // Map the user input to tvBacklightTestMode_t enum values
-    if (input_mode == 0)
+    // Validate user input
+    if (input_mode < LDIM_STATE_NONBOOST || input_mode >= LDIM_STATE_MAX)
     {
-        mode = tvBacklightTestMode_Normal;
-    }
-    else if (input_mode == 1)
-    {
-        mode = tvBacklightTestMode_Boost;
-    }
-    else if (input_mode == 2)
-    {
-        mode = tvBacklightTestMode_Burst;
-    }
-    else if (input_mode == 3)
-    {
-        mode = tvBacklightTestMode_Reset;
-    }
-    else
-    {
-        UT_LOG_ERROR("Invalid input mode:[%d]. Please enter a valid mode (0-3).", input_mode);
+        UT_LOG_ERROR("Invalid input mode: [%d]. Please enter a valid mode (0-3).", input_mode);
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    UT_LOG_INFO("Calling SetBacklightTestMode(IN:Mode:[%s])",
-                 ut_control_GetMapString(tvBacklightTestMode_mapTable, mode));
+    // Set the mode based on user input
+    mode = (ldimStateLevel_t)input_mode - 1;
+
+    // Log the function call and result
+    UT_LOG_INFO("Calling SetBacklightTestMode(IN: Mode: [%s])",
+                 UT_Control_GetMapString(tvBacklightTestMode_mapTable, mode));
     ret = SetBacklightTestMode(mode);
-    UT_LOG_INFO("Result SetBacklightTestMode(IN:Mode:[%s]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvBacklightTestMode_mapTable, mode),
-                 ut_control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result SetBacklightTestMode(IN: Mode: [%s]) tvError_t: [%s]",
+                 UT_Control_GetMapString(tvBacklightTestMode_mapTable, mode),
+                 UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
+    // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
 
@@ -3446,13 +3601,12 @@ void test_l3_tvSettings_EnableDynamicContrast(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int input_mode = 0;
+    int32_t input_mode = 0;
     bool enable;
 
     // User input for enabling or disabling dynamic contrast
     UT_LOG_MENU_INFO("Enter mode for dynamic contrast (1 to enable, 0 to disable): ");
-    scanf("%d", &input_mode);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&input_mode);
 
     // Map the user input to boolean values
     if (input_mode == 1)
@@ -3475,7 +3629,7 @@ void test_l3_tvSettings_EnableDynamicContrast(void)
     ret = EnableDynamicContrast(enable);
     UT_LOG_INFO("Result EnableDynamicContrast(IN:Mode:[%s]) tvError_t:[%s]",
                  enable ? "true" : "false",
-                 ut_control_GetMapString(tvError_mapTable, ret));
+                 UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3501,13 +3655,12 @@ void test_l3_tvSettings_EnableLocalContrast(void)
 
     // Data type declarations
     tvError_t ret = tvERROR_NONE;
-    int input_mode = 0;
+    int32_t input_mode = 0;
     bool enable;
 
     // User input for enabling or disabling local contrast
     UT_LOG_MENU_INFO("Enter mode for local contrast (1 to enable, 0 to disable): ");
-    scanf("%d", &input_mode);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&input_mode);
 
     // Map the user input to boolean values
     if (input_mode == 1)
@@ -3530,7 +3683,7 @@ void test_l3_tvSettings_EnableLocalContrast(void)
     ret = EnableLocalContrast(enable);
     UT_LOG_INFO("Result EnableLocalContrast(IN:Mode:[%s]) tvError_t:[%s]",
              enable ? "true" : "false",
-             ut_control_GetMapString(tvError_mapTable, ret));
+             UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3558,58 +3711,53 @@ void test_l3_tvSettings_BacklightSave(void)
     // Data type declarations
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source directly to VIDEO_SOURCE_IP
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int backlightValue = -1;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t backlightValue = -1;
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the supported video source
-    UT_LOG_MENU_INFO("Supported Video Source: [%s]", ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource));
+    UT_LOG_MENU_INFO("Supported Video Source: [%s]", UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource));
 
     // List all options for PQ Mode
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = userPQChoice - 1;
 
     // List all options for Video Format
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3617,13 +3765,11 @@ void test_l3_tvSettings_BacklightSave(void)
     }
 
     // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Prompt the user for the backlight value
     UT_LOG_MENU_INFO("Enter the backlight value to set (0 - 100): ");
-    scanf("%d", &backlightValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&backlightValue);
 
     // Validate the user input for backlight value
     if (backlightValue < 0 || backlightValue > 100)
@@ -3634,17 +3780,17 @@ void test_l3_tvSettings_BacklightSave(void)
     }
 
     UT_LOG_INFO("Calling SaveBacklight(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  backlightValue);
     result = SaveBacklight(videoSource, pqValue, videoFormat, backlightValue);
     UT_LOG_INFO("Result SaveBacklight(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d]) tvError_t:[%s]",
-             ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+             UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
              pqValue,
-             ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+             UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              backlightValue,
-             ut_control_GetMapString(tvError_mapTable, result));
+             UT_Control_GetMapString(tvError_mapTable, result));
     ASSERT(result == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3672,63 +3818,54 @@ void test_l3_tvSettings_TVDimmingModeSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source directly to VIDEO_SOURCE_IP
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
     tvDimmingMode_t dimmingMode = tvDimmingMode_MAX;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    uint32_t dimmingModeCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    int userDimmingModeChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
+    int32_t userDimmingModeChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-    dimmingModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
-    UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index from above): ");
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = userPQChoice + PQ_MODE_STANDARD - 1; // Convert to zero-based index
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-    UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Format (index from above): ");
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (VIDEO_FORMAT_MAX - VIDEO_FORMAT_NONE))
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3736,23 +3873,23 @@ void test_l3_tvSettings_TVDimmingModeSave(void)
     }
 
     // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)(userFormatChoice + VIDEO_FORMAT_NONE - 1);
 
     // List all options for Dimming Mode
-    UT_LOG_MENU_INFO("Supported Dimming Modes:");
-    for (unsigned int l = 0; l < dimmingModeCount; l++)
+ UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Dimming Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Dimming Modes");
+    for (uint32_t l = 0; l < tvDimmingMode_MAX; l++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", l);
-        int dimmingModeIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", l + 1, ut_control_GetMapString(tvDimmingMode_mapTable, dimmingModeIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", l + 1, UT_Control_GetMapString(tvDimmingMode_mapTable, l)); // Display index starting from 1
     }
-    UT_LOG_MENU_INFO("Enter your choice of Dimming Mode (index): ");
-    scanf("%d", &userDimmingModeChoice);
-    readAndDiscardRestOfLine(stdin);
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Dimming Mode (index from above): ");
+    readInt(&userDimmingModeChoice);
 
     // Validate user input for Dimming Mode
-    if (userDimmingModeChoice < 1 || userDimmingModeChoice > (int)dimmingModeCount)
+    if (userDimmingModeChoice < 1 || userDimmingModeChoice > (int32_t)tvDimmingMode_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Dimming Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3760,21 +3897,23 @@ void test_l3_tvSettings_TVDimmingModeSave(void)
     }
 
     // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", userDimmingModeChoice - 1);
-    dimmingMode = (tvDimmingMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    dimmingMode = (tvDimmingMode_t)(userDimmingModeChoice - 1);
 
     UT_LOG_INFO("Calling SaveTVDimmingMode(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:DimmingMode:[%s])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(tvDimmingMode_mapTable, dimmingMode));
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvDimmingMode_mapTable, dimmingMode));
+
     result = SaveTVDimmingMode(videoSource, pqValue, videoFormat, dimmingMode);
+
     UT_LOG_INFO("Result SaveTVDimmingMode(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:DimmingMode:[%s]) tvError_t:[%s]",
-             ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
-             pqValue,
-             ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-             ut_control_GetMapString(tvDimmingMode_mapTable, dimmingMode),
-             ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 pqValue,
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvDimmingMode_mapTable, dimmingMode),
+                 UT_Control_GetMapString(tvError_mapTable, result));
+
     ASSERT(result == tvERROR_NONE);
 
     // Log function exit
@@ -3803,36 +3942,31 @@ void test_l3_tvSettings_LocalDimmingLevelSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source directly to VIDEO_SOURCE_IP
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
     ldimStateLevel_t dimmingLevel = LDIM_STATE_MAX; // Initialize with the maximum value to handle invalid input
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 
     // List all options for Picture Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3840,42 +3974,39 @@ void test_l3_tvSettings_LocalDimmingLevelSave(void)
     }
 
     // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t)userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // List all options for Local Dimming Level
     UT_LOG_MENU_INFO("Supported Local Dimming Levels:");
-    for (int i = 0; i < LDIM_STATE_MAX; i++)
+    for (int32_t i = 0; i < LDIM_STATE_MAX; i++)
     {
-        UT_LOG_MENU_INFO("[%d]: [%s]", i, ut_control_GetMapString(ldimStateLevel_mapTable, (ldimStateLevel_t)i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(ldimStateLevel_mapTable, (ldimStateLevel_t)i));
     }
     UT_LOG_MENU_INFO("Enter your choice of Local Dimming Level (index): ");
-    scanf("%d", (int*)&dimmingLevel);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int32_t *)&dimmingLevel);
 
     // Validate the local dimming level input
     if (dimmingLevel < LDIM_STATE_NONBOOST || dimmingLevel >= LDIM_STATE_MAX)
@@ -3886,17 +4017,17 @@ void test_l3_tvSettings_LocalDimmingLevelSave(void)
     }
 
     UT_LOG_INFO("Calling SaveLocalDimmingLevel(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:DimmingLevel:[%s])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(ldimStateLevel_mapTable, dimmingLevel));
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(ldimStateLevel_mapTable, dimmingLevel));
     result = SaveLocalDimmingLevel(videoSource, pqValue, videoFormat, dimmingLevel);
     UT_LOG_INFO("Result SaveLocalDimmingLevel(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:DimmingLevel:[%s]) tvError_t:[%s]",
-             ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+             UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
              pqValue,
-             ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-             ut_control_GetMapString(ldimStateLevel_mapTable, dimmingLevel),
-             ut_control_GetMapString(tvError_mapTable, result));
+             UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+             UT_Control_GetMapString(ldimStateLevel_mapTable, dimmingLevel),
+             UT_Control_GetMapString(tvError_mapTable, result));
     ASSERT(result == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3928,60 +4059,53 @@ void test_l3_tvSettings_BrightnessSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int brightnessValue = -1;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t brightnessValue = -1;
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t)userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3989,13 +4113,11 @@ void test_l3_tvSettings_BrightnessSave(void)
     }
 
     // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Prompt the user for the brightness value
     UT_LOG_MENU_INFO("Enter the brightness value to set (0 - 100): ");
-    scanf("%d", &brightnessValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&brightnessValue);
 
     // Validate the brightness value input
     if (brightnessValue < 0 || brightnessValue > 100)
@@ -4006,17 +4128,17 @@ void test_l3_tvSettings_BrightnessSave(void)
     }
 
     UT_LOG_INFO("Calling SaveBrightness(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  brightnessValue);
     result = SaveBrightness(videoSource, pqValue, videoFormat, brightnessValue);
     UT_LOG_INFO("Result SaveBrightness(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:BrightnessValue:[%d]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  brightnessValue,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -4049,74 +4171,63 @@ void test_l3_tvSettings_ContrastSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int contrastValue = -1;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t contrastValue = -1;
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t)userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-
     // Prompt the user for the contrast value
     UT_LOG_MENU_INFO("Enter the contrast value to set (0 - 100): ");
-    scanf("%d", &contrastValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&contrastValue);
 
     // Validate the contrast value input
     if (contrastValue < 0 || contrastValue > 100)
@@ -4127,19 +4238,19 @@ void test_l3_tvSettings_ContrastSave(void)
     }
 
     UT_LOG_INFO("Calling SaveContrast(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  contrastValue);
 
     // Save the contrast value
     result = SaveContrast(videoSource, pqValue, videoFormat, contrastValue);
     UT_LOG_INFO("Result SaveContrast(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:ContrastValue:[%d]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  contrastValue,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -4171,74 +4282,62 @@ void test_l3_tvSettings_SharpnessSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int sharpnessValue = -1;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t sharpnessValue = -1;
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t)userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-
     // Prompt the user for the sharpness value
     UT_LOG_MENU_INFO("Enter the sharpness value to set (0 - 100): ");
-    scanf("%d", &sharpnessValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&sharpnessValue);
 
     // Validate the sharpness value input
     if (sharpnessValue < 0 || sharpnessValue > 100)
@@ -4249,19 +4348,19 @@ void test_l3_tvSettings_SharpnessSave(void)
     }
 
     UT_LOG_INFO("Calling SaveSharpness(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  sharpnessValue);
 
     // Save the sharpness value
     result = SaveSharpness(videoSource, pqValue, videoFormat, sharpnessValue);
     UT_LOG_INFO("Result SaveSharpness(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:SharpnessValue:[%d]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  sharpnessValue,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -4293,74 +4392,64 @@ void test_l3_tvSettings_HueSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int hueValue = -1;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t hueValue = -1;
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t)userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Prompt the user for the hue value
     UT_LOG_MENU_INFO("Enter the hue value to set (0 - 100): ");
-    scanf("%d", &hueValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&hueValue);
 
     // Validate the hue value input
     if (hueValue < 0 || hueValue > 100)
@@ -4371,18 +4460,18 @@ void test_l3_tvSettings_HueSave(void)
     }
 
     UT_LOG_INFO("Calling SaveHue(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  hueValue);
     // Save the hue value
     result = SaveHue(videoSource, pqValue, videoFormat, hueValue);
     UT_LOG_INFO("Result SaveHue(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:HueValue:[%d]) tvError_t:[%s]",
-             ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+             UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
              pqValue,
-             ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+             UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              hueValue,
-             ut_control_GetMapString(tvError_mapTable, result));
+             UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -4413,74 +4502,64 @@ void test_l3_tvSettings_SaturationSave(void)
     // Declare and initialize variables
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int saturationValue = -1;
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userPQChoice = 0;
-    int userFormatChoice = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t saturationValue = -1;
+    int32_t userPQChoice = 0;
+    int32_t userFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", j);
-        int pqIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userPQChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userPQChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t )userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        int videoFmtIndex = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFmtIndex)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userFormatChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userFormatChoice);
 
     // Validate user input for Video Format
-    if (userFormatChoice < 1 || userFormatChoice > (int)videoFmtCount)
+    if (userFormatChoice < 1 || userFormatChoice > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice back to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userFormatChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Prompt the user for the saturation value
     UT_LOG_MENU_INFO("Enter the saturation value to set (0 - 100): ");
-    scanf("%d", &saturationValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&saturationValue);
 
     // Validate the saturation value input
     if (saturationValue < 0 || saturationValue > 100)
@@ -4491,18 +4570,18 @@ void test_l3_tvSettings_SaturationSave(void)
     }
 
     UT_LOG_INFO("Calling SaveSaturation(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  saturationValue);
     // Save the saturation value
     result = SaveSaturation(videoSource, pqValue, videoFormat, saturationValue);
     UT_LOG_INFO("Result SaveSaturation(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:SaturationValue:[%d]) tvError_t:[%s]",
-             ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+             UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
              pqValue,
-             ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+             UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              saturationValue,
-             ut_control_GetMapString(tvError_mapTable, result));
+             UT_Control_GetMapString(tvError_mapTable, result));
     ASSERT(result == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4533,118 +4612,96 @@ void test_l3_tvSettings_ColorTemperatureSave(void)
     // Declare and initialize all variables at the top
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE; // Initialize to default value
     tvColorTemp_t colorTemp = tvColorTemp_MAX; // Initialize to default value
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    uint32_t colorTempCount = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 }; // Initialize to zero
-    int userChoice = 0; // Declare at the top
+    int32_t userChoice = 0; // Declare at the top
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
-
     // List all options for PQ Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", j);
-        pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqValue)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     // Get user choice for Picture Mode
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice for Picture Mode
-    if (userChoice < 1 || userChoice > (int)pqCount)
+    if (userChoice < 1 || userChoice > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", userChoice - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t )userChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-
-    // Get user choice for Video Format
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice for Video Format
-    if (userChoice < 1 || userChoice > (int)videoFmtCount)
+    if (userChoice < 1 || userChoice > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", userChoice - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-
-    // Retrieve all supported color temperatures from profile
-    tvColorTemp_t supportedTemperaturesArray[tvColorTemp_MAX] = { tvColorTemp_MAX }; // Initialize with default value
-    for (unsigned int k = 0; k < colorTempCount; k++)
-    {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%u", k);
-        supportedTemperaturesArray[k] = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
+    videoFormat = (tvVideoFormatType_t)userChoice - 1;
 
     // Display available color temperatures to the user
     UT_LOG_MENU_INFO("Supported Color Temperatures:");
-    for (unsigned int i = 0; i < colorTempCount; i++)
+    for (uint32_t i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
     {
-        UT_LOG_MENU_INFO("%u: [%s]", i + 1, ut_control_GetMapString(tvColorTemp_mapTable, supportedTemperaturesArray[i])); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i)); // Display index starting from 1
     }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
 
     // Get user input for selecting a color temperature
     UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice for Color Temperature
-    if (userChoice < 1 || userChoice > (int)colorTempCount)
+    if (userChoice < 1 || userChoice > (int32_t )tvColorTemp_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Color Temperature. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    colorTemp = supportedTemperaturesArray[userChoice - 1]; // Map 1-based choice to 0-based index
+    colorTemp = userChoice - 1; // Map 1-based choice to 0-based index
 
     UT_LOG_INFO("Calling SaveColorTemperature(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%s])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(tvColorTemp_mapTable, colorTemp));
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvColorTemp_mapTable, colorTemp));
     // Save the color temperature value
     result = SaveColorTemperature(videoSource, pqValue, videoFormat, colorTemp);
     UT_LOG_INFO("Result SaveColorTemperature(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:ColorTemperature:[%s]) tvError_t:[%s]",
-             ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+             UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
              pqValue,
-             ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-             ut_control_GetMapString(tvColorTemp_mapTable, colorTemp),
-             ut_control_GetMapString(tvError_mapTable, result));    ASSERT(result == tvERROR_NONE);
+             UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+             UT_Control_GetMapString(tvColorTemp_mapTable, colorTemp),
+             UT_Control_GetMapString(tvError_mapTable, result));    ASSERT(result == tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -4674,39 +4731,30 @@ void test_l3_tvSettings_AspectRatioSave(void)
     // Declare and initialize all variables at the top
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE; // Initialize to default value
     tvDisplayMode_t aspectRatio = tvDisplayMode_MAX; // Initialize to default value
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    uint32_t aspectRatioCount = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 }; // Initialize to zero
-    int userChoice = 0; // Declare at the top
+    int32_t userChoice = 0; // Declare at the top
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-    aspectRatioCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
-
     // List all options for Picture Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", j);
-        pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqValue)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     // Get user choice for Picture Mode
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &pqValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&pqValue);
 
     // Validate user choice for Picture Mode
-    if (pqValue < 1 || pqValue > (int)pqCount)
+    if (pqValue < 1 || pqValue > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4714,25 +4762,23 @@ void test_l3_tvSettings_AspectRatioSave(void)
     }
 
     // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", pqValue - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t ) pqValue - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-
-    // Get user choice for Video Format
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", (int*)&videoFormat);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int32_t *)&videoFormat);
 
     // Validate user choice for Video Format
-    if ((int)videoFormat < 1 || (int)videoFormat > (int)videoFmtCount)
+    if ((int32_t )videoFormat < 1 || (int32_t )videoFormat > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4740,54 +4786,44 @@ void test_l3_tvSettings_AspectRatioSave(void)
     }
 
     // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", (int)videoFormat - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-
-    // Retrieve all supported aspect ratios from profile
-    tvDisplayMode_t supportedAspectRatiosArray[tvDisplayMode_MAX] = { tvDisplayMode_MAX }; // Initialize with default value
-    for (unsigned int k = 0; k < aspectRatioCount; k++)
-    {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/AspectRatio/index/%u", k);
-        supportedAspectRatiosArray[k] = (tvDisplayMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
+    videoFormat = (tvVideoFormatType_t)videoFormat - 1;
 
     // Display available aspect ratios to the user
     UT_LOG_MENU_INFO("Supported Aspect Ratios:");
-    for (unsigned int i = 0; i < aspectRatioCount; i++)
+    for (uint32_t i = tvDisplayMode_4x3; i < tvDisplayMode_MAX; i++)
     {
-        UT_LOG_MENU_INFO("%u: [%s]", i + 1, ut_control_GetMapString(tvDisplayMode_mapTable, supportedAspectRatiosArray[i])); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", i + 1, UT_Control_GetMapString(tvDisplayMode_mapTable, i)); // Display index starting from 1
     }
 
     // Get user input for selecting an aspect ratio
     UT_LOG_MENU_INFO("Enter the number corresponding to the Aspect Ratio: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice for Aspect Ratio
-    if (userChoice < 1 || userChoice > (int)aspectRatioCount)
+    if (userChoice < 1 || userChoice > (int32_t )tvDisplayMode_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Aspect Ratio. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    aspectRatio = supportedAspectRatiosArray[userChoice - 1]; // Map 1-based choice to 0-based index
+    aspectRatio = userChoice - 1; // Map 1-based choice to 0-based index
 
     UT_LOG_INFO("Calling SaveAspectRatio(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%s])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(tvDisplayMode_mapTable, aspectRatio));
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvDisplayMode_mapTable, aspectRatio));
 
 
     result = SaveAspectRatio(videoSource, pqValue, videoFormat, aspectRatio);
 
     UT_LOG_INFO("Result SaveAspectRatio(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:AspectRatio:[%s]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(tvDisplayMode_mapTable, aspectRatio),
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvDisplayMode_mapTable, aspectRatio),
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -4818,74 +4854,64 @@ void test_l3_tvSettings_LowLatencySave(void)
 
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int lowLatencyIndex = -1; // Initialize to an invalid value
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int32_t lowLatencyIndex = -1; // Initialize to an invalid value
+    int32_t userPQChoice = 0;
+    int32_t userVideoFormatChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
 
     // List all options for Picture Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", j);
-        pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqValue)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     // Get user choice for Picture Mode
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &pqValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
-    if (pqValue < 1 || pqValue > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", pqValue - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t )userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-
-    // Get user choice for Video Format
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", (int*)&videoFormat);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int32_t *)&userVideoFormatChoice);
 
-    if ((int)videoFormat < 1 || (int)videoFormat > (int)videoFmtCount)
+    if ((int32_t )userVideoFormatChoice < 1 || (int32_t )userVideoFormatChoice > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", (int)videoFormat - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = userVideoFormatChoice - 1;
 
     // Prompt the user for the low latency index
     UT_LOG_MENU_INFO("Enter the Low Latency Index (0 or 1): ");
-    scanf("%d", &lowLatencyIndex);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&lowLatencyIndex);
 
     // Validate the low latency index input
     if (lowLatencyIndex != 0 && lowLatencyIndex != 1)
@@ -4896,18 +4922,18 @@ void test_l3_tvSettings_LowLatencySave(void)
     }
 
     UT_LOG_INFO("Calling SaveLowLatencyState(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  lowLatencyIndex);
     // Save the low latency index value
     result = SaveLowLatencyState(videoSource, pqValue, videoFormat, lowLatencyIndex);
     UT_LOG_INFO("Result SaveLowLatencyState(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  lowLatencyIndex,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -4937,63 +4963,51 @@ void test_l3_tvSettings_DolbyVisionSave(void)
 
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
-    int pqValue = 0;
+    int32_t pqValue = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
     tvDolbyMode_t selectedMode = tvMode_Max; // Initialize to an invalid value
-    uint32_t count = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
-    uint32_t pqCount = 0;
-    uint32_t videoFmtCount = 0;
-    int userChoice = 0;
-    tvDolbyMode_t supportedModesArray[10] = {0}; // Assuming max size to be defined as needed
+    int32_t userPQChoice = 0, userVideoFormatChoice = 0, userChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
-    // Get counts from profile
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-
     // List all options for Picture Mode
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int j = 0; j < pqCount; j++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t j = PQ_MODE_STANDARD; j <= PQ_MODE_VIVID2; j++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", j);
-        pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", j + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqValue)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", j + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, j)); // Display index starting from 1
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     // Get user choice for Picture Mode
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &pqValue);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userPQChoice);
 
-    if (pqValue < 1 || pqValue > (int)pqCount)
+    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", pqValue - 1);
-    pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqValue = (int32_t )userPQChoice - 1;
 
     // List all options for Video Format
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-
-    // Get user choice for Video Format
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", (int*)&videoFormat);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int*)&userVideoFormatChoice);
 
-    if ((int)videoFormat < 1 || (int)videoFormat > (int)videoFmtCount)
+    if ((int32_t )userVideoFormatChoice < 1 || (int32_t )userVideoFormatChoice > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5001,54 +5015,44 @@ void test_l3_tvSettings_DolbyVisionSave(void)
     }
 
     // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", (int)videoFormat - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-
-    // Retrieve supported Dolby Vision modes
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
-    for (uint32_t k = 0; k < count; k++)
+    videoFormat = (tvVideoFormatType_t)userVideoFormatChoice - 1;
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Dolby Vision Modes:");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Dolby Vision Modes:");
+    for (uint32_t i = tvDolbyMode_Dark; i <= tvHLGMode_Game; i++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%u", k);
-        supportedModesArray[k] = (tvDolbyMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        UT_LOG_MENU_INFO("%u. %s", i + 1, UT_Control_GetMapString(tvDolbyMode_mapTable, i)); // Display index starting from 1
     }
-
-    // Display available Dolby Vision modes to the user
-    UT_LOG_MENU_INFO("Supported Dolby Vision Modes:");
-    for (uint32_t i = 0; i < count; i++)
-    {
-        UT_LOG_MENU_INFO("%u: [%s]", i + 1, ut_control_GetMapString(tvDolbyMode_mapTable, supportedModesArray[i])); // Display index starting from 1
-    }
-
-    // Get user input for selecting a Dolby Vision mode
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter the number corresponding to the Dolby Vision Mode: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice
-    if (userChoice < 1 || userChoice > (int)count)
+    if (userChoice < 1 || userChoice > (int32_t )tvHLGMode_Game)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid Dolby Vision mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    selectedMode = supportedModesArray[userChoice - 1]; // Map 1-based choice to 0-based index
+    selectedMode = userChoice - 1; // Map 1-based choice to 0-based index
 
     // Log function call with parameters
     UT_LOG_INFO("Calling SaveTVDolbyVisionMode(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  selectedMode);
 
     // Save the Dolby Vision mode value
     result = SaveTVDolbyVisionMode(videoSource, pqValue, videoFormat, selectedMode);
     UT_LOG_INFO("Result SaveTVDolbyVisionMode(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:Value:[%d]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqValue,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  selectedMode,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -5078,85 +5082,72 @@ void test_l3_tvSettings_PictureModeSave(void)
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int selectedPictureMode = 0;
-    int userChoice = 0;
-    uint32_t videoFmtCount = 0;
-    uint32_t count = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
-    int supportedPictureModesArray[10] = {0}; // Initialize array elements to 0, adjust size if needed
+    int32_t selectedPictureMode = 0;
+    int32_t userChoice = 0;
 
     // Log the selected video source
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
     // List all options for Video Format
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Format");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Format");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     // Get user choice for Video Format
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", (int*)&videoFormat);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int*)&videoFormat);
 
     // Validate video format choice
-    if ((int)videoFormat < 1 || (int)videoFormat > (int)videoFmtCount)
+    if ((int32_t )videoFormat < 1 || (int32_t )videoFormat > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", (int)videoFormat - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-
-    // Retrieve supported picture modes
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    for (uint32_t k = 0; k < count; k++)
-    {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", k);
-        supportedPictureModesArray[k] = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
-    }
+    videoFormat = (int32_t )videoFormat - 1;
 
     // Display available picture modes to the user
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (uint32_t i = 0; i < count; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Format");
+    for (uint32_t i = PQ_MODE_STANDARD; i <= PQ_MODE_VIVID2; i++)
     {
-        UT_LOG_MENU_INFO("%u: [0x%0X]", i + 1, supportedPictureModesArray[i]); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", i + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable,i)); // Display index starting from 1
     }
 
     // Get user input for selecting a picture mode
     UT_LOG_MENU_INFO("Enter the number corresponding to the Picture Mode: ");
-    scanf("%d", &userChoice);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&userChoice);
 
     // Validate user choice
-    if (userChoice < 1 || userChoice > (int)count)
+    if (userChoice < 1 || userChoice > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid Picture Mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    selectedPictureMode = supportedPictureModesArray[userChoice - 1]; // Map 1-based choice to 0-based index
+    selectedPictureMode = userChoice - 1; // Map 1-based choice to 0-based index
 
     UT_LOG_INFO("Calling SaveSourcePictureMode(IN:VideoSrcType:[%s], IN:VideoFormatType:[%s], IN:PictureMode:[0x%0X])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  selectedPictureMode);
 
     // Save the picture mode value
     result = SaveSourcePictureMode(videoSource, videoFormat, selectedPictureMode);
     UT_LOG_INFO("Result SaveSourcePictureMode(IN:VideoSrcType:[%s], IN:VideoFormatType:[%s], IN:PictureMode:[0x%0X]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                  selectedPictureMode,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
@@ -5189,37 +5180,31 @@ void test_l3_tvSettings_CMSSave(void)
     tvError_t result = tvERROR_NONE;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_IP; // Set video source to IP directly
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
-    int cmsValue = 0;
-    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
+    int32_t cmsValue = 0;
     tvComponentType_t componentType = COMP_NONE;
     tvDataComponentColor_t colorType = tvDataColor_NONE;
-    int componentTypeCount = COMP_MAX;
-    int pqMode = 0;
-    uint32_t pqModeCount;
-    uint32_t videoFmtCount;
-    int componentColorCount;
-    int userColorChoice;
-    int maxRange = 30;
+    int32_t pqMode = 0;
+    int32_t userColorChoice;
+    int32_t maxRange = 30;
+    int32_t menuIndex = 1;
 
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
     // List all options for Picture Modes
-    pqModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    UT_LOG_MENU_INFO("Supported Picture Modes:");
-    for (unsigned int k = 0; k < pqModeCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Picture Modes");
+    for (uint32_t k = PQ_MODE_STANDARD; k <= PQ_MODE_VIVID2; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%u", k);
-        pqMode = UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvPQModeIndex_mapTable, pqMode)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvPQModeIndex_mapTable, k)); // Display index starting from 1
     }
-
-    // Get user choice for Picture Mode
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
-    scanf("%d", &pqMode);
-    readAndDiscardRestOfLine(stdin);
+    readInt(&pqMode);
 
     // Validate picture mode choice
-    if (pqMode < 1 || pqMode > (int)pqModeCount)
+    if (pqMode < PQ_MODE_STANDARD || pqMode > (int32_t )PQ_MODE_VIVID2)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5227,26 +5212,23 @@ void test_l3_tvSettings_CMSSave(void)
     }
 
     // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", pqMode - 1);
-    pqMode = UT_KVP_PROFILE_GET_UINT32(keyValue);
+    pqMode = pqMode - 1;
 
     // List all options for Video Format
-    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-    UT_LOG_MENU_INFO("Supported Video Formats:");
-    for (unsigned int k = 0; k < videoFmtCount; k++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video Formats");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Formats");
+    for (uint32_t k = VIDEO_FORMAT_NONE; k < VIDEO_FORMAT_MAX; k++)
     {
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%u", k);
-        videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        UT_LOG_MENU_INFO("[%u]: [%s]", k + 1, ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat)); // Display index starting from 1
+        UT_LOG_MENU_INFO("%u. %s", k + 1, UT_Control_GetMapString(tvVideoFormatType_mapTable, k)); // Display index starting from 1
     }
-
-    // Get user choice for Video Format
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
-    scanf("%d", (int*)&videoFormat);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int*)&videoFormat);
 
     // Validate video format choice
-    if ((int)videoFormat < 1 || (int)videoFormat > (int)videoFmtCount)
+    if ((int32_t )videoFormat < 1 || (int32_t )videoFormat > (int32_t )VIDEO_FORMAT_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Video Format. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5254,24 +5236,25 @@ void test_l3_tvSettings_CMSSave(void)
     }
 
     // Map the user's 1-based choice to 0-based index
-    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", (int)videoFormat - 1);
-    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+    videoFormat = (tvVideoFormatType_t)videoFormat - 1;
 
     // Retrieve supported component types
-    UT_LOG_MENU_INFO("Supported Component Types:");
-    for (int i = 0; i < componentTypeCount; i++)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Component Types");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Component Types");
+    for (int32_t i = COMP_NONE; i < COMP_MAX; i++)
     {
         if (i == COMP_MAX) continue; // Skip COMP_MAX as it's not a valid option
-        UT_LOG_MENU_INFO("%d: [%s]", i, ut_control_GetMapString(tvComponentType_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvComponentType_mapTable, i));
     }
 
     // Get user choice for Component Type
     UT_LOG_MENU_INFO("Enter the number corresponding to the Component Type: ");
-    scanf("%d", (int*)&componentType);
-    readAndDiscardRestOfLine(stdin);
+    readInt((int*)&componentType);
 
     // Validate component type choice
-    if (componentType < 0 || componentType >= componentTypeCount)
+    if (componentType < COMP_NONE || componentType >= COMP_MAX)
     {
         UT_LOG_ERROR("Invalid Component Type! Please enter a valid index from the list.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5281,30 +5264,27 @@ void test_l3_tvSettings_CMSSave(void)
     // Retrieve supported component colors if component type is not COMP_NONE
     if (componentType != COMP_NONE)
     {
-        componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
-
-        UT_LOG_MENU_INFO("Supported Component Colors:");
-        for (unsigned int i = 0; i < componentColorCount; i++)
+        UT_LOG_MENU_INFO("----------------------------------------------------------");
+        UT_LOG_MENU_INFO("\t\tSupported Component Types");
+        UT_LOG_MENU_INFO("----------------------------------------------------------");
+        UT_LOG_MENU_INFO("\t#   %-30s", "Component Types");
+        for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i <<= 1)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%u", i);
-            colorType = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            UT_LOG_MENU_INFO("%d: [%s]", i, ut_control_GetMapString(tvDataComponentColor_mapTable, colorType));
+            UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
         }
 
         // Get user input for component color
-        UT_LOG_MENU_INFO("Enter the component color index (0 - %d): ", componentColorCount - 1);
-        scanf("%d", &userColorChoice);
-        readAndDiscardRestOfLine(stdin);
+        UT_LOG_MENU_INFO("Enter the component color: ");
+        readInt(&userColorChoice);
 
-        if (userColorChoice < 0 || userColorChoice >= componentColorCount)
+        if (userColorChoice < 0 || userColorChoice >= COMP_MAX)
         {
             UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
             UT_LOG_INFO("Out %s", __FUNCTION__);
             return;
         }
 
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", userColorChoice);
-        colorType = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        colorType = (tvDataComponentColor_t)userColorChoice;
     }
 
     // Determine value range for cms_value based on componentType and colorType
@@ -5317,8 +5297,7 @@ void test_l3_tvSettings_CMSSave(void)
     if (componentType == COMP_NONE && colorType == tvDataColor_NONE)
     {
         UT_LOG_MENU_INFO("Enter CMS state value (0 or 1): ");
-        scanf("%d", &cmsValue);
-        readAndDiscardRestOfLine(stdin);
+        readInt(&cmsValue);
 
         if (cmsValue < 0 || cmsValue > 1)
         {
@@ -5330,8 +5309,7 @@ void test_l3_tvSettings_CMSSave(void)
     else
     {
         UT_LOG_MENU_INFO("Enter the CMS value (0 - %d): ", maxRange);
-        scanf("%d", &cmsValue);
-        readAndDiscardRestOfLine(stdin);
+        readInt(&cmsValue);
 
         if (cmsValue < 0 || cmsValue > maxRange)
         {
@@ -5342,24 +5320,24 @@ void test_l3_tvSettings_CMSSave(void)
     }
 
     UT_LOG_INFO("Calling SaveCMS(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:ComponentType:[%s], IN:ColorType:[%s], IN:CMSValue:[%d])",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqMode,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(tvComponentType_mapTable, componentType),
-                 ut_control_GetMapString(tvDataComponentColor_mapTable, colorType),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvComponentType_mapTable, componentType),
+                 UT_Control_GetMapString(tvDataComponentColor_mapTable, colorType),
                  cmsValue);
 
     // Save the CMS value
     result = SaveCMS(videoSource, pqMode, videoFormat, componentType, colorType, cmsValue);
 
     UT_LOG_INFO("Result SaveCMS(IN:VideoSrcType:[%s], IN:PQMode:[%d], IN:VideoFormatType:[%s], IN:ComponentType:[%s], IN:ColorType:[%s], IN:CMSValue:[%d]) tvError_t:[%s]",
-                 ut_control_GetMapString(tvVideoSrcType_mapTable, videoSource),
+                 UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource),
                  pqMode,
-                 ut_control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
-                 ut_control_GetMapString(tvComponentType_mapTable, componentType),
-                 ut_control_GetMapString(tvDataComponentColor_mapTable, colorType),
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
+                 UT_Control_GetMapString(tvComponentType_mapTable, componentType),
+                 UT_Control_GetMapString(tvDataComponentColor_mapTable, colorType),
                  cmsValue,
-                 ut_control_GetMapString(tvError_mapTable, result));
+                 UT_Control_GetMapString(tvError_mapTable, result));
 
     ASSERT(result == tvERROR_NONE);
 
