@@ -2064,6 +2064,54 @@ graph TB
     F -->|tvERROR_NONE| G[Test case success]
     F -->|!=tvERROR_NONE| F1[Test case fail]
 ```
+
+### Test 50
+
+|Title|Details|
+|--|--|
+|Function Name|`test_l2_tvSettings_RetrieveLDIMShortCircuitStatus`|
+|Description|Verifies the functionality of retrieving the short circuit status of the adjacent zones. It ensures that the returned status indicates whether any short is detected.|
+|Test Group|02|
+|Test Case ID|50|
+|Priority|High|
+
+**Pre-Conditions**
+None
+
+**Dependencies**
+None
+
+**User Interaction**
+If user chose to run the test in interactive mode, then the test case has to be selected via console.
+
+
+#### Test Procedure  - Test 50
+
+| Variation / Steps | Description | Test Data | Expected Result | Notes|
+| -- | --------- | ---------- | -------------- | ----- |
+| 01 | Initialize the TV using TvInit() | None | tvERROR_NONE | Should be successful |
+| 02 | Retrieve the short circuit status using GetOpenCircuitStatus() | shortcircuitlist = valid pointer, listsize = number of zones, status = valid pointer | tvERROR_NONE | Should be successful |
+| 03 | Check if the status indicates an short detected | shortcircuitlist = list of zones shorted/not shorted, status >= 1 | short detected | Should be successful |
+| 04 | Check if the status indicates no short detected | shortcircuitlist = list of zones shorted/not shorted, status = 0 | No short detected | Should be successful |
+| 05 | Check if the status value is invalid | status < 0 | Invalid status value | Should fail |
+| 06 | Terminate the TV using TvTerm() | None | tvERROR_NONE | Should be successful |
+
+```mermaid
+graph TB
+    A[TvInit] -->|tvERROR_NONE| B[GetLdimZoneShortCircuitStatus]
+    A -->|!=tvERROR_NONE| A1[Test case fail]
+    B -->|tvERROR_NONE| C[Check returned <br> status]
+    B -->|!=tvERROR_NONE && != tvERROR_OPERATION_NOT_SUPPORTED| B1[Test case fail]
+    C -->|Status >= 1| F[Short detected]
+    C -->|Status == 0| G[Short not <br> detected]
+    C -->|Status < 0 <br> or Status > 1| H[Invalid status]
+    F -->D[TvTerm]
+    G -->D
+    H --> D
+    D -->|tvERROR_NONE| E[Test case pass]
+    D -->|!=tvERROR_NONE| D1[Test case fail]
+```
+
 ### Test 51
 
 |Title|Details|
@@ -2072,6 +2120,7 @@ graph TB
 |Description|Verifies the functionality of retrieving the dimming zone count.|
 |Test Group|02|
 |Test Case ID|51|
+
 |Priority|High|
 
 **Pre-Conditions**

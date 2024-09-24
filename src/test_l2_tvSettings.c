@@ -3636,6 +3636,81 @@ void test_l2_tvSettings_EnableAndGetDynamicContrast(void)
 }
 
 /**
+* @brief Test to verify the functionality of RetrieveLDIMShortCircuitStatus API
+*
+* This test case verifies the functionality of the RetrieveLDIMShortCircuitStatus API.
+* It checks if the API is able to correctly retrieve the status of the short circuit
+* in the TV settings. The test case invokes the TvInit() function to initialize the
+* TV settings, then it calls the GetLdimZoneShortCircuitStatus() function to retrieve the
+* status of the short circuit. The test case asserts that the return values of these
+* functions are as expected. If the status of the short circuit is equal to 1, it logs that a
+* adjacent zone short is detected. Also it will list the adjacent zones which are shorted.
+* If the status is 0, it logs that no short is detected.
+* If the status is less than 0, it logs an error message.
+* Finally, the test case calls the TvTerm() function to terminate the TV settings
+* and asserts that its return value is as expected.
+*
+* **Test Group ID:** 02@n
+* **Test Case ID:** 050@n
+*
+* **Test Procedure:**
+* Refer to Test specification documentation [tv-settings_L2_Low_Level_Test_Spec.md](../docs/pages/tv-settings_L2_Low_Level_Test_Spec.md)
+*/
+
+void test_l2_tvSettings_RetrieveLDIMShortCircuitStatus(void)
+{
+    gTestID = 50;
+    UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t ret = tvERROR_NONE;
+    int shortCircuitStatus = -1;
+    unsigned int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
+    // Initialize array elements to 0
+    for (int i = 0; i < listsize; i++ ) {
+        shortcircuitlist[i] = 0; 
+    }
+
+    UT_LOG_DEBUG("Invoking TvInit()");
+    ret = TvInit();
+    UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+
+    UT_LOG_DEBUG("Invoking GetLdimZoneShortCircuitStatus() with valid pointer");
+    ret = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+    UT_LOG_DEBUG("Short circuit status: %d, Return status: %d", shortCircuitStatus, ret);
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    } else {
+        UT_ASSERT_EQUAL(ret, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    if ((ret != tvERROR_NONE) && (ret != tvERROR_OPERATION_NOT_SUPPORTED)) {
+        UT_LOG_ERROR("GetLdimZoneShortCircuitStatus failed with status: %d", ret);
+    }
+
+    if (shortCircuitStatus >= 1)
+    {
+        UT_LOG_INFO("Adjacent zones short detected");
+        for(int i=0; i<listsize; i++){
+            UT_LOG_INFO("shortcircuit_zone_list[%d] = [%d], ", i, shortcircuitlist[i]);
+        }
+    } else if (shortCircuitStatus == 0) {
+        UT_LOG_INFO("\n No Adjacent zones short detected");
+    } else {
+        UT_LOG_ERROR("\n Invalid status value");
+    }
+
+    UT_LOG_DEBUG("Invoking TvTerm()");
+    ret = TvTerm();
+    UT_LOG_DEBUG("Return status: %d", ret);
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+
+    UT_LOG_INFO("Out %s\n", __FUNCTION__);
+}
+
+  
+/**
 * @brief Test to verify the functionality of GetNumberOfDimmingZones API
 *
 * This test case verifies the functionality of the GetNumberOfDimmingZones API.
@@ -3695,7 +3770,7 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
-
+  
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -3764,6 +3839,7 @@ int32_t test_l2_tvSettings_register(void)
     UT_add_test( pSuite, "L2_RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
     UT_add_test( pSuite, "L2_EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
     UT_add_test( pSuite, "L2_GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
+    UT_add_test( pSuite, "L2_RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
 
     return 0;
 }
