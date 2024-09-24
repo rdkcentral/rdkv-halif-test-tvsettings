@@ -3307,7 +3307,9 @@ void test_l2_tvSettings_GetTVGammaTarget(void)
     for( colorTemp=tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++ )
     {
         UT_LOG_DEBUG("Invoking GetTVGammaTarget() with colorTemp = %d", colorTemp);
-        GetTVGammaTarget(colorTemp, &x, &y);
+        status = GetTVGammaTarget(colorTemp, &x, &y);
+        UT_LOG_DEBUG(" GetTVGammaTarget Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
         UT_LOG_DEBUG("Returned x = %f, y = %f", x, y);
         UT_ASSERT_TRUE(x >= 0 && x <= 1.0);
         UT_ASSERT_TRUE(y >= 0 && y <= 1.0);
