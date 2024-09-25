@@ -17653,7 +17653,7 @@ void test_l1_tvSettings_positive_GetNumberOfDimmingZones (void)
     /* Step 02: Calling tvsettings GetNumberOfDimmingZones and the API to return success */
     result = GetNumberOfDimmingZones(&number_of_dimming_zones);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE((number_of_dimming_zones >= 0));
+    UT_ASSERT_EQUAL((number_of_dimming_zones_retry == 0));
 
     /* Step 03: Retry tvsettings GetNumberOfDimmingZones and the API to return success */
     result = GetNumberOfDimmingZones(&number_of_dimming_zones_retry);

@@ -3756,7 +3756,7 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
         UT_LOG_ERROR("GetNumberOfDimmingZones failed with status: %d", ret);
     }
 
-    if (zoneCount_expected == zoneCount_actual)
+    if ((zoneCount_actual) && (zoneCount_expected == zoneCount_actual))
     {
         UT_LOG_INFO("Expected zone count matches the actual read value");
     } else {
