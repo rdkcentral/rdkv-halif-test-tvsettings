@@ -17617,7 +17617,6 @@ void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
     }
 }
 
-
 /**
  * @brief Validate GetNumberOfDimmingZones() for all positive invocation scenarios
  *
@@ -17652,13 +17651,21 @@ void test_l1_tvSettings_positive_GetNumberOfDimmingZones (void)
 
     /* Step 02: Calling tvsettings GetNumberOfDimmingZones and the API to return success */
     result = GetNumberOfDimmingZones(&number_of_dimming_zones);
-    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_EQUAL((number_of_dimming_zones_retry == 0));
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    } else {
+        UT_ASSERT_EQUAL(ret, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
 
     /* Step 03: Retry tvsettings GetNumberOfDimmingZones and the API to return success */
     result = GetNumberOfDimmingZones(&number_of_dimming_zones_retry);
-    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE((number_of_dimming_zones_retry >= 0));
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    } else {
+        UT_ASSERT_EQUAL(ret, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    UT_ASSERT_EQUAL((number_of_dimming_zones_retry == number_of_dimming_zones));
 
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();

@@ -3735,7 +3735,7 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
 
     tvError_t ret = tvERROR_NONE;
     int zoneCount_actual = 0;
-    int zoneCount_expected = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMNumberOfDimmingZones/zone_count");
+    int zoneCount_expected = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/zone_count");
 
     UT_LOG_DEBUG("Invoking TvInit()");
     ret = TvInit();
@@ -3756,7 +3756,9 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
         UT_LOG_ERROR("GetNumberOfDimmingZones failed with status: %d", ret);
     }
 
-    if ((zoneCount_actual) && (zoneCount_expected == zoneCount_actual))
+    UT_ASSERT_EQUAL(zoneCount_expected, zoneCount_actual);
+
+    if (zoneCount_expected == zoneCount_actual)
     {
         UT_LOG_INFO("Expected zone count matches the actual read value");
     } else {
