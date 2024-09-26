@@ -70,6 +70,7 @@ High level overview:
 |26|[Enable and Disable White Balance - Dynamic Contrast and Local Contrast](#enable-and-disable-white-balance---dynamic-contrast-and-local-contrast)|This test verifies the functionality of enabling or disabling the white balance, dynamic contrast and local contrast module. It ensures that the white balance, dynamic contrast and local contrast module can be successfully enabled or disabled as intended.|
 |27|[Test the save setting values](#test-the-save-setting-values)|This test verifies the functionality of saving all persistence settings by rebooting the test case.|
 |28|[Get short Circuit Status](#get-short-circuit-status)|This test verifies the functionality of retrieving the short circuit status of the adjacent zones. It ensures that the returned status indicates whether any short is detected.|
+|29|[Get number of dimming zones](#get-number-of-dimming-zones)|This test verifies the functionality of retrieving the dimming zone count.|
 -----------
 
 ### Test Start up Requirement

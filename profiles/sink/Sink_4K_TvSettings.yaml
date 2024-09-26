@@ -1543,3 +1543,4 @@ tvSettings:
   LDIMShortCircuitStatus:
     enable: true
     size : 160
+    zone_count : 160

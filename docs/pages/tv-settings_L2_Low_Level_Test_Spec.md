@@ -2084,6 +2084,7 @@ None
 **User Interaction**
 If user chose to run the test in interactive mode, then the test case has to be selected via console.
 
+
 #### Test Procedure  - Test 50
 
 | Variation / Steps | Description | Test Data | Expected Result | Notes|
@@ -2107,6 +2108,50 @@ graph TB
     F -->D[TvTerm]
     G -->D
     H --> D
+    D -->|tvERROR_NONE| E[Test case pass]
+    D -->|!=tvERROR_NONE| D1[Test case fail]
+```
+
+### Test 51
+
+|Title|Details|
+|--|--|
+|Function Name|`test_l2_tvSettings_GetNumberOfDimmingZones`|
+|Description|Verifies the functionality of retrieving the dimming zone count.|
+|Test Group|02|
+|Test Case ID|51|
+
+|Priority|High|
+
+**Pre-Conditions**
+None
+
+**Dependencies**
+None
+
+**User Interaction**
+If user chose to run the test in interactive mode, then the test case has to be selected via console.
+
+#### Test Procedure  - Test 51
+
+| Variation / Steps | Description | Test Data | Expected Result | Notes|
+| -- | --------- | ---------- | -------------- | ----- |
+| 01 | Initialize the TV using TvInit() | None | tvERROR_NONE | Should be successful |
+| 02 | Retrieve the dimming zone count using GetNumberOfDimmingZones() | number_of_dimming_zones = valid pointer | tvERROR_NONE | Should be successful |
+| 03 | Check if number_of_dimming_zones  | number_of_dimming_zones = number of dimming zones supported | number of dimming zone matches the expected count for given platform | Should be successful |
+| 04 | Check if the status indicates no short detected | number_of_dimming_zones = number of dimming zones supported | number of dimming zone did not matches the expected count for given platform | Should fail |
+| 05 | Terminate the TV using TvTerm() | None | tvERROR_NONE | Should be successful |
+
+```mermaid
+graph TB
+    A[TvInit] -->|tvERROR_NONE| B[GetNumberOfDimmingZones]
+    A -->|!=tvERROR_NONE| A1[Test case fail]
+    B -->|tvERROR_NONE| C[Check returned <br> status]
+    B -->|!=tvERROR_NONE && != tvERROR_OPERATION_NOT_SUPPORTED| B1[Test case fail]
+    C -->|number_of_dimming_zones != number_of_dimming_zones__expected_for_current_panel_platform| F[Test case fail]
+    C -->|number_of_dimming_zones == number_of_dimming_zones__expected_for_current_panel_platform| G[Test case pass]
+    F -->D[TvTerm]
+    G -->D[TvTerm]
     D -->|tvERROR_NONE| E[Test case pass]
     D -->|!=tvERROR_NONE| D1[Test case fail]
 ```
