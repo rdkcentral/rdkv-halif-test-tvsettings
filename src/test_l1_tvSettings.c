@@ -15875,8 +15875,8 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetTVGammaTarget() -  Retrieve the current Gamma Target values and validate with range (0 to 1.0) by looping through the ColorTemperature section of test specific config file | tvColorTemp_t, double *, double *| void | Should Pass |
- * | 03 | call GetTVGammaTarget() -  Retrieve the current current Gamma Target values with valid argument and validate with above value |  tvColorTemp_t, double *, double * | void | Should Pass |
+ * | 02 | call GetTVGammaTarget() -  Retrieve the current Gamma Target values and validate with range (0 to 1.0) by looping through the ColorTemperature section of test specific config file | tvColorTemp_t, double *, double *| tvERROR_NONE | Should Pass |
+ * | 03 | call GetTVGammaTarget() -  Retrieve the current current Gamma Target values with valid argument and validate with above value |  tvColorTemp_t, double *, double * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_GetTVGammaTarget (void)
@@ -15902,11 +15902,13 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-        GetTVGammaTarget( colorTempValue, &x_Value, &y_Value);
+        result = GetTVGammaTarget( colorTempValue, &x_Value, &y_Value);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
         UT_ASSERT_TRUE((x_Value >= 0 && x_Value <= 1.0) );
         UT_ASSERT_TRUE((y_Value >= 0 && y_Value <= 1.0) );
 
-        GetTVGammaTarget( colorTempValue, &x_ValueRetry, &y_ValueRetry);
+        result = GetTVGammaTarget( colorTempValue, &x_ValueRetry, &y_ValueRetry);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
         UT_ASSERT_TRUE((x_Value == x_ValueRetry && y_Value == y_ValueRetry) );
     }
 
@@ -15931,14 +15933,14 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target even before TvInit() | tvColorTemp_t, double *, double *| void | Should Pass |
+ * | 01 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target even before TvInit() | tvColorTemp_t, double *, double *| tvERROR_INVALID_STATE | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, double *, NULL | void | Should Pass |
- * | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, NULL, double * | void | Should Pass |
- * | 05 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with max range| tvColorTemp_MAX, double *, double * | void | Should Pass |
- * | 06 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with less than lower range| -1, double *, double * | void | Should Pass |
+ * | 03 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, double *, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, NULL, double * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with max range| tvColorTemp_MAX, double *, double * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with less than lower range| -1, double *, double * | tvERROR_INVALID_PARAM | Should Pass |
  * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 08 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target valid arguments | tvColorTemp_t, double *, double * | void | Should Pass |
+ * | 08 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target valid arguments | tvColorTemp_t, double *, double * | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 {
@@ -15954,32 +15956,28 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetTVGammaTarget before TvInit */
-        GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
-        UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
+        result = GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( tvColorTemp_MAX , &x_Value, &y_Value);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0));
+    result = GetTVGammaTarget( tvColorTemp_MAX , &x_Value, &y_Value);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( (tvColorTemp_t)-1 , &x_Value, &y_Value);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0));
+    result = GetTVGammaTarget( (tvColorTemp_t)-1 , &x_Value, &y_Value);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( colorTempValue, NULL, &y_Value);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0 ));
+    result = GetTVGammaTarget( colorTempValue, NULL, &y_Value);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( colorTempValue, &x_Value, NULL);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0 ));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0));
+    result = GetTVGammaTarget( colorTempValue, &x_Value, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
@@ -15988,8 +15986,8 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 08: Calling tvsettings GetTVGammaTarget after TvTerm*/
-        GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
-        UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
+        result = GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
 }

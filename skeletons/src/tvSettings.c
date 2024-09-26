@@ -815,7 +815,7 @@ tvError_t SetGammaPattern(int is_10_bit, int R_Value, int G_Value, int B_Value)
   return (tvError_t)0;
 }
 
-void GetTVGammaTarget(tvColorTemp_t colorTemp, double* x, double* y)
+tvError_t GetTVGammaTarget(tvColorTemp_t colorTemp, double* x, double* y)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
