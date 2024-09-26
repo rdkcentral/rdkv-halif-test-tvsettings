@@ -815,7 +815,7 @@ tvError_t SetGammaPattern(int is_10_bit, int R_Value, int G_Value, int B_Value)
   return (tvError_t)0;
 }
 
-void GetTVGammaTarget(tvColorTemp_t colorTemp, double* x, double* y)
+tvError_t GetTVGammaTarget(tvColorTemp_t colorTemp, double* x, double* y)
 {
   /*TODO: Implement Me!*/
   (void)colorTemp;
@@ -919,3 +919,18 @@ tvError_t EnableLocalContrast(bool mode)
   return (tvError_t)0;
 }
 
+tvError_t GetLdimZoneShortCircuitStatus(unsigned char* shortcircuit_zone_list, unsigned int size, int* status)
+{
+  /*TODO: Implement Me!*/
+  (void)shortcircuit_zone_list;
+  (void)size;
+  (void)status;
+  return (tvError_t)0;
+}
+
+tvError_t GetNumberOfDimmingZones(unsigned int* number_of_dimming_zones)
+{
+  /*TODO: Implement Me!*/
+  (void)number_of_dimming_zones;
+  return (tvError_t)0;  
+}
