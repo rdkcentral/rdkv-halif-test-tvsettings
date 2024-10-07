@@ -3626,6 +3626,7 @@ void test_l1_tvSettings_positive_GetLocalDimmingLevel (void)
         if(dimmingLevel == ldimStateLevel)
         {
             IsLdimValid = true;
+            break;
         }
     }
     UT_ASSERT_TRUE((IsLdimValid));
@@ -6445,7 +6446,7 @@ void test_l1_tvSettings_negative_SetColorTemperature (void)
 		{
 			snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
 			colorTempValue = (tvColorTemp_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-			if(colorTempValue == i)
+			if(colorTempValue == (tvColorTemp_t)i)
 			{
 				SupportAvailable = true;
 				break;
@@ -6841,7 +6842,7 @@ void test_l1_tvSettings_negative_SaveColorTemperature (void)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if(colorTempValue == i)
+            if(colorTempValue == (tvColorTemp_t)i)
             {
                 SupportAvailable = true;
                 break;
@@ -9801,7 +9802,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Rgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_Rgain_onSource(colorTempValue , 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
+            result = SetColorTemp_Rgain_onSource((tvColorTemp_t)i , 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -9861,7 +9862,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_Rgain_onSource(colorTempValue,&rgain, (tvColorTempSourceOffset_t)HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (rgain > 0 && rgain < 2048));
+    UT_ASSERT_TRUE( (rgain >= 0 && rgain < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_Rgain_onSource and expectinging the API to return success */
     result = GetColorTemp_Rgain_onSource(colorTempValue,&rgainRetry, (tvColorTempSourceOffset_t)HDMI_OFFSET);
@@ -9878,7 +9879,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Rgain_onSource (void)
 
             result = GetColorTemp_Rgain_onSource(colorTempValue, &rgain, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (rgain > 0 && rgain < 2048));
+            UT_ASSERT_TRUE( (rgain >= 0 && rgain < 2048));
 
         }
     }
@@ -9968,9 +9969,9 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
     for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (unsigned int j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -9980,7 +9981,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Rgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_Rgain_onSource(colorTempValue ,&rgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_Rgain_onSource((tvColorTemp_t)i ,&rgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -10178,7 +10179,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
     for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        for (unsigned int j = 0; j < colorTempCount ; j++ )
+        for (unsigned int j = 0; j < colorTempCount; j++ )
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
@@ -10190,7 +10191,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Ggain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_Ggain_onSource(colorTempValue , 0, \
+            result = SetColorTemp_Ggain_onSource((tvColorTemp_t)i, 0, \
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
@@ -10278,9 +10279,9 @@ void test_l1_tvSettings_positive_GetColorTemp_Ggain_onSource (void)
         {
             result = GetColorTemp_Ggain_onSource(colorTempValue, &ggain, (tvColorTempSourceOffset_t)j);
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (ggain > 0 && ggain < 2048));
+            UT_ASSERT_TRUE( (ggain >= 0 && ggain < 2048));
 
-            result = GetColorTemp_Ggain_onSource(colorTempValue, &ggain, (tvColorTempSourceOffset_t)j);
+            result = GetColorTemp_Ggain_onSource(colorTempValue, &ggainRetry, (tvColorTempSourceOffset_t)j);
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
             UT_ASSERT_EQUAL(ggain,ggainRetry);
 
@@ -10385,7 +10386,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Ggain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_Ggain_onSource(colorTempValue ,&ggain, \
+            result = GetColorTemp_Ggain_onSource((tvColorTemp_t)i ,&ggain, \
                     (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -10596,7 +10597,7 @@ void test_l1_tvSettings_negative_SetColorTemp_Bgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_Bgain_onSource(colorTempValue , 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
+            result = SetColorTemp_Bgain_onSource((tvColorTemp_t)i, 0, (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -10675,7 +10676,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_Bgain_onSource(colorTempValue,&bgain, (tvColorTempSourceOffset_t)HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (bgain > 0 && bgain < 2048 ));
+    UT_ASSERT_TRUE( (bgain >= 0 && bgain < 2048 ));
 
     /* Step 03: Calling tvsettings GetColorTemp_Bgain_onSource and expectinging the API to return success */
     result = GetColorTemp_Bgain_onSource(colorTempValue,&bgainRetry, (tvColorTempSourceOffset_t)HDMI_OFFSET);
@@ -10692,7 +10693,7 @@ void test_l1_tvSettings_positive_GetColorTemp_Bgain_onSource (void)
 
             result = GetColorTemp_Bgain_onSource(colorTempValue, &bgain, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (bgain > 0 && bgain < 2048));
+            UT_ASSERT_TRUE( (bgain >= 0 && bgain < 2048));
 
         }
     }
@@ -10783,7 +10784,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -10793,7 +10794,7 @@ void test_l1_tvSettings_negative_GetColorTemp_Bgain_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_Bgain_onSource(colorTempValue ,&bgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_Bgain_onSource((tvColorTemp_t)i,&bgain, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -11006,7 +11007,7 @@ void test_l1_tvSettings_negative_SetColorTemp_R_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_R_post_offset_onSource(colorTempValue , 0,\
+            result = SetColorTemp_R_post_offset_onSource((tvColorTemp_t)i , 0,\
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -11089,7 +11090,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_R_post_offset_onSource(colorTempValue,&rpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
+    UT_ASSERT_TRUE( (rpostoffset >= 0 && rpostoffset < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_R_post_offset_onSource and expectinging the API to return success */
     result = GetColorTemp_R_post_offset_onSource(colorTempValue,&rpostoffsetRetry,(tvColorTempSourceOffset_t) HDMI_OFFSET);
@@ -11106,7 +11107,7 @@ void test_l1_tvSettings_positive_GetColorTemp_R_post_offset_onSource (void)
 
             result = GetColorTemp_R_post_offset_onSource(colorTempValue, &rpostoffset, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (rpostoffset > 0 && rpostoffset < 2048));
+            UT_ASSERT_TRUE( (rpostoffset >= 0 && rpostoffset < 2048));
 
         }
     }
@@ -11196,7 +11197,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -11206,7 +11207,7 @@ void test_l1_tvSettings_negative_GetColorTemp_R_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_R_post_offset_onSource(colorTempValue ,&rpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_R_post_offset_onSource((tvColorTemp_t)i ,&rpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -11414,7 +11415,7 @@ void test_l1_tvSettings_negative_SetColorTemp_G_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_G_post_offset_onSource(colorTempValue , 0,\
+            result = SetColorTemp_G_post_offset_onSource((tvColorTemp_t)i , 0,\
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -11500,7 +11501,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_G_post_offset_onSource(colorTempValue,&gpostoffset,(tvColorTempSourceOffset_t) HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (gpostoffset > 0 && gpostoffset < 2048));
+    UT_ASSERT_TRUE( (gpostoffset >= 0 && gpostoffset < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_G_post_offset_onSource and expectinging the API to return success */
     result = GetColorTemp_G_post_offset_onSource(colorTempValue,&gpostoffsetRetry,(tvColorTempSourceOffset_t) HDMI_OFFSET);
@@ -11516,7 +11517,7 @@ void test_l1_tvSettings_positive_GetColorTemp_G_post_offset_onSource (void)
         {
             result = GetColorTemp_G_post_offset_onSource(colorTempValue, &gpostoffset, (tvColorTempSourceOffset_t) j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (gpostoffset > 0 && gpostoffset < 2048));
+            UT_ASSERT_TRUE( (gpostoffset >= 0 && gpostoffset < 2048));
         }
     }
 
@@ -11605,7 +11606,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -11615,7 +11616,7 @@ void test_l1_tvSettings_negative_GetColorTemp_G_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_G_post_offset_onSource(colorTempValue ,&gpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_G_post_offset_onSource((tvColorTemp_t)i ,&gpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -11826,7 +11827,7 @@ void test_l1_tvSettings_negative_SetColorTemp_B_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = SetColorTemp_B_post_offset_onSource(colorTempValue , 0,\
+            result = SetColorTemp_B_post_offset_onSource((tvColorTemp_t)i , 0,\
                     (tvColorTempSourceOffset_t)HDMI_OFFSET, 0);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -11907,7 +11908,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
     colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperature/index/0");
     result = GetColorTemp_B_post_offset_onSource(colorTempValue,&bpostoffset, (tvColorTempSourceOffset_t) HDMI_OFFSET);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_TRUE( (bpostoffset > 0 && bpostoffset < 2048));
+    UT_ASSERT_TRUE( (bpostoffset >= 0 && bpostoffset < 2048));
 
     /* Step 03: Calling tvsettings GetColorTemp_B_post_offset_onSource and expectinging the API to return success */
     result = GetColorTemp_B_post_offset_onSource(colorTempValue,&bpostoffsetRetry,(tvColorTempSourceOffset_t) HDMI_OFFSET);
@@ -11925,7 +11926,7 @@ void test_l1_tvSettings_positive_GetColorTemp_B_post_offset_onSource (void)
 
             result = GetColorTemp_B_post_offset_onSource(colorTempValue, &bpostoffset, (tvColorTempSourceOffset_t)j );
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_TRUE( (bpostoffset > 0 && bpostoffset < 2048));
+            UT_ASSERT_TRUE( (bpostoffset >= 0 && bpostoffset < 2048));
 
         }
     }
@@ -12015,10 +12016,10 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
     for (unsigned int i = 0; i < tvColorTemp_MAX; i++)
     {
         platformFlag = false;
-        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
+            colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
                 platformFlag = true;
@@ -12027,7 +12028,7 @@ void test_l1_tvSettings_negative_GetColorTemp_B_post_offset_onSource (void)
         }
         if(!platformFlag)
         {
-            result = GetColorTemp_B_post_offset_onSource(colorTempValue ,&bpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
+            result = GetColorTemp_B_post_offset_onSource((tvColorTemp_t)i ,&bpostoffset, (tvColorTempSourceOffset_t)HDMI_OFFSET );
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
@@ -12453,7 +12454,7 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
     unsigned short pData_R_limit[]={0, 100, 1023};
     unsigned short pData_G_limit[]={0, 100, 1023};
     unsigned short pData_B_limit[]={0, 100, 1023};
-    unsigned short  size =256;
+    unsigned short  size =3;
     bool bflag = true;
     uint32_t colorTempCount = 0;
     tvColorTemp_t colorTempValue = tvColorTemp_STANDARD;
@@ -12472,7 +12473,6 @@ void test_l1_tvSettings_positive_GetDefaultGammaTable (void)
         colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
         result = GetDefaultGammaTable(colorTempValue,pData_R_limit,pData_G_limit,pData_B_limit, size);
         UT_ASSERT_EQUAL(result, tvERROR_NONE);
-
         for(int i =0; i <size; i++ )
         {
             if(   (pData_R_limit[i] < 0 ||  pData_R_limit[i] > 1023) || \
@@ -12530,7 +12530,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
     unsigned short pData_R_limit[] ={0, 100, 1023};
     unsigned short pData_G_limit[] ={0, 100, 1023};
     unsigned short pData_B_limit[]={0, 100, 1023};
-    unsigned short  size = 256;
+    unsigned short  size = 3;
     bool platformFlag = false;
     tvError_t result = tvERROR_NONE ;
     uint32_t colorTempCount = 0;
@@ -12580,7 +12580,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
         platformFlag = false;
         for (unsigned int j = 0; j < colorTempCount ; j++ )
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", j);
             colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
             if(colorTempValue == (tvColorTemp_t)i)
             {
@@ -12590,7 +12590,7 @@ void test_l1_tvSettings_negative_GetDefaultGammaTable (void)
         }
         if(!platformFlag)
         {
-            result = GetDefaultGammaTable(colorTempValue, \
+            result = GetDefaultGammaTable((tvColorTemp_t)i, \
                     pData_R_limit,pData_G_limit,pData_B_limit, size);
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
@@ -12721,7 +12721,7 @@ void test_l1_tvSettings_negative_GetGammaTable (void)
     unsigned short pData_R_limit[]={0, 100, 1023};
     unsigned short pData_G_limit[]={0, 100, 1023};
     unsigned short pData_B_limit[]={0, 100, 1023};
-    unsigned short  size = 256;
+    unsigned short  size = 3;
     tvError_t result = tvERROR_NONE ;
 
     if (extendedEnumsSupported == true)
@@ -12791,7 +12791,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
     unsigned short pData_R_limit[] = {0, 100, 1023};
     unsigned short pData_G_limit[] = {0, 100, 1023};
     unsigned short pData_B_limit[] = {0, 100, 1023};
-    unsigned short size = 256;
+    unsigned short size = 3;
     uint32_t colorTempCount = 0;
     tvColorTemp_t colorTempValue = tvColorTemp_STANDARD;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
@@ -12807,7 +12807,7 @@ void test_l1_tvSettings_positive_SaveGammaTable (void)
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
         result = SaveGammaTable(colorTempValue, pData_R_limit,pData_G_limit,pData_B_limit, size);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM)
+        UT_ASSERT_EQUAL(result, tvERROR_NONE)
     }
 
     /* Step 03: Calling tvsettings termination and expecting the API to return success */
@@ -15875,8 +15875,8 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 02 | call GetTVGammaTarget() -  Retrieve the current Gamma Target values and validate with range (0 to 1.0) by looping through the ColorTemperature section of test specific config file | tvColorTemp_t, double *, double *| void | Should Pass |
- * | 03 | call GetTVGammaTarget() -  Retrieve the current current Gamma Target values with valid argument and validate with above value |  tvColorTemp_t, double *, double * | void | Should Pass |
+ * | 02 | call GetTVGammaTarget() -  Retrieve the current Gamma Target values and validate with range (0 to 1.0) by looping through the ColorTemperature section of test specific config file | tvColorTemp_t, double *, double *| tvERROR_NONE | Should Pass |
+ * | 03 | call GetTVGammaTarget() -  Retrieve the current current Gamma Target values with valid argument and validate with above value |  tvColorTemp_t, double *, double * | tvERROR_NONE | Should Pass |
  * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_GetTVGammaTarget (void)
@@ -15902,11 +15902,13 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
         colorTempValue = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-        GetTVGammaTarget( colorTempValue, &x_Value, &y_Value);
+        result = GetTVGammaTarget( colorTempValue, &x_Value, &y_Value);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
         UT_ASSERT_TRUE((x_Value >= 0 && x_Value <= 1.0) );
         UT_ASSERT_TRUE((y_Value >= 0 && y_Value <= 1.0) );
 
-        GetTVGammaTarget( colorTempValue, &x_ValueRetry, &y_ValueRetry);
+        result = GetTVGammaTarget( colorTempValue, &x_ValueRetry, &y_ValueRetry);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
         UT_ASSERT_TRUE((x_Value == x_ValueRetry && y_Value == y_ValueRetry) );
     }
 
@@ -15931,14 +15933,14 @@ void test_l1_tvSettings_positive_GetTVGammaTarget (void)
  * **Test Procedure:**@n
  * | Variation / Step | Description | Test Data | Expected Result | Notes |
  * | :-------: | ------------- | --------- | --------------- | ----- |
- * | 01 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target even before TvInit() | tvColorTemp_t, double *, double *| void | Should Pass |
+ * | 01 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target even before TvInit() | tvColorTemp_t, double *, double *| tvERROR_INVALID_STATE | Should Pass |
  * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 03 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, double *, NULL | void | Should Pass |
- * | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, NULL, double * | void | Should Pass |
- * | 05 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with max range| tvColorTemp_MAX, double *, double * | void | Should Pass |
- * | 06 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with less than lower range| -1, double *, double * | void | Should Pass |
+ * | 03 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, double *, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input | tvColorTemp_t, NULL, double * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with max range| tvColorTemp_MAX, double *, double * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call GetTVGammaTarget() -   Retrieve current TV Gamma Target with invalid input with less than lower range| -1, double *, double * | tvERROR_INVALID_PARAM | Should Pass |
  * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
- * | 08 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target valid arguments | tvColorTemp_t, double *, double * | void | Should Pass |
+ * | 08 | call GetTVGammaTarget() -  Retrieve current TV Gamma Target valid arguments | tvColorTemp_t, double *, double * | tvERROR_INVALID_STATE | Should Pass |
  */
 void test_l1_tvSettings_negative_GetTVGammaTarget (void)
 {
@@ -15954,32 +15956,28 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetTVGammaTarget before TvInit */
-        GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
-        UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
+        result = GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( tvColorTemp_MAX , &x_Value, &y_Value);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0));
+    result = GetTVGammaTarget( tvColorTemp_MAX , &x_Value, &y_Value);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( (tvColorTemp_t)-1 , &x_Value, &y_Value);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0));
+    result = GetTVGammaTarget( (tvColorTemp_t)-1 , &x_Value, &y_Value);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 05: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( colorTempValue, NULL, &y_Value);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0 ));
+    result = GetTVGammaTarget( colorTempValue, NULL, &y_Value);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 06: Calling tvsettings GetTVGammaTarget with invalid input*/
-    GetTVGammaTarget( colorTempValue, &x_Value, NULL);
-    UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0 ));
-    UT_ASSERT_FALSE((y_Value >= 0 && y_Value <= 1.0));
+    result = GetTVGammaTarget( colorTempValue, &x_Value, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 07: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
@@ -15988,8 +15986,8 @@ void test_l1_tvSettings_negative_GetTVGammaTarget (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 08: Calling tvsettings GetTVGammaTarget after TvTerm*/
-        GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
-        UT_ASSERT_FALSE((x_Value >= 0 && x_Value <= 1.0));
+        result = GetTVGammaTarget(colorTempValue, &x_Value, &y_Value);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -17471,6 +17469,267 @@ void test_l1_tvSettings_negative_EnableLocalContrast (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+/**
+ * @brief Validate GetLdimZoneShortCircuitStatus() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 227@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call GetLdimZoneShortCircuitStatus() -  Retrieve the shortCircuit Status | unsigned char *, unsigned int, int *  | tvERROR_NONE | Should Pass |
+ * | 03 | call GetLdimZoneShortCircuitStatus()-  Retrieve the shortCircuit Status with valid argument and validate with above value | unsigned char *, unsigned int, int * | tvERROR_NONE | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
+{
+    gTestID = 227;                                    /* It must be 227 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int shortCircuitStatus = -1;
+    int shortCircuitStatusRetry = -1;
+    unsigned int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
+    unsigned char shortcircuitlistRetry[listsize > 0? listsize: 1];
+    // Initialize array elements to 0
+    for (int i = 0; i < listsize; i++ ) {
+        shortcircuitlist[i] = 0; 
+        shortcircuitlistRetry[i] = 0;
+    }
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return success */
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+        UT_ASSERT_TRUE((shortCircuitStatus >= 0));
+
+        /* Step 03: Calling tvsettings GetLdimZoneShortCircuitStatus again and the API to return success */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlistRetry, listsize, &shortCircuitStatusRetry);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+        UT_ASSERT_EQUAL(shortCircuitStatus, shortCircuitStatusRetry);
+    } else {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+/**
+ * @brief Validate GetLdimZoneShortCircuitStatus() for all negative invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 228@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status even before TvInit() | unsigned char *, unsigned int, int * | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input status | unsigned char *, unsigned int, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input shortCircuitlist | NULL , unsigned int, int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, 0 , int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status with invalid input size | unsigned char *, -1 , int* | tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 08 | call GetLdimZoneShortCircuitStatus() -  Retrieve current TV shortCircuit Status valid arguments | unsigned char *, unsigned int, int* | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
+{
+    gTestID = 228;                                    /* It must be 228 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int shortCircuitStatus = -1;
+    unsigned int listsize = UT_KVP_PROFILE_GET_UINT32("tvSettings/LDIMShortCircuitStatus/size");
+    unsigned char shortcircuitlist[listsize > 0? listsize: 1];
+    // Initialize array elements to 0
+    for (int i = 0; i < listsize; i++ ) {
+        shortcircuitlist[i] = 0; 
+    }
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return tvERROR_INVALID_STATE */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        /* Step 03: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid status */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 04: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid shortcircuitlist */
+        result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 05: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        /* Step 06: Calling tvsettings GetLdimZoneShortCircuitStatus for invalid size */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, -1, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+    } else {
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+        result = GetLdimZoneShortCircuitStatus(NULL, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, 0, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 06: Calling tvsettings termination and expecting the API to return success */
+
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 07: Calling tvsettings GetLdimZoneShortCircuitStatus and the API to return tvERROR_INVALID_STATE */
+        result = GetLdimZoneShortCircuitStatus(shortcircuitlist, listsize, &shortCircuitStatus);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+}
+
+/**
+ * @brief Validate GetNumberOfDimmingZones() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 227@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | unsigned int* | tvERROR_NONE | Should Pass |
+ * | 02 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status | unsigned int*  | tvERROR_NONE | Should Pass |
+ * | 03 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status with valid argument and validate with above value | unsigned int* | tvERROR_NONE | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetNumberOfDimmingZones (void)
+{
+	gTestID = 227;   /* It must be 227 */
+	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    unsigned int number_of_dimming_zones = 0;
+    unsigned int number_of_dimming_zones_retry = 0;
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetNumberOfDimmingZones and the API to return success */
+    result = GetNumberOfDimmingZones(&number_of_dimming_zones);
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    } else {
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 03: Retry tvsettings GetNumberOfDimmingZones and the API to return success */
+    result = GetNumberOfDimmingZones(&number_of_dimming_zones_retry);
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true) {
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    } else {
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    UT_ASSERT_EQUAL(number_of_dimming_zones_retry, number_of_dimming_zones);
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+/**
+ * @brief Validate GetNumberOfDimmingZones() for all negative invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 228@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status before TvInit() | unsigned int*  | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status with invalid argument and | NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 05 | call GetNumberOfDimmingZones() -  GetNumberOfDimmingZones Status with valid argument | unsigned int* | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetNumberOfDimmingZones (void)
+{
+	gTestID = 228;   /* It must be 228 */
+	UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    unsigned int number_of_dimming_zones = 0;
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings tvERROR_INVALID_STATE and the API to return tvERROR_INVALID_STATE */
+        result = GetNumberOfDimmingZones(&number_of_dimming_zones);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetNumberOfDimmingZones and the API to return tvERROR_INVALID_PARAM */
+    result = GetNumberOfDimmingZones(NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 05: Retry tvsettings GetNumberOfDimmingZones and the API to return tvERROR_INVALID_STATE */
+        result = GetNumberOfDimmingZones(&number_of_dimming_zones);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+ 
+  
 static UT_test_suite_t * pSuite = NULL;
 static UT_test_suite_t * pSuite_B1 = NULL;
 static UT_test_suite_t * pSuite_B2 = NULL;
@@ -17588,6 +17847,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite_B3, "GetSaturation_L1_negative" ,test_l1_tvSettings_negative_GetSaturation );
     UT_add_test( pSuite_B3, "SaveSaturation_L1_positive" ,test_l1_tvSettings_positive_SaveSaturation );
     UT_add_test( pSuite_B3, "SaveSaturation_L1_negative" ,test_l1_tvSettings_negative_SaveSaturation );
+    UT_add_test( pSuite_B3, "GetNumberOfDimmingZones_L1_positive" ,test_l1_tvSettings_positive_GetNumberOfDimmingZones );
+    UT_add_test( pSuite_B3, "GetNumberOfDimmingZones_L1_negative" ,test_l1_tvSettings_negative_GetNumberOfDimmingZones );
 
     pSuite_B4 = UT_add_suite( "[L1 tvSettings - Bank4]", NULL, NULL );
     if ( NULL == pSuite_B4 )
@@ -17731,7 +17992,7 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite_B8, "GetCMSState_L1_negative" ,test_l1_tvSettings_negative_GetCMSState );
     UT_add_test( pSuite_B8, "GetDefaultPQParams_L1_positive" ,test_l1_tvSettings_positive_GetDefaultPQParams );
     UT_add_test( pSuite_B8, "GetDefaultPQParams_L1_negative" ,test_l1_tvSettings_negative_GetDefaultPQParams );
-    UT_add_test( pSuite_B8, "GetPQParams_L1_negative" ,test_l1_tvSettings_positive_GetPQParams );
+    UT_add_test( pSuite_B8, "GetPQParams_L1_positive" ,test_l1_tvSettings_positive_GetPQParams );
     UT_add_test( pSuite_B8, "GetPQParams_L1_negative" ,test_l1_tvSettings_negative_GetPQParams );
     UT_add_test( pSuite_B8, "GetMaxGainValue_L1_positive" ,test_l1_tvSettings_positive_GetMaxGainValue );
     UT_add_test( pSuite_B8, "GetMaxGainValue_L1_negative" ,test_l1_tvSettings_negative_GetMaxGainValue );
@@ -17773,6 +18034,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite_B9, "EnableDynamicContrast_L1_negative" ,test_l1_tvSettings_negative_EnableDynamicContrast );
     UT_add_test( pSuite_B9, "EnableLocalContrast_L1_positive" ,test_l1_tvSettings_positive_EnableLocalContrast );
     UT_add_test( pSuite_B9, "EnableLocalContrast_L1_negative" ,test_l1_tvSettings_negative_EnableLocalContrast );
+    UT_add_test( pSuite_B9, "GetLdimZoneShortCircuitStatus_L1_positive" ,test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus );
+    UT_add_test( pSuite_B9, "GetLdimZoneShortCircuitStatus_L1_negative" ,test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus );
 
     pSuite_B10= UT_add_suite( "[L1 tvSettings - Bank10]", NULL, NULL );
     if ( NULL == pSuite_B10 )

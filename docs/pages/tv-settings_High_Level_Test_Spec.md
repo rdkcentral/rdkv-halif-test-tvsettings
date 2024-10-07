@@ -69,6 +69,8 @@ High level overview:
 |25|[Set Backlight Test Mode](#set-backlight-test-mode)|This test verifies the functionality of setting the backlight test mode. It ensures that the backlight hardware can be configured correctly for calibration purposes based on the specified test mode.|
 |26|[Enable and Disable White Balance - Dynamic Contrast and Local Contrast](#enable-and-disable-white-balance---dynamic-contrast-and-local-contrast)|This test verifies the functionality of enabling or disabling the white balance, dynamic contrast and local contrast module. It ensures that the white balance, dynamic contrast and local contrast module can be successfully enabled or disabled as intended.|
 |27|[Test the save setting values](#test-the-save-setting-values)|This test verifies the functionality of saving all persistence settings by rebooting the test case.|
+|28|[Get short Circuit Status](#get-short-circuit-status)|This test verifies the functionality of retrieving the short circuit status of the adjacent zones. It ensures that the returned status indicates whether any short is detected.|
+|29|[Get number of dimming zones](#get-number-of-dimming-zones)|This test verifies the functionality of retrieving the dimming zone count.|
 -----------
 
 ### Test Start up Requirement
@@ -737,3 +739,21 @@ None
 ### Control Plane Requirement - Test the save setting values
 
 - Control plane dynamically changes the video sources, video formats and picture modes.
+
+## Get Short Circuit Status
+
+|Description|HAL APIs|L2|L3|Control Plane requirements|
+|-----------|--------|--|--|--------------------------|
+|Verifies the functionality of retrieving the short circuit status of the adjacent zones. It ensures that the returned status indicates whether any short is detected.|GetLdimZoneShortCircuitStatus()|Y|N|N|
+
+### Test Startup Requirement - Get Short Circuit Status
+
+[Test Start up Requirement](#test-start-up-requirement)
+
+### Emulator Requirement - Get Open Circuit Status
+
+[Emulator Requirement](#emulator-requirement)
+
+### Control Plane Requirement - Get Short Circuit Status
+
+None

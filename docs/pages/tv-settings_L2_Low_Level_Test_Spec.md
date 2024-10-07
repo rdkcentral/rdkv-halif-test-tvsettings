@@ -1044,7 +1044,7 @@ If user chose to run the test in interactive mode, then the test case has to be 
 | Variation / Steps | Description | Test Data | Expected Result | Notes|
 | -- | --------- | ---------- | -------------- | ----- |
 | 01 | Initialize the TV using TvInit | None | tvERROR_NONE | Should be successful |
-| 02 | Set the TV Dolby Vision mode using SetTVDolbyVisionMode | dolbyMode = tvDolbyMode_Dark to tvHLGMode_Reserved3 | tvERROR_NONE | Should be successful |
+| 02 | Set the TV Dolby Vision mode using SetTVDolbyVisionMode | dolbyMode = value retrieved from GetTVSupportedDolbyVisionModes. | tvERROR_NONE | Should be successful |
 | 03 | Get the TV Dolby Vision mode using GetTVDolbyVisionMode and verify | getDolbyMode = valid buffer | tvERROR_NONE, getDolbyMode = dolbyMode | Should be successful |
 | 04 | Terminate the TV using TvTerm | None | tvERROR_NONE | Should be successful |
 
@@ -2063,4 +2063,95 @@ graph TB
     E -->|!=tvERROR_NONE| E1[Test case fail]
     F -->|tvERROR_NONE| G[Test case success]
     F -->|!=tvERROR_NONE| F1[Test case fail]
+```
+
+### Test 50
+
+|Title|Details|
+|--|--|
+|Function Name|`test_l2_tvSettings_RetrieveLDIMShortCircuitStatus`|
+|Description|Verifies the functionality of retrieving the short circuit status of the adjacent zones. It ensures that the returned status indicates whether any short is detected.|
+|Test Group|02|
+|Test Case ID|50|
+|Priority|High|
+
+**Pre-Conditions**
+None
+
+**Dependencies**
+None
+
+**User Interaction**
+If user chose to run the test in interactive mode, then the test case has to be selected via console.
+
+
+#### Test Procedure  - Test 50
+
+| Variation / Steps | Description | Test Data | Expected Result | Notes|
+| -- | --------- | ---------- | -------------- | ----- |
+| 01 | Initialize the TV using TvInit() | None | tvERROR_NONE | Should be successful |
+| 02 | Retrieve the short circuit status using GetOpenCircuitStatus() | shortcircuitlist = valid pointer, listsize = number of zones, status = valid pointer | tvERROR_NONE | Should be successful |
+| 03 | Check if the status indicates an short detected | shortcircuitlist = list of zones shorted/not shorted, status >= 1 | short detected | Should be successful |
+| 04 | Check if the status indicates no short detected | shortcircuitlist = list of zones shorted/not shorted, status = 0 | No short detected | Should be successful |
+| 05 | Check if the status value is invalid | status < 0 | Invalid status value | Should fail |
+| 06 | Terminate the TV using TvTerm() | None | tvERROR_NONE | Should be successful |
+
+```mermaid
+graph TB
+    A[TvInit] -->|tvERROR_NONE| B[GetLdimZoneShortCircuitStatus]
+    A -->|!=tvERROR_NONE| A1[Test case fail]
+    B -->|tvERROR_NONE| C[Check returned <br> status]
+    B -->|!=tvERROR_NONE && != tvERROR_OPERATION_NOT_SUPPORTED| B1[Test case fail]
+    C -->|Status >= 1| F[Short detected]
+    C -->|Status == 0| G[Short not <br> detected]
+    C -->|Status < 0 <br> or Status > 1| H[Invalid status]
+    F -->D[TvTerm]
+    G -->D
+    H --> D
+    D -->|tvERROR_NONE| E[Test case pass]
+    D -->|!=tvERROR_NONE| D1[Test case fail]
+```
+
+### Test 51
+
+|Title|Details|
+|--|--|
+|Function Name|`test_l2_tvSettings_GetNumberOfDimmingZones`|
+|Description|Verifies the functionality of retrieving the dimming zone count.|
+|Test Group|02|
+|Test Case ID|51|
+
+|Priority|High|
+
+**Pre-Conditions**
+None
+
+**Dependencies**
+None
+
+**User Interaction**
+If user chose to run the test in interactive mode, then the test case has to be selected via console.
+
+#### Test Procedure  - Test 51
+
+| Variation / Steps | Description | Test Data | Expected Result | Notes|
+| -- | --------- | ---------- | -------------- | ----- |
+| 01 | Initialize the TV using TvInit() | None | tvERROR_NONE | Should be successful |
+| 02 | Retrieve the dimming zone count using GetNumberOfDimmingZones() | number_of_dimming_zones = valid pointer | tvERROR_NONE | Should be successful |
+| 03 | Check if number_of_dimming_zones  | number_of_dimming_zones = number of dimming zones supported | number of dimming zone matches the expected count for given platform | Should be successful |
+| 04 | Check if the status indicates no short detected | number_of_dimming_zones = number of dimming zones supported | number of dimming zone did not matches the expected count for given platform | Should fail |
+| 05 | Terminate the TV using TvTerm() | None | tvERROR_NONE | Should be successful |
+
+```mermaid
+graph TB
+    A[TvInit] -->|tvERROR_NONE| B[GetNumberOfDimmingZones]
+    A -->|!=tvERROR_NONE| A1[Test case fail]
+    B -->|tvERROR_NONE| C[Check returned <br> status]
+    B -->|!=tvERROR_NONE && != tvERROR_OPERATION_NOT_SUPPORTED| B1[Test case fail]
+    C -->|number_of_dimming_zones != number_of_dimming_zones__expected_for_current_panel_platform| F[Test case fail]
+    C -->|number_of_dimming_zones == number_of_dimming_zones__expected_for_current_panel_platform| G[Test case pass]
+    F -->D[TvTerm]
+    G -->D[TvTerm]
+    D -->|tvERROR_NONE| E[Test case pass]
+    D -->|!=tvERROR_NONE| D1[Test case fail]
 ```
