@@ -32,17 +32,17 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test12_Brightness(utHelperClass):
+class tvSettings_test16_Hue(utHelperClass):
 
-    testName  = "test12_Brightness"
+    testName = "test16_Hue"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
     rackDevice = "dut"
-    brightnessLevels = [0, 25, 50, 75, 100]
+    hueLevels = [0, 25, 50, 75, 100]
 
     def __init__(self):
         """
-        Initializes the test12 Brightness test.
+        Initializes the test16 Hue test.
 
         Args:
             None.
@@ -67,7 +67,7 @@ class tvSettings_test12_Brightness(utHelperClass):
         # Create player Class
         self.testPlayer = utPlayer(self.player_session, player)
 
-         # Create user response Class
+        # Create user response Class
         self.testUserResponse = utUserResponse()
 
         # Get path to device profile file
@@ -88,13 +88,13 @@ class tvSettings_test12_Brightness(utHelperClass):
 
         test = self.testSetup.get("assets").get("device").get(self.testName)
 
-        #download test artifacts to device
+        # Download test artifacts to device
         url = test.get("artifacts")
         if url is not None:
             self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
 
-        #download test streams to device
-        url =  test.get("streams")
+        # Download test streams to device
+        url = test.get("streams")
         if url is not None:
             self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
             for streampath in url:
@@ -117,34 +117,34 @@ class tvSettings_test12_Brightness(utHelperClass):
             None.
         """
 
-        #Run test specific commands
+        # Run test specific commands
         test = self.testSetup.get("assets").get("device").get(self.testName)
-        cmds = test.get("execute");
+        cmds = test.get("execute")
         if cmds is not None:
             for cmd in cmds:
                 self.writeCommands(cmd)
 
-    #TODO: Current version supports only manual verification.
-    def testVerifyBrightnessLevel(self, brightness, manual=False):
+    # TODO: Current version supports only manual verification.
+    def testVerifyHueLevel(self, hue, manual=False):
         """
-        Verifies whether the Brightness is set or not.
+        Verifies whether the Hue is set or not.
 
         Args:
-            brightness (int) : brightness value
+            hue (int) : hue value
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to other verification methods
 
         Returns:
-            bool : returns the status of brightness
+            bool : returns the status of hue
         """
-        if manual == True:
-            return self.testUserResponse.getUserYN(f"Has brightness level {brightness} applied? (Y/N):")
-        else :
-            #TODO: Add automation verification methods
+        if manual:
+            return self.testUserResponse.getUserYN(f"Has hue level {hue} applied? (Y/N):")
+        else:
+            # TODO: Add automation verification methods
             return False
 
     def testFunction(self):
-        """This function tests the BrightnessLevels
+        """This function tests the Hue Levels
 
         Returns:
             bool
@@ -168,15 +168,15 @@ class tvSettings_test12_Brightness(utHelperClass):
             # Start the stream playback
             self.testPlayer.play(stream)
 
-            for brightness in self.brightnessLevels:
-                self.log.stepStart(f'Brightness Level:{brightness} Stream:{stream}')
+            for hue in self.hueLevels:
+                self.log.stepStart(f'Hue Level:{hue} Stream:{stream}')
 
-                #set the brightness
-                self.testtvSettings.setBrightnessLevel(brightness)
+                #set the hue level
+                self.testtvSettings.setHueLevel(hue)
 
-                result = self.testVerifyBrightnessLevel(brightness, True)
+                result = self.testVerifyHueLevel(hue, True)
 
-                self.log.stepResult(result, f'Brightness Level:{brightness} Stream:{stream}')
+                self.log.stepResult(result, f'Hue Level:{hue} Stream:{stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -194,5 +194,5 @@ class tvSettings_test12_Brightness(utHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test12_Brightness()
+    test = tvSettings_test16_Hue()
     test.run(False)
