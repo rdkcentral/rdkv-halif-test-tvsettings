@@ -3,7 +3,7 @@
 tvSettings:  # Prefix must always exist
     description: "tvSettings testing profile / menu system for UT"
     test:
-        execute: "" #Execute command
+        execute: "/opt/HAL_L3/run.sh -p /opt/HAL_L3/Sink_4K_TvSettings.yaml" #Execute command
         type: UT-C # C (UT-C Cunit) / C++ (UT-G (g++ ut-core gtest backend))
         suites:
             0:

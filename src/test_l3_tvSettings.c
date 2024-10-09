@@ -67,17 +67,14 @@
 #include <ut_kvp_profile.h>
 #include <ut_control_plane.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include <time.h>
+#include <pthread.h>
 #include "tvSettings.h"
-
-/* Type Definitions */
-
-/* Global Variables */
-static int32_t gTestGroup = 3;
-static int32_t gTestID    = 1;
 
 #define UT_LOG_MENU_INFO UT_LOG_INFO
 #define ASSERT assert
+#define MAX_FILE_SIZE 64
 #define ASSERT_COMPARE(var1, var2) \
     do \
     { \
@@ -86,6 +83,16 @@ static int32_t gTestID    = 1;
             UT_LOG_ERROR("Mismatch: %s != %s at %s:%d\n", #var1, #var2, __FILE__, __LINE__); \
         } \
     } while (0)
+
+/* Global Variables */
+static int32_t gTestGroup = 3;
+static int32_t gTestID    = 1;
+
+static char gFormatChangeCBFile[MAX_FILE_SIZE];
+static char gContentChangeCBFile[MAX_FILE_SIZE];
+static char gResolutionChangeCBFile[MAX_FILE_SIZE];
+static char gFrameRateChangeCBFile[MAX_FILE_SIZE];
+static pthread_mutex_t gCallbackMutex = PTHREAD_MUTEX_INITIALIZER;
 
 /* tvBacklightTestMode_t */
 const static ut_control_keyStringMapping_t  tvBacklightTestMode_mapTable [] =
@@ -412,6 +419,50 @@ static void readString(char *choice)
     fgets(choice, 4, stdin);
     readAndDiscardRestOfLine(stdin);
 }
+/**
+ * @brief This function logs the callback.
+ *
+ */
+
+static void writeCallbackLog(char *logPath, const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+
+
+    // Get the current timestamp in seconds and microseconds
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    // Format the timestamp with year, month, day, time, and microseconds
+    char timestamp[64];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", localtime(&tv.tv_sec));
+
+    // Append the microseconds to the timestamp
+    snprintf(&timestamp[strlen(timestamp)], sizeof(timestamp) - strlen(timestamp), ".%06ld", tv.tv_usec);
+
+    pthread_mutex_lock(&gCallbackMutex);
+
+    // Open the log file in append mode
+    FILE *fp = fopen(logPath, "a");
+    if (fp == NULL) {
+        fprintf(stderr, "Error opening log file: %s\n", strerror(errno));
+        return;
+    }
+
+    // Print the timestamp and formatted message
+    fprintf(fp, "[%s] ", timestamp);
+    vfprintf(fp, format, args);
+    fprintf(fp, "\n");
+
+    // Close the log file
+    fclose(fp);
+
+    pthread_mutex_unlock(&gCallbackMutex);
+
+    va_end(args);
+}
+
 
 /**
  * @brief Callback function for change in the video format.
@@ -422,6 +473,11 @@ static void videoFormatChangeCB (tvVideoFormatType_t format, void *userData)
 {
     UT_LOG_INFO("Received Video Format Change callback format:[%s], userData[%s][0x%0X]",
                  UT_Control_GetMapString(tvVideoFormatType_mapTable, format),(char *)userData,userData);
+
+    writeCallbackLog(gFormatChangeCBFile, "Received Video Format Change callback format:[%s], userData[%s][0x%0X]",
+                 UT_Control_GetMapString(tvVideoFormatType_mapTable, format),(char *)userData,userData);
+
+
 }
 
 /**
@@ -433,6 +489,10 @@ static void videoContentChangeCB (tvContentType_t mode, void *userData)
 {
     UT_LOG_INFO("Received Video Content Change callback format:[%s], userData[%s][0x%0X]",
                  UT_Control_GetMapString(tvContentType_mapTable, mode),(char *)userData,userData);
+
+    writeCallbackLog(gContentChangeCBFile, "Received Video Content Change callback format:[%s], userData[%s][0x%0X]",
+                 UT_Control_GetMapString(tvContentType_mapTable, mode),(char *)userData,userData);
+
 }
 
 /**
@@ -449,6 +509,15 @@ static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void 
                 UT_Control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue),
                 (char *)userData,
                 userData);
+
+    writeCallbackLog(gResolutionChangeCBFile, "Received Video Resolution Change callback Frame heightxwidth:[%dx%d], IsIntercaed[%d] Res:[%s], userData[%s][0x%0X]",
+                 resolutionStruct.frameHeight,
+                 resolutionStruct.frameWidth,
+                resolutionStruct.isInterlaced,
+                UT_Control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue),
+                (char *)userData,
+                userData);
+
 }
 
 /**
@@ -459,6 +528,9 @@ static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void 
 static void videoFrameRateChangeCB (tvVideoFrameRate_t frameRate, void *userData)
 {
     UT_LOG_INFO("Received Video Frame Rate Change callback format:[%s], userData[%s][0x%0X]",
+                 UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate),(char *)userData,userData);
+
+    writeCallbackLog(gFormatChangeCBFile, "Received Video Frame Rate Change callback format:[%s], userData[%s][0x%0X]",
                  UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate),(char *)userData,userData);
 }
 
@@ -488,6 +560,18 @@ void test_l3_tvSettings_initialize(void)
     char videoContentData[] = "videoContentChange";
     char videoResolutionData[] = "videoResolutionChange";
     char videoFrameRateData[] = "videoFrameRateChange";
+
+    UT_LOG_MENU_INFO("Enter file name with path to log Format change callbacks:");
+    readString(gFormatChangeCBFile);
+
+    UT_LOG_MENU_INFO("Enter file name with path to log content change callbacks:");
+    readString(gContentChangeCBFile);
+
+    UT_LOG_MENU_INFO("Enter file name with path to log resolution change callbacks:");
+    readString(gResolutionChangeCBFile);
+
+    UT_LOG_MENU_INFO("Enter file name with path to log Frame Rate change callbacks:");
+    readString(gFormatChangeCBFile);
 
     /* Initialize the tvSettings Module */
     UT_LOG_INFO("Calling tvSettingsInit()");

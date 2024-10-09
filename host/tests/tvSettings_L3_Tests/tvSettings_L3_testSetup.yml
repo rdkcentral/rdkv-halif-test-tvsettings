@@ -3,6 +3,12 @@
 
 tvSettings:  # Prefix must always exist
   description: "tvSettings test setup"
+  callback:
+    formatChange_status: "/opt/HAL_L3/tvSettings_formatChangeStatus.txt"
+    contentChange_status: "/opt/HAL_L3/tvSettings_contentChangeStatus.txt"
+    resolutionChange_status: "/opt/HAL_L3/tvSettings_resolutionChangeStatus.txt"
+    frameRateChange_status:  "/opt/HAL_L3/tvSettings_frameRateChangeStatus.txt"
+
   assets:
     device:
       test1_Verify_formats_Callbacks:
@@ -13,3 +19,10 @@ tvSettings:  # Prefix must always exist
         artifacts:
         execute:
         streams:
+      test12_Brightness:
+        artifacts: ["<PATH>/bin/hal_test",
+                    "<PATH>/bin/libut_control.so",
+                    "<PATH>/bin/Sink_4K_TvSettings.yaml",
+                    "<PATH>/bin/run.sh"]
+      execute: ["chmod +x /opt/HAL_L3/hal_test", "chmod +x /opt/HAL_L3/run.sh"]
+      streams: ["<PATH>/streams/RGB_1920x1080.mp4"]
