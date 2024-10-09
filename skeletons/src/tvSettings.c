@@ -821,6 +821,7 @@ tvError_t GetTVGammaTarget(tvColorTemp_t colorTemp, double* x, double* y)
   (void)colorTemp;
   (void)x;
   (void)y;
+  return (tvError_t)0;
 }
 
 tvError_t SetGammaPatternMode(bool mode)
