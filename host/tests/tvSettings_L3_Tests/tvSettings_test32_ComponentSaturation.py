@@ -8,7 +8,7 @@
 # *
 # * Licensed under the Apache License, Version 2.0 (the "License");
 # * you may not use this file except in compliance with the License.
-# * You may obtain a copy of the License at
+# * you may obtain a copy of the License at
 # *
 # *
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -20,6 +20,7 @@
 # * limitations under the License.
 # *
 #* ******************************************************************************
+
 import os
 import sys
 
@@ -32,29 +33,24 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test13_Contrast(utHelperClass):
+class tvSettings_test32_ComponentSaturation(utHelperClass):
 
-    testName = "test13_Contrast"
+    testName = "test32_ComponentSaturation"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
-    rackDevice = "dut"
-    contrastLevels = [0, 25, 50, 75, 100]
+    saturationValues = list(range(0, 101))  # Saturation values from 0 to 100
 
     def __init__(self):
         """
-        Initializes the test13 Contrast test.
+        Initializes the ComponentSaturation test.
 
         Args:
             None.
         """
-        super().__init__(self.testName, '1')
+        super().__init__(self.testName, '32')
 
         # Test Setup configuration file
         self.testSetup = ConfigRead(self.testSetupPath, self.moduleName)
-        self.formatChangeCB = self.testSetup.get("callback").get("formatChange_status")
-        self.contentChangeCB = self.testSetup.get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.testSetup.get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.testSetup.get("callback").get("frameRateChange_status")
 
         # Open Session for player
         self.player_session = self.dut.getConsoleSession("ssh_player")
@@ -73,6 +69,9 @@ class tvSettings_test13_Contrast(utHelperClass):
         # Get path to device profile file
         self.deviceProfile = os.path.join(dir_path, self.cpe.get("test").get("profile"))
 
+        # Create the tvSettings class
+        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session)
+
     def testDownloadAssets(self):
         """
         Downloads the artifacts and streams listed in test-setup configuration file to the dut.
@@ -80,7 +79,6 @@ class tvSettings_test13_Contrast(utHelperClass):
         Args:
             None.
         """
-
         # List of streams with path
         self.testStreams = []
 
@@ -116,7 +114,6 @@ class tvSettings_test13_Contrast(utHelperClass):
         Args:
             None.
         """
-
         # Run test specific commands
         test = self.testSetup.get("assets").get("device").get(self.testName)
         cmds = test.get("execute")
@@ -124,59 +121,61 @@ class tvSettings_test13_Contrast(utHelperClass):
             for cmd in cmds:
                 self.writeCommands(cmd)
 
-    # TODO: Current version supports only manual verification.
-    def testVerifyContrastLevel(self, contrast, manual=False):
+    def testVerifyComponentSaturation(self, saturationValue, manual=False):
         """
-        Verifies whether the Contrast is set or not.
+        Verifies whether the Component Saturation is set or not.
 
         Args:
-            contrast (int) : contrast value
+            saturationValue (int): saturation value
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
-                                     Defaults to other verification methods
+                                     Defaults to other verification methods.
 
         Returns:
-            bool : returns the status of contrast
+            bool: returns the status of component saturation.
         """
         if manual:
-            return self.testUserResponse.getUserYN(f"Has contrast level {contrast} applied? (Y/N):")
+            return self.testUserResponse.getUserYN(f"Has component saturation value {saturationValue} applied? (Y/N):")
         else:
             # TODO: Add automation verification methods
             return False
 
     def testFunction(self):
-        """This function tests the ContrastLevels
+        """This function tests the Component Saturation.
 
         Returns:
             bool
         """
-
         # Download the assets listed in test setup configuration file
         self.testDownloadAssets()
 
         # Run Prerequisites listed in the test setup configuration file
         self.testRunPrerequisites()
 
-        # Create the tvSettings class
-        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session)
-
-        self.log.testStart(self.testName, '1')
+        self.log.testStart(self.testName, '32')
 
         # Initialize the tvSettings module
-        self.testtvSettings.initialise(self.formatChangeCB, self.contentChangeCB, self.resolutionChangeCB, self.frameRateChangeCB)
+        self.testtvSettings.initialise()
+
+        # Set the CMS state
+        self.testtvSettings.setCMSState()
+
+        # Get available TV Data Colors
+        tvDataColors = self.testtvSettings.getTVDataColor()
 
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
 
-            for contrast in self.contrastLevels:
-                self.log.stepStart(f'Contrast Level:{contrast} Stream:{stream}')
+            for colorIndex in tvDataColors:  # Iterate through available color indices
+                for saturationValue in self.saturationValues:
+                    self.log.stepStart(f'Color Index: {colorIndex}, Component Saturation Value: {saturationValue}, Stream: {stream}')
 
-                #set the Contrast level
-                self.testtvSettings.setContrastLevel(contrast)
+                    # Set the component saturation value
+                    self.testtvSettings.setComponentSaturation(colorIndex, saturationValue)
 
-                result = self.testVerifyContrastLevel(contrast, True)
+                    result = self.testVerifyComponentSaturation(saturationValue, True)
 
-                self.log.stepResult(result, f'Contrast Level:{contrast} Stream:{stream}')
+                    self.log.stepResult(result, f'Color Index: {colorIndex}, Component Saturation Value: {saturationValue}, Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -194,5 +193,5 @@ class tvSettings_test13_Contrast(utHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test13_Contrast()
+    test = tvSettings_test32_ComponentSaturation()
     test.run(False)

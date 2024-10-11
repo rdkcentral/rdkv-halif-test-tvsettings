@@ -3,26 +3,261 @@
 
 tvSettings:  # Prefix must always exist
   description: "tvSettings test setup"
-  callback:
-    formatChange_status: "/opt/HAL_L3/tvSettings_formatChangeStatus.txt"
-    contentChange_status: "/opt/HAL_L3/tvSettings_contentChangeStatus.txt"
-    resolutionChange_status: "/opt/HAL_L3/tvSettings_resolutionChangeStatus.txt"
-    frameRateChange_status:  "/opt/HAL_L3/tvSettings_frameRateChangeStatus.txt"
-
   assets:
     device:
+      defaults: &defaults
+              artifacts:
+                  - "<PATH>/hal_test"
+                  - "<PATH>/libut_control.so"
+                  - "<PATH>/Sink_4K_TvSettings.yaml"
+                  - "<PATH>/run.sh"
+              execute:
+                  - "chmod +x /opt/HAL_L3/hal_test"
+                  - "chmod +x /opt/HAL_L3/run.sh"
       test1_Verify_formats_Callbacks:
         artifacts: #list of artifacts to be copied to device
         execute: #list of commands to be executed on device
         streams: #list of streams to be copied to device
-      test2_Check_Brightness:
-        artifacts:
-        execute:
+      test02_CheckVideoFormat:
+        <<: *defaults
         streams:
-      test12_Brightness:
-        artifacts: ["<PATH>/bin/hal_test",
-                    "<PATH>/bin/libut_control.so",
-                    "<PATH>/bin/Sink_4K_TvSettings.yaml",
-                    "<PATH>/bin/run.sh"]
-      execute: ["chmod +x /opt/HAL_L3/hal_test", "chmod +x /opt/HAL_L3/run.sh"]
-      streams: ["<PATH>/streams/RGB_1920x1080.mp4"]
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+          -  "<PATH>/streams/life_of_pi_hdr.ts"
+          -  "<PATH>/Streams/HDR10.mp4"
+          -  "<PATH>/streams/HDR10PLUS_Stream.mp4"
+          -  "<PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<PATH>/streams/Dolby_Vision.mp4"
+      test03_CheckVideoResolution:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+          -  "<PATH>/streams/life_of_pi_hdr.ts"
+          -  "<PATH>/Streams/HDR10.mp4"
+          -  "<PATH>/streams/HDR10PLUS_Stream.mp4"
+          -  "<PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<PATH>/streams/Dolby_Vision.mp4"
+      test04_CheckVideoFrameRate:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+          -  "<PATH>/streams/life_of_pi_hdr.ts"
+          -  "<PATH>/Streams/HDR10.mp4"
+          -  "<PATH>/streams/HDR10PLUS_Stream.mp4"
+          -  "<PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<PATH>/streams/Dolby_Vision.mp4"
+      test05_CheckVideoSource:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test06_Backlight:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test07_BacklightFade:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test08_BacklightMode:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test09_TVDimmingMode:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test10_LocalDimmingLevel:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test11_Brightness:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test12_Contrast:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test13_Sharpness:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test14_Saturation:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test15_Hue:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test16_ColorTemp:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test17_AspectRatio:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test18_LowLatencyState:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test19_DynamicContrast:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test20_DynamicGamma:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test21_DolbyVision:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/P81_GlassBlowing2_3840x2160@59.94fps_15200kbps_fmp4.mp4"
+      test22_PictureMode:
+        <<: *defaults
+        streams:
+          -  "<PATH>/Streams/RGB_1920x1080.mp4"
+      test23_ColorTempRgain:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test24_ColorTempGgain:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test25_ColorTempBgain:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test26_ColorTempRpostoffset:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test27_ColorTempGpostoffset:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test28_ColorTempBpostoffset:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test29_WBCalibrationMode:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test30_GammaTable:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test31_DvTmaxValue:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test32_ComponentSaturation:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test33_ComponentHue:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test34_ComponentLuma:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test35_EnableGammaMode:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test36_SetGammaPatternMode:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test37_SetGammaPattern:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test38_RGBPattern:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test39_GrayPattern:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test40_EnableLDIMPixelCompensation:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test41_EnableLDIM:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test42_SetBacklightTestMode:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test43_EnableDynamicContrast:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test44_EnableLocalContrast:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test45_SaveBacklightValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test46_SaveTVDimmingModeValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test47_SaveLocalDimmingModeValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test48_SaveBrightnessValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test49_SaveContrastValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test50_SaveSharpnessValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test51_SaveSaturationValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test52_SaveHueValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test53_SaveColorTemperatureValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test54_SaveAspectRatioValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test55_SaveLowLatencyValues:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test56_SaveDolbyVision:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test57_SavePictureMode:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"
+      test58_SaveCMS:
+        <<: *defaults
+        streams:
+          - "<PATH>/Streams/RGB_1920x1080.mp4"

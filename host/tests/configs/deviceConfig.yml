@@ -24,19 +24,33 @@
 
 deviceConfig:
     cpe1:
-        platform:   "llama.uk"
+        platform:   "linux PC"
         model:      "65"
-        target_directory: "/opt/"
+        target_directory: "<PATH>"
         test:
             #TODO: Use the single profile file which contains all details (ds, hdmi, etc)
             profile: "../../../profiles/sink/Sink_4K_TvSettings.yaml"
             player:
                 tool: "gstreamer"
                 prerequisites:
-                    - "export EXP=test" # pre commands required to play the stream
+                    - "systemctl stop wpeframework"
+                    - "systemctl stop sky-avcastdisplay.service"
+                    - "systemctl stop sky-asplayer.service"
+                    - "systemctl stop sky-asbridge.service"
+                    - "systemctl stop sky-asanalytics.service"
+                    - "systemctl stop sky-asperipherals.service"
+                    - "systemctl stop sky-jspp.service"
+                    - "systemctl stop sky-epg.service"
+                    - "systemctl stop sky-appsservice.service"
+                    - "export XDG_RUNTIME_DIR=/run"
+                    - "export WAYLAND_DISPLAY=wayland-0"
+                    - "export WESTEROS_SINK_AMLOGIC_USE_DMABUF=1"
+                    - "export WESTEROS_SINK_USE_FREERUN=1"
+                    - "export WESTEROS_GL_USE_REFRESH_LOCK=1"
+                    - "westeros-init&"
     cpe2:
         platform: "test"
         model: "test"
-        target_directory: "/tmp"
+        target_directory: "<PATH>"
         profile: ""
         test:

@@ -20,8 +20,10 @@
 # * limitations under the License.
 # *
 #* ******************************************************************************
+
 import os
 import sys
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -32,28 +34,24 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test17_ColorTemp(utHelperClass):
+class tvSettings_test04_CheckVideoFrameRate(utHelperClass):
 
-    testName = "test17_ColorTemp"
+    testName = "test04_CheckVideoFrameRate"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
     rackDevice = "dut"
 
     def __init__(self):
         """
-        Initializes the test17 ColorTemp test.
+        Initializes the test04 VideoFrameRate test.
 
         Args:
             None.
         """
-        super().__init__(self.testName, '1')
+        super().__init__(self.testName, '4')
 
         # Test Setup configuration file
         self.testSetup = ConfigRead(self.testSetupPath, self.moduleName)
-        self.formatChangeCB = self.testSetup.get("callback").get("formatChange_status")
-        self.contentChangeCB = self.testSetup.get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.testSetup.get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.testSetup.get("callback").get("frameRateChange_status")
 
         # Open Session for player
         self.player_session = self.dut.getConsoleSession("ssh_player")
@@ -72,41 +70,40 @@ class tvSettings_test17_ColorTemp(utHelperClass):
         # Get path to device profile file
         self.deviceProfile = os.path.join(dir_path, self.cpe.get("test").get("profile"))
 
-    def testDownloadAssets(self):
+    def testDownloadAssets(self, stream_url):
         """
-        Downloads the artifacts and streams listed in test-setup configuration file to the dut.
+        Downloads a single stream listed in the test-setup configuration file to the dut.
 
         Args:
-            None.
+            stream_url (str): The URL of the stream to download.
         """
 
-        # List of streams with path
+        # Ensure the testStreams list is cleared
         self.testStreams = []
 
         self.deviceDownloadPath = self.cpe.get("target_directory")
 
         test = self.testSetup.get("assets").get("device").get(self.testName)
 
-        # Download test artifacts to device
+        # Download test artifacts to device (if needed)
         url = test.get("artifacts")
         if url is not None:
             self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
 
-        # Download test streams to device
-        url = test.get("streams")
-        if url is not None:
-            self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
-            for streampath in url:
-                self.testStreams.append(os.path.join(self.deviceDownloadPath, os.path.basename(streampath)))
+        # Download the specified stream to the device
+        if stream_url is not None:
+            self.downloadToDevice([stream_url], self.deviceDownloadPath, self.rackDevice)
+            self.testStreams.append(os.path.join(self.deviceDownloadPath, os.path.basename(stream_url)))
 
-    def testCleanAssets(self):
+    def testCleanAssets(self, stream_path):
         """
-        Removes the assets copied to the dut.
+        Removes the specified asset copied to the dut.
 
         Args:
-            None.
+            stream_path (str): The path of the stream to delete from the device.
         """
-        self.deleteFromDevice(self.testStreams)
+        # Delete only the specified stream from the device
+        self.deleteFromDevice([stream_path])
 
     def testRunPrerequisites(self):
         """
@@ -123,34 +120,12 @@ class tvSettings_test17_ColorTemp(utHelperClass):
             for cmd in cmds:
                 self.writeCommands(cmd)
 
-    # TODO: Current version supports only manual verification.
-    def testVerifyColorTempLevel(self, ColorTemp, manual=False):
-        """
-        Verifies whether the ColorTemp is set or not.
-
-        Args:
-            ColorTemp (int) : ColorTemp value
-            manual (bool, optional): Manual verification (True: manual, False: other verification methods).
-                                     Defaults to other verification methods
-
-        Returns:
-            bool : returns the status of ColorTemp
-        """
-        if manual:
-            return self.testUserResponse.getUserYN(f"Has ColorTemp level {ColorTemp} applied? (Y/N):")
-        else:
-            # TODO: Add automation verification methods
-            return False
-
     def testFunction(self):
-        """This function tests the ColorTemp Levels
+        """This function tests the Video Frame Rates
 
         Returns:
             bool
         """
-
-        # Download the assets listed in test setup configuration file
-        self.testDownloadAssets()
 
         # Run Prerequisites listed in the test setup configuration file
         self.testRunPrerequisites()
@@ -158,32 +133,40 @@ class tvSettings_test17_ColorTemp(utHelperClass):
         # Create the tvSettings class
         self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session)
 
-        print(self.testtvSettings.getColorTemperature())
-
-        self.log.testStart(self.testName, '1')
+        self.log.testStart(self.testName, '4')
 
         # Initialize the tvSettings module
-        self.testtvSettings.initialise(self.formatChangeCB, self.contentChangeCB, self.resolutionChangeCB, self.frameRateChangeCB)
+        self.testtvSettings.initialise()
 
-        for stream in self.testStreams:
-            # Start the stream playback
-            self.testPlayer.play(stream)
+        # Get the list of frame rates
+        frameRates = self.testtvSettings.getVideoFrameRateInfo()
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-            for ColorTemp in self.testtvSettings.getColorTemperature():
-                self.log.stepStart(f'ColorTemp Level:{ColorTemp} Stream:{stream}')
+        # Iterate through each frame rate and corresponding stream URL
+        for frame_rate, stream_url in zip(frameRates, streams):
 
-                #set the ColorTemp level
-                self.testtvSettings.setColorTempLevel(ColorTemp)
+            # Download the individual stream
+            self.testDownloadAssets(stream_url)
 
-                result = self.testVerifyColorTempLevel(ColorTemp, True)
+            stream_full_path = os.path.join(self.deviceDownloadPath, os.path.basename(stream_url))
 
-                self.log.stepResult(result, f'ColorTemp Level:{ColorTemp} Stream:{stream}')
+            # Play the stream
+            self.testPlayer.play(stream_full_path)
+            time.sleep(10)  # Wait for a moment to let the stream start
+
+            self.log.stepStart(f'Frame Rate Level:{frame_rate} Stream:{stream_full_path}')
+
+            # Check frame rate
+            currentFrameRate = self.testtvSettings.checkVideoFrameRate()
+
+            # Log the result of the test
+            self.log.stepResult(frame_rate in currentFrameRate, f'Frame Rate {frame_rate} Test')
 
             # Stop the stream playback
             self.testPlayer.stop()
 
-        # Clean the assets downloaded to the device
-        self.testCleanAssets()
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssets(stream_full_path)
 
         # Terminate tvSettings Module
         self.testtvSettings.terminate()
@@ -191,9 +174,9 @@ class tvSettings_test17_ColorTemp(utHelperClass):
         # Delete the tvSettings class
         del self.testtvSettings
 
-        return result
+        return True
 
 
 if __name__ == '__main__':
-    test = tvSettings_test17_ColorTemp()
+    test = tvSettings_test04_CheckVideoFrameRate()
     test.run(False)

@@ -10,16 +10,9 @@
 # * you may not use this file except in compliance with the License.
 # * You may obtain a copy of the License at
 # *
+# * http://www.apache.org/licenses/LICENSE-2.0
 # *
-# http://www.apache.org/licenses/LICENSE-2.0
-# *
-# * Unless required by applicable law or agreed to in writing, software
-# * distributed under the License is distributed on an "AS IS" BASIS,
-# * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# * See the License for the specific language governing permissions and
-# * limitations under the License.
-# *
-#* ******************************************************************************
+# * *******************************************************************************
 import os
 import sys
 
@@ -32,17 +25,17 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test15_Saturation(utHelperClass):
+class tvSettings_test29_WBCalibrationMode(utHelperClass):
 
-    testName = "test15_Saturation"
+    testName = "test29_WBCalibrationMode"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
     rackDevice = "dut"
-    saturationLevels = [0, 25, 50, 75, 100]
+    wbCalibrationModes = [0, 1]  # WBCalibrationMode values
 
     def __init__(self):
         """
-        Initializes the test15 Saturation test.
+        Initializes the test29 WBCalibrationMode test.
 
         Args:
             None.
@@ -51,10 +44,6 @@ class tvSettings_test15_Saturation(utHelperClass):
 
         # Test Setup configuration file
         self.testSetup = ConfigRead(self.testSetupPath, self.moduleName)
-        self.formatChangeCB = self.testSetup.get("callback").get("formatChange_status")
-        self.contentChangeCB = self.testSetup.get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.testSetup.get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.testSetup.get("callback").get("frameRateChange_status")
 
         # Open Session for player
         self.player_session = self.dut.getConsoleSession("ssh_player")
@@ -80,7 +69,6 @@ class tvSettings_test15_Saturation(utHelperClass):
         Args:
             None.
         """
-
         # List of streams with path
         self.testStreams = []
 
@@ -116,7 +104,6 @@ class tvSettings_test15_Saturation(utHelperClass):
         Args:
             None.
         """
-
         # Run test specific commands
         test = self.testSetup.get("assets").get("device").get(self.testName)
         cmds = test.get("execute")
@@ -125,31 +112,30 @@ class tvSettings_test15_Saturation(utHelperClass):
                 self.writeCommands(cmd)
 
     # TODO: Current version supports only manual verification.
-    def testVerifySaturationLevel(self, saturation, manual=False):
+    def testVerifyWBCalibrationMode(self, wbCalibrationMode, manual=False):
         """
-        Verifies whether the Saturation is set or not.
+        Verifies whether the WBCalibrationMode is set or not.
 
         Args:
-            saturation (int) : saturation value
+            wbCalibrationMode (int) : WBCalibrationMode value
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to other verification methods
 
         Returns:
-            bool : returns the status of saturation
+            bool : returns the status of WBCalibrationMode
         """
         if manual:
-            return self.testUserResponse.getUserYN(f"Has saturation level {saturation} applied? (Y/N):")
+            return self.testUserResponse.getUserYN(f"Has WBCalibrationMode {wbCalibrationMode} applied? (Y/N):")
         else:
             # TODO: Add automation verification methods
             return False
 
     def testFunction(self):
-        """This function tests the Saturation Levels
+        """This function tests the WBCalibrationMode settings.
 
         Returns:
             bool
         """
-
         # Download the assets listed in test setup configuration file
         self.testDownloadAssets()
 
@@ -162,21 +148,21 @@ class tvSettings_test15_Saturation(utHelperClass):
         self.log.testStart(self.testName, '1')
 
         # Initialize the tvSettings module
-        self.testtvSettings.initialise(self.formatChangeCB, self.contentChangeCB, self.resolutionChangeCB, self.frameRateChangeCB)
+        self.testtvSettings.initialise()
 
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
 
-            for saturation in self.saturationLevels:
-                self.log.stepStart(f'Saturation Level:{saturation} Stream:{stream}')
+            for wbCalibrationMode in self.wbCalibrationModes:
+                self.log.stepStart(f'WBCalibrationMode:{wbCalibrationMode} Stream:{stream}')
 
-                #set the saturation level
-                self.testtvSettings.setSaturationLevel(saturation)
+                # Set the WBCalibrationMode
+                self.testtvSettings.setWBCalibrationMode(wbCalibrationMode)
 
-                result = self.testVerifySaturationLevel(saturation, True)
+                result = self.testVerifyWBCalibrationMode(wbCalibrationMode, True)
 
-                self.log.stepResult(result, f'Saturation Level:{saturation} Stream:{stream}')
+                self.log.stepResult(result, f'WBCalibrationMode:{wbCalibrationMode} Stream:{stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -194,5 +180,5 @@ class tvSettings_test15_Saturation(utHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test15_Saturation()
+    test = tvSettings_test29_WBCalibrationMode()
     test.run(False)

@@ -32,17 +32,16 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test16_Hue(utHelperClass):
+class tvSettings_test21_DolbyVision(utHelperClass):
 
-    testName = "test16_Hue"
+    testName = "test21_DolbyVision"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
     rackDevice = "dut"
-    hueLevels = [0, 25, 50, 75, 100]
 
     def __init__(self):
         """
-        Initializes the test16 Hue test.
+        Initializes the test17 Dolby Vision test.
 
         Args:
             None.
@@ -51,10 +50,6 @@ class tvSettings_test16_Hue(utHelperClass):
 
         # Test Setup configuration file
         self.testSetup = ConfigRead(self.testSetupPath, self.moduleName)
-        self.formatChangeCB = self.testSetup.get("callback").get("formatChange_status")
-        self.contentChangeCB = self.testSetup.get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.testSetup.get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.testSetup.get("callback").get("frameRateChange_status")
 
         # Open Session for player
         self.player_session = self.dut.getConsoleSession("ssh_player")
@@ -125,26 +120,45 @@ class tvSettings_test16_Hue(utHelperClass):
                 self.writeCommands(cmd)
 
     # TODO: Current version supports only manual verification.
-    def testVerifyHueLevel(self, hue, manual=False):
+    def testQueryDolbyVisionLevel(self, DolbyVision, manual=False):
         """
-        Verifies whether the Hue is set or not.
+        Queries whether the DolbyVision is to set or not.
 
         Args:
-            hue (int) : hue value
+            DolbyVision (int) : DolbyVision value
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to other verification methods
 
         Returns:
-            bool : returns the status of hue
+            bool : returns the status of DolbyVision
         """
         if manual:
-            return self.testUserResponse.getUserYN(f"Has hue level {hue} applied? (Y/N):")
+            return self.testUserResponse.getUserYN(f"Do you want to apply DolbyVision level {DolbyVision}? (Y/N):")
+        else:
+            # TODO: Add automation verification methods
+            return False
+
+    # TODO: Current version supports only manual verification.
+    def testVerifyDolbyVisionLevel(self, DolbyVision, manual=False):
+        """
+        Verifies whether the DolbyVision is set or not.
+
+        Args:
+            DolbyVision (int) : DolbyVision value
+            manual (bool, optional): Manual verification (True: manual, False: other verification methods).
+                                     Defaults to other verification methods
+
+        Returns:
+            bool : returns the status of DolbyVision
+        """
+        if manual:
+            return self.testUserResponse.getUserYN(f"Has DolbyVision level {DolbyVision} applied? (Y/N):")
         else:
             # TODO: Add automation verification methods
             return False
 
     def testFunction(self):
-        """This function tests the Hue Levels
+        """This function tests the DolbyVision Levels
 
         Returns:
             bool
@@ -162,21 +176,26 @@ class tvSettings_test16_Hue(utHelperClass):
         self.log.testStart(self.testName, '1')
 
         # Initialize the tvSettings module
-        self.testtvSettings.initialise(self.formatChangeCB, self.contentChangeCB, self.resolutionChangeCB, self.frameRateChangeCB)
+        self.testtvSettings.initialise()
 
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
 
-            for hue in self.hueLevels:
-                self.log.stepStart(f'Hue Level:{hue} Stream:{stream}')
+            for DolbyVision in self.testtvSettings.getDolbyVisionInfo():
+                self.log.stepStart(f'DolbyVision Level:{DolbyVision} Stream:{stream}')
 
-                #set the hue level
-                self.testtvSettings.setHueLevel(hue)
+                result = self.testQueryDolbyVisionLevel(DolbyVision, True)
 
-                result = self.testVerifyHueLevel(hue, True)
+                self.log.stepResult(result, f'DolbyVision Level:{DolbyVision} Stream:{stream}')
 
-                self.log.stepResult(result, f'Hue Level:{hue} Stream:{stream}')
+                if result == True:
+                    #set the DolbyVision level
+                    self.testtvSettings.setDolbyVision(DolbyVision)
+
+                    result = self.testVerifyDolbyVisionLevel(DolbyVision, True)
+
+                    self.log.stepResult(result, f'DolbyVision Level:{DolbyVision} Stream:{stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -194,5 +213,5 @@ class tvSettings_test16_Hue(utHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test16_Hue()
+    test = tvSettings_test21_DolbyVision()
     test.run(False)

@@ -20,6 +20,7 @@
 # * limitations under the License.
 # *
 #* ******************************************************************************
+
 import os
 import sys
 
@@ -32,29 +33,23 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test14_Sharpness(utHelperClass):
+class tvSettings_test53_SaveColorTemperature(utHelperClass):
 
-    testName = "test14_Sharpness"
+    testName = "test53_SaveColorTemperature"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
-    rackDevice = "dut"
-    sharpnessLevels = [0, 100, 25, 75, 50]
 
     def __init__(self):
         """
-        Initializes the test14 Sharpness test.
+        Initializes the SaveColorTemperature test.
 
         Args:
             None.
         """
-        super().__init__(self.testName, '1')
+        super().__init__(self.testName, '53')
 
         # Test Setup configuration file
         self.testSetup = ConfigRead(self.testSetupPath, self.moduleName)
-        self.formatChangeCB = self.testSetup.get("callback").get("formatChange_status")
-        self.contentChangeCB = self.testSetup.get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.testSetup.get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.testSetup.get("callback").get("frameRateChange_status")
 
         # Open Session for player
         self.player_session = self.dut.getConsoleSession("ssh_player")
@@ -80,7 +75,6 @@ class tvSettings_test14_Sharpness(utHelperClass):
         Args:
             None.
         """
-
         # List of streams with path
         self.testStreams = []
 
@@ -116,7 +110,6 @@ class tvSettings_test14_Sharpness(utHelperClass):
         Args:
             None.
         """
-
         # Run test specific commands
         test = self.testSetup.get("assets").get("device").get(self.testName)
         cmds = test.get("execute")
@@ -124,59 +117,61 @@ class tvSettings_test14_Sharpness(utHelperClass):
             for cmd in cmds:
                 self.writeCommands(cmd)
 
-    # TODO: Current version supports only manual verification.
-    def testVerifySharpnessLevel(self, sharpness, manual=False):
+    def testVerifyColorTemperature(self, pictureMode, videoFormat, colorTemperature, manual=False):
         """
-        Verifies whether the Sharpness is set or not.
+        Verifies whether the Color Temperature value is set or not.
 
         Args:
-            sharpness (int) : sharpness value
+            pictureMode (str): Picture Mode.
+            videoFormat (str): Video Format.
+            colorTemperature (int): Color Temperature value.
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
-                                     Defaults to other verification methods
+                                     Defaults to other verification methods.
 
         Returns:
-            bool : returns the status of sharpness
+            bool: returns the status of color temperature value.
         """
         if manual:
-            return self.testUserResponse.getUserYN(f"Has sharpness level {sharpness} applied? (Y/N):")
+            return self.testUserResponse.getUserYN(
+                f"Is color temperature {colorTemperature} applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
+            )
         else:
             # TODO: Add automation verification methods
             return False
 
     def testFunction(self):
-        """This function tests the Sharpness Levels
+        """This function tests saving color temperature values with all combinations of picture mode and video format.
 
         Returns:
             bool
         """
-
         # Download the assets listed in test setup configuration file
         self.testDownloadAssets()
 
         # Run Prerequisites listed in the test setup configuration file
         self.testRunPrerequisites()
 
-        # Create the tvSettings class
-        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session)
-
-        self.log.testStart(self.testName, '1')
+        self.log.testStart(self.testName, '53')
 
         # Initialize the tvSettings module
-        self.testtvSettings.initialise(self.formatChangeCB, self.contentChangeCB, self.resolutionChangeCB, self.frameRateChangeCB)
+        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session)
 
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
 
-            for sharpness in self.sharpnessLevels:
-                self.log.stepStart(f'Sharpness Level:{sharpness} Stream:{stream}')
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
+                for videoFormat in self.testtvSettings.getVideoFormatInfo():
+                    colorTemperature = self.testtvSettings.getColorTemperatureInfo()  # Get Color Temperature
 
-                #set the sharpness
-                self.testtvSettings.setSharpnessLevel()
+                    self.log.stepStart(f'Set Color Temperature: {colorTemperature}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {stream}')
 
-                result = self.testVerifySharpnessLevel(sharpness, True)
+                    # Set Picture Mode, Video Format, and Color Temperature
+                    self.testtvSettings.setColorTemperature(pictureMode, videoFormat, colorTemperature)
 
-                self.log.stepResult(result, f'Sharpness Level:{sharpness} Stream:{stream}')
+                    result = self.testVerifyColorTemperature(pictureMode, videoFormat, colorTemperature, True)
+
+                    self.log.stepResult(result, f'Color Temperature: {colorTemperature}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -194,5 +189,5 @@ class tvSettings_test14_Sharpness(utHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test14_Sharpness()
+    test = tvSettings_test53_SaveColorTemperature()
     test.run(False)

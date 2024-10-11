@@ -3,7 +3,12 @@
 tvSettings:  # Prefix must always exist
     description: "tvSettings testing profile / menu system for UT"
     test:
-        execute: "/opt/HAL_L3/run.sh -p /opt/HAL_L3/Sink_4K_TvSettings.yaml" #Execute command
+        execute: "<PATH>/run.sh -p <PATH>/Sink_4K_TvSettings.yaml" #Execute command
+        callback:
+            formatChange_status: "<PATH>/tvSettings_formatChangeStatus.txt"
+            contentChange_status: "<PATH>/tvSettings_contentChangeStatus.txt"
+            resolutionChange_status: "<PATH>/tvSettings_resolutionChangeStatus.txt"
+            frameRateChange_status:  "<PATH>/tvSettings_frameRateChangeStatus.txt"
         type: UT-C # C (UT-C Cunit) / C++ (UT-G (g++ ut-core gtest backend))
         suites:
             0:

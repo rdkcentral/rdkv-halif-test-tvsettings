@@ -10,16 +10,9 @@
 # * you may not use this file except in compliance with the License.
 # * You may obtain a copy of the License at
 # *
+# * http://www.apache.org/licenses/LICENSE-2.0
 # *
-# http://www.apache.org/licenses/LICENSE-2.0
-# *
-# * Unless required by applicable law or agreed to in writing, software
-# * distributed under the License is distributed on an "AS IS" BASIS,
-# * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# * See the License for the specific language governing permissions and
-# * limitations under the License.
-# *
-#* ******************************************************************************
+# * *******************************************************************************
 import os
 import sys
 
@@ -32,17 +25,18 @@ from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 
-class tvSettings_test12_Brightness(utHelperClass):
+class tvSettings_test28_GpostOffset(utHelperClass):
 
-    testName  = "test12_Brightness"
+    testName = "test28_GpostOffset"
     testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
     moduleName = "tvSettings"
     rackDevice = "dut"
-    brightnessLevels = [0, 25, 50, 75, 100]
+    gpostValues = [-1024, -512, 0, 512, 1023]  # GpostValue range
+    saveSetFlags = [0, 1]  # Save only or set only flags
 
     def __init__(self):
         """
-        Initializes the test12 Brightness test.
+        Initializes the test28 GpostOffset test.
 
         Args:
             None.
@@ -51,10 +45,6 @@ class tvSettings_test12_Brightness(utHelperClass):
 
         # Test Setup configuration file
         self.testSetup = ConfigRead(self.testSetupPath, self.moduleName)
-        self.formatChangeCB = self.testSetup.get("callback").get("formatChange_status")
-        self.contentChangeCB = self.testSetup.get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.testSetup.get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.testSetup.get("callback").get("frameRateChange_status")
 
         # Open Session for player
         self.player_session = self.dut.getConsoleSession("ssh_player")
@@ -67,7 +57,7 @@ class tvSettings_test12_Brightness(utHelperClass):
         # Create player Class
         self.testPlayer = utPlayer(self.player_session, player)
 
-         # Create user response Class
+        # Create user response Class
         self.testUserResponse = utUserResponse()
 
         # Get path to device profile file
@@ -80,7 +70,6 @@ class tvSettings_test12_Brightness(utHelperClass):
         Args:
             None.
         """
-
         # List of streams with path
         self.testStreams = []
 
@@ -88,13 +77,13 @@ class tvSettings_test12_Brightness(utHelperClass):
 
         test = self.testSetup.get("assets").get("device").get(self.testName)
 
-        #download test artifacts to device
+        # Download test artifacts to device
         url = test.get("artifacts")
         if url is not None:
             self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
 
-        #download test streams to device
-        url =  test.get("streams")
+        # Download test streams to device
+        url = test.get("streams")
         if url is not None:
             self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
             for streampath in url:
@@ -116,40 +105,39 @@ class tvSettings_test12_Brightness(utHelperClass):
         Args:
             None.
         """
-
-        #Run test specific commands
+        # Run test specific commands
         test = self.testSetup.get("assets").get("device").get(self.testName)
-        cmds = test.get("execute");
+        cmds = test.get("execute")
         if cmds is not None:
             for cmd in cmds:
                 self.writeCommands(cmd)
 
-    #TODO: Current version supports only manual verification.
-    def testVerifyBrightnessLevel(self, brightness, manual=False):
+    def testVerifyGpostOffset(self, colorTemperature, gpostValue, saveSetFlag, manual=False):
         """
-        Verifies whether the Brightness is set or not.
+        Verifies whether the Color Temperature and GpostOffset are set or not.
 
         Args:
-            brightness (int) : brightness value
+            colorTemperature (int) : Color Temperature value
+            gpostValue (int) : Gpost value
+            saveSetFlag (int) : Save/Set flag (0 or 1)
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to other verification methods
 
         Returns:
-            bool : returns the status of brightness
+            bool : returns the status of Color Temperature and GpostOffset
         """
-        if manual == True:
-            return self.testUserResponse.getUserYN(f"Has brightness level {brightness} applied? (Y/N):")
-        else :
-            #TODO: Add automation verification methods
+        if manual:
+            return self.testUserResponse.getUserYN(f"Has Color Temperature {colorTemperature} and GpostOffset {gpostValue} with flag {saveSetFlag} applied? (Y/N):")
+        else:
+            # TODO: Add automation verification methods
             return False
 
     def testFunction(self):
-        """This function tests the BrightnessLevels
+        """This function tests the GpostOffset settings.
 
         Returns:
             bool
         """
-
         # Download the assets listed in test setup configuration file
         self.testDownloadAssets()
 
@@ -162,21 +150,26 @@ class tvSettings_test12_Brightness(utHelperClass):
         self.log.testStart(self.testName, '1')
 
         # Initialize the tvSettings module
-        self.testtvSettings.initialise(self.formatChangeCB, self.contentChangeCB, self.resolutionChangeCB, self.frameRateChangeCB)
+        self.testtvSettings.initialise()
 
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
 
-            for brightness in self.brightnessLevels:
-                self.log.stepStart(f'Brightness Level:{brightness} Stream:{stream}')
+            # Get the Color Temperature values
+            colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
 
-                #set the brightness
-                self.testtvSettings.setBrightnessLevel(brightness)
+            for colorTemperature in colorTemperatureValues:
+                for gpostValue in self.gpostValues:
+                    for saveSetFlag in self.saveSetFlags:
+                        self.log.stepStart(f'Color Temperature:{colorTemperature} GpostOffset:{gpostValue} Save/Set Flag:{saveSetFlag} Stream:{stream}')
 
-                result = self.testVerifyBrightnessLevel(brightness, True)
+                        # Set the Color Temperature and GpostOffset
+                        self.testtvSettings.setGpostOffsetValue(colorTemperature, gpostValue, saveSetFlag)
 
-                self.log.stepResult(result, f'Brightness Level:{brightness} Stream:{stream}')
+                        result = self.testVerifyGpostOffset(colorTemperature, gpostValue, saveSetFlag, True)
+
+                        self.log.stepResult(result, f'Color Temperature:{colorTemperature} GpostOffset:{gpostValue} Save/Set Flag:{saveSetFlag} Stream:{stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -194,5 +187,5 @@ class tvSettings_test12_Brightness(utHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test12_Brightness()
+    test = tvSettings_test28_GpostOffset()
     test.run(False)
