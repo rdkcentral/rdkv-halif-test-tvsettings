@@ -24,19 +24,19 @@
 
 deviceConfig:
     cpe1:
-        platform:   "llama.uk"
-        model:      "65"
-        target_directory: "/opt/"
+        platform:   "Panel"
+        model:      "UK"
+        target_directory: "/tmp/"
         test:
             #TODO: Use the single profile file which contains all details (ds, hdmi, etc)
             profile: "../../../profiles/sink/Sink_4K_TvSettings.yaml"
             player:
                 tool: "gstreamer"
                 prerequisites:
-                    - "export EXP=test" # pre commands required to play the stream
+                    - "export EXP=test # pre commands required to play the stream"
     cpe2:
         platform: "test"
         model: "test"
-        target_directory: "/tmp"
+        target_directory: "<PATH>"
         profile: ""
         test:

@@ -84,6 +84,11 @@
         } \
     } while (0)
 
+#define TVSETTINGS_FORMAT_CB_FILE "tvSettings_formatChangeStatus.txt"
+#define TVSETTINGS_CONTENT_CB_FILE "tvSettings_contentChangeStatus.txt"
+#define TVSETTINGS_RESOLUTION_CB_FILE "tvSettings_resolutionChangeStatus.txt"
+#define TVSETTINGS_FRAMERATE_CB_FILE "tvSettings_frameRateChangeStatus.txt"
+
 /* Global Variables */
 static int32_t gTestGroup = 3;
 static int32_t gTestID    = 1;
@@ -530,7 +535,7 @@ static void videoFrameRateChangeCB (tvVideoFrameRate_t frameRate, void *userData
     UT_LOG_INFO("Received Video Frame Rate Change callback format:[%s], userData[%s][0x%0X]",
                  UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate),(char *)userData,userData);
 
-    writeCallbackLog(gFormatChangeCBFile, "Received Video Frame Rate Change callback format:[%s], userData[%s][0x%0X]",
+    writeCallbackLog(gFrameRateChangeCBFile, "Received Video Frame Rate Change callback format:[%s], userData[%s][0x%0X]",
                  UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate),(char *)userData,userData);
 }
 
@@ -561,17 +566,10 @@ void test_l3_tvSettings_initialize(void)
     char videoResolutionData[] = "videoResolutionChange";
     char videoFrameRateData[] = "videoFrameRateChange";
 
-    UT_LOG_MENU_INFO("Enter file name with path to log Format change callbacks:");
-    readString(gFormatChangeCBFile);
-
-    UT_LOG_MENU_INFO("Enter file name with path to log content change callbacks:");
-    readString(gContentChangeCBFile);
-
-    UT_LOG_MENU_INFO("Enter file name with path to log resolution change callbacks:");
-    readString(gResolutionChangeCBFile);
-
-    UT_LOG_MENU_INFO("Enter file name with path to log Frame Rate change callbacks:");
-    readString(gFormatChangeCBFile);
+    strncpy(gFormatChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
+    strncpy(gContentChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
+    strncpy(gResolutionChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
+    strncpy(gFrameRateChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
 
     /* Initialize the tvSettings Module */
     UT_LOG_INFO("Calling tvSettingsInit()");
@@ -1425,7 +1423,7 @@ void test_l3_tvSettings_ColorTemperature(void)
         UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the desired color temperature. value: ");
+    UT_LOG_MENU_INFO("Enter the desired color temperature value: ");
     // Get user input for selecting a color temperature
     readInt(&userChoice);
 
@@ -1686,7 +1684,7 @@ void test_l3_tvSettings_DynamicGamma(void)
     // Get the current dynamic gamma value to confirm
     UT_LOG_INFO("Calling GetDynamicGamma(OUT: dynamicGamma:[])");
     ret = GetDynamicGamma(&currentDynamicGamma);
-    UT_LOG_INFO("Result GotDynamicGamma(OUT: dynamicGamma:[%.2f]),tvError_t:[%s]", currentDynamicGamma, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetDynamicGamma(OUT: dynamicGamma:[%.2f]),tvError_t:[%s]", currentDynamicGamma, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(userGammaValue, currentDynamicGamma);
@@ -1862,39 +1860,12 @@ void test_l3_tvSettings_ColorTempRgain(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
-    tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
+    tvColorTempSourceOffset_t selectedSourceId = TV_OFFSET;
     int32_t rgainValue = 0;
     int32_t retrievedRgain = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
-
-    // Get user input for selecting a source
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSource Selection");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
-    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
-    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
-    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
-    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
-
-    readInt(&selectedSourceId);
-
-    if (selectedSourceId < 0 || selectedSourceId > 3)
-    {
-        UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2002,39 +1973,12 @@ void test_l3_tvSettings_ColorTempGgain(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
-    tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
+    tvColorTempSourceOffset_t selectedSourceId = TV_OFFSET;
     int32_t ggainValue = 0;
     int32_t retrievedGgain = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
-
-    // Get user input for selecting a source
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSource Selection");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
-    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
-    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
-    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
-    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
-
-    readInt(&selectedSourceId);
-
-    if (selectedSourceId < 0 || selectedSourceId > 3)
-    {
-        UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2142,39 +2086,12 @@ void test_l3_tvSettings_ColorTempBgain(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
-    tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
+    tvColorTempSourceOffset_t selectedSourceId = TV_OFFSET;
     int32_t bgainValue = 0;
     int32_t retrievedBgain = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
-
-    // Get user input for selecting a source
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSource Selection");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
-    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
-    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
-    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
-    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
-
-    readInt(&selectedSourceId);
-
-    if (selectedSourceId < 0 || selectedSourceId > 3)
-    {
-        UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2282,39 +2199,12 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
-    tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
+    tvColorTempSourceOffset_t selectedSourceId = TV_OFFSET;
     int32_t rpostoffsetValue = 0;
     int32_t retrievedRpostoffset = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
-
-    // Get user input for selecting a source
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSource Selection");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
-    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
-    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
-    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
-    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
-
-    readInt(&selectedSourceId);
-
-    if (selectedSourceId < 0 || selectedSourceId > 3)
-    {
-        UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2420,39 +2310,12 @@ void test_l3_tvSettings_ColorTempGpostoffset(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
-    tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
+    tvColorTempSourceOffset_t selectedSourceId = TV_OFFSET;
     int32_t gpostoffsetValue = 0;
     int32_t retrievedGpostoffset = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
-
-    // Get user input for selecting a source
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSource Selection");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
-    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
-    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
-    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
-    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
-
-    readInt(&selectedSourceId);
-
-    if (selectedSourceId < 0 || selectedSourceId > 3)
-    {
-        UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2557,44 +2420,11 @@ void test_l3_tvSettings_ColorTempBpostoffset(void)
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
     tvColorTemp_t selectedColorTemp = tvColorTemp_MAX;
-    tvColorTempSourceOffset_t selectedSourceId = ALL_SRC_OFFSET;
+    tvColorTempSourceOffset_t selectedSourceId = TV_OFFSET;
     int32_t bpostoffsetValue = 0;
     int32_t retrievedBpostoffset = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     int32_t userChoice = 0;
-
-    // Get user input for selecting a source
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSource Selection");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Source ID");
-    UT_LOG_MENU_INFO("\t0.  %-30s", "HDMI");
-    UT_LOG_MENU_INFO("\t1.  %-30s", "TV");
-    UT_LOG_MENU_INFO("\t2.  %-30s", "AV");
-    UT_LOG_MENU_INFO("\t3.  %-30s", "All Sources");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("Enter the number corresponding to the source:");
-
-    readInt(&selectedSourceId);
-
-    if (selectedSourceId < 0 || selectedSourceId > 3)
-    {
-        UT_LOG_ERROR("Invalid Source ID: [%d]", selectedSourceId);
-        UT_LOG_INFO("Out %s", __FUNCTION__);
-        return;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
-
-    // Convert 3 (All Sources) to -1 before passing it to the function
-    if (selectedSourceId == 3)
-    {
-        selectedSourceId = -1;
-    }
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -3084,7 +2914,7 @@ void test_l3_tvSettings_ComponentHue(void)
     blHueColor = (tvDataComponentColor_t)(userColorChoice - 1); // Adjust for 0-based indexing
 
     // Get user input for hue value
-    UT_LOG_MENU_INFO("Enter the hue value (0 - 360): ");
+    UT_LOG_MENU_INFO("Enter the hue value (0 - 100): ");
     readInt(&hueValue);
 
     // Validate hue value
@@ -3633,7 +3463,7 @@ void test_l3_tvSettings_SetBacklightTestMode(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Backlight Test Mode");
     for (int32_t i = LDIM_STATE_NONBOOST; i < LDIM_STATE_MAX; i++)
     {
-        UT_LOG_MENU_INFO("%d : [%s]", i + 1, UT_Control_GetMapString(tvBacklightTestMode_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvBacklightTestMode_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -3818,7 +3648,7 @@ void test_l3_tvSettings_BacklightSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3926,7 +3756,7 @@ void test_l3_tvSettings_TVDimmingModeSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4050,7 +3880,7 @@ void test_l3_tvSettings_LocalDimmingLevelSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4166,7 +3996,7 @@ void test_l3_tvSettings_BrightnessSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4279,7 +4109,7 @@ void test_l3_tvSettings_ContrastSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4389,7 +4219,7 @@ void test_l3_tvSettings_SharpnessSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4410,6 +4240,8 @@ void test_l3_tvSettings_SharpnessSave(void)
     UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
     readInt(&userFormatChoice);
+ 
+    videoFormat = userFormatChoice;
 
     // Validate user input for Video Format
     if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
@@ -4499,7 +4331,7 @@ void test_l3_tvSettings_HueSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t)PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4609,7 +4441,7 @@ void test_l3_tvSettings_SaturationSave(void)
     readInt(&userPQChoice);
 
     // Validate user input for Picture Mode
-    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4719,7 +4551,7 @@ void test_l3_tvSettings_ColorTemperatureSave(void)
     readInt(&userChoice);
 
     // Validate user choice for Picture Mode
-    if (userChoice < 1 || userChoice > (int32_t )PQ_MODE_VIVID2)
+    if (userChoice < 1 || userChoice > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4838,7 +4670,7 @@ void test_l3_tvSettings_AspectRatioSave(void)
     readInt(&pqValue);
 
     // Validate user choice for Picture Mode
-    if (pqValue < 1 || pqValue > (int32_t )PQ_MODE_VIVID2)
+    if (pqValue < 1 || pqValue > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4962,7 +4794,7 @@ void test_l3_tvSettings_LowLatencySave(void)
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
     readInt(&userPQChoice);
 
-    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5069,7 +4901,7 @@ void test_l3_tvSettings_DolbyVisionSave(void)
     UT_LOG_MENU_INFO("Enter your choice of Picture Mode (index): ");
     readInt(&userPQChoice);
 
-    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_VIVID2)
+    if (userPQChoice < 1 || userPQChoice > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5211,7 +5043,7 @@ void test_l3_tvSettings_PictureModeSave(void)
     readInt(&userChoice);
 
     // Validate user choice
-    if (userChoice < 1 || userChoice > (int32_t )PQ_MODE_VIVID2)
+    if (userChoice < 1 || userChoice > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid Picture Mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5270,7 +5102,6 @@ void test_l3_tvSettings_CMSSave(void)
     int32_t pqMode = 0;
     int32_t userColorChoice;
     int32_t maxRange = 30;
-    int32_t menuIndex = 1;
 
     UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
 
@@ -5288,7 +5119,7 @@ void test_l3_tvSettings_CMSSave(void)
     readInt(&pqMode);
 
     // Validate picture mode choice
-    if (pqMode < PQ_MODE_STANDARD || pqMode > (int32_t )PQ_MODE_VIVID2)
+    if (pqMode < PQ_MODE_STANDARD || pqMode > (int32_t )PQ_MODE_MAX)
     {
         UT_LOG_ERROR("Invalid choice of Picture Mode. Exiting test.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5345,31 +5176,27 @@ void test_l3_tvSettings_CMSSave(void)
         return;
     }
 
-    // Retrieve supported component colors if component type is not COMP_NONE
-    if (componentType != COMP_NONE)
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Component Types");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Component Types");
+    for (uint32_t i = tvDataColor_NONE; i < tvDataColor_MAX; i <<= 1)
     {
-        UT_LOG_MENU_INFO("----------------------------------------------------------");
-        UT_LOG_MENU_INFO("\t\tSupported Component Types");
-        UT_LOG_MENU_INFO("----------------------------------------------------------");
-        UT_LOG_MENU_INFO("\t#   %-30s", "Component Types");
-        for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i <<= 1)
-        {
-            UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
-        }
-
-        // Get user input for component color
-        UT_LOG_MENU_INFO("Enter the component color: ");
-        readInt(&userColorChoice);
-
-        if (userColorChoice < 0 || userColorChoice >= COMP_MAX)
-        {
-            UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
-            UT_LOG_INFO("Out %s", __FUNCTION__);
-            return;
-        }
-
-        colorType = (tvDataComponentColor_t)userColorChoice;
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
+
+    // Get user input for component color
+    UT_LOG_MENU_INFO("Enter the component color: ");
+    readInt(&userColorChoice);
+
+    if (userColorChoice < 0 || userColorChoice >= COMP_MAX)
+    {
+        UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    colorType = (tvDataComponentColor_t)userColorChoice;
 
     // Determine value range for cms_value based on componentType and colorType
 
@@ -5446,66 +5273,66 @@ int32_t test_l3_tvSettings_register(void)
         return -1;
     }
 
-    UT_add_test(pSuite, "Initialize tvSettings", test_l3_tvSettings_initialize);
-    UT_add_test(pSuite, "Terminate tvSettings", test_l3_tvSettings_terminate);
-    UT_add_test(pSuite, "Get Video Format of tvSettings", test_l3_tvSettings_GetVideoFormat);
-    UT_add_test(pSuite, "Get Video Resolution of tvSettings", test_l3_tvSettings_GetCurrentVideoResolution);
-    UT_add_test(pSuite, "Get Video FrameRate of tvSettings", test_l3_tvSettings_GetCurrentVideoFrameRate);
-    UT_add_test(pSuite, "Get Video Source of tvSettings", test_l3_tvSettings_GetCurrentVideoSource);
-    UT_add_test(pSuite, "Back light for tvSettings", test_l3_tvSettings_backlight);
-    UT_add_test(pSuite, "Back light Fade for tvSettings", test_l3_tvSettings_backlightFade);
-    UT_add_test(pSuite, "Back light Mode for tvSettings", test_l3_tvSettings_backlightMode);
-    UT_add_test(pSuite, "TV Dimming Mode for tvSettings", test_l3_tvSettings_TVDimmingMode);
-    UT_add_test(pSuite, "Local Dimming Mode for tvSettings", test_l3_tvSettings_LocalDimmingLevel);
-    UT_add_test(pSuite, "Brightness for tvSettings", test_l3_tvSettings_Brightness);
-    UT_add_test(pSuite, "Contrast for tvSettings", test_l3_tvSettings_Contrast);
-    UT_add_test(pSuite, "Sharpness for tvSettings", test_l3_tvSettings_Sharpness);
-    UT_add_test(pSuite, "Saturation for tvSettings", test_l3_tvSettings_Saturation);
-    UT_add_test(pSuite, "Hue for tvSettings", test_l3_tvSettings_Hue);
-    UT_add_test(pSuite, "ColorTemperature for tvSettings", test_l3_tvSettings_ColorTemperature);
-    UT_add_test(pSuite, "Aspect Ratio for tvSettings", test_l3_tvSettings_AspectRatio);
-    UT_add_test(pSuite, "Low Latency State for tvSettings", test_l3_tvSettings_LowLatencyState);
-    UT_add_test(pSuite, "Dynamic Contrast for tvSettings", test_l3_tvSettings_DynamicContrast);
-    UT_add_test(pSuite, "Dynamic Gamma for tvSettings", test_l3_tvSettings_DynamicGamma);
-    UT_add_test(pSuite, "Dolby Vision for tvSettings", test_l3_tvSettings_DolbyVisionMode);
-    UT_add_test(pSuite, "Picture Mode for tvSettings", test_l3_tvSettings_PictureMode);
-    UT_add_test(pSuite, "ColorTempRgain for tvSettings", test_l3_tvSettings_ColorTempRgain);
-    UT_add_test(pSuite, "ColorTempGgain for tvSettings", test_l3_tvSettings_ColorTempGgain);
-    UT_add_test(pSuite, "ColorTempBgain for tvSettings", test_l3_tvSettings_ColorTempBgain);
-    UT_add_test(pSuite, "ColorTempRpostoffset for tvSettings", test_l3_tvSettings_ColorTempRpostoffset);
-    UT_add_test(pSuite, "ColorTempGpostoffset for tvSettings", test_l3_tvSettings_ColorTempGpostoffset);
-    UT_add_test(pSuite, "ColorTempBpostoffset for tvSettings", test_l3_tvSettings_ColorTempBpostoffset);
-    UT_add_test(pSuite, "WBCalibrationMode for tvSettings", test_l3_tvSettings_WBCalibrationMode);
-    UT_add_test(pSuite, "Gamma Table for tvSettings", test_l3_tvSettings_GammaTable);
-    UT_add_test(pSuite, "DvTmaxValue for tvSettings", test_l3_tvSettings_DvTmaxValue);
-    UT_add_test(pSuite, "CMSState for tvSettings", test_l3_tvSettings_CMSState);
-    UT_add_test(pSuite, "ComponentSaturation for tvSettings", test_l3_tvSettings_ComponentSaturation);
-    UT_add_test(pSuite, "ComponentHue for tvSettings", test_l3_tvSettings_ComponentHue);
-    UT_add_test(pSuite, "ComponentLuma for tvSettings", test_l3_tvSettings_ComponentLuma);
-    UT_add_test(pSuite, "EnableGammaMode for tvSettings", test_l3_tvSettings_EnableGammaMode);
-    UT_add_test(pSuite, "SetGammaPatternMode for tvSettings", test_l3_tvSettings_SetGammaPatternMode);
-    UT_add_test(pSuite, "SetGammaPattern for tvSettings", test_l3_tvSettings_SetGammaPattern);
-    UT_add_test(pSuite, "RGBPattern for tvSettings", test_l3_tvSettings_RGBPattern);
-    UT_add_test(pSuite, "GrayPattern for tvSettings", test_l3_tvSettings_GrayPattern);
-    UT_add_test(pSuite, "EnableLDIMPixelCompensation for tvSettings", test_l3_tvSettings_EnableLDIMPixelCompensation);
-    UT_add_test(pSuite, "EnableLDIM for tvSettings", test_l3_tvSettings_EnableLDIM);
-    UT_add_test(pSuite, "SetBacklightTestMode for tvSettings", test_l3_tvSettings_SetBacklightTestMode);
-    UT_add_test(pSuite, "EnableDynamicContrast for tvSettings", test_l3_tvSettings_EnableDynamicContrast);
-    UT_add_test(pSuite, "EnableLocalContrast for tvSettings", test_l3_tvSettings_EnableLocalContrast);
-    UT_add_test(pSuite, "Save Backlight values for tvSettings", test_l3_tvSettings_BacklightSave);
-    UT_add_test(pSuite, "Save TVDimming Mode values for tvSettings", test_l3_tvSettings_TVDimmingModeSave);
-    UT_add_test(pSuite, "Save LocalDimming Mode values for tvSettings", test_l3_tvSettings_LocalDimmingLevelSave);
-    UT_add_test(pSuite, "Save Brightness values for tvSettings", test_l3_tvSettings_BrightnessSave);
-    UT_add_test(pSuite, "Save Contrast values for tvSettings", test_l3_tvSettings_ContrastSave);
-    UT_add_test(pSuite, "Save Sharpness values for tvSettings", test_l3_tvSettings_SharpnessSave);
-    UT_add_test(pSuite, "Save Saturation values for tvSettings", test_l3_tvSettings_SaturationSave);
-    UT_add_test(pSuite, "Save Hue values for tvSettings", test_l3_tvSettings_HueSave);
-    UT_add_test(pSuite, "Save Color Temperature values for tvSettings", test_l3_tvSettings_ColorTemperatureSave);
-    UT_add_test(pSuite, "Save Aspect Ratio values for tvSettings", test_l3_tvSettings_AspectRatioSave);
-    UT_add_test(pSuite, "Save Low Latency values for tvSettings", test_l3_tvSettings_LowLatencySave);
-    UT_add_test(pSuite, "Save Dolby vision for tvSettings", test_l3_tvSettings_DolbyVisionSave);
-    UT_add_test(pSuite, "Save Picture Mode for tvSettings", test_l3_tvSettings_PictureModeSave);
-    UT_add_test(pSuite, "Save CMS for tvSettings", test_l3_tvSettings_CMSSave);
+    UT_add_test(pSuite, "Initialize", test_l3_tvSettings_initialize);
+    UT_add_test(pSuite, "Terminate", test_l3_tvSettings_terminate);
+    UT_add_test(pSuite, "Get Video Format", test_l3_tvSettings_GetVideoFormat);
+    UT_add_test(pSuite, "Get Resolution", test_l3_tvSettings_GetCurrentVideoResolution);
+    UT_add_test(pSuite, "Get Video FrameRate", test_l3_tvSettings_GetCurrentVideoFrameRate);
+    UT_add_test(pSuite, "Get Video Source", test_l3_tvSettings_GetCurrentVideoSource);
+    UT_add_test(pSuite, "Back light", test_l3_tvSettings_backlight);
+    UT_add_test(pSuite, "Back light Fade", test_l3_tvSettings_backlightFade);
+    UT_add_test(pSuite, "Back light Mode", test_l3_tvSettings_backlightMode);
+    UT_add_test(pSuite, "TV Dimming Mode", test_l3_tvSettings_TVDimmingMode);
+    UT_add_test(pSuite, "Local Dimming Mode", test_l3_tvSettings_LocalDimmingLevel);
+    UT_add_test(pSuite, "Brightness", test_l3_tvSettings_Brightness);
+    UT_add_test(pSuite, "Contrast", test_l3_tvSettings_Contrast);
+    UT_add_test(pSuite, "Sharpness", test_l3_tvSettings_Sharpness);
+    UT_add_test(pSuite, "Saturation", test_l3_tvSettings_Saturation);
+    UT_add_test(pSuite, "Hue", test_l3_tvSettings_Hue);
+    UT_add_test(pSuite, "ColorTemperature", test_l3_tvSettings_ColorTemperature);
+    UT_add_test(pSuite, "Aspect Ratio", test_l3_tvSettings_AspectRatio);
+    UT_add_test(pSuite, "Low Latency State", test_l3_tvSettings_LowLatencyState);
+    UT_add_test(pSuite, "Dynamic Contrast", test_l3_tvSettings_DynamicContrast);
+    UT_add_test(pSuite, "Dynamic Gamma", test_l3_tvSettings_DynamicGamma);
+    UT_add_test(pSuite, "Dolby Vision", test_l3_tvSettings_DolbyVisionMode);
+    UT_add_test(pSuite, "Picture Mode", test_l3_tvSettings_PictureMode);
+    UT_add_test(pSuite, "ColorTempRgain", test_l3_tvSettings_ColorTempRgain);
+    UT_add_test(pSuite, "ColorTempGgain", test_l3_tvSettings_ColorTempGgain);
+    UT_add_test(pSuite, "ColorTempBgain", test_l3_tvSettings_ColorTempBgain);
+    UT_add_test(pSuite, "ColorTempRpost", test_l3_tvSettings_ColorTempRpostoffset);
+    UT_add_test(pSuite, "ColorTempGpost", test_l3_tvSettings_ColorTempGpostoffset);
+    UT_add_test(pSuite, "ColorTempBpost", test_l3_tvSettings_ColorTempBpostoffset);
+    UT_add_test(pSuite, "WBCalibrationMode", test_l3_tvSettings_WBCalibrationMode);
+    UT_add_test(pSuite, "Gamma Table", test_l3_tvSettings_GammaTable);
+    UT_add_test(pSuite, "DvTmaxValue", test_l3_tvSettings_DvTmaxValue);
+    UT_add_test(pSuite, "CMSState", test_l3_tvSettings_CMSState);
+    UT_add_test(pSuite, "CompSaturation", test_l3_tvSettings_ComponentSaturation);
+    UT_add_test(pSuite, "CompHue", test_l3_tvSettings_ComponentHue);
+    UT_add_test(pSuite, "CompLuma", test_l3_tvSettings_ComponentLuma);
+    UT_add_test(pSuite, "EnableGammaMode", test_l3_tvSettings_EnableGammaMode);
+    UT_add_test(pSuite, "SetGammaPatternMode", test_l3_tvSettings_SetGammaPatternMode);
+    UT_add_test(pSuite, "SetGammaPattern", test_l3_tvSettings_SetGammaPattern);
+    UT_add_test(pSuite, "RGBPattern", test_l3_tvSettings_RGBPattern);
+    UT_add_test(pSuite, "GrayPattern", test_l3_tvSettings_GrayPattern);
+    UT_add_test(pSuite, "EnableLDIMPixelCompensation", test_l3_tvSettings_EnableLDIMPixelCompensation);
+    UT_add_test(pSuite, "EnableLDIM", test_l3_tvSettings_EnableLDIM);
+    UT_add_test(pSuite, "SetBacklightTestMode", test_l3_tvSettings_SetBacklightTestMode);
+    UT_add_test(pSuite, "EnableDynamicContrast", test_l3_tvSettings_EnableDynamicContrast);
+    UT_add_test(pSuite, "EnableLocalContrast", test_l3_tvSettings_EnableLocalContrast);
+    UT_add_test(pSuite, "Save Backlight values", test_l3_tvSettings_BacklightSave);
+    UT_add_test(pSuite, "Save TV Dimming Mode values", test_l3_tvSettings_TVDimmingModeSave);
+    UT_add_test(pSuite, "Save Local Dimming Mode values", test_l3_tvSettings_LocalDimmingLevelSave);
+    UT_add_test(pSuite, "Save Brightness values", test_l3_tvSettings_BrightnessSave);
+    UT_add_test(pSuite, "Save Contrast values", test_l3_tvSettings_ContrastSave);
+    UT_add_test(pSuite, "Save Sharpness values", test_l3_tvSettings_SharpnessSave);
+    UT_add_test(pSuite, "Save Saturation values", test_l3_tvSettings_SaturationSave);
+    UT_add_test(pSuite, "Save Hue values", test_l3_tvSettings_HueSave);
+    UT_add_test(pSuite, "Save Color Temperature values", test_l3_tvSettings_ColorTemperatureSave);
+    UT_add_test(pSuite, "Save Aspect Ratio values", test_l3_tvSettings_AspectRatioSave);
+    UT_add_test(pSuite, "Save Low Latency values", test_l3_tvSettings_LowLatencySave);
+    UT_add_test(pSuite, "Save Dolby Vision", test_l3_tvSettings_DolbyVisionSave);
+    UT_add_test(pSuite, "Save Picture Mode", test_l3_tvSettings_PictureModeSave);
+    UT_add_test(pSuite, "Save CMS", test_l3_tvSettings_CMSSave);
 
     return 0;
 }
