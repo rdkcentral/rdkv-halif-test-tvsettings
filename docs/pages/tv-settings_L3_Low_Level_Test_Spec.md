@@ -104,10 +104,9 @@ Below are top test use-case for the `TV` Settings.
 |53|Save ColorTemperature for tvSettings|Verify the saving of color temperature for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveColorTemperature()`|N|Y|1,2|
 |54|Save Aspect Ratio for tvSettings|Verify the saving of aspect ratio for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveAspectRatio()`|N|Y|1,2|
 |55|Save Low Latency State for tvSettings|Verify the saving of low latency state for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveLowLatency()`|N|Y|1,2|
-|56|Save Dynamic Contrast for tvSettings|Verify the saving of dynamic contrast for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveDynamicContrast()`|N|Y|1,2|
-|57|Save Dynamic Gamma for tvSettings|Verify the saving of dynamic gamma for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveDynamicGamma()`|N|Y|1,2|
-|58|Save Dolby Vision mode for tvSettings|Verify the saving of Dolby Vision mode for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveDolbyVision()`|N|Y|1,2|
-|59|Save Picture Mode for tvSettings|Verify the saving of picture mode for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SavePictureMode()`|N|Y|1,2|
+|56|Save Dolby Vision mode for tvSettings|Verify the saving of Dolby Vision mode for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SaveDolbyVision()`|N|Y|1,2|
+|57|Save Picture Mode for tvSettings|Verify the saving of picture mode for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SavePictureMode()`|N|Y|1,2|
+|58|Save CMS State for tvSettings|Verify the saving of CMS state for TV settings. Play the predefined streams of one format, then switch to the saved video formats and verify the saving functionality.|`SavePictureMode()`|N|Y|1,2|
 
 ## Level 3 Python Test Cases High Level Overview
 
@@ -121,7 +120,8 @@ classDiagram
     testControl <|-- ut_raft : inherits
     class ut_raft{
     }
-    ut_raft <|-- L3_TestClasses : inherits
+    ut_raft <|-- dstvSettingsClass : inherits
+    dstvSettingsClass <|-- L3_TestClasses : inherits
     L3_TestClasses ..> tvSettings : uses
     note for testControl "uses rackConfig.yaml and deviceConfig.yaml"
     note for tvSettings "uses platformProfile.yaml"

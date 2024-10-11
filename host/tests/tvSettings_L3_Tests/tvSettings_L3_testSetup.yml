@@ -3,26 +3,225 @@
 
 tvSettings:  # Prefix must always exist
   description: "tvSettings test setup"
-  callback:
-    formatChange_status: "/opt/HAL_L3/tvSettings_formatChangeStatus.txt"
-    contentChange_status: "/opt/HAL_L3/tvSettings_contentChangeStatus.txt"
-    resolutionChange_status: "/opt/HAL_L3/tvSettings_resolutionChangeStatus.txt"
-    frameRateChange_status:  "/opt/HAL_L3/tvSettings_frameRateChangeStatus.txt"
-
   assets:
     device:
       test1_Verify_formats_Callbacks:
         artifacts: #list of artifacts to be copied to device
         execute: #list of commands to be executed on device
         streams: #list of streams to be copied to device
-      test2_Check_Brightness:
-        artifacts:
-        execute:
+      test01_CheckVideoFormat:
         streams:
-      test12_Brightness:
-        artifacts: ["<PATH>/bin/hal_test",
-                    "<PATH>/bin/libut_control.so",
-                    "<PATH>/bin/Sink_4K_TvSettings.yaml",
-                    "<PATH>/bin/run.sh"]
-      execute: ["chmod +x /opt/HAL_L3/hal_test", "chmod +x /opt/HAL_L3/run.sh"]
-      streams: ["<PATH>/streams/RGB_1920x1080.mp4"]
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test02_CheckVideoResolution:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test03_CheckVideoFrameRate:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test04_CheckVideoSource:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test05_Backlight:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test06_BacklightFade:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test07_BacklightMode:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test08_TVDimmingMode:
+        streams:
+          - "<URL PATH>/streams/DimmingTest.mp4"
+      test09_LocalDimmingLevel:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test10_Brightness:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test11_Contrast:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test12_Sharpness:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test13_Saturation:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test14_Hue:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test15_ColorTemp:
+        streams:
+          -  "<URL PATH>/streams/PatternVideo.mp4"
+      test16_AspectRatio:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test17_DynamicContrast:
+        streams:
+          -  "<URL PATH>/streams/HDR10.mp4"
+      test18_DynamicGamma:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test19_DolbyVision:
+        streams:
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test20_PictureMode:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test21_ColorTempRgain:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test22_ColorTempGgain:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test23_ColorTempBgain:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test24_RpostOffset:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test25_GpostOffset:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test26_BpostOffset:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test27_WBCalibrationMode:
+        streams:
+          - "<URL PATH>/streams/DimmingTest.mp4"
+      test28_GammaTable:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test29_DVTmaxValue:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test30_ComponentSaturation:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test31_ComponentHue:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test32_ComponentLuma:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test33_EnableGammaMode:
+        streams:
+          - "<URL PATH>/streams/ColorBars.mp4"
+      test34_SetGammaPattern:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test35_RGBPattern:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test36_GrayPattern:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test37_EnableLDIMPixelCompensation:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test38_EnableLDIM:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test39_SetBacklightTestMode:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test40_EnableDynamicContrast:
+        streams:
+          -  "<URL PATH>/streams/HDR10.mp4"
+      test41_EnableLocalContrast:
+        streams:
+          - "<URL PATH>/streams/PatternVideo.mp4"
+      test42_SaveBacklightValues:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test43_SaveTVDimmingMode:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test44_SaveLocalDimmingLevel:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test45_SaveBrightness:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test46_SaveContrast:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test47_SaveSharpness:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test48_SaveSaturation:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test49_SaveHue:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test50_SaveColorTemperature:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test51_SaveAspectRatio:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test52_SaveDolbyVision:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test53_SavePictureMode:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test54_SaveCMS:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
+      test55_SaveGammaTable:
+        streams:
+          -  "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
