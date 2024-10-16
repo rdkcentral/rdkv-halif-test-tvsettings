@@ -14824,7 +14824,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
     }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagentha/platformsupport") == false)
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagenta/platformsupport") == false)
     {
         result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
