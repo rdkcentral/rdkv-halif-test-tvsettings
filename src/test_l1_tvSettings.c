@@ -9035,8 +9035,8 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    pic_modes_t *tvPicModes= NULL;
-    pic_modes_t *tvPicModesRetry= NULL;
+    pic_modes_t tvPicModes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t tvPicModesRetry[PIC_MODES_SUPPORTED_MAX];
     bool IsPictureModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -9049,10 +9049,10 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
     result = GetTVSupportedPictureModes(&tvPicModes, &sizeReceived);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
     UT_ASSERT_EQUAL(sizeReceived, (unsigned short)pqCount);
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
 
 
     for (unsigned int i = 0; i < pqCount; i++)
