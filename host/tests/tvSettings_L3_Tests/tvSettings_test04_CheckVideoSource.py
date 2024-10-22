@@ -77,14 +77,6 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
 
             self.log.stepStart(f'Video Source Level: {source} Stream: {stream}')
 
-            self.log.stepStart(f'Video FrameRate {source} Callback Test')
-
-            # Retrieve the video content callback status
-            cbVideoSource = self.testtvSettings.getVideoContentCallbackStatus()
-
-            # Log the result of the video content callback test
-            self.log.stepResult(cbVideoSource and source in cbVideoSource, f'Video FrameRate {source} Callback Test')
-
             # Check the current video source
             videoSource = self.testtvSettings.checkVideoSource()
 

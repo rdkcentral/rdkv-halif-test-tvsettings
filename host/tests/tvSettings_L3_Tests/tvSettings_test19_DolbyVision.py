@@ -22,6 +22,7 @@
 #* ******************************************************************************
 import os
 import sys
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -41,25 +42,6 @@ class tvSettings_test19_DolbyVision(tvSettingsHelperClass):
         """
         self.testName = "test19_DolbyVision"
         super().__init__(self.testName, '19')
-
-    def testQueryDolbyVisionLevel(self, DolbyVision, manual=False):
-        """
-        Queries whether the Dolby Vision level should be applied.
-
-        This method prompts the user to confirm applying the Dolby Vision level.
-
-        Args:
-            DolbyVision (int): Dolby Vision level.
-            manual (bool, optional): Indicates if manual verification is used.
-                                     Defaults to False.
-
-        Returns:
-            bool: Status of Dolby Vision level query.
-        """
-        if manual:
-            return self.testUserResponse.getUserYN(f"Do you want to apply Dolby Vision level {DolbyVision}? (Y/N):")
-        else:
-            return False  # TODO: Add automation verification methods
 
     def testVerifyDolbyVisionLevel(self, DolbyVision, manual=False):
         """
@@ -99,23 +81,19 @@ class tvSettings_test19_DolbyVision(tvSettingsHelperClass):
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
+            time.sleep(10)
 
             for DolbyVision in self.testtvSettings.getDolbyVisionInfo():
+
                 self.log.stepStart(f'Dolby Vision Level: {DolbyVision} Stream: {stream}')
 
-                # Query if Dolby Vision level should be applied
-                result = self.testQueryDolbyVisionLevel(DolbyVision, True)
+                # Set the Dolby Vision level
+                self.testtvSettings.setDolbyVision(DolbyVision)
+
+                # Verify if Dolby Vision level has been applied
+                result = self.testVerifyDolbyVisionLevel(DolbyVision, True)
 
                 self.log.stepResult(result, f'Dolby Vision Level: {DolbyVision} Stream: {stream}')
-
-                if result:
-                    # Set the Dolby Vision level
-                    self.testtvSettings.setDolbyVision(DolbyVision)
-
-                    # Verify if Dolby Vision level has been applied
-                    result = self.testVerifyDolbyVisionLevel(DolbyVision, True)
-
-                    self.log.stepResult(result, f'Dolby Vision Level: {DolbyVision} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()

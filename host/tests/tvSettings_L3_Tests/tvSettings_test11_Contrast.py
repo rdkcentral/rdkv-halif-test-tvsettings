@@ -32,7 +32,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test11_Contrast(tvSettingsHelperClass):
 
-    contrastLevels = [0, 25, 50, 75, 100]
+    contrastLevels = [0, 25, 50, 75, 100, 50]
 
     def __init__(self):
         """

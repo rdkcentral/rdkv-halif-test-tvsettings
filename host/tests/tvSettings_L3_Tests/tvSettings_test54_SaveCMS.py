@@ -30,110 +30,102 @@ sys.path.append(os.path.join(dir_path, "../"))
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
+    """
+    Test class for saving CMS values for different picture modes and video formats.
 
-    cmsValues = [0, 25, 50, 75, 100]  # List of CMS values to test
-    rackDevice = "dut"  # Device under test
+    Attributes:
+        testName (str): Name of the test.
+        cms_values (list): List to store calculated CMS values.
+        validHueSaturationValues (list): Hue/Saturation values from 0 to 100.
+        validLumaValues (list): Luma values from 0 to 30.
+    """
 
     def __init__(self):
-        """
-        Initializes the SaveCMS test.
-
-        Args:
-            None.
-        """
+        """Initializes the SaveCMS test with required parameters."""
         self.testName = "test54_SaveCMS"
         super().__init__(self.testName, '54')
+        self.cms_values = []  # Initialize list to capture CMS values
+        self.validHueSaturationValues = list(range(101))  # Valid Hue/Saturation values (0-100)
+        self.validLumaValues = list(range(31))  # Valid Luma values (0-30)
 
-    # TODO: Current version supports only manual verification.
-    def testVerifyCMSValue(self, pictureMode, videoFormat, componentType, componentColor, cmsValue, manual=False):
+    def saveCMSValuesForAllFormats(self):
         """
-        Verifies whether the CMS value is set or not.
-
-        Args:
-            pictureMode (str): Picture Mode.
-            videoFormat (str): Video Format.
-            componentType (str): Component Type.
-            componentColor (str): Component Color.
-            cmsValue (int): CMS value.
-            manual (bool, optional): Manual verification (True: manual, False: other verification methods).
-                                     Defaults to other verification methods.
-
-        Returns:
-            bool: Returns the status of CMS value.
+        Saves CMS values for all combinations of picture modes and video formats.
+        Iterates through video formats to calculate and save CMS values accordingly.
         """
-        if manual:
-            return self.testUserResponse.getUserYN(
-                f"Is CMS value '{cmsValue}' applied for Picture Mode: {pictureMode}, Video Format: {videoFormat}, "
-                f"Component Type: {componentType}, Component Color: {componentColor}? (Y/N):"
-            )
-        else:
-            # TODO: Add automation verification methods
-            return False
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        componentTypes = self.testtvSettings.getComponentTypeInfo()
+        componentColors = self.testtvSettings.getTVDataColor()
+
+        # Loop through video formats to calculate CMS values
+        for videoFormatIndex in range(len(videoFormatInfo)):
+            for componentType in componentTypes:
+                for componentColor in componentColors:
+                    # Default CMS value to 0 or 1
+                    cms_value = videoFormatIndex % 2
+
+                    # Calculate CMS value based on component type
+                    if componentType in ['COMP_HUE', 'COMP_SATURATION']:
+                        cms_value = self.validHueSaturationValues[videoFormatIndex % len(self.validHueSaturationValues)]
+                    elif componentType == 'COMP_LUMA':
+                        cms_value = self.validLumaValues[videoFormatIndex % len(self.validLumaValues)]
+
+                    self.cms_values.append(cms_value)  # Store calculated CMS value
+
+                    # Save the CMS value for each picture mode
+                    for pictureMode in pictureModeIndices:
+                        self.testtvSettings.saveCMS(pictureMode, videoFormatInfo[videoFormatIndex], componentType, componentColor, cms_value)
 
     def testFunction(self):
-        """This function tests saving CMS values with all combinations of picture mode and video format.
-
-        It also adds the option to restart the device to verify changes.
+        """
+        Executes the test for saving CMS values across all formats and verifies the values.
 
         Returns:
-            bool: Status of the CMS save operations.
+            bool: Overall status of the CMS save operations.
         """
-        self.log.testStart(self.testName, '54')  # Start the test with the defined test name
+        self.log.testStart(self.testName, '54')  # Start logging for the test
 
-        # Initialize the tvSettings module
-        self.testtvSettings.initialise()
+        self.testtvSettings.initialise()  # Initialize the tvSettings module
+
+        self.saveCMSValuesForAllFormats()  # Save CMS values for all formats
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-        # Loop through video formats and corresponding stream URLs
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
-            # Download the individual stream
-            self.testDownloadAssetsByUrl(streamUrl)
+        result = True  # Initialize result as True
+        for videoFormatIndex, videoFormat in enumerate(self.testtvSettings.getVideoFormatInfo()):
+            streamUrl = streams[videoFormatIndex]
+
+            self.testDownloadAssetsByUrl(streamUrl)  # Download the individual stream
 
             streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
 
-            # Play the stream
-            self.testPlayer.play(streamFullPath)
+            self.testPlayer.play(streamFullPath)  # Play the stream
+
             time.sleep(3)  # Allow some time for the stream to start
 
-            # Loop through all picture modes and component types/colors
+            # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                for componentType in self.testtvSettings.getComponentTypeInfo():
-                    for componentColor in self.testtvSettings.getTVDataColor():
-                        # If componentType is COMP_NONE and componentColor is tvDataColor_NONE, treat cms_value as CMS state (true/false)
-                        if componentType == 'COMP_NONE' and componentColor == 'tvDataColor_NONE':
-                            # Reduce cmsValues to 1 (true) or 0 (false) for CMS state
-                            cmsStateValues = [1, 0]  # true or false values for CMS state
-                            for cms_value in cmsStateValues:
-                                self.log.stepStart(f'Setting CMS state: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                cms_value = self.cms_values[videoFormatIndex]  # Get the CMS value based on index
 
-                                # Set Picture Mode, Video Format, and CMS state
-                                result = self.testtvSettings.saveCMS(pictureMode, videoFormat, componentType, componentColor, cms_value)
+                self.log.stepStart(f'Setting CMS: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                                # Log the result for each step
-                                self.log.stepResult(result, f'Verification for CMS state: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
-                        else:
-                            # Iterate over the full range of CMS values for other component types and colors
-                            for cms_value in self.cmsValues:
-                                self.log.stepStart(f'Setting CMS: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                result &= self.testVerifyCMSValue(pictureMode, videoFormat, '', '', cms_value, manual=True)  # Verify CMS value
 
-                                # Set Picture Mode, Video Format, and CMS value
-                                result = self.testtvSettings.saveCMS(pictureMode, videoFormat, componentType, componentColor, cms_value)
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for CMS: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                                # Log the result for each step
-                                self.log.stepResult(result, f'Verification for CMS: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+            self.testPlayer.stop()  # Stop the stream playback
 
-            # Stop the stream playback
-            self.testPlayer.stop()
+            self.testCleanAssetsByUrl(streamFullPath)  # Clean the downloaded assets
 
-            # Clean the assets downloaded to the device
-            self.testCleanAssetsByUrl(streamFullPath)
+        self.log.info("Captured CMS values for video formats: " + ", ".join(map(str, self.cms_values)))  # Log captured CMS values
 
-        # Terminate tvSettings Module
-        self.testtvSettings.terminate()
+        self.testtvSettings.terminate()  # Terminate the tvSettings Module
 
-        return result  # Return the last result of the verification
+        return result  # Return the overall result
 
 if __name__ == '__main__':
     test = tvSettings_test54_SaveCMS()

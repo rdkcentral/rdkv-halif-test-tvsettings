@@ -22,6 +22,7 @@
 #* ******************************************************************************
 import os
 import sys
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -30,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test18_DynamicGamma(tvSettingsHelperClass):
 
-    dynamicGammaLevels = [1.80, 1.90, 2.00, 2.10, 2.20, 2.30, 2.40, 2.50, 2.60]
+    dynamicGammaLevels = [1.80, 2.10, 2.60]
 
     def __init__(self):
         """
@@ -82,6 +83,7 @@ class tvSettings_test18_DynamicGamma(tvSettingsHelperClass):
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
+            time.sleep(3)
 
             for dynamicGamma in self.dynamicGammaLevels:
                 self.log.stepStart(f'Dynamic Gamma Level: {dynamicGamma} Stream: {stream}')

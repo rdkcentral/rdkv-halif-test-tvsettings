@@ -57,15 +57,16 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
         Executes the Video Format Level test.
 
         This method:
-        - Initializes the tvSettings module.
-        - Retrieves the list of video formats.
-        - Iterates through each video format and corresponding stream URL.
-        - Downloads, plays, and verifies each video format.
+          - Initializes the tvSettings module.
+          - Retrieves the list of video formats.
+          - Iterates through each video format and corresponding stream URL.
+          - Downloads, plays, and verifies each video format.
+          - Verifies SDR callback after stopping non-SDR streams.
 
         Returns:
             bool: Always returns True upon successful execution of the test.
         """
-        self.log.testStart(self.testName, '1') # Log start of the test with test number
+        self.log.testStart(self.testName, '1')  # Log start of the test with test number
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -85,8 +86,6 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
 
-            self.log.stepStart(f'videoFormat Level: {format} Stream: {streamFullPath}')
-
             self.log.stepStart(f'Video Format {format} Callback Test')
 
             # Retrieve the video format callback status
@@ -94,6 +93,8 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
 
             # Log the result of the video format callback test
             self.log.stepResult(cbVideoFormat and format in cbVideoFormat, f'Video Format {format} Callback Test')
+
+            self.log.stepStart(f'videoFormat Level: {format} Stream: {streamFullPath}')
 
             # Check the current video format
             videoFormat = self.testtvSettings.checkVideoFormat()
@@ -104,6 +105,13 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
+            self.log.stepStart(f'videoFormat Default SDR Callback Test at Playback Stop  : {format} Stream: {streamFullPath}')
+
+            time.sleep(2)  # Allow time for the default callback to occur
+            cbVideoFormatAfterStop = self.testtvSettings.getVideoFormatCallbackStatus()
+
+            self.log.stepResult(cbVideoFormatAfterStop and "SDR" in cbVideoFormatAfterStop, 'Default SDR Callback After Stopping Stream')
+
             # Clean the assets (delete the downloaded stream using testCleanAssets)
             self.testCleanAssetsByUrl(streamFullPath)
 
@@ -111,6 +119,7 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
         self.testtvSettings.terminate()
 
         return True
+
 
 if __name__ == '__main__':
     test = tvSettings_test01_CheckVideoFormat()

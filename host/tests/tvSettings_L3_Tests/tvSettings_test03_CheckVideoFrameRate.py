@@ -84,8 +84,6 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
             self.testPlayer.play(streamFullPath)
             time.sleep(10)  # Wait for a moment to let the stream start
 
-            self.log.stepStart(f'Frame Rate Level: {frameRate} Stream: {streamFullPath}')
-
             self.log.stepStart(f'Video FrameRate {frameRate} Callback Test')
 
             # Retrieve the video frameRate callback status
@@ -93,6 +91,8 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
 
             # Log the result of the video frameRate callback test
             self.log.stepResult(cbVideoFrameRate and frameRate in cbVideoFrameRate, f'Video FrameRate {frameRate} Callback Test')
+
+            self.log.stepStart(f'Frame Rate Level: {frameRate} Stream: {streamFullPath}')
 
             # Check the current frame rate
             currentFrameRate = self.testtvSettings.checkVideoFrameRate()

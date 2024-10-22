@@ -904,7 +904,6 @@ void test_l3_tvSettings_backlightMode(void)
     int32_t userChoice = 0;
     int32_t selectedMode = 0;
     tvBacklightMode_t currentMode = tvBacklightMode_INVALID;
-    int32_t menuIndex = 1;
 
     // Display available modes to the user
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -913,7 +912,7 @@ void test_l3_tvSettings_backlightMode(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Backlight Modes");
     for (int32_t i = tvBacklightMode_MANUAL; i < tvBacklightMode_MAX; i <<= 1)
     {
-        UT_LOG_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvBacklightMode_mapTable, i));
+        UT_LOG_INFO("%d. %s", i, UT_Control_GetMapString(tvBacklightMode_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -1782,43 +1781,48 @@ void test_l3_tvSettings_PictureMode(void)
     tvError_t ret = tvERROR_NONE;
     char currentPictureMode[PIC_MODE_NAME_MAX] = {0};
     char selectedPictureMode[PIC_MODE_NAME_MAX] = {0};
+    pic_modes_t *supportedPictureModes;  // Array of pointers to pic_modes_t
+    unsigned short pictureModeCount = 0;
     int32_t userChoice = 0;
 
-    // Display available modes from the tvPQModeIndex enum
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tPicture Mode");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Picture Mode");
-    for (int32_t i = PQ_MODE_STANDARD; i <= PQ_MODE_VIVID2; i++)
+    // Get the supported picture modes from the system
+    ret = GetTVSupportedPictureModes(&supportedPictureModes, &pictureModeCount);
+    UT_LOG_INFO("GetTVSupportedPictureModes pictureModeCount[%u]",pictureModeCount);
+    if (ret != tvERROR_NONE || pictureModeCount == 0)
     {
-        const char* modeName = UT_Control_GetMapString(tvPQModeRange_mapTable, i);
-        if (modeName != NULL)
+        UT_LOG_ERROR("Failed to retrieve supported picture modes or no modes available.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    // Display the list of supported picture modes to the user
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    for (int32_t i = 0; i < pictureModeCount; i++)
+    {
+        if (supportedPictureModes[i].name != NULL)
         {
-            UT_LOG_INFO("%d. %s", i, modeName);
+            UT_LOG_INFO("%d. %s", i + 1, supportedPictureModes[i].name);
         }
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
-    // Get user input for selecting a mode by enum value
+
+    // Get user input for selecting a mode by its index
     UT_LOG_MENU_INFO("Enter the number corresponding to the Picture Mode: ");
     scanf("%d", &userChoice);
     readAndDiscardRestOfLine(stdin);
 
-    // Validate user choice
-    if (userChoice < PQ_MODE_STANDARD || userChoice > PQ_MODE_VIVID2)
+    // Validate the user's choice
+    if (userChoice < 1 || userChoice > pictureModeCount)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid picture mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Convert enum value to the corresponding picture mode string using the map table
-    const char* modeString = UT_Control_GetMapString(tvPQModeRange_mapTable, userChoice);
-    if (modeString == NULL)
-    {
-        UT_LOG_ERROR("Invalid picture mode selected.");
-        return;
-    }
-    strncpy(selectedPictureMode, modeString, sizeof(selectedPictureMode) - 1);
+    // Retrieve the selected mode from the list
+    strncpy(selectedPictureMode, supportedPictureModes[userChoice - 1].name, sizeof(selectedPictureMode) - 1);
 
     // Set the selected picture mode
     UT_LOG_INFO("Calling SetTVPictureMode(IN: selectedPictureMode[%s])", selectedPictureMode);
@@ -2799,7 +2803,6 @@ void test_l3_tvSettings_ComponentSaturation(void)
     int32_t saturationValue = 0;
     int32_t retrievedSaturationValue = 0;
     int32_t userColorChoice = 0;
-    int32_t menuIndex = 1;
 
     // Display supported colors
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2808,7 +2811,7 @@ void test_l3_tvSettings_ComponentSaturation(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
     for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -2824,7 +2827,7 @@ void test_l3_tvSettings_ComponentSaturation(void)
         return;
     }
 
-    blSaturationColor = userColorChoice - 1;
+    blSaturationColor = userColorChoice;
 
     // Get user input for saturation value
     UT_LOG_MENU_INFO("Enter the saturation value (0 - 100): ");
@@ -2884,7 +2887,6 @@ void test_l3_tvSettings_ComponentHue(void)
     int32_t hueValue = 0;
     int32_t retrievedHueValue = 0;
     int32_t userColorChoice = 0;
-    int32_t menuIndex = 1;
 
     // Display supported colors
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2893,7 +2895,7 @@ void test_l3_tvSettings_ComponentHue(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
     for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -2911,7 +2913,7 @@ void test_l3_tvSettings_ComponentHue(void)
     }
 
     // Set the selected component color based on user choice
-    blHueColor = (tvDataComponentColor_t)(userColorChoice - 1); // Adjust for 0-based indexing
+    blHueColor = (tvDataComponentColor_t)(userColorChoice); // Adjust for 0-based indexing
 
     // Get user input for hue value
     UT_LOG_MENU_INFO("Enter the hue value (0 - 100): ");
@@ -2971,7 +2973,6 @@ void test_l3_tvSettings_ComponentLuma(void)
     int32_t lumaValue = 0;
     int32_t retrievedLumaValue = 0;
     int32_t userColorChoice = 0;
-    int32_t menuIndex = 1;
 
     // Display supported colors
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2980,7 +2981,7 @@ void test_l3_tvSettings_ComponentLuma(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
     for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        UT_LOG_MENU_INFO("%d :[%s]", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -4139,6 +4140,9 @@ void test_l3_tvSettings_ContrastSave(void)
         return;
     }
 
+    // Map the user's 1-based choice back to 0-based index
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
+
     // Prompt the user for the contrast value
     UT_LOG_MENU_INFO("Enter the contrast value to set (0 - 100): ");
     readInt(&contrastValue);
@@ -4241,7 +4245,7 @@ void test_l3_tvSettings_SharpnessSave(void)
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
     readInt(&userFormatChoice);
  
-    videoFormat = userFormatChoice;
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Validate user input for Video Format
     if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
@@ -5255,6 +5259,122 @@ void test_l3_tvSettings_CMSSave(void)
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
 
+/**
+ * @brief This test sets and saves the gamma table values for primary colors (R, G, B) based on user input for a specified color temperature.
+ *
+ * This test function allows the user to set the gamma table values for the primary colors (R, G, B) with a specified size
+ * and color temperature. It then verifies the gamma values by retrieving them back.
+ *
+ * **Test Group ID:** 03@n
+ * **Test Case ID:** 61@n
+ *
+ * **Test Procedure:**
+ * Refer to Test specification documentation
+ * [tvSettings_L3_Low-Level_TestSpecification.md](../docs/pages/tvSettings_L3_Low-Level_TestSpecification.md)
+ */
+void test_l3_tvSettings_SaveGammaTable(void)
+{
+    // Initialize test ID and log entry
+    gTestID = 61;
+    UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    // Variable declarations
+    tvError_t ret = tvERROR_NONE;
+    unsigned short size = 0;
+    unsigned short pData_R[256] = {0};
+    unsigned short pData_G[256] = {0};
+    unsigned short pData_B[256] = {0};
+    unsigned short selectedColorTemp = 0;
+    int32_t userChoice = 0;
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "ColorTemperature");
+    for (unsigned short i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
+    // Get user input for the size of the gamma table
+    UT_LOG_MENU_INFO("Enter the size of the gamma table (1 - 255): ");
+    readInt((int32_t*)&size);
+
+    if (size < 1 || size > 255)
+    {
+        UT_LOG_ERROR("Invalid size! Please enter a size between 1 and 255.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    // Get user input for gamma values for Red
+    UT_LOG_MENU_INFO("Enter %hu gamma values for Red (0 - 1023): ", size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        scanf("%hu", &pData_R[i]);
+        if (pData_R[i] > 1023)
+        {
+            UT_LOG_ERROR("Invalid value for Red at position %hu! Please enter a value between 0 and 1023.", i + 1);
+            UT_LOG_INFO("Out %s", __FUNCTION__);
+            return;
+        }
+    }
+    readAndDiscardRestOfLine(stdin);
+
+    // Get user input for gamma values for Green
+    UT_LOG_MENU_INFO("Enter %hu gamma values for Green (0 - 1023): ", size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        scanf("%hu", &pData_G[i]);
+        if (pData_G[i] > 1023)
+        {
+            UT_LOG_ERROR("Invalid value for Green at position %hu! Please enter a value between 0 and 1023.", i + 1);
+            UT_LOG_INFO("Out %s", __FUNCTION__);
+            return;
+        }
+    }
+    readAndDiscardRestOfLine(stdin);
+
+    // Get user input for gamma values for Blue
+    UT_LOG_MENU_INFO("Enter %hu gamma values for Blue (0 - 1023): ", size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        scanf("%hu", &pData_B[i]);
+        if (pData_B[i] > 1023)
+        {
+            UT_LOG_ERROR("Invalid value for Blue at position %hu! Please enter a value between 0 and 1023.", i + 1);
+            UT_LOG_INFO("Out %s", __FUNCTION__);
+            return;
+        }
+    }
+    readAndDiscardRestOfLine(stdin);
+
+    // Set the gamma table values
+    UT_LOG_INFO("Calling SaveGammaTable(IN: colortemp[%hu], size[%hu])", selectedColorTemp, size);
+    ret = SaveGammaTable(selectedColorTemp, pData_R, pData_G, pData_B, size);
+    UT_LOG_INFO("Result SaveGammaTable(colortemp:[%hu], size:[%hu]), tvError_t:[%s]", selectedColorTemp, size, UT_Control_GetMapString(tvError_mapTable, ret));
+    ASSERT(ret == tvERROR_NONE);
+
+    UT_LOG_INFO("Out %s", __FUNCTION__);
+}
+
+
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -5333,6 +5453,7 @@ int32_t test_l3_tvSettings_register(void)
     UT_add_test(pSuite, "Save Dolby Vision", test_l3_tvSettings_DolbyVisionSave);
     UT_add_test(pSuite, "Save Picture Mode", test_l3_tvSettings_PictureModeSave);
     UT_add_test(pSuite, "Save CMS", test_l3_tvSettings_CMSSave);
+    UT_add_test(pSuite, "Save Gamma Table", test_l3_tvSettings_SaveGammaTable);
 
     return 0;
 }

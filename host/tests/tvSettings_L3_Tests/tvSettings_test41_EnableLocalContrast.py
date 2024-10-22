@@ -83,7 +83,7 @@ class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
                 self.log.stepStart(f'Set Local Contrast Level: {contrast}, Stream: {stream}')
 
                 # Set the Local Contrast level
-                self.testtvSettings.setEnableLocalContrast(contrast)
+                self.testtvSettings.enableLocalContrast(contrast)
 
                 # Verify the Local Contrast setting
                 result = self.testVerifyLocalContrast(contrast, True)

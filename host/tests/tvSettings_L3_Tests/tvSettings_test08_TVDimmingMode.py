@@ -85,6 +85,7 @@ class tvSettings_test08_TVDimmingMode(tvSettingsHelperClass):
             time.sleep(3)
 
             for tvDimmingMode in self.testtvSettings.getTVDimmingMode():
+
                 self.log.stepStart(f'TVDimmingMode Level:{tvDimmingMode} Stream:{stream}')
 
                 # Set the TVDimmingMode level

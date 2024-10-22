@@ -84,8 +84,6 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
 
-            self.log.stepStart(f'Video Resolution Level: {resolution} Stream: {streamFullPath}')
-
             self.log.stepStart(f'Video Resolution {resolution} Callback Test')
 
             # Retrieve the video resolution callback status
@@ -93,6 +91,8 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
 
             # Log the result of the video resolution callback test
             self.log.stepResult(cbVideoResolution and resolution in cbVideoResolution, f'Video Resolution {resolution} Callback Test')
+
+            self.log.stepStart(f'Video Resolution Level: {resolution} Stream: {streamFullPath}')
 
             # Check the current video resolution
             videoResolution = self.testtvSettings.checkVideoResolution()

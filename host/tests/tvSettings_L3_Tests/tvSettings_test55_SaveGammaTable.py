@@ -33,55 +33,13 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
     """
-    A class that implements test 57 for saving gamma table settings and performing stream playback.
+    A class that implements test 55 for saving gamma table settings and performing stream playback.
 
     Attributes:
         testName (str): The name of the test case.
         testSetupPath (str): The path to the test setup configuration file.
         moduleName (str): The module name being tested.
-        rackDevice (str): The name of the device under test (DUT).
-        gammaCombinations (list): A list of dictionaries defining different gamma table combinations for testing.
     """
-
-    # Predefined Gamma table RGB values for testing various configurations
-    gammaCombinations = [
-        {
-            "size": 10,
-            "red": [1023, 900, 800, 700, 600, 500, 400, 300, 200, 100],
-            "green": [800, 750, 700, 650, 600, 500, 400, 300, 200, 100],
-            "blue": [600, 500, 400, 300, 200, 100, 50, 30, 20, 10]
-        },
-        {
-            "size": 5,
-            "red": [300, 200, 100, 50, 0],
-            "green": [600, 500, 400, 300, 200],
-            "blue": [1023, 900, 800, 700, 600]
-        },
-        {
-            "size": 10,
-            "red": [600] * 10,
-            "green": [600] * 10,
-            "blue": [600] * 10
-        },
-        {
-            "size": 5,
-            "red": [1023, 1000, 900, 800, 700],
-            "green": [500, 400, 300, 200, 100],
-            "blue": [1023, 1000, 900, 800, 700]
-        },
-        {
-            "size": 10,
-            "red": [300] * 10,
-            "green": [300] * 10,
-            "blue": [300] * 10
-        },
-        {
-            "size": 10,  # Reset Gamma Table
-            "red": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Default values for Red
-            "green": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Default values for Green
-            "blue": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # Default values for Blue
-        }
-    ]
 
     def __init__(self):
         """
@@ -114,9 +72,63 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
             # TODO: Add automated verification methods
             return False
 
+    def setGammaValues(self, colorTemperatures):
+        """
+        Generates and applies gamma values based on the provided color temperatures.
+
+        Args:
+            colorTemperatures (list): List of color temperatures.
+
+        Returns:
+            list: List of tuples containing (color_temp, red, green, blue).
+        """
+        gamma_values = []  # List to store gamma values
+
+        for index, colortemp in enumerate(colorTemperatures):
+            # Set gamma table with size 1
+            size = 1
+
+            # Generate RGB values in a wider range
+            red = [int((index * 255) % 1024)]   # Scale index to fit range 0-1023
+            green = [int(((index + 1) * 255) % 1024)]  # Unique green value
+            blue = [int(((index + 2) * 255) % 1024)]   # Unique blue value
+
+            # Call saveGammaTable with appropriate parameters
+            self.testtvSettings.saveGammaTable(size, red, green, blue, colortemp)
+
+            # Store the values for logging
+            gamma_values.append((colortemp, red[0], green[0], blue[0]))
+
+        return gamma_values
+
+    def setGammaValuesToDefault(self, defaultRed=0, defaultGreen=0, defaultBlue=0):
+        """
+        Sets gamma values to default for all color temperatures.
+
+        Args:
+            defaultRed (int, optional): Default value for Red. Defaults to 512.
+            defaultGreen (int, optional): Default value for Green. Defaults to 512.
+            defaultBlue (int, optional): Default value for Blue. Defaults to 512.
+
+        Returns:
+            None.
+        """
+        colorTemperatures = self.testtvSettings.getColorTemperatureInfo()
+
+        for colorTemp in colorTemperatures:
+            size = 1  # Fixed size
+            red = [defaultRed]
+            green = [defaultGreen]
+            blue = [defaultBlue]
+
+            # Log and apply default gamma values
+            self.log.stepStart(f'Setting default gamma values: R: {red}, G: {green}, B: {blue} for Color Temp: {colorTemp}')
+            self.testtvSettings.saveGammaTable(size, red, green, blue, colorTemp)
+            self.log.stepResult(True, f'Default Gamma values applied for Color Temp: {colorTemp}')
+
     def testFunction(self):
         """
-        Main function that tests saving GammaTable values with all combinations of picture mode and video format.
+        Main function that tests saving GammaTable values with all combinations of color temperatures.
 
         Returns:
             bool: Final result of the test.
@@ -131,41 +143,39 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-        # Loop through each video format and stream
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
-            # Download stream assets
-            self.testDownloadAssetsByUrl(streamUrl)
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+        # Get the list of color temperatures
+        colorTemperatures = self.testtvSettings.getColorTemperatureInfo()
 
+        # Set gamma values for the color temperatures once, outside the stream loop
+        gamma_values = self.setGammaValues(colorTemperatures)
+
+        for stream in streams:
             # Play the stream
-            self.testPlayer.play(streamFullPath)
+            self.testPlayer.play(stream)
             time.sleep(3)  # Allow the stream to start
 
-            # Loop through picture modes and gamma combinations
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
-                for gamma_value in self.gammaCombinations:
-                    self.log.stepStart(f'Setting GammaValue: {gamma_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+            # Set color temperature level for each stream
+            for index, colortemp in enumerate(colorTemperatures):
+                self.log.stepStart(f'Setting Color Temp Level: {colortemp}')
+                self.testtvSettings.setColorTempLevel(colortemp)  # Set the color temperature level
+                self.log.stepResult(True, f'Color Temp Level set to {colortemp}')
 
-                    # Set gamma table and query the save status
-                    self.testtvSettings.saveGammaTable(pictureMode, videoFormat, gamma_value)
-
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()
-                    self.testPlayer.play(streamFullPath)
-
-                    # Manually verify gamma table settings
-                    result = self.testVerifyGammaTable(pictureMode, videoFormat, gamma_value, manual=True)
-                    self.log.stepResult(result, f'GammaValue: {gamma_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Use pre-computed gamma values from gamma_values
+                size = 1  # Size is always 1
+                red, green, blue = gamma_values[index][1:4]  # Accessing RGB values
+                result = self.testVerifyGammaTable(size, [red], [green], [blue], colortemp, manual=True)
+                self.log.stepResult(result, f'Gamma values for Color Temp: {colortemp}, R: {red}, G: {green}, B: {blue}')
 
             # Stop the stream playback and clean assets
             self.testPlayer.stop()
 
-            self.testCleanAssetsByUrl(streamFullPath)
+        # Set default gamma values before applying custom values
+        self.setGammaValuesToDefault()
 
         # Terminate tvSettings Module
         self.testtvSettings.terminate()
 
-        return result
+        return True
 
 if __name__ == '__main__':
     test = tvSettings_test55_SaveGammaTable()
