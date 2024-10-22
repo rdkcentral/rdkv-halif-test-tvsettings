@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test37_EnableLDIMPixelCompensation(tvSettingsHelperClass):
 
     # Two predefined values for the LDIM Pixel Compensation parameter: 0 and 1
-    ldimPixelCompensationValues = [0, 1]
+    ldimPixelCompensationValues = [0, 1, 0]
 
     def __init__(self):
         """

@@ -5,223 +5,272 @@ tvSettings:  # Prefix must always exist
   description: "tvSettings test setup"
   assets:
     device:
-      test1_Verify_formats_Callbacks:
-        artifacts: #list of artifacts to be copied to device
-        execute: #list of commands to be executed on device
-        streams: #list of streams to be copied to device
+      defaults: &defaults
+        artifacts:
+          - "<URL Path>/bin/hal_test"
+          - "<URL Path>/bin/libut_control.so"
+          - "<URL Path>/bin/Sink_4K_TvSettings.yaml"
+          - "<URL Path>/bin/run.sh"
+        execute:
+          - "chmod +x <PATH on Device>/hal_test"
+          - "chmod +x <PATH on Device>/run.sh"
+        streams:
       test01_CheckVideoFormat:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test02_CheckVideoResolution:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test03_CheckVideoFrameRate:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test04_CheckVideoSource:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test05_Backlight:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/white_sdr.mp4"
       test06_BacklightFade:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test07_BacklightMode:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test08_TVDimmingMode:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/DimmingTest.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test09_LocalDimmingLevel:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test10_Brightness:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test11_Contrast:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test12_Sharpness:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/sharpness_video.mp4"
       test13_Saturation:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test14_Hue:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test15_ColorTemp:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test16_AspectRatio:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test17_DynamicContrast:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test18_DynamicGamma:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test19_DolbyVision:
+        <<: *defaults
         streams:
           -  "<URL PATH>/streams/DolbyVision.mp4"
       test20_PictureMode:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test21_ColorTempRgain:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test22_ColorTempGgain:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test23_ColorTempBgain:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test24_RpostOffset:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test25_GpostOffset:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test26_BpostOffset:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test27_WBCalibrationMode:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/DimmingTest.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test28_GammaTable:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test29_DVTmaxValue:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
       test30_ComponentSaturation:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test31_ComponentHue:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test32_ComponentLuma:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test33_EnableGammaMode:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/ColorBars.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test34_SetGammaPattern:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test35_RGBPattern:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test36_GrayPattern:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test37_EnableLDIMPixelCompensation:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test38_EnableLDIM:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test39_SetBacklightTestMode:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test40_EnableDynamicContrast:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/HDR10.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test41_EnableLocalContrast:
+        <<: *defaults
         streams:
-          - "<URL PATH>/streams/PatternVideo.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test42_SaveBacklightValues:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/white_sdr.mp4"
+          -  "<URL PATH>/streams/white_hdr.mp4"
+          -  "<URL PATH>/streams/white_hlg.mp4"
       test43_SaveTVDimmingMode:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/white_sdr.mp4"
+          -  "<URL PATH>/streams/white_hdr.mp4"
+          -  "<URL PATH>/streams/white_hlg.mp4"
       test44_SaveLocalDimmingLevel:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test45_SaveBrightness:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
           -  "<URL PATH>/streams/DolbyVision.mp4"
       test46_SaveContrast:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test47_SaveSharpness:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/sharpness_video.mp4"
+          -  "<URL PATH>/streams/sharpness_hdr.mp4"
+          -  "<URL PATH>/streams/sharpness_hlg.mp4"
       test48_SaveSaturation:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test49_SaveHue:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test50_SaveColorTemperature:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test51_SaveAspectRatio:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test52_SaveDolbyVision:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test53_SavePictureMode:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test54_SaveCMS:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/Colors_hlg.mp4"
       test55_SaveGammaTable:
+        <<: *defaults
         streams:
-          -  "<URL PATH>/streams/ColorBars.mp4"
-          -  "<URL PATH>/streams/HDR10.mp4"
-          -  "<URL PATH>/streams/BBC_HLG_Supp1.ts"
-          -  "<URL PATH>/streams/DolbyVision.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"

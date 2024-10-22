@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
 #** *****************************************************************************
-# *
-# * If not stated otherwise in this file or this component's LICENSE file the
-# * following copyright and licenses apply:
-# *
 # * Copyright 2024 RDK Management
-# *
-# * Licensed under the Apache License, Version 2.0 (the "License");
-# * you may not use this file except in compliance with the License.
-# * you may obtain a copy of the License at
-# *
+# * Licensed under the Apache License, Version 2.0
 # * http://www.apache.org/licenses/LICENSE-2.0
-# *
-# * Unless required by applicable law or agreed to in writing, software
-# * distributed under the License is distributed on an "AS IS" BASIS,
-# * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# * See the License for the specific language governing permissions and
-# * limitations under the License.
-# *
-#* ******************************************************************************
+#* *****************************************************************************
 
 import os
 import sys
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -30,20 +16,12 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test31_ComponentHue(tvSettingsHelperClass):
 
-    # Predefined hue values ranging from 0 to 100
-    hueValues = [0, 25, 50, 75, 100]
-
     def __init__(self):
-        """
-        Initializes the ComponentHue test.
-
-        Args:
-            None.
-        """
+        """Initializes the ComponentHue test."""
         self.testName = "test31_ComponentHue"
         super().__init__(self.testName, '31')
+        self.hueValues = []  # Predefined hue values ranging from 0 to 100
 
-    # TODO: Current version supports only manual verification.
     def testVerifyComponentHue(self, hueValue, manual=False):
         """
         Verifies whether the Component Hue is set correctly.
@@ -62,6 +40,78 @@ class tvSettings_test31_ComponentHue(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
+    def setComponentHueForAllStreams(self):
+        """Sets the Component Hue settings based on video formats and picture modes."""
+
+        # Get available TV Data Colors, Video Formats, and Picture Modes
+        tvDataColors = self.testtvSettings.getTVDataColor()
+        videoFormats = self.testtvSettings.getVideoFormatInfo()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
+
+        # Sync video formats with streams
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+
+        # Define hue values from 0 to 100 for testing purposes
+        numVideoFormats = len(videoFormats)
+        self.hueValues = [int(i * (100 / (numVideoFormats - 1))) for i in range(numVideoFormats)]
+
+        # Download and play streams, set component hue for each picture mode and format
+        for videoFormatIndex, (videoFormat, stream) in enumerate(zip(videoFormats, streams)):
+
+            self.testDownloadAssetsByUrl(stream)
+
+            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+
+            self.testPlayer.play(streamFullPath)
+            time.sleep(3)
+
+            # Set component hue for each picture mode
+            for pictureMode in pictureModes:
+
+                self.testtvSettings.setPictureMode(pictureMode)
+
+                hueValue = self.hueValues[videoFormatIndex]
+
+                color = tvDataColors[videoFormatIndex % len(tvDataColors)]
+
+                self.testtvSettings.setComponentHue(color, hueValue)
+
+            # Stop the stream playback
+            self.testPlayer.stop()
+
+
+    def resetComponentHueToDefault(self):
+        """
+        Sets the component hue to the default value (50) for all color and picture mode combinations.
+
+        """
+
+        defaultHueValue = 50
+        tvDataColors = self.testtvSettings.getTVDataColor()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
+
+        # Sync video formats with streams
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+
+        for stream in streams:
+            # Download and play the stream
+            self.testDownloadAssetsByUrl(stream)
+            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+
+            self.testPlayer.play(streamFullPath)
+            time.sleep(3)  # Allow some time for the stream to start playing
+
+            # Set default hue for each color and picture mode
+            for pictureMode in pictureModes:
+                self.testtvSettings.setPictureMode(pictureMode)
+                for color in tvDataColors:
+                    self.testtvSettings.setComponentHue(color, defaultHueValue)
+
+            # Stop the stream playback after setting the default values
+            self.testPlayer.stop()
+
+
+
     def testFunction(self):
         """This function tests the Component Hue settings.
 
@@ -71,45 +121,55 @@ class tvSettings_test31_ComponentHue(tvSettingsHelperClass):
 
         self.log.testStart(self.testName, '31')
 
-        # Initialize the tvSettings module
-        self.testtvSettings.initialise()
+        self.testtvSettings.initialise()  # Initialize the tvSettings module
 
-        # Get available TV Data Colors
+        self.testtvSettings.setCMSState(1)  # Set the CMS state
+
+        self.setComponentHueForAllStreams()  # Set the hue values for all streams
+
+        # Get available TV Data Colors, Video Formats, and Picture Modes
+        videoFormats = self.testtvSettings.getVideoFormatInfo()
         tvDataColors = self.testtvSettings.getTVDataColor()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
 
-        for stream in self.testStreams:
-            # Start the stream playback
-            self.testPlayer.play(stream)
+        # Sync video formats with streams
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-            # Set the Component Management System (CMS) state
-            self.testtvSettings.setCMSState(1)
+        result = False  # Initialize result variable
+        # Perform the verification by playing streams and verifying hue values
+        for videoFormatIndex, (videoFormat, stream) in enumerate(zip(videoFormats, streams)):
 
-            for colorIndex in tvDataColors:  # Iterate through available color indices
-                for hueValue in self.hueValues:
-                    self.log.stepStart(f'Color Index: {colorIndex}, Component Hue Value: {hueValue}, Stream: {stream}')
+            self.testDownloadAssetsByUrl(stream)
 
-                    # Set the component hue value
-                    self.testtvSettings.setComponentHue(colorIndex, hueValue)
+            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
 
-                    # Verify the component hue value
-                    result = self.testVerifyComponentHue(hueValue, True)
+            # Play the stream before verification
+            self.testPlayer.play(streamFullPath)
+            time.sleep(3)
 
-                    # Log the result of the verification
-                    self.log.stepResult(result, f'Color Index: {colorIndex}, Component Hue Value: {hueValue}, Stream: {stream}')
+            for pictureMode in pictureModes:
+                self.testtvSettings.setPictureMode(pictureMode)
 
-                    # Restart the stream for the current hue value
-                    self.testPlayer.stop()
-                    self.testPlayer.play(stream)
+                hueValue = self.hueValues[videoFormatIndex]
 
-                    # Verify the component hue value after the stream restart
-                    result = self.testVerifyComponentHue(hueValue, True)
-                    self.log.stepResult(result, f'Verified Component Hue after stream restart for Color Index: {colorIndex}')
+                color = tvDataColors[videoFormatIndex % len(tvDataColors)]
 
-            # Stop the stream playback
+                self.log.stepStart(f'Setting Component Hue: {hueValue},  Color: {color}, Picture Mode: {pictureMode}, '
+                                   f'Video Format: {videoFormat}, Stream: {streamFullPath}')
+
+                # Verify the component hue value
+                result = self.testVerifyComponentHue(hueValue, True)
+
+                self.log.stepResult(result, f'Verification for Component Hue: {hueValue}, Color: {color}, '
+                                            f'Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamFullPath}')
+
+            # Stop the stream playback after verification
             self.testPlayer.stop()
 
-            # Reset the Component Management System (CMS) state
-            self.testtvSettings.setCMSState(0)
+        #set to default values
+        self.resetComponentHueToDefault()
+
+        self.testtvSettings.setCMSState(0)  # Set the CMS state
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()

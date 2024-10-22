@@ -35,7 +35,7 @@ This document describes the L3 Low Level Test Specification and Procedure Docume
 - `High Level Test Specification` - [TV Settings High Level TestSpec](https://github.com/rdkcentral/rdkv-halif-test-tvsettings/blob/2.0.0/docs/pages/tv-settings_High_Level_Test_Spec.md)
 - `Interface header` - [TV Settings HAL header](https://github.com/rdkcentral/rdkv-halif-tvsettings/blob/2.0.0/include/tvSettings.h)
 
-## Level 3 Test Cases High Level Overview
+## TvSettings Stream Requirement
 
 |#|Streams Name|Streams description|
 |-|------------|-------------------|
@@ -44,6 +44,8 @@ This document describes the L3 Low Level Test Specification and Procedure Docume
 |3|vts_HLG_stream|Format: HLG,Resolution: 3840 x 2160 or It can also be used with 1080p and 720p resolutions.|
 |4|vts_DolbyVision_stream|Format: Dolby Vision,Resolution: 3840 x 2160 (4K UHD),Color Depth: 10/12-bit,Color Space: Rec. 2020format and dynamic metadata.|
 |5|vts_HDR10plus_stream|Format: HDR10,Resolution: 3840 x 2160 (4K UHD),Color Depth: 10-bit,Color Space: Rec. 2020 and dynamic metadata capabilities.|
+
+## Level 3 Test Cases High Level Overview
 
 Below are top test use-case for the `TV` Settings.
 
@@ -165,3 +167,4 @@ classDiagram
 - **testSuite.yaml**
   - This configuration file contains the list of menu items for C/C++ L3 test running on `DUT`
   - Example configuration file [tvSettings_test_suite.yml](../../host/tests/Classes/tvSettings_test_suite.yml)
+  

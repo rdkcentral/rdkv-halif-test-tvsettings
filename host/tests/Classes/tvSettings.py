@@ -71,20 +71,6 @@ class tvDolbyMode(Enum):
     tvHLGMode_Bright                      = auto()         # HLG mode is HLG Bright
     tvHLGMode_Game                        = auto()         # HLG mode is HLG Game
 
-class PQMode(Enum):
-    standard                               = 0               # Picture mode is "Standard" or "Entertainment"
-    vivid                                  = auto()          # Picture mode is "Vivid" or "Dynamic"
-    energysaving                           = auto()          # Picture mode is "Energy Saving"
-    custom                                 = auto()          # Picture mode is "Custom" or "Expert"
-    theater                                = auto()          # Picture mode is "Theater" or "Movie"
-    reserved1                              = auto()          # Picture mode is Reserved
-    reserved2                              = auto()          # Picture mode is Reserved
-    game                                   = auto()          # Picture mode is "Game"
-    sports                                 = auto()          # Picture mode is "Sports"
-    graphics                               = auto()          # Picture mode is "Graphics"
-    fmm                                    = auto()          # Picture mode is "Filmmaker"
-    vivid2                                 = auto()          # Picture mode is "Vivid2" or "Dynamic2"
-
 class PQMode_(Enum):
     PQ_MODE_STANDARD                       = 0               # Picture mode is "Standard" or "Entertainment"
     PQ_MODE_VIVID                          = auto()          # Picture mode is "Vivid" or "Dynamic"
@@ -144,47 +130,47 @@ class tvBacklightTestMode(Enum):
     tvBacklightTestMode_Reset             = auto()          # Backlight test mode is reset
 
 class tvVideoResolution(Enum):
-    TV_VIDEO_RESOLUTION_NONE              = 0                  # No Resolution
-    TV_VIDEO_RESOLUTION_720x240           = auto()             # Resolution is 720x240
-    TV_VIDEO_RESOLUTION_2880x240          = auto()             # Resolution is 2880x240
-    TV_VIDEO_RESOLUTION_720x288           = auto()             # Resolution is 720x288
-    TV_VIDEO_RESOLUTION_2880x288          = auto()             # Resolution is 2880x288
-    TV_VIDEO_RESOLUTION_640x480           = auto()             # Resolution is 640x480
-    TV_VIDEO_RESOLUTION_720x480           = auto()             # Resolution is 720x480
-    TV_VIDEO_RESOLUTION_800x480           = auto()             # Resolution is 800x480
-    TV_VIDEO_RESOLUTION_852x480           = auto()             # Resolution is 852x480
-    TV_VIDEO_RESOLUTION_854x480           = auto()             # Resolution is 854x480
-    TV_VIDEO_RESOLUTION_1440x480          = auto()             # Resolution is 1440x480
-    TV_VIDEO_RESOLUTION_2880x480          = auto()             # Resolution is 2880x480
-    TV_VIDEO_RESOLUTION_960x540           = auto()             # Resolution is 960x540
-    TV_VIDEO_RESOLUTION_3840x540          = auto()             # Resolution is 3840x540
-    TV_VIDEO_RESOLUTION_720x576           = auto()             # Resolution is 720x576
-    TV_VIDEO_RESOLUTION_1440x576          = auto()             # Resolution is 1440x576
-    TV_VIDEO_RESOLUTION_2880x576          = auto()             # Resolution is 2880x576
-    TV_VIDEO_RESOLUTION_800x600           = auto()             # Resolution is 800x600
-    TV_VIDEO_RESOLUTION_1024x600          = auto()             # Resolution is 1024x600
-    TV_VIDEO_RESOLUTION_1280x600          = auto()             # Resolution is 1280x600
-    TV_VIDEO_RESOLUTION_1280x720          = auto()             # Resolution is 1280x720
-    TV_VIDEO_RESOLUTION_1280x1024         = auto()             # Resolution is 1280x1024
-    TV_VIDEO_RESOLUTION_1680x720          = auto()             # Resolution is 1680x720
-    TV_VIDEO_RESOLUTION_1024x768          = auto()             # Resolution is 1024x768
-    TV_VIDEO_RESOLUTION_1280x768          = auto()             # Resolution is 1280x768
-    TV_VIDEO_RESOLUTION_1360x768          = auto()             # Resolution is 1360x768
-    TV_VIDEO_RESOLUTION_1366x768          = auto()             # Resolution is 1366x768
-    TV_VIDEO_RESOLUTION_1440x900          = auto()             # Resolution is 1440x900
-    TV_VIDEO_RESOLUTION_1600x900          = auto()             # Resolution is 1600x900
-    TV_VIDEO_RESOLUTION_1280x960          = auto()             # Resolution is 1280x960
-    TV_VIDEO_RESOLUTION_1920x1080         = auto()             # Resolution is 1920x1080
-    TV_VIDEO_RESOLUTION_2560x1080         = auto()             # Resolution is 2560x1080
-    TV_VIDEO_RESOLUTION_3840x1080         = auto()             # Resolution is 3840x1080
-    TV_VIDEO_RESOLUTION_1600x1200         = auto()             # Resolution is 1600x1200
-    TV_VIDEO_RESOLUTION_1920x1200         = auto()             # Resolution is 1920x1200
-    TV_VIDEO_RESOLUTION_2160x1200         = auto()             # Resolution is 2160x1200
-    TV_VIDEO_RESOLUTION_2400x1200         = auto()             # Resolution is 2400x1200
-    TV_VIDEO_RESOLUTION_2560x1440         = auto()             # Resolution is 2560x1440
-    TV_VIDEO_RESOLUTION_3440x1440         = auto()             # Resolution is 3440x1440
-    TV_VIDEO_RESOLUTION_3840x2160         = auto()             # Resolution is 3840x2160
-    TV_VIDEO_RESOLUTION_4096x2160         = auto()             # Resolution is 4096x2160
+    tvVideoResolution_NONE               = 0                    # No Resolution
+    tvVideoResolution_720x240            = auto()               # Resolution is 720x240
+    tvVideoResolution_2880x240           = auto()               # Resolution is 2880x240
+    tvVideoResolution_720x288            = auto()               # Resolution is 720x288
+    tvVideoResolution_2880x288           = auto()               # Resolution is 2880x288
+    tvVideoResolution_640x480            = auto()               # Resolution is 640x480
+    tvVideoResolution_720x480            = auto()               # Resolution is 720x480
+    tvVideoResolution_800x480            = auto()               # Resolution is 800x480
+    tvVideoResolution_852x480            = auto()               # Resolution is 852x480
+    tvVideoResolution_854x480            = auto()               # Resolution is 854x480
+    tvVideoResolution_1440x480           = auto()               # Resolution is 1440x480
+    tvVideoResolution_2880x480           = auto()               # Resolution is 2880x480
+    tvVideoResolution_960x540            = auto()               # Resolution is 960x540
+    tvVideoResolution_3840x540           = auto()               # Resolution is 3840x540
+    tvVideoResolution_720x576            = auto()               # Resolution is 720x576
+    tvVideoResolution_1440x576           = auto()               # Resolution is 1440x576
+    tvVideoResolution_2880x576           = auto()               # Resolution is 2880x576
+    tvVideoResolution_800x600            = auto()               # Resolution is 800x600
+    tvVideoResolution_1024x600           = auto()               # Resolution is 1024x600
+    tvVideoResolution_1280x600           = auto()               # Resolution is 1280x600
+    tvVideoResolution_1280x720           = auto()               # Resolution is 1280x720
+    tvVideoResolution_1280x1024          = auto()               # Resolution is 1280x1024
+    tvVideoResolution_1680x720           = auto()               # Resolution is 1680x720
+    tvVideoResolution_1024x768           = auto()               # Resolution is 1024x768
+    tvVideoResolution_1280x768           = auto()               # Resolution is 1280x768
+    tvVideoResolution_1360x768           = auto()               # Resolution is 1360x768
+    tvVideoResolution_1366x768           = auto()               # Resolution is 1366x768
+    tvVideoResolution_1440x900           = auto()               # Resolution is 1440x900
+    tvVideoResolution_1600x900           = auto()               # Resolution is 1600x900
+    tvVideoResolution_1280x960           = auto()               # Resolution is 1280x960
+    tvVideoResolution_1920x1080          = auto()               # Resolution is 1920x1080
+    tvVideoResolution_2560x1080          = auto()               # Resolution is 2560x1080
+    tvVideoResolution_3840x1080          = auto()               # Resolution is 3840x1080
+    tvVideoResolution_1600x1200          = auto()               # Resolution is 1600x1200
+    tvVideoResolution_1920x1200          = auto()               # Resolution is 1920x1200
+    tvVideoResolution_2160x1200          = auto()               # Resolution is 2160x1200
+    tvVideoResolution_2400x1200          = auto()               # Resolution is 2400x1200
+    tvVideoResolution_2560x1440          = auto()               # Resolution is 2560x1440
+    tvVideoResolution_3440x1440          = auto()               # Resolution is 3440x1440
+    tvVideoResolution_3840x2160          = auto()               # Resolution is 3840x2160
+    tvVideoResolution_4096x2160          = auto()               # Resolution is 4096x2160
 
 class tvVideoFrameRate(Enum):
     tvVideoFrameRate_NONE                 = 0                  # No frame rate
@@ -197,30 +183,48 @@ class tvVideoFrameRate(Enum):
     tvVideoFrameRate_29dot97              = auto()             # Frame rate is 29.97
     tvVideoFrameRate_59dot94              = auto()             # Frame rate is 59.94
 
-class tvSettingsClass():
+class TvVideoSrcType(Enum):
+    VIDEO_SOURCE_ANALOGUE                 = 0               # Video source is Analogue
+    VIDEO_SOURCE_COMPOSITE1               = auto()          # Video source is Composite1
+    VIDEO_SOURCE_COMPOSITE2               = auto()          # Video source is Composite2
+    VIDEO_SOURCE_YPBPR1                   = auto()          # Video source is YPbPr1
+    VIDEO_SOURCE_YPBPR2                   = auto()          # Video source is YPbPr2
+    VIDEO_SOURCE_HDMI1                    = auto()          # Video source is HDMI1
+    VIDEO_SOURCE_HDMI2                    = auto()          # Video source is HDMI2
+    VIDEO_SOURCE_HDMI3                    = auto()          # Video source is HDMI3
+    VIDEO_SOURCE_HDMI4                    = auto()          # Video source is HDMI4
+    VIDEO_SOURCE_VGA                      = auto()          # Video source is VGA
+    VIDEO_SOURCE_IP                       = auto()          # Video source is IP
+    VIDEO_SOURCE_TUNER                    = auto()          # Video source is Tuner
+    VIDEO_SOURCE_SVIDEO                   = auto()          # Video source is SVideo
+    VIDEO_SOURCE_RESERVED                 = auto()          # Video source reserved
+    VIDEO_SOURCE_RESERVED1                = auto()          # Video source reserved
+    VIDEO_SOURCE_RESERVED2                = auto()          # Video source reserved
+    VIDEO_SOURCE_RESERVED3                = auto()          # Video source reserved
+    VIDEO_SOURCE_MAX                      = auto()          # End of enum
 
-    moduleName = "tvSettings"
-    menuConfig =  dir_path + "/tvSettings_test_suite.yml"
-    testSuite = "L3 tvSettings"
+
+class tvSettingsClass():
 
     """
     tvSettings Class
 
     This module provides common extensions for tvSettings Module.
     """
-    def __init__(self, deviceProfilePath:str, session=None, devicePath="/tmp" ):
+    def __init__(self, deviceProfilePath:str, session=None):
         """
         Initializes the tvSettings class function.
         """
+        self.moduleName    = "tvSettings"
+        self.menuConfig    =  dir_path + "/tvSettings_test_suite.yml"
+        self.testSuite     = "L3 tvSettings"
         self.deviceProfile = ConfigRead( deviceProfilePath, self.moduleName)
         self.suitConfig    = ConfigRead(self.menuConfig, self.moduleName)
-        self.utMenu        = UTSuiteNavigatorClass(self.menuConfig, self.moduleName, session, devicePath)
+        self.utMenu        = UTSuiteNavigatorClass(self.menuConfig, self.moduleName, session)
         self.testSession   = session
+
+        # Start the user interface menu
         self.utMenu.start()
-        self.formatChangeCB = self.suitConfig.get("test").get("callback").get("formatChange_status")
-        self.contentChangeCB = self.suitConfig.get("test").get("callback").get("contentChange_status")
-        self.resolutionChangeCB = self.suitConfig.get("test").get("callback").get("resolutionChange_status")
-        self.frameRateChangeCB = self.suitConfig.get("test").get("callback").get("frameRateChange_status")
 
     def searchPattern(self, haystack, pattern):
         match = re.search(pattern, haystack)
@@ -242,634 +246,781 @@ class tvSettingsClass():
 
     def checkVideoFormat(self):
         """
-        Gets the current video format.
+        Retrieves the current video format from the system.
+
+        This function interacts with the utMenu to execute the 'Get Video Format'
+        test suite and captures the video format using a regex pattern.
+
+        Args:
+            None
 
         Returns:
-            None
+            str: The video format identifier (e.g., VIDEO_FORMAT_SDR, VIDEO_FORMAT_HDR, etc.)
+                extracted from the test suite result, or None if not found.
         """
         # Use the same utMenu.select structure to interact
         result = self.utMenu.select(self.testSuite, "Get Video Format")
+
+        # Regex pattern to extract the video format from the result string
         videoFormatPattern = r"Result GetCurrentVideoFormat\(OUT:Video Format:\[(VIDEO_FORMAT_\w+)\]\)"
+
+        # Search the result for the video format using the pattern
         videoFormat = self.searchPattern(result, videoFormatPattern)
+
         return videoFormat
+
 
     def checkVideoResolution(self):
         """
-        Gets the current video resolution.
+        Retrieves the current video resolution from the system.
+
+        This function interacts with the utMenu to execute the 'Get Resolution'
+        test suite and captures the video resolution using a regex pattern.
+
+        Args:
+            None
 
         Returns:
-            None
+            str: The video resolution details (e.g., resolution, interlaced status, resolution value)
+                extracted from the test suite result, or None if not found.
         """
         # Use the same utMenu.select structure to interact
         result = self.utMenu.select(self.testSuite, "Get Resolution")
+
+        # Regex pattern to extract the video resolution from the result string
         videoResolutionPattern = r"Result GetCurrentVideoResolution\(OUT:Resolution:\[(0x[0-9A-F]+)\], OUT:isInterlaced:\[(\d+)\], OUT:res value:\[(tvVideoResolution_\w+)\]\)"
+
+        # Search the result for the video resolution details using the pattern
         videoResolution = self.searchPattern(result, videoResolutionPattern)
+
         return videoResolution
+
 
     def checkVideoFrameRate(self):
         """
-        Gets the current video format.
+        Retrieves the current video frame rate from the system.
+
+        This function interacts with the utMenu to execute the 'Get Video FrameRate'
+        test suite and captures the frame rate using a regex pattern.
+
+        Args:
+            None
 
         Returns:
-            None
+            str: The video frame rate identifier (e.g., tvVideoFrameRate_60, tvVideoFrameRate_24, etc.)
+                extracted from the test suite result, or None if not found.
         """
         # Use the same utMenu.select structure to interact
         result = self.utMenu.select(self.testSuite, "Get Video FrameRate")
+
+        # Regex pattern to extract the video frame rate from the result string
         videoFrameRatePattern = r"Result GetCurrentVideoFrameRate\(OUT:Frame Rate:\[(tvVideoFrameRate_\w+)\]\)"
+
+        # Search the result for the frame rate using the pattern
         videoFrameRate = self.searchPattern(result, videoFrameRatePattern)
+
         return videoFrameRate
+
 
     def checkVideoSource(self):
         """
-        Gets the current video format.
+        Retrieves the current video source from the system.
+
+        This function interacts with the utMenu to execute the 'Get Video Source'
+        test suite and captures the video source using a regex pattern.
+
+        Args:
+            None
 
         Returns:
-            None
+            str: The video source identifier (e.g., VIDEO_SOURCE_HDMI1, VIDEO_SOURCE_AV, etc.)
+                extracted from the test suite result, or None if not found.
         """
         # Use the same utMenu.select structure to interact
         result = self.utMenu.select(self.testSuite, "Get Video Source")
+
+        # Regex pattern to extract the video source from the result string
         videoSourcePattern = r"Result GetCurrentVideoSource\(OUT:Current Source:\[(VIDEO_SOURCE_\w+)\]\)"
+
+        # Search the result for the video source using the pattern
         videoSource = self.searchPattern(result, videoSourcePattern)
+
         return videoSource
 
-    def setBacklight(self, backlightLevel:int=0):
+
+    def setBacklight(self, backlightLevel: int = 0):
         """
-        Sets backlight.
+        Sets the backlight level for the video display.
 
         Args:
-            backlight (int, optional): backlight to be applied. Ranges from 0 to 100. Defaults to 0
+            backlightLevel (int, optional): The backlight level to be applied. Ranges from 0 to 100.
+                                            Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the backlight value to set (0 - 100):",
-                    "input": str(backlightLevel)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the backlight value to set (0 - 100):",
+                "input": str(backlightLevel)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Back light", promptWithAnswers)
 
-    def setBacklightFade(self, fromVal:int=0, toVal:int=0, fadeDuration:int=0):
+
+    def setBacklightFade(self, fromVal: int = 0, toVal: int = 0, fadeDuration: int = 0):
         """
-        Sets backlight Fade.
+        Sets the backlight fade effect.
 
         Args:
             fromVal (int, optional): The starting backlight value (0 to 100). Defaults to 0.
             toVal (int, optional): The ending backlight value (0 to 100). Defaults to 0.
-            fadeDuration (int, optional): The duration of the fade effect in milliseconds (0 to 1000). Defaults to 0.
+            fadeDuration (int, optional): The duration of the fade effect in milliseconds (0 to 1000).
+                                        Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the 'from' backlight value (0-100):",
-                    "input": str(fromVal)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the 'to' backlight value (0-100):",
-                    "input": str(toVal)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the fade duration (0-1000 ms):",
-                    "input": str(fadeDuration)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the 'from' backlight value (0-100):",
+                "input": str(fromVal)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the 'to' backlight value (0-100):",
+                "input": str(toVal)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the fade duration (0-1000 ms):",
+                "input": str(fadeDuration)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Back light Fade", promptWithAnswers)
 
-    def setBacklightMode(self, BacklightMode:int=0):
+
+    def setBacklightMode(self, backlightMode: int = 0):
         """
-        Sets backlightMode.
+        Sets the backlight mode.
 
         Args:
-            backlight mode (int, optional): backlight Mode to be applied.
+            backlightMode (int, optional): The backlight mode to be applied. Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Backlight Mode:",
-                    "input": str(BacklightMode)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Backlight Mode:",
+                "input": str(backlightMode)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Back light Mode", promptWithAnswers)
 
-    def setTVDimmingMode(self, TVDimmingMode:int=0):
+
+    def setTVDimmingMode(self, TVDimmingMode: str = "tvDimmingMode_Fixed"):
         """
-        Sets TvDimmingMode.
+        Sets the TV dimming mode.
 
         Args:
-            TvDimmingMode (int, optional): TvDimmingMode Mode to be applied.
+            TVDimmingMode (int, optional): The TV dimming mode to be applied. Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the number corresponding to the Dimming Mode:",
-                    "input": str(TVDimmingMode)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Dimming Mode:",
+                "input": TVDimmingMode
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "TV Dimming Mode", promptWithAnswers)
 
-    def setLocalDimmingMode(self, LocalDimmingMode:int=0):
+
+    def setLocalDimmingMode(self, LocalDimmingMode: str = "LDIM_STATE_NONBOOST"):
         """
-        Sets Local DImmingMode.
+        Sets the local dimming mode.
 
         Args:
-            Local DimmingMode (int, optional): Local Dimming Mode to be applied.
+            LocalDimmingMode (int, optional): The local dimming mode to be applied. Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the number corresponding to the desired Local Dimming Level:",
-                    "input": str(LocalDimmingMode)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the desired Local Dimming Level:",
+                "input": LocalDimmingMode
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Local Dimming Mode", promptWithAnswers)
 
 
-    def setBrightnessLevel(self, brightnessLevel:int=0):
+    def setBrightnessLevel(self, brightnessLevel: int = 0):
         """
-        Sets brightness level.
+        Sets the brightness level for the display.
 
         Args:
-            brightnessLevel (int, optional): Brightness level to be applied. Ranges from 0 to 100. Defaults to 0
+            brightnessLevel (int, optional): The brightness level to be applied. Ranges from 0 to 100.
+                                            Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the desired brightness value (0-100):",
-                    "input": str(brightnessLevel)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the desired brightness value (0-100):",
+                "input": str(brightnessLevel)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Brightness", promptWithAnswers)
 
+
     def setContrastLevel(self, contrastLevel: int = 0):
         """
-        Sets contrast level.
+        Sets the contrast level for the display.
 
         Args:
-            contrastLevel (int, optional): Contrast level to be applied. Ranges from 0 to 100. Defaults to 0.
+            contrastLevel (int, optional): The contrast level to be applied. Ranges from 0 to 100.
+                                            Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the desired contrast value (0-100):",
-                    "input": str(contrastLevel)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the desired contrast value (0-100):",
+                "input": str(contrastLevel)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Contrast", promptWithAnswers)
 
+
     def setSharpnessLevel(self, sharpnessLevel: int = 0):
         """
-        Sets sharpness level.
+        Sets the sharpness level for the display.
 
         Args:
-            sharpnessLevel (int, optional): Sharpness level to be applied. Ranges from 0 to 100. Defaults to 0.
+            sharpnessLevel (int, optional): The sharpness level to be applied. Ranges from 0 to 100.
+                                            Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the desired sharpness value (0-100):",
-                    "input": str(sharpnessLevel)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the desired sharpness value (0-100):",
+                "input": str(sharpnessLevel)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Sharpness", promptWithAnswers)
 
+
     def setSaturationLevel(self, saturationLevel: int = 0):
         """
-        Sets saturation level.
+        Sets the saturation level for the display.
 
         Args:
-            saturationLevel (int, optional): Saturation level to be applied. Ranges from 0 to 100. Defaults to 0.
+            saturationLevel (int, optional): The saturation level to be applied. Ranges from 0 to 100.
+                                            Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the desired saturation value (0-100):",
-                    "input": str(saturationLevel)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the desired saturation value (0-100):",
+                "input": str(saturationLevel)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Saturation", promptWithAnswers)
 
     def setHueLevel(self, hueLevel: int = 0):
         """
-        Sets hue level.
+        Sets the hue level for the display.
 
         Args:
-             hueLevel (int, optional): Hue level to be applied. Ranges from 0 to 100. Defaults to 0.
+            hueLevel (int, optional): The hue level to be applied. Ranges from 0 to 100.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter the desired hue value (0-100):",
-                     "input": str(hueLevel)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter the desired hue value (0-100):",
+                "input": str(hueLevel)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Hue", promptWithAnswers)
 
-    def setColorTempLevel(self, ColorTempLevel: str="tvColorTemp_STANDARD"):
+
+    def setColorTempLevel(self, ColorTempLevel: str = "tvColorTemp_STANDARD"):
         """
-        Sets ColorTempLevel level.
+        Sets the color temperature level.
 
         Args:
-             ColorTempLevelLevel (str, optional): ColorTempLevel level to be applied.
+            ColorTempLevel (str, optional): The color temperature level to be applied.
+                                            Defaults to "tvColorTemp_STANDARD".
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the desired color temperature value:",
-                     "input": ColorTempLevel
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the desired color temperature value:",
+                "input": ColorTempLevel
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "ColorTemperature", promptWithAnswers)
 
-    def setAspectRatio(self, AspectRatio: str="tvDisplayMode_4x3"):
+    def setAspectRatio(self, AspectRatio: str = "tvDisplayMode_4x3"):
         """
-        Sets AspectRatio level.
+        Sets the aspect ratio for the display.
 
         Args:
-             AspectRatioLevel (str, optional): AspectRatio level to be applied.
+            AspectRatio (str, optional): The aspect ratio level to be applied.
+                                        Defaults to "tvDisplayMode_4x3".
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Aspect Ratio:",
-                     "input": AspectRatio
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Aspect Ratio:",
+                "input": AspectRatio
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Aspect Ratio", promptWithAnswers)
 
-    def setLowLatencyState(self, LowLatency: bool=0):
+
+    def setLowLatencyState(self, LowLatency: bool = False):
         """
-        Sets Low latency state.
+        Sets the low latency state.
 
         Args:
-             Low Latency state (int, optional): low latency to be applied.
+            LowLatency (bool, optional): The low latency state to be applied.
+                                        Use True to enable and False to disable.
+                                        Defaults to False.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter 0 to Disable or 1 to Enable Low Latency:",
-                     "input": str(LowLatency)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter 0 to Disable or 1 to Enable Low Latency:",
+                "input": str(int(LowLatency))
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Low Latency State", promptWithAnswers)
 
-    def setDynamicContrast(self, DynamicContrast: str="disabled"):
+
+    def setDynamicContrast(self, DynamicContrast: str = "disabled"):
         """
-        Sets Dynamic Contrast.
+        Sets the dynamic contrast level.
 
         Args:
-             Dynamic Contrast (str, optional): Dynamic Contrast to be applied.
+            DynamicContrast (str, optional): The dynamic contrast state to be applied.
+                                            Use "enabled" to enable and "disabled" to disable.
+                                            Defaults to "disabled".
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter 'enabled' to Enable or 'disabled' to Disable Dynamic Contrast:",
-                     "input": str(DynamicContrast)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter '1' to Enable or '2' to Disable Dynamic Contrast:",
+                "input": DynamicContrast
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Dynamic Contrast", promptWithAnswers)
 
-    def setDynamicGamma(self, DynamicGamma: float=0.0):
+
+    def setDynamicGamma(self, DynamicGamma: float = 0.0):
         """
-        Sets Dynamic Gamma.
+        Sets the dynamic gamma level.
 
         Args:
-             Dynamic Gamma (flaot, optional): Dynamic Gamma to be applied.
+            DynamicGamma (float, optional): The dynamic gamma value to be applied.
+                                            Ranges from 1.80 to 2.60. Defaults to 0.0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter a dynamic gamma value (1.80 to 2.60):",
-                     "input": str(DynamicGamma)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter a dynamic gamma value (1.80 to 2.60):",
+                "input": str(DynamicGamma)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Dynamic Gamma", promptWithAnswers)
 
-    def setDolbyVision(self, DolbyVision: str="tvDolbyMode_Dark"):
+
+    def setDolbyVision(self, DolbyVision: str = "tvDolbyMode_Dark"):
         """
-        Sets DolbyVision.
+        Sets the Dolby Vision mode.
 
         Args:
-             DolbyVision (int, optional): Dolby vision to be applied.
+            DolbyVision (str, optional): The Dolby Vision mode to be applied.
+                                        Defaults to "tvDolbyMode_Dark".
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Dolby Vision Mode:",
-                     "input": DolbyVision
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Dolby Vision Mode:",
+                "input": DolbyVision
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Dolby Vision", promptWithAnswers)
 
-    def setPictureMode(self, PictureMode: str="PQ_MODE_STANDARD"):
+
+    def setPictureMode(self, PictureMode: str = "Entertainment"):
         """
-        Sets Picture mode.
+        Sets the picture mode.
 
         Args:
-             PictureMode (int, optional): Picture Mode to be applied.
+            PictureMode (str, optional): The picture mode to be applied.
+                                        Defaults to "Entertainment".
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Picture Mode:",
-                     "input": PictureMode
-                }
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Picture Mode:",
+                "input": PictureMode
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "Picture Mode", promptWithAnswers)
 
-    def setRgainValue(self, ColorTemp: str="tvColorTemp_STANDARD", RgainValue:int=0, SetOrSave:int=0):
+
+    def setRgainValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", RgainValue: int = 0, SetOrSave: int = 0):
         """
-        Sets ColorTempRgain.
+        Sets the Rgain value for the specified color temperature.
 
         Args:
-             ColorTemp (str, optional): ColorTempRgain to be applied.
-             RgainValue (int, optional): RgainValue to be applied.
-             SetOrSave (int, optional): SetOrSave to be applied.
+            ColorTemp (str, optional): The color temperature to be applied.
+                                    Defaults to "tvColorTemp_STANDARD".
+            RgainValue (int, optional): The Rgain value to be applied.
+                                        Ranges from 0 to 2047. Defaults to 0.
+            SetOrSave (int, optional): Flag to set or save the value.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Color Temperature:",
-                     "input": ColorTemp
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Rgain Value (0 - 2047):",
-                     "input": str(RgainValue)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Flag Selection:",
-                     "input": str(SetOrSave)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Color Temperature:",
+                "input": ColorTemp
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Rgain Value (0 - 2047):",
+                "input": str(RgainValue)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Flag Selection:",
+                "input": str(SetOrSave)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "ColorTempRgain", promptWithAnswers)
 
-    def setGgainValue(self, ColorTemp: str="tvColorTemp_STANDARD", GgainValue:int=0, SetOrSave:int=0):
+
+    def setGgainValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", GgainValue: int = 0, SetOrSave: int = 0):
         """
-        Sets ColorTempGgain.
+        Sets the Ggain value for the specified color temperature.
 
         Args:
-             ColorTemp (str, optional): ColorTempGgain to be applied.
-             RgainValue (int, optional): GgainValue to be applied.
-             SetOrSave (int, optional): SetOrSave to be applied.
+            ColorTemp (str, optional): The color temperature to be applied.
+                                    Defaults to "tvColorTemp_STANDARD".
+            GgainValue (int, optional): The Ggain value to be applied.
+                                        Ranges from 0 to 2047. Defaults to 0.
+            SetOrSave (int, optional): Flag to set or save the value.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Color Temperature:",
-                     "input": ColorTemp
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Ggain Value (0 - 2047):",
-                     "input": str(GgainValue)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Flag Selection:",
-                     "input": str(SetOrSave)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Color Temperature:",
+                "input": ColorTemp
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Ggain Value (0 - 2047):",
+                "input": str(GgainValue)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Flag Selection:",
+                "input": str(SetOrSave)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "ColorTempGgain", promptWithAnswers)
 
-    def setBgainValue(self, ColorTemp: str="tvColorTemp_STANDARD", BgainValue:int=0, SetOrSave:int=0):
+
+    def setBgainValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", BgainValue: int = 0, SetOrSave: int = 0):
         """
-        Sets ColorTempBgain.
+        Sets the Bgain value for the specified color temperature.
 
         Args:
-             ColorTemp (str, optional): ColorTempBgain to be applied.
-             BgainValue (int, optional): BgainValue to be applied.
-             SetOrSave (int, optional): SetOrSave to be applied.
+            ColorTemp (str, optional): The color temperature to be applied.
+                                    Defaults to "tvColorTemp_STANDARD".
+            BgainValue (int, optional): The Bgain value to be applied.
+                                        Ranges from 0 to 2047. Defaults to 0.
+            SetOrSave (int, optional): Flag to set or save the value.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Color Temperature:",
-                     "input": ColorTemp
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Bgain Value (0 - 2047):",
-                     "input": str(BgainValue)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Flag Selection:",
-                     "input": str(SetOrSave)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Color Temperature:",
+                "input": ColorTemp
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Bgain Value (0 - 2047):",
+                "input": str(BgainValue)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Flag Selection:",
+                "input": str(SetOrSave)
+            }
         ]
 
-        result = self.utMenu.select(self.testSuite, "ColorTempRgain", promptWithAnswers)
+        result = self.utMenu.select(self.testSuite, "ColorTempBgain", promptWithAnswers)
 
-    def setRpostOffsetValue(self, ColorTemp: str="tvColorTemp_STANDARD", RpostOffsetValue:int=0, SetOrSave:int=0):
+
+    def setRpostOffsetValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", RpostOffsetValue: int = 0, SetOrSave: int = 0):
         """
-        Sets RpostOffsetValue.
+        Sets the RpostOffset value for the specified color temperature.
 
         Args:
-             ColorTemp (str, optional): ColorTemp to be applied.
-             RpostOffsetValue (int, optional): RpostOffsetValue to be applied.
-             SetOrSave (int, optional): SetOrSave to be applied.
+            ColorTemp (str, optional): The color temperature to be applied.
+                                    Defaults to "tvColorTemp_STANDARD".
+            RpostOffsetValue (int, optional): The RpostOffset value to be applied.
+                                            Ranges from -1024 to 1023. Defaults to 0.
+            SetOrSave (int, optional): Flag to set or save the value.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Color Temperature:",
-                     "input": ColorTemp
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Rpostoffset Value (-1024 to 1023):",
-                     "input": str(RpostOffsetValue)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Flag Selection:",
-                     "input": str(SetOrSave)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Color Temperature:",
+                "input": ColorTemp
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Rpostoffset Value (-1024 to 1023):",
+                "input": str(RpostOffsetValue)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Flag Selection:",
+                "input": str(SetOrSave)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "ColorTempRpost", promptWithAnswers)
 
-    def setGpostOffsetValue(self, ColorTemp: str="tvColorTemp_STANDARD", GpostOffsetValue:int=0, SetOrSave:int=0):
+
+    def setGpostOffsetValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", GpostOffsetValue: int = 0, SetOrSave: int = 0):
         """
-        Sets GpostOffsetValue.
+        Sets the GpostOffset value for the specified color temperature.
 
         Args:
-             ColorTemp (str, optional): ColorTemp to be applied.
-             GpostOffsetValue (int, optional): GpostOffsetValue to be applied.
-             SetOrSave (int, optional): SetOrSave to be applied.
+            ColorTemp (str, optional): The color temperature to be applied.
+                                    Defaults to "tvColorTemp_STANDARD".
+            GpostOffsetValue (int, optional): The GpostOffset value to be applied.
+                                            Ranges from -1024 to 1023. Defaults to 0.
+            SetOrSave (int, optional): Flag to set or save the value.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Color Temperature:",
-                     "input": ColorTemp
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Gpostoffset Value (-1024 to 1023):",
-                     "input": str(GpostOffsetValue)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Flag Selection:",
-                     "input": str(SetOrSave)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Color Temperature:",
+                "input": ColorTemp
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Gpostoffset Value (-1024 to 1023):",
+                "input": str(GpostOffsetValue)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Flag Selection:",
+                "input": str(SetOrSave)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "ColorTempGpost", promptWithAnswers)
 
-    def setBpostOffsetValue(self, ColorTemp: str="tvColorTemp_STANDARD", BpostOffsetValue:int=0, SetOrSave:int=0):
+
+    def setBpostOffsetValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", BpostOffsetValue: int = 0, SetOrSave: int = 0):
         """
-        Sets BpostOffsetValue.
+        Sets the BpostOffset value for the specified color temperature.
 
         Args:
-             ColorTemp (str, optional): ColorTemp to be applied.
-             BpostOffsetValue (int, optional): BpostOffsetValue to be applied.
-             SetOrSave (int, optional): SetOrSave to be applied.
+            ColorTemp (str, optional): The color temperature to be applied.
+                                    Defaults to "tvColorTemp_STANDARD".
+            BpostOffsetValue (int, optional): The BpostOffset value to be applied.
+                                            Ranges from -1024 to 1023. Defaults to 0.
+            SetOrSave (int, optional): Flag to set or save the value.
+                                    Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "list",
-                    "query": "Enter the number corresponding to the Color Temperature:",
-                     "input": ColorTemp
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Bpostoffset Value (-1024 to 1023):",
-                     "input": str(BpostOffsetValue)
-                },
-                {
-                    "query_type": "direct",
-                    "query": "Enter the Flag Selection:",
-                     "input": str(SetOrSave)
-                }
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
+                "query": "Enter the number corresponding to the Color Temperature:",
+                "input": ColorTemp
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Bpostoffset Value (-1024 to 1023):",
+                "input": str(BpostOffsetValue)
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the Flag Selection:",
+                "input": str(SetOrSave)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "ColorTempBpost", promptWithAnswers)
 
-    def setWBCalibration(self, WBcalibrationFlag: bool=0):
+
+    def setWBCalibration(self, WBcalibrationFlag: bool = 0):
         """
-        Sets WB calibration.
+        Sets the White Balance (WB) calibration mode.
 
         Args:
-             WB calibationFlag (bool, optional): WB calibration to be applied.
+            WBcalibrationFlag (bool, optional): Flag to enable (1) or disable (0) WB calibration.
+                                                Defaults to 0 (Disabled).
 
         Returns:
             None
         """
         promptWithAnswers = [
-                {
-                    "query_type": "direct",
-                    "query": "Enter 1 to Enable WB Calibration Mode, 0 to Disable:",
-                     "input": str(WBcalibrationFlag)
-                }
+            {
+                "query_type": "direct",
+                "query": "Enter 1 to Enable WB Calibration Mode, 0 to Disable:",
+                "input": str(WBcalibrationFlag)
+            }
         ]
 
         result = self.utMenu.select(self.testSuite, "WBCalibrationMode", promptWithAnswers)
 
-    def setGammaTable(self, gammaTableSize: int = 1, gammaRed: int = 0, gammaGreen: int = 0, gammaBlue: int = 0):
+
+    def setGammaTable(self, gammaTableSize: int = 1, gammaRed: list = None, gammaGreen: list = None, gammaBlue: list = None):
         """
-        Sets Gamma Table values.
+        Sets the Gamma Table values.
 
         Args:
-            gammaTableSize (int, optional): Size of the gamma table. Ranges from 1 to 255. Defaults to 1.
-            gammaRed (int, optional): Gamma value for Red. Ranges from 0 to 1023. Defaults to 0.
-            gammaGreen (int, optional): Gamma value for Green. Ranges from 0 to 1023. Defaults to 0.
-            gammaBlue (int, optional): Gamma value for Blue. Ranges from 0 to 1023. Defaults to 0.
+            gammaTableSize (int, optional): Size of the gamma table (1 to 255). Defaults to 1.
+            gammaRed (list, optional): List of gamma values for Red (0 to 1023). Defaults to empty list.
+            gammaGreen (list, optional): List of gamma values for Green (0 to 1023). Defaults to empty list.
+            gammaBlue (list, optional): List of gamma values for Blue (0 to 1023). Defaults to empty list.
 
         Returns:
             None
         """
+        # Set default values to empty lists if None is provided
+        if gammaRed is None:
+            gammaRed = []
+        if gammaGreen is None:
+            gammaGreen = []
+        if gammaBlue is None:
+            gammaBlue = []
+
+        # Prepare the prompt with answers for user input
         promptWithAnswers = [
             {
                 "query_type": "direct",
@@ -879,36 +1030,38 @@ class tvSettingsClass():
             {
                 "query_type": "direct",
                 "query": f"Enter {gammaTableSize} gamma values for Red (0 - 1023):",
-                "input": str(gammaRed)
+                "input": "\n".join(map(str, gammaRed))
             },
             {
                 "query_type": "direct",
                 "query": f"Enter {gammaTableSize} gamma values for Green (0 - 1023):",
-                "input": str(gammaGreen)
+                "input": "\n".join(map(str, gammaGreen))
             },
             {
                 "query_type": "direct",
                 "query": f"Enter {gammaTableSize} gamma values for Blue (0 - 1023):",
-                "input": str(gammaBlue)
+                "input": "\n".join(map(str, gammaBlue))
             }
         ]
 
         result = self.utMenu.select(self.testSuite, "Gamma Table", promptWithAnswers)
+
 
     def saveGammaTable(self, gammaTableSize: int = 1, gammaRed: list = None, gammaGreen: list = None, gammaBlue: list = None, colorTemperature: str = "tvColorTemp_STANDARD"):
         """
         Saves Gamma Table values and applies a specified color temperature.
 
         Args:
-            gammaTableSize (int, optional): Size of the gamma table. Ranges from 1 to 255. Defaults to 1.
-            gammaRed (list, optional): List of gamma values for Red. Each value ranges from 0 to 1023. Defaults to None.
-            gammaGreen (list, optional): List of gamma values for Green. Each value ranges from 0 to 1023. Defaults to None.
-            gammaBlue (list, optional): List of gamma values for Blue. Each value ranges from 0 to 1023. Defaults to None.
-            colorTemperature (str, optional): The desired color temperature setting. Defaults to "Neutral White".
+            gammaTableSize (int, optional): Size of the gamma table (1 to 255). Defaults to 1.
+            gammaRed (list, optional): List of gamma values for Red (0 to 1023). Defaults to None.
+            gammaGreen (list, optional): List of gamma values for Green (0 to 1023). Defaults to None.
+            gammaBlue (list, optional): List of gamma values for Blue (0 to 1023). Defaults to None.
+            colorTemperature (str, optional): Desired color temperature setting. Defaults to "tvColorTemp_STANDARD".
 
         Returns:
             None
         """
+        # Initialize gamma values if not provided
         if gammaRed is None:
             gammaRed = [0] * gammaTableSize
         if gammaGreen is None:
@@ -916,13 +1069,13 @@ class tvSettingsClass():
         if gammaBlue is None:
             gammaBlue = [0] * gammaTableSize
 
-        # Prompt user for gamma table size
+        # Ensure gamma values are within acceptable limits (0-1023)
+        gammaRed = [min(max(value, 0), 1023) for value in gammaRed]
+        gammaGreen = [min(max(value, 0), 1023) for value in gammaGreen]
+        gammaBlue = [min(max(value, 0), 1023) for value in gammaBlue]
+
+        # Prepare prompt for user input if required
         promptWithAnswers = [
-            {
-                "query_type": "direct",
-                "query": "Enter the size of the gamma table (1 - 255):",
-                "input": str(gammaTableSize)
-            },
             {
                 "query_type": "list",
                 "query": "Enter the number corresponding to the Color Temperature:",
@@ -930,31 +1083,38 @@ class tvSettingsClass():
             },
             {
                 "query_type": "direct",
+                "query": "Enter the size of the gamma table (1 - 255):",
+                "input": str(gammaTableSize)
+            },
+            {
+                "query_type": "direct",
                 "query": f"Enter {gammaTableSize} gamma values for Red (0 - 1023):",
-                "input": " ".join(map(str, gammaRed))
+                "input": "\n".join(map(str, gammaRed))
             },
             {
                 "query_type": "direct",
                 "query": f"Enter {gammaTableSize} gamma values for Green (0 - 1023):",
-                "input": " ".join(map(str, gammaGreen))
+                "input": "\n".join(map(str, gammaGreen))
             },
             {
                 "query_type": "direct",
                 "query": f"Enter {gammaTableSize} gamma values for Blue (0 - 1023):",
-                "input": " ".join(map(str, gammaBlue))
+                "input": "\n".join(map(str, gammaBlue))
             }
         ]
 
         # Display prompts and collect user inputs
         result = self.utMenu.select(self.testSuite, "Save Gamma Table", promptWithAnswers)
 
+
+
     def setComponentSaturation(self, colorIndex: str = "tvDataColor_RED", saturationValue: int = 0):
         """
         Sets Component Saturation values.
 
         Args:
-            colorIndex (int, optional): Component color index to be applied. Defaults to 0.
-            saturationValue (int, optional): Saturation value to be applied. Ranges from 0 to 100. Defaults to 0.
+            colorIndex (str, optional): Component color index to be applied. Defaults to "tvDataColor_RED".
+            saturationValue (int, optional): Saturation value to be applied (0 to 100). Defaults to 0.
 
         Returns:
             None
@@ -974,13 +1134,14 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "CompSaturation", promptWithAnswers)
 
+
     def setComponentHue(self, colorIndex: str = "tvDataColor_RED", hueValue: int = 0):
         """
         Sets Component Hue values.
 
         Args:
-            colorIndex (int, optional): Component color index to be applied. Defaults to 0.
-            hueValue (int, optional): Hue value to be applied. Ranges from 0 to 100. Defaults to 0.
+            colorIndex (str, optional): Component color index to be applied. Defaults to "tvDataColor_RED".
+            hueValue (int, optional): Hue value to be applied (0 to 100). Defaults to 0.
 
         Returns:
             None
@@ -1000,13 +1161,14 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "CompHue", promptWithAnswers)
 
+
     def setComponentLuma(self, colorIndex: str = "tvDataColor_RED", lumaValue: int = 0):
         """
         Sets Component Luma values.
 
         Args:
-            colorIndex (int, optional): Component color index to be applied. Defaults to 0.
-            lumaValue (int, optional): Luma value to be applied. Ranges from 0 to 30. Defaults to 0.
+            colorIndex (str, optional): Component color index to be applied. Defaults to "tvDataColor_RED".
+            lumaValue (int, optional): Luma value to be applied (0 to 30). Defaults to 0.
 
         Returns:
             None
@@ -1032,7 +1194,7 @@ class tvSettingsClass():
         Sets Dolby Vision TMAX value.
 
         Args:
-            dvTmaxValue (int, optional): Dolby Vision TMAX value to be applied. Ranges from 0 to 10000. Defaults to 0.
+            dvTmaxValue (int, optional): Dolby Vision TMAX value to be applied (0 to 10000). Defaults to 0.
 
         Returns:
             None
@@ -1047,12 +1209,13 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "DvTmaxValue", promptWithAnswers)
 
+
     def setCMSState(self, cmsState: bool = 0):
         """
         Sets CMS state.
 
         Args:
-            cmsState (bool, optional): CMS state to be applied. Defaults to 0 (Disable), 1 (Enable).
+            cmsState (bool, optional): CMS state to be applied (0 to Disable, 1 to Enable). Defaults to 0.
 
         Returns:
             None
@@ -1067,12 +1230,13 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "CMSState", promptWithAnswers)
 
+
     def setEnableGammaMode(self, enableGammaMode: bool = 0):
         """
         Sets Gamma mode.
 
         Args:
-            enableGammaMode (bool, optional): Gamma mode to be applied. Defaults to 0 (Disable), 1 (Enable).
+            enableGammaMode (bool, optional): Gamma mode to be applied (0 to Disable, 1 to Enable). Defaults to 0.
 
         Returns:
             None
@@ -1087,25 +1251,27 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "EnableGammaMode", promptWithAnswers)
 
+
     def setGammaPatternMode(self, gammaPatternMode: bool = 0):
         """
         Sets Gamma pattern mode.
 
         Args:
-            gammaPatternMode (bool, optional): Gamma pattern mode to be applied. Defaults to 0 (Disable), 1 (Enable).
+            gammaPatternMode (bool, optional): Gamma pattern mode to be applied (0 to Disable, 1 to Enable). Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
-        {
-            "query_type": "direct",
-            "query": "Enter mode (0 to disable, 1 to enable):",
-            "input": str(gammaPatternMode)
-        }
-    ]
+            {
+                "query_type": "direct",
+                "query": "Enter mode (0 to disable, 1 to enable):",
+                "input": str(gammaPatternMode)
+            }
+        ]
 
         result = self.utMenu.select(self.testSuite, "GammaPatternMode", promptWithAnswers)
+
 
     def setGammaPattern(self, bitResolution: int = 0, redLevel: int = 0, greenLevel: int = 0, blueLevel: int = 0):
         """
@@ -1144,6 +1310,7 @@ class tvSettingsClass():
         ]
 
         result = self.utMenu.select(self.testSuite, "SetGammaPattern", promptWithAnswers)
+
 
     def setRGBPattern(self, redLevel: int = 0, greenLevel: int = 0, blueLevel: int = 0):
         """
@@ -1194,7 +1361,7 @@ class tvSettingsClass():
                 "query": "Enter Gray level (0 - 255):",
                 "input": str(grayPattern)
             }
-    ]
+        ]
 
         result = self.utMenu.select(self.testSuite, "GrayPattern", promptWithAnswers)
 
@@ -1217,7 +1384,7 @@ class tvSettingsClass():
             }
         ]
 
-        result = self.utMenu.select(self.testSuite, "EnableLDIMPixel", promptWithAnswers)
+        result = self.utMenu.select(self.testSuite, "EnableLDIMPixelCompensation", promptWithAnswers)
 
     def setEnableLDIM(self, mode: int = 0):
         """
@@ -1237,14 +1404,15 @@ class tvSettingsClass():
             }
         ]
 
-        result = self.utMenu.select(self.testSuite, "EnableLDIM", promptWithAnswers)
+        result = self.utMenu.select(self.testSuite, "LDIMEnable", promptWithAnswers)
+
 
     def setBacklightTestMode(self, mode: str = "tvBacklightTestMode_Normal"):
         """
         Sets backlight test mode.
 
         Args:
-            mode (int, optional): Backlight test mode to be applied. Defaults to 0.
+            mode (str, optional): Backlight test mode to be applied. Defaults to "tvBacklightTestMode_Normal".
 
         Returns:
             None
@@ -1259,9 +1427,10 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "SetBacklightTestMode", promptWithAnswers)
 
-    def EnableDynamicContrast(self, mode: int = 0):
+
+    def enableDynamicContrast(self, mode: int = 0):
         """
-        Enable dynamic contrast mode.
+        Enables dynamic contrast mode.
 
         Args:
             mode (int, optional): Dynamic contrast mode to be applied. Defaults to 0.
@@ -1279,9 +1448,10 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "EnableDynamicContrast", promptWithAnswers)
 
-    def setEnableLocalContrast(self, mode: int = 0):
+
+    def enableLocalContrast(self, mode: int = 0):
         """
-        Sets local contrast mode.
+        Enables local contrast mode.
 
         Args:
             mode (int, optional): Local contrast mode to be applied. Defaults to 0.
@@ -1299,19 +1469,25 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "EnableLocalContrast", promptWithAnswers)
 
-    def saveBacklightValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", backlightValue: int = 0):
+
+    def saveBacklightValues(self,  VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", backlightValue: int = 0):
         """
         Saves backlight values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
             backlightValue (int, optional): Backlight value to set (0 - 100). Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1332,19 +1508,24 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Backlight values", promptWithAnswers)
 
 
-    def saveTVDimmingModeValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingModeIndex: str = "tvDimmingMode_Fixed"):
+    def saveTVDimmingModeValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingModeIndex: str = "tvDimmingMode_Fixed"):
         """
         Saves TV Dimming Mode values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            dimmingModeIndex (int, optional): Your choice of Dimming Mode index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
+            dimmingModeIndex (str, optional): Your choice of Dimming Mode index. Defaults to "tvDimmingMode_Fixed".
 
         Returns:
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1365,19 +1546,24 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save TV Dimming Mode values", promptWithAnswers)
 
 
-    def saveLocalDimmingModeValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD",  DimmingLevelIndex: str = "LDIM_STATE_NONBOOST"):
+    def saveLocalDimmingModeValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingLevelIndex: str = "LDIM_STATE_NONBOOST"):
         """
         Saves Local Dimming Mode values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            localDimmingLevelIndex (int, optional): Your choice of Local Dimming Level index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
+            dimmingLevelIndex (str, optional): Your choice of Local Dimming Level index. Defaults to "LDIM_STATE_NONBOOST".
 
         Returns:
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1391,26 +1577,31 @@ class tvSettingsClass():
             {
                 "query_type": "list",
                 "query": "Enter your choice of Local Dimming Level (index):",
-                "input": DimmingLevelIndex
+                "input": dimmingLevelIndex
             }
         ]
 
         result = self.utMenu.select(self.testSuite, "Save Local Dimming Mode values", promptWithAnswers)
 
 
-    def saveBrightnessValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", brightnessValue: int = 0):
+    def saveBrightnessValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", brightnessValue: int = 0):
         """
         Saves brightness values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
             brightnessValue (int, optional): Brightness value to set (0 - 100). Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1431,13 +1622,13 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Brightness values", promptWithAnswers)
 
 
-    def saveContrastValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", contrastValue: int = 0):
+    def saveContrastValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", contrastValue: int = 0):
         """
         Saves contrast values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
             contrastValue (int, optional): Contrast value to set (0 - 100). Defaults to 0.
 
         Returns:
@@ -1446,11 +1637,16 @@ class tvSettingsClass():
         promptWithAnswers = [
             {
                 "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
+            {
+                "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
                 "input": pictureModeIndex
             },
             {
-                "query_type": "direct",
+                "query_type": "list",
                 "query": "Enter your choice of Video Format (index):",
                 "input": videoFormatIndex
             },
@@ -1464,19 +1660,24 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Contrast values", promptWithAnswers)
 
 
-    def saveSharpnessValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", sharpnessValue: int = 0):
+    def saveSharpnessValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", sharpnessValue: int = 0):
         """
         Saves sharpness values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
             sharpnessValue (int, optional): Sharpness value to set (0 - 100). Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1497,19 +1698,24 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Sharpness values", promptWithAnswers)
 
 
-    def saveSaturationValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", saturationValue: int = 0):
+    def saveSaturationValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", saturationValue: int = 0):
         """
         Saves saturation values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
+            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
             saturationValue (int, optional): Saturation value to set (0 - 100). Defaults to 0.
 
         Returns:
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1530,7 +1736,8 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Saturation values", promptWithAnswers)
 
 
-    def saveHueValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", hueValue: int = 0):
+
+    def saveHueValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", hueValue: int = 0):
         """
         Saves hue values.
 
@@ -1543,6 +1750,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1563,7 +1775,7 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Hue values", promptWithAnswers)
 
 
-    def saveColorTemperatureValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", colorTemperatureIndex: str = "tvColorTemp_STANDARD"):
+    def saveColorTemperatureValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", colorTemperatureIndex: str = "tvColorTemp_STANDARD"):
         """
         Saves color temperature values.
 
@@ -1576,6 +1788,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1596,7 +1813,7 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Color Temperature values", promptWithAnswers)
 
 
-    def saveAspectRatioValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", aspectRatioIndex: str = "tvDisplayMode_4x3"):
+    def saveAspectRatioValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", aspectRatioIndex: str = "tvDisplayMode_4x3"):
         """
         Saves aspect ratio values.
 
@@ -1609,6 +1826,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1629,7 +1851,7 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Aspect Ratio values", promptWithAnswers)
 
 
-    def saveLowLatencyValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", lowLatencyIndex: int = 0):
+    def saveLowLatencyValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", lowLatencyIndex: int = 0):
         """
         Saves low latency values.
 
@@ -1642,6 +1864,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1662,7 +1889,7 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Low Latency values", promptWithAnswers)
 
 
-    def saveDolbyVisionValues(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dolbyVisionModeIndex: str = "tvDolbyMode_Dark"):
+    def saveDolbyVisionValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dolbyVisionModeIndex: str = "tvDolbyMode_Dark"):
         """
         Saves Dolby Vision values.
 
@@ -1675,6 +1902,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1692,9 +1924,9 @@ class tvSettingsClass():
             }
         ]
 
-        result = self.utMenu.select(self.testSuite, "Save Dolby vision", promptWithAnswers)
+        result = self.utMenu.select(self.testSuite, "Save Dolby Vision", promptWithAnswers)
 
-    def savePictureMode(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD",):
+    def savePictureMode(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD",):
         """
         Saves the Picture Mode.
 
@@ -1706,6 +1938,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Video Format (index):",
@@ -1729,21 +1966,22 @@ class tvSettingsClass():
             None.
 
         Returns:
-                bool : BacklightModes
+            list : List of Backlight Modes.
         """
-        # Get the Back light Mode index from the profile
-        BacklightModes = self.deviceProfile.get("BacklightControl").get("index")
+        # Get the Backlight Mode index from the profile
+        backlightModes = self.deviceProfile.BacklightControl.index
 
         # Check if index is valid
-        if BacklightModes is None:
+        if backlightModes is None:
             return []
 
         outBacklightMode = []
-        for BacklightMode in BacklightModes:
-            outBacklightMode.append(tvBacklightMode(BacklightMode).name)
+        for backlightMode in backlightModes:
+            outBacklightMode.append(tvBacklightMode(backlightMode).name)
         return outBacklightMode
 
-    def saveCMS(self, pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", componentType: str = "COMP_NONE", componentColor: str = "tvDataColor_RED", cmsValue: int = 0):
+
+    def saveCMS(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", componentType: str = "COMP_NONE", componentColor: str = "tvDataColor_RED", cmsValue: int = 0):
         """
         Saves the CMS settings.
 
@@ -1758,6 +1996,11 @@ class tvSettingsClass():
             None
         """
         promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of Video Source (index):",
+                "input": VideoSource
+            },
             {
                 "query_type": "list",
                 "query": "Enter your choice of Picture Mode (index):",
@@ -1795,10 +2038,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : Dimming Modes
+            list : list of Dimming Modes
         """
         # Get the Back light Mode index from the profile
-        TVDimmingModes = self.deviceProfile.get("DimmingMode").get("index")
+        TVDimmingModes = self.deviceProfile.DimmingMode.index
 
         # Check if index is valid
         if TVDimmingModes is None:
@@ -1817,10 +2060,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : Local Dimming Modes
+            list  : list of Local Dimming Modes
         """
         # Get the Back light Mode index from the profile
-        LocalDimmingModes = self.deviceProfile.get("LocalDimmingLevel").get("index")
+        LocalDimmingModes = self.deviceProfile.LocalDimmingLevel.index
 
         # Check if index is valid
         if LocalDimmingModes is None:
@@ -1839,10 +2082,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : ColorTemperatures
+            list : list of ColorTemperatures
         """
         # Get the color temperature index from the profile
-        ColorTempIndex = self.deviceProfile.get("ColorTemperature").get("index")
+        ColorTempIndex = self.deviceProfile.ColorTemperature.index
 
         # Check if index is valid
         if ColorTempIndex is None:
@@ -1861,10 +2104,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : Aspect Ratio
+            list : list ofAspect Ratio
         """
         # Get the color temperature index from the profile
-        AspectRatioIndex = self.deviceProfile.get("AspectRatio").get("index")
+        AspectRatioIndex = self.deviceProfile.AspectRatio.index
 
         # Check if index is valid
         if AspectRatioIndex is None:
@@ -1883,10 +2126,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : Dolby Visions
+            list : list ofDolby Visions
         """
         # Get the Dolby Vision index from the profile
-        DolbyVisionMode = self.deviceProfile.get("DolbyVisionMode").get("index")
+        DolbyVisionMode = self.deviceProfile.DolbyVisionMode.index
 
         # Check if index is valid
         if DolbyVisionMode is None:
@@ -1905,19 +2148,11 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : Picture Modes
+            list : list ofPicture Modes
         """
         # Get the Picture Mode index from the profile
-        PictureMode = self.deviceProfile.get("PictureMode").get("index")
-
-        # Check if index is valid
-        if PictureMode is None:
-            return []
-
-        outPicture = []
-        for Picture in PictureMode:
-            outPicture.append(PQMode(Picture).name)
-        return outPicture
+        PictureMode = self.deviceProfile.PictureMode.range
+        return PictureMode
 
     def getPictureModeIndex(self):
         """
@@ -1927,10 +2162,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : Picture Modes
+            list : list ofPicture Modes
         """
         # Get the Picture Mode index from the profile
-        PictureMode = self.deviceProfile.get("PictureMode").get("index")
+        PictureMode = self.deviceProfile.PictureMode.index
 
         # Check if index is valid
         if PictureMode is None:
@@ -1949,10 +2184,10 @@ class tvSettingsClass():
             None.
 
         Returns:
-            bool : List of Video Formats.
+            list : list ofList of Video Formats.
         """
         # Get the Video Format index from the profile
-        videoFormatIndex = self.deviceProfile.get("VideoFormat").get("index")
+        videoFormatIndex = self.deviceProfile.VideoFormat.index
 
         # Check if index is valid
         if videoFormatIndex is None:
@@ -1974,7 +2209,7 @@ class tvSettingsClass():
             list : List containing the Video Source (always VIDEO_SOURCE_IP).
         """
         # Get the Video Source index from the profile
-        videoSourceIndex = self.deviceProfile.get("VideoSource").get("index")
+        videoSourceIndex = self.deviceProfile.VideoSource.index
 
         # Check if index is valid
         if videoSourceIndex is None:
@@ -1982,9 +2217,7 @@ class tvSettingsClass():
 
         outVideoSources = []
         for videoSource in videoSourceIndex:
-            if videoSource == "IP":
-                outVideoSources.append("VIDEO_SOURCE_IP")
-
+                outVideoSources.append(TvVideoSrcType(videoSource).name)
         return outVideoSources
 
     def getVideoFrameRateInfo(self):
@@ -1998,7 +2231,7 @@ class tvSettingsClass():
             list : List of Supported Video Frame Rates.
         """
         # Get the Video Frame Rate index from the profile
-        videoFrameRateIndex = self.deviceProfile.get("SupportedVideoFrameRate")
+        videoFrameRateIndex = self.deviceProfile.SupportedVideoFrameRate
 
         # Check if index is valid
         if videoFrameRateIndex is None:
@@ -2020,7 +2253,7 @@ class tvSettingsClass():
             list : List of Supported Video Resolutions.
         """
         # Get the Video Resolution index from the profile
-        video_resolution_index = self.deviceProfile.get("SupportedVideoResolution")
+        video_resolution_index = self.deviceProfile.SupportedVideoResolution
 
         # Check if index is valid
         if video_resolution_index is None:
@@ -2042,7 +2275,7 @@ class tvSettingsClass():
             list : List of Supported Video Frame Rates.
         """
         # Get the Video Frame Rate index from the profile
-        videoFrameRateIndex = self.deviceProfile.get("SupportedVideoFrameRate")
+        videoFrameRateIndex = self.deviceProfile.SupportedVideoFrameRate
 
         # Check if index is valid
         if videoFrameRateIndex is None:
@@ -2066,7 +2299,7 @@ class tvSettingsClass():
 
         outTVDataColors = []
         for color in tvDataColor:
-                outTVDataColors.append(tvDataColor(color).name)
+                outTVDataColors.append(color.name)
 
         return outTVDataColors
 
@@ -2131,9 +2364,10 @@ class tvSettingsClass():
         """
         result = self.testSession.read_until("Received Video Format Change callback format")
 
-        formatCallbackPattern = r"Received Video Format Change callback format:\[(\w+)\], userData\[\]\[0x([0-9A-Fa-f]+)\]"
+        formatCallbackPattern = r"Received Video Format Change callback format:\[(\w+)\]"
 
         return self.searchPattern(result, formatCallbackPattern)
+
 
     def getVideoResolutionCallbackStatus(self):
         """
@@ -2144,13 +2378,27 @@ class tvSettingsClass():
 
         Returns:
             None: If the function fails to retrieve the callback status.
-            tuple: The height, width, interlaced status, resolution, and user data, as indicated by the system callback.
+            tuple: A tuple containing the frame resolution name, height, width, interlaced status, and user data, as indicated by the system callback.
         """
         result = self.testSession.read_until("Received Video Resolution Change callback Frame heightxwidth")
 
-        formatCallbackPattern = r"Received Video Resolution Change callback Frame heightxwidth:\[(\d+)x(\d+)\], IsInterlaced\[(\d+)\] Res:\[(\w+)\], userData\[\]\[0x([0-9A-Fa-f]+)\]"
+        # Updated regex pattern to capture all required data
+        formatCallbackPattern = r"Received Video Resolution Change callback Frame Res:\[(\w+)\], widthxheight:\[(\d+)x(\d+)\], IsIntercaed\[(\d+)\]"
 
-        return self.searchPattern(result, formatCallbackPattern)
+        # Use re.search to find the pattern in the result
+        match = re.search(formatCallbackPattern, result)
+
+        if match:
+            # Return a tuple of the captured groups
+            resolution_name = match.group(1)
+            width = int(match.group(2))
+            height = int(match.group(3))
+            is_interlaced = int(match.group(4))
+
+            return (resolution_name, width, height, is_interlaced)
+
+        return None
+
 
     def getVideoContentCallbackStatus(self):
         """
@@ -2165,7 +2413,7 @@ class tvSettingsClass():
         """
         result = self.testSession.read_until("Received Video Content Change callback format")
 
-        formatCallbackPattern = r"Received Video Content Change callback format:\[(\w+)\], userData\[\]\[0x([0-9A-Fa-f]+)\]"
+        formatCallbackPattern = r"Received Video Content Change callback format:\[(\w+)\]"
 
         return self.searchPattern(result, formatCallbackPattern)
 
@@ -2181,3 +2429,20 @@ class tvSettingsClass():
             None
         """
         result = self.utMenu.select(self.testSuite, "Terminate")
+
+# Test and example usage code
+if __name__ == '__main__':
+
+    shell = InteractiveShell()
+    shell.open()
+
+    platformProfile = dir_path + "/../../../profiles/sink/Sink_4K_TvSettings.yaml"
+    # test the class assuming that it's optional
+    test = tvSettingsClass(platformProfile, shell)
+
+    test.initialise()
+    ports = test.getVideoFormatInfo
+
+    test.terminate()
+
+    shell.close()

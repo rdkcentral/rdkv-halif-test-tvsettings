@@ -40,10 +40,11 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
         """
         self.testName = "test52_SaveDolbyVision"
         super().__init__(self.testName, '52')
+        self.dolby_vision_indices = []
 
     def testVerifyDolbyVision(self, pictureMode, videoFormat, dolbyVision, manual=False):
         """
-        Verifies whether the Dolby Vision value is set or not.
+        Verifies whether the Dolby Vision value is set correctly.
 
         Args:
             pictureMode (str): Picture Mode.
@@ -53,35 +54,82 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
                                      Defaults to other verification methods.
 
         Returns:
-            bool: Returns the status of Dolby Vision value.
+            bool: Returns the status of the Dolby Vision value.
         """
         if manual:
             return self.testUserResponse.getUserYN(
-                f"Is Dolby Vision value '{dolbyVision}' applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
+                f"Is Dolby Vision '{dolbyVision}' applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
             )
         else:
             # TODO: Add automation verification methods
             return False
 
+    def saveDolbyVisionForAllFormats(self):
+        """
+        Saves Dolby Vision values for all combinations of picture mode index and video format.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        dolbyVisionValues = self.testtvSettings.getDolbyVisionInfo()
+
+        # Prepare the list of Dolby Vision assignments based on video formats
+        for videoFormatIndex in range(len(videoFormatInfo)):
+            # Assign Dolby Vision indices (0 or 1 based on index)
+            self.dolby_vision_indices.append(videoFormatIndex % len(dolbyVisionValues))
+
+        # Save the appropriate Dolby Vision values based on the video format
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
+                dolbyVision = dolbyVisionValues[self.dolby_vision_indices[videoFormatIndex]]
+
+                # Log and save the Dolby Vision values
+                self.testtvSettings.saveDolbyVisionValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, dolbyVision)
+                time.sleep(1)
+
+
+    def setAllDolbyVisionToDefault(self, defaultValue='tvDolbyMode_Dark'):
+        """
+        Sets the Dolby Vision value to a default value for all combinations of picture modes and video formats.
+
+        Args:
+            defaultValue (str, optional): The default Dolby Vision value to set. Defaults to 'tvDolbyMode_Dark'.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormat in videoFormatInfo:
+                # Log and save the default Dolby Vision value
+                self.testtvSettings.saveDolbyVisionValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+                time.sleep(1)
+
+
     def testFunction(self):
         """This function tests saving Dolby Vision values with all combinations of picture mode and video format.
-
-        It also adds the option to restart the device to verify changes.
 
         Returns:
             bool: Status of the Dolby Vision save operations.
         """
-
-        self.log.testStart(self.testName, '52')  # Start the test with the defined test name
+        self.log.testStart(self.testName, '52')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
+
+        # Save Dolby Vision values for all formats
+        self.saveDolbyVisionForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
         # Loop through video formats and corresponding stream URLs
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
+        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(),streams)):
+
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
@@ -89,27 +137,23 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
-            time.sleep(3)  # Allow some time for the stream to start
+
+            # Allow some time for the stream to start
+            time.sleep(3)
 
             # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Loop through defined Dolby Vision settings
-                for dolbyVision in self.testtvSettings.getDolbyVisionInfo():
-                    self.log.stepStart(f'Setting Dolby Vision: {dolbyVision}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    # Set Picture Mode, Video Format, and Dolby Vision
-                    result = self.testtvSettings.saveDolbyVisionValues(pictureMode, videoFormat, dolbyVision)  # Call the saveDolbyVision function
+                # Determine the Dolby Vision value based on the saved indices
+                dolbyVision = self.testtvSettings.getDolbyVisionInfo()[self.dolby_vision_indices[videoFormatIndex]]
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()  # Stop the current stream playback
-                    self.testPlayer.play(streamFullPath)  # Restart the stream
-                    self.log.info("Stream restarted, continuing verification...")
+                self.log.stepStart(f'Setting Dolby Vision: {dolbyVision}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    # Call the verification function (manual=True allows for manual verification)
-                    result = self.testVerifyDolbyVision(pictureMode, videoFormat, dolbyVision, manual=True)  # Call the verification function
+                # Call the verification function (manual=True allows for manual verification)
+                result = self.testVerifyDolbyVision(pictureMode, videoFormat, dolbyVision, manual=True)
 
-                    # Log the result for each step
-                    self.log.stepResult(result, f'Verification for Dolby Vision: {dolbyVision}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for Dolby Vision: {dolbyVision}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -117,10 +161,14 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
 
+
+        # Set all Dolby Vision values to the default value of 'tvDolbyMode_Dark'
+        self.setAllDolbyVisionToDefault()
+
         # Terminate the tvSettings Module
         self.testtvSettings.terminate()
 
-        return result  # Return the last result of the verification
+        return result
 
 if __name__ == '__main__':
     test = tvSettings_test52_SaveDolbyVision()

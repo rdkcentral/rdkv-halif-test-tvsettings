@@ -89,6 +89,7 @@ class tvSettings_test06_BacklightFade(tvSettingsHelperClass):
             for fromVal in self.backlightValues:
                 for toVal in self.backlightValues:
                     for fadeDuration in self.fadeDurations:
+
                         self.log.stepStart(f'BacklightFade from {fromVal} to {toVal} with duration {fadeDuration} ms Stream:{stream}')
 
                         # Start the stream playback before setting backlight fade

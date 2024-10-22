@@ -33,9 +33,9 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
     # Five different values for red, green, and blue levels (range: 0-255)
     rgbLevels = [
         {'red': 0, 'green': 0, 'blue': 0},
-        {'red': 64, 'green': 64, 'blue': 64},
-        {'red': 128, 'green': 128, 'blue': 128},
-        {'red': 192, 'green': 192, 'blue': 192},
+        {'red': 255, 'green': 0, 'blue': 0},
+        {'red': 0, 'green': 255, 'blue': 0},
+        {'red': 0, 'green': 0, 'blue': 255},
         {'red': 255, 'green': 255, 'blue': 255}
     ]
 
@@ -82,29 +82,22 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        for stream in self.testStreams:
-            # Start the stream playback
-            self.testPlayer.play(stream)
+        # Set up different values for red, green, and blue levels across the predefined samples
+        for levels in self.rgbLevels:
+            redLevel = levels['red']
+            greenLevel = levels['green']
+            blueLevel = levels['blue']
 
-            # Set up different values for red, green, and blue levels across the predefined samples
-            for levels in self.rgbLevels:
-                redLevel = levels['red']
-                greenLevel = levels['green']
-                blueLevel = levels['blue']
+            self.log.stepStart(f'Red Level: {redLevel}, Green Level: {greenLevel}, Blue Level: {blueLevel}')
 
-                self.log.stepStart(f'Red Level: {redLevel}, Green Level: {greenLevel}, Blue Level: {blueLevel}, Stream: {stream}')
+            # Set the RGB pattern
+            self.testtvSettings.setRGBPattern(redLevel, greenLevel, blueLevel)
 
-                # Set the RGB pattern
-                self.testtvSettings.setRGBPattern(redLevel, greenLevel, blueLevel)
+            # Verify the RGB pattern has been set correctly
+            result = self.testVerifyRGBPattern(redLevel, greenLevel, blueLevel, True)
 
-                # Verify the RGB pattern has been set correctly
-                result = self.testVerifyRGBPattern(redLevel, greenLevel, blueLevel, True)
-
-                # Log the result of the RGB pattern verification
-                self.log.stepResult(result, f'Red Level: {redLevel}, Green Level: {greenLevel}, Blue Level: {blueLevel}, Stream: {stream}')
-
-            # Stop the stream playback
-            self.testPlayer.stop()
+            # Log the result of the RGB pattern verification
+            self.log.stepResult(result, f'Red Level: {redLevel}, Green Level: {greenLevel}, Blue Level: {blueLevel},')
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()

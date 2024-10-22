@@ -40,6 +40,7 @@ class tvSettings_test44_SaveLocalDimmingLevel(tvSettingsHelperClass):
         """
         self.testName = "test44_SaveLocalDimmingLevel"
         super().__init__(self.testName, '44')
+        self.local_dimming_indices = []  # Initialize the list for local dimming indices
 
     def testVerifyLocalDimmingValue(self, pictureMode, videoFormat, localDimmingLevel, manual=False):
         """
@@ -63,6 +64,31 @@ class tvSettings_test44_SaveLocalDimmingLevel(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
+    def saveLocalDimmingValuesForAllFormats(self):
+        """
+        Saves local dimming values for all combinations of picture mode index and video format.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        self.local_dimming_levels = self.testtvSettings.getLocalDimmingMode()
+
+        # Prepare the list of local dimming assignments based on video formats
+        for videoFormatIndex in range(len(videoFormatInfo)):
+            # Determine index for local dimming levels using modulus logic
+            self.local_dimming_indices.append(videoFormatIndex % len(self.local_dimming_levels))
+
+        # Save the appropriate local dimming values based on the video format
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
+                # Select the local dimming level based on the computed index
+                localDimmingLevel = self.local_dimming_levels[self.local_dimming_indices[videoFormatIndex]]
+
+                # Log and save the local dimming values
+                self.testtvSettings.saveLocalDimmingModeValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, localDimmingLevel)
+
     def testFunction(self):
         """This function tests saving localDimmingLevel values with all combinations of picture mode and video format.
 
@@ -75,6 +101,9 @@ class tvSettings_test44_SaveLocalDimmingLevel(tvSettingsHelperClass):
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
+
+        # Save local dimming values for all formats
+        self.saveLocalDimmingValuesForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
@@ -92,23 +121,16 @@ class tvSettings_test44_SaveLocalDimmingLevel(tvSettingsHelperClass):
 
             # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Loop through available local dimming levels
-                for local_dimming in self.testtvSettings.getLocalDimmingMode():
-                    self.log.stepStart(f'Setting Local Dimming Level: {local_dimming}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Determine the local dimming level based on the saved indices
+                localDimmingLevel = self.local_dimming_levels[self.local_dimming_indices[self.testtvSettings.getVideoFormatInfo().index(videoFormat)]]
 
-                    # Set Picture Mode, Video Format, and Local Dimming Level
-                    result = self.testtvSettings.saveLocalDimmingModeValues(pictureMode, videoFormat, local_dimming)
+                self.log.stepStart(f'Setting Local Dimming Level: {localDimmingLevel}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()  # Stop the current stream playback
-                    self.testPlayer.play(streamFullPath)  # Restart the stream
-                    self.log.info("Stream restarted, continuing verification...")
+                # Call the verification function (manual=True allows for manual verification)
+                result = self.testVerifyLocalDimmingValue(pictureMode, videoFormat, localDimmingLevel, manual=True)
 
-                    # Call the verification function (manual=True allows for manual verification)
-                    result = self.testVerifyLocalDimmingValue(pictureMode, videoFormat, local_dimming, manual=True)
-
-                    # Log the result for each step
-                    self.log.stepResult(result, f'Verification for Local Dimming Level: {local_dimming}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for Local Dimming Level: {localDimmingLevel}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()

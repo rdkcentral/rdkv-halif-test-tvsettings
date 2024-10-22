@@ -32,7 +32,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test13_Saturation(tvSettingsHelperClass):
 
-    saturationLevels = [0, 25, 50, 75, 100]
+    saturationLevels = [0, 25, 50, 75, 100, 50]
 
     def __init__(self):
         """

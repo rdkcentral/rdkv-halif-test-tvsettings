@@ -22,6 +22,7 @@
 #* ******************************************************************************
 import os
 import sys
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -30,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test17_DynamicContrast(tvSettingsHelperClass):
 
-    dynamicContrastStates = ["enabled", "disabled"]
+    dynamicContrastStates = ["Disabled", "Enabled", "Disabled"]
 
     def __init__(self):
         """
@@ -82,6 +83,7 @@ class tvSettings_test17_DynamicContrast(tvSettingsHelperClass):
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
+            time.sleep(3)
 
             for dynamicContrast in self.dynamicContrastStates:
                 self.log.stepStart(f'Dynamic Contrast: {dynamicContrast} Stream: {stream}')

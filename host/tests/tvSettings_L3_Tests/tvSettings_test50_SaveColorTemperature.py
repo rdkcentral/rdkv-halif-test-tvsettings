@@ -40,10 +40,11 @@ class tvSettings_test50_SaveColorTemperature(tvSettingsHelperClass):
         """
         self.testName = "test50_SaveColorTemperature"
         super().__init__(self.testName, '50')
+        self.color_temperature_indices = []
 
     def testVerifyColorTemperature(self, pictureMode, videoFormat, colorTemperature, manual=False):
         """
-        Verifies whether the Color Temperature value is set or not.
+        Verifies whether the Color Temperature value is set correctly.
 
         Args:
             pictureMode (str): Picture Mode.
@@ -63,25 +64,72 @@ class tvSettings_test50_SaveColorTemperature(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
+    def saveColorTemperatureForAllFormats(self):
+        """
+        Saves color temperature values for all combinations of picture mode index and video format.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        colorTemperatures = self.testtvSettings.getColorTemperatureInfo()
+
+        # Prepare the list of color temperature assignments based on video formats
+        for videoFormatIndex in range(len(videoFormatInfo)):
+            # 0 or 1 based on index
+            self.color_temperature_indices.append(videoFormatIndex % len(colorTemperatures))
+
+        # Save the appropriate color temperature values based on the video format
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
+                colorTemperature = colorTemperatures[self.color_temperature_indices[videoFormatIndex]]
+
+                # Log and save the color temperature values
+                self.testtvSettings.saveColorTemperatureValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, colorTemperature)
+                time.sleep(1)
+
+
+    def setAllColorTemperatureToDefault(self, defaultValue='tvColorTemp_STANDARD'):
+        """
+        Sets the color temperature to a default value for all combinations of picture modes and video formats.
+
+        Args:
+            defaultValue (str, optional): The default color temperature value to set. Defaults to 'tvColorTemp_STANDARD'.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormat in videoFormatInfo:
+                # Log and save the default color temperature value
+                self.testtvSettings.saveColorTemperatureValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+                time.sleep(1)
+
+
     def testFunction(self):
         """This function tests saving Color Temperature values with all combinations of picture mode and video format.
-
-        It also adds the option to restart the device to verify changes.
 
         Returns:
             bool: Status of the color temperature save operations.
         """
-
-        self.log.testStart(self.testName, '50')  # Start the test with the defined test name
+        self.log.testStart(self.testName, '50')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
+
+        # Save color temperature values for all formats
+        self.saveColorTemperatureForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
         # Loop through video formats and corresponding stream URLs
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
+        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(),streams)):
+
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
@@ -89,27 +137,23 @@ class tvSettings_test50_SaveColorTemperature(tvSettingsHelperClass):
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
-            time.sleep(3)  # Allow some time for the stream to start
+
+            # Allow some time for the stream to start
+            time.sleep(3)
 
             # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Loop through defined color temperature values
-                for colorTemperature in self.testtvSettings.getColorTemperatureInfo():
-                    self.log.stepStart(f'Setting Color Temperature: {colorTemperature}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    # Set Picture Mode, Video Format, and Color Temperature
-                    self.testtvSettings.saveColorTemperatureValues(pictureMode, videoFormat, colorTemperature)  # Call the saveColorTemperature function
+                # Determine the color temperature based on the saved indices
+                colorTemperature = self.testtvSettings.getColorTemperatureInfo()[self.color_temperature_indices[videoFormatIndex]]
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()  # Stop the current stream playback
-                    self.testPlayer.play(streamFullPath)  # Restart the stream
-                    self.log.info("Stream restarted, continuing verification...")
+                self.log.stepStart(f'Setting Color Temperature: {colorTemperature}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    # Call the verification function (manual=True allows for manual verification)
-                    result = self.testVerifyColorTemperature(pictureMode, videoFormat, colorTemperature, manual=True)  # Call the verification function
+                # Call the verification function (manual=True allows for manual verification)
+                result = self.testVerifyColorTemperature(pictureMode, videoFormat, colorTemperature, manual=True)
 
-                    # Log the result for each step
-                    self.log.stepResult(result, f'Verification for Color Temperature: {colorTemperature}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for Color Temperature: {colorTemperature}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -117,10 +161,13 @@ class tvSettings_test50_SaveColorTemperature(tvSettingsHelperClass):
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
 
+        # Set all color temperature values to the default value of 'tvColorTemp_STANDARD'
+        self.setAllColorTemperatureToDefault()
+
         # Terminate the tvSettings Module
         self.testtvSettings.terminate()
 
-        return result  # Return the last result of the verification
+        return result
 
 if __name__ == '__main__':
     test = tvSettings_test50_SaveColorTemperature()

@@ -23,7 +23,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
 
-    wbCalibrationModes = [1, 0]  # WBCalibrationMode values
+    wbCalibrationModes = [0, 1, 0]  # WBCalibrationMode values
 
     def __init__(self):
         """
@@ -34,25 +34,6 @@ class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
         """
         self.testName = "test27_WBCalibrationMode"
         super().__init__(self.testName, '27')
-
-    # TODO: Current version supports only manual verification.
-    def testQueryWBCalibrationLevel(self, wbCalibration, manual=False):
-        """
-        Queries whether the WBCalibration is to set or not.
-
-        Args:
-            wbCalibration (int): WBCalibration value to be set.
-            manual (bool, optional): Manual verification (True: manual, False: other verification methods).
-                                     Defaults to False.
-
-        Returns:
-            bool: Status of WBCalibration setting.
-        """
-        if manual:
-            return self.testUserResponse.getUserYN(f"Do you want to make WBCalibration {wbCalibration}? (Y/N):")
-        else:
-            # TODO: Add automation verification methods
-            return False
 
     # TODO: Current version supports only manual verification.
     def testVerifyWBCalibrationMode(self, wbCalibrationMode, manual=False):
@@ -91,9 +72,6 @@ class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
 
             for wbCalibrationMode in self.wbCalibrationModes:
                 self.log.stepStart(f'WBCalibrationMode: {wbCalibrationMode} Stream: {stream}')
-
-                # Query the user about the WBCalibration level
-                self.testQueryWBCalibrationLevel(wbCalibrationMode, True)
 
                 # Set the WBCalibrationMode
                 self.testtvSettings.setWBCalibration(wbCalibrationMode)

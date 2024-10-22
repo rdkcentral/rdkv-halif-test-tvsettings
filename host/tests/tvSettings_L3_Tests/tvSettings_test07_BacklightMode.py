@@ -85,6 +85,7 @@ class tvSettings_test07_BacklightMode(tvSettingsHelperClass):
             time.sleep(3)
 
             for backlightMode in self.testtvSettings.getBacklightMode():
+
                 self.log.stepStart(f'BacklightMode Level:{backlightMode} Stream:{stream}')
 
                 # Set the BacklightMode level

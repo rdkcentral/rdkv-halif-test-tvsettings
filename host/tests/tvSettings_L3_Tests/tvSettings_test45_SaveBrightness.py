@@ -8,7 +8,7 @@
 # *
 # * Licensed under the Apache License, Version 2.0 (the "License");
 # * you may not use this file except in compliance with the License.
-# * You may obtain a copy of the License at
+# * you may obtain a copy of the License at
 # *
 # * http://www.apache.org/licenses/LICENSE-2.0
 # *
@@ -31,9 +31,6 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
 
-    brightnessValues = [0, 25, 50, 75, 100]  # Define brightness values
-    rackDevice = "dut"  # Define the device under test
-
     def __init__(self):
         """
         Initializes the SaveBrightness test.
@@ -43,10 +40,11 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
         """
         self.testName = "test45_SaveBrightness"
         super().__init__(self.testName, '45')
+        self.brightness_values = []
 
     def testVerifyBrightnessValue(self, pictureMode, videoFormat, brightness, manual=False):
         """
-        Verifies whether the Brightness value is set or not.
+        Verifies whether the Brightness value is set correctly.
 
         Args:
             pictureMode (str): Picture Mode.
@@ -56,7 +54,7 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
                                      Defaults to other verification methods.
 
         Returns:
-            bool: returns the status of brightness value.
+            bool: Returns the status of brightness value.
         """
         if manual:
             return self.testUserResponse.getUserYN(
@@ -66,24 +64,68 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
+    def saveBrightnessValuesForAllFormats(self):
+        """
+        Saves brightness values for all combinations of picture mode index and video format.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        # Split the brightness values based on the number of video formats
+        num_video_formats = len(videoFormatInfo)
+        self.brightness_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
+
+        # Save the appropriate brightness values based on the video format
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
+                brightnessValue = self.brightness_values[videoFormatIndex]
+
+                # Log and save the brightness values
+                self.testtvSettings.saveBrightnessValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, brightnessValue)
+                time.sleep(1)
+
+    def setAllBrightnessToDefault(self, defaultValue=50):
+        """
+        Sets the brightness value to a default value for all combinations of picture modes and video formats.
+
+        Args:
+            defaultValue (int, optional): The default brightness value to set. Defaults to 50.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        for videoFormat in videoFormatInfo:
+            for pictureModeIndex in pictureModeIndices:
+                # Log and save the default brightness value
+                self.testtvSettings.saveBrightnessValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+                time.sleep(1)
+
     def testFunction(self):
         """This function tests saving brightness values with all combinations of picture mode and video format.
-
-        It also adds the option to restart the device to verify changes.
 
         Returns:
             bool: Status of the brightness save operations.
         """
-        self.log.testStart(self.testName, '45')  # Start the test with the defined test name
+        self.log.testStart(self.testName, '45')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
+
+        # Save brightness values for all formats
+        self.saveBrightnessValuesForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
         # Loop through video formats and corresponding stream URLs
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
+        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(),streams)):
+
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
@@ -91,27 +133,20 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
-            time.sleep(3)  # Allow some time for the stream to start
+            time.sleep(3)
 
             # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Loop through defined brightness values
-                for brightness in self.brightnessValues:
-                    self.log.stepStart(f'Setting Brightness: {brightness}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Get the brightness value based on the saved indices
+                brightnessValue = self.brightness_values[videoFormatIndex]
 
-                    # Set Picture Mode, Video Format, and Brightness Level
-                    result = self.testtvSettings.saveBrightnessValues(pictureMode, videoFormat, brightness)
+                self.log.stepStart(f'Setting Brightness: {brightnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()  # Stop the current stream playback
-                    self.testPlayer.play(streamFullPath)  # Restart the stream
-                    self.log.info("Stream restarted, continuing verification...")
+                # Call the verification function (manual=True allows for manual verification)
+                result = self.testVerifyBrightnessValue(pictureMode, videoFormat, brightnessValue, manual=True)
 
-                    # Call the verification function (manual=True allows for manual verification)
-                    result = self.testVerifyBrightnessValue(pictureMode, videoFormat, brightness, manual=True)
-
-                    # Log the result for each step
-                    self.log.stepResult(result, f'Verification for Brightness: {brightness}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for Brightness: {brightnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -119,10 +154,13 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
 
+        # Set all brightness values to the default value of 50
+        self.setAllBrightnessToDefault()
+
         # Terminate the tvSettings Module
         self.testtvSettings.terminate()
 
-        return result  # Return the last result of the verification
+        return result
 
 if __name__ == '__main__':
     test = tvSettings_test45_SaveBrightness()

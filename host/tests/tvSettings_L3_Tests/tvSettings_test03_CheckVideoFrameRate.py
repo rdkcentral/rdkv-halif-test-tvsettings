@@ -52,13 +52,26 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
         self.testName = "test03_CheckVideoFrameRate"
         super().__init__(self.testName, '3')  # Set test number to 3
 
+        # List of all supported video frame rates
+        self.supportedFrameRates = [
+            "30",
+            "60",
+            "23dot98",
+            "59dot94"
+            "24",
+            "25",
+            "50",
+            "29dot97",
+        ]
+
     def testFunction(self):
         """
-        Executes the Video Frame Rate test.
+        Executes the Video Frame Rate Level test.
 
         This method:
         - Initializes the tvSettings module.
-        - Retrieves the list of frame rates and their corresponding stream URLs.
+        - Retrieves the list of video frame rates.
+        - Iterates through each video frame rate and corresponding stream URL.
         - Downloads, plays, and verifies each video frame rate.
 
         Returns:
@@ -69,39 +82,49 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Get the list of frame rates and streams
-        frameRates = self.testtvSettings.getVideoFrameRateInfo()
+        # Get the list of video frame rates currently supported
+        videoFrameRates = self.testtvSettings.getVideoFrameRateInfo()
+
+        # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-        # Iterate through each frame rate and corresponding stream URL
-        for frameRate, streamUrl in zip(frameRates, streams):
+        # Iterate through each supported frame rate and corresponding stream in order
+        for frameRate, streamUrl in zip(self.supportedFrameRates, streams):
+            # Check if the format is present as a substring in any item of videoFormats
+            if not any(frameRate in vf for vf in videoFrameRates):
+                continue
+
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
             streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
 
-            # Start the stream playback
+            # Play the stream
             self.testPlayer.play(streamFullPath)
-            time.sleep(10)  # Wait for a moment to let the stream start
-
-            self.log.stepStart(f'Frame Rate Level: {frameRate} Stream: {streamFullPath}')
+            time.sleep(3)
 
             self.log.stepStart(f'Video FrameRate {frameRate} Callback Test')
 
-            # Retrieve the video frameRate callback status
+            # Retrieve the video frame rate callback status
             cbVideoFrameRate = self.testtvSettings.getVideoFrameRateCallbackStatus()
 
-            # Log the result of the video frameRate callback test
-            self.log.stepResult(cbVideoFrameRate and frameRate in cbVideoFrameRate, f'Video FrameRate {frameRate} Callback Test')
+            # Log the result of the video frame rate callback test
+            self.log.stepResult(cbVideoFrameRate and frameRate in cbVideoFrameRate,
+                                f'Video FrameRate {frameRate} Callback Test')
 
-            # Check the current frame rate
+            self.log.stepStart(f'Frame Rate Level: {frameRate} Stream: {streamFullPath}')
+
+            # Check the current video frame rate
             currentFrameRate = self.testtvSettings.checkVideoFrameRate()
 
-            # Log the result of the frame rate test
+            # Log the result of the frame rate check
             self.log.stepResult(frameRate in currentFrameRate, f'Frame Rate {frameRate} Test')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
+            time.sleep(2)  # Allow time for the default callback to occur
+            cbVideoFrameRateAfterStop = self.testtvSettings.getVideoFrameRateCallbackStatus()
 
             # Clean the assets (delete the downloaded stream)
             self.testCleanAssetsByUrl(streamFullPath)

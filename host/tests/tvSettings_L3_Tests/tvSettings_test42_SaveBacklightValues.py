@@ -8,7 +8,7 @@
 # *
 # * Licensed under the Apache License, Version 2.0 (the "License");
 # * you may not use this file except in compliance with the License.
-# * You may obtain a copy of the License at
+# * you may obtain a copy of the License at
 # *
 # * http://www.apache.org/licenses/LICENSE-2.0
 # *
@@ -31,9 +31,6 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
 
-    # Predefined backlight values to test: 0, 25, 50, 75, 100
-    backlightValues = [0, 25, 50, 75, 100]
-
     def __init__(self):
         """
         Initializes the SaveBacklightValues test.
@@ -43,6 +40,7 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
         """
         self.testName = "test42_SaveBacklightValues"
         super().__init__(self.testName, '42')
+        self.backlight_values = []
 
     def testVerifyBacklightValue(self, pictureMode, videoFormat, backlight, manual=False):
         """
@@ -66,50 +64,90 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
-    def testFunction(self):
-        """This function tests saving backlight values with all combinations of picture mode and video format.
-
-        Adds the option to restart the device to verify changes.
+    def saveBacklightValuesForAllFormats(self):
+        """
+        Saves backlight values for all combinations of picture mode index and video format.
 
         Returns:
-            bool: Status of the backlight save operations.
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        # Split the brightness values based on the number of video formats
+        num_video_formats = len(videoFormatInfo)
+        self.backlight_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
+
+        # Save the appropriate backlight values based on the video format
+        for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
+            for pictureModeIndex in pictureModeIndices:
+                backlightValue = self.backlight_values[videoFormatIndex]
+
+                # Log and save the backlight values
+                self.testtvSettings.saveBacklightValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, backlightValue)
+
+    def setAllBacklightValuesToDefault(self, defaultValue=50):
+        """
+        Sets the backlight value to a default value for all combinations of picture modes and video formats.
+
+        Args:
+            defaultValue (int, optional): The default backlight value to set. Defaults to 50.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        for videoFormat in videoFormatInfo:
+            for pictureModeIndex in pictureModeIndices:
+                # Log and save the default backlight value
+                self.testtvSettings.saveBacklightValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+
+    def testFunction(self):
+        """
+        Tests saving Backlight values with all combinations of picture mode and video format.
+
+        Returns:
+            bool: Status of the backlight value save operations.
         """
         self.log.testStart(self.testName, '42')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
+        # Save backlight values for all formats
+        self.saveBacklightValuesForAllFormats()
+
+        # Get the list of streams from the test setup
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+
         # Loop through video formats and corresponding stream URLs
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), self.testSetup.get("assets").get("device").get(self.testName).get("streams")):
-            # Download the individual stream (using the updated testDownloadAssets)
+        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(),streams)):
+
+            # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
             streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
-            time.sleep(3)  # Wait for the stream to start
+
+            # Allow some time for the stream to start
+            time.sleep(3)
 
             # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Loop through predefined backlight values
-                for backlight in self.backlightValues:
+                # Get the backlight value based on the saved indices
+                backlightValue = self.backlight_values[videoFormatIndex]
 
-                    self.log.stepStart(f'Set Backlight Value: {backlight}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                self.log.stepStart(f'Setting Backlight Value: {backlightValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    # Set Picture Mode, Video Format, and Backlight Value
-                    self.testtvSettings.saveBacklightValues(pictureMode, videoFormat, backlight)
+                # Call the verification function (manual=True allows for manual verification)
+                result = self.testVerifyBacklightValue(pictureMode, videoFormat, backlightValue, manual=True)
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()
-                    self.testPlayer.play(streamFullPath)
-                    self.log.info("Device restarted, continuing verification...")
-
-                    # Call the verification function (manual=True allows for manual verification)
-                    result = self.testVerifyBacklightValue(pictureMode, videoFormat, backlight, manual=True)
-
-                    # Log the result for each step
-                    self.log.stepResult(result, f'Backlight Value: {backlight}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for Backlight Value: {backlightValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -117,10 +155,13 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
 
-        # Terminate the tvSettings module
+        # Set all backlight values to the default value of 50
+        self.setAllBacklightValuesToDefault()
+
+        # Terminate the tvSettings Module
         self.testtvSettings.terminate()
 
-        return True
+        return result
 
 if __name__ == '__main__':
     test = tvSettings_test42_SaveBacklightValues()

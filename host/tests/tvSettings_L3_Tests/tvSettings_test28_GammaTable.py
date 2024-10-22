@@ -15,6 +15,8 @@
 # * *******************************************************************************
 import os
 import sys
+import time
+import numpy as np
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -23,44 +25,32 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test28_GammaTable(tvSettingsHelperClass):
 
-    # Predefined RGB values for testing
+    # Predefined RGB gamma curve values for testing
     gammaCombinations = [
         {
-            "size": 10,
-            "red": [1023, 900, 800, 700, 600, 500, 400, 300, 200, 100],
-            "green": [800, 750, 700, 650, 600, 500, 400, 300, 200, 100],
-            "blue": [600, 500, 400, 300, 200, 100, 50, 30, 20, 10]
+            # Linear gamma using x ^ 1
+            "description": "Linear gamma (x ^ 1)",
+            "size": 255,
+            "red": list(np.linspace(0, 1023, 255).astype(int)),
+            "green": list(np.linspace(0, 1023, 255).astype(int)),
+            "blue": list(np.linspace(0, 1023, 255).astype(int)),
         },
         {
-            "size": 5,
-            "red": [300, 200, 100, 50, 0],
-            "green": [600, 500, 400, 300, 200],
-            "blue": [1023, 900, 800, 700, 600]
+            # Curved gamma using x ^ (1/2)
+            "description": "Curved gamma (x ^ 1/2)",
+            "size": 255,
+            "red": list((np.sqrt(np.linspace(0, 1, 255)) * 1023).astype(int)),
+            "green": list((np.sqrt(np.linspace(0, 1, 255)) * 1023).astype(int)),
+            "blue": list((np.sqrt(np.linspace(0, 1, 255)) * 1023).astype(int)),
         },
         {
-            "size": 10,
-            "red": [600] * 10,
-            "green": [600] * 10,
-            "blue": [600] * 10
+            # Gamma using x ^ 2.2 for higher contrast
+            "description": "Gamma (x ^ 2.2)",
+            "size": 255,
+            "red": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
+            "green": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
+            "blue": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
         },
-        {
-            "size": 5,
-            "red": [1023, 1000, 900, 800, 700],
-            "green": [500, 400, 300, 200, 100],
-            "blue": [1023, 1000, 900, 800, 700]
-        },
-        {
-            "size": 10,
-            "red": [300] * 10,
-            "green": [300] * 10,
-            "blue": [300] * 10
-        },
-        {
-            "size": 10,  # Reset Gamma Table
-            "red": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Default values for Red
-            "green": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Default values for Green
-            "blue": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # Default values for Blue
-        }
     ]
 
     def __init__(self):
@@ -73,16 +63,12 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
         self.testName = "test28_GammaTable"
         super().__init__(self.testName, '28')
 
-    # TODO: Current version supports only manual verification.
-    def testVerifyGammaTable(self, size, red, green, blue, manual=False):
+    def testVerifyGammaTable(self, description, manual=False):
         """
         Verifies whether the Gamma Table settings are set correctly.
 
         Args:
-            size (int): Gamma Table size.
-            red (list): List of Red values.
-            green (list): List of Green values.
-            blue (list): List of Blue values.
+            description (str): Description of the gamma type.
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to False.
 
@@ -90,7 +76,7 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
             bool: Status of Gamma Table settings.
         """
         if manual:
-            return self.testUserResponse.getUserYN(f"Is Gamma Table set with Size: {size}, R: {red}, G: {green}, B: {blue}? (Y/N):")
+            return self.testUserResponse.getUserYN(f"Is Gamma Table set with: {description}? (Y/N):")
         else:
             # TODO: Add automation verification methods
             return False
@@ -117,6 +103,7 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
                 red = combination["red"]
                 green = combination["green"]
                 blue = combination["blue"]
+                description = combination["description"]
 
                 self.log.stepStart(f'Setting Gamma Table Size: {size}, R: {red}, G: {green}, B: {blue}')
 
@@ -124,7 +111,7 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
                 self.testtvSettings.setGammaTable(size, red, green, blue)
 
                 # Verify the Gamma Table settings
-                result = self.testVerifyGammaTable(size, red, green, blue, True)
+                result = self.testVerifyGammaTable(description, True)
 
                 # Log the result of the verification
                 self.log.stepResult(result, f'Gamma Table Size: {size} R: {red}, G: {green}, B: {blue}')

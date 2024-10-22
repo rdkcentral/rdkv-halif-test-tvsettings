@@ -416,15 +416,6 @@ static void readDouble(double *choice)
     readAndDiscardRestOfLine(stdin);
 }
 /**
- * @brief This function gets the string Input value.
- *
- */
-static void readString(char *choice)
-{
-    fgets(choice, 4, stdin);
-    readAndDiscardRestOfLine(stdin);
-}
-/**
  * @brief This function logs the callback.
  *
  */
@@ -507,9 +498,9 @@ static void videoContentChangeCB (tvContentType_t mode, void *userData)
  */
 static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void *userData)
 {
-    UT_LOG_INFO("Received Video Resolution Change callback Frame heightxwidth:[%dx%d], IsIntercaed[%d] Res:[%s], userData[%s][0x%0X]",
-                 resolutionStruct.frameHeight,
+    UT_LOG_INFO("Received Video Resolution Change callback Frame Res:[%s], widthxheight:[%dx%d], IsIntercaed[%d], userData[%s][0x%0X]",
                  resolutionStruct.frameWidth,
+                 resolutionStruct.frameHeight,
                 resolutionStruct.isInterlaced,
                 UT_Control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue),
                 (char *)userData,
@@ -904,7 +895,6 @@ void test_l3_tvSettings_backlightMode(void)
     int32_t userChoice = 0;
     int32_t selectedMode = 0;
     tvBacklightMode_t currentMode = tvBacklightMode_INVALID;
-    int32_t menuIndex = 1;
 
     // Display available modes to the user
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -913,7 +903,7 @@ void test_l3_tvSettings_backlightMode(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Backlight Modes");
     for (int32_t i = tvBacklightMode_MANUAL; i < tvBacklightMode_MAX; i <<= 1)
     {
-        UT_LOG_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvBacklightMode_mapTable, i));
+        UT_LOG_INFO("%d. %s", i, UT_Control_GetMapString(tvBacklightMode_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -929,7 +919,7 @@ void test_l3_tvSettings_backlightMode(void)
         return;
     }
 
-    selectedMode = userChoice - 1;
+    selectedMode = userChoice;
 
     // Set the selected backlight mode
     UT_LOG_INFO("Setting BacklightMode (IN: mode:[%s])", UT_Control_GetMapString(tvBacklightMode_mapTable, selectedMode));
@@ -1003,13 +993,13 @@ void test_l3_tvSettings_TVDimmingMode(void)
     switch (selectedMode)
     {
         case tvDimmingMode_Fixed:
-            modeStr = "fixed";
+            modeStr = "Fixed";
             break;
         case tvDimmingMode_Local:
-            modeStr = "local";
+            modeStr = "Local";
             break;
         case tvDimmingMode_Global:
-            modeStr = "global";
+            modeStr = "Global";
             break;
         default:
             UT_LOG_ERROR("Unknown dimming mode selected.");
@@ -1597,22 +1587,30 @@ void test_l3_tvSettings_DynamicContrast(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char currentDynamicContrast[10] = {0}; // Buffer to store the current dynamic contrast mode
-    char userChoice[10] = {0};
+    char currentDynamicContrast[20] = {0}; // Buffer to store the current dynamic contrast mode
+    char userChoice[20] = {0};
+    int userSelection = 0;
 
     // Display available dynamic contrast states to the user
     UT_LOG_INFO("Available Dynamic Contrast States:");
-    UT_LOG_INFO("enabled. Enable Dynamic Contrast");
-    UT_LOG_INFO("disabled. Disable Dynamic Contrast");
+    UT_LOG_INFO("1. Enabled");
+    UT_LOG_INFO("2. Disabled");
 
     // Get user input for selecting a dynamic contrast mode
-    UT_LOG_MENU_INFO("Enter 'enabled' to Enable or 'disabled' to Disable Dynamic Contrast: ");
-    readString(userChoice);
+    UT_LOG_MENU_INFO("Enter '1' to Enable or '2' to Disable Dynamic Contrast: ");
+    if (scanf("%d", &userSelection) != 1) {
+        UT_LOG_ERROR("Invalid input! Please enter 1 or 2 to select a mode.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
-    // Validate user input and handle invalid choices
-    if (strcmp(userChoice, "enabled") != 0 && strcmp(userChoice, "disabled") != 0)
-    {
-        UT_LOG_ERROR("Invalid choice! Please enter 'enabled' or 'disabled' to set dynamic contrast.");
+    // Validate user input and set the userChoice
+    if (userSelection == 1) {
+        strcpy(userChoice, "enabled");
+    } else if (userSelection == 2) {
+        strcpy(userChoice, "disabled");
+    } else {
+        UT_LOG_ERROR("Invalid choice! Please enter 1 or 2 to select a mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
@@ -1620,16 +1618,24 @@ void test_l3_tvSettings_DynamicContrast(void)
     // Set the selected dynamic contrast mode
     UT_LOG_INFO("Calling SetDynamicContrast(IN:DynamicContrastMode:[%s])", userChoice);
     ret = SetDynamicContrast(userChoice);
-    UT_LOG_INFO("Result SetDynamicContrast(IN:DynamicContrastMode:[%s]),tvError_t:[%s]", userChoice, UT_Control_GetMapString(tvError_mapTable, ret));
-
-    ASSERT(ret == tvERROR_NONE);
+    if (ret != tvERROR_NONE) {
+        UT_LOG_ERROR("Failed to set dynamic contrast. Error code: %d", ret);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+    UT_LOG_INFO("Result SetDynamicContrast(IN:DynamicContrastMode:[%s]), tvError_t:[%s]", userChoice, UT_Control_GetMapString(tvError_mapTable, ret));
 
     // Get the current dynamic contrast mode to confirm
     UT_LOG_INFO("Calling GetDynamicContrast(OUT:DynamicContrastMode:[])");
     ret = GetDynamicContrast(currentDynamicContrast);
+    if (ret != tvERROR_NONE) {
+        UT_LOG_ERROR("Failed to get dynamic contrast mode. Error code: %d", ret);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
     UT_LOG_INFO("Result GotDynamicContrast(OUT:DynamicContrastMode:[%s])", currentDynamicContrast);
 
-    ASSERT(ret == tvERROR_NONE);
+    // Verify that the setting matches the user's choice
     ASSERT_COMPARE(userChoice, currentDynamicContrast);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1782,43 +1788,48 @@ void test_l3_tvSettings_PictureMode(void)
     tvError_t ret = tvERROR_NONE;
     char currentPictureMode[PIC_MODE_NAME_MAX] = {0};
     char selectedPictureMode[PIC_MODE_NAME_MAX] = {0};
+    pic_modes_t *supportedPictureModes;  // Array of pointers to pic_modes_t
+    unsigned short pictureModeCount = 0;
     int32_t userChoice = 0;
 
-    // Display available modes from the tvPQModeIndex enum
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tPicture Mode");
-    UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s","Picture Mode");
-    for (int32_t i = PQ_MODE_STANDARD; i <= PQ_MODE_VIVID2; i++)
+    // Get the supported picture modes from the system
+    ret = GetTVSupportedPictureModes(&supportedPictureModes, &pictureModeCount);
+    UT_LOG_INFO("GetTVSupportedPictureModes pictureModeCount[%u]",pictureModeCount);
+    if (ret != tvERROR_NONE || pictureModeCount == 0)
     {
-        const char* modeName = UT_Control_GetMapString(tvPQModeRange_mapTable, i);
-        if (modeName != NULL)
+        UT_LOG_ERROR("Failed to retrieve supported picture modes or no modes available.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    // Display the list of supported picture modes to the user
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Picture Modes");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    for (int32_t i = 0; i < pictureModeCount; i++)
+    {
+        if (supportedPictureModes[i].name != NULL)
         {
-            UT_LOG_INFO("%d. %s", i, modeName);
+            UT_LOG_INFO("%d. %s", i + 1, supportedPictureModes[i].name);
         }
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
-    // Get user input for selecting a mode by enum value
+
+    // Get user input for selecting a mode by its index
     UT_LOG_MENU_INFO("Enter the number corresponding to the Picture Mode: ");
     scanf("%d", &userChoice);
     readAndDiscardRestOfLine(stdin);
 
-    // Validate user choice
-    if (userChoice < PQ_MODE_STANDARD || userChoice > PQ_MODE_VIVID2)
+    // Validate the user's choice
+    if (userChoice < 1 || userChoice > pictureModeCount)
     {
         UT_LOG_ERROR("Invalid choice! Please select a valid picture mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
 
-    // Convert enum value to the corresponding picture mode string using the map table
-    const char* modeString = UT_Control_GetMapString(tvPQModeRange_mapTable, userChoice);
-    if (modeString == NULL)
-    {
-        UT_LOG_ERROR("Invalid picture mode selected.");
-        return;
-    }
-    strncpy(selectedPictureMode, modeString, sizeof(selectedPictureMode) - 1);
+    // Retrieve the selected mode from the list
+    strncpy(selectedPictureMode, supportedPictureModes[userChoice - 1].name, sizeof(selectedPictureMode) - 1);
 
     // Set the selected picture mode
     UT_LOG_INFO("Calling SetTVPictureMode(IN: selectedPictureMode[%s])", selectedPictureMode);
@@ -1866,6 +1877,32 @@ void test_l3_tvSettings_ColorTempRgain(void)
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = HDMI_OFFSET; j <= MAX_OFFSET; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < HDMI_OFFSET || userSrcChoice > MAX_OFFSET)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedSourceId = userSrcChoice - 1;
+
+
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -1979,6 +2016,31 @@ void test_l3_tvSettings_ColorTempGgain(void)
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = HDMI_OFFSET; j <= MAX_OFFSET; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < HDMI_OFFSET || userSrcChoice > MAX_OFFSET)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedSourceId = userSrcChoice - 1;
+
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2092,6 +2154,30 @@ void test_l3_tvSettings_ColorTempBgain(void)
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = HDMI_OFFSET; j <= MAX_OFFSET; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < HDMI_OFFSET || userSrcChoice > MAX_OFFSET)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedSourceId = userSrcChoice - 1;
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2205,6 +2291,30 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = HDMI_OFFSET; j <= MAX_OFFSET; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < HDMI_OFFSET || userSrcChoice > MAX_OFFSET)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedSourceId = userSrcChoice - 1;
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2316,6 +2426,30 @@ void test_l3_tvSettings_ColorTempGpostoffset(void)
     int32_t saveOnly = 0; // 0 for set, 1 for save
     uint32_t i;
     int32_t userChoice = 0;
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = HDMI_OFFSET; j <= MAX_OFFSET; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < HDMI_OFFSET || userSrcChoice > MAX_OFFSET)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedSourceId = userSrcChoice - 1;
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2425,6 +2559,31 @@ void test_l3_tvSettings_ColorTempBpostoffset(void)
     int32_t retrievedBpostoffset = 0;
     int32_t saveOnly = 0; // 0 for set, 1 for save
     int32_t userChoice = 0;
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = HDMI_OFFSET; j <= MAX_OFFSET; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < HDMI_OFFSET || userSrcChoice > MAX_OFFSET)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedSourceId = userSrcChoice - 1;
+
 
     // Retrieve and display supported color temperatures
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2799,7 +2958,6 @@ void test_l3_tvSettings_ComponentSaturation(void)
     int32_t saturationValue = 0;
     int32_t retrievedSaturationValue = 0;
     int32_t userColorChoice = 0;
-    int32_t menuIndex = 1;
 
     // Display supported colors
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2808,7 +2966,7 @@ void test_l3_tvSettings_ComponentSaturation(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
     for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -2824,7 +2982,7 @@ void test_l3_tvSettings_ComponentSaturation(void)
         return;
     }
 
-    blSaturationColor = userColorChoice - 1;
+    blSaturationColor = userColorChoice;
 
     // Get user input for saturation value
     UT_LOG_MENU_INFO("Enter the saturation value (0 - 100): ");
@@ -2884,7 +3042,6 @@ void test_l3_tvSettings_ComponentHue(void)
     int32_t hueValue = 0;
     int32_t retrievedHueValue = 0;
     int32_t userColorChoice = 0;
-    int32_t menuIndex = 1;
 
     // Display supported colors
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2893,7 +3050,7 @@ void test_l3_tvSettings_ComponentHue(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
     for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        UT_LOG_MENU_INFO("%d. %s", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -2911,7 +3068,7 @@ void test_l3_tvSettings_ComponentHue(void)
     }
 
     // Set the selected component color based on user choice
-    blHueColor = (tvDataComponentColor_t)(userColorChoice - 1); // Adjust for 0-based indexing
+    blHueColor = (tvDataComponentColor_t)(userColorChoice); // Adjust for 0-based indexing
 
     // Get user input for hue value
     UT_LOG_MENU_INFO("Enter the hue value (0 - 100): ");
@@ -2971,7 +3128,6 @@ void test_l3_tvSettings_ComponentLuma(void)
     int32_t lumaValue = 0;
     int32_t retrievedLumaValue = 0;
     int32_t userColorChoice = 0;
-    int32_t menuIndex = 1;
 
     // Display supported colors
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -2980,7 +3136,7 @@ void test_l3_tvSettings_ComponentLuma(void)
     UT_LOG_MENU_INFO("\t#   %-30s", "Supported Component Color");
     for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i<<=1)
     {
-        UT_LOG_MENU_INFO("%d :[%s]", menuIndex++, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -3215,7 +3371,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
         }
     }
 
-    UT_LOG_INFO("Calling SetRGBPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d])", is_10_bit, R_Value, G_Value, B_Value);
+    UT_LOG_INFO("Calling SetGammaPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d])", is_10_bit, R_Value, G_Value, B_Value);
     ret = SetGammaPattern(is_10_bit, R_Value, G_Value, B_Value);
     UT_LOG_INFO("Result SetGammaPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d]), tvError_t:[%s]", is_10_bit, R_Value, G_Value, B_Value, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
@@ -3461,9 +3617,9 @@ void test_l3_tvSettings_SetBacklightTestMode(void)
     UT_LOG_MENU_INFO("\t\tSupported Backlight Test Modes");
     UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("\t#   %-30s", "Backlight Test Mode");
-    for (int32_t i = LDIM_STATE_NONBOOST; i < LDIM_STATE_MAX; i++)
+    for (int32_t i = tvBacklightTestMode_Normal; i < tvBacklightTestMode_Max; i++)
     {
-        UT_LOG_MENU_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvBacklightTestMode_mapTable, i));
+        UT_LOG_MENU_INFO("%d. %s", i , UT_Control_GetMapString(tvBacklightTestMode_mapTable, i));
     }
     UT_LOG_MENU_INFO("----------------------------------------------------------");
 
@@ -3472,7 +3628,7 @@ void test_l3_tvSettings_SetBacklightTestMode(void)
     readInt(&input_mode);
 
     // Validate user input
-    if (input_mode < LDIM_STATE_NONBOOST || input_mode >= LDIM_STATE_MAX)
+    if (input_mode < tvBacklightTestMode_Normal || input_mode >= (tvBacklightTestMode_Max ))
     {
         UT_LOG_ERROR("Invalid input mode: [%d]. Please enter a valid mode (0-3).", input_mode);
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3480,7 +3636,7 @@ void test_l3_tvSettings_SetBacklightTestMode(void)
     }
 
     // Set the mode based on user input
-    mode = (ldimStateLevel_t)input_mode - 1;
+    mode = (ldimStateLevel_t)input_mode;
 
     // Log the function call and result
     UT_LOG_INFO("Calling SetBacklightTestMode(IN: Mode: [%s])",
@@ -3630,9 +3786,30 @@ void test_l3_tvSettings_BacklightSave(void)
     int32_t backlightValue = -1;
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
+    int32_t userSrcChoice = 0;
 
-    // Log the supported video source
-    UT_LOG_MENU_INFO("Supported Video Source: [%s]", UT_Control_GetMapString(tvVideoSrcType_mapTable, videoSource));
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -3739,8 +3916,31 @@ void test_l3_tvSettings_TVDimmingModeSave(void)
     int32_t userFormatChoice = 0;
     int32_t userDimmingModeChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -3862,8 +4062,30 @@ void test_l3_tvSettings_LocalDimmingLevelSave(void)
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
 
 
     // List all options for Picture Mode
@@ -3979,8 +4201,31 @@ void test_l3_tvSettings_BrightnessSave(void)
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -4091,8 +4336,31 @@ void test_l3_tvSettings_ContrastSave(void)
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
 
     // List all options for PQ Mode
@@ -4138,6 +4406,9 @@ void test_l3_tvSettings_ContrastSave(void)
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
+
+    // Map the user's 1-based choice back to 0-based index
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Prompt the user for the contrast value
     UT_LOG_MENU_INFO("Enter the contrast value to set (0 - 100): ");
@@ -4202,8 +4473,31 @@ void test_l3_tvSettings_SharpnessSave(void)
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -4241,7 +4535,7 @@ void test_l3_tvSettings_SharpnessSave(void)
     UT_LOG_MENU_INFO("Enter your choice of Video Format (index): ");
     readInt(&userFormatChoice);
  
-    videoFormat = userFormatChoice;
+    videoFormat = (tvVideoFormatType_t)userFormatChoice - 1;
 
     // Validate user input for Video Format
     if (userFormatChoice < 1 || userFormatChoice > (int32_t)VIDEO_FORMAT_MAX)
@@ -4314,8 +4608,31 @@ void test_l3_tvSettings_HueSave(void)
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -4424,8 +4741,31 @@ void test_l3_tvSettings_SaturationSave(void)
     int32_t userPQChoice = 0;
     int32_t userFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -4533,8 +4873,31 @@ void test_l3_tvSettings_ColorTemperatureSave(void)
     tvColorTemp_t colorTemp = tvColorTemp_MAX; // Initialize to default value
     int32_t userChoice = 0; // Declare at the top
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for PQ Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -4652,8 +5015,31 @@ void test_l3_tvSettings_AspectRatioSave(void)
     tvDisplayMode_t aspectRatio = tvDisplayMode_MAX; // Initialize to default value
     int32_t userChoice = 0; // Declare at the top
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
+
 
     // List all options for Picture Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -4776,8 +5162,30 @@ void test_l3_tvSettings_LowLatencySave(void)
     int32_t userPQChoice = 0;
     int32_t userVideoFormatChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
 
 
     // List all options for Picture Mode
@@ -4884,8 +5292,30 @@ void test_l3_tvSettings_DolbyVisionSave(void)
     tvDolbyMode_t selectedMode = tvMode_Max; // Initialize to an invalid value
     int32_t userPQChoice = 0, userVideoFormatChoice = 0, userChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
 
     // List all options for Picture Mode
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -5001,8 +5431,30 @@ void test_l3_tvSettings_PictureModeSave(void)
     int32_t selectedPictureMode = 0;
     int32_t userChoice = 0;
 
-    // Log the selected video source
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
 
     // List all options for Video Format
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -5103,7 +5555,30 @@ void test_l3_tvSettings_CMSSave(void)
     int32_t userColorChoice;
     int32_t maxRange = 30;
 
-    UT_LOG_MENU_INFO("Using Video Source: VIDEO_SOURCE_IP");
+    int32_t userSrcChoice = 0;
+
+    // List all options for Video sources
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported Video sources");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "Video Sources");
+    for (uint32_t j = VIDEO_SOURCE_ANALOGUE; j <= VIDEO_SOURCE_MAX; j++)
+    {
+        UT_LOG_MENU_INFO("%u. %s", j+1, UT_Control_GetMapString(tvVideoSrcType_mapTable, j)); // Display index starting from 1
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of Video Source (index): ");
+    readInt(&userSrcChoice);
+
+    // Validate user input for video source
+    if (userSrcChoice < 1 || userSrcChoice > VIDEO_SOURCE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of Video source. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    videoSource = userSrcChoice - 1;
 
     // List all options for Picture Modes
     UT_LOG_MENU_INFO("----------------------------------------------------------");
@@ -5180,7 +5655,7 @@ void test_l3_tvSettings_CMSSave(void)
     UT_LOG_MENU_INFO("\t\tSupported Component Types");
     UT_LOG_MENU_INFO("----------------------------------------------------------");
     UT_LOG_MENU_INFO("\t#   %-30s", "Component Types");
-    for (uint32_t i = tvDataColor_NONE; i < tvDataColor_MAX; i <<= 1)
+    for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i <<= 1)
     {
         UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
@@ -5189,7 +5664,7 @@ void test_l3_tvSettings_CMSSave(void)
     UT_LOG_MENU_INFO("Enter the component color: ");
     readInt(&userColorChoice);
 
-    if (userColorChoice < 0 || userColorChoice >= COMP_MAX)
+    if (userColorChoice < 0 || userColorChoice >= tvDataColor_MAX)
     {
         UT_LOG_ERROR("Invalid component color index! Please enter a valid index from the list.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5255,6 +5730,122 @@ void test_l3_tvSettings_CMSSave(void)
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
 
+/**
+ * @brief This test sets and saves the gamma table values for primary colors (R, G, B) based on user input for a specified color temperature.
+ *
+ * This test function allows the user to set the gamma table values for the primary colors (R, G, B) with a specified size
+ * and color temperature. It then verifies the gamma values by retrieving them back.
+ *
+ * **Test Group ID:** 03@n
+ * **Test Case ID:** 61@n
+ *
+ * **Test Procedure:**
+ * Refer to Test specification documentation
+ * [tvSettings_L3_Low-Level_TestSpecification.md](../docs/pages/tvSettings_L3_Low-Level_TestSpecification.md)
+ */
+void test_l3_tvSettings_SaveGammaTable(void)
+{
+    // Initialize test ID and log entry
+    gTestID = 61;
+    UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    // Variable declarations
+    tvError_t ret = tvERROR_NONE;
+    unsigned short size = 0;
+    unsigned short pData_R[256] = {0};
+    unsigned short pData_G[256] = {0};
+    unsigned short pData_B[256] = {0};
+    unsigned short selectedColorTemp = 0;
+    int32_t userChoice = 0;
+
+    // Retrieve and display supported color temperatures
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tColorTemperature");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "ColorTemperature");
+    for (unsigned short i = tvColorTemp_STANDARD; i < tvColorTemp_MAX; i++)
+    {
+        UT_LOG_INFO("%d. %s", i + 1, UT_Control_GetMapString(tvColorTemp_mapTable, i));
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+
+    // Get user input for selecting a color temperature
+    UT_LOG_MENU_INFO("Enter the number corresponding to the Color Temperature: ");
+    readInt(&userChoice);
+
+    if (userChoice < 1 || userChoice > tvColorTemp_MAX)
+    {
+        UT_LOG_ERROR("Invalid color temperature choice: [%d]", userChoice);
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    selectedColorTemp = userChoice - 1;
+
+    // Get user input for the size of the gamma table
+    UT_LOG_MENU_INFO("Enter the size of the gamma table (1 - 255): ");
+    readInt((int32_t*)&size);
+
+    if (size < 1 || size > 255)
+    {
+        UT_LOG_ERROR("Invalid size! Please enter a size between 1 and 255.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    // Get user input for gamma values for Red
+    UT_LOG_MENU_INFO("Enter %hu gamma values for Red (0 - 1023): ", size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        scanf("%hu", &pData_R[i]);
+        if (pData_R[i] > 1023)
+        {
+            UT_LOG_ERROR("Invalid value for Red at position %hu! Please enter a value between 0 and 1023.", i + 1);
+            UT_LOG_INFO("Out %s", __FUNCTION__);
+            return;
+        }
+    }
+    readAndDiscardRestOfLine(stdin);
+
+    // Get user input for gamma values for Green
+    UT_LOG_MENU_INFO("Enter %hu gamma values for Green (0 - 1023): ", size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        scanf("%hu", &pData_G[i]);
+        if (pData_G[i] > 1023)
+        {
+            UT_LOG_ERROR("Invalid value for Green at position %hu! Please enter a value between 0 and 1023.", i + 1);
+            UT_LOG_INFO("Out %s", __FUNCTION__);
+            return;
+        }
+    }
+    readAndDiscardRestOfLine(stdin);
+
+    // Get user input for gamma values for Blue
+    UT_LOG_MENU_INFO("Enter %hu gamma values for Blue (0 - 1023): ", size);
+    for (unsigned short i = 0; i < size; i++)
+    {
+        scanf("%hu", &pData_B[i]);
+        if (pData_B[i] > 1023)
+        {
+            UT_LOG_ERROR("Invalid value for Blue at position %hu! Please enter a value between 0 and 1023.", i + 1);
+            UT_LOG_INFO("Out %s", __FUNCTION__);
+            return;
+        }
+    }
+    readAndDiscardRestOfLine(stdin);
+
+    // Set the gamma table values
+    UT_LOG_INFO("Calling SaveGammaTable(IN: colortemp[%hu], size[%hu])", selectedColorTemp, size);
+    ret = SaveGammaTable(selectedColorTemp, pData_R, pData_G, pData_B, size);
+    UT_LOG_INFO("Result SaveGammaTable(colortemp:[%hu], size:[%hu]), tvError_t:[%s]", selectedColorTemp, size, UT_Control_GetMapString(tvError_mapTable, ret));
+    ASSERT(ret == tvERROR_NONE);
+
+    UT_LOG_INFO("Out %s", __FUNCTION__);
+}
+
+
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -5310,12 +5901,12 @@ int32_t test_l3_tvSettings_register(void)
     UT_add_test(pSuite, "CompHue", test_l3_tvSettings_ComponentHue);
     UT_add_test(pSuite, "CompLuma", test_l3_tvSettings_ComponentLuma);
     UT_add_test(pSuite, "EnableGammaMode", test_l3_tvSettings_EnableGammaMode);
-    UT_add_test(pSuite, "SetGammaPatternMode", test_l3_tvSettings_SetGammaPatternMode);
+    UT_add_test(pSuite, "GammaPatternMode", test_l3_tvSettings_SetGammaPatternMode);
     UT_add_test(pSuite, "SetGammaPattern", test_l3_tvSettings_SetGammaPattern);
     UT_add_test(pSuite, "RGBPattern", test_l3_tvSettings_RGBPattern);
     UT_add_test(pSuite, "GrayPattern", test_l3_tvSettings_GrayPattern);
     UT_add_test(pSuite, "EnableLDIMPixelCompensation", test_l3_tvSettings_EnableLDIMPixelCompensation);
-    UT_add_test(pSuite, "EnableLDIM", test_l3_tvSettings_EnableLDIM);
+    UT_add_test(pSuite, "LDIMEnable", test_l3_tvSettings_EnableLDIM);
     UT_add_test(pSuite, "SetBacklightTestMode", test_l3_tvSettings_SetBacklightTestMode);
     UT_add_test(pSuite, "EnableDynamicContrast", test_l3_tvSettings_EnableDynamicContrast);
     UT_add_test(pSuite, "EnableLocalContrast", test_l3_tvSettings_EnableLocalContrast);
@@ -5333,6 +5924,7 @@ int32_t test_l3_tvSettings_register(void)
     UT_add_test(pSuite, "Save Dolby Vision", test_l3_tvSettings_DolbyVisionSave);
     UT_add_test(pSuite, "Save Picture Mode", test_l3_tvSettings_PictureModeSave);
     UT_add_test(pSuite, "Save CMS", test_l3_tvSettings_CMSSave);
+    UT_add_test(pSuite, "Save Gamma Table", test_l3_tvSettings_SaveGammaTable);
 
     return 0;
 }

@@ -40,24 +40,6 @@ class tvSettings_test20_PictureMode(tvSettingsHelperClass):
         self.testName = "test20_PictureMode"
         super().__init__(self.testName, '20')
 
-    def testQueryPictureModeLevel(self, pictureMode, manual=False):
-        """
-        Queries whether the Picture Mode should be applied.
-
-        Args:
-            pictureMode (int): Picture Mode value.
-            manual (bool, optional): Indicates if manual verification is used.
-                                     Defaults to False.
-
-        Returns:
-            bool: Status of Picture Mode application.
-        """
-        if manual:
-            return self.testUserResponse.getUserYN(f"Do you want to apply Picture Mode level {pictureMode}? (Y/N):")
-        else:
-            # TODO: Add automation verification methods
-            return False
-
     def testVerifyPictureModeLevel(self, pictureMode, manual=False):
         """
         Verifies whether the Picture Mode is set or not.
@@ -83,6 +65,7 @@ class tvSettings_test20_PictureMode(tvSettingsHelperClass):
         This method:
         - Initializes the tvSettings module.
         - Plays each stream while setting and verifying Picture Mode levels.
+        - Check the callback status if the pictureMode is FMM
 
         Returns:
             bool: Returns the final verification result.
@@ -97,24 +80,32 @@ class tvSettings_test20_PictureMode(tvSettingsHelperClass):
             self.testPlayer.play(stream)
 
             for pictureMode in self.testtvSettings.getPictureModeInfo():
+
                 self.log.stepStart(f'Picture Mode Level: {pictureMode} Stream: {stream}')
 
-                # Query if Picture Mode level should be applied
-                result = self.testQueryPictureModeLevel(pictureMode, True)
+                # Set the Picture Mode level
+                self.testtvSettings.setPictureMode(pictureMode)
+
+                # Verify if Picture Mode level has been applied
+                result = self.testVerifyPictureModeLevel(pictureMode, True)
 
                 self.log.stepResult(result, f'Picture Mode Level: {pictureMode} Stream: {stream}')
 
-                if result:
-                    # Set the Picture Mode level
-                    self.testtvSettings.setPictureMode(pictureMode)
+                # If the Picture Mode is FMM, check for the video content callback
+                if pictureMode == "fmm":  # Direct comparison with the string "fmm"
+                    self.log.stepStart(f'Video Content {pictureMode} Callback Test')
 
-                    # Verify if Picture Mode level has been applied
-                    result = self.testVerifyPictureModeLevel(pictureMode, True)
+                    # Retrieve the video content callback status
+                    cbPictureMode = self.testtvSettings.getVideoContentCallbackStatus()
 
-                    self.log.stepResult(result, f'Picture Mode Level: {pictureMode} Stream: {stream}')
+                    # Log the result of the video content callback test
+                    self.log.stepResult(cbPictureMode and "tvContentType_FMM" in cbPictureMode, f'Video Content {pictureMode} Callback Test')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
+        # Set the default Picture Mode level
+        self.testtvSettings.setPictureMode()
 
         # Terminate tvSettings Module
         self.testtvSettings.terminate()

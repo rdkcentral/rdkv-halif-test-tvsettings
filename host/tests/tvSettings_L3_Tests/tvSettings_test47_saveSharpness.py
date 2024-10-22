@@ -31,8 +31,6 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
 
-    sharpnessValues = [0, 25, 50, 75, 100]  # Define sharpness values
-
     def __init__(self):
         """
         Initializes the SaveSharpness test.
@@ -42,10 +40,11 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
         """
         self.testName = "test47_SaveSharpness"
         super().__init__(self.testName, '47')
+        self.sharpness_values = []
 
     def testVerifySharpnessValue(self, pictureMode, videoFormat, sharpness, manual=False):
         """
-        Verifies whether the Sharpness value is set or not.
+        Verifies whether the Sharpness value is set correctly.
 
         Args:
             pictureMode (str): Picture Mode.
@@ -65,24 +64,70 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
+    def saveSharpnessValuesForAllFormats(self):
+        """
+        Saves sharpness values for all combinations of picture mode index and video format.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        # Split the sharpness values based on the number of video formats
+        num_video_formats = len(videoFormatInfo)
+        self.sharpness_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
+
+        # Save the appropriate sharpness values based on the video format
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
+                sharpnessValue = self.sharpness_values[videoFormatIndex]
+
+                # Log and save the sharpness values
+                self.testtvSettings.saveSharpnessValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, sharpnessValue)
+                time.sleep(1)
+
+
+    def setAllSharpnessToDefault(self, defaultValue=50):
+        """
+        Sets the sharpness value to a default value for all combinations of picture modes and video formats.
+
+        Args:
+            defaultValue (int, optional): The default sharpness value to set. Defaults to 50.
+
+        Returns:
+            None.
+        """
+        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+
+        for pictureModeIndex in pictureModeIndices:
+            for videoFormat in videoFormatInfo:
+                # Log and save the default sharpness value
+                self.testtvSettings.saveSharpnessValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+                time.sleep(1)
+
+
     def testFunction(self):
         """This function tests saving sharpness values with all combinations of picture mode and video format.
-
-        It also adds the option to restart the device to verify changes.
 
         Returns:
             bool: Status of the sharpness save operations.
         """
-        self.log.testStart(self.testName, '47')  # Start the test with the defined test name
+        self.log.testStart(self.testName, '47')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
+
+        # Save sharpness values for all formats
+        self.saveSharpnessValuesForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
         # Loop through video formats and corresponding stream URLs
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
+        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(),streams)):
+
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
@@ -94,29 +139,25 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
 
             # Loop through available picture modes
             for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Loop through defined sharpness values
-                for sharpness in self.sharpnessValues:
-                    self.log.stepStart(f'Setting Sharpness: {sharpness}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Get the sharpness value based on the saved indices
+                sharpnessValue = self.sharpness_values[videoFormatIndex]
 
-                    # Set Picture Mode, Video Format, and Sharpness Level
-                    self.testtvSettings.saveSharpnessValues(pictureMode, videoFormat, sharpness)  # Call the saveSharpness function
+                self.log.stepStart(f'Setting Sharpness: {sharpnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()  # Stop the current stream playback
-                    self.testPlayer.play(streamFullPath)  # Restart the stream
-                    self.log.info("Stream restarted, continuing verification...")
+                # Call the verification function (manual=True allows for manual verification)
+                result = self.testVerifySharpnessValue(pictureMode, videoFormat, sharpnessValue, manual=True)
 
-                    # Call the verification function (manual=True allows for manual verification)
-                    result = self.testVerifySharpnessValue(pictureMode, videoFormat, sharpness, manual=True)
-
-                    # Log the result for each step
-                    self.log.stepResult(result, f'Verification for Sharpness: {sharpness}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                # Log the result for each step
+                self.log.stepResult(result, f'Verification for Sharpness: {sharpnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
 
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
+
+        # Set all sharpness values to the default value of 50
+        self.setAllSharpnessToDefault()
 
         # Terminate the tvSettings Module
         self.testtvSettings.terminate()

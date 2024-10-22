@@ -72,7 +72,7 @@ class tvSettings_test22_ColorTempGgain(tvSettingsHelperClass):
                     self.log.stepStart(f'Set Operation - Color Temperature: {colorTemperature} Ggain: {ggain} Stream: {stream}')
 
                     # Set the Color Temperature and Ggain (Save flag = 0 means Set operation)
-                    self.testtvSettings.setGgainValue(colorTemperature, ggain, 0)
+                    self.testtvSettings.setGgainValue("TV_OFFSET", colorTemperature, ggain, 0)
 
                     # Verify Set operation manually
                     result = self.testVerifyColorTempGgain(colorTemperature, ggain, 0, True)
@@ -96,7 +96,7 @@ class tvSettings_test22_ColorTempGgain(tvSettingsHelperClass):
                     self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} Ggain: {ggain} Stream: {stream}')
 
                     # Set the Color Temperature and Ggain (Save flag = 1 means Save operation)
-                    self.testtvSettings.setGgainValue(colorTemperature, ggain, 1)
+                    self.testtvSettings.setGgainValue("TV_OFFSET", colorTemperature, ggain, 1)
 
                     # Stop the current stream
                     self.testPlayer.stop()

@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
 
-    dynamicContrastLevels = [0, 1]
+    dynamicContrastLevels = [0, 1, 0]
 
     def __init__(self):
         """
@@ -42,20 +42,6 @@ class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
         """
         self.testName = "test40_EnableDynamicContrast"
         super().__init__(self.testName, '40')
-
-    def testQueryDynamicContrastLevel(self, dynamicContrast):
-        """
-        Queries whether to apply the Dynamic Contrast Level.
-
-        Args:
-            dynamicContrast (int): Dynamic Contrast value (0 or 1).
-
-        Returns:
-            bool: returns True if user agrees to apply the Dynamic Contrast Level.
-        """
-        return self.testUserResponse.getUserYN(
-            f"Do you want to apply make dynamic contrast to {dynamicContrast}? (Y/N):"
-        )
 
     def testVerifyDynamicContrast(self, dynamicContrast, manual=False):
         """
@@ -94,20 +80,14 @@ class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
             self.testPlayer.play(stream)
 
             for contrast in self.dynamicContrastLevels:
-                self.log.stepStart(f'Query Dynamic Contrast Level: {contrast} Stream: {stream}')
 
-                # Query the user before setting the contrast level
-                if self.testQueryDynamicContrastLevel(contrast):
-                    self.log.info(f"User accepted to apply Dynamic Contrast Level: {contrast}")
-
+                    self.log.stepStart(f'Query Dynamic Contrast Level: {contrast} Stream: {stream}')
                     # Set the Dynamic Contrast level
-                    self.testtvSettings.EnableDynamicContrast(contrast)
+                    self.testtvSettings.enableDynamicContrast(contrast)
 
                     result = self.testVerifyDynamicContrast(contrast, True)
 
                     self.log.stepResult(result, f'Dynamic Contrast Level: {contrast} Stream: {stream}')
-                else:
-                    self.log.info(f"User declined to apply Dynamic Contrast Level: {contrast}")
 
             # Stop the stream playback
             self.testPlayer.stop()

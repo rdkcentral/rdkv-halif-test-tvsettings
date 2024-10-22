@@ -95,6 +95,9 @@ class tvSettings_test15_ColorTemp(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
+        # Set the default ColorTemp level
+        self.testtvSettings.setColorTempLevel()
+
         # Terminate tvSettings Module
         self.testtvSettings.terminate()
 

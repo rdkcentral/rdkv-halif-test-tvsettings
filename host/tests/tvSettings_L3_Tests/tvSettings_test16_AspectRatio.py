@@ -94,6 +94,9 @@ class tvSettings_test16_AspectRatio(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
+        #set the default aspect ratio
+        self.testtvSettings.setAspectRatio()
+
         # Terminate tvSettings Module
         self.testtvSettings.terminate()
 

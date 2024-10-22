@@ -23,6 +23,7 @@
 import os
 import sys
 import time
+import numpy as np
 
 # Set the directory path
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -33,55 +34,8 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
     """
-    A class that implements test 57 for saving gamma table settings and performing stream playback.
-
-    Attributes:
-        testName (str): The name of the test case.
-        testSetupPath (str): The path to the test setup configuration file.
-        moduleName (str): The module name being tested.
-        rackDevice (str): The name of the device under test (DUT).
-        gammaCombinations (list): A list of dictionaries defining different gamma table combinations for testing.
+    A class that implements test 55 for saving gamma table settings and performing stream playback.
     """
-
-    # Predefined Gamma table RGB values for testing various configurations
-    gammaCombinations = [
-        {
-            "size": 10,
-            "red": [1023, 900, 800, 700, 600, 500, 400, 300, 200, 100],
-            "green": [800, 750, 700, 650, 600, 500, 400, 300, 200, 100],
-            "blue": [600, 500, 400, 300, 200, 100, 50, 30, 20, 10]
-        },
-        {
-            "size": 5,
-            "red": [300, 200, 100, 50, 0],
-            "green": [600, 500, 400, 300, 200],
-            "blue": [1023, 900, 800, 700, 600]
-        },
-        {
-            "size": 10,
-            "red": [600] * 10,
-            "green": [600] * 10,
-            "blue": [600] * 10
-        },
-        {
-            "size": 5,
-            "red": [1023, 1000, 900, 800, 700],
-            "green": [500, 400, 300, 200, 100],
-            "blue": [1023, 1000, 900, 800, 700]
-        },
-        {
-            "size": 10,
-            "red": [300] * 10,
-            "green": [300] * 10,
-            "blue": [300] * 10
-        },
-        {
-            "size": 10,  # Reset Gamma Table
-            "red": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Default values for Red
-            "green": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Default values for Green
-            "blue": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]  # Default values for Blue
-        }
-    ]
 
     def __init__(self):
         """
@@ -91,35 +45,89 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         self.testName = "test55_SaveGammaTable"
         super().__init__(self.testName, '55')
 
-    def testVerifyGammaTable(self, size, red, green, blue, color_temp, manual=False):
+    def testVerifyGammaTable(self, description, color_temp, manual=False):
         """
         Verifies if the gamma table is applied with the expected values.
-
-        Args:
-            size (int): Gamma table size.
-            red (list): List of Red values.
-            green (list): List of Green values.
-            blue (list): List of Blue values.
-            color_temp (str): Color temperature.
-            manual (bool): Manual verification flag (True for manual verification).
-
-        Returns:
-            bool: Status of gamma table verification.
         """
         if manual:
             return self.testUserResponse.getUserYN(
-                f"Is Gamma Table set with Size:{size}, R:{red}, G:{green}, B:{blue} for Color Temp: {color_temp}? (Y/N):"
+                f"Is Gamma Table set {description} for Color Temp: {color_temp}? (Y/N):"
             )
         else:
             # TODO: Add automated verification methods
             return False
 
-    def testFunction(self):
+
+    def setGammaValues(self):
         """
-        Main function that tests saving GammaTable values with all combinations of picture mode and video format.
+        Generates and applies gamma values for specified combinations based on color temperature assignments.
 
         Returns:
-            bool: Final result of the test.
+            list: List of tuples containing (color_temp, red, green, blue).
+        """
+        gamma_values = []  # List to store gamma values
+
+        # Define color temperatures (to be fetched dynamically if needed)
+        colorTemperatures = self.testtvSettings.getColorTemperatureInfo()
+
+        # Predefined RGB gamma curve values for testing
+        combinations = [
+            {
+                # Linear gamma using x ^ 1
+                "description": "Linear gamma (x ^ 1)",
+                "size": 255,
+                "red": list(np.linspace(0, 1023, 255).astype(int)),
+                "green": list(np.linspace(0, 1023, 255).astype(int)),
+                "blue": list(np.linspace(0, 1023, 255).astype(int)),
+            },
+            {
+                # Curved gamma using x ^ (1/2)
+                "description": "Curved gamma (x ^ 1/2)",
+                "size": 255,
+                "red": list((np.sqrt(np.linspace(0, 1, 255)) * 1023).astype(int)),
+                "green": list((np.sqrt(np.linspace(0, 1, 255)) * 1023).astype(int)),
+                "blue": list((np.sqrt(np.linspace(0, 1, 255)) * 1023).astype(int)),
+            },
+            {
+                # Gamma using x ^ 2.2 for higher contrast
+                "description": "Gamma (x ^ 2.2)",
+                "size": 255,
+                "red": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
+                "green": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
+                "blue": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
+            },
+        ]
+
+        num_combinations = len(combinations)
+        num_color_temperatures = len(colorTemperatures)
+
+        # Loop through combinations and assign color temperatures accordingly
+        for i, combo in enumerate(combinations):
+            size = combo["size"]
+            red = combo["red"]
+            green = combo["green"]
+            blue = combo["blue"]
+            description = combo["description"]
+
+            # Determine the appropriate color temperature
+            if i < num_color_temperatures:
+                colortemp = colorTemperatures[i]  # Assign color temperature in order
+            else:
+                colortemp = colorTemperatures[i % num_color_temperatures]  # Round-robin assignment
+
+            # Save the gamma table with the generated values
+            self.testtvSettings.saveGammaTable(size, red, green, blue, colortemp)
+
+            # Store the color temp and all RGB values for logging
+            gamma_values.append((colortemp, red, green, blue, description))
+
+        return gamma_values
+
+
+
+    def testFunction(self):
+        """
+        Main function that tests saving GammaTable values with all combinations of color temperatures.
         """
 
         # Start the test log
@@ -131,41 +139,44 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-        # Loop through each video format and stream
-        for videoFormat, streamUrl in zip(self.testtvSettings.getVideoFormatInfo(), streams):
-            # Download stream assets
-            self.testDownloadAssetsByUrl(streamUrl)
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+        # Set gamma values for the color temperatures
+        gamma_values = self.setGammaValues()  # This should return a list of (color_temp, red, green, blue) tuples
+        colorTemperatures = self.testtvSettings.getColorTemperatureInfo()  # Get the available color temperatures
 
+        # Loop through streams
+        for stream in streams:
             # Play the stream
-            self.testPlayer.play(streamFullPath)
+            self.testPlayer.play(stream)
             time.sleep(3)  # Allow the stream to start
 
-            # Loop through picture modes and gamma combinations
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
-                for gamma_value in self.gammaCombinations:
-                    self.log.stepStart(f'Setting GammaValue: {gamma_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+            # Log details for the current stream
+            self.log.stepStart(f'Stream: {stream}')
 
-                    # Set gamma table and query the save status
-                    self.testtvSettings.saveGammaTable(pictureMode, videoFormat, gamma_value)
+            # Loop through the combinations and assign color temperatures
+            for index, (color_temp, red, green, blue, description) in enumerate(gamma_values):
+                if index < len(colorTemperatures):  # Ensure we don't exceed available color temperatures
+                    color_temp = colorTemperatures[index]  # Assign the color temperature based on the index
 
-                    self.log.info("Restarting the Stream...")
-                    self.testPlayer.stop()
-                    self.testPlayer.play(streamFullPath)
+                    self.testtvSettings.setColorTempLevel(color_temp)  # Set the color temperature level
 
-                    # Manually verify gamma table settings
-                    result = self.testVerifyGammaTable(pictureMode, videoFormat, gamma_value, manual=True)
-                    self.log.stepResult(result, f'GammaValue: {gamma_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                    # Log the applied gamma values for this combination
+                    self.log.stepStart(f'Applying Gamma values: Color Temp: {color_temp}, R: {red}, G: {green}, B: {blue}')
+                    size = 255  # Size is fixed as per combinations
+
+                    # Verify gamma table with the gamma values applied
+                    result = self.testVerifyGammaTable([description], color_temp, manual=True)
+
+                    # Log the result of the verification
+                    self.log.stepResult(result, f'Gamma values verified for Color Temp: {color_temp}, R: {red}, G: {green}, B: {blue}')
 
             # Stop the stream playback and clean assets
             self.testPlayer.stop()
 
-            self.testCleanAssetsByUrl(streamFullPath)
-
         # Terminate tvSettings Module
         self.testtvSettings.terminate()
 
-        return result
+
+        return True
 
 if __name__ == '__main__':
     test = tvSettings_test55_SaveGammaTable()

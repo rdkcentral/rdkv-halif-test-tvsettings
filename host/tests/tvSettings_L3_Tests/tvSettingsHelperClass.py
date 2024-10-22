@@ -32,13 +32,13 @@ from raft.framework.plugins.ut_raft.utPlayer import utPlayer
 from raft.framework.plugins.ut_raft.utUserResponse import utUserResponse
 from raft.framework.plugins.ut_raft import utHelperClass
 from raft.framework.core.logModule import logModule
-from Classes.tvSettings import tvSettingsClass  # Changed from tvSettingClass
+from Classes.tvSettings import tvSettingsClass
 
-class tvSettingsHelperClass(utHelperClass):  # Changed from tvSettingHelperClass
+class tvSettingsHelperClass(utHelperClass):
 
     testName  = ""
-    testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")  # Changed path
-    moduleName = "tvSettings"  # Changed from tvSetting
+    testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
+    moduleName = "tvSettings"
     rackDevice = "dut"
 
     def __init__(self, testName:str, qcId:str, log:logModule=None ):
@@ -56,14 +56,12 @@ class tvSettingsHelperClass(utHelperClass):  # Changed from tvSettingHelperClass
 
         # Open Sessions for player, secondary player and for hal test
         self.player_session = self.dut.getConsoleSession("ssh_player")
-        self.secondary_player_session = self.dut.getConsoleSession("ssh_player_secondary")
         self.hal_session = self.dut.getConsoleSession("ssh_hal_test")
 
         player = self.cpe.get("test").get("player")
 
         # Create player and secondary player Class
         self.testPlayer = utPlayer(self.player_session, player)
-        self.testSecondaryPlayer = utPlayer(self.secondary_player_session, player)
 
         # Create user response Class
         self.testUserResponse = utUserResponse()
@@ -103,15 +101,6 @@ class tvSettingsHelperClass(utHelperClass):  # Changed from tvSettingHelperClass
 
         # Ensure the testStreams list is cleared
         self.testStreams = []
-
-        self.deviceDownloadPath = self.cpe.get("target_directory")
-
-        test = self.testSetup.get("assets").get("device").get(self.testName)
-
-        # Download test artifacts to device (if needed, this part remains unchanged)
-        url = test.get("artifacts")
-        if url is not None:
-            self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
 
         # Download the specified stream to the device
         if stream_url is not None:
@@ -161,6 +150,13 @@ class tvSettingsHelperClass(utHelperClass):  # Changed from tvSettingHelperClass
             bool
         """
 
+        test = self.testSetup.get("assets").get("device").get(self.testName)
+
+        # Download test artifacts to device
+        url = test.get("artifacts")
+        if url is not None:
+            self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
+
         # Get stream info from the test setup configuration
         streamInfo = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
@@ -173,7 +169,7 @@ class tvSettingsHelperClass(utHelperClass):  # Changed from tvSettingHelperClass
         self.testRunPrerequisites()
 
         # Create the tvSettings class
-        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session, self.deviceDownloadPath)
+        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session )
 
         return True
 

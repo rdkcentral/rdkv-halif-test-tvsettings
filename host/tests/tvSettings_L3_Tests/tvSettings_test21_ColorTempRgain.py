@@ -25,7 +25,6 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
 
     rgainValues = [0, 512, 1024, 1536, 2047]
-    saveSetFlags = [0, 1]  # Save only or set only flags
 
     def __init__(self):
         """
@@ -69,13 +68,15 @@ class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
 
             for colorTemperature in colorTemperatureValues:
                 for rgain in self.rgainValues:
+
                     self.log.stepStart(f'Set Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
 
                     # Set the Color Temperature and Rgain (Save flag = 0 means Set operation)
-                    self.testtvSettings.setRgainValue(colorTemperature, rgain, 0)
+                    self.testtvSettings.setRgainValue("TV_OFFSET", colorTemperature, rgain, 0)
 
                     # Verify Set operation manually
                     result = self.testVerifyColorTempRgain(colorTemperature, rgain, 0, True)
+
                     self.log.stepResult(result, f'Set Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
 
             # Stop the stream playback
@@ -84,35 +85,34 @@ class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
     def testSaveOperation(self):
         """Tests the Save operation for ColorTempRgain and restarts the stream to verify the changes."""
 
-        # Apply Save operation and ask user if they want to restart the stream to verify
+        # Get the Color Temperature values
+        colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
+
+        # Loop through Color Temperatures and Rgain values to set them
+        for colorTemperature in colorTemperatureValues:
+            for rgain in self.rgainValues:
+                # Set the Color Temperature and Rgain (Save flag = 1 means Save operation)
+                self.testtvSettings.setRgainValue("TV_OFFSET", colorTemperature, rgain, 1)
+
+        # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
-            # Get the Color Temperature values
-            colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
-
+            # Verify the Save operation manually after stream playback
             for colorTemperature in colorTemperatureValues:
                 for rgain in self.rgainValues:
                     self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
 
-                    # Set the Color Temperature and Rgain (Save flag = 1 means Save operation)
-                    self.testtvSettings.setRgainValue(colorTemperature, rgain, 1)
-
-                    # Stop the current stream
-                    self.testPlayer.stop()
-
-                    # Restart the stream
-                    self.testPlayer.play(stream)
-
-                    # Set the Color Temperature to the same value to apply the saved Rgain value
+                    # Set the Color Temperature to apply the saved Rgain value
                     self.testtvSettings.setColorTempLevel(colorTemperature)
 
-                    # Now verify the Save operation manually after restart and applying color temp
-                    resultAfterRestart = self.testVerifyColorTempRgain(colorTemperature, rgain, 1, True)
-                    self.log.stepResult(resultAfterRestart, f'Save Operation After Restart - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
+                    # Now verify the Save operation manually after restart
+                    result = self.testVerifyColorTempRgain(colorTemperature, rgain, 1, True)
+                    self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
 
     def testFunction(self):
         """Main function to run both Set and Save tests for ColorTempRgain."""

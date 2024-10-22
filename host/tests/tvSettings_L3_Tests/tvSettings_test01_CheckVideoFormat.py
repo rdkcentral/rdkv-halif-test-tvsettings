@@ -52,6 +52,17 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
         self.testName = "test01_CheckVideoFormat"
         super().__init__(self.testName, '1') # Set test number to 3
 
+        # List of all supported video formats
+        self.supportedFormats = [
+            "HDR10",
+            "DV",
+            "HLG",
+            "SDR",
+            "MVC"
+            "HDR10PLUS",
+            "PRIMESL",
+        ]
+
     def testFunction(self):
         """
         Executes the Video Format Level test.
@@ -61,22 +72,29 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
         - Retrieves the list of video formats.
         - Iterates through each video format and corresponding stream URL.
         - Downloads, plays, and verifies each video format.
+        - Verifies SDR callback after stopping non-SDR streams.
 
         Returns:
             bool: Always returns True upon successful execution of the test.
         """
-        self.log.testStart(self.testName, '1') # Log start of the test with test number
+        self.log.testStart(self.testName, '1')  # Log start of the test with test number
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Get the list of video formats
+        # Get the list of video formats currently supported
         videoFormats = self.testtvSettings.getVideoFormatInfo()
 
-        # Iterate through each video format and corresponding stream URL
-        for format, streamUrl in zip(videoFormats, self.testSetup.get("assets").get("device").get(self.testName).get("streams")):
+        # Get the list of streams from the test setup
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-            # Download the individual stream (using the updated testDownloadAssets)
+        # Iterate through each supported video format and corresponding stream in order
+        for streamUrl, format in zip(streams, self.supportedFormats):
+            # Check if the format is present as a substring in any item of videoFormats
+            if not any(format in vf for vf in videoFormats):
+                continue
+
+            # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
             streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
@@ -85,8 +103,6 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
 
-            self.log.stepStart(f'videoFormat Level: {format} Stream: {streamFullPath}')
-
             self.log.stepStart(f'Video Format {format} Callback Test')
 
             # Retrieve the video format callback status
@@ -94,6 +110,8 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
 
             # Log the result of the video format callback test
             self.log.stepResult(cbVideoFormat and format in cbVideoFormat, f'Video Format {format} Callback Test')
+
+            self.log.stepStart(f'Video Format Level: {format} Stream: {streamFullPath}')
 
             # Check the current video format
             videoFormat = self.testtvSettings.checkVideoFormat()
@@ -104,13 +122,18 @@ class tvSettings_test01_CheckVideoFormat(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
-            # Clean the assets (delete the downloaded stream using testCleanAssets)
+            time.sleep(2)  # Allow time for the default callback to occur
+            cbVideoFormatAfterStop = self.testtvSettings.getVideoFormatCallbackStatus()
+
+            # Clean the assets (delete the downloaded stream)
             self.testCleanAssetsByUrl(streamFullPath)
 
         # Terminate tvSettings Module
         self.testtvSettings.terminate()
 
         return True
+
+
 
 if __name__ == '__main__':
     test = tvSettings_test01_CheckVideoFormat()

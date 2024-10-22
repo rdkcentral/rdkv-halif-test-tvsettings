@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test38_EnableLDIM(tvSettingsHelperClass):
 
     # Two predefined values for the LDIM parameter: 0 (disabled) and 1 (enabled)
-    ldimValues = [0, 1]
+    ldimValues = [0, 1, 0]
 
     def __init__(self):
         """

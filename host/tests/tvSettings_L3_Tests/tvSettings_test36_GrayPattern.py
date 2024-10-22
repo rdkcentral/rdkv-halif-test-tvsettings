@@ -74,25 +74,18 @@ class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        for stream in self.testStreams:
-            # Start the stream playback
-            self.testPlayer.play(stream)
+        # Set up different values for gray levels across the predefined samples
+        for grayLevel in self.grayLevels:
+            self.log.stepStart(f'Gray Level: {grayLevel}')
 
-            # Set up different values for gray levels across the predefined samples
-            for grayLevel in self.grayLevels:
-                self.log.stepStart(f'Gray Level: {grayLevel}, Stream: {stream}')
+            # Set the Gray pattern
+            self.testtvSettings.setGrayPattern(grayLevel)
 
-                # Set the Gray pattern
-                self.testtvSettings.setGrayPattern(grayLevel)
+            # Verify the Gray pattern has been set correctly
+            result = self.testVerifyGrayPattern(grayLevel, True)
 
-                # Verify the Gray pattern has been set correctly
-                result = self.testVerifyGrayPattern(grayLevel, True)
-
-                # Log the result of the Gray pattern verification
-                self.log.stepResult(result, f'Gray Level: {grayLevel}, Stream: {stream}')
-
-            # Stop the stream playback
-            self.testPlayer.stop()
+            # Log the result of the Gray pattern verification
+            self.log.stepResult(result, f'Gray Level: {grayLevel}')
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()

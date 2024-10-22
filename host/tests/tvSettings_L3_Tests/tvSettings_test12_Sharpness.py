@@ -32,7 +32,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test12_Sharpness(tvSettingsHelperClass):
 
-    sharpnessLevels = [0, 25, 50, 75, 100]
+    sharpnessLevels = [0, 25, 50, 75, 100, 50]
 
     def __init__(self):
         """

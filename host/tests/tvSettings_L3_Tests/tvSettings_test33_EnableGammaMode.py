@@ -32,7 +32,6 @@ class tvSettings_test33_EnableGammaMode(tvSettingsHelperClass):
 
     # Predefined gamma modes (0: Disable, 1: Enable)
     gammaModes = [0, 1]
-    rackDevice = "dut"
 
     def __init__(self):
         """
@@ -45,24 +44,6 @@ class tvSettings_test33_EnableGammaMode(tvSettingsHelperClass):
         super().__init__(self.testName, '33')
 
     # TODO: Current version supports only manual verification.
-    def testQueryGammaModeLevel(self, gammaMode, manual=False):
-        """
-        Queries whether the Gamma Mode level is to be set or not.
-
-        Args:
-            gammaMode (int): Gamma mode value (0: Disable, 1: Enable).
-            manual (bool, optional): Manual verification (True: manual, False: other verification methods).
-                                    Defaults to False, meaning other verification methods will be used when available.
-
-        Returns:
-            bool: Returns the status of Gamma Mode level.
-        """
-        if manual:
-            return self.testUserResponse.getUserYN(f"Do you want to make Gamma Mode to {gammaMode}? (Y/N):")
-        else:
-            # TODO: Add automation verification methods
-            return False
-
     def testVerifyGammaMode(self, gammaMode, manual=False):
         """
         Verifies whether the gamma mode is set correctly.
@@ -93,30 +74,30 @@ class tvSettings_test33_EnableGammaMode(tvSettingsHelperClass):
         self.testtvSettings.initialise()
 
         # Set the Component Management System (CMS) state
-        self.testtvSettings.setCMSState()
+        self.testtvSettings.setCMSState(1)
 
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
 
             for gammaMode in self.gammaModes:
-                # Query the user about changing the gamma mode
-                result = self.testQueryGammaModeLevel(gammaMode, True)
 
                 self.log.stepStart(f'Gamma Mode: {gammaMode}, Stream: {stream}')
 
-                if result:
-                    # Set the gamma mode
-                    self.testtvSettings.setEnableGammaMode(gammaMode)
+                # Set the gamma mode
+                self.testtvSettings.setEnableGammaMode(gammaMode)
 
-                    # Verify the gamma mode has been set
-                    result = self.testVerifyGammaMode(gammaMode, True)
+                # Verify the gamma mode has been set
+                result = self.testVerifyGammaMode(gammaMode, True)
 
-                    # Log the result of the gamma mode verification
-                    self.log.stepResult(result, f'Gamma Mode: {gammaMode}, Stream: {stream}')
+                # Log the result of the gamma mode verification
+                self.log.stepResult(result, f'Gamma Mode: {gammaMode}, Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
+        # Set the Component Management System (CMS) state
+        self.testtvSettings.setCMSState(0)
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()

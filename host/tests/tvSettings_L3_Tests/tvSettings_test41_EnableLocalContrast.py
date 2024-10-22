@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
 
     # Predefined values for the Local Contrast parameter: 0 (disabled) and 1 (enabled)
-    localContrastLevels = [0, 1]
+    localContrastLevels = [0, 1, 0]
 
     def __init__(self):
         """
@@ -83,7 +83,7 @@ class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
                 self.log.stepStart(f'Set Local Contrast Level: {contrast}, Stream: {stream}')
 
                 # Set the Local Contrast level
-                self.testtvSettings.setEnableLocalContrast(contrast)
+                self.testtvSettings.enableLocalContrast(contrast)
 
                 # Verify the Local Contrast setting
                 result = self.testVerifyLocalContrast(contrast, True)

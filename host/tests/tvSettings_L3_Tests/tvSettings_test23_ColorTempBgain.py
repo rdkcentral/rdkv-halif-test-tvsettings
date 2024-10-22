@@ -72,7 +72,7 @@ class tvSettings_test23_ColorTempBgain(tvSettingsHelperClass):
                     self.log.stepStart(f'Set Operation - Color Temperature: {colorTemperature} Bgain: {bgain} Stream: {stream}')
 
                     # Set the Color Temperature and Bgain (Save flag = 0 means Set operation)
-                    self.testtvSettings.setBgainValue(colorTemperature, bgain, 0)
+                    self.testtvSettings.setBgainValue("TV_OFFSET", colorTemperature, bgain, 0)
 
                     # Verify Set operation manually
                     result = self.testVerifyColorTempBgain(colorTemperature, bgain, 0, True)
@@ -84,32 +84,30 @@ class tvSettings_test23_ColorTempBgain(tvSettingsHelperClass):
     def testSaveOperation(self):
         """Tests the Save operation for ColorTempBgain and restarts the stream to verify the changes."""
 
-        # Apply Save operation and ask user if they want to restart the stream to verify
+        # Get the Color Temperature values
+        colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
+
+        # Loop through Color Temperatures and Bgain values to set them
+        for colorTemperature in colorTemperatureValues:
+            for bgain in self.bgainValues:
+                # Set the Color Temperature and Bgain (Save flag = 1 means Save operation)
+                self.testtvSettings.setBgainValue("TV_OFFSET", colorTemperature, bgain, 1)
+
+        # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
-            # Get the Color Temperature values
-            colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
-
+            # Verify the Save operation manually after stream playback
             for colorTemperature in colorTemperatureValues:
                 for bgain in self.bgainValues:
                     self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} Bgain: {bgain} Stream: {stream}')
 
-                    # Set the Color Temperature and Bgain (Save flag = 1 means Save operation)
-                    self.testtvSettings.setBgainValue(colorTemperature, bgain, 1)
-
-                    # Stop the current stream
-                    self.testPlayer.stop()
-
-                    # Restart the stream
-                    self.testPlayer.play(stream)
-
-                    # Set the Color Temperature to the same value to apply the saved Bgain value
+                    # Set the Color Temperature to apply the saved Bgain value
                     self.testtvSettings.setColorTempLevel(colorTemperature)
 
-                    # Now verify the Save operation manually after restart and applying color temp
-                    resultAfterRestart = self.testVerifyColorTempBgain(colorTemperature, bgain, 1, True)
-                    self.log.stepResult(resultAfterRestart, f'Save Operation After Restart - Color Temperature: {colorTemperature} Bgain: {bgain} Stream: {stream}')
+                    # Now verify the Save operation manually after restart
+                    result = self.testVerifyColorTempBgain(colorTemperature, bgain, 1, True)
+                    self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} Bgain: {bgain} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()

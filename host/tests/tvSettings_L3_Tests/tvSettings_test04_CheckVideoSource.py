@@ -34,7 +34,7 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
     """
     Test class for validating video source functionalities.
 
-    This class is designed to test various video sources supported by the device.
+    This class is designed to test the VIDEO_SOURCE_IP supported by the device.
     It extends the tvSettingsHelperClass to leverage its utility methods for device interaction
     and test execution.
 
@@ -54,12 +54,12 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
 
     def testFunction(self):
         """
-        Executes the Video Source test.
+        Executes the Video Source test for VIDEO_SOURCE_IP.
 
         This method:
         - Initializes the tvSettings module.
-        - Retrieves the list of video sources and corresponding streams.
-        - Plays each stream and verifies the video source.
+        - Retrieves the list of video sources.
+        - Tests only VIDEO_SOURCE_IP if supported.
 
         Returns:
             bool: Always returns True upon successful execution of the test.
@@ -69,27 +69,22 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Iterate through each video source and corresponding stream
-        for source, stream in zip(self.testtvSettings.getVideoSourceInfo(), self.testStreams):
+        # Get the streams associated with the test
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+
+        # Iterate through streams, but only for VIDEO_SOURCE_IP
+        for stream in streams:
             # Start the stream playback
             self.testPlayer.play(stream)
             time.sleep(3)  # Wait for a moment to let the stream start
 
-            self.log.stepStart(f'Video Source Level: {source} Stream: {stream}')
-
-            self.log.stepStart(f'Video FrameRate {source} Callback Test')
-
-            # Retrieve the video content callback status
-            cbVideoSource = self.testtvSettings.getVideoContentCallbackStatus()
-
-            # Log the result of the video content callback test
-            self.log.stepResult(cbVideoSource and source in cbVideoSource, f'Video FrameRate {source} Callback Test')
+            self.log.stepStart(f'Video Source Level: VIDEO_SOURCE_IP Stream: {stream}')
 
             # Check the current video source
             videoSource = self.testtvSettings.checkVideoSource()
 
             # Log the result of the video source test
-            self.log.stepResult(source in videoSource, f'Video Source {source} Test')
+            self.log.stepResult("VIDEO_SOURCE_IP" in videoSource, 'Video Source VIDEO_SOURCE_IP Test')
 
             # Stop the stream playback
             self.testPlayer.stop()

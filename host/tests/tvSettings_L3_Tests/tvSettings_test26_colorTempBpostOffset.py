@@ -23,8 +23,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test26_BpostOffset(tvSettingsHelperClass):
 
-    bpostValues = [-1024, -512, 0, 512, 1023]
-    saveSetFlags = [0, 1]  # Save only or set only flags
+    bpostValues = [512, -1024, -512, 0, 512, 1023]
 
     def __init__(self):
         """
@@ -71,7 +70,7 @@ class tvSettings_test26_BpostOffset(tvSettingsHelperClass):
                     self.log.stepStart(f'Set Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
 
                     # Set the Color Temperature and BpostOffset (Save flag = 0 means Set operation)
-                    self.testtvSettings.setBpostOffsetValue(colorTemperature, bpostValue, 0)
+                    self.testtvSettings.setBpostOffsetValue("TV_OFFSET", colorTemperature, bpostValue, 0)
 
                     # Verify Set operation manually
                     result = self.testVerifyBpostOffset(colorTemperature, bpostValue, 0, True)
@@ -83,32 +82,30 @@ class tvSettings_test26_BpostOffset(tvSettingsHelperClass):
     def testSaveOperation(self):
         """Tests the Save operation for BpostOffset and verifies changes after restart."""
 
-        # Apply Save operation and ask user if they want to restart the stream to verify
+        # Get the Color Temperature values
+        colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
+
+        # Loop through Color Temperatures and Bpost values to set them
+        for colorTemperature in colorTemperatureValues:
+            for bpostValue in self.bpostValues:  # Loop through Bpost values
+                # Set the BpostOffset (Save flag = 1 means Save operation)
+                self.testtvSettings.setBpostOffsetValue("TV_OFFSET", colorTemperature, bpostValue, 1)  # Assuming a method for Bpost
+
+        # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
-            # Get the Color Temperature values
-            colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
-
+            # Verify the Save operation manually after stream playback
             for colorTemperature in colorTemperatureValues:
-                for bpostValue in self.bpostValues:
-                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
+                for bpostValue in self.bpostValues:  # Loop through Bpost values for verification
+                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue}')
 
-                    # Set the Color Temperature and BpostOffset (Save flag = 1 means Save operation)
-                    self.testtvSettings.setBpostOffsetValue(colorTemperature, bpostValue, 1)
-
-                    # Stop the current stream
-                    self.testPlayer.stop()
-
-                    # Restart the stream
-                    self.testPlayer.play(stream)
-
-                    # Set the Color Temperature to the same value to apply the saved BpostOffset value
+                    # Set the Color Temperature to apply the saved BpostOffset value
                     self.testtvSettings.setColorTempLevel(colorTemperature)
 
-                    # Now verify the Save operation manually after restart
-                    resultAfterRestart = self.testVerifyBpostOffset(colorTemperature, bpostValue, 1, True)
-                    self.log.stepResult(resultAfterRestart, f'Save Operation After Restart - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
+                    # Now verify the Save operation manually after restart for Bpost
+                    result = self.testVerifyBpostOffset(colorTemperature, bpostValue, 1, True)  # Assuming similar verification method for Bpost
+                    self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()

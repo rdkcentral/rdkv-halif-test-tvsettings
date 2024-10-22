@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
 #** *****************************************************************************
-# *
-# * If not stated otherwise in this file or this component's LICENSE file the
-# * following copyright and licenses apply:
-# *
 # * Copyright 2024 RDK Management
-# *
-# * Licensed under the Apache License, Version 2.0 (the "License");
-# * you may not use this file except in compliance with the License.
-# * you may obtain a copy of the License at
-# *
+# * Licensed under the Apache License, Version 2.0
 # * http://www.apache.org/licenses/LICENSE-2.0
-# *
-# * Unless required by applicable law or agreed to in writing, software
-# * distributed under the License is distributed on an "AS IS" BASIS,
-# * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# * See the License for the specific language governing permissions and
-# * limitations under the License.
-# *
-#* ******************************************************************************
+#* *****************************************************************************
 
 import os
 import sys
+import time
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
@@ -30,21 +16,12 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
 
-    # Predefined luma values ranging from 1 to 30
-    lumaValues = [1, 5, 10, 15, 30]
-    rackDevice = "dut"
-
     def __init__(self):
-        """
-        Initializes the ComponentLuma test.
-
-        Args:
-            None.
-        """
+        """Initializes the ComponentLuma test."""
         self.testName = "test32_ComponentLuma"
         super().__init__(self.testName, '32')
+        self.lumaValues = []
 
-    # TODO: Current version supports only manual verification.
     def testVerifyComponentLuma(self, lumaValue, manual=False):
         """
         Verifies whether the Component Luma is set correctly.
@@ -63,53 +40,135 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
             # TODO: Add automation verification methods
             return False
 
+    def setComponentLumaForAllStreams(self):
+        """Sets the Component Luma settings based on video formats and picture modes."""
+
+        # Get available TV Data Colors, Video Formats, and Picture Modes
+        tvDataColors = self.testtvSettings.getTVDataColor()
+        videoFormats = self.testtvSettings.getVideoFormatInfo()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
+
+        # Sync video formats with streams
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+
+        # Calculate luma values based on number of video formats
+        numVideoFormats = len(videoFormats)
+        self.lumaValues = [int(i * (30 / (numVideoFormats - 1))) for i in range(numVideoFormats)]
+
+        # Download and play streams, set component luma for each picture mode and format
+        for videoFormatIndex, (videoFormat, stream) in enumerate(zip(videoFormats, streams)):
+
+            self.testDownloadAssetsByUrl(stream)
+
+            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+
+            self.testPlayer.play(streamFullPath)
+            time.sleep(3)
+
+            # Set component luma for each picture mode
+            for pictureMode in pictureModes:
+
+                self.testtvSettings.setPictureMode(pictureMode)
+
+                lumaValue = self.lumaValues[videoFormatIndex]
+
+                color = tvDataColors[videoFormatIndex % len(tvDataColors)]
+
+                self.testtvSettings.setComponentLuma(color, lumaValue)
+
+            # Stop the stream playback
+            self.testPlayer.stop()
+
+
+    def resetComponentLumaToDefault(self):
+        """
+        Sets the component luma to the default value (15) for all color and picture mode combinations.
+
+        """
+
+        defaultLumaValue = 15
+        tvDataColors = self.testtvSettings.getTVDataColor()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
+
+        # Sync video formats with streams
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+
+        for stream in streams:
+            # Download and play the stream
+            self.testDownloadAssetsByUrl(stream)
+            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+
+            self.testPlayer.play(streamFullPath)
+            time.sleep(3)  # Allow some time for the stream to start playing
+
+            # Set default luma for each color and picture mode
+            for pictureMode in pictureModes:
+                self.testtvSettings.setPictureMode(pictureMode)
+                for color in tvDataColors:
+                    self.testtvSettings.setComponentLuma(color, defaultLumaValue)
+
+            # Stop the stream playback after setting the default values
+            self.testPlayer.stop()
+
+
     def testFunction(self):
         """This function tests the Component Luma settings.
 
         Returns:
             bool: Status of the last verification.
         """
-        # Run prerequisites listed in the test setup configuration file
-        self.testRunPrerequisites()
 
         self.log.testStart(self.testName, '32')
 
-        # Initialize the tvSettings module
-        self.testtvSettings.initialise()
+        self.testtvSettings.initialise()  # Initialize the tvSettings module
 
-        # Set the Component Management System (CMS) state
-        self.testtvSettings.setCMSState()
+        self.testtvSettings.setCMSState(1)  # Set the CMS state
 
-        # Get available TV Data Colors
+        self.setComponentLumaForAllStreams()  # Set the luma values for all streams
+
+        # Get available TV Data Colors, Video Formats, and Picture Modes
+        videoFormats = self.testtvSettings.getVideoFormatInfo()
         tvDataColors = self.testtvSettings.getTVDataColor()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
 
-        for stream in self.testStreams:
-            # Start the stream playback
-            self.testPlayer.play(stream)
+        # Sync video formats with streams
+        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
-            for colorIndex in tvDataColors:  # Iterate through available color indices
-                for lumaValue in self.lumaValues:
-                    self.log.stepStart(f'Color Index: {colorIndex}, Component Luma Value: {lumaValue}, Stream: {stream}')
+        result = False  # Initialize result variable
+        # Perform the verification by playing streams and verifying luma values
+        for videoFormatIndex, (videoFormat, stream) in enumerate(zip(videoFormats, streams)):
 
-                    # Set the component luma value
-                    self.testtvSettings.setComponentLuma(colorIndex, lumaValue)
+            self.testDownloadAssetsByUrl(stream)
 
-                    # Verify the component luma value
-                    result = self.testVerifyComponentLuma(lumaValue, True)
+            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
 
-                    # Log the result of the verification
-                    self.log.stepResult(result, f'Color Index: {colorIndex}, Component Luma Value: {lumaValue}, Stream: {stream}')
+            # Play the stream before verification
+            self.testPlayer.play(streamFullPath)
+            time.sleep(3)
 
-                    #Restart the stream for the current luma value
-                    self.testPlayer.stop()
-                    self.testPlayer.play(stream)
+            for pictureMode in pictureModes:
+                self.testtvSettings.setPictureMode(pictureMode)
 
-                    # Verify the component luma value after the stream restart
-                    result = self.testVerifyComponentLuma(lumaValue, True)
-                    self.log.stepResult(result, f'Verified Component Luma after stream restart for Color Index: {colorIndex}')
+                lumaValue = self.lumaValues[videoFormatIndex]
 
-            # Stop the stream playback
+                color = tvDataColors[videoFormatIndex % len(tvDataColors)]
+
+                self.log.stepStart(f'Setting Component Luma: {lumaValue},  Color: {color}, Picture Mode: {pictureMode}, '
+                                   f'Video Format: {videoFormat}, Stream: {streamFullPath}')
+
+                # Verify the component luma value
+                result = self.testVerifyComponentLuma(lumaValue, True)
+
+                self.log.stepResult(result, f'Verification for Component Luma: {lumaValue}, Color: {color}, '
+                                            f'Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamFullPath}')
+
+            # Stop the stream playback after verification
             self.testPlayer.stop()
+
+        #reset to default values
+        self.resetComponentLumaToDefault()
+
+        self.testtvSettings.setCMSState(0)  # Reset the CMS state
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()

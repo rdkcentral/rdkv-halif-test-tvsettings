@@ -23,8 +23,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test24_RpostOffset(tvSettingsHelperClass):
 
-    rpostValues = [-1024, -512, 0, 512, 1023]
-    saveSetFlags = [0, 1]  # Save only or set only flags
+    rpostValues = [512, -1024, -512, 0, 512, 1023]
 
     def __init__(self):
         """
@@ -71,7 +70,7 @@ class tvSettings_test24_RpostOffset(tvSettingsHelperClass):
                     self.log.stepStart(f'Set Operation - Color Temperature: {colorTemperature} RpostOffset: {rpostValue} Stream: {stream}')
 
                     # Set the Color Temperature and RpostOffset (Save flag = 0 means Set operation)
-                    self.testtvSettings.setRpostOffsetValue(colorTemperature, rpostValue, 0)
+                    self.testtvSettings.setRpostOffsetValue("TV_OFFSET", colorTemperature, rpostValue, 0)
 
                     # Verify Set operation manually
                     result = self.testVerifyRpostOffset(colorTemperature, rpostValue, 0, True)
@@ -83,35 +82,35 @@ class tvSettings_test24_RpostOffset(tvSettingsHelperClass):
     def testSaveOperation(self):
         """Tests the Save operation for RpostOffset and verifies changes after restart."""
 
-        # Apply Save operation and ask user if they want to restart the stream to verify
+        # Get the Color Temperature values
+        colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
+
+        # Loop through Color Temperatures and Rpost values to set them
+        for colorTemperature in colorTemperatureValues:
+            for rpostValue in self.rpostValues:
+
+                # Set the Color Temperature and RpostOffset (Save flag = 1 means Save operation)
+                self.testtvSettings.setRpostOffsetValue("TV_OFFSET", colorTemperature, rpostValue, 1)
+
+        # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
-            # Get the Color Temperature values
-            colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
-
+            # Verify the Save operation manually after stream playback
             for colorTemperature in colorTemperatureValues:
                 for rpostValue in self.rpostValues:
-                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} RpostOffset: {rpostValue} Stream: {stream}')
+                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} RpostOffset: {rpostValue}')
 
-                    # Set the Color Temperature and RpostOffset (Save flag = 1 means Save operation)
-                    self.testtvSettings.setRpostOffsetValue(colorTemperature, rpostValue, 1)
-
-                    # Stop the current stream
-                    self.testPlayer.stop()
-
-                    # Restart the stream
-                    self.testPlayer.play(stream)
-
-                    # Set the Color Temperature to the same value to apply the saved RpostOffset value
+                    # Set the Color Temperature to apply the saved RpostOffset value
                     self.testtvSettings.setColorTempLevel(colorTemperature)
 
                     # Now verify the Save operation manually after restart
-                    resultAfterRestart = self.testVerifyRpostOffset(colorTemperature, rpostValue, 1, True)
-                    self.log.stepResult(resultAfterRestart, f'Save Operation After Restart - Color Temperature: {colorTemperature} RpostOffset: {rpostValue} Stream: {stream}')
+                    resut = self.testVerifyRpostOffset(colorTemperature, rpostValue, 1, True)
+                    self.log.stepResult(resut, f'Save Operation - Color Temperature: {colorTemperature} RpostOffset: {rpostValue} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
 
     def testFunction(self):
         """Main function to run both Set and Save tests for RpostOffset."""
