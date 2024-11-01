@@ -128,3 +128,4 @@ tvSettings:  # Prefix must always exist
                     - "Save Picture Mode"
                     - "Save CMS"
                     - "Save Gamma Table"
+                    - "Get CMS State"

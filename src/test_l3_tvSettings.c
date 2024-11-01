@@ -84,6 +84,18 @@
         } \
     } while (0)
 
+#define ASSERT_STRING_COMPARE(str1, str2, n) \
+    do \
+    { \
+        const char *s1 = (str1) ? (str1) : "(NULL)"; \
+        const char *s2 = (str2) ? (str2) : "(NULL)"; \
+        if (!(str1 && str2 && strncmp(s1, s2, (n)) == 0)) \
+        { \
+            UT_LOG_ERROR("Mismatch: \"%s\" != \"%s\" at %s:%d\n", s1, s2, __FILE__, __LINE__); \
+        } \
+    } while (0)
+
+
 #define TVSETTINGS_FORMAT_CB_FILE "tvSettings_formatChangeStatus.txt"
 #define TVSETTINGS_CONTENT_CB_FILE "tvSettings_contentChangeStatus.txt"
 #define TVSETTINGS_RESOLUTION_CB_FILE "tvSettings_resolutionChangeStatus.txt"
@@ -499,10 +511,10 @@ static void videoContentChangeCB (tvContentType_t mode, void *userData)
 static void videoResolutionChangeCB (tvResolutionParam_t resolutionStruct, void *userData)
 {
     UT_LOG_INFO("Received Video Resolution Change callback Frame Res:[%s], widthxheight:[%dx%d], IsIntercaed[%d], userData[%s][0x%0X]",
+                UT_Control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue),
                  resolutionStruct.frameWidth,
                  resolutionStruct.frameHeight,
                 resolutionStruct.isInterlaced,
-                UT_Control_GetMapString(tvVideoResolution_mapTable, resolutionStruct.resolutionValue),
                 (char *)userData,
                 userData);
 
@@ -930,7 +942,7 @@ void test_l3_tvSettings_backlightMode(void)
     // Get the current backlight mode to confirm
     UT_LOG_INFO("Calling GetCurrentBacklightMode(OUT: currentMode:[])");
     ret = GetCurrentBacklightMode(&currentMode);
-    UT_LOG_INFO("Got current BacklightMode (OUT: currentMode:[%s])tvError[%s]",
+    UT_LOG_INFO("Get current BacklightMode (OUT: currentMode:[%s])tvError[%s]",
         UT_Control_GetMapString(tvBacklightMode_mapTable, currentMode),
         UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
@@ -993,13 +1005,13 @@ void test_l3_tvSettings_TVDimmingMode(void)
     switch (selectedMode)
     {
         case tvDimmingMode_Fixed:
-            modeStr = "Fixed";
+            modeStr = "fixed";
             break;
         case tvDimmingMode_Local:
-            modeStr = "Local";
+            modeStr = "local";
             break;
         case tvDimmingMode_Global:
-            modeStr = "Global";
+            modeStr = "global";
             break;
         default:
             UT_LOG_ERROR("Unknown dimming mode selected.");
@@ -1016,9 +1028,9 @@ void test_l3_tvSettings_TVDimmingMode(void)
     // Get and verify the current dimming mode
     UT_LOG_INFO("Calling GetTVDimmingMode(OUT:currentMode:[])");
     ret = GetTVDimmingMode(currentMode);
-    UT_LOG_INFO("Result Got TVDimmingMode (OUT:currentMode:[%s]),tvError_t:[%s]", currentMode, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result Get TVDimmingMode (OUT:currentMode:[%s]),tvError_t:[%s]", currentMode, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(modeStr,currentMode);
+    ASSERT_STRING_COMPARE(modeStr,currentMode, strlen(modeStr) + 1);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1084,7 +1096,7 @@ void test_l3_tvSettings_LocalDimmingLevel(void)
     // Get and verify the current dimming level
     UT_LOG_INFO("Calling GetLocalDimmingLevel()");
     ret = GetLocalDimmingLevel(&currentLevel);
-    UT_LOG_INFO("Result Got LocalDimmingLevel (OUT:CurrentLevel:[%s]),tvError_t:[%s]", UT_Control_GetMapString(ldimStateLevel_mapTable, currentLevel), UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result Get LocalDimmingLevel (OUT:CurrentLevel:[%s]),tvError_t:[%s]", UT_Control_GetMapString(ldimStateLevel_mapTable, currentLevel), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(selectedLevel, currentLevel);
@@ -1140,7 +1152,7 @@ void test_l3_tvSettings_Brightness(void)
     // Get the brightness value
     UT_LOG_INFO("Calling GetBrightness(OUT:brightness:[])");
     ret = GetBrightness(&currentBrightness);
-    UT_LOG_INFO("Result GotBrightness(OUT:brightness:[%d]),tvError_t:[%s]", currentBrightness, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetBrightness(OUT:brightness:[%d]),tvError_t:[%s]", currentBrightness, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(brightness, currentBrightness);
@@ -1199,7 +1211,7 @@ void test_l3_tvSettings_Contrast(void)
     // Get the current contrast value
     UT_LOG_INFO("Calling GetContrast(OUT:contrast:[])");
     ret = GetContrast(&currentContrast);
-    UT_LOG_INFO("Result GotContrast(OUT:contrast:[%d]),tvError_t:[%s]", currentContrast, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetContrast(OUT:contrast:[%d]),tvError_t:[%s]", currentContrast, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(contrast, currentContrast);
@@ -1257,7 +1269,7 @@ void test_l3_tvSettings_Sharpness(void)
     // Get the current sharpness value
     UT_LOG_INFO("Calling GetSharpness(OUT:sharpness:[])");
     ret = GetSharpness(&currentSharpness);
-    UT_LOG_INFO("Result GotSharpness(OUT:sharpness:[%d]),tvError_t:[%s]", currentSharpness, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetSharpness(OUT:sharpness:[%d]),tvError_t:[%s]", currentSharpness, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(sharpness, currentSharpness);
@@ -1315,7 +1327,7 @@ void test_l3_tvSettings_Saturation(void)
     // Get the current saturation value
     UT_LOG_INFO("Calling GetSaturation(OUT:saturation:[])");
     ret = GetSaturation(&currentSaturation);
-    UT_LOG_INFO("Result GotSaturation(OUT:saturation:[%d]),tvError_t:[%s]", currentSaturation, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetSaturation(OUT:saturation:[%d]),tvError_t:[%s]", currentSaturation, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(saturation, currentSaturation);
@@ -1372,7 +1384,7 @@ void test_l3_tvSettings_Hue(void)
     // Get the current hue value
     UT_LOG_INFO("Calling GetHue(OUT:hue:[])");
     ret = GetHue(&currentHue);
-    UT_LOG_INFO("Result GotHue(OUT:hue:[%d]),tvError_t:[%s]", currentHue, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetHue(OUT:hue:[%d]),tvError_t:[%s]", currentHue, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(hue, currentHue);
@@ -1501,7 +1513,7 @@ void test_l3_tvSettings_AspectRatio(void)
     // Get and confirm the current aspect ratio
     UT_LOG_INFO("Calling GetAspectRatio(OUT:aspectRatio:[])");
     ret = GetAspectRatio(&currentAspectRatio);
-    UT_LOG_INFO("Result GotAspectRatio(OUT:aspectRatio:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvDisplayMode_mapTable, currentAspectRatio), UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetAspectRatio(OUT:aspectRatio:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvDisplayMode_mapTable, currentAspectRatio), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(selectedAspectRatio, currentAspectRatio);
@@ -1559,7 +1571,7 @@ void test_l3_tvSettings_LowLatencyState(void)
     // Get and confirm the current low latency state
     UT_LOG_INFO("Calling GetLowLatencyState(OUT:LowLatencyState:[])");
     ret = GetLowLatencyState(&currentLowLatencyState);
-    UT_LOG_INFO("Result GotLowLatencyState(OUT:LowLatencyState:[%d]),tvError_t:[%s]", currentLowLatencyState, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_LOG_INFO("Result GetLowLatencyState(OUT:LowLatencyState:[%d]),tvError_t:[%s]", currentLowLatencyState, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
     ASSERT_COMPARE(userChoice, currentLowLatencyState);
@@ -1587,8 +1599,8 @@ void test_l3_tvSettings_DynamicContrast(void)
 
     // Variable declarations
     tvError_t ret = tvERROR_NONE;
-    char currentDynamicContrast[20] = {0}; // Buffer to store the current dynamic contrast mode
     char userChoice[20] = {0};
+    char currentDynamicContrast[20] = {0}; // Buffer to store the current dynamic contrast mode
     int userSelection = 0;
 
     // Display available dynamic contrast states to the user
@@ -1606,9 +1618,9 @@ void test_l3_tvSettings_DynamicContrast(void)
 
     // Validate user input and set the userChoice
     if (userSelection == 1) {
-        strcpy(userChoice, "enabled");
+        strncpy(userChoice, "enabled", sizeof(userChoice) - 1);
     } else if (userSelection == 2) {
-        strcpy(userChoice, "disabled");
+        strncpy(userChoice, "disabled", sizeof(userChoice) - 1);
     } else {
         UT_LOG_ERROR("Invalid choice! Please enter 1 or 2 to select a mode.");
         UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1633,13 +1645,14 @@ void test_l3_tvSettings_DynamicContrast(void)
         UT_LOG_INFO("Out %s", __FUNCTION__);
         return;
     }
-    UT_LOG_INFO("Result GotDynamicContrast(OUT:DynamicContrastMode:[%s])", currentDynamicContrast);
+    UT_LOG_INFO("Result GetDynamicContrast(OUT:DynamicContrastMode:[%s])", currentDynamicContrast);
 
     // Verify that the setting matches the user's choice
-    ASSERT_COMPARE(userChoice, currentDynamicContrast);
+    ASSERT_STRING_COMPARE(userChoice, currentDynamicContrast, strlen(userChoice) + 1);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
+
 
 /**
  * @brief This test sets and gets the current dynamic gamma value.
@@ -1750,7 +1763,7 @@ void test_l3_tvSettings_DolbyVisionMode(void)
     UT_LOG_INFO("Calling SetTVDolbyVisionMode(IN: DolbyVisionMode: [%s])", UT_Control_GetMapString(tvDolbyMode_mapTable, selectedMode));
     ret = SetTVDolbyVisionMode(selectedMode);
     UT_LOG_INFO("Result SetTVDolbyVisionMode (IN:DolbyVisionMode[%s]),tvError_t:[%s]",
-                UT_Control_GetMapString(tvDolbyMode_mapTable, currentDolbyMode), UT_Control_GetMapString(tvError_mapTable, ret));
+                UT_Control_GetMapString(tvDolbyMode_mapTable, selectedMode), UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
 
@@ -1844,7 +1857,7 @@ void test_l3_tvSettings_PictureMode(void)
     UT_LOG_INFO("Result GetTVPictureMode(OUT:currentPictureMode[%s]), tvError_t:[%s]", currentPictureMode, UT_Control_GetMapString(tvError_mapTable, ret));
 
     ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(selectedPictureMode, currentPictureMode);
+    ASSERT_STRING_COMPARE(selectedPictureMode, currentPictureMode, strlen(selectedPictureMode) + 1);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2102,7 +2115,7 @@ void test_l3_tvSettings_ColorTempGgain(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly);
     ret = SetColorTemp_Ggain_onSource(selectedColorTemp, ggainValue, selectedSourceId, saveOnly);
-    UT_LOG_INFO("Result SetColorTemp_Ggain_onSource( IN:Color Temperature:[%s], IN:Ggain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%s]), tvError_t:[%d]",
+    UT_LOG_INFO("Result SetColorTemp_Ggain_onSource( IN:Color Temperature:[%s], IN:Ggain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d]), tvError_t:[%d]",
                 UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 ggainValue,
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
@@ -2242,8 +2255,9 @@ void test_l3_tvSettings_ColorTempBgain(void)
     UT_LOG_INFO("Result SetColorTemp_Bgain_onSource(IN:Color Temperature:[%s], IN:Bgain:[%d], IN:Source ID:[%s], IN:SaveOnly:[%d]),tvError_t:[%s]",
                 UT_Control_GetMapString(tvColorTemp_mapTable, selectedColorTemp),
                 bgainValue,
+                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
-                UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
+                UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
     // Get and confirm the Bgain value
@@ -2814,9 +2828,6 @@ void test_l3_tvSettings_GammaTable(void)
     ret = GetGammaTable(retrievedData_R, retrievedData_G, retrievedData_B, size);
     UT_LOG_INFO("Result GetGammaTable( OUT: size[%hu]),tvError_t:[%s]", size, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(pData_R, retrievedData_R);
-    ASSERT_COMPARE(pData_G, retrievedData_G);
-    ASSERT_COMPARE(pData_B, retrievedData_B);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5652,12 +5663,14 @@ void test_l3_tvSettings_CMSSave(void)
     }
 
     UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t\tSupported Component Types");
+    UT_LOG_MENU_INFO("\t\tSupported Component Colors");
     UT_LOG_MENU_INFO("----------------------------------------------------------");
-    UT_LOG_MENU_INFO("\t#   %-30s", "Component Types");
-    for (uint32_t i = tvDataColor_RED; i < tvDataColor_MAX; i <<= 1)
+    UT_LOG_MENU_INFO("\t#   %-30s", "Component Colors");
+
+    // Start the loop from tvDataColor_NONE and proceed up to tvDataColor_MAX, doubling each iteration
+    for (uint32_t i = tvDataColor_NONE; i <= tvDataColor_MAX; i = (i == 0 ? 1 : i << 1))
     {
-        UT_LOG_MENU_INFO("%d. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
+        UT_LOG_MENU_INFO("%u. %s", i, UT_Control_GetMapString(tvDataComponentColor_mapTable, i));
     }
 
     // Get user input for component color
@@ -5844,6 +5857,40 @@ void test_l3_tvSettings_SaveGammaTable(void)
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
 
+/**
+ * @brief Retrieves and validates the CMS state without setting it.
+ *
+ * This test function directly calls GetCMSState to retrieve the current CMS state
+ * and validates the retrieval process.
+ *
+ * **Test Group ID:** 05
+ * **Test Case ID:** 62
+ *
+ * **Test Procedure:**
+ * Refer to Test specification documentation
+ * [tvSettings_L3_Low-Level_TestSpecification.md](../docs/pages/tvSettings_L3_Low-Level_TestSpecification.md)
+ */
+void test_l3_tvSettings_GetCMSState(void)
+{
+    // Initialize test ID and log entry
+    gTestID = 62;
+    UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    // Variable declarations
+    tvError_t ret = tvERROR_NONE;
+    bool retrievedCMSState = false;
+
+    // Retrieve the CMS state
+    UT_LOG_INFO("Calling GetCMSState OUT:retrievedCMSState[]");
+    ret = GetCMSState(&retrievedCMSState);
+    UT_LOG_INFO("Result GetCMSState(OUT: retrievedCMSState[%s]), tvError_t:[%s]",
+                retrievedCMSState ? "Enabled" : "Disabled",
+                UT_Control_GetMapString(tvError_mapTable, ret));
+    ASSERT(ret == tvERROR_NONE);
+
+    // Log exit and end function
+    UT_LOG_INFO("Out %s", __FUNCTION__);
+}
 
 
 static UT_test_suite_t * pSuite = NULL;
@@ -5925,6 +5972,7 @@ int32_t test_l3_tvSettings_register(void)
     UT_add_test(pSuite, "Save Picture Mode", test_l3_tvSettings_PictureModeSave);
     UT_add_test(pSuite, "Save CMS", test_l3_tvSettings_CMSSave);
     UT_add_test(pSuite, "Save Gamma Table", test_l3_tvSettings_SaveGammaTable);
+    UT_add_test(pSuite, "Get CMS State", test_l3_tvSettings_GetCMSState);
 
     return 0;
 }

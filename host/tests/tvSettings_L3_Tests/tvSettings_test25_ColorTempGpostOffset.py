@@ -23,7 +23,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test25_GpostOffset(tvSettingsHelperClass):
 
-    gpostValues = [512, -1024, -512, 0, 512, 1023]
+    gpostValues = [512, -1024, -512, 0, 512, 1023, 0]
 
     def __init__(self):
         """
@@ -85,30 +85,35 @@ class tvSettings_test25_GpostOffset(tvSettingsHelperClass):
         # Get the Color Temperature values
         colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
 
-        # Loop through Color Temperatures and Gpost values to set them
-        for colorTemperature in colorTemperatureValues:
-            for gpostValue in self.gpostValues:
-                # Save the GpostOffset
-                self.testtvSettings.setGpostOffsetValue("TV_OFFSET", colorTemperature, gpostValue, 1)
+        # Loop through each color temperature and corresponding GpostOffset value to set them
+        for colorTemperature, gpostValue in zip(colorTemperatureValues, self.gpostValues):
+            # Set the Color Temperature and GpostOffset (Save flag = 1 means Save operation)
+            self.testtvSettings.setGpostOffsetValue("TV_OFFSET", colorTemperature, gpostValue, 1)
 
         # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
             # Verify the Save operation manually after stream playback
-            for colorTemperature in colorTemperatureValues:
-                for gpostValue in self.gpostValues:
-                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} GpostOffset: {gpostValue}')
+            for colorTemperature, gpostValue in zip(colorTemperatureValues, self.gpostValues):
+                self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} GpostOffset: {gpostValue} Stream: {stream}')
 
-                    # Set the Color Temperature to apply the saved GpostOffset value
-                    self.testtvSettings.setColorTempLevel(colorTemperature)
+                # Set the Color Temperature to apply the saved GpostOffset value
+                self.testtvSettings.setColorTempLevel(colorTemperature)
 
-                    # Now verify the Save operation manually after restart for Gpost
-                    result = self.testVerifyGpostOffset(colorTemperature, gpostValue, 1, True)
-                    self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} GpostOffset: {gpostValue} Stream: {stream}')
+                # Now verify the Save operation manually after restart
+                result = self.testVerifyGpostOffset(colorTemperature, gpostValue, 1, True)
+                self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} GpostOffset: {gpostValue} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
+            # Reset each color temperature to the default GpostOffset value (e.g., 0)
+            defaultGpostValue = 0  # or whatever your default value is
+            for colorTemperature in colorTemperatureValues:
+                self.testtvSettings.setGpostOffsetValue("TV_OFFSET", colorTemperature, defaultGpostValue, 1)
+                self.log.info(f'Reset Color Temperature {colorTemperature} to default GpostOffset value: {defaultGpostValue}')
+
 
     def testFunction(self):
         """Main function to run both Set and Save tests for GpostOffset."""

@@ -123,9 +123,6 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
-            time.sleep(2)  # Allow time for the default callback to occur
-            cbVideoFrameRateAfterStop = self.testtvSettings.getVideoFrameRateCallbackStatus()
-
             # Clean the assets (delete the downloaded stream)
             self.testCleanAssetsByUrl(streamFullPath)
 

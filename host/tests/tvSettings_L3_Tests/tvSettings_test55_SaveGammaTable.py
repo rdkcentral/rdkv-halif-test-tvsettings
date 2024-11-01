@@ -73,14 +73,6 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         # Predefined RGB gamma curve values for testing
         combinations = [
             {
-                # Linear gamma using x ^ 1
-                "description": "Linear gamma (x ^ 1)",
-                "size": 255,
-                "red": list(np.linspace(0, 1023, 255).astype(int)),
-                "green": list(np.linspace(0, 1023, 255).astype(int)),
-                "blue": list(np.linspace(0, 1023, 255).astype(int)),
-            },
-            {
                 # Curved gamma using x ^ (1/2)
                 "description": "Curved gamma (x ^ 1/2)",
                 "size": 255,
@@ -96,6 +88,14 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
                 "green": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
                 "blue": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
             },
+            {
+                # Linear gamma using x ^ 1
+                "description": "Linear gamma (x ^ 1)",
+                "size": 255,
+                "red": list(np.linspace(0, 1023, 255).astype(int)),
+                "green": list(np.linspace(0, 1023, 255).astype(int)),
+                "blue": list(np.linspace(0, 1023, 255).astype(int)),
+            }
         ]
 
         num_combinations = len(combinations)
@@ -124,7 +124,6 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         return gamma_values
 
 
-
     def testFunction(self):
         """
         Main function that tests saving GammaTable values with all combinations of color temperatures.
@@ -145,12 +144,15 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
 
         # Loop through streams
         for stream in streams:
+
+            streamPath =  os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+
             # Play the stream
-            self.testPlayer.play(stream)
+            self.testPlayer.play(streamPath)
             time.sleep(3)  # Allow the stream to start
 
             # Log details for the current stream
-            self.log.stepStart(f'Stream: {stream}')
+            self.log.stepStart(f'Stream: {streamPath}')
 
             # Loop through the combinations and assign color temperatures
             for index, (color_temp, red, green, blue, description) in enumerate(gamma_values):
@@ -160,14 +162,14 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
                     self.testtvSettings.setColorTempLevel(color_temp)  # Set the color temperature level
 
                     # Log the applied gamma values for this combination
-                    self.log.stepStart(f'Applying Gamma values: Color Temp: {color_temp}, R: {red}, G: {green}, B: {blue}')
+                    self.log.stepStart(f'Applying Gamma values: description: {description}')
                     size = 255  # Size is fixed as per combinations
 
                     # Verify gamma table with the gamma values applied
                     result = self.testVerifyGammaTable([description], color_temp, manual=True)
 
                     # Log the result of the verification
-                    self.log.stepResult(result, f'Gamma values verified for Color Temp: {color_temp}, R: {red}, G: {green}, B: {blue}')
+                    self.log.stepResult(result, f'Gamma values verified for description: {description}')
 
             # Stop the stream playback and clean assets
             self.testPlayer.stop()

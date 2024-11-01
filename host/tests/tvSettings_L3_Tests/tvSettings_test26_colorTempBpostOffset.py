@@ -23,7 +23,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test26_BpostOffset(tvSettingsHelperClass):
 
-    bpostValues = [512, -1024, -512, 0, 512, 1023]
+    bpostValues = [512, -1024, -512, 0, 512, 1023, 0]
 
     def __init__(self):
         """
@@ -79,36 +79,42 @@ class tvSettings_test26_BpostOffset(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
+
     def testSaveOperation(self):
         """Tests the Save operation for BpostOffset and verifies changes after restart."""
 
         # Get the Color Temperature values
         colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
 
-        # Loop through Color Temperatures and Bpost values to set them
-        for colorTemperature in colorTemperatureValues:
-            for bpostValue in self.bpostValues:  # Loop through Bpost values
-                # Set the BpostOffset (Save flag = 1 means Save operation)
-                self.testtvSettings.setBpostOffsetValue("TV_OFFSET", colorTemperature, bpostValue, 1)  # Assuming a method for Bpost
+        # Loop through each color temperature and corresponding BpostOffset value to set them
+        for colorTemperature, bpostValue in zip(colorTemperatureValues, self.bpostValues):
+            # Set the Color Temperature and BpostOffset (Save flag = 1 means Save operation)
+            self.testtvSettings.setBpostOffsetValue("TV_OFFSET", colorTemperature, bpostValue, 1)
 
         # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
             # Verify the Save operation manually after stream playback
-            for colorTemperature in colorTemperatureValues:
-                for bpostValue in self.bpostValues:  # Loop through Bpost values for verification
-                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue}')
+            for colorTemperature, bpostValue in zip(colorTemperatureValues, self.bpostValues):
+                self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
 
-                    # Set the Color Temperature to apply the saved BpostOffset value
-                    self.testtvSettings.setColorTempLevel(colorTemperature)
+                # Set the Color Temperature to apply the saved BpostOffset value
+                self.testtvSettings.setColorTempLevel(colorTemperature)
 
-                    # Now verify the Save operation manually after restart for Bpost
-                    result = self.testVerifyBpostOffset(colorTemperature, bpostValue, 1, True)  # Assuming similar verification method for Bpost
-                    self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
+                # Now verify the Save operation manually after restart
+                result = self.testVerifyBpostOffset(colorTemperature, bpostValue, 1, True)
+                self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} BpostOffset: {bpostValue} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
+            # Reset each color temperature to the default BpostOffset value (e.g., 0)
+            defaultBpostValue = 0  # or whatever your default value is
+            for colorTemperature in colorTemperatureValues:
+                self.testtvSettings.setBpostOffsetValue("TV_OFFSET", colorTemperature, defaultBpostValue, 1)
+                self.log.info(f'Reset Color Temperature {colorTemperature} to default BpostOffset value: {defaultBpostValue}')
+
 
     def testFunction(self):
         """Main function to run both Set and Save tests for BpostOffset."""

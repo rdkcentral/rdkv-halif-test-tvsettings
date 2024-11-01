@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test33_EnableGammaMode(tvSettingsHelperClass):
 
     # Predefined gamma modes (0: Disable, 1: Enable)
-    gammaModes = [0, 1]
+    gammaModes = [0, 1, 0]
 
     def __init__(self):
         """
@@ -73,9 +73,6 @@ class tvSettings_test33_EnableGammaMode(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Set the Component Management System (CMS) state
-        self.testtvSettings.setCMSState(1)
-
         for stream in self.testStreams:
             # Start the stream playback
             self.testPlayer.play(stream)
@@ -95,9 +92,6 @@ class tvSettings_test33_EnableGammaMode(tvSettingsHelperClass):
 
             # Stop the stream playback
             self.testPlayer.stop()
-
-        # Set the Component Management System (CMS) state
-        self.testtvSettings.setCMSState(0)
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()

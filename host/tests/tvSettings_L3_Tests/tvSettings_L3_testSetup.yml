@@ -18,21 +18,64 @@ tvSettings:  # Prefix must always exist
       test01_CheckVideoFormat:
         <<: *defaults
         streams:
-          -  "<URL PATH>/streams/Colors_sdr.mp4"
           -  "<URL PATH>/streams/Colors_hdr.mp4"
+          -  "<URL PATH>/streams/DolbyVision.mp4"
           -  "<URL PATH>/streams/Colors_hlg.mp4"
+          -  "<URL PATH>/streams/Colors_sdr.mp4"
       test02_CheckVideoResolution:
         <<: *defaults
         streams:
-          -  "<URL PATH>/streams/Colors_sdr.mp4"
-          -  "<URL PATH>/streams/Colors_hdr.mp4"
-          -  "<URL PATH>/streams/Colors_hlg.mp4"
+          - "<URL PATH>/streams/Colors_720x240_0.mp4"
+          - "<URL PATH>/streams/Colors_2880x240_0.mp4"
+          - "<URL PATH>/streams/Colors_720x288_0.mp4"
+          - "<URL PATH>/streams/Colors_2880x288_0.mp4"
+          - "<URL PATH>/streams/Colors_640x480_0.mp4"
+          - "<URL PATH>/streams/Colors_720x480_0.mp4"
+          - "<URL PATH>/streams/Colors_800x480_0.mp4"
+          - "<URL PATH>/streams/Colors_852x480_0.mp4"
+          - "<URL PATH>/streams/Colors_854x480_0.mp4"
+          - "<URL PATH>/streams/Colors_1440x480_1.mp4"
+          - "<URL PATH>/streams/Colors_2880x480_1.mp4"
+          - "<URL PATH>/streams/Colors_960x540_0.mp4"
+          - "<URL PATH>/streams/Colors_3840x540_0.mp4"
+          - "<URL PATH>/streams/Colors_720x576_1.mp4"
+          - "<URL PATH>/streams/Colors_1440x576_1.mp4"
+          - "<URL PATH>/streams/Colors_2880x576_1.mp4"
+          - "<URL PATH>/streams/Colors_800x600_0.mp4"
+          - "<URL PATH>/streams/Colors_1024x600_0.mp4"
+          - "<URL PATH>/streams/Colors_1280x600_0.mp4"
+          - "<URL PATH>/streams/Colors_1280x720_0.mp4"
+          - "<URL PATH>/streams/Colors_1280x1024_0.mp4"
+          - "<URL PATH>/streams/Colors_1680x720_0.mp4"
+          - "<URL PATH>/streams/Colors_1024x768_0.mp4"
+          - "<URL PATH>/streams/Colors_1280x768_0.mp4"
+          - "<URL PATH>/streams/Colors_1360x768_0.mp4"
+          - "<URL PATH>/streams/Colors_1366x768_0.mp4"
+          - "<URL PATH>/streams/Colors_1440x900_0.mp4"
+          - "<URL PATH>/streams/Colors_1600x900_0.mp4"
+          - "<URL PATH>/streams/Colors_1280x960_0.mp4"
+          - "<URL PATH>/streams/Colors_1920x1080_1.mp4"
+          - "<URL PATH>/streams/Colors_2560x1080_0.mp4"
+          - "<URL PATH>/streams/Colors_3840x1080_0.mp4"
+          - "<URL PATH>/streams/Colors_1600x1200_0.mp4"
+          - "<URL PATH>/streams/Colors_1920x1200_0.mp4"
+          - "<URL PATH>/streams/Colors_2160x1200_0.mp4"
+          - "<URL PATH>/streams/Colors_2400x1200_0.mp4"
+          - "<URL PATH>/streams/Colors_2560x1440_0.mp4"
+          - "<URL PATH>/streams/Colors_3440x1440_0.mp4"
+          - "<URL PATH>/streams/Colors_3840x2160_0.mp4"
+          - "<URL PATH>/streams/Colors_4096x2160_0.mp4"
       test03_CheckVideoFrameRate:
         <<: *defaults
         streams:
-          -  "<URL PATH>/streams/Colors_sdr.mp4"
-          -  "<URL PATH>/streams/Colors_hdr.mp4"
-          -  "<URL PATH>/streams/Colors_hlg.mp4"
+          - "<URL PATH>/streams/FrameRate_30.mp4"
+          - "<URL PATH>/streams/FrameRate_60.mp4"
+          - "<URL PATH>/streams/FrameRate_23dot98.mp4"
+          - "<URL PATH>/streams/FrameRate_59dot94.mp4"
+          - "<URL PATH>/streams/FrameRate_24.mp4"
+          - "<URL PATH>/streams/FrameRate_25.mp4"
+          - "<URL PATH>/streams/FrameRate_50.mp4"
+          - "<URL PATH>/streams/FrameRate_29dot97.mp4"
       test04_CheckVideoSource:
         <<: *defaults
         streams:
@@ -48,7 +91,7 @@ tvSettings:  # Prefix must always exist
       test07_BacklightMode:
         <<: *defaults
         streams:
-          -  "<URL PATH>/streams/Colors_sdr.mp4"
+          -  "<URL PATH>/streams/BlackRed_hdr10.mp4"
       test08_TVDimmingMode:
         <<: *defaults
         streams:

@@ -58,7 +58,7 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
         """
         if manual:
             return self.testUserResponse.getUserYN(
-                f"Is Dolby Vision '{dolbyVision}' applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
+                f"Is Dolby Vision '{dolbyVision}' applied for Picture Mode: {pictureMode} and Video Format: {videoFormat} as expected? (Y/N):"
             )
         else:
             # TODO: Add automation verification methods

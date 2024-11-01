@@ -24,13 +24,15 @@ class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
         (1023, 0, 0),    # Red
         (0, 1023, 0),    # Green
         (0, 0, 1023),    # Blue
-        (1023, 1023, 1023)  # White
+        (1023, 1023, 1023),  # White
+        (0, 0, 0)  # White
     ]
     eight_bit_levels = [
         (255, 0, 0),     # Red
         (0, 255, 0),     # Green
         (0, 0, 255),     # Blue
-        (255, 255, 255)  # White
+        (255, 255, 255),  # White
+        (0, 0, 0)  # White
     ]
 
     def __init__(self):

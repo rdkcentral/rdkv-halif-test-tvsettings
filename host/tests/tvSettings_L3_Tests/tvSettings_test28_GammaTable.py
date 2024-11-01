@@ -28,14 +28,6 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
     # Predefined RGB gamma curve values for testing
     gammaCombinations = [
         {
-            # Linear gamma using x ^ 1
-            "description": "Linear gamma (x ^ 1)",
-            "size": 255,
-            "red": list(np.linspace(0, 1023, 255).astype(int)),
-            "green": list(np.linspace(0, 1023, 255).astype(int)),
-            "blue": list(np.linspace(0, 1023, 255).astype(int)),
-        },
-        {
             # Curved gamma using x ^ (1/2)
             "description": "Curved gamma (x ^ 1/2)",
             "size": 255,
@@ -51,6 +43,14 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
             "green": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
             "blue": list((np.power(np.linspace(0, 1, 255), 2.2) * 1023).astype(int)),
         },
+        {
+            # Linear gamma using x ^ 1
+            "description": "Linear gamma (x ^ 1)",
+            "size": 255,
+            "red": list(np.linspace(0, 1023, 255).astype(int)),
+            "green": list(np.linspace(0, 1023, 255).astype(int)),
+            "blue": list(np.linspace(0, 1023, 255).astype(int)),
+        }
     ]
 
     def __init__(self):

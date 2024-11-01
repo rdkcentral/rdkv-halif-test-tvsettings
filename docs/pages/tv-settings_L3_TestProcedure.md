@@ -228,13 +228,15 @@ Refer [tvSettings_L3_Low-Level_Test_Spec.md](./tv-settings_L3_Low_Level_Test_Spe
 
 #### Acceptance Criteria - test01
 
-The device should play each video format stream accurately, and the callback should verify each format. When playback of non-SDR streams stops, the device should trigger a default SDR callback.
+- The device should play each video format stream in the specified order, and the callback should verify each format.
+- When playback of non-SDR streams stops, the device should trigger a default SDR callback.
+- **Note:** The order of supportedFormats in the test and the video format stream list in the test setup YAML file should match to ensure each format aligns with the corresponding stream during playback.
 
 #### Expected Results - test01
 
-The test initializes the TV settings, iterates through multiple video formats, and confirms the correct video format and callback status for each playback.
+The test initializes the TV settings, iterates through multiple video formats in the defined order, and confirms the correct video format and callback status for each playback.
 
-Success Criteria
+Success Criteria:
 
 - The device should correctly display each specified video format during playback.
 - The default SDR callback should activate after playback stops on non-SDR streams.
@@ -244,20 +246,21 @@ Success Criteria
 - **Initiate the Test:**
 
   - Run the Python file: **`tvSettings_test01_CheckVideoFormat.py`**
-  - The test will automatically download each required video stream to the target directory, initialize TV settings, and begin playback.
+  - The test will automatically download each required video stream in the specified order to the target directory, initialize TV settings, and begin playback.
 
 - **Video Format Verification:**
 
-  - For each video format, the test:
-    - Downloads the stream.
+  - For each video format in the predefined list, the test:
+    - Downloads the corresponding stream.
     - Plays the stream and logs the current video format.
     - Retrieves the video format callback status for validation.
+    - Retrives the video format.
 
 - **Playback Stop and SDR Callback Verification:**
 
   - After each playback, the test:
     - Stops the stream.
-    - Confirms and logs that the SDR callback activates when stopping non-SDR streams.
+    - The SDR callback activates when stopping non-SDR streams.
 
 - **Cleanup:**
 
@@ -265,7 +268,7 @@ Success Criteria
 
 - **Test Conclusion:**
 
-  Upon completing playback and callback checks for all video formats, the test concludes and logs the final results based on automatic validations.
+  Upon completing playback and callback checks for all video formats, the test concludes and logs the final results based on automatic validations, ensuring streams were handled in the specified format order.
 
 ### tvSettings_test02_CheckVideoResolution.py
 
@@ -275,30 +278,37 @@ Success Criteria
 
 #### Acceptance Criteria - test02
 
-The device should play each video resolution stream accurately, and the callback should verify each resolution setting.
+The device should accurately play each video resolution stream and validate the callback status for each. After playback stops, the device should correctly reflect the video resolution information.
+**Note:** The order of supportedResolutions in the test and the video resolution streams in the test setup YAML file should match to ensure each resolution aligns with the corresponding stream during playback.
 
 #### Expected Results - test02
 
-The test initializes the TV settings, iterates through multiple video resolutions, and confirms the correct video resolution and callback status for each playback.
+The test initializes the TV settings, iterates through multiple video resolutions in the defined order, and confirms the correct video resolution and callback status for each playback.
 
-Success Criteria
+Success Criteria:
 
 - The device should correctly display each specified video resolution during playback.
-- The correct video resolution callback should activate for the stream.
+- The video resolution callback should accurately reflect each resolution and interlace status.
 
 #### Test Steps - test02
 
 - **Initiate the Test:**
 
   - Run the Python file: **`tvSettings_test02_CheckVideoResolution.py`**
-  - The test will automatically download each required video stream to the target directory, initialize TV settings, and begin playback.
+  - The test will automatically download each required video stream in the specified order to the target directory, initialize TV settings, and begin playback.
 
 - **Video Resolution Verification:**
 
-  - For each video resolution, the test:
-    - Downloads the stream.
-    - Plays the stream and logs the current video resolution.
-    - Retrieves and logs the video resolution callback status for validation.
+  - For each video resolution in the predefined list, the test:
+    - Downloads the corresponding stream.
+    - Plays the stream and retrieves the current video resolution callback.
+    - Confirms the callback's resolution matches the expected resolution and interlace status.
+
+- **Callback and Resolution Check:**
+
+  - After each playback, the test:
+    - Verifies that the callback resolution, width, height, and interlace status match the expected values.
+    - Logs results indicating whether each callback property matches the expected resolution.
 
 - **Cleanup:**
 
@@ -306,7 +316,7 @@ Success Criteria
 
 - **Test Conclusion:**
 
-  Upon completing playback and callback checks for all video resolutions, the test concludes and logs the final results based on automatic validations.
+  Upon completing playback and callback checks for all video resolutions, the test concludes and logs the final results based on automatic validations, ensuring streams were handled in the specified resolution order.
 
 ### tvSettings_test03_CheckVideoFrameRate.py
 
@@ -316,30 +326,38 @@ Success Criteria
 
 #### Acceptance Criteria - test03
 
-The device should play each video frame rate stream accurately, and the callback should verify each frame rate setting.
+The device should play each video frame rate stream accurately, and the callback should verify each frame rate.
+
+**Note:** The order of supportedFrameRates in the test and the video frame rate streams in the test setup YAML file should match to ensure each frame rate aligns with the corresponding stream during playback.
 
 #### Expected Results - test03
 
-The test initializes the TV settings, iterates through multiple video frame rates, and confirms the correct video frame rate and callback status for each playback.
+The test initializes the TV settings, iterates through multiple frame rates in the specified order, and confirms the correct frame rate and callback status for each playback.
 
-Success Criteria
+Success Criteria:
 
-- The device should correctly display each specified video frame rate during playback.
-- The correct video frame rate callback should activate for each stream.
+- The device should correctly display each specified frame rate during playback.
+- The frame rate callback should accurately reflect each frame rate.
 
 #### Test Steps - test03
 
 - **Initiate the Test:**
 
   - Run the Python file: **`tvSettings_test03_CheckVideoFrameRate.py`**
-  - The test will automatically download each required video stream to the target directory, initialize TV settings, and begin playback.
+  - The test will automatically download each required video stream in the specified order to the target directory, initialize TV settings, and begin playback.
 
-- **Video Frame Rate Verification:**
+- **Frame Rate Verification:**
 
-  - For each video frame rate, the test:
-    - Downloads the stream.
-    - Plays the stream and logs the current frame rate.
-    - Retrieves and logs the video frame rate callback status for validation.
+  - For each frame rate in the predefined list, the test:
+    - Downloads the corresponding stream.
+    - Plays the stream and retrieves the current frame rate callback.
+    - Confirms the callback's frame rate matches the expected frame rate.
+
+- **Callback and Frame Rate Check:**
+
+  - After each playback, the test:
+    - Verifies that the callback frame rate matches the expected frame rate.
+    - Logs results indicating whether the callback accurately reflects the frame rate of the stream.
 
 - **Cleanup:**
 
@@ -347,7 +365,7 @@ Success Criteria
 
 - **Test Conclusion:**
 
-  Upon completing playback and callback checks for all video frame rates, the test concludes and logs the final results based on automatic validations.
+  Upon completing playback and callback checks for all frame rates, the test concludes and logs the final results based on automatic validations, ensuring streams were handled in the specified frame rate order.
 
 ### tvSettings_test04_CheckVideoSource.py
 
@@ -534,48 +552,50 @@ Success Criteria
 
 #### User Input Required - test08
 
-**Yes**: This test requires user input to confirm if the TV Dimming Mode setting has been correctly applied. During the test execution, the user will be prompted with a Yes/No question to verify each TV Dimming Mode level for the stream.
+**Yes**: This test requires manual verification of the TVDimmingMode setting.
 
 #### Acceptance Criteria - test08
 
-The device should apply the specified TV Dimming Mode as configured, and the user should verify that the mode change has been applied accurately.
+- The device should apply each specified TVDimmingMode setting level successfully during stream playback.
+- The user must confirm if each TVDimmingMode level is correctly applied through a Y/N prompt during manual verification.
+- The test should iterate over each stream and dimming mode level, ensuring correct application.
 
 #### Expected Results - test08
 
-The test initializes the TV settings, iterates through defined TV Dimming Modes, and verifies the application of each mode during playback of the stream through user prompts.
+The test initializes the TV settings module, applies multiple TVDimmingMode levels during playback of each stream, and requests user feedback on the application status.
 
-Success Criteria
+**Success Criteria:**
 
-- The specified TV Dimming Mode should be set and visible on the device.
-- The user should confirm whether each TV Dimming Mode level has been correctly applied for the stream.
+- Each specified TVDimmingMode setting should apply correctly as verified by the user.
+- Each verification result is logged, indicating successful or unsuccessful application.
 
 #### Test Steps - test08
 
 - **Initiate the Test:**
 
   - Run the Python file: **`tvSettings_test08_TVDimmingMode.py`**
-  - The test automatically initializes the TV settings and begins playback of the designated streams.
+  - The test will automatically initialize TV settings, load test streams, and begin playback.
 
-- **TV Dimming Mode Verification:**
+- **TVDimmingMode Application Verification:**
 
-  - For the stream, the test:
-    - Sets up each defined TV Dimming Mode level.
-    - Plays the stream for a brief period to ensure visibility of the TV Dimming Mode effect.
-    - Prompts the user with a question:
-      - **"Has TVDimmingMode level {tvDimmingMode} applied? (Y/N):"**
-      - The user must respond with **Y** for Yes or **N** for No.
+  - For each stream, the test:
+    - Starts playback.
+    - Iterates through each available TVDimmingMode level:
+      - Sets the specified TVDimmingMode level.
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the result of each verification for review.
 
-- **Logging Results:**
+- **Playback Stop:**
 
-  - The test logs the result of the user input for each TV Dimming Mode level and stream.
+  - The test stops the stream after each dimming mode verification.
 
 - **Cleanup:**
 
-  - The test stops playback after verifying each TV Dimming Mode level.
+  - The test terminates the tvSettings module after all verifications are complete.
 
 - **Test Conclusion:**
 
-  Upon completing playback and verification of all TV Dimming Mode levels, the test concludes and logs the final results based on user confirmations.
+  Upon completing all TVDimmingMode verifications across streams, the test concludes. The final results log each successful or unsuccessful setting application based on user feedback.
 
 ### tvSettings_test09_LocalDimmingMode.py
 
@@ -891,7 +911,7 @@ Success Criteria
 2. **Color Temperature Level Verification:**
 
    - For each stream, the test:
-     - Retrieves the available color temperature levels using `self.testtvSettings.getColorTemperatureInfo()`.
+     - Retrieves the supported color Temperatures.
      - Sets each color temperature level and prompts the user with a Yes/No question to confirm the level:
        - **"Has ColorTemp level {colorTemp} applied? (Y/N):"**
        - The user should respond with **Y** for Yes if the color temperature level is applied correctly or **N** for No if it is not.
@@ -938,7 +958,7 @@ Success Criteria
 2. **Aspect Ratio Verification:**
 
    - For each stream, the test:
-     - Retrieves the available aspect ratios using `self.testtvSettings.getAspectRatio()`.
+     - Retrieves the supported Aspect Ratio.
      - Sets each aspect ratio and prompts the user with a Yes/No question to confirm the setting:
        - **"Has AspectRatio {aspectRatio} applied? (Y/N):"**
        - The user should respond with **Y** for Yes if the aspect ratio is applied correctly or **N** for No if it is not.
@@ -1082,7 +1102,7 @@ Success Criteria
 2. **Dolby Vision Verification:**
 
    - For each stream, the test:
-     - Iterates over the available Dolby Vision levels provided by `getDolbyVisionInfo`.
+     - Iterates over the supported Dolby Vision levels.
      - Sets each level and prompts the user with a Yes/No question to confirm the setting:
        - **"Has Dolby Vision level {DolbyVision} applied? (Y/N):"**
        - The user should respond with **Y** for Yes if the Dolby Vision level is applied correctly or **N** for No if it is not.
@@ -1128,7 +1148,7 @@ Success Criteria
 2. **Picture Mode Verification:**
 
    - For each stream, the test:
-     - Iterates over the available Picture Mode levels provided by `getPictureModeInfo`.
+     - Iterates over the supported Picture Mode levels.
      - Sets each level and prompts the user to confirm the setting with a Yes/No question:
        - **"Has Picture Mode level {pictureMode} applied? (Y/N):"**
        - User should respond **Y** for Yes if the level is applied or **N** for No if not.
@@ -1136,7 +1156,7 @@ Success Criteria
 3. **FMM Picture Mode Callback Check:**
 
    - If the Picture Mode is **"FMM"**, the test will:
-     - Log and verify the presence of the **"tvContentType_FMM"** callback by calling `getVideoContentCallbackStatus`.
+     - Log and verify the presence of the **"tvContentType_FMM"**.
      - Log the result of this callback verification.
 
 4. **Logging Results:**
@@ -1146,6 +1166,7 @@ Success Criteria
 5. **Cleanup:**
 
    - The test stops playback after each Picture Mode level is verified for each stream.
+   - The test resets to the default Picture Mode level.
 
 6. **Test Conclusion:**
 
@@ -1155,307 +1176,349 @@ Success Criteria
 
 #### User Input Required - test21
 
-**Yes**: This test requires user input to confirm if each Color Temperature and Rgain setting has been applied correctly. Users will respond with Yes or No during each verification step.
+**Yes**: This test requires manual verification of the Color Temperature and Rgain settings for both Set and Save operations.
 
 #### Acceptance Criteria - test21
 
-The device should correctly apply and retain the specified Color Temperature and Rgain settings across multiple streams. The test distinguishes between **Set** (temporary application) and **Save** (persistent application) operations.
+- The device should successfully apply each specified Color Temperature and Rgain setting, as well as the Save/Set flag during stream playback.
+- User feedback should confirm that each Color Temperature and Rgain setting is correctly applied.
+- All settings should reset to the default Rgain value after testing.
 
 #### Expected Results - test21
 
-The test initializes TV settings, iterates over multiple Color Temperature and Rgain values, and verifies each application with both Set and Save flags, through user confirmation or automated checks.
+The test initializes the TV settings module, applies and saves multiple Color Temperature and Rgain values, and requests user feedback on application status.
 
-Success Criteria
+**Success Criteria:**
 
-- The device should display the correct Color Temperature and Rgain settings as applied or saved.
-- For Save operations, settings should persist when streams are restarted.
+- Each specified Color Temperature and Rgain setting should apply correctly during the Set and Save operations, as verified by the user.
+- Verification results are logged for each setting application to indicate successful or unsuccessful application.
 
 #### Test Steps - test21
 
-1. **Initiate the Test:**
+- **Initiate the Test:**
 
-   - Run the Python file: **`tvSettings_test21_ColorTempRgain.py`**
-   - The test initializes TV settings.
+  - Run the Python file: **`tvSettings_test21_ColorTempRgain.py`**
+  - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Operation:**
+- **Set Operation Verification:**
 
-   - For each stream, the test iterates through available Color Temperature values and Rgain values:
-     - For each combination of Color Temperature and Rgain, the system sets the value temporarily (`saveSetFlag = 0`) and prompts the user:
-       - **"Has Color Temperature {colorTemperature} and Rgain {rgain} with flag {saveSetFlag} applied? (Y/N):"**
-       - Users should confirm with **Y** for Yes or **N** for No based on applied values.
+  - For each stream, the test:
+    - Begins playback.
+    - Iterates through each Color Temperature value and Rgain level:
+      - Applies the specified Color Temperature and Rgain with the Set flag (0).
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the verification result for review.
+    - Stops playback after testing all Color Temperature and Rgain values.
 
-3. **Save Operation:**
+- **Save Operation Verification:**
 
-   - For each Color Temperature and Rgain combination, the test applies the Save operation (`saveSetFlag = 1`).
-   - After setting all combinations, the test restarts each stream and verifies that each saved setting has been retained:
-     - **"Has Color Temperature {colorTemperature} and Rgain {rgain} with flag {saveSetFlag} applied? (Y/N):"**
+  - For each Color Temperature and Rgain combination:
+    - Sets the Save flag (1) to apply the settings permanently.
+  - For each stream:
+    - Begins playback.
+    - Reapplies each Color Temperature to verify the saved Rgain values.
+    - Prompts the user to confirm correct application.
+    - Logs the verification result.
+    - Stops playback after testing all Color Temperature and Rgain values.
+  - Resets all Color Temperature values to the default Rgain (1024) after the test.
 
-4. **Logging Results:**
+- **Cleanup:**
 
-   - The test logs the result of each Set and Save operation verification for each stream.
+  - The test terminates the tvSettings module after all verifications and resets are complete.
 
-5. **Cleanup:**
+- **Test Conclusion:**
 
-   - The test stops playback after each verification step.
+  Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-6. **Test Conclusion:**
-
-   - After completing playback and verification for all Color Temperature and Rgain combinations, the test terminates TV settings and logs final results based on user confirmations.
-
-### tvSettings_test22_ColorTempGgain.py
+### tvSettings_test21_ColorTempGgain.py
 
 #### User Input Required - test22
 
-**Yes**: This test requires user input to confirm if each Color Temperature and Ggain setting has been applied correctly. Users will respond with Yes or No during each verification step.
+**Yes**: This test requires manual verification of the Color Temperature and Ggain settings for both Set and Save operations.
 
 #### Acceptance Criteria - test22
 
-The device should correctly apply and retain the specified Color Temperature and Ggain settings across multiple streams. The test distinguishes between **Set** (temporary application) and **Save** (persistent application) operations.
+- The device should successfully apply each specified Color Temperature and Ggain setting, as well as the Save/Set flag during stream playback.
+- User feedback should confirm that each Color Temperature and Ggain setting is correctly applied.
+- All settings should reset to the default Ggain value after testing.
 
 #### Expected Results - test22
 
-The test initializes TV settings, iterates over multiple Color Temperature and Ggain values, and verifies each application with both Set and Save flags, through user confirmation or automated checks.
+The test initializes the TV settings module, applies and saves multiple Color Temperature and Ggain values, and requests user feedback on application status.
 
-Success Criteria
+**Success Criteria:**
 
-- The device should display the correct Color Temperature and Ggain settings as applied or saved.
-- For Save operations, settings should persist when streams are restarted.
+- Each specified Color Temperature and Ggain setting should apply correctly during the Set and Save operations, as verified by the user.
+- Verification results are logged for each setting application to indicate successful or unsuccessful application.
 
 #### Test Steps - test22
 
-1. **Initiate the Test:**
+- **Initiate the Test:**
 
-   - Run the Python file: **`tvSettings_test22_ColorTempGgain.py`**
-   - The test initializes TV settings.
+  - Run the Python file: **`tvSettings_test22_ColorTempGgain.py`**
+  - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Operation:**
+- **Set Operation Verification:**
 
-   - For each stream, the test iterates through available Color Temperature values and Ggain values:
-     - For each combination of Color Temperature and Ggain, the system sets the value temporarily (`saveSetFlag = 0`) and prompts the user:
-       - **"Has Color Temperature {colorTemperature} and Ggain {ggain} with flag {saveSetFlag} applied? (Y/N):"**
-       - Users should confirm with **Y** for Yes or **N** for No based on applied values.
+  - For each stream, the test:
+    - Begins playback.
+    - Iterates through each Color Temperature value and Ggain level:
+      - Applies the specified Color Temperature and Ggain with the Set flag (0).
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the verification result for review.
+    - Stops playback after testing all Color Temperature and Ggain values.
 
-3. **Save Operation:**
+- **Save Operation Verification:**
 
-   - For each Color Temperature and Ggain combination, the test applies the Save operation (`saveSetFlag = 1`).
-   - After setting all combinations, the test restarts each stream and verifies that each saved setting has been retained:
-     - **"Has Color Temperature {colorTemperature} and Ggain {ggain} with flag {saveSetFlag} applied? (Y/N):"**
+  - For each Color Temperature and Ggain combination:
+    - Sets the Save flag (1) to apply the settings permanently.
+  - For each stream:
+    - Begins playback.
+    - Reapplies each Color Temperature to verify the saved Ggain values.
+    - Prompts the user to confirm correct application.
+    - Logs the verification result.
+    - Stops playback after testing all Color Temperature and Ggain values.
+  - Resets all Color Temperature values to the default Ggain (1024) after the test.
 
-4. **Logging Results:**
+- **Cleanup:**
 
-   - The test logs the result of each Set and Save operation verification for each stream.
+  - The test terminates the tvSettings module after all verifications and resets are complete.
 
-5. **Cleanup:**
+- **Test Conclusion:**
 
-   - The test stops playback after each verification step.
-
-6. **Test Conclusion:**
-
-   - After completing playback and verification for all Color Temperature and Ggain combinations, the test terminates TV settings and logs final results based on user confirmations.
+  Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
 ### tvSettings_test23_ColorTempBgain.py
 
 #### User Input Required - test23
 
-**Yes**: This test requires manual user confirmation for each application of Color Temperature and Bgain settings. Users will respond with Yes or No when prompted to verify each change.
+**Yes**: This test requires manual verification of the Color Temperature and Bgain settings for both Set and Save operations.
 
 #### Acceptance Criteria - test23
 
-The system should correctly apply and retain the specified Color Temperature and Bgain settings for each stream tested. The script distinguishes between **Set** (temporary application) and **Save** (persistent application) operations.
+- The device should successfully apply each specified Color Temperature and Bgain setting, as well as the Save/Set flag during stream playback.
+- User feedback should confirm that each Color Temperature and Bgain setting is correctly applied.
+- All settings should reset to the default Bgain value after testing.
 
 #### Expected Results - test23
 
-The script initializes TV settings, iterates over different Color Temperature and Bgain values, and verifies each application and persistence through user input.
+The test initializes the TV settings module, applies and saves multiple Color Temperature and Bgain values, and requests user feedback on application status.
 
-Success Criteria
+**Success Criteria:**
 
-- The system should display the correct Color Temperature and Bgain settings when applied.
-- Save operations should be confirmed to persist across stream restarts.
+- Each specified Color Temperature and Bgain setting should apply correctly during the Set and Save operations, as verified by the user.
+- Verification results are logged for each setting application to indicate successful or unsuccessful application.
 
 #### Test Steps - test23
 
-1. **Initiate the Test:**
+- **Initiate the Test:**
 
-   - Run the Python file: **`tvSettings_test23_ColorTempBgain.py`**
-   - The test initializes the TV settings module.
+  - Run the Python file: **`tvSettings_test23_ColorTempBgain.py`**
+  - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Operation:**
+- **Set Operation Verification:**
 
-   - For each stream, the script iterates through available Color Temperature values and Bgain values:
-     - For each combination of Color Temperature and Bgain, the system temporarily sets the value (`saveSetFlag = 0`) and prompts the user:
-       - **"Has Color Temperature {colorTemperature} and Bgain {bgain} with flag {saveSetFlag} applied? (Y/N):"**
-       - Users should confirm with **Y** for Yes or **N** for No based on what is displayed.
+  - For each stream, the test:
+    - Begins playback.
+    - Iterates through each Color Temperature value and Bgain level:
+      - Applies the specified Color Temperature and Bgain with the Set flag (0).
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the verification result for review.
+    - Stops playback after testing all Color Temperature and Bgain values.
 
-3. **Save Operation:**
+- **Save Operation Verification:**
 
-   - For each Color Temperature and Bgain combination, the script applies the Save operation (`saveSetFlag = 1`).
-   - After saving all values, the script plays each stream and verifies that the saved settings are applied:
-     - **"Has Color Temperature {colorTemperature} and Bgain {bgain} with flag {saveSetFlag} applied? (Y/N):"**
+  - For each Color Temperature and Bgain combination:
+    - Sets the Save flag (1) to apply the settings permanently.
+  - For each stream:
+    - Begins playback.
+    - Reapplies each Color Temperature to verify the saved Bgain values.
+    - Prompts the user to confirm correct application.
+    - Logs the verification result.
+    - Stops playback after testing all Color Temperature and Bgain values.
+  - Resets all Color Temperature values to the default Bgain (1024) after the test.
 
-4. **Logging Results:**
+- **Cleanup:**
 
-   - The script logs results for each Set and Save operation based on user confirmation for each stream and setting.
+  - The test terminates the tvSettings module after all verifications and resets are complete.
 
-5. **Cleanup:**
+- **Test Conclusion:**
 
-   - The script stops playback after each stream verification.
+  Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-6. **Test Conclusion:**
-
-   - After completing playback and verification, the script terminates TV settings and logs the final results based on user input.
-
-### tvSettings_test24_colorTempRpostOffset.py
+### tvSettings_test24_RpostOffset.py
 
 #### User Input Required - test24
 
-**Yes**: This test requires manual confirmation for the application of Color Temperature and RpostOffset settings. Users must respond with **Y** (Yes) or **N** (No) based on whether the displayed values align with the specified settings.
+**Yes**: This test requires manual verification of the Color Temperature and RpostOffset settings for both Set and Save operations.
 
 #### Acceptance Criteria - test24
 
-The system should accurately apply and retain the specified Color Temperature and RpostOffset settings for each tested stream. The script performs both **Set** (temporary) and **Save** (persistent) operations, verifying the changes based on user input.
+- The device should successfully apply each specified Color Temperature and RpostOffset setting, as well as the Save/Set flag during stream playback.
+- User feedback should confirm that each Color Temperature and RpostOffset setting is correctly applied.
+- All settings should reset to the default RpostOffset value after testing.
 
 #### Expected Results - test24
 
-The script initializes TV settings, iterates over Color Temperature and RpostOffset values, and prompts the user to verify each setting change to ensure the correct application.
+The test initializes the TV settings module, applies and saves multiple Color Temperature and RpostOffset values, and requests user feedback on application status.
 
-Success Criteria
+**Success Criteria:**
 
-- Correct Color Temperature and RpostOffset settings should appear on the screen when each setting is applied.
-- Save operations should persist after the stream is restarted, confirmed through user verification.
+- Each specified Color Temperature and RpostOffset setting should apply correctly during the Set and Save operations, as verified by the user.
+- Verification results are logged for each setting application to indicate successful or unsuccessful application.
 
 #### Test Steps - test24
 
-1. **Initiate the Test:**
+- **Initiate the Test:**
 
-   - Run the Python script: **`tvSettings_test24_RpostOffset.py`**
-   - The test initializes the TV settings module.
+  - Run the Python file: **`tvSettings_test24_RpostOffset.py`**
+  - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Operation:**
+- **Set Operation Verification:**
 
-   - For each stream in the test, the script iterates over available Color Temperature values and RpostOffset values:
-     - For each combination, the system temporarily applies the setting (`saveSetFlag = 0`) and prompts the user:
-       - **"Has Color Temperature {colorTemperature} and RpostOffset {rpostValue} with flag {saveSetFlag} applied? (Y/N):"**
-       - Users should respond **Y** (Yes) or **N** (No) based on what is displayed.
+  - For each stream, the test:
+    - Begins playback.
+    - Iterates through each Color Temperature value and RpostOffset level:
+      - Applies the specified Color Temperature and RpostOffset with the Set flag (0).
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the verification result for review.
+    - Stops playback after testing all Color Temperature and RpostOffset values.
 
-3. **Save Operation:**
+- **Save Operation Verification:**
 
-   - For each Color Temperature and RpostOffset combination, the script applies the Save operation (`saveSetFlag = 1`).
-   - After saving all values, the script plays each stream and verifies that the saved settings are applied:
-     - **"Has Color Temperature {colorTemperature} and RpostOffset {rpostValue} with flag {saveSetFlag} applied? (Y/N):"**
+  - For each Color Temperature and RpostOffset combination:
+    - Sets the Save flag (1) to apply the settings permanently.
+  - For each stream:
+    - Begins playback.
+    - Reapplies each Color Temperature to verify the saved RpostOffset values.
+    - Prompts the user to confirm correct application.
+    - Logs the verification result.
+    - Stops playback after testing all Color Temperature and RpostOffset values.
+  - Resets all Color Temperature values to the default RpostOffset (0) after the test.
 
-4. **Logging Results:**
+- **Cleanup:**
 
-   - The script logs results based on user input for each Set and Save operation across all streams and settings.
+  - The test terminates the tvSettings module after all verifications and resets are complete.
 
-5. **Cleanup:**
+- **Test Conclusion:**
 
-   - The script stops playback after each stream verification.
+  Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-6. **Test Conclusion:**
-
-   - Once playback and verification are completed, the script terminates TV settings and logs the final results based on user responses.
-
-### tvSettings_test25_ColorTempGpostOffset.py
+### tvSettings_test25_GpostOffset.py
 
 #### User Input Required - test25
 
-**Yes**: This test requires manual verification for the application of Color Temperature and GpostOffset settings. The user must confirm each setting application with **Y** (Yes) or **N** (No) based on displayed values.
+**Yes**: This test requires manual verification of the Color Temperature and GpostOffset settings for both Set and Save operations.
 
 #### Acceptance Criteria - test25
 
-The system should accurately apply and retain specified Color Temperature and GpostOffset settings for each tested stream. The script performs **Set** (temporary) and **Save** (persistent) operations, with changes verified based on user input.
+- The device should successfully apply each specified Color Temperature and GpostOffset setting, as well as the Save/Set flag during stream playback.
+- User feedback should confirm that each Color Temperature and GpostOffset setting is correctly applied.
+- All settings should reset to the default GpostOffset value after testing.
 
 #### Expected Results - test25
 
-The script initializes TV settings, iterates over Color Temperature and GpostOffset values, and prompts the user to verify each setting change to ensure correct application.
+The test initializes the TV settings module, applies and saves multiple Color Temperature and GpostOffset values, and requests user feedback on application status.
 
-Success Criteria
+**Success Criteria:**
 
-- Correct Color Temperature and GpostOffset settings appear on the screen when each setting is applied.
-- Save operations should persist after the stream restarts, confirmed through user verification.
+- Each specified Color Temperature and GpostOffset setting should apply correctly during the Set and Save operations, as verified by the user.
+- Verification results are logged for each setting application to indicate successful or unsuccessful application.
 
 #### Test Steps - test25
 
-1. **Initiate the Test:**
+- **Initiate the Test:**
 
-   - Run the Python script: **`tvSettings_test25_GpostOffset.py`**
-   - The test initializes the TV settings module.
+  - Run the Python file: **`tvSettings_test25_GpostOffset.py`**
+  - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Operation:**
+- **Set Operation Verification:**
 
-   - For each stream in the test, the script iterates over available Color Temperature values and GpostOffset values:
-     - For each combination, the system applies the setting temporarily (`saveSetFlag = 0`) and prompts the user:
-       - **"Has Color Temperature {colorTemperature} and GpostOffset {gpostValue} with flag {saveSetFlag} applied? (Y/N):"**
-       - Users respond with **Y** (Yes) or **N** (No) based on what is displayed.
+  - For each stream, the test:
+    - Begins playback.
+    - Iterates through each Color Temperature value and GpostOffset level:
+      - Applies the specified Color Temperature and GpostOffset with the Set flag (0).
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the verification result for review.
+    - Stops playback after testing all Color Temperature and GpostOffset values.
 
-3. **Save Operation:**
+- **Save Operation Verification:**
 
-   - For each Color Temperature and GpostOffset combination, the script applies the Save operation (`saveSetFlag = 1`).
-   - After saving all values, the script plays each stream and verifies that saved settings are applied:
-     - **"Has Color Temperature {colorTemperature} and GpostOffset {gpostValue} with flag {saveSetFlag} applied? (Y/N):"**
+  - For each Color Temperature and GpostOffset combination:
+    - Sets the Save flag (1) to apply the settings permanently.
+  - For each stream:
+    - Begins playback.
+    - Reapplies each Color Temperature to verify the saved GpostOffset values.
+    - Prompts the user to confirm correct application.
+    - Logs the verification result.
+    - Stops playback after testing all Color Temperature and GpostOffset values.
+  - Resets all Color Temperature values to the default GpostOffset (0) after the test.
 
-4. **Logging Results:**
+- **Cleanup:**
 
-   - The script logs results based on user input for each Set and Save operation across all streams and settings.
+  - The test terminates the tvSettings module after all verifications and resets are complete.
 
-5. **Cleanup:**
+- **Test Conclusion:**
 
-   - The script stops playback after each stream verification.
+  Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-6. **Test Conclusion:**
-
-   - Once playback and verification are completed, the script terminates TV settings and logs the final results based on user responses.
-
-### tvSettings_test26_ColorTempBpostOffset.py
+### tvSettings_test26_BpostOffset.py
 
 #### User Input Required - test26
 
-**Yes**: This test requires manual verification for the application of Color Temperature and BpostOffset settings. The user must confirm each setting application with **Y** (Yes) or **N** (No) based on displayed values.
+**Yes**: This test requires manual verification of the Color Temperature and BpostOffset settings for both Set and Save operations.
 
 #### Acceptance Criteria - test26
 
-The system should accurately apply and retain specified Color Temperature and BpostOffset settings for each tested stream. The script performs **Set** (temporary) and **Save** (persistent) operations, with changes verified based on user input.
+- The device should successfully apply each specified Color Temperature and BpostOffset setting, as well as the Save/Set flag during stream playback.
+- User feedback should confirm that each Color Temperature and BpostOffset setting is correctly applied.
+- All settings should reset to the default BpostOffset value after testing.
 
 #### Expected Results - test26
 
-The script initializes TV settings, iterates over Color Temperature and BpostOffset values, and prompts the user to verify each setting change to ensure correct application.
+The test initializes the TV settings module, applies and saves multiple Color Temperature and BpostOffset values, and requests user feedback on application status.
 
-Success Criteria
+**Success Criteria:**
 
-- Correct Color Temperature and BpostOffset settings appear on the screen when each setting is applied.
-- Save operations should persist after the stream restarts, confirmed through user verification.
+- Each specified Color Temperature and BpostOffset setting should apply correctly during the Set and Save operations, as verified by the user.
+- Verification results are logged for each setting application to indicate successful or unsuccessful application.
 
 #### Test Steps - test26
 
-1. **Initiate the Test:**
+- **Initiate the Test:**
 
-   - Run the Python script: **`tvSettings_test26_BpostOffset.py`**
-   - The test initializes the TV settings module.
+  - Run the Python file: **`tvSettings_test26_BpostOffset.py`**
+  - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Operation:**
+- **Set Operation Verification:**
 
-   - For each stream in the test, the script iterates over available Color Temperature values and BpostOffset values:
-     - For each combination, the system applies the setting temporarily (`saveSetFlag = 0`) and prompts the user:
-       - **"Has Color Temperature {colorTemperature} and BpostOffset {bpostValue} with flag {saveSetFlag} applied? (Y/N):"**
-       - Users respond with **Y** (Yes) or **N** (No) based on what is displayed.
+  - For each stream, the test:
+    - Begins playback.
+    - Iterates through each Color Temperature value and BpostOffset level:
+      - Applies the specified Color Temperature and BpostOffset with the Set flag (0).
+      - Prompts the user to confirm if the setting is applied with a Y/N response.
+      - Logs the verification result for review.
+    - Stops playback after testing all Color Temperature and BpostOffset values.
 
-3. **Save Operation:**
+- **Save Operation Verification:**
 
-   - For each Color Temperature and BpostOffset combination, the script applies the Save operation (`saveSetFlag = 1`).
-   - After saving all values, the script plays each stream and verifies that saved settings are applied:
-     - **"Has Color Temperature {colorTemperature} and BpostOffset {bpostValue} with flag {saveSetFlag} applied? (Y/N):"**
+  - For each Color Temperature and BpostOffset combination:
+    - Sets the Save flag (1) to apply the settings permanently.
+  - For each stream:
+    - Begins playback.
+    - Reapplies each Color Temperature to verify the saved BpostOffset values.
+    - Prompts the user to confirm correct application.
+    - Logs the verification result.
+    - Stops playback after testing all Color Temperature and BpostOffset values.
+  - Resets all Color Temperature values to the default BpostOffset (0) after the test.
 
-4. **Logging Results:**
+- **Cleanup:**
 
-   - The script logs results based on user input for each Set and Save operation across all streams and settings.
+  - The test terminates the tvSettings module after all verifications and resets are complete.
 
-5. **Cleanup:**
+- **Test Conclusion:**
 
-   - The script stops playback after each stream verification.
-
-6. **Test Conclusion:**
-
-   - Once playback and verification are completed, the script terminates TV settings and logs the final results based on user responses.
+  Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
 ### tvSettings_test27_WBCalibration.py
 
@@ -1768,13 +1831,13 @@ Success Criteria
 1. **Initiate the Test:**
 
    - Run the Python script: **`tvSettings_test33_EnableGammaMode.py`**
-   - The test initializes the TV settings module and sets the CMS (Color Management System) state.
+   - The test initializes the TV settings module.
 
 2. **Gamma Mode Setting:**
 
    - The script iterates through the predefined gamma modes (0: Disable, 1: Enable) for each stream:
      - For each gamma mode, it starts the playback of the corresponding stream.
-     - It sets the gamma mode using `self.testtvSettings.setEnableGammaMode(gammaMode)`.
+     - It sets the gamma mode.
 
 3. **Gamma Mode Verification:**
 
@@ -1825,7 +1888,7 @@ Success Criteria
 
    - The script iterates through the predefined bit depths (0 for 10-bit, 1 for 8-bit) for each stream:
      - For each bit depth, it retrieves the corresponding level ranges for Red, Green, and Blue channels.
-     - It sets the gamma pattern using `self.testtvSettings.setGammaPattern(bitDepth, redLevel, greenLevel, blueLevel)`.
+     - It sets the gamma pattern.
 
 3. **Gamma Pattern Verification:**
 
@@ -2071,7 +2134,7 @@ Success Criteria
 2. **Backlight Mode Setting:**
 
    - The script initializes the TV settings module.
-   - It iterates through the available backlight modes obtained from `getBacklightTestModeInfo`.
+   - It iterates through the Supported backlight test modes.
 
 3. **Backlight Mode Verification:**
 
@@ -2119,7 +2182,7 @@ Success Criteria
 2. **Dynamic Contrast Setting:**
 
    - The script initializes the TV settings module.
-   - It iterates through the available dynamic contrast levels defined in `dynamicContrastLevels`.
+   - It enables or disables the dynamic contrast.
 
 3. **Dynamic Contrast Verification:**
 
@@ -2167,7 +2230,7 @@ Success Criteria
 2. **Local Contrast Setting:**
 
    - The script initializes the TV settings module.
-   - It iterates through the available local contrast levels defined in `localContrastLevels`.
+   - It enables and disables the local contrast.
 
 3. **Local Contrast Verification:**
 
@@ -2918,49 +2981,46 @@ Success Criteria
 
 #### User Input Required - test55
 
-**Yes**: This test requires manual verification to confirm whether the gamma table settings have been applied correctly for different color temperatures. The user must respond to a prompt indicating whether the settings are correct.
+**Yes**: This test requires manual verification of gamma table settings for different color temperatures during stream playback.
 
 #### Acceptance Criteria - test55
 
-The system should save the gamma table settings for various color temperatures, and the user should confirm the accuracy of the applied gamma values.
+- The device should apply the specified gamma table settings and color temperatures successfully during stream playback.
+- User feedback should confirm that each gamma configuration and color temperature is applied correctly.
+- All settings should reset to the default gamma values after testing.
 
 #### Expected Results - test55
 
-The script initializes the TV settings, saves gamma values for specified color temperatures, plays the streams, and prompts the user to verify whether the gamma settings were applied correctly.
+The test initializes the TV settings module, applies multiple gamma configurations with associated color temperatures, and requests user feedback on the application status.
 
-Success Criteria
+**Success Criteria:**
 
-- Gamma table values are saved and applied correctly for each specified color temperature.
-- User confirmation matches the expected gamma values.
+- Each gamma table configuration should apply correctly across different color temperatures during stream playback, as verified by the user.
+- Verification results are logged for each configuration to indicate successful or unsuccessful application.
 
 #### Test Steps - test55
 
 1. **Initiate the Test:**
 
-   - Run the Python script: **`tvSettings_test55_SaveGammaTable.py`**
+   - Run the Python file: **`tvSettings_test55_SaveGammaTable.py`**
+   - The test initializes the TV settings module, loads test streams, and begins playback.
 
-2. **Set Gamma Values:**
+2. **Apply Gamma Table Settings:**
 
-   - The script initializes the TV settings module and sets gamma values for the specified color temperatures.
+   - For each stream, the test:
+     - Begins playback.
+     - Iterates through each gamma table configuration:
+       - Assigns the gamma values to the color temperature.
+       - Logs the applied gamma values and color temperature.
+       - Sets the color temperature level.
+       - Verifies each configuration manually by prompting the user for feedback with a Y/N response.
+       - Logs the verification result for each gamma table configuration.
+     - Stops playback after testing all gamma configurations and color temperatures.
 
-3. **Stream Playback:**
+3. **Cleanup:**
 
-   - The script retrieves the list of streams from the test setup and plays each stream.
+   - The test terminates the `tvSettings` module after all verifications and resets.
 
-4. **Gamma Value Verification:**
+4. **Test Conclusion:**
 
-   - After playing each stream, the script verifies whether the gamma values were set correctly:
-     - User is prompted with: **"Is Gamma Table set with Size:{size}, R:{red}, G:{green}, B:{blue} for Color Temp: {color_temp}? (Y/N):"**
-     - Users respond with **Y** (Yes) or **N** (No) based on the display.
-
-5. **Logging Results:**
-
-   - The script logs results based on user input for each gamma setting.
-
-6. **Cleanup:**
-
-   - After all verifications, the script stops the stream playback.
-
-7. **Test Conclusion:**
-
-   - Once all gamma values are verified, the script terminates the TV settings module and logs the final results based on user responses.
+   - Upon completing all verifications for each gamma configuration across streams, the test concludes, logging each success or failure based on user feedback.

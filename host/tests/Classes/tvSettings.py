@@ -281,19 +281,31 @@ class tvSettingsClass():
             None
 
         Returns:
-            str: The video resolution details (e.g., resolution, interlaced status, resolution value)
-                extracted from the test suite result, or None if not found.
+            dict: A dictionary containing video resolution details with keys 'width', 'height', 
+                'isInterlaced', and 'resolutionName', or None if not found.
         """
-        # Use the same utMenu.select structure to interact
+        # Interact with the utMenu to run the 'Get Resolution' test
         result = self.utMenu.select(self.testSuite, "Get Resolution")
 
         # Regex pattern to extract the video resolution from the result string
-        videoResolutionPattern = r"Result GetCurrentVideoResolution\(OUT:Resolution:\[(0x[0-9A-F]+)\], OUT:isInterlaced:\[(\d+)\], OUT:res value:\[(tvVideoResolution_\w+)\]\)"
+        videoResolutionPattern = r"Result GetCurrentVideoResolution\(OUT:Resolution:\[(\d+)x(\d+)\], OUT:isInterlaced:\[(\d+)\], OUT:res value:\[(tvVideoResolution_\w+)\]\)"
 
         # Search the result for the video resolution details using the pattern
-        videoResolution = self.searchPattern(result, videoResolutionPattern)
+        match = re.search(videoResolutionPattern, result)
+
+        if match:
+            # Capture the width, height, interlace status, and resolution name
+            videoResolution = {
+                "width": int(match.group(1)),
+                "height": int(match.group(2)),
+                "isInterlaced": bool(int(match.group(3))),
+                "resolutionName": match.group(4)
+            }
+        else:
+            videoResolution = None
 
         return videoResolution
+
 
 
     def checkVideoFrameRate(self):
@@ -404,7 +416,7 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Back light Fade", promptWithAnswers)
 
 
-    def setBacklightMode(self, backlightMode: int = 0):
+    def setBacklightMode(self, backlightMode: str = "tvBacklightMode_MANUAL"):
         """
         Sets the backlight mode.
 
@@ -709,17 +721,21 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Dolby Vision", promptWithAnswers)
 
 
-    def setPictureMode(self, PictureMode: str = "Entertainment"):
+    def setPictureMode(self, PictureMode: str = None):
         """
         Sets the picture mode.
 
         Args:
             PictureMode (str, optional): The picture mode to be applied.
-                                        Defaults to "Entertainment".
+                                        Defaults to the 0th index of deviceProfile.PictureMode.range.
 
         Returns:
             None
         """
+        # Use the 0th index if PictureMode is not provided
+        if PictureMode is None:
+            PictureMode = self.deviceProfile.PictureMode.range[0]
+
         promptWithAnswers = [
             {
                 "query_type": "list",
@@ -731,11 +747,14 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Picture Mode", promptWithAnswers)
 
 
+
     def setRgainValue(self, VideoSource: str= "TV_OFFSET", ColorTemp: str = "tvColorTemp_STANDARD", RgainValue: int = 0, SetOrSave: int = 0):
         """
         Sets the Rgain value for the specified color temperature.
 
         Args:
+            VideoSource (str, optional): The video source to be used.
+                                            Defaults to "TV_OFFSET".
             ColorTemp (str, optional): The color temperature to be applied.
                                     Defaults to "tvColorTemp_STANDARD".
             RgainValue (int, optional): The Rgain value to be applied.
@@ -777,6 +796,8 @@ class tvSettingsClass():
         Sets the Ggain value for the specified color temperature.
 
         Args:
+            VideoSource (str, optional): The video source to be used.
+                                      Defaults to "TV_OFFSET".
             ColorTemp (str, optional): The color temperature to be applied.
                                     Defaults to "tvColorTemp_STANDARD".
             GgainValue (int, optional): The Ggain value to be applied.
@@ -818,6 +839,8 @@ class tvSettingsClass():
         Sets the Bgain value for the specified color temperature.
 
         Args:
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "TV_OFFSET".
             ColorTemp (str, optional): The color temperature to be applied.
                                     Defaults to "tvColorTemp_STANDARD".
             BgainValue (int, optional): The Bgain value to be applied.
@@ -859,6 +882,8 @@ class tvSettingsClass():
         Sets the RpostOffset value for the specified color temperature.
 
         Args:
+            VideoSource (str, optional): The video source to be used.
+                                      Defaults to "TV_OFFSET".
             ColorTemp (str, optional): The color temperature to be applied.
                                     Defaults to "tvColorTemp_STANDARD".
             RpostOffsetValue (int, optional): The RpostOffset value to be applied.
@@ -900,6 +925,8 @@ class tvSettingsClass():
         Sets the GpostOffset value for the specified color temperature.
 
         Args:
+            VideoSource (str, optional): The video source to be used.
+                                      Defaults to "TV_OFFSET".
             ColorTemp (str, optional): The color temperature to be applied.
                                     Defaults to "tvColorTemp_STANDARD".
             GpostOffsetValue (int, optional): The GpostOffset value to be applied.
@@ -941,6 +968,8 @@ class tvSettingsClass():
         Sets the BpostOffset value for the specified color temperature.
 
         Args:
+            VideoSource (str, optional): The video source to be used.
+                                      Defaults to "TV_OFFSET".
             ColorTemp (str, optional): The color temperature to be applied.
                                     Defaults to "tvColorTemp_STANDARD".
             BpostOffsetValue (int, optional): The BpostOffset value to be applied.
@@ -1475,9 +1504,14 @@ class tvSettingsClass():
         Saves backlight values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            backlightValue (int, optional): Backlight value to set (0 - 100). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            backlightValue (int, optional): Backlight value to set.
+                                            Ranges from 0 to 100. Defaults to 0.
 
         Returns:
             None
@@ -1508,14 +1542,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Backlight values", promptWithAnswers)
 
 
-    def saveTVDimmingModeValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingModeIndex: str = "tvDimmingMode_Fixed"):
+    def saveTVDimmingModeValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingModeIndex: str = "tvDimmingMode_Fixed"):
         """
         Saves TV Dimming Mode values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            dimmingModeIndex (str, optional): Your choice of Dimming Mode index. Defaults to "tvDimmingMode_Fixed".
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            dimmingModeIndex (str, optional): Your choice of Dimming Mode index.
+                                            Defaults to "tvDimmingMode_Fixed".
 
         Returns:
             None
@@ -1546,14 +1585,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save TV Dimming Mode values", promptWithAnswers)
 
 
-    def saveLocalDimmingModeValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingLevelIndex: str = "LDIM_STATE_NONBOOST"):
+    def saveLocalDimmingModeValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dimmingLevelIndex: str = "LDIM_STATE_NONBOOST"):
         """
         Saves Local Dimming Mode values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            dimmingLevelIndex (str, optional): Your choice of Local Dimming Level index. Defaults to "LDIM_STATE_NONBOOST".
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            dimmingLevelIndex (str, optional): Your choice of Local Dimming Level index.
+                                                Defaults to "LDIM_STATE_NONBOOST".
 
         Returns:
             None
@@ -1584,14 +1628,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Local Dimming Mode values", promptWithAnswers)
 
 
-    def saveBrightnessValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", brightnessValue: int = 0):
+    def saveBrightnessValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", brightnessValue: int = 0):
         """
         Saves brightness values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            brightnessValue (int, optional): Brightness value to set (0 - 100). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            brightnessValue (int, optional): Brightness value to set (0 - 100).
+                                            Defaults to 0.
 
         Returns:
             None
@@ -1622,14 +1671,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Brightness values", promptWithAnswers)
 
 
-    def saveContrastValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", contrastValue: int = 0):
+    def saveContrastValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", contrastValue: int = 0):
         """
         Saves contrast values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            contrastValue (int, optional): Contrast value to set (0 - 100). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            contrastValue (int, optional): Contrast value to set (0 - 100).
+                                        Defaults to 0.
 
         Returns:
             None
@@ -1660,14 +1714,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Contrast values", promptWithAnswers)
 
 
-    def saveSharpnessValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", sharpnessValue: int = 0):
+    def saveSharpnessValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", sharpnessValue: int = 0):
         """
         Saves sharpness values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            sharpnessValue (int, optional): Sharpness value to set (0 - 100). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            sharpnessValue (int, optional): Sharpness value to set (0 - 100).
+                                            Defaults to 0.
 
         Returns:
             None
@@ -1698,14 +1757,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Sharpness values", promptWithAnswers)
 
 
-    def saveSaturationValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", saturationValue: int = 0):
+    def saveSaturationValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", saturationValue: int = 0):
         """
         Saves saturation values.
 
         Args:
-            pictureModeIndex (str, optional): Your choice of Picture Mode index. Defaults to "PQ_MODE_STANDARD".
-            videoFormatIndex (str, optional): Your choice of Video Format index. Defaults to "PQ_MODE_STANDARD".
-            saturationValue (int, optional): Saturation value to set (0 - 100). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            saturationValue (int, optional): Saturation value to set (0 - 100).
+                                            Defaults to 0.
 
         Returns:
             None
@@ -1736,15 +1800,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Saturation values", promptWithAnswers)
 
 
-
-    def saveHueValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", hueValue: int = 0):
+    def saveHueValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", hueValue: int = 0):
         """
         Saves hue values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            hueValue (int, optional): Hue value to set (0 - 100). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            hueValue (int, optional): Hue value to set (0 - 100).
+                                    Defaults to 0.
 
         Returns:
             None
@@ -1775,14 +1843,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Hue values", promptWithAnswers)
 
 
-    def saveColorTemperatureValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", colorTemperatureIndex: str = "tvColorTemp_STANDARD"):
+    def saveColorTemperatureValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", colorTemperatureIndex: str = "tvColorTemp_STANDARD"):
         """
         Saves color temperature values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            colorTemperatureIndex (int, optional): Number corresponding to the Color Temperature. Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            colorTemperatureIndex (str, optional): Your choice of Color Temperature index.
+                                                    Defaults to "tvColorTemp_STANDARD".
 
         Returns:
             None
@@ -1813,14 +1886,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Color Temperature values", promptWithAnswers)
 
 
-    def saveAspectRatioValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", aspectRatioIndex: str = "tvDisplayMode_4x3"):
+    def saveAspectRatioValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", aspectRatioIndex: str = "tvDisplayMode_4x3"):
         """
         Saves aspect ratio values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            aspectRatioIndex (int, optional): Number corresponding to the Aspect Ratio. Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            aspectRatioIndex (str, optional): Your choice of Aspect Ratio index.
+                                            Defaults to "tvDisplayMode_4x3".
 
         Returns:
             None
@@ -1851,14 +1929,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Aspect Ratio values", promptWithAnswers)
 
 
-    def saveLowLatencyValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", lowLatencyIndex: int = 0):
+    def saveLowLatencyValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", lowLatencyIndex: int = 0):
         """
         Saves low latency values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            lowLatencyIndex (int, optional): Low Latency Index (0 or 1). Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            lowLatencyIndex (int, optional): Low Latency Index (0 or 1).
+                                            Defaults to 0.
 
         Returns:
             None
@@ -1889,14 +1972,19 @@ class tvSettingsClass():
         result = self.utMenu.select(self.testSuite, "Save Low Latency values", promptWithAnswers)
 
 
-    def saveDolbyVisionValues(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dolbyVisionModeIndex: str = "tvDolbyMode_Dark"):
+    def saveDolbyVisionValues(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", dolbyVisionModeIndex: str = "tvDolbyMode_Dark"):
         """
         Saves Dolby Vision values.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            dolbyVisionModeIndex (int, optional): Number corresponding to the Dolby Vision Mode. Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            dolbyVisionModeIndex (str, optional): Your choice of Dolby Vision Mode index.
+                                                Defaults to "tvDolbyMode_Dark".
 
         Returns:
             None
@@ -1926,13 +2014,17 @@ class tvSettingsClass():
 
         result = self.utMenu.select(self.testSuite, "Save Dolby Vision", promptWithAnswers)
 
-    def savePictureMode(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD",):
+    def savePictureMode(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD"):
         """
         Saves the Picture Mode.
 
         Args:
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            pictureModeIndex (int, optional): Number corresponding to the Picture Mode. Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
 
         Returns:
             None
@@ -1981,15 +2073,19 @@ class tvSettingsClass():
         return outBacklightMode
 
 
-    def saveCMS(self, VideoSource: str= "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", componentType: str = "COMP_NONE", componentColor: str = "tvDataColor_RED", cmsValue: int = 0):
+    def saveCMS(self, VideoSource: str = "VIDEO_SOURCE_IP", pictureModeIndex: str = "PQ_MODE_STANDARD", videoFormatIndex: str = "PQ_MODE_STANDARD", componentType: str = "COMP_NONE", componentColor: str = "tvDataColor_RED", cmsValue: int = 0):
         """
         Saves the CMS settings.
 
         Args:
-            pictureModeIndex (int, optional): Your choice of Picture Mode index. Defaults to 0.
-            videoFormatIndex (int, optional): Your choice of Video Format index. Defaults to 0.
-            componentType (int, optional): Number corresponding to the Component Type. Defaults to 0.
-            componentColor (int, optional): The component color. Defaults to 0.
+            VideoSource (str, optional): The video source to be used.
+                                        Defaults to "VIDEO_SOURCE_IP".
+            pictureModeIndex (str, optional): Your choice of Picture Mode index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            videoFormatIndex (str, optional): Your choice of Video Format index.
+                                            Defaults to "PQ_MODE_STANDARD".
+            componentType (str, optional): The component type. Defaults to "COMP_NONE".
+            componentColor (str, optional): The component color. Defaults to "tvDataColor_RED".
             cmsValue (int, optional): The CMS value (0 - 100). Defaults to 0.
 
         Returns:
@@ -2416,6 +2512,33 @@ class tvSettingsClass():
         formatCallbackPattern = r"Received Video Content Change callback format:\[(\w+)\]"
 
         return self.searchPattern(result, formatCallbackPattern)
+
+
+    def getCMSStateStatus(self):
+        """
+        Retrieves the CMS state from the system logs.
+
+        Args:
+            None.
+
+        Returns:
+            int: 1 if CMS state is "Enabled", 0 if "Disabled".
+            None: If the function fails to retrieve the CMS state.
+        """
+        # Use the same utMenu.select structure to interact
+        result = self.utMenu.select(self.testSuite, "Get CMS State")
+
+        # Define a pattern to match the CMS state ("Enabled" or "Disabled")
+        cmsStatePattern = r"Result GetCMSState\(OUT: retrievedCMSState\[(Enabled|Disabled)\]"
+
+        # Search the result for the CMS state
+        match = re.search(cmsStatePattern, result)
+        if match:
+            cmsState = match.group(1)
+            return 1 if cmsState == "Enabled" else 0
+        else:
+            self.log.error("Failed to retrieve CMS state from logs.")
+            return None
 
 
     def terminate(self):

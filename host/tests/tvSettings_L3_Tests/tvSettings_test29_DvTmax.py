@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test29_DVTmaxValue(tvSettingsHelperClass):
 
     # Predefined DVT max values for testing
-    dvtMaxValues = [0, 2500, 5000, 7500, 10000]
+    dvtMaxValues = [0, 2500, 5000, 7500, 10000, 5000]
 
     def __init__(self):
         """

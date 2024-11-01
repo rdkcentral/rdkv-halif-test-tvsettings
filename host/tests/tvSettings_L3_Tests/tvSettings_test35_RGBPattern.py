@@ -32,11 +32,11 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
 
     # Five different values for red, green, and blue levels (range: 0-255)
     rgbLevels = [
-        {'red': 0, 'green': 0, 'blue': 0},
         {'red': 255, 'green': 0, 'blue': 0},
         {'red': 0, 'green': 255, 'blue': 0},
         {'red': 0, 'green': 0, 'blue': 255},
-        {'red': 255, 'green': 255, 'blue': 255}
+        {'red': 255, 'green': 255, 'blue': 255},
+        {'red': 0, 'green': 0, 'blue': 0}
     ]
 
     def __init__(self):

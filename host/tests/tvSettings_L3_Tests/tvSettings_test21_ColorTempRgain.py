@@ -24,7 +24,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
 
-    rgainValues = [0, 512, 1024, 1536, 2047]
+    rgainValues = [0, 512, 1024, 1536, 2047, 1024]
 
     def __init__(self):
         """
@@ -88,30 +88,34 @@ class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
         # Get the Color Temperature values
         colorTemperatureValues = self.testtvSettings.getColorTemperatureInfo()
 
-        # Loop through Color Temperatures and Rgain values to set them
-        for colorTemperature in colorTemperatureValues:
-            for rgain in self.rgainValues:
-                # Set the Color Temperature and Rgain (Save flag = 1 means Save operation)
-                self.testtvSettings.setRgainValue("TV_OFFSET", colorTemperature, rgain, 1)
+        # Loop through each color temperature and Rgain value to set them
+        for colorTemperature, rgain in zip(colorTemperatureValues, self.rgainValues):
+            # Set the Color Temperature and Rgain (Save flag = 1 means Save operation)
+            self.testtvSettings.setRgainValue("TV_OFFSET", colorTemperature, rgain, 1)
 
         # After setting all values, loop through the streams to play them
         for stream in self.testStreams:
             self.testPlayer.play(stream)
 
-            # Verify the Save operation manually after stream playback
-            for colorTemperature in colorTemperatureValues:
-                for rgain in self.rgainValues:
-                    self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
+            # Re-pair values for each stream playback iteration
+            for colorTemperature, rgain in zip(colorTemperatureValues, self.rgainValues):
+                self.log.stepStart(f'Save Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
 
-                    # Set the Color Temperature to apply the saved Rgain value
-                    self.testtvSettings.setColorTempLevel(colorTemperature)
+                # Set the Color Temperature to apply the saved Rgain value
+                self.testtvSettings.setColorTempLevel(colorTemperature)
 
-                    # Now verify the Save operation manually after restart
-                    result = self.testVerifyColorTempRgain(colorTemperature, rgain, 1, True)
-                    self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
+                # Now verify the Save operation manually after restart
+                result = self.testVerifyColorTempRgain(colorTemperature, rgain, 1, True)
+                self.log.stepResult(result, f'Save Operation - Color Temperature: {colorTemperature} Rgain: {rgain} Stream: {stream}')
 
             # Stop the stream playback
             self.testPlayer.stop()
+
+            # Reset each color temperature to the default Rgain value (e.g., 1024)
+            defaultRgain = 1024
+            for colorTemperature in colorTemperatureValues:
+                self.testtvSettings.setRgainValue("TV_OFFSET", colorTemperature, defaultRgain, 1)
+                self.log.info(f'Reset Color Temperature {colorTemperature} to default Rgain value: {defaultRgain}')
 
 
     def testFunction(self):

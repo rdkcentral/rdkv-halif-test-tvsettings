@@ -109,8 +109,32 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
 
             # Check the current video resolution
             videoResolution = self.testtvSettings.checkVideoResolution()
-            video_res_check = resolution in videoResolution
-            self.log.stepResult(video_res_check, f'Video Resolution {resolution} Test: {"Passed" if video_res_check else "Failed"}')
+
+            if videoResolution:
+                # Extract returned resolution details
+                actualWidth = videoResolution["width"]
+                actualHeight = videoResolution["height"]
+                actualIsInterlaced = videoResolution["isInterlaced"]
+                actualResolutionName = videoResolution["resolutionName"]
+                resValue = actualResolutionName.split('_')[-1]
+
+                # Parse expected width and height from the resolution parameter
+                expectedWidth, expectedHeight = map(int, resolution.split('x'))
+
+                # Validate width, height, and interlace status
+                widthCheck = actualWidth == expectedWidth
+                heightCheck = actualHeight == expectedHeight
+                interlaceCheck = actualIsInterlaced == is_interlaced
+                resolutionCheck = resolution == resValue
+
+                # Log the result of the video resolution check
+                self.log.stepResult(
+                    widthCheck and heightCheck and interlaceCheck and resolutionCheck,
+                    f'Video Resolution Check: Expected {resolution} ({expectedWidth}x{expectedHeight}, Interlaced: {is_interlaced}), '
+                    f'Got: {actualResolutionName} ({actualWidth}x{actualHeight}, Interlaced: {actualIsInterlaced})'
+                )
+            else:
+                self.log.stepResult(False, 'Failed to retrieve video resolution from checkVideoResolution.')
 
             # Stop the stream playback and clean up
             self.testPlayer.stop()

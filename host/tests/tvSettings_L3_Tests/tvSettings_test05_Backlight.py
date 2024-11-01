@@ -32,7 +32,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 
 class tvSettings_test05_Backlight(tvSettingsHelperClass):
 
-    backlightLevels = [0, 25, 50, 75, 100]
+    backlightLevels = [0, 25, 50, 75, 100, 50]
 
     def __init__(self):
         """

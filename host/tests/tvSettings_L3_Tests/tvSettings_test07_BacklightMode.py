@@ -95,6 +95,9 @@ class tvSettings_test07_BacklightMode(tvSettingsHelperClass):
 
                 self.log.stepResult(result, f'BacklightMode Level:{backlightMode} Stream:{stream}')
 
+            # Set the BacklightMode level to default
+            self.testtvSettings.setBacklightMode()
+
             # Stop the stream playback
             self.testPlayer.stop()
 

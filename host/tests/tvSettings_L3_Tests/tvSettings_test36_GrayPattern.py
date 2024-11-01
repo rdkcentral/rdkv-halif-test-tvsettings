@@ -31,7 +31,7 @@ from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
 class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
 
     # Five predefined Gray levels (range: 0-255)
-    grayLevels = [0, 64, 128, 192, 255]
+    grayLevels = [0, 64, 128, 192, 255, 0]
 
     def __init__(self):
         """
