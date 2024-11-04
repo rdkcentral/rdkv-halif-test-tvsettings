@@ -1124,6 +1124,8 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
     result = GetCurrentVideoResolution(&tvVideoResolution);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
+    UT_ASSERT_EQUAL(tvVideoResolution.resolutionValue,tvVideoResolution_NONE);
+
     /* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoResolution(&tvVideoResolutionRetry);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
@@ -1230,6 +1232,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
     /* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoFrameRate(&tvVideoFramerate);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_EQUAL(tvVideoFramerate,tvVideoFrameRate_NONE)
 
     /* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
