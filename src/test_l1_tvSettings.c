@@ -66,6 +66,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 
 #include <ut.h>
 #include <ut_log.h>
@@ -81,7 +82,8 @@ int gTestID = 1;
 #define MAX_VIDEO_FORMAT         20
 #define MAX_DIMMING_MODES        20
 #define USER_DATA_SIZE           10
-
+#define MIN_MAXGAIN_RANGE     (1<<10)
+#define MAX_MAXGAIN_RANGE     INT_MAX
 
 /* Global flags to support features */
 static bool extendedEnumsSupported=false;
@@ -1230,8 +1232,8 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
     /* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoFrameRate(&tvVideoFramerate);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-
     UT_ASSERT_EQUAL(tvVideoFramerate,tvVideoFrameRate_NONE)
+
     /* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
@@ -9036,8 +9038,8 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    pic_modes_t *tvPicModes= NULL;
-    pic_modes_t *tvPicModesRetry= NULL;
+    pic_modes_t tvPicModes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t tvPicModesRetry[PIC_MODES_SUPPORTED_MAX];
     bool IsPictureModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -9050,10 +9052,10 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
     result = GetTVSupportedPictureModes(&tvPicModes, &sizeReceived);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
     UT_ASSERT_EQUAL(sizeReceived, (unsigned short)pqCount);
-    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
 
 
     for (unsigned int i = 0; i < pqCount; i++)
@@ -14239,7 +14241,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
             componentColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
             if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
             {
-                bModeMatched = false;
+                bModeMatched = true;
                 break;
 
             }
@@ -14825,7 +14827,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
         result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
     }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagentha/platformsupport") == false)
+    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagenta/platformsupport") == false)
     {
         result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
@@ -15528,14 +15530,13 @@ void test_l1_tvSettings_positive_GetMaxGainValue (void)
     int maxGain = -1;
     int maxGainRetry = -1;
 
-
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 02: Calling tvsettings GetMaxGainValue and expectinging the API to return success */
     maxGain = GetMaxGainValue();
-    UT_ASSERT_TRUE( (maxGain >= (2^10)) && ( maxGain <= (2^31)-1) );
+    UT_ASSERT_TRUE( (maxGain >= MIN_MAXGAIN_RANGE) && ( maxGain <= MAX_MAXGAIN_RANGE));
 
     /* Step 03: Calling tvsettings GetMaxGainValue and expectinging the API to return success */
     maxGainRetry = GetMaxGainValue( );
@@ -15573,19 +15574,20 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
 
     tvError_t result = tvERROR_NONE ;
     int maxGain = -1;
+
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
         maxGain = GetMaxGainValue();
-        UT_ASSERT_FALSE((maxGain >= (2 ^ 10)) && (maxGain <= (2 ^ 31) - 1));
+        UT_ASSERT_FALSE((maxGain >= MIN_MAXGAIN_RANGE) && (maxGain <= MAX_MAXGAIN_RANGE));
     }
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
-    maxGain = GetMaxGainValue( );
-    UT_ASSERT_TRUE(  (maxGain >= (2^10)) && (maxGain <= (2^31)-1));
+    maxGain = GetMaxGainValue();
+    UT_ASSERT_TRUE((maxGain >= MIN_MAXGAIN_RANGE) && (maxGain <= MAX_MAXGAIN_RANGE));
 
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
@@ -15595,7 +15597,7 @@ void test_l1_tvSettings_negative_GetMaxGainValue (void)
     {
         /* Step 05: Calling tvsettings to Set the GetMaxGainValue for value -1 and the API to return success */
         maxGain = GetMaxGainValue();
-        UT_ASSERT_FALSE((maxGain >= (2 ^ 10)) && (maxGain <= (2 ^ 31) - 1));
+        UT_ASSERT_FALSE((maxGain >= MIN_MAXGAIN_RANGE) && (maxGain <= MAX_MAXGAIN_RANGE));
     }
     UT_LOG("Out %s",__FUNCTION__);
 }
