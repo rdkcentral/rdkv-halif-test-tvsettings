@@ -9038,8 +9038,8 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    pic_modes_t tvPicModes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t tvPicModesRetry[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *tvPicModes;
+    pic_modes_t *tvPicModesRetry;
     bool IsPictureModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
