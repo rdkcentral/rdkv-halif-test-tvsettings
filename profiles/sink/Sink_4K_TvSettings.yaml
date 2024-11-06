@@ -21,6 +21,112 @@ tvSettings:
     - 0x10 # tvDataColor_CYAN
     - 0x20 # tvDataColor_MAGENTA
 
+  # Video Frame Rates
+  # tvVideoFrameRate_NONE    = 0x00, //!< No frame rate
+  # tvVideoFrameRate_24      = 0x01, //!< Frame rate is 24
+  # tvVideoFrameRate_25      = 0x02, //!< Frame rate is 25
+  # tvVideoFrameRate_30      = 0x03, //!< Frame rate is 30
+  # tvVideoFrameRate_50      = 0x04, //!< Frame rate is 50
+  # tvVideoFrameRate_60      = 0x05, //!< Frame rate is 60
+  # tvVideoFrameRate_23dot98 = 0x06, //!< Frame rate is 23.98
+  # tvVideoFrameRate_29dot97 = 0x07, //!< Frame rate is 29.97
+  # tvVideoFrameRate_59dot94 = 0x08, //!< Frame rate is 59.94
+  SupportedVideoFrameRate:
+    - 0x00  # tvVideoFrameRate_NONE
+    - 0x01  # tvVideoFrameRate_24
+    - 0x02  # tvVideoFrameRate_25
+    - 0x03  # tvVideoFrameRate_30
+    - 0x04  # tvVideoFrameRate_50
+    - 0x05  # tvVideoFrameRate_60
+    - 0x06  # tvVideoFrameRate_23dot98
+    - 0x07  # tvVideoFrameRate_29dot97
+    - 0x08  # tvVideoFrameRate_59dot94
+
+
+  # tvVideoResolution_NONE                    = 0x00, //!< No Resolution
+  # tvVideoResolution_720x240                 = 0x01, //!< Resolution is 720x240
+  # tvVideoResolution_2880x240                = 0x02, //!< Resolution is 2880x240
+  # tvVideoResolution_720x288                 = 0x03, //!< Resolution is 720x288
+  # tvVideoResolution_2880x288                = 0x04, //!< Resolution is 2880x288
+  # tvVideoResolution_640x480                 = 0x05, //!< Resolution is 640x480
+  # tvVideoResolution_720x480                 = 0x06, //!< Resolution is 720x480
+  # tvVideoResolution_800x480                 = 0x07, //!< Resolution is 800x480
+  # tvVideoResolution_852x480                 = 0x08, //!< Resolution is 852x480
+  # tvVideoResolution_854x480                 = 0x09, //!< Resolution is 854x480
+  # tvVideoResolution_1440x480                = 0x0A, //!< Resolution is 1440x480
+  # tvVideoResolution_2880x480                = 0x0B, //!< Resolution is 2880x480
+  # tvVideoResolution_960x540                 = 0x0C, //!< Resolution is 960x540
+  # tvVideoResolution_3840x540                = 0x0D, //!< Resolution is 3840x540
+  # tvVideoResolution_720x576                 = 0x0E, //!< Resolution is 720x576
+  # tvVideoResolution_1440x576                = 0x0F, //!< Resolution is 1440x576
+  # tvVideoResolution_2880x576                = 0x10, //!< Resolution is 2880x576
+  # tvVideoResolution_800x600                 = 0x11, //!< Resolution is 800x600
+  # tvVideoResolution_1024x600                = 0x12, //!< Resolution is 1024x600
+  # tvVideoResolution_1280x600                = 0x13, //!< Resolution is 1280x600
+  # tvVideoResolution_1280x720                = 0x14, //!< Resolution is 1280x720
+  # tvVideoResolution_1280x1024               = 0x15, //!< Resolution is 1280x1024
+  # tvVideoResolution_1680x720                = 0x16, //!< Resolution is 1680x720
+  # tvVideoResolution_1024x768                = 0x17, //!< Resolution is 1024x768
+  # tvVideoResolution_1280x768                = 0x18, //!< Resolution is 1280x768
+  # tvVideoResolution_1360x768                = 0x19, //!< Resolution is 1360x768
+  # tvVideoResolution_1366x768                = 0x1A, //!< Resolution is 1366x768
+  # tvVideoResolution_1440x900                = 0x1B, //!< Resolution is 1440x900
+  # tvVideoResolution_1600x900                = 0x1C, //!< Resolution is 1600x900
+  # tvVideoResolution_1280x960                = 0x1D, //!< Resolution is 1280x960
+  # tvVideoResolution_1920x1080               = 0x1E, //!< Resolution is 1920x1080
+  # tvVideoResolution_2560x1080               = 0x1F, //!< Resolution is 2560x1080
+  # tvVideoResolution_3840x1080               = 0x20, //!< Resolution is 3840x1080
+  # tvVideoResolution_1600x1200               = 0x21, //!< Resolution is 1600x1200
+  # tvVideoResolution_1920x1200               = 0x22, //!< Resolution is 1920x1200
+  # tvVideoResolution_2160x1200               = 0x23, //!< Resolution is 2160x1200
+  # tvVideoResolution_2400x1200               = 0x24, //!< Resolution is 2400x1200
+  # tvVideoResolution_2560x1440               = 0x25, //!< Resolution is 2560x1440
+  # tvVideoResolution_3440x1440               = 0x26, //!< Resolution is 3440x1440
+  # tvVideoResolution_3840x2160               = 0x27, //!< Resolution is 3840x2160
+  # tvVideoResolution_4096x2160               = 0x28, //!< Resolution is 4096x2160
+  SupportedVideoResolution:
+    - 0x00  # tvVideoResolution_NONE
+    - 0x01  # tvVideoResolution_720x240
+    - 0x02  # tvVideoResolution_2880x240
+    - 0x03  # tvVideoResolution_720x288
+    - 0x04  # tvVideoResolution_2880x288
+    - 0x05  # tvVideoResolution_640x480
+    - 0x06  # tvVideoResolution_720x480
+    - 0x07  # tvVideoResolution_800x480
+    - 0x08  # tvVideoResolution_852x480
+    - 0x09  # tvVideoResolution_854x480
+    - 0x0A  # tvVideoResolution_1440x480
+    - 0x0B  # tvVideoResolution_2880x480
+    - 0x0C  # tvVideoResolution_960x540
+    - 0x0D  # tvVideoResolution_3840x540
+    - 0x0E  # tvVideoResolution_720x576
+    - 0x0F  # tvVideoResolution_1440x576
+    - 0x10  # tvVideoResolution_2880x576
+    - 0x11  # tvVideoResolution_800x600
+    - 0x12  # tvVideoResolution_1024x600
+    - 0x13  # tvVideoResolution_1280x600
+    - 0x14  # tvVideoResolution_1280x720
+    - 0x15  # tvVideoResolution_1280x1024
+    - 0x16  # tvVideoResolution_1680x720
+    - 0x17  # tvVideoResolution_1024x768
+    - 0x18  # tvVideoResolution_1280x768
+    - 0x19  # tvVideoResolution_1360x768
+    - 0x1A  # tvVideoResolution_1366x768
+    - 0x1B  # tvVideoResolution_1440x900
+    - 0x1C  # tvVideoResolution_1600x900
+    - 0x1D  # tvVideoResolution_1280x960
+    - 0x1E  # tvVideoResolution_1920x1080
+    - 0x1F  # tvVideoResolution_2560x1080
+    - 0x20  # tvVideoResolution_3840x1080
+    - 0x21  # tvVideoResolution_1600x1200
+    - 0x22  # tvVideoResolution_1920x1200
+    - 0x23  # tvVideoResolution_2160x1200
+    - 0x24  # tvVideoResolution_2400x1200
+    - 0x25  # tvVideoResolution_2560x1440
+    - 0x26  # tvVideoResolution_3440x1440
+    - 0x27  # tvVideoResolution_3840x2160
+    - 0x28  # tvVideoResolution_4096x2160
+
   Brightness:
     range_from: 0
     range_to: 100
@@ -282,6 +388,7 @@ tvSettings:
       - 0x00 # STANDARD
       - 0x01 # WARM
       - 0x02 # COLD
+      - 0x03 # USER DEFINED
     # Entertainment
     # Dynamic
     # Energy saving
@@ -617,6 +724,15 @@ tvSettings:
     source: none
     isPlatformSupport: true
 
+  LocalDimmingLevel:
+    #LDIM_STATE_NONBOOST = 0x0             # LDIM state level is non boost (AKA Normal)
+    #LDIM_STATE_BOOST    = 0x01           # LDIM state level is boost
+    #LDIM_STATE_BURST    = 0x02          # LDIM state level is burst
+    index:
+      - 0x00
+      - 0x01
+      - 0x02
+
   # tvDimmingMode_Fixed   = 0x00, //!< Dimming Mode is Fixed
   # tvDimmingMode_Local   = 0x01, //!< Dimming Mode is Local
   # tvDimmingMode_Global  = 0x02, //!< Dimming Mode is Global
@@ -626,7 +742,7 @@ tvSettings:
       - fixed
       - global
     index:
-      - 0x00 #tvDimmingMode_Fixed
+      - 0x01 #tvDimmingMode_Local
       - 0x02 #tvDimmingMode_Global
     # Entertaiment
     # Dynamic
@@ -742,13 +858,13 @@ tvSettings:
     # Game
     # Filmmaker
     range:
-      - standard
-      - vivid
-      - energysaving
-      - custom
-      - theater
-      - game
-      - sports
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+      - Graphics
+      - Dynamic2
     # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
     # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
     # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"
@@ -766,11 +882,11 @@ tvSettings:
     index:
       - 0x00 # PQ_MODE_STANDARD
       - 0x01 # PQ_MODE_VIVID
-      - 0x02 # PQ_MODE_ENERGY_SAVING
       - 0x03 # PQ_MODE_CUSTOM
       - 0x04 # PQ_MODE_THEATER
-      - 0x07 # PQ_MODE_GAME
       - 0x08 # PQ_MODE_SPORTS
+      - 0x09
+      - 0x0B
     pqmode: none
     # HDR10
     # HDR10PLUS
