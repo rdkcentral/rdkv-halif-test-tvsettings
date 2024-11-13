@@ -28,45 +28,47 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
-class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
+class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
-        Initializes the SaveSharpness test.
+        Initializes the SaveSaturation test.
 
         Args:
             None.
         """
-        self.testName = "test47_SaveSharpness"
-        super().__init__(self.testName, '47')
-        self.sharpness_values = []
+        self.testName = "test48_SaveSaturation"
+        self.qcID = '48'
+        super().__init__(self.testName, self.qcID, log)
+        self.saturation_values = []
 
-    def testVerifySharpnessValue(self, pictureMode, videoFormat, sharpness, manual=False):
+    def testVerifySaturationValue(self, pictureMode, videoFormat, saturation, manual=False):
         """
-        Verifies whether the Sharpness value is set correctly.
+        Verifies whether the Saturation value is set correctly.
 
         Args:
             pictureMode (str): Picture Mode.
             videoFormat (str): Video Format.
-            sharpness (int): Sharpness value.
+            saturation (int): Saturation value.
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to other verification methods.
 
         Returns:
-            bool: Returns the status of sharpness value.
+            bool: Returns the status of saturation value.
         """
         if manual:
             return self.testUserResponse.getUserYN(
-                f"Is sharpness value {sharpness} applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
+                f"Is saturation value {saturation} applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
             )
         else:
             # TODO: Add automation verification methods
             return False
 
-    def saveSharpnessValuesForAllFormats(self):
+    def saveSaturationValuesForAllFormats(self):
         """
-        Saves sharpness values for all combinations of picture mode index and video format.
+        Saves saturation values for all combinations of picture mode index and video format.
 
         Returns:
             None.
@@ -74,26 +76,26 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
         pictureModeIndices = self.testtvSettings.getPictureModeIndex()
         videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
 
-        # Split the sharpness values based on the number of video formats
+        # Split the saturation values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
-        self.sharpness_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
+        self.saturation_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
 
-        # Save the appropriate sharpness values based on the video format
+        # Save the appropriate saturation values based on the video format
         for pictureModeIndex in pictureModeIndices:
             for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
-                sharpnessValue = self.sharpness_values[videoFormatIndex]
+                saturationValue = self.saturation_values[videoFormatIndex]
 
-                # Log and save the sharpness values
-                self.testtvSettings.saveSharpnessValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, sharpnessValue)
+                # Log and save the saturation values
+                self.testtvSettings.saveSaturationValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, saturationValue)
                 time.sleep(1)
 
 
-    def setAllSharpnessToDefault(self, defaultValue=50):
+    def setAllSaturationToDefault(self, defaultValue=50):
         """
-        Sets the sharpness value to a default value for all combinations of picture modes and video formats.
+        Sets the saturation value to a default value for all combinations of picture modes and video formats.
 
         Args:
-            defaultValue (int, optional): The default sharpness value to set. Defaults to 50.
+            defaultValue (int, optional): The default saturation value to set. Defaults to 50.
 
         Returns:
             None.
@@ -103,24 +105,24 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:
-                # Log and save the default sharpness value
-                self.testtvSettings.saveSharpnessValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+                # Log and save the default saturation value
+                self.testtvSettings.saveSaturationValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
                 time.sleep(1)
 
 
     def testFunction(self):
-        """This function tests saving sharpness values with all combinations of picture mode and video format.
+        """This function tests saving saturation values with all combinations of picture mode and video format.
+
+        It also adds the option to restart the device to verify changes.
 
         Returns:
-            bool: Status of the sharpness save operations.
+            bool: Status of the saturation save operations.
         """
-        self.log.testStart(self.testName, '47')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Save sharpness values for all formats
-        self.saveSharpnessValuesForAllFormats()
+        # Save saturation values for all formats
+        self.saveSaturationValuesForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
@@ -131,24 +133,26 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
             time.sleep(3)  # Allow some time for the stream to start
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Get the sharpness value based on the saved indices
-                sharpnessValue = self.sharpness_values[videoFormatIndex]
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
+                # Get the saturation value based on the saved indices
+                saturationValue = self.saturation_values[videoFormatIndex]
 
-                self.log.stepStart(f'Setting Sharpness: {sharpnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                self.testtvSettings.setPictureMode(pictureMode)
+
+                self.log.stepStart(f'Setting Saturation: {saturationValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
                 # Call the verification function (manual=True allows for manual verification)
-                result = self.testVerifySharpnessValue(pictureMode, videoFormat, sharpnessValue, manual=True)
+                result = self.testVerifySaturationValue(pictureMode, videoFormat, saturationValue, manual=True)
 
                 # Log the result for each step
-                self.log.stepResult(result, f'Verification for Sharpness: {sharpnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                self.log.stepResult(result, f'Verification for Saturation: {saturationValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -156,14 +160,16 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
 
-        # Set all sharpness values to the default value of 50
-        self.setAllSharpnessToDefault()
+        # Set all saturation values to the default value of 50
+        self.setAllSaturationToDefault()
 
         # Terminate the tvSettings Module
         self.testtvSettings.terminate()
 
-        return result  # Return the last result of the verification
+        return result
 
 if __name__ == '__main__':
-    test = tvSettings_test47_SaveSharpness()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test48_SaveSaturation(summeryLog)
     test.run(False)

@@ -28,18 +28,20 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
     """
     Test class for saving CMS values for different picture modes and video formats.
     """
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SaveCMS test with required parameters.
         """
         self.testName = "test54_SaveCMS"
-        super().__init__(self.testName, '54')
+        self.qcID = '54'
+        super().__init__(self.testName, self.qcID, log)
         self.cms_values = []  # Initialize list to capture CMS values
 
     def testVerifyCMSValue(self, pictureMode, videoFormat, componentType, componentColor, cmsValue, manual=False):
@@ -111,8 +113,6 @@ class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
         Returns:
             bool: Overall status of the CMS save operations.
         """
-        self.log.testStart(self.testName, '54')  # Start logging for the test
-
         self.testtvSettings.initialise()  # Initialize the tvSettings module
 
         self.saveCMSValuesForSelectedFormats()  # Save CMS values for selected formats
@@ -123,7 +123,7 @@ class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
         result = True  # Initialize result as True
 
         videoFormats = self.testtvSettings.getVideoFormatInfo()
-        pictureModes = self.testtvSettings.getPictureModeIndex()
+        pictureModes = self.testtvSettings.getPictureModeInfo()
         componentTypes = self.testtvSettings.getComponentTypeInfo()
         componentColors = self.testtvSettings.getTVDataColor()
 
@@ -136,7 +136,7 @@ class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
             cms_value = self.cms_values[videoFormatIndex]
 
             self.testDownloadAssetsByUrl(streamUrl)  # Download the individual stream
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Only enable/disable CMS state if componentType and componentColor are not 'COMP_NONE' or 'tvDataColor_NONE'
             if componentType != 'COMP_NONE' and componentColor != 'tvDataColor_NONE':
@@ -148,6 +148,7 @@ class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
             self.log.stepStart(f"Setting CMS: {cms_value}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}")
 
             if componentType != 'COMP_NONE' and componentColor != 'tvDataColor_NONE':
+                self.testtvSettings.setPictureMode(pictureMode)
                 result &= self.testVerifyCMSValue(pictureMode, videoFormat, componentType, componentColor, cms_value, manual=True)
             else:
                 result &= self.testVerifyCMSValue(pictureMode, videoFormat, componentType, componentColor, cms_value, manual=False)
@@ -170,5 +171,7 @@ class tvSettings_test54_SaveCMS(tvSettingsHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test54_SaveCMS()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test54_SaveCMS(summeryLog)
     test.run(False)

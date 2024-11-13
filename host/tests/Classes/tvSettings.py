@@ -33,6 +33,7 @@ sys.path.append(dir_path+"/../")
 from raft.framework.plugins.ut_raft.configRead import ConfigRead
 from raft.framework.plugins.ut_raft.utSuiteNavigator import UTSuiteNavigatorClass
 from raft.framework.plugins.ut_raft.interactiveShell import InteractiveShell
+from raft.framework.plugins.ut_raft.utBaseUtils import utBaseUtils
 
 class ComponentType(Enum):
     COMP_NONE                             = 0              # No Component
@@ -211,17 +212,25 @@ class tvSettingsClass():
 
     This module provides common extensions for tvSettings Module.
     """
-    def __init__(self, deviceProfilePath:str, session=None):
+    def __init__(self, moduleConfigProfileFile:str, session=None, targetWorkspace="/tmp"):
         """
         Initializes the tvSettings class function.
         """
         self.moduleName    = "tvSettings"
-        self.menuConfig    =  dir_path + "/tvSettings_test_suite.yml"
+        self.testConfigFile     =  dir_path + "/tvSettings_testConfig.yml"
         self.testSuite     = "L3 tvSettings"
-        self.deviceProfile = ConfigRead( deviceProfilePath, self.moduleName)
-        self.suitConfig    = ConfigRead(self.menuConfig, self.moduleName)
-        self.utMenu        = UTSuiteNavigatorClass(self.menuConfig, self.moduleName, session)
+
+        # Load configurations for device profile and menu
+        self.deviceProfile = ConfigRead( moduleConfigProfileFile , self.moduleName)
+        self.testConfig    = ConfigRead(self.testConfigFile, self.moduleName)
+        self.testConfig.test.execute = os.path.join(targetWorkspace, self.testConfig.test.execute)
+        self.utMenu        = UTSuiteNavigatorClass(self.testConfig, None, session)
         self.testSession   = session
+        self.utils         = utBaseUtils()
+
+        for artifact in self.testConfig.test.artifacts:
+            filesPath = os.path.join(dir_path, artifact)
+            self.utils.rsync(self.testSession, filesPath, targetWorkspace)
 
         # Start the user interface menu
         self.utMenu.start()
@@ -2048,6 +2057,43 @@ class tvSettingsClass():
         ]
 
         result = self.utMenu.select(self.testSuite, "Save Picture Mode", promptWithAnswers)
+
+
+    def saveDvTmaxValue(self, dimmingLevelIndex: str = "LDIM_STATE_NONBOOST", tmaxValue: int = 5000):
+        """
+        Saves the Dolby Vision TMAX value for a specific LDIM state.
+
+        This function allows you to set the TMAX value for a specific LDIM state level.
+        The saved TMAX value will be applied in Dolby Vision core whenever the specified LDIM state level is selected
+        as a result of a picture mode change or primary video source change.
+
+        Args:
+            dimmingLevelIndex (str, optional): The LDIM state level to use. Default is "LDIM_STATE_NONBOOST".
+                                            Valid values should correspond to available LDIM states (e.g., "LDIM_STATE_BOOST", "LDIM_STATE_NONBOOST").
+            tmaxValue (int, optional): The TMAX value to set, which determines the maximum brightness for Dolby Vision.
+                                    Valid range is between 0 and 10000. Default is 5000.
+
+        Returns:
+            None: The function does not return a value. It performs the action of saving the TMAX value for the specified LDIM state.
+
+        Example:
+            saveDvTmaxValue(dimmingLevelIndex="LDIM_STATE_BOOST", tmaxValue=7500)
+        """
+        promptWithAnswers = [
+            {
+                "query_type": "list",
+                "query": "Enter your choice of LDIM State Level (index):",
+                "input": dimmingLevelIndex
+            },
+            {
+                "query_type": "direct",
+                "query": "Enter the TMAX value to set (0 - 10000):",
+                "input": str(tmaxValue)
+            }
+        ]
+
+        # Use the prompt to select and set the TMAX value
+        result = self.utMenu.select(self.testSuite, "Save DV Tmax", promptWithAnswers)
 
 
     def getBacklightMode(self):

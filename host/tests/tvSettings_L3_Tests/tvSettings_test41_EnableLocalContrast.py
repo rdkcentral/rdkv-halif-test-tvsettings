@@ -27,13 +27,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
 
     # Predefined values for the Local Contrast parameter: 0 (disabled) and 1 (enabled)
     localContrastLevels = [0, 1, 0]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the EnableLocalContrast test.
 
@@ -41,7 +42,8 @@ class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
             None.
         """
         self.testName = "test41_EnableLocalContrast"
-        super().__init__(self.testName, '41')
+        self.qcID = '41'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyLocalContrast(self, localContrast, manual=False):
         """
@@ -69,7 +71,6 @@ class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
         Returns:
             bool: Status of the last Local Contrast verification.
         """
-        self.log.testStart(self.testName, '41')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -100,5 +101,7 @@ class tvSettings_test41_EnableLocalContrast(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test41_EnableLocalContrast()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test41_EnableLocalContrast(summeryLog)
     test.run(False)

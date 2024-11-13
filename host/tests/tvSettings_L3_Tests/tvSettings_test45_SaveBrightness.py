@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SaveBrightness test.
 
@@ -39,7 +40,8 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
             None.
         """
         self.testName = "test45_SaveBrightness"
-        super().__init__(self.testName, '45')
+        self.qcID = '45'
+        super().__init__(self.testName, self.qcID, log)
         self.brightness_values = []
 
     def testVerifyBrightnessValue(self, pictureMode, videoFormat, brightness, manual=False):
@@ -112,7 +114,6 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
         Returns:
             bool: Status of the brightness save operations.
         """
-        self.log.testStart(self.testName, '45')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -129,16 +130,18 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
                 # Get the brightness value based on the saved indices
                 brightnessValue = self.brightness_values[videoFormatIndex]
+
+                self.testtvSettings.setPictureMode(pictureMode)
 
                 self.log.stepStart(f'Setting Brightness: {brightnessValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
@@ -163,5 +166,7 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test45_SaveBrightness()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test45_SaveBrightness(summeryLog)
     test.run(False)

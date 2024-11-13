@@ -22,6 +22,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test28_GammaTable(tvSettingsHelperClass):
 
@@ -53,7 +54,7 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
         }
     ]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test28 GammaTable test.
 
@@ -61,7 +62,8 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
             None.
         """
         self.testName = "test28_GammaTable"
-        super().__init__(self.testName, '28')
+        self.qcID = '28'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyGammaTable(self, description, manual=False):
         """
@@ -87,8 +89,6 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
         Returns:
             bool: Status of the last verification.
         """
-
-        self.log.testStart(self.testName, '28')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -125,5 +125,7 @@ class tvSettings_test28_GammaTable(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test28_GammaTable()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test28_GammaTable(summeryLog)
     test.run(False)

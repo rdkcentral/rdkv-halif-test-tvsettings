@@ -388,7 +388,6 @@ tvSettings:
       - 0x00 # STANDARD
       - 0x01 # WARM
       - 0x02 # COLD
-      - 0x03 # USER DEFINED
     # Entertainment
     # Dynamic
     # Energy saving
@@ -742,7 +741,7 @@ tvSettings:
       - fixed
       - global
     index:
-      - 0x01 #tvDimmingMode_Local
+      - 0x00 #tvDimmingMode_Fixed
       - 0x02 #tvDimmingMode_Global
     # Entertaiment
     # Dynamic
@@ -858,13 +857,13 @@ tvSettings:
     # Game
     # Filmmaker
     range:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-      - Graphics
-      - Dynamic2
+      - standard
+      - vivid
+      - energysaving
+      - custom
+      - theater
+      - game
+      - sports
     # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
     # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
     # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"
@@ -882,11 +881,11 @@ tvSettings:
     index:
       - 0x00 # PQ_MODE_STANDARD
       - 0x01 # PQ_MODE_VIVID
+      - 0x02 # PQ_MODE_ENERGY_SAVING
       - 0x03 # PQ_MODE_CUSTOM
       - 0x04 # PQ_MODE_THEATER
+      - 0x07 # PQ_MODE_GAME
       - 0x08 # PQ_MODE_SPORTS
-      - 0x09
-      - 0x0B
     pqmode: none
     # HDR10
     # HDR10PLUS

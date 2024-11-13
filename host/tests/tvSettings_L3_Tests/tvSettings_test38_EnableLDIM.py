@@ -27,13 +27,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test38_EnableLDIM(tvSettingsHelperClass):
 
     # Two predefined values for the LDIM parameter: 0 (disabled) and 1 (enabled)
     ldimValues = [0, 1, 0]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the EnableLDIM test.
 
@@ -41,7 +42,8 @@ class tvSettings_test38_EnableLDIM(tvSettingsHelperClass):
             None.
         """
         self.testName = "test38_EnableLDIM"
-        super().__init__(self.testName, '38')
+        self.qcID = '38'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyLDIM(self, ldimValue, manual=False):
         """
@@ -69,11 +71,6 @@ class tvSettings_test38_EnableLDIM(tvSettingsHelperClass):
         Returns:
             bool: Status of the last LDIM verification.
         """
-        # Run prerequisites listed in the test setup configuration file
-        self.testRunPrerequisites()
-
-        self.log.testStart(self.testName, '38')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -103,5 +100,7 @@ class tvSettings_test38_EnableLDIM(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test38_EnableLDIM()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test38_EnableLDIM(summeryLog)
     test.run(False)

@@ -29,6 +29,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
     """
@@ -38,12 +39,13 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
         testName (str): Name of the test.
     """
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test02 VideoResolution test.
         """
         self.testName = "test02_CheckVideoResolution"
-        super().__init__(self.testName, '2')  # Set test number to 2
+        self.qcID = '2'
+        super().__init__(self.testName, self.qcID, log)  # Set test number to 2
 
         # Supported video resolutions with interlace information
         # Each entry is a list of [resolution, is_interlaced]
@@ -65,8 +67,6 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
         Returns:
             bool: Always returns True upon successful execution of the test.
         """
-        self.log.testStart(self.testName, '2')  # Log start of the test with test number
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -82,7 +82,7 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
 
             # Download and play the stream
             self.testDownloadAssetsByUrl(streamUrl)
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
 
@@ -147,5 +147,7 @@ class tvSettings_test02_CheckVideoResolution(tvSettingsHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test02_CheckVideoResolution()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test02_CheckVideoResolution(summeryLog)
     test.run(False)

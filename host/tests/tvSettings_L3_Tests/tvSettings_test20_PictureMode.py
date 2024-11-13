@@ -27,10 +27,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test20_PictureMode(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test20 Picture Mode test.
 
@@ -38,7 +39,8 @@ class tvSettings_test20_PictureMode(tvSettingsHelperClass):
             None.
         """
         self.testName = "test20_PictureMode"
-        super().__init__(self.testName, '20')
+        self.qcID = '20'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyPictureModeLevel(self, pictureMode, manual=False):
         """
@@ -70,7 +72,6 @@ class tvSettings_test20_PictureMode(tvSettingsHelperClass):
         Returns:
             bool: Returns the final verification result.
         """
-        self.log.testStart(self.testName, '20')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -113,5 +114,7 @@ class tvSettings_test20_PictureMode(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test20_PictureMode()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test20_PictureMode(summeryLog)
     test.run(False)

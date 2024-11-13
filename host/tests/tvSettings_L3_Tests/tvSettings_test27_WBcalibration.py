@@ -20,12 +20,13 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
-class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
+class tvSettings_test27_WBcalibration(tvSettingsHelperClass):
 
     wbCalibrationModes = [0, 1, 0]  # WBCalibrationMode values
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test27 WBCalibrationMode test.
 
@@ -33,7 +34,8 @@ class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
             None.
         """
         self.testName = "test27_WBCalibrationMode"
-        super().__init__(self.testName, '27')
+        self.qcID = '27'
+        super().__init__(self.testName, self.qcID, log)
 
     # TODO: Current version supports only manual verification.
     def testVerifyWBCalibrationMode(self, wbCalibrationMode, manual=False):
@@ -60,8 +62,6 @@ class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
         Returns:
             bool: Returns the status of the last verification.
         """
-
-        self.log.testStart(self.testName, '27')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -92,5 +92,7 @@ class tvSettings_test27_WBCalibrationMode(tvSettingsHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test27_WBCalibrationMode()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test27_WBcalibration(summeryLog)
     test.run(False)

@@ -7,6 +7,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
     """
@@ -35,12 +36,13 @@ class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
         (0, 0, 0)  # White
     ]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SetGammaPattern test.
         """
         self.testName = "test34_SetGammaPattern"
-        super().__init__(self.testName, '34')
+        self.qcID = '34'
+        super().__init__(self.testName, self.qcID, log)
 
     def getLevelRanges(self, bitDepth):
         """
@@ -93,7 +95,6 @@ class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
         Returns:
             bool: Status of the last gamma pattern verification.
         """
-        self.log.testStart(self.testName, '34')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -141,5 +142,7 @@ class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test34_SetGammaPattern()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test34_SetGammaPattern(summeryLog)
     test.run(False)

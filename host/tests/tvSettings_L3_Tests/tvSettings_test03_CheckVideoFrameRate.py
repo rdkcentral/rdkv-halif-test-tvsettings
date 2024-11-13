@@ -29,6 +29,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
     """
@@ -42,7 +43,7 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
         testName (str): Name of the test.
     """
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test03 VideoFrameRate test.
 
@@ -50,7 +51,8 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
             None.
         """
         self.testName = "test03_CheckVideoFrameRate"
-        super().__init__(self.testName, '3')  # Set test number to 3
+        self.qcID = '3'
+        super().__init__(self.testName, self.qcID, log)  # Set test number to 3
 
         # List of all supported video frame rates
         self.supportedFrameRates = [
@@ -77,8 +79,6 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
         Returns:
             bool: Always returns True upon successful execution of the test.
         """
-        self.log.testStart(self.testName, '3')  # Log start of the test with test number
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -97,7 +97,7 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
@@ -132,5 +132,7 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
         return True
 
 if __name__ == '__main__':
-    test = tvSettings_test03_CheckVideoFrameRate()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test03_CheckVideoFrameRate(summeryLog)
     test.run(False)
