@@ -29,13 +29,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test06_BacklightFade(tvSettingsHelperClass):
 
     backlightValues = [0, 50, 100]  # Using extremes and a middle value for better visibility
     fadeDurations = [500, 1000]  # Keeping fade durations shorter but noticeable
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test06 BacklightFade test.
 
@@ -45,7 +46,8 @@ class tvSettings_test06_BacklightFade(tvSettingsHelperClass):
             None.
         """
         self.testName = "test06_BacklightFade"
-        super().__init__(self.testName, '6')
+        self.qcID = '6'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyBacklightFadeLevel(self, fromVal, toVal, fadeDuration, manual=False):
         """
@@ -80,8 +82,6 @@ class tvSettings_test06_BacklightFade(tvSettingsHelperClass):
         Returns:
             bool: Returns the final verification result.
         """
-        self.log.testStart(self.testName, '6')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -112,5 +112,7 @@ class tvSettings_test06_BacklightFade(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test06_BacklightFade()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test06_BacklightFade(summeryLog)
     test.run(False)

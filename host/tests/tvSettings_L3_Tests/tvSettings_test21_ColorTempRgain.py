@@ -21,12 +21,13 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
 
     rgainValues = [0, 512, 1024, 1536, 2047, 1024]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test21 ColorTempRgain test.
 
@@ -34,7 +35,8 @@ class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
             None.
         """
         self.testName = "test21_ColorTempRgain"
-        super().__init__(self.testName, '21')
+        self.qcID = '21'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyColorTempRgain(self, colorTemperature, rgain, saveSetFlag, manual=False):
         """
@@ -121,8 +123,6 @@ class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
     def testFunction(self):
         """Main function to run both Set and Save tests for ColorTempRgain."""
 
-        self.log.testStart(self.testName, '21')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -139,5 +139,7 @@ class tvSettings_test21_ColorTempRgain(tvSettingsHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test21_ColorTempRgain()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test21_ColorTempRgain(summeryLog)
     test.run(False)

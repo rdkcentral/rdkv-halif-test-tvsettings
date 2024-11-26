@@ -27,13 +27,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
 
     # Five predefined Gray levels (range: 0-255)
     grayLevels = [0, 64, 128, 192, 255, 0]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the GrayPattern test.
 
@@ -41,7 +42,8 @@ class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
             None.
         """
         self.testName = "test36_GrayPattern"
-        super().__init__(self.testName, '36')
+        self.qcID = '36'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyGrayPattern(self, grayLevel, manual=False):
         """
@@ -69,7 +71,6 @@ class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
         Returns:
             bool: Status of the last Gray pattern verification.
         """
-        self.log.testStart(self.testName, '36')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -93,5 +94,7 @@ class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test36_GrayPattern()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test36_GrayPattern(summeryLog)
     test.run(False)

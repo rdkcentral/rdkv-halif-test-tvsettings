@@ -119,8 +119,8 @@ classDiagram
     testControl <|-- ut_raft : inherits
     class ut_raft{
     }
-    ut_raft <|-- dstvSettingsClass : inherits
-    dstvSettingsClass <|-- L3_TestClasses : inherits
+    ut_raft <|-- tvSettingsHelperClass : inherits
+    tvSettingsHelperClass <|-- L3_TestClasses : inherits
     L3_TestClasses ..> tvSettings : uses
     note for testControl "uses rackConfig.yaml and deviceConfig.yaml"
     note for tvSettings "uses platformProfile.yaml"
@@ -164,7 +164,7 @@ classDiagram
   - This configuration file contains the list of requirements for tests to execute. Eg: Copying the streams, setting environment variables etc.
   - Example configuration file [tvSettings_L3_testSetup.yml](../../host/tests/tvSettings_L3_Tests/tvSettings_L3_testSetup.yml)
 
-- **testSuite.yaml**
+- **testConfig.yaml**
   - This configuration file contains the list of menu items for C/C++ L3 test running on `DUT`
-  - Example configuration file [tvSettings_test_suite.yml](../../host/tests/Classes/tvSettings_test_suite.yml)
+  - Example configuration file [tvSettings_testConfig.yml](../../host/tests/Classes/tvSettings_testConfig.yml)
   

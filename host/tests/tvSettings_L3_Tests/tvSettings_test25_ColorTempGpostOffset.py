@@ -20,12 +20,13 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
-class tvSettings_test25_GpostOffset(tvSettingsHelperClass):
+class tvSettings_test25_ColorTempGpostOffset(tvSettingsHelperClass):
 
     gpostValues = [512, -1024, -512, 0, 512, 1023, 0]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test25 GpostOffset test.
 
@@ -33,7 +34,8 @@ class tvSettings_test25_GpostOffset(tvSettingsHelperClass):
             None.
         """
         self.testName = "test25_GpostOffset"
-        super().__init__(self.testName, '25')
+        self.qcID = '25'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyGpostOffset(self, colorTemperature, gpostValue, saveSetFlag, manual=False):
         """
@@ -118,8 +120,6 @@ class tvSettings_test25_GpostOffset(tvSettingsHelperClass):
     def testFunction(self):
         """Main function to run both Set and Save tests for GpostOffset."""
 
-        self.log.testStart(self.testName, '25')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -135,5 +135,7 @@ class tvSettings_test25_GpostOffset(tvSettingsHelperClass):
         return True
 
 if __name__ == '__main__':
-    test = tvSettings_test25_GpostOffset()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test25_ColorTempGpostOffset(summeryLog)
     test.run(False)

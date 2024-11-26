@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test15_ColorTemp(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test15 ColorTemp test.
 
@@ -41,7 +42,8 @@ class tvSettings_test15_ColorTemp(tvSettingsHelperClass):
             None.
         """
         self.testName = "test15_ColorTemp"
-        super().__init__(self.testName, '15')
+        self.qcID = '15'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyColorTempLevel(self, colorTemp, manual=False):
         """
@@ -73,8 +75,6 @@ class tvSettings_test15_ColorTemp(tvSettingsHelperClass):
         Returns:
             bool: Returns the final verification result.
         """
-        self.log.testStart(self.testName, '15')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -104,5 +104,7 @@ class tvSettings_test15_ColorTemp(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test15_ColorTemp()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test15_ColorTemp(summeryLog)
     test.run(False)

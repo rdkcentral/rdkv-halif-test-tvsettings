@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test43_SaveTVDimmingMode(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SaveTVDimmingMode test.
 
@@ -39,7 +40,8 @@ class tvSettings_test43_SaveTVDimmingMode(tvSettingsHelperClass):
             None.
         """
         self.testName = "test43_SaveTVDimmingMode"
-        super().__init__(self.testName, '43')
+        self.qcID = '43'
+        super().__init__(self.testName, self.qcID, log)
         self.dimming_indices = []
 
     def testVerifyDimmingValue(self, pictureMode, videoFormat, dimmingLevel, manual=False):
@@ -98,7 +100,6 @@ class tvSettings_test43_SaveTVDimmingMode(tvSettingsHelperClass):
         Returns:
             bool
         """
-        self.log.testStart(self.testName, '43')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -114,17 +115,19 @@ class tvSettings_test43_SaveTVDimmingMode(tvSettingsHelperClass):
 
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
             time.sleep(3)  # Allow some time for the stream to start
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
 
                 # Determine the color temperature based on the saved indices
                 dimmingLevel = self.testtvSettings.getTVDimmingMode()[self.dimming_indices[videoFormatIndex]]
+
+                self.testtvSettings.setPictureMode(pictureMode)
 
                 self.log.stepStart(f'Setting Dimming Level: {dimmingLevel}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
@@ -147,5 +150,7 @@ class tvSettings_test43_SaveTVDimmingMode(tvSettingsHelperClass):
 
 
 if __name__ == '__main__':
-    test = tvSettings_test43_SaveTVDimmingMode()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test43_SaveTVDimmingMode(summeryLog)
     test.run(False)

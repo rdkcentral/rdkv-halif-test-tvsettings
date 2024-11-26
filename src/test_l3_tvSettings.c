@@ -2873,6 +2873,12 @@ void test_l3_tvSettings_DvTmaxValue(void)
     UT_LOG_INFO("Result SetDvTmaxValue(IN:tmaxValue [%d]),tvError_t[%s]", tmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
     ASSERT(ret == tvERROR_NONE);
 
+    // Set the Dolby Vision TMAX value
+    UT_LOG_INFO("Calling SetDvTmaxValue(IN: tmaxValue[%d])", tmaxValue);
+    ret = SetDvTmaxValue(tmaxValue);
+    UT_LOG_INFO("Result SetDvTmaxValue(IN:tmaxValue [%d]),tvError_t[%s]", tmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
+    ASSERT(ret == tvERROR_NONE);
+
     // Verify the Dolby Vision TMAX value
     UT_LOG_INFO("Calling GetDvTmaxValue(OUT:retrievedTmaxValue[]");
     ret = GetDvTmaxValue(&retrievedTmaxValue);
@@ -5892,6 +5898,84 @@ void test_l3_tvSettings_GetCMSState(void)
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
 
+/**
+ * @brief Saves the Dolby Vision TMAX parameter.
+ *
+ * This function saves the Dolby Vision TMAX parameter in the picture profile database
+ * for the specified LDIM state level. The saved TMAX value will be applied in Dolby Vision
+ * core whenever the specified LDIM state level is selected as a result of picture mode
+ * change or primary video source change or primary video format change.
+ *
+ * **Test Group ID:** 03
+ * **Test Case ID:** 63
+ *
+ * **Test Procedure:**
+ * Refer to Test specification documentation
+ * [tvSettings_L3_Low-Level_TestSpecification.md](../docs/pages/tvSettings_L3_Low-Level_TestSpecification.md)
+ */
+void test_l3_tvSettings_SaveDvTmaxValue(void)
+{
+    // Initialize test ID and log entry
+    gTestID = 63;
+    UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    // Declare and initialize variables
+    tvError_t result = tvERROR_NONE;
+    ldimStateLevel_t ldimState = LDIM_STATE_NONBOOST; // Set initial state to non-boost
+    int32_t tmaxValue = 0;
+    int32_t userLdimChoice = 0;
+
+    // List all options for LDIM State Level
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t\tSupported LDIM State Levels");
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("\t#   %-30s", "LDIM State Levels");
+    for (uint32_t i = LDIM_STATE_NONBOOST; i < LDIM_STATE_MAX; i++) // Exclude LDIM_STATE_MAX
+    {
+        UT_LOG_MENU_INFO("%u. %s", i, UT_Control_GetMapString(ldimStateLevel_mapTable, i)); // Display index starting from 0
+    }
+    UT_LOG_MENU_INFO("----------------------------------------------------------");
+    UT_LOG_MENU_INFO("Enter your choice of LDIM State Level (index): ");
+    readInt(&userLdimChoice);
+
+    // Validate user input for LDIM State Level
+    if (userLdimChoice < 0 || userLdimChoice >= (int32_t)LDIM_STATE_MAX)
+    {
+        UT_LOG_ERROR("Invalid choice of LDIM State Level. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    ldimState = (ldimStateLevel_t)userLdimChoice;
+
+    // Prompt the user for the TMAX value
+    UT_LOG_MENU_INFO("Enter the TMAX value to set (0 - 10000): ");
+    readInt(&tmaxValue);
+
+    // Validate the TMAX value input
+    if (tmaxValue < 0 || tmaxValue > 10000)
+    {
+        UT_LOG_ERROR("Invalid TMAX value entered. Exiting test.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
+
+    UT_LOG_INFO("Calling SaveDvTmaxValue(IN:LDIMState:[%s], IN:TMAXValue:[%d])",
+                 UT_Control_GetMapString(ldimStateLevel_mapTable, ldimState),
+                 tmaxValue);
+
+    // Save the TMAX value
+    result = SaveDvTmaxValue(ldimState, tmaxValue);
+
+    UT_LOG_INFO("Result SaveDvTmaxValue(IN:LDIMState:[%s], IN:TMAXValue:[%d]) tvError_t:[%s]",
+                 UT_Control_GetMapString(ldimStateLevel_mapTable, ldimState),
+                 tmaxValue,
+                 UT_Control_GetMapString(tvError_mapTable, result));
+
+    ASSERT(result == tvERROR_NONE);
+
+    UT_LOG_INFO("Out %s", __FUNCTION__);
+}
 
 static UT_test_suite_t * pSuite = NULL;
 
@@ -5973,6 +6057,7 @@ int32_t test_l3_tvSettings_register(void)
     UT_add_test(pSuite, "Save CMS", test_l3_tvSettings_CMSSave);
     UT_add_test(pSuite, "Save Gamma Table", test_l3_tvSettings_SaveGammaTable);
     UT_add_test(pSuite, "Get CMS State", test_l3_tvSettings_GetCMSState);
+    UT_add_test(pSuite, "Save DV Tmax", test_l3_tvSettings_SaveDvTmaxValue);
 
     return 0;
 }
