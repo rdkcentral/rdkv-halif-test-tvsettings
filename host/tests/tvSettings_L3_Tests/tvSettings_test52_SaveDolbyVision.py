@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SaveDolbyVision test.
 
@@ -39,7 +40,8 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
             None.
         """
         self.testName = "test52_SaveDolbyVision"
-        super().__init__(self.testName, '52')
+        self.qcID = '52'
+        super().__init__(self.testName, self.qcID, log)
         self.dolby_vision_indices = []
 
     def testVerifyDolbyVision(self, pictureMode, videoFormat, dolbyVision, manual=False):
@@ -116,8 +118,6 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
         Returns:
             bool: Status of the Dolby Vision save operations.
         """
-        self.log.testStart(self.testName, '52')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -133,7 +133,7 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
@@ -142,10 +142,12 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
             time.sleep(3)
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
 
                 # Determine the Dolby Vision value based on the saved indices
                 dolbyVision = self.testtvSettings.getDolbyVisionInfo()[self.dolby_vision_indices[videoFormatIndex]]
+
+                self.testtvSettings.setPictureMode(pictureMode)
 
                 self.log.stepStart(f'Setting Dolby Vision: {dolbyVision}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
@@ -171,5 +173,7 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test52_SaveDolbyVision()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test52_SaveDolbyVision(summeryLog)
     test.run(False)

@@ -27,6 +27,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
 
@@ -39,7 +40,7 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
         {'red': 0, 'green': 0, 'blue': 0}
     ]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the RGBPattern test.
 
@@ -47,7 +48,8 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
             None.
         """
         self.testName = "test35_RGBPattern"
-        super().__init__(self.testName, '35')
+        self.qcID = '35'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyRGBPattern(self, redLevel, greenLevel, blueLevel, manual=False):
         """
@@ -77,7 +79,6 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
         Returns:
             bool: Status of the last RGB pattern verification.
         """
-        self.log.testStart(self.testName, '35')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -105,5 +106,7 @@ class tvSettings_test35_RGBPattern(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test35_RGBPattern()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test35_RGBPattern(summeryLog)
     test.run(False)

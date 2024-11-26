@@ -29,12 +29,13 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test13_Saturation(tvSettingsHelperClass):
 
     saturationLevels = [0, 25, 50, 75, 100, 50]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test13 Saturation test.
 
@@ -44,7 +45,8 @@ class tvSettings_test13_Saturation(tvSettingsHelperClass):
             None.
         """
         self.testName = "test13_Saturation"
-        super().__init__(self.testName, '13')
+        self.qcID = '13'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifySaturationLevel(self, saturation, manual=False):
         """
@@ -76,8 +78,6 @@ class tvSettings_test13_Saturation(tvSettingsHelperClass):
         Returns:
             bool: Returns the final verification result.
         """
-        self.log.testStart(self.testName, '13')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -105,5 +105,7 @@ class tvSettings_test13_Saturation(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test13_Saturation()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test13_Saturation(summeryLog)
     test.run(False)

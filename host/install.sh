@@ -75,11 +75,11 @@ function WARNING()
 
 function ERROR()
 {
-    ECHO "${RED_BOLD}ERROR: ${RED}$*${NO_COLOR}" 
+    ECHO "${RED_BOLD}ERROR: ${RED}$*${NO_COLOR}"
     exit 1
 }
 
-function install_pip_requirements() 
+function install_pip_requirements()
 {
     local requirements_file="$1"
 
@@ -162,7 +162,7 @@ clone_repo git@github.com:rdkcentral/python_raft.git "${RAFT_DIR}" "1.1.1" "in .
 install_pip_requirements "${RAFT_DIR}"/requirements.txt
 
 # Setup ut-raft
-clone_repo git@github.com:rdkcentral/ut-raft.git "${PLUGINS_FRAMEWORK_DIR}/ut_raft" 1.0.1 "in ./raft/framework/plugins"
+clone_repo git@github.com:rdkcentral/ut-raft.git "${PLUGINS_FRAMEWORK_DIR}/ut_raft" 2.0.0 "in ./raft/framework/plugins"
 install_pip_requirements "${PLUGINS_FRAMEWORK_DIR}"/ut_raft/requirements.txt
 
 ## Install your own sub git repo's in here as required

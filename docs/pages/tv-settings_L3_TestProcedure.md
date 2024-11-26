@@ -61,6 +61,8 @@
   - [tvSettings_test53_savePictureMode.py](#tvsettings_test53_savepicturemodepy)
   - [tvSettings_test54_saveCMS.py](#tvsettings_test54_savecmspy)
   - [tvSettings_test55_saveGammaTable.py](#tvsettings_test55_savegammatablepy)
+  - [tvSettings_test56_SaveDvTmaxValue.py](#tvsettings_test56_savedvtmaxvaluepy)
+  - [tvSettings_L3_Runall.py](#tvsettings_l3_runallpy)
 
 ## Acronyms, Terms and Abbreviations
 
@@ -129,22 +131,23 @@ Example Device configuration File: `ut/host/tests/configs/deviceConfig.yml`
 
 For more details refer [RAFT](https://github.com/rdkcentral/python_raft/blob/1.0.0/README.md) and [example_device_config.yml](https://github.com/rdkcentral/python_raft/blob/1.0.0/examples/configs/example_device_config.yml)
 
-Update the target directory where `HAL` binaries will be copied into the device. Also, map the profile to the source/sink settings `YAML` file path.
+Update below fields in the device configuration file:
 
-Update the URL `streams_download_url` from which the streams are fetched.
-
-Ensure the platform should match with the `DUT` platform in [Rack Configuration](#rack-configuration-file)
+- Set the folder path for `target_directory` where `HAL` binaries will be copied onto the device.
+- Specify the device profile path in `test/profile`
+- Ensure the `platform` should match with the `DUT` `platform` in [Rack Configuration](#rack-configuration-file)
 
 ```yaml
 deviceConfig:
     cpe1:
-        platform: "linux"
-        model: "uk"
-        soc_vendor: "intel"
-        target_directory: "/tmp/"  # Target Directory on device
+        platform:   "Panel"
+        model:      "UK"
+        soc_vendor: "amlogic"
+        target_directory: "/tmp/"
         prompt: "" # Prompt string on console
         test:
-            profile: "../../../../profiles/sink/Sink_4K_TvSettings.yaml"
+            #TODO: Use the single profile file which contains all details (ds, hdmi, etc)
+            profile: "../../../profiles/sink/Sink_4K_TvSettings.yaml"
             streams_download_url: "<URL_Path>" #URL path from which the streams are downloaded to the device
 ```
 
@@ -160,31 +163,19 @@ If a test case requires multiple streams or needs to be validated using several 
 tvSettings:  # Prefix must always exist
   description: "tvSettings test setup"
   assets:
-    device:
-      defaults: &defaults
-        artifacts:
-          - "<URL Path>/bin/hal_test"
-          - "<URL Path>/bin/libut_control.so"
-          - "<URL Path>/bin/Sink_4K_TvSettings.yaml"
-          - "<URL Path>/bin/run.sh"
-        execute:
-          - "chmod +x <PATH on Device>/hal_test"
-          - "chmod +x <PATH on Device>/run.sh"
-        streams:
+   device:
       test01_CheckVideoFormat:
-        <<: *defaults
         streams:
-          -  "Streams/Colors_sdr.mp4"
-          -  "Streams/Colors_hdr.mp4"
-          -  "Streams/Colors_hlg.mp4"
+          -  "streams/Colors_hdr.mp4"
+          -  "streams/DolbyVision.mp4"
+          -  "streams/Colors_hlg.mp4"
+          -  "streams/Colors_sdr.mp4"
       test02_CheckVideoResolution:
-        <<: *defaults
         streams:
           -  "Streams/Colors_sdr.mp4"
           -  "Streams/Colors_hdr.mp4"
           -  "Streams/Colors_hlg.mp4"
       test03_CheckVideoFrameRate:
-        <<: *defaults
         streams:
           -  "Streams/Colors_sdr.mp4"
           -  "Streams/Colors_hdr.mp4"
@@ -192,9 +183,9 @@ tvSettings:  # Prefix must always exist
       test04_CheckVideoSource:
 ```
 
-#### Test Suite Configuration
+#### Test Configuration
 
-Example Test Setup configuration File: `ut/host/tests/Classes/tvSettings_test_suite.yml`
+Example Test Setup configuration File: `ut/host/tests/Classes/tvSettings_testConfig.yml`
 
 Update the execute command according to the device path where `HAL` binaries are copied.
 
@@ -1230,7 +1221,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
   Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-### tvSettings_test21_ColorTempGgain.py
+### tvSettings_test22_ColorTempGgain.py
 
 #### User Input Required - test22
 
@@ -1346,7 +1337,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
   Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-### tvSettings_test24_RpostOffset.py
+### tvSettings_test24_colorTempRpostOffset.py
 
 #### User Input Required - test24
 
@@ -1371,7 +1362,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
 - **Initiate the Test:**
 
-  - Run the Python file: **`tvSettings_test24_RpostOffset.py`**
+  - Run the Python file: **`tvSettings_test24_colorTempRpostOffset.py`**
   - The test initializes the TV settings module, loads test streams, and begins playback.
 
 - **Set Operation Verification:**
@@ -1404,7 +1395,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
   Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-### tvSettings_test25_GpostOffset.py
+### tvSettings_test25_ColorTempGpostOffset.py
 
 #### User Input Required - test25
 
@@ -1429,7 +1420,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
 - **Initiate the Test:**
 
-  - Run the Python file: **`tvSettings_test25_GpostOffset.py`**
+  - Run the Python file: **`tvSettings_test25_ColorTempGpostOffset.py`**
   - The test initializes the TV settings module, loads test streams, and begins playback.
 
 - **Set Operation Verification:**
@@ -1462,7 +1453,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
   Upon completing all verifications for both Set and Save operations across streams, the test concludes, logging each successful or unsuccessful setting application based on user feedback.
 
-### tvSettings_test26_BpostOffset.py
+### tvSettings_test26_ColorTempBpostOffset.py
 
 #### User Input Required - test26
 
@@ -1487,7 +1478,7 @@ The test initializes the TV settings module, applies and saves multiple Color Te
 
 - **Initiate the Test:**
 
-  - Run the Python file: **`tvSettings_test26_BpostOffset.py`**
+  - Run the Python file: **`tvSettings_test26_ColorTempBpostOffset.py`**
   - The test initializes the TV settings module, loads test streams, and begins playback.
 
 - **Set Operation Verification:**
@@ -3024,3 +3015,72 @@ The test initializes the TV settings module, applies multiple gamma configuratio
 4. **Test Conclusion:**
 
    - Upon completing all verifications for each gamma configuration across streams, the test concludes, logging each success or failure based on user feedback.
+
+### tvSettings_test56_SaveDvTmaxValue.py
+
+## User Input Required - test56
+
+**Yes**: This test requires manual verification to confirm whether the Dolby Vision TMAX (TMAX) values have been applied correctly for various picture modes and video formats. The user must respond to prompts indicating whether the TMAX settings were correctly applied.
+
+## Acceptance Criteria - test56
+
+The system should save the correct Dolby Vision TMAX values for all combinations of picture modes and video formats, and the user should be able to confirm the settings through manual verification.
+
+## Expected Results - test56
+
+The script initializes the TV settings, saves TMAX values for different formats and modes, plays the streams, and prompts the user to verify whether the settings were applied correctly.
+
+### Success Criteria
+
+- TMAX values are saved and applied correctly for each combination of picture mode and video format.
+- User confirmation matches the expected TMAX levels.
+
+## Test Steps - test56
+
+1. **Initiate the Test:**
+
+   - Run the Python script: **`tvSettings_test56_SaveDvTmaxValue.py`**
+
+2. **Save TMAX Values:**
+
+   - The script initializes the TV settings module and saves TMAX values for all combinations of picture modes and video formats.
+   - TMAX values are distributed based on the number of video formats using a linear scaling approach.
+
+3. **Stream Playback:**
+
+   - The script retrieves the list of video formats and corresponding stream URLs.
+   - It downloads the individual streams and plays them.
+
+4. **TMAX Verification:**
+
+   - For each video format and picture mode combination:
+     - The script selects the LDIM state and picture mode based on modulus logic.
+     - The script sets the TMAX value and logs the operation.
+     - User is prompted with: **"Is TMAX value {tmaxValue} applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"**
+     - Users respond with **Y** (Yes) or **N** (No) based on the display.
+
+5. **Logging Results:**
+
+   - The script logs the results of each verification step based on user input for TMAX settings.
+
+6. **Cleanup:**
+
+   - After all verifications, the script stops the stream playback and cleans up the downloaded assets.
+
+7. **Set Default TMAX Value:**
+
+   - After testing, the script sets all TMAX values back to a default value of **5000**.
+
+8. **Test Conclusion:**
+
+   - Once all settings are verified and defaults restored, the script logs the final results based on user responses.
+
+### tvSettings_L3_Runall.py
+
+This python file runs all the tests
+
+```bash
+python tvSettings_L3_Runall.py --config </PATH>/ut/host/tests/configs/example_rack_config.yml --deviceConfig </PATH>/ut/host/tests/configs/deviceConfig.yml
+```
+
+Note: If a test is not required on the platform, it can be added to the skipTests list.

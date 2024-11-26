@@ -3774,7 +3774,7 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
-  
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**

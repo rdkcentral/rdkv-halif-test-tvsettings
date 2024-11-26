@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SaveBacklightValues test.
 
@@ -39,7 +40,8 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
             None.
         """
         self.testName = "test42_SaveBacklightValues"
-        super().__init__(self.testName, '42')
+        self.qcID = '42'
+        super().__init__(self.testName, self.qcID, log)
         self.backlight_values = []
 
     def testVerifyBacklightValue(self, pictureMode, videoFormat, backlight, manual=False):
@@ -111,7 +113,6 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
         Returns:
             bool: Status of the backlight value save operations.
         """
-        self.log.testStart(self.testName, '42')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -128,7 +129,7 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
@@ -137,9 +138,11 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
             time.sleep(3)
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
                 # Get the backlight value based on the saved indices
                 backlightValue = self.backlight_values[videoFormatIndex]
+
+                self.testtvSettings.setPictureMode(pictureMode)
 
                 self.log.stepStart(f'Setting Backlight Value: {backlightValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
@@ -164,5 +167,7 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test42_SaveBacklightValues()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test42_SaveBacklightValues(summeryLog)
     test.run(False)

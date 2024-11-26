@@ -27,13 +27,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
-class tvSettings_test37_EnableLDIMPixelCompensation(tvSettingsHelperClass):
+class tvSettings_test37_EnableLDIMPixel(tvSettingsHelperClass):
 
     # Two predefined values for the LDIM Pixel Compensation parameter: 0 and 1
     ldimPixelCompensationValues = [0, 1, 0]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the EnableLDIMPixelCompensation test.
 
@@ -41,7 +42,8 @@ class tvSettings_test37_EnableLDIMPixelCompensation(tvSettingsHelperClass):
             None.
         """
         self.testName = "test37_EnableLDIMPixelCompensation"
-        super().__init__(self.testName, '37')
+        self.qcID = '37'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyLDIMPixelCompensation(self, ldimValue, manual=False):
         """
@@ -69,8 +71,6 @@ class tvSettings_test37_EnableLDIMPixelCompensation(tvSettingsHelperClass):
         Returns:
             bool: Status of the last LDIM Pixel Compensation verification.
         """
-        self.log.testStart(self.testName, '37')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -100,5 +100,7 @@ class tvSettings_test37_EnableLDIMPixelCompensation(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test37_EnableLDIMPixelCompensation()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test37_EnableLDIMPixel(summeryLog)
     test.run(False)
