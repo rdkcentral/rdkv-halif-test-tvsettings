@@ -3395,11 +3395,11 @@ void test_l2_tvSettings_SetAndGetRGBPattern(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for(int32_t i = 0; i <= 256; i += 64)
+    for(int32_t i = 0; i < 256; i += 64)
     {
-        for ( int32_t j = 0; j <= 256; j += 64 )
+        for ( int32_t j = 0; j < 256; j += 64 )
         {
-            for( int32_t k= 0; k <= 256; k += 64 )
+            for( int32_t k= 0; k < 256; k += 64 )
             {
                 r_set = i;
                 g_set = j;
@@ -3471,7 +3471,7 @@ void test_l2_tvSettings_SetAndGetGrayPattern(void)
     {
         UT_LOG_ERROR("SetGammaPatternMode failed with status: %d", status);
     }
-    for( int32_t i = 0; i <= 256 ; i += 64 )
+    for( int32_t i = 0; i < 256 ; i += 64 )
     {
         YUVValue = i;
         UT_LOG_DEBUG("Invoking SetGrayPattern(%d)", YUVValue);
