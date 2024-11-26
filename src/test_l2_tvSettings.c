@@ -472,7 +472,7 @@ void test_l2_tvSettings_VerifyNoVideoSource(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    int32_t currentSource = 0;
+    tvVideoSrcType_t currentSource = 0;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
