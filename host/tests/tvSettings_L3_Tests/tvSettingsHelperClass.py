@@ -36,11 +36,6 @@ from Classes.tvSettings import tvSettingsClass
 
 class tvSettingsHelperClass(utHelperClass):
 
-    testName  = ""
-    testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
-    moduleName = "tvSettings"
-    rackDevice = "dut"
-
     def __init__(self, testName:str, qcId:str, log:logModule=None ):
         """
         Initializes the test class with test name, setup configuration, and sessions for the device.
@@ -49,6 +44,11 @@ class tvSettingsHelperClass(utHelperClass):
             qcId (str): QC ID of the test.
             log (class, optional): Parent log class. Defaults to None.
         """
+        self.testName  = ""
+        self.testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
+        self.moduleName = "tvSettings"
+        self.rackDevice = "dut"
+
         super().__init__(testName, qcId, log)
 
         # Load test setup configuration
@@ -58,18 +58,21 @@ class tvSettingsHelperClass(utHelperClass):
         self.player_session = self.dut.getConsoleSession("ssh_player")
         self.hal_session = self.dut.getConsoleSession("ssh_hal_test")
 
-        player = self.cpe.get("test").get("player")
+        deviceTestSetup = self.cpe.get("test")
+        socVendor = self.cpe.get("soc_vendor")
 
         # Create player and secondary player Class
-        self.testPlayer = utPlayer(self.player_session, player)
+        self.testPlayer = utPlayer(self.player_session, socVendor)
 
         # Create user response Class
         self.testUserResponse = utUserResponse()
 
         # Get path to device profile file
-        self.deviceProfile = os.path.join(dir_path, self.cpe.get("test").get("profile"))
+        self.moduleConfigProfileFile = os.path.join(dir_path, deviceTestSetup.get("profile"))
 
-        self.deviceDownloadPath = self.cpe.get("target_directory")
+        self.targetWorkspace = self.cpe.get("target_directory")
+        self.targetWorkspace = os.path.join(self.targetWorkspace, self.moduleName)
+        self.streamDownloadURL = deviceTestSetup.get("streams_download_url")
 
     def testDownloadAllAssets(self):
         """
@@ -82,14 +85,16 @@ class tvSettingsHelperClass(utHelperClass):
 
         # List of streams with path
         self.testStreams = []
+        url = []
 
-        url = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
+        streamPaths = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
         # Download test streams to device
-        if url is not None:
-            self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
-            for streampath in url:
-                self.testStreams.append(os.path.join(self.deviceDownloadPath, os.path.basename(streampath)))
+        if streamPaths and self.streamDownloadURL:
+            for streamPath in streamPaths:
+                url.append(os.path.join(self.streamDownloadURL, streamPath))
+                self.testStreams.append(os.path.join(self.targetWorkspace, os.path.basename(streamPath)))
+            self.downloadToDevice(url, self.targetWorkspace, self.rackDevice)
 
     def testDownloadAssetsByUrl(self, stream_url):
         """
@@ -101,11 +106,13 @@ class tvSettingsHelperClass(utHelperClass):
 
         # Ensure the testStreams list is cleared
         self.testStreams = []
+        url = []
 
         # Download the specified stream to the device
         if stream_url is not None:
-            self.downloadToDevice([stream_url], self.deviceDownloadPath, self.rackDevice)
-            self.testStreams.append(os.path.join(self.deviceDownloadPath, os.path.basename(stream_url)))
+            url.append(os.path.join(self.streamDownloadURL, stream_url))
+            self.downloadToDevice(url, self.targetWorkspace, self.rackDevice)
+            self.testStreams.append(os.path.join(self.targetWorkspace, os.path.basename(stream_url)))
 
     def testCleanAssetsByUrl(self, stream_path):
         """
@@ -125,37 +132,16 @@ class tvSettingsHelperClass(utHelperClass):
         """
         self.deleteFromDevice(self.testStreams)
 
-    def testRunPrerequisites(self):
-        """
-        Executes prerequisite commands listed in the test setup configuration file on the DUT.
-        Args:
-            None
-        """
-
-        # Run commands as part of test prerequisites
-        test = self.testSetup.get("assets").get("device").get(self.testName)
-        cmds = test.get("execute")
-        if cmds is not None:
-            for cmd in cmds:
-                self.writeCommands(cmd)
 
     def testPrepareFunction(self):
         """
         Prepares the environment and assets required for the test.
         This function:
         - Downloads the required assets (if applicable).
-        - Runs the prerequisite commands.
         - Creates tvSettingsClass.
         Returns:
             bool
         """
-
-        test = self.testSetup.get("assets").get("device").get(self.testName)
-
-        # Download test artifacts to device
-        url = test.get("artifacts")
-        if url is not None:
-            self.downloadToDevice(url, self.deviceDownloadPath, self.rackDevice)
 
         # Get stream info from the test setup configuration
         streamInfo = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
@@ -165,11 +151,9 @@ class tvSettingsHelperClass(utHelperClass):
             # Download the assets listed in the test setup configuration file if len is 1
             self.testDownloadAllAssets()
 
-        # Run Prerequisites listed in the test setup configuration file
-        self.testRunPrerequisites()
 
         # Create the tvSettings class
-        self.testtvSettings = tvSettingsClass(self.deviceProfile, self.hal_session )
+        self.testtvSettings = tvSettingsClass(self.moduleConfigProfileFile , self.hal_session, self.targetWorkspace )
 
         return True
 

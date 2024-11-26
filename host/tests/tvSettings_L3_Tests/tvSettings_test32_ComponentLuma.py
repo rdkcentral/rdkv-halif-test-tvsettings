@@ -13,13 +13,15 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """Initializes the ComponentLuma test."""
         self.testName = "test32_ComponentLuma"
-        super().__init__(self.testName, '32')
+        self.qcID = '32'
+        super().__init__(self.testName, self.qcID, log)
         self.lumaValues = []
 
     def testVerifyComponentLuma(self, lumaValue, manual=False):
@@ -60,7 +62,7 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
 
             self.testDownloadAssetsByUrl(stream)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(stream))
 
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
@@ -96,7 +98,7 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
         for stream in streams:
             # Download and play the stream
             self.testDownloadAssetsByUrl(stream)
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(stream))
 
             self.testPlayer.play(streamFullPath)
             time.sleep(3)  # Allow some time for the stream to start playing
@@ -118,8 +120,6 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
             bool: Status of the last verification.
         """
 
-        self.log.testStart(self.testName, '32')
-
         self.testtvSettings.initialise()  # Initialize the tvSettings module
 
         self.testtvSettings.setCMSState(1)  # Set the CMS state
@@ -140,7 +140,7 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
 
             self.testDownloadAssetsByUrl(stream)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(stream))
 
             # Play the stream before verification
             self.testPlayer.play(streamFullPath)
@@ -176,5 +176,7 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test32_ComponentLuma()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test32_ComponentLuma(summeryLog)
     test.run(False)

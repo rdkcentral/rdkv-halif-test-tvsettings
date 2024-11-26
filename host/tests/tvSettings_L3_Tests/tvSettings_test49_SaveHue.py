@@ -28,45 +28,47 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
-class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
+class tvSettings_test49_SaveHue(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
-        Initializes the SaveSaturation test.
+        Initializes the SaveHue test.
 
         Args:
             None.
         """
-        self.testName = "test48_SaveSaturation"
-        super().__init__(self.testName, '48')
-        self.saturation_values = []
+        self.testName = "test49_SaveHue"
+        self.qcID = '49'
+        super().__init__(self.testName, self.qcID, log)
+        self.hue_values = []  # Initialize a list to store hue values
 
-    def testVerifySaturationValue(self, pictureMode, videoFormat, saturation, manual=False):
+    def testVerifyHueValue(self, pictureMode, videoFormat, hue, manual=False):
         """
-        Verifies whether the Saturation value is set correctly.
+        Verifies whether the Hue value is set correctly.
 
         Args:
             pictureMode (str): Picture Mode.
             videoFormat (str): Video Format.
-            saturation (int): Saturation value.
+            hue (int): Hue value.
             manual (bool, optional): Manual verification (True: manual, False: other verification methods).
                                      Defaults to other verification methods.
 
         Returns:
-            bool: Returns the status of saturation value.
+            bool: Returns the status of hue value.
         """
         if manual:
             return self.testUserResponse.getUserYN(
-                f"Is saturation value {saturation} applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
+                f"Is hue value {hue} applied for Picture Mode: {pictureMode} and Video Format: {videoFormat}? (Y/N):"
             )
         else:
             # TODO: Add automation verification methods
             return False
 
-    def saveSaturationValuesForAllFormats(self):
+    def saveHueValuesForAllFormats(self):
         """
-        Saves saturation values for all combinations of picture mode index and video format.
+        Saves hue values for all combinations of picture mode index and video format.
 
         Returns:
             None.
@@ -74,26 +76,26 @@ class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
         pictureModeIndices = self.testtvSettings.getPictureModeIndex()
         videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
 
-        # Split the saturation values based on the number of video formats
+        # Split the hue values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
-        self.saturation_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
+        self.hue_values = [int(i * (100 / (num_video_formats - 1))) for i in range(num_video_formats)]
 
-        # Save the appropriate saturation values based on the video format
+        # Save the appropriate hue values based on the video format
         for pictureModeIndex in pictureModeIndices:
             for videoFormatIndex, videoFormat in enumerate(videoFormatInfo):
-                saturationValue = self.saturation_values[videoFormatIndex]
+                hueValue = self.hue_values[videoFormatIndex]
 
-                # Log and save the saturation values
-                self.testtvSettings.saveSaturationValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, saturationValue)
+                # Log and save the hue values
+                self.testtvSettings.saveHueValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, hueValue)
                 time.sleep(1)
 
 
-    def setAllSaturationToDefault(self, defaultValue=50):
+    def setAllHueToDefault(self, defaultValue=50):
         """
-        Sets the saturation value to a default value for all combinations of picture modes and video formats.
+        Sets the hue value to a default value for all combinations of picture modes and video formats.
 
         Args:
-            defaultValue (int, optional): The default saturation value to set. Defaults to 50.
+            defaultValue (int, optional): The default hue value to set. Defaults to 50.
 
         Returns:
             None.
@@ -103,26 +105,25 @@ class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:
-                # Log and save the default saturation value
-                self.testtvSettings.saveSaturationValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
+                # Log and save the default hue value
+                self.testtvSettings.saveHueValues("VIDEO_SOURCE_IP", pictureModeIndex, videoFormat, defaultValue)
                 time.sleep(1)
 
 
     def testFunction(self):
-        """This function tests saving saturation values with all combinations of picture mode and video format.
+        """This function tests saving Hue values with all combinations of picture mode and video format.
 
         It also adds the option to restart the device to verify changes.
 
         Returns:
-            bool: Status of the saturation save operations.
+            bool: Status of the hue save operations.
         """
-        self.log.testStart(self.testName, '48')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Save saturation values for all formats
-        self.saveSaturationValuesForAllFormats()
+        # Save hue values for all formats
+        self.saveHueValuesForAllFormats()
 
         # Get the list of streams from the test setup
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
@@ -133,24 +134,26 @@ class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
             time.sleep(3)  # Allow some time for the stream to start
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
-                # Get the saturation value based on the saved indices
-                saturationValue = self.saturation_values[videoFormatIndex]
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
+                # Get the hue value based on the saved indices
+                hueValue = self.hue_values[videoFormatIndex]
 
-                self.log.stepStart(f'Setting Saturation: {saturationValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                self.testtvSettings.setPictureMode(pictureMode)
+
+                self.log.stepStart(f'Setting Hue: {hueValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
                 # Call the verification function (manual=True allows for manual verification)
-                result = self.testVerifySaturationValue(pictureMode, videoFormat, saturationValue, manual=True)
+                result = self.testVerifyHueValue(pictureMode, videoFormat, hueValue, manual=True)
 
                 # Log the result for each step
-                self.log.stepResult(result, f'Verification for Saturation: {saturationValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
+                self.log.stepResult(result, f'Verification for Hue: {hueValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
             # Stop the stream playback
             self.testPlayer.stop()
@@ -158,14 +161,16 @@ class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
             # Clean the assets downloaded to the device
             self.testCleanAssetsByUrl(streamFullPath)
 
-        # Set all saturation values to the default value of 50
-        self.setAllSaturationToDefault()
+        # Set all hue values to the default value of 50
+        self.setAllHueToDefault()
 
         # Terminate the tvSettings Module
         self.testtvSettings.terminate()
 
-        return result
+        return result  # Return the last result of the verification
 
 if __name__ == '__main__':
-    test = tvSettings_test48_SaveSaturation()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test49_SaveHue(summeryLog)
     test.run(False)

@@ -29,6 +29,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
     """
@@ -42,7 +43,7 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
         testName (str): Name of the test.
     """
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test04 VideoSource test.
 
@@ -50,7 +51,8 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
             None.
         """
         self.testName = "test04_CheckVideoSource"
-        super().__init__(self.testName, '4')  # Set test number to 4
+        self.qcID = '4'
+        super().__init__(self.testName, self.qcID, log)  # Set test number to 4
 
     def testFunction(self):
         """
@@ -64,8 +66,6 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
         Returns:
             bool: Always returns True upon successful execution of the test.
         """
-        self.log.testStart(self.testName, '4')  # Log start of the test with test number
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -95,5 +95,7 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
         return True
 
 if __name__ == '__main__':
-    test = tvSettings_test04_CheckVideoSource()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test04_CheckVideoSource(summeryLog)
     test.run(False)

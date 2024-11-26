@@ -27,13 +27,14 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
-class tvSettings_test29_DVTmaxValue(tvSettingsHelperClass):
+class tvSettings_test29_DvTmax(tvSettingsHelperClass):
 
     # Predefined DVT max values for testing
     dvtMaxValues = [0, 2500, 5000, 7500, 10000, 5000]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the DVTmaxValue test.
 
@@ -41,7 +42,8 @@ class tvSettings_test29_DVTmaxValue(tvSettingsHelperClass):
             None.
         """
         self.testName = "test29_DVTmaxValue"
-        super().__init__(self.testName, '29')
+        self.qcID = '29'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyDVTmaxValue(self, dvtMaxValue, manual=False):
         """
@@ -67,8 +69,6 @@ class tvSettings_test29_DVTmaxValue(tvSettingsHelperClass):
         Returns:
             bool: Status of the last verification.
         """
-
-        self.log.testStart(self.testName, '29')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -98,5 +98,7 @@ class tvSettings_test29_DVTmaxValue(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test29_DVTmaxValue()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test29_DvTmax(summeryLog)
     test.run(False)

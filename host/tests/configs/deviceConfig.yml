@@ -26,14 +26,13 @@ deviceConfig:
     cpe1:
         platform:   "Panel"
         model:      "UK"
+        soc_vendor: "amlogic"
         target_directory: "/tmp/"
+        prompt: "" # Prompt string on console
         test:
             #TODO: Use the single profile file which contains all details (ds, hdmi, etc)
             profile: "../../../profiles/sink/Sink_4K_TvSettings.yaml"
-            player:
-                tool: "gstreamer"
-                prerequisites:
-                    - "export EXP=test # pre commands required to play the stream"
+            streams_download_url: "<URL_Path>" #URL path from which the streams are downloaded to the device
     cpe2:
         platform: "test"
         model: "test"

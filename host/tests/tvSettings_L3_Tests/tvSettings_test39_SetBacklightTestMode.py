@@ -27,10 +27,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test39_SetBacklightTestMode(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SetBacklightTestMode test.
 
@@ -38,7 +39,8 @@ class tvSettings_test39_SetBacklightTestMode(tvSettingsHelperClass):
             None.
         """
         self.testName = "test39_SetBacklightTestMode"
-        super().__init__(self.testName, '39')
+        self.qcID = '39'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyBacklightMode(self, backlightMode, manual=False):
         """
@@ -66,8 +68,6 @@ class tvSettings_test39_SetBacklightTestMode(tvSettingsHelperClass):
         Returns:
             bool: Status of the last backlight mode verification.
         """
-        self.log.testStart(self.testName, '39')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -97,5 +97,7 @@ class tvSettings_test39_SetBacklightTestMode(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test39_SetBacklightTestMode()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test39_SetBacklightTestMode(summeryLog)
     test.run(False)

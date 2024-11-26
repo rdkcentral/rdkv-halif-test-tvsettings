@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SavePictureMode test.
 
@@ -39,7 +40,8 @@ class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
             None.
         """
         self.testName = "test53_SavePictureMode"
-        super().__init__(self.testName, '53')
+        self.qcID = '53'
+        super().__init__(self.testName, self.qcID, log)
         self.picture_mode_indices = []
 
     def testVerifyPictureMode(self, pictureMode, videoFormat, manual=False):
@@ -109,7 +111,6 @@ class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
         Returns:
             bool: Status of the picture mode save operations.
         """
-        self.log.testStart(self.testName, '53')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -129,7 +130,7 @@ class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
@@ -160,5 +161,7 @@ class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test53_SavePictureMode()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test53_SavePictureMode(summeryLog)
     test.run(False)

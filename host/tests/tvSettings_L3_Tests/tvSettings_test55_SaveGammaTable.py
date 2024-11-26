@@ -31,19 +31,21 @@ sys.path.append(os.path.join(dir_path, "../"))
 
 # Import necessary modules from custom and external libraries
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
     """
     A class that implements test 55 for saving gamma table settings and performing stream playback.
     """
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the test55_SaveGammaTable class.
         Opens the necessary sessions and reads the configuration file.
         """
         self.testName = "test55_SaveGammaTable"
-        super().__init__(self.testName, '55')
+        self.qcID = '55'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyGammaTable(self, description, color_temp, manual=False):
         """
@@ -129,9 +131,6 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         Main function that tests saving GammaTable values with all combinations of color temperatures.
         """
 
-        # Start the test log
-        self.log.testStart(self.testName, '55')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -145,7 +144,7 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         # Loop through streams
         for stream in streams:
 
-            streamPath =  os.path.join(self.deviceDownloadPath, os.path.basename(stream))
+            streamPath =  os.path.join(self.targetWorkspace, os.path.basename(stream))
 
             # Play the stream
             self.testPlayer.play(streamPath)
@@ -181,5 +180,7 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         return True
 
 if __name__ == '__main__':
-    test = tvSettings_test55_SaveGammaTable()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test55_SaveGammaTable(summeryLog)
     test.run(False)

@@ -28,12 +28,13 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
 
     dynamicContrastLevels = [0, 1, 0]
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the EnableDynamicContrast test.
 
@@ -41,7 +42,8 @@ class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
             None.
         """
         self.testName = "test40_EnableDynamicContrast"
-        super().__init__(self.testName, '40')
+        self.qcID = '40'
+        super().__init__(self.testName, self.qcID, log)
 
     def testVerifyDynamicContrast(self, dynamicContrast, manual=False):
         """
@@ -69,9 +71,6 @@ class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
         Returns:
             bool
         """
-
-        self.log.testStart(self.testName, '40')
-
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
@@ -98,5 +97,7 @@ class tvSettings_test40_EnableDynamicContrast(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test40_EnableDynamicContrast()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test40_EnableDynamicContrast(summeryLog)
     test.run(False)

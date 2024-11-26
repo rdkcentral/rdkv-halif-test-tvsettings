@@ -28,10 +28,11 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(dir_path, "../"))
 
 from tvSettings_L3_Tests.tvSettingsHelperClass import tvSettingsHelperClass
+from raft.framework.core.logModule import logModule
 
 class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
 
-    def __init__(self):
+    def __init__(self, log:logModule=None):
         """
         Initializes the SaveContrast test.
 
@@ -39,7 +40,8 @@ class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
             None.
         """
         self.testName = "test46_SaveContrast"
-        super().__init__(self.testName, '46')
+        self.qcID = '46'
+        super().__init__(self.testName, self.qcID, log)
         self.contrast_values = []
 
     def testVerifyContrastValue(self, pictureMode, videoFormat, contrast, manual=False):
@@ -113,7 +115,6 @@ class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
         Returns:
             bool: Status of the contrast save operations.
         """
-        self.log.testStart(self.testName, '46')
 
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
@@ -130,16 +131,18 @@ class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
 
-            streamFullPath = os.path.join(self.deviceDownloadPath, os.path.basename(streamUrl))
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(streamUrl))
 
             # Play the stream
             self.testPlayer.play(streamFullPath)
             time.sleep(3)
 
             # Loop through available picture modes
-            for pictureMode in self.testtvSettings.getPictureModeIndex():
+            for pictureMode in self.testtvSettings.getPictureModeInfo():
                 # Get the contrast value based on the saved indices
                 contrastValue = self.contrast_values[videoFormatIndex]
+
+                self.testtvSettings.setPictureMode(pictureMode)
 
                 self.log.stepStart(f'Setting Contrast: {contrastValue}, Picture Mode: {pictureMode}, Video Format: {videoFormat}, Stream: {streamUrl}')
 
@@ -164,5 +167,7 @@ class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
         return result
 
 if __name__ == '__main__':
-    test = tvSettings_test46_SaveContrast()
+    summerLogName = os.path.splitext(os.path.basename(__file__))[0] + "_summery"
+    summeryLog = logModule(summerLogName, level=logModule.INFO)
+    test = tvSettings_test46_SaveContrast(summeryLog)
     test.run(False)
