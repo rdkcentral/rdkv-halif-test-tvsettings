@@ -1328,8 +1328,8 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    int tvVideoSource = 0;
-    int tvVideoSourceRetry = 0;
+    tvVideoSrcType_t tvVideoSource = 0;
+    tvVideoSrcType_t tvVideoSourceRetry = 0;
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
@@ -1379,7 +1379,7 @@ void test_l1_tvSettings_negative_GetCurrentVideoSource (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
-    int tvVideoSource = 0;
+    tvVideoSrcType_t tvVideoSource = 0;
 
     if (extendedEnumsSupported == true)
     {
