@@ -1534,7 +1534,6 @@ void test_l2_tvSettings_SetAndGetDynamicContrast(void)
     if (status != tvERROR_NONE)
     {
         UT_LOG_ERROR("SetDynamicContrast(enabled) failed with status %d", status);
-        UT_LOG_ERROR("Invoking TvTerm()");
     }
 
     UT_LOG_DEBUG("Invoking GetDynamicContrast");
@@ -3631,6 +3630,7 @@ void test_l2_tvSettings_EnableAndGetDynamicContrast(void)
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
+    ret = TvTerm();
     UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
