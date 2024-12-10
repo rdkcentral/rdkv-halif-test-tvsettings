@@ -3296,15 +3296,22 @@ void test_l2_tvSettings_GetTVGammaTarget(void)
 
     tvError_t status = tvERROR_NONE;
     double x = 1.1, y = 1.1; // Assigning Max range as default.
+    uint32_t colorTempCount = 0;
     tvColorTemp_t colorTemp = tvColorTemp_MAX;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for( colorTemp=tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++ )
+    // Get the count of color temperature values from the configuration profile
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < colorTempCount; i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+        colorTemp = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
+
         UT_LOG_DEBUG("Invoking GetTVGammaTarget() with colorTemp = %d", colorTemp);
         status = GetTVGammaTarget(colorTemp, &x, &y);
         UT_LOG_DEBUG(" GetTVGammaTarget Return status: %d", status);
