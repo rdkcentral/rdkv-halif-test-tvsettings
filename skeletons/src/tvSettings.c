@@ -935,3 +935,30 @@ tvError_t GetNumberOfDimmingZones(unsigned int* number_of_dimming_zones)
   (void)number_of_dimming_zones;
   return (tvError_t)0;  
 }
+
+tvError_t SetCustom2PointWhiteBalance(tvWBColor_t color, tvWBControl_t control, int value)
+{
+  /*TODO: Implement Me!*/
+  return (tvError_t)0;
+}
+
+tvError_t GetCustom2PointWhiteBalance(tvWBColor_t color, tvWBControl_t control, int *value)
+{
+   /*TODO: Implement Me!*/
+   (void)color;
+   (void)control;
+   (void)value;
+   return (tvError_t)0;
+}
+
+tvError_t SaveCustom2PointWhiteBalance(tvVideoSrcType_t videoSrcType, int pq_mode,tvVideoFormatType_t videoFormatType, tvWBColor_t color, tvWBControl_t control, int value)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)color;
+  (void)control;
+  (void)value;
+  return (tvError_t)0;
+}
