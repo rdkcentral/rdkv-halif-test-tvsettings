@@ -319,6 +319,7 @@ const static ut_control_keyStringMapping_t  tvError_mapTable [] =
   { "tvERROR_NONE",                      (int32_t)tvERROR_NONE                     },
   { "tvERROR_GENERAL",                   (int32_t)tvERROR_GENERAL                  },
   { "tvERROR_OPERATION_NOT_SUPPORTED",   (int32_t)tvERROR_OPERATION_NOT_SUPPORTED  },
+  { "tvERROR_INVALID_PARAM",             (int32_t)tvERROR_INVALID_PARAM            },
   { "tvERROR_INVALID_STATE",             (int32_t)tvERROR_INVALID_STATE            },
   {  NULL, -1 }
 };
