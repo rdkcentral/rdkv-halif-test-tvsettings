@@ -472,7 +472,7 @@ void test_l2_tvSettings_VerifyNoVideoSource(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    int32_t currentSource = 0;
+    tvVideoSrcType_t currentSource = 0;
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
@@ -1534,7 +1534,6 @@ void test_l2_tvSettings_SetAndGetDynamicContrast(void)
     if (status != tvERROR_NONE)
     {
         UT_LOG_ERROR("SetDynamicContrast(enabled) failed with status %d", status);
-        UT_LOG_ERROR("Invoking TvTerm()");
     }
 
     UT_LOG_DEBUG("Invoking GetDynamicContrast");
@@ -1982,9 +1981,9 @@ void test_l2_tvSettings_SetAndGetColorTempRgain(void)
     tvError_t status = tvERROR_NONE;
     int32_t rgain = 0;
     int32_t setRgain = 0;
+    int32_t saveRgain = 0;
     tvColorTemp_t colorTemp = 0;
     tvColorTempSourceOffset_t sourceId = MAX_OFFSET;
-    int32_t saveOnly = 0;
     int32_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
 
@@ -1997,44 +1996,79 @@ void test_l2_tvSettings_SetAndGetColorTempRgain(void)
 
     for ( int32_t i = 0; i < count; i++ )
     {
-
         snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        colorTemp = UT_KVP_PROFILE_GET_UINT32(keyValue);
 
         for ( sourceId = HDMI_OFFSET; sourceId < MAX_OFFSET; sourceId++ )
         {
             for ( setRgain = 0; setRgain <= 2047; setRgain += 500 )
             {
-                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
+                UT_LOG_DEBUG("Invoking SetColorTemp_Rgain_onSource with colorTemp: %d, rgain: %d, sourceId: %d, saveOnly: 0", colorTemp, setRgain, sourceId);
+                status = SetColorTemp_Rgain_onSource(colorTemp, setRgain, sourceId, 0); // saveOnly = 0
+                UT_LOG_DEBUG("SetColorTemp_Rgain_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
                 {
-                    UT_LOG_DEBUG("Invoking SetColorTemp_Rgain_onSource with colorTemp: %d, rgain: %d, sourceId: %d, saveOnly: %d", colorTemp, setRgain, sourceId, saveOnly);
-                    status = SetColorTemp_Rgain_onSource(colorTemp, setRgain, sourceId, saveOnly);
-                    UT_LOG_DEBUG("SetColorTemp_Rgain_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed with status: %d", status);
-                    }
-
-                    UT_LOG_DEBUG("Invoking GetColorTemp_Rgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                    status = GetColorTemp_Rgain_onSource(colorTemp, &rgain, sourceId);
-                    UT_LOG_DEBUG("GetColorTemp_Rgain_onSource status: %d, rgain: %d", status, rgain);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("GetColorTemp_Rgain_onSource failed with status: %d", status);
-                    }
-
-                    UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
-                    UT_ASSERT_EQUAL(rgain, setRgain);
-                    if(rgain != setRgain)
-                    {
-                        UT_LOG_ERROR("Mismatch in set and retrieved rgain values");
-                    }
+                    UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed with status: %d", status);
                 }
+
+                UT_LOG_DEBUG("Invoking GetColorTemp_Rgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                status = GetColorTemp_Rgain_onSource(colorTemp, &rgain, sourceId);
+                UT_LOG_DEBUG("GetColorTemp_Rgain_onSource status: %d, rgain: %d", status, rgain);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetColorTemp_Rgain_onSource failed with status: %d", status);
+                }
+
+                UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
+                UT_ASSERT_EQUAL(rgain, setRgain); // Compare retrieved value with set value
+                if (rgain != setRgain)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved rgain values");
+                }
+            }
+
+            setRgain = 1024;
+            UT_LOG_DEBUG("Invoking SetColorTemp_Rgain_onSource with colorTemp: %d, rgain: %d, sourceId: %d, saveOnly: 0", colorTemp, setRgain, sourceId);
+            status = SetColorTemp_Rgain_onSource(colorTemp, setRgain, sourceId, 0); // saveOnly = 0
+            UT_LOG_DEBUG("SetColorTemp_Rgain_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed with status: %d", status);
+            }
+
+            saveRgain = 2047;
+            UT_LOG_DEBUG("Invoking SetColorTemp_Rgain_onSource with colorTemp: %d, rgain: %d, sourceId: %d, saveOnly: 1", colorTemp, saveRgain, sourceId);
+            status = SetColorTemp_Rgain_onSource(colorTemp, saveRgain, sourceId, 1); // saveOnly = 1
+            UT_LOG_DEBUG("SetColorTemp_Rgain_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed with status: %d", status);
+            }
+
+            // Retrieve the rgain value again to ensure the previously set value (1024) is not impacted
+            UT_LOG_DEBUG("Invoking GetColorTemp_Rgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+            status = GetColorTemp_Rgain_onSource(colorTemp, &rgain, sourceId);
+            UT_LOG_DEBUG("GetColorTemp_Rgain_onSource status: %d, rgain: %d", status, rgain);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetColorTemp_Rgain_onSource failed with status: %d", status);
+            }
+
+            UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
+            // Ensure the saved value with 2047 doesn't impact the set value 1024
+            UT_ASSERT_EQUAL(rgain, setRgain);
+            if (rgain != setRgain)
+            {
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved rgain values [%d]", rgain, setRgain);
             }
         }
     }
+
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -2042,6 +2076,7 @@ void test_l2_tvSettings_SetAndGetColorTempRgain(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
+
 
 /**
 * @brief Test to verify the setting and getting of color temperature ggain in TV settings
@@ -2065,11 +2100,12 @@ void test_l2_tvSettings_SetAndGetColorTempGgain(void)
 
     tvError_t status = tvERROR_NONE;
     int32_t ggain = 0;
-    int32_t set_ggain = 0;
-    int32_t saveOnly = 0;
+    int32_t setGgain = 0;
+    int32_t saveGgain = 0;
+    tvColorTemp_t colorTemp = 0;
+    tvColorTempSourceOffset_t sourceId = MAX_OFFSET;
     int32_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
-    tvColorTemp_t colorTemp = 0;
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
@@ -2078,43 +2114,81 @@ void test_l2_tvSettings_SetAndGetColorTempGgain(void)
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
 
-    for(int32_t i = 0; i < count; i++)
+    for ( int32_t i = 0; i < count; i++ )
     {
         snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue );
 
-        for(tvColorTempSourceOffset_t sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
+        for ( sourceId = HDMI_OFFSET; sourceId < MAX_OFFSET; sourceId++ )
         {
-            for(set_ggain = 0; set_ggain <= 2047; set_ggain += 500)
+            for ( setGgain = 0; setGgain <= 2047; setGgain += 500 )
             {
-                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
+                UT_LOG_DEBUG("Invoking SetColorTemp_Ggain_onSource with colorTemp: %d, ggain: %d, sourceId: %d, saveOnly: 0", colorTemp, setGgain, sourceId);
+                status = SetColorTemp_Ggain_onSource(colorTemp, setGgain, sourceId, 0); // saveOnly = 0
+                UT_LOG_DEBUG("SetColorTemp_Ggain_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if(status != tvERROR_NONE)
                 {
-                    UT_LOG_DEBUG("Invoking SetColorTemp_Ggain_onSource with colorTemp: %d, ggain: %d, sourceId: %d, saveOnly: %d", colorTemp, set_ggain, sourceId, saveOnly);
-                    status = SetColorTemp_Ggain_onSource(colorTemp, set_ggain, sourceId, saveOnly);
-                    UT_LOG_DEBUG("SetColorTemp_Ggain_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed with status: %d", status);
-                    }
-
-                    UT_LOG_DEBUG("Invoking GetColorTemp_Ggain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                    status = GetColorTemp_Ggain_onSource(colorTemp, &ggain, sourceId);
-                    UT_LOG_DEBUG("ggain: %d, status: %d", ggain, status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("GetColorTemp_Ggain_onSource failed with status: %d", status);
-                    }
-                    UT_ASSERT_EQUAL(ggain, set_ggain);
-                    if(ggain != set_ggain)
-                    {
-                        UT_LOG_ERROR("Mismatch in set and retrieved ggain values");
-                    }
+                    UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed with status: %d", status);
                 }
+
+                UT_LOG_DEBUG("Invoking GetColorTemp_Ggain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                status = GetColorTemp_Ggain_onSource(colorTemp, &ggain, sourceId);
+                UT_LOG_DEBUG("GetColorTemp_Ggain_onSource status: %d, ggain: %d", status, ggain);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if(status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetColorTemp_Ggain_onSource failed with status: %d", status);
+                }
+
+                UT_LOG_DEBUG("Retrieved ggain: %d", ggain);
+                UT_ASSERT_EQUAL(ggain, setGgain);
+                if(ggain != setGgain)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved ggain values");
+                }
+            }
+
+            setGgain = 1024;
+            UT_LOG_DEBUG("Invoking SetColorTemp_Ggain_onSource with colorTemp: %d, ggain: %d, sourceId: %d, saveOnly: 0", colorTemp, setGgain, sourceId);
+            status = SetColorTemp_Ggain_onSource(colorTemp, setGgain, sourceId, 0); // saveOnly = 0
+            UT_LOG_DEBUG("SetColorTemp_Ggain_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed with status: %d", status);
+            }
+
+            saveGgain = 2047;
+            UT_LOG_DEBUG("Invoking SetColorTemp_Ggain_onSource with colorTemp: %d, ggain: %d, sourceId: %d, saveOnly: 1", colorTemp, saveGgain, sourceId);
+            status = SetColorTemp_Ggain_onSource(colorTemp, saveGgain, sourceId, 1); // saveOnly = 1
+            UT_LOG_DEBUG("SetColorTemp_Ggain_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed with status: %d", status);
+            }
+
+            // Retrieve the ggain value again to ensure the previous set value (1024) is not impacted
+            UT_LOG_DEBUG("Invoking GetColorTemp_Ggain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+            status = GetColorTemp_Ggain_onSource(colorTemp, &ggain, sourceId);
+            UT_LOG_DEBUG("GetColorTemp_Ggain_onSource status: %d, ggain: %d", status, ggain);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetColorTemp_Ggain_onSource failed with status: %d", status);
+            }
+
+            UT_LOG_DEBUG("Retrieved ggain: %d", ggain);
+            // Ensure the saved value with 2047 doesn't impact the set value 1024
+            UT_ASSERT_EQUAL(ggain, setGgain);
+            if(ggain != setGgain)
+            {
+                UT_LOG_ERROR("Mismatch in set [%d]and retrieved ggain values [%d]", ggain, setGgain);
             }
         }
     }
+
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -2122,6 +2196,7 @@ void test_l2_tvSettings_SetAndGetColorTempGgain(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
+
 
 /**
 * @brief This test aims to set and get the color temperature background gain in a TV setting
@@ -2144,8 +2219,10 @@ void test_l2_tvSettings_SetAndGetColorTempBgain(void)
 
     tvError_t status = tvERROR_NONE;
     int32_t bgain = 0;
-    int32_t get_bgain = 0;
-    int32_t saveOnly = 0;
+    int32_t setBgain = 0;
+    int32_t saveBgain = 0;
+    tvColorTemp_t colorTemp = 0;
+    tvColorTempSourceOffset_t sourceId = MAX_OFFSET;
     int32_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
 
@@ -2156,45 +2233,81 @@ void test_l2_tvSettings_SetAndGetColorTempBgain(void)
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
 
-    for (int32_t i = 0; i < count; i++)
+    for ( int32_t i = 0; i < count; i++ )
     {
         snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        tvColorTemp_t colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        colorTemp = UT_KVP_PROFILE_GET_UINT32(keyValue);
 
-        for (tvColorTempSourceOffset_t sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
+        for ( sourceId = HDMI_OFFSET; sourceId < MAX_OFFSET; sourceId++ )
         {
-            for ( bgain = 0; bgain <= 2047; bgain +=  500)
+            for ( setBgain = 0; setBgain <= 2047; setBgain += 500 )
             {
-                for ( saveOnly = 0; saveOnly <= 1; saveOnly++ )
+                UT_LOG_DEBUG("Invoking SetColorTemp_Bgain_onSource with colorTemp: %d, bgain: %d, sourceId: %d, saveOnly: 0", colorTemp, setBgain, sourceId);
+                status = SetColorTemp_Bgain_onSource(colorTemp, setBgain, sourceId, 0); // saveOnly = 0
+                UT_LOG_DEBUG("SetColorTemp_Bgain_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if(status != tvERROR_NONE)
                 {
-                    UT_LOG_DEBUG("Invoking SetColorTemp_Bgain_onSource with colorTemp: %d, bgain: %d, sourceId: %d, saveOnly: %d", colorTemp, bgain, sourceId, saveOnly);
-                    status = SetColorTemp_Bgain_onSource(colorTemp, bgain, sourceId, saveOnly);
-                    UT_LOG_DEBUG("SetColorTemp_Bgain_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if (status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed with status: %d", status);
-                    }
-
-                    UT_LOG_DEBUG("Invoking GetColorTemp_Bgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                    status = GetColorTemp_Bgain_onSource(colorTemp, &get_bgain, sourceId);
-                    UT_LOG_DEBUG(" GetColorTemp_Bgain_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if (status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("GetColorTemp_Bgain_onSource failed with status: %d", status);
-                    }
-
-                    UT_LOG_DEBUG("bgain value retrieved: %d", get_bgain);
-                    UT_ASSERT_EQUAL(bgain, get_bgain);
-                    if(bgain != get_bgain)
-                    {
-                        UT_LOG_ERROR("Mismatch in set and retrieved bgain values");
-                    }
+                    UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed with status: %d", status);
                 }
+
+                UT_LOG_DEBUG("Invoking GetColorTemp_Bgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+                status = GetColorTemp_Bgain_onSource(colorTemp, &bgain, sourceId);
+                UT_LOG_DEBUG("GetColorTemp_Bgain_onSource status: %d, bgain: %d", status, bgain);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if(status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetColorTemp_Bgain_onSource failed with status: %d", status);
+                }
+
+                UT_LOG_DEBUG("Retrieved bgain: %d", bgain);
+                UT_ASSERT_EQUAL(bgain, setBgain);
+                if(bgain != setBgain)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved bgain values");
+                }
+            }
+
+            setBgain = 1024;
+            UT_LOG_DEBUG("Invoking SetColorTemp_Bgain_onSource with colorTemp: %d, bgain: %d, sourceId: %d, saveOnly: 0", colorTemp, setBgain, sourceId);
+            status = SetColorTemp_Bgain_onSource(colorTemp, setBgain, sourceId, 0); // saveOnly = 0
+            UT_LOG_DEBUG("SetColorTemp_Bgain_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed with status: %d", status);
+            }
+
+            saveBgain = 2047;
+            UT_LOG_DEBUG("Invoking SetColorTemp_Bgain_onSource with colorTemp: %d, bgain: %d, sourceId: %d, saveOnly: 1", colorTemp, saveBgain, sourceId);
+            status = SetColorTemp_Bgain_onSource(colorTemp, saveBgain, sourceId, 1); // saveOnly = 1
+            UT_LOG_DEBUG("SetColorTemp_Bgain_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed with status: %d", status);
+            }
+
+            // Retrieve the bgain value again to ensure the previous set value (1024) is not impacted
+            UT_LOG_DEBUG("Invoking GetColorTemp_Bgain_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
+            status = GetColorTemp_Bgain_onSource(colorTemp, &bgain, sourceId);
+            UT_LOG_DEBUG("GetColorTemp_Bgain_onSource status: %d, bgain: %d", status, bgain);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if(status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetColorTemp_Bgain_onSource failed with status: %d", status);
+            }
+
+            UT_LOG_DEBUG("Retrieved bgain: %d", bgain);
+            // Ensure the saved value with 2047 doesn't impact the set value 1024
+            UT_ASSERT_EQUAL(bgain, setBgain);
+            if(bgain != setBgain)
+            {
+                UT_LOG_ERROR("Mismatch in set[%d] and retrieved bgain values[%d]", bgain, setBgain);
             }
         }
     }
+
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -2202,6 +2315,7 @@ void test_l2_tvSettings_SetAndGetColorTempBgain(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
+
 
 /**
 * @brief This test aims to verify the functionality of setting and getting color temperature post offset on a source
@@ -2225,9 +2339,8 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    int32_t rpostoffset_set = 0, rpostoffset_get = 0;
+    int32_t rpostoffset_set = 0, rpostoffset_get = 0, rpostoffset_save = 0;
     tvColorTempSourceOffset_t sourceId = MAX_OFFSET;
-    int32_t saveOnly = 0;
     int32_t count = 0;
 
     UT_LOG_DEBUG("Invoking TvInit");
@@ -2239,38 +2352,70 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
 
     for (tvColorTemp_t colorTemp = 0; colorTemp < count; colorTemp++)
     {
-
-        for ( sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++ )
+        for (sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
             for (rpostoffset_set = -1024; rpostoffset_set <= MAX_OFFSET; rpostoffset_set += 500)
             {
-                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
+                UT_LOG_DEBUG("Invoking SetColorTemp_R_post_offset_onSource with colorTemp=%d, rpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, rpostoffset_set, sourceId);
+                status = SetColorTemp_R_post_offset_onSource(colorTemp, rpostoffset_set, sourceId, 0); // saveOnly=0
+                UT_LOG_DEBUG("SetColorTemp_R_post_offset_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
                 {
-                    UT_LOG_DEBUG("Invoking SetColorTemp_R_post_offset_onSource with colorTemp=%d, rpostoffset=%d, sourceId=%d, saveOnly=%d", colorTemp, rpostoffset_set, sourceId, saveOnly);
-                    status = SetColorTemp_R_post_offset_onSource(colorTemp, rpostoffset_set, sourceId, saveOnly);
-                    UT_LOG_DEBUG("SetColorTemp_R_post_offset_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if (status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("SetColorTemp_R_post_offset_onSource failed with status=%d", status);
-                    }
-
-                    UT_LOG_DEBUG("Invoking GetColorTemp_R_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
-                    status = GetColorTemp_R_post_offset_onSource(colorTemp, &rpostoffset_get, sourceId);
-                    UT_LOG_DEBUG("GetColorTemp_R_post_offset_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if (status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("GetColorTemp_R_post_offset_onSource failed with status=%d", status);
-                    }
-
-                    UT_LOG_DEBUG("Retrieved rpostoffset=%d", rpostoffset_get);
-                    UT_ASSERT_EQUAL(rpostoffset_set, rpostoffset_get);
-                    if(rpostoffset_set != rpostoffset_get)
-                    {
-                        UT_LOG_ERROR("Mismatch in set and retrieved rpostoffset values");
-                    }
+                    UT_LOG_ERROR("SetColorTemp_R_post_offset_onSource failed with status=%d", status);
                 }
+
+                UT_LOG_DEBUG("Invoking GetColorTemp_R_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+                status = GetColorTemp_R_post_offset_onSource(colorTemp, &rpostoffset_get, sourceId);
+                UT_LOG_DEBUG("GetColorTemp_R_post_offset_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetColorTemp_R_post_offset_onSource failed with status=%d", status);
+                }
+
+                UT_LOG_DEBUG("Retrieved rpostoffset=%d", rpostoffset_get);
+                UT_ASSERT_EQUAL(rpostoffset_set, rpostoffset_get);
+                if (rpostoffset_set != rpostoffset_get)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved rpostoffset values");
+                }
+            }
+
+            rpostoffset_set = 500;
+            UT_LOG_DEBUG("Invoking SetColorTemp_R_post_offset_onSource with colorTemp=%d, rpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, rpostoffset_set, sourceId);
+            status = SetColorTemp_R_post_offset_onSource(colorTemp, rpostoffset_set, sourceId, 0); // saveOnly=0
+            UT_LOG_DEBUG("SetColorTemp_R_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_R_post_offset_onSource failed with status=%d", status);
+            }
+
+            rpostoffset_save = 1000;
+            UT_LOG_DEBUG("Invoking SetColorTemp_R_post_offset_onSource with colorTemp=%d, rpostoffset=%d, sourceId=%d, saveOnly=1", colorTemp, rpostoffset_save, sourceId);
+            status = SetColorTemp_R_post_offset_onSource(colorTemp, rpostoffset_save, sourceId, 1); // saveOnly=1
+            UT_LOG_DEBUG("SetColorTemp_R_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_R_post_offset_onSource failed with status=%d", status);
+            }
+
+            UT_LOG_DEBUG("Invoking GetColorTemp_R_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+            status = GetColorTemp_R_post_offset_onSource(colorTemp, &rpostoffset_get, sourceId);
+            UT_LOG_DEBUG("GetColorTemp_R_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetColorTemp_R_post_offset_onSource failed with status=%d", status);
+            }
+
+            UT_LOG_DEBUG("Retrieved rpostoffset=%d", rpostoffset_get);
+            UT_ASSERT_EQUAL(rpostoffset_set, rpostoffset_get);
+            if (rpostoffset_set != rpostoffset_get)
+            {
+                UT_LOG_ERROR("Mismatch in set [%d]and retrieved rpostoffset values [%d]", rpostoffset_set, rpostoffset_get);
             }
         }
     }
@@ -2282,6 +2427,7 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
+
 
 /**
 * @brief This test checks the functionality of setting and getting color temperature G post offset
@@ -2301,16 +2447,13 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
 
 void test_l2_tvSettings_SetAndGetColorTempGPostOffset(void)
 {
-    gTestID = 32;
+    gTestID = 33;
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    int32_t gpostoffset_set = 0, gpostoffset_get = 0;
-    tvColorTemp_t colorTemp = tvColorTemp_MAX;
+    int32_t gpostoffset_set = 0, gpostoffset_get = 0, gpostoffset_save = 0;
     tvColorTempSourceOffset_t sourceId = MAX_OFFSET;
-    int32_t saveOnly = 0;
     int32_t count = 0;
-    char keyValue[KEY_VALUE_SIZE] = {0};
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
@@ -2319,44 +2462,77 @@ void test_l2_tvSettings_SetAndGetColorTempGPostOffset(void)
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
 
-    for ( int32_t i = 0; i < count; i++ )
+    for (tvColorTemp_t colorTemp = 0; colorTemp < count; colorTemp++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
-
-        for( sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++ )
+        for (sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
-            for( gpostoffset_set = -1024; gpostoffset_set <= MAX_OFFSET; gpostoffset_set += 500 )
+            // Iterate over gpostoffset values from -1024 to MAX_OFFSET
+            for (gpostoffset_set = -1024; gpostoffset_set <= MAX_OFFSET; gpostoffset_set += 500)
             {
-                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
+                UT_LOG_DEBUG("Invoking SetColorTemp_G_post_offset_onSource with colorTemp=%d, gpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, gpostoffset_set, sourceId);
+                status = SetColorTemp_G_post_offset_onSource(colorTemp, gpostoffset_set, sourceId, 0); // saveOnly=0
+                UT_LOG_DEBUG("SetColorTemp_G_post_offset_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
                 {
-                    UT_LOG_DEBUG("Invoking SetColorTemp_G_post_offset_onSource with colorTemp: %d, gpostoffset: %d, sourceId: %d, saveOnly: %d", colorTemp, gpostoffset_set, sourceId, saveOnly);
-                    status = SetColorTemp_G_post_offset_onSource(colorTemp, gpostoffset_set, sourceId, saveOnly);
-                    UT_LOG_DEBUG("SetColorTemp_G_post_offset_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed with status: %d", status);
-                    }
-
-                    UT_LOG_DEBUG("Invoking GetColorTemp_G_post_offset_onSource with colorTemp: %d, sourceId: %d", colorTemp, sourceId);
-                    status = GetColorTemp_G_post_offset_onSource(colorTemp, &gpostoffset_get, sourceId);
-                    UT_LOG_DEBUG("GetColorTemp_G_post_offset_onSource status: %d, gpostoffset: %d", status, gpostoffset_get);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("GetColorTemp_G_post_offset_onSource failed with status: %d", status);
-                    }
-                    UT_LOG_DEBUG("Retrieved gpostoffset=%d", gpostoffset_get);
-                    UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
-                    if(gpostoffset_set != gpostoffset_get)
-                    {
-                        UT_LOG_ERROR("Mismatch in set and retrieved gpostoffset values");
-                    }
+                    UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed with status=%d", status);
                 }
+
+                UT_LOG_DEBUG("Invoking GetColorTemp_G_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+                status = GetColorTemp_G_post_offset_onSource(colorTemp, &gpostoffset_get, sourceId);
+                UT_LOG_DEBUG("GetColorTemp_G_post_offset_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetColorTemp_G_post_offset_onSource failed with status=%d", status);
+                }
+
+                UT_LOG_DEBUG("Retrieved gpostoffset=%d", gpostoffset_get);
+                UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
+                if (gpostoffset_set != gpostoffset_get)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved gpostoffset values");
+                }
+            }
+
+            gpostoffset_set = 500;
+            UT_LOG_DEBUG("Invoking SetColorTemp_G_post_offset_onSource with colorTemp=%d, gpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, gpostoffset_set, sourceId);
+            status = SetColorTemp_G_post_offset_onSource(colorTemp, gpostoffset_set, sourceId, 0); // saveOnly=0
+            UT_LOG_DEBUG("SetColorTemp_G_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed with status=%d", status);
+            }
+
+            gpostoffset_save = 1000;
+            UT_LOG_DEBUG("Invoking SetColorTemp_G_post_offset_onSource with colorTemp=%d, gpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, gpostoffset_save, sourceId);
+            status = SetColorTemp_G_post_offset_onSource(colorTemp, gpostoffset_save, sourceId, 1); // saveOnly=1
+            UT_LOG_DEBUG("SetColorTemp_G_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed with status=%d", status);
+            }
+
+            UT_LOG_DEBUG("Invoking GetColorTemp_G_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+            status = GetColorTemp_G_post_offset_onSource(colorTemp, &gpostoffset_get, sourceId);
+            UT_LOG_DEBUG("GetColorTemp_G_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetColorTemp_G_post_offset_onSource failed with status=%d", status);
+            }
+
+            UT_LOG_DEBUG("Retrieved gpostoffset=%d", gpostoffset_get);
+            UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
+            if (gpostoffset_set != gpostoffset_get)
+            {
+                UT_LOG_ERROR("Mismatch in set [%d]and retrieved gpostoffset values [%d]", gpostoffset_set, gpostoffset_get);
             }
         }
     }
+
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -2386,12 +2562,9 @@ void test_l2_tvSettings_SetAndGetColorTempBPostOffset(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    int32_t bpostoffset_set = 0, bpostoffset_get = 0;
-    tvColorTemp_t colorTemp = tvColorTemp_MAX;
+    int32_t bpostoffset_set = 0, bpostoffset_get = 0, bpostoffset_save = 0;
     tvColorTempSourceOffset_t sourceId = MAX_OFFSET;
-    int32_t saveOnly = 0;
     int32_t count = 0;
-    char keyValue[KEY_VALUE_SIZE] = {0};
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
@@ -2400,45 +2573,77 @@ void test_l2_tvSettings_SetAndGetColorTempBPostOffset(void)
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
 
-    for (int32_t i = 0; i < count; i++)
+    for (tvColorTemp_t colorTemp = 0; colorTemp < count; colorTemp++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
-
         for (sourceId = ALL_SRC_OFFSET; sourceId < MAX_OFFSET; sourceId++)
         {
+            // Iterate over bpostoffset values from -1024 to MAX_OFFSET
             for (bpostoffset_set = -1024; bpostoffset_set <= MAX_OFFSET; bpostoffset_set += 500)
             {
-                for (saveOnly = 0; saveOnly <= 1; saveOnly++)
+                UT_LOG_DEBUG("Invoking SetColorTemp_B_post_offset_onSource with colorTemp=%d, bpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, bpostoffset_set, sourceId);
+                status = SetColorTemp_B_post_offset_onSource(colorTemp, bpostoffset_set, sourceId, 0); // saveOnly=0
+                UT_LOG_DEBUG("SetColorTemp_B_post_offset_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
                 {
-                    UT_LOG_DEBUG("Invoking SetColorTemp_B_post_offset_onSource with colorTemp=%d, bpostoffset=%d, sourceId=%d, saveOnly=%d", colorTemp, bpostoffset_set, sourceId, saveOnly);
-                    status = SetColorTemp_B_post_offset_onSource(colorTemp, bpostoffset_set, sourceId, saveOnly);
-                    UT_LOG_DEBUG("SetColorTemp_B_post_offset_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if (status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed with status=%d", status);
-                    }
-
-                    UT_LOG_DEBUG("Invoking GetColorTemp_B_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
-                    status = GetColorTemp_B_post_offset_onSource(colorTemp, &bpostoffset_get, sourceId);
-                    UT_LOG_DEBUG("GetColorTemp_B_post_offset_onSource status: %d", status);
-                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if (status != tvERROR_NONE)
-                    {
-                        UT_LOG_ERROR("GetColorTemp_B_post_offset_onSource failed with status=%d", status);
-                    }
-
-                    UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
-                    UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
-                    if(bpostoffset_set != bpostoffset_get)
-                    {
-                        UT_LOG_ERROR("Mismatch in set and retrieved bpostoffset values");
-                    }
+                    UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed with status=%d", status);
                 }
+
+                UT_LOG_DEBUG("Invoking GetColorTemp_B_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+                status = GetColorTemp_B_post_offset_onSource(colorTemp, &bpostoffset_get, sourceId);
+                UT_LOG_DEBUG("GetColorTemp_B_post_offset_onSource status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if (status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetColorTemp_B_post_offset_onSource failed with status=%d", status);
+                }
+
+                UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
+                UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
+                if (bpostoffset_set != bpostoffset_get)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved bpostoffset values");
+                }
+            }
+
+            bpostoffset_set = 500;
+            UT_LOG_DEBUG("Invoking SetColorTemp_B_post_offset_onSource with colorTemp=%d, bpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, bpostoffset_set, sourceId);
+            status = SetColorTemp_B_post_offset_onSource(colorTemp, bpostoffset_set, sourceId, 0); // saveOnly=0
+            UT_LOG_DEBUG("SetColorTemp_B_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed with status=%d", status);
+            }
+
+            bpostoffset_save = 1000;
+            UT_LOG_DEBUG("Invoking SetColorTemp_B_post_offset_onSource with colorTemp=%d, bpostoffset=%d, sourceId=%d, saveOnly=0", colorTemp, bpostoffset_save, sourceId);
+            status = SetColorTemp_B_post_offset_onSource(colorTemp, bpostoffset_save, sourceId, 1); // saveOnly=1
+            UT_LOG_DEBUG("SetColorTemp_B_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed with status=%d", status);
+            }
+
+            UT_LOG_DEBUG("Invoking GetColorTemp_B_post_offset_onSource with colorTemp=%d, sourceId=%d", colorTemp, sourceId);
+            status = GetColorTemp_B_post_offset_onSource(colorTemp, &bpostoffset_get, sourceId);
+            UT_LOG_DEBUG("GetColorTemp_B_post_offset_onSource status: %d", status);
+            UT_ASSERT_EQUAL(status, tvERROR_NONE);
+            if (status != tvERROR_NONE)
+            {
+                UT_LOG_ERROR("GetColorTemp_B_post_offset_onSource failed with status=%d", status);
+            }
+
+            UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
+            UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
+            if (bpostoffset_set != bpostoffset_get)
+            {
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved bpostoffset values [%d]", bpostoffset_set, bpostoffset_get);
             }
         }
     }
+
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -2446,7 +2651,6 @@ void test_l2_tvSettings_SetAndGetColorTempBPostOffset(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
-
 /**
 * @brief This test verifies the functionality of enabling and verifying the WB Calibration Mode in TV settings
 *
@@ -3297,15 +3501,22 @@ void test_l2_tvSettings_GetTVGammaTarget(void)
 
     tvError_t status = tvERROR_NONE;
     double x = 1.1, y = 1.1; // Assigning Max range as default.
+    uint32_t colorTempCount = 0;
     tvColorTemp_t colorTemp = tvColorTemp_MAX;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for( colorTemp=tvColorTemp_STANDARD; colorTemp < tvColorTemp_MAX; colorTemp++ )
+    // Get the count of color temperature values from the configuration profile
+    colorTempCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    for (unsigned int i = 0; i < colorTempCount; i++)
     {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+        colorTemp = (tvColorTemp_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
+
         UT_LOG_DEBUG("Invoking GetTVGammaTarget() with colorTemp = %d", colorTemp);
         status = GetTVGammaTarget(colorTemp, &x, &y);
         UT_LOG_DEBUG(" GetTVGammaTarget Return status: %d", status);
@@ -3631,6 +3842,7 @@ void test_l2_tvSettings_EnableAndGetDynamicContrast(void)
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
+    ret = TvTerm();
     UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 

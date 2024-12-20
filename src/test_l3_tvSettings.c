@@ -319,6 +319,7 @@ const static ut_control_keyStringMapping_t  tvError_mapTable [] =
   { "tvERROR_NONE",                      (int32_t)tvERROR_NONE                     },
   { "tvERROR_GENERAL",                   (int32_t)tvERROR_GENERAL                  },
   { "tvERROR_OPERATION_NOT_SUPPORTED",   (int32_t)tvERROR_OPERATION_NOT_SUPPORTED  },
+  { "tvERROR_INVALID_PARAM",             (int32_t)tvERROR_INVALID_PARAM            },
   { "tvERROR_INVALID_STATE",             (int32_t)tvERROR_INVALID_STATE            },
   {  NULL, -1 }
 };
@@ -755,7 +756,7 @@ void test_l3_tvSettings_GetCurrentVideoSource(void)
     gTestID = 6;
     UT_LOG_INFO("In %s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
     tvError_t ret = tvERROR_NONE;
-    int32_t currentSource = 0;
+    tvVideoSrcType_t currentSource = 0;
 
     UT_LOG_INFO("Calling GetCurrentVideoSource(OUT:currentSource:[])");
     ret = GetCurrentVideoSource(&currentSource);
