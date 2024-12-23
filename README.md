@@ -19,7 +19,7 @@
 
 ## Description
 
-This repository contains the Unit Test Suites (L1 & L2) for TV Settings `HAL`.
+This repository contains the Unit Test Suites (L1,L2 & L3) for TV Settings `HAL`.
 
 ## Reference Documents
 
