@@ -8197,9 +8197,9 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    tvDolbyMode_t tvDolbyModes[tvMode_Max] = { tvDolbyMode_Invalid };
+    tvDolbyMode_t tvDolbyModes[tvMode_Max] = { tvDolbyMode_Dark };
     tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max];
-    tvDolbyMode_t tvDolbyModesRetry[tvMode_Max] = { tvDolbyMode_Invalid };
+    tvDolbyMode_t tvDolbyModesRetry[tvMode_Max] = { tvDolbyMode_Dark };
     tvDolbyMode_t *tvDolbyModesRetryPtr[tvMode_Max];
 
     bool IsDolbyModeValid = true;
