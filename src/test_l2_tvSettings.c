@@ -4035,7 +4035,7 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
         {
             snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", i);
             control = UT_KVP_PROFILE_GET_UINT32( keyValue);
-			if (control == tvWB_CONTROL_GAIN) {
+            if (control == tvWB_CONTROL_GAIN) {
                 from = 0;
                 to = 2047;
             } else if (control == tvWB_CONTROL_OFFSET) {
