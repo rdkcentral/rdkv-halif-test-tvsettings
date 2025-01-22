@@ -21,6 +21,32 @@ tvSettings:
     - 0x10 # tvDataColor_CYAN
     - 0x20 # tvDataColor_MAGENTA
 
+  # COMP_NONE=0,     //!< No Component
+  # COMP_HUE,        //!< Component is Hue
+  # COMP_SATURATION, //!< Component is Saturation
+  # COMP_LUMA,       //!< Component is Luma
+  # COMP_MAX         //!< End of enum
+  SupportedComponentType:
+    - 1 # COMP_HUE
+    - 2 # COMP_SATURATION
+    - 3 # COMP_LUMA
+
+  # tvWB_COLOR_RED    = 0, //!< Color is Red
+  # tvWB_COLOR_GREEN, = 1, //!< Color is Green
+  # tvWB_COLOR_BLUE,  = 2, //!< Color is Blue
+  # tvWB_COLOR_MAX    = 3, //!< End of Enum
+  SupportedCustomWhiteBalanceColor:
+    - 0 # tvWB_COLOR_RED
+    - 1 # tvWB_COLOR_GREEN
+    - 2 # tvWB_COLOR_BLUE
+
+  # tvWB_CONTROL_GAIN   = 0, //!< Control is Gain
+  # tvWB_CONTROL_OFFSET = 1, //!< Control is Offset
+  # tvWB_CONTROL_MAX    = 2, //!< End of Enum
+  SupportedCustomWhiteBalanceControl:
+    - 0 # tvWB_CONTROL_GAIN
+    - 1 # tvWB_CONTROL_OFFSET
+
   # Video Frame Rates
   # tvVideoFrameRate_NONE    = 0x00, //!< No frame rate
   # tvVideoFrameRate_24      = 0x01, //!< Frame rate is 24
@@ -919,10 +945,14 @@ tvSettings:
       - Tuner
       - Composite1
 
-  ComponentSaturationRed:
+  CMS:
     # range from 0 to 100
-    range_from: 0
-    range_to: 100
+    range_Saturation_from : 0
+    range_Saturation_to  : 100
+    range_Hue_from  : 0
+    range_Hue_to  : 100
+    range_Luma_from  : 0
+    range_Luma_to  : 30
     # Entertainment
     # Dynamic
     # Energy saving
@@ -968,695 +998,94 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    # Red
+    # Green
+    # Blue
+    # Yellow
+    # Cyan
+    # Magenta
+    color:
+      - Red
+      - Green
+      - Blue
+      - Yellow
+      - Cyan
+      - Magenta
+    # Hue
+    # Saturation
+    # Luma
+    Component:
+      - Saturation
+      - Hue
+      - Luma
     platformsupport: true
 
-  ComponentSaturationBlue:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationGreen:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationYellow:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationCyan:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSTE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationMagenta:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueRed:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueBlue:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueGreen:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueYellow:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentHueMagenta:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentHueCyan:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaRed:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaBlue:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaGreen:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaYellow:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaMagenta:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaCyan:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
   LDIMShortCircuitStatus:
     enable: true
     size : 160
     zone_count : 160
+
+  CustomWhiteBalance:
+    range.gain.from: 0
+    range.gain.to: 2047
+    range.offset.from: -1024
+    range.offset.to: 1023
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+      - Dynamic2
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    # ANALOGUE
+    # COMPOSITE1
+    # COMPOSITE2
+    # YPBPR1
+    # YPBPR2
+    # HDMI1
+    # HDMI2
+    # HDMI3
+    # HDMI4
+    # VGA
+    # IP
+    # TUNER
+    # SVIDEO
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    # RED
+    # GREEN
+    # BLUE
+    color:
+      - Red
+      - Green
+      - Blue
+    # GAIN
+    # OFFSET
+    control:
+      - Gain
+      - Offset
+    platformsupport: true

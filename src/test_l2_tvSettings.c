@@ -4033,7 +4033,7 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
 
         for(int32_t j = 0; j < controlCount; j++)
         {
-            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", i);
+            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
             control = UT_KVP_PROFILE_GET_UINT32( keyValue);
             if (control == tvWB_CONTROL_GAIN) {
                 from = 0;
@@ -4054,7 +4054,7 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
                     UT_LOG_ERROR("SetCustom2PointWhiteBalance failed with status: %d", status);
                 }
 
-                UT_LOG_DEBUG("Invoking GetCustom2PointWhiteBalance with color: %d, control: %d");
+                UT_LOG_DEBUG("Invoking GetCustom2PointWhiteBalance with color: %d, control: %d",color,control);
                 status = GetCustom2PointWhiteBalance(color, control, &getWB);
                 UT_LOG_DEBUG("getWB: %d, status: %d", getWB, status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
