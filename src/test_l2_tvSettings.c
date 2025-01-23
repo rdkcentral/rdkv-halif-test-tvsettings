@@ -4043,8 +4043,8 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
                 to = 1023;
             }
 			
-			for (setWB = from; setWB <= to; setWB += (to - from) / 10)
-			{
+            for (setWB = from; setWB <= to; setWB += (to - from) / 10)
+            {
                 UT_LOG_DEBUG("Invoking SetCustom2PointWhiteBalance with color: %d, control: %d, setWB: %d", color,control,setWB);
                 status = SetCustom2PointWhiteBalance(color,control,setWB);
                 UT_LOG_DEBUG("SetCustom2PointWhiteBalance status: %d", status);

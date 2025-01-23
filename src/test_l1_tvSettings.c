@@ -17981,11 +17981,11 @@ void test_l1_tvSettings_positive_SetCustom2PointWhiteBalance (void)
     controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
 
     for (unsigned int k = 0; k < colorCount; k++)
-   	{
+    {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", k);
         colorValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
         for (unsigned int l = 0;l < controlCount; l++)
-		{
+        {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", l);
             controlValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
             result = SetCustom2PointWhiteBalance(colorValue,controlValue,50);
@@ -18105,8 +18105,8 @@ void test_l1_tvSettings_negative_SetCustom2PointWhiteBalance (void)
     for (int i=tvWB_CONTROL_GAIN; i<= tvWB_CONTROL_MAX; i++)
     {
         SupportAvailable = false;
-        for(unsigned int j =0; j < controlCount; j++){
-
+        for(unsigned int j =0; j < controlCount; j++)
+        {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
             controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
             if((tvWBControl_t)controlValue == (tvWBControl_t) i)
@@ -18294,8 +18294,8 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     for (int i=tvWB_COLOR_RED; i< tvWB_COLOR_MAX; i++)
     {
         bModeMatched = false;
-        for(unsigned int j =0; j < colorCount; j++){
-
+        for(unsigned int j =0; j < colorCount; j++)
+        {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", j);
             color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
             if((tvWBColor_t) color == (tvWBColor_t) i)
@@ -18316,8 +18316,8 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     for (int i=tvWB_CONTROL_GAIN; i< tvWB_CONTROL_MAX; i++)
     {
         bModeMatched = false;
-        for(unsigned int j =0; j < controlCount; j++){
-
+        for(unsigned int j =0; j < controlCount; j++)
+        {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
             control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
             if((tvWBControl_t) control == (tvWBControl_t) i)
