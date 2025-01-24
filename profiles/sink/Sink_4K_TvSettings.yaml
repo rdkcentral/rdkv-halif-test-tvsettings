@@ -27,25 +27,25 @@ tvSettings:
   # COMP_LUMA,       //!< Component is Luma
   # COMP_MAX         //!< End of enum
   SupportedComponentType:
-    - 1 # COMP_HUE
-    - 2 # COMP_SATURATION
-    - 3 # COMP_LUMA
+    - 0x1 # COMP_HUE
+    - 0x2 # COMP_SATURATION
+    - 0x3 # COMP_LUMA
 
   # tvWB_COLOR_RED    = 0, //!< Color is Red
   # tvWB_COLOR_GREEN, = 1, //!< Color is Green
   # tvWB_COLOR_BLUE,  = 2, //!< Color is Blue
   # tvWB_COLOR_MAX    = 3, //!< End of Enum
   SupportedCustomWhiteBalanceColor:
-    - 0 # tvWB_COLOR_RED
-    - 1 # tvWB_COLOR_GREEN
-    - 2 # tvWB_COLOR_BLUE
+    - 0x0 # tvWB_COLOR_RED
+    - 0x1 # tvWB_COLOR_GREEN
+    - 0x2 # tvWB_COLOR_BLUE
 
   # tvWB_CONTROL_GAIN   = 0, //!< Control is Gain
   # tvWB_CONTROL_OFFSET = 1, //!< Control is Offset
   # tvWB_CONTROL_MAX    = 2, //!< End of Enum
   SupportedCustomWhiteBalanceControl:
-    - 0 # tvWB_CONTROL_GAIN
-    - 1 # tvWB_CONTROL_OFFSET
+    - 0x0 # tvWB_CONTROL_GAIN
+    - 0x1 # tvWB_CONTROL_OFFSET
 
   # Video Frame Rates
   # tvVideoFrameRate_NONE    = 0x00, //!< No frame rate
