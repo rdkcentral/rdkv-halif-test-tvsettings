@@ -1026,10 +1026,10 @@ tvSettings:
     zone_count : 160
 
   CustomWhiteBalance:
-    range.gain.from: 0
-    range.gain.to: 2047
-    range.offset.from: -1024
-    range.offset.to: 1023
+    range_gain_from: 0
+    range_gain_to: 2047
+    range_offset_from: -1024
+    range_offset_to: 1023
     # Entertainment
     # Dynamic
     # Energy saving
