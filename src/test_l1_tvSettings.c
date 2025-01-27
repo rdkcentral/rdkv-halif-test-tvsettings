@@ -13591,7 +13591,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentSaturation (void)
 
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
             componentColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
+            if((tvDataComponentColor_t) componentColor ==(tvDataComponentColor_t) i)
             {
                 bModeMatched = true;
                 break;
@@ -13664,6 +13664,7 @@ void test_l1_tvSettings_positive_GetCurrentComponentSaturation (void)
 
     UT_ASSERT_EQUAL(saturation, saturationRetry);
 
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
     for (unsigned int i = 0; i < componentColorCount; ++i)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", i);
@@ -13740,7 +13741,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentSaturation (void)
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
-    for(int i = 0; i < tvDataColor_MAX; i++)
+    for(int i = tvDataColor_RED; i <= tvDataColor_MAX; i<<=1)
     {
         bModeMatched = false;
         for (unsigned int j = 0; j < componentColorCount; ++j)
@@ -13915,7 +13916,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentHue (void)
 
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
             componentColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
+            if((tvDataComponentColor_t) componentColor ==(tvDataComponentColor_t) i)
             {
                 bModeMatched = true;
                 break;
@@ -14065,7 +14066,7 @@ void test_l1_tvSettings_negative_GetCurrentComponentHue (void)
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
-    for (int i =0; i < tvDataColor_MAX; i++)
+    for (int i =tvDataColor_RED; i <= tvDataColor_MAX; i<<=1)
     {
         bModeMatched = false;
         for(unsigned int j = 0; j < componentColorCount; ++j){
@@ -14239,7 +14240,7 @@ void test_l1_tvSettings_negative_SetCurrentComponentLuma (void)
 
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
             componentColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            if((tvDataComponentColor_t) componentColor !=(tvDataComponentColor_t) i)
+            if((tvDataComponentColor_t) componentColor ==(tvDataComponentColor_t) i)
             {
                 bModeMatched = true;
                 break;
@@ -14453,6 +14454,11 @@ void test_l1_tvSettings_positive_SaveCMS (void)
     uint32_t videoSrcCount = 0;
     uint32_t pqCount = 0;
     uint32_t videoFmtCount = 0;
+    uint32_t componentColorCount = 0;
+    uint32_t componentTypeCount = 0;
+    tvDataComponentColor_t componentColor = tvDataColor_NONE;
+    tvComponentType_t componentType = COMP_NONE;
+
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -14462,8 +14468,10 @@ void test_l1_tvSettings_positive_SaveCMS (void)
     /* Step 02: Calling tvsettings SaveCMS for all the sourceId,pqmode,videoFormatType, component_type, color_type and expecting the API to return success */
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    componentColorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    componentTypeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentType");
+
     for (unsigned int i = 0; i < videoSrcCount; i++)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
@@ -14476,95 +14484,18 @@ void test_l1_tvSettings_positive_SaveCMS (void)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationRed/platformsupport") == true)
+                
+                for (unsigned int l=0; l< componentColorCount; l++)
                 {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_RED,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationBlue/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_BLUE,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationGreen/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_GREEN,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationYellow/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_YELLOW,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationCyan/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_CYAN,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationMagenta/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_MAGENTA,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueRed/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_RED,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueBlue/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_BLUE,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueGreen/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_GREEN,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueYellow/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagenta/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueCyan/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_CYAN,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaRed/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_RED,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaBlue/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_BLUE,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaGreen/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_GREEN,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaYellow/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_YELLOW,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaMagenta/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_MAGENTA,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                }
-                if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaCyan/platformsupport") == true)
-                {
-                    result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_CYAN,30);
-                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", l);
+                    componentColor = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    for (unsigned int m=0; m< componentTypeCount; m++)
+                    {
+                        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentType/%d", m);
+                        componentType = (tvComponentType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                        result = SaveCMS(videoSource,pqValue,videoFormat,componentType,componentColor,30);
+                        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    }
                 }
             }
         }
@@ -14629,6 +14560,11 @@ void test_l1_tvSettings_negative_SaveCMS (void)
     uint32_t videoSrcCount = 0;
     uint32_t pqCount = 0;
     uint32_t videoFmtCount = 0;
+    uint32_t colorCount = 0;
+    uint32_t componentCount = 0;
+    tvComponentType_t componentValue = COMP_HUE;
+    tvDataComponentColor_t colorValue = tvDataColor_RED;
+
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
@@ -14777,98 +14713,49 @@ void test_l1_tvSettings_negative_SaveCMS (void)
     }
 
     videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
-    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationRed/platformsupport") == false)
+    componentCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentType");
+    for( i=COMP_NONE ; i <= COMP_MAX; i++)
     {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_RED,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationBlue/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_BLUE,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationGreen/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_GREEN,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationYellow/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_YELLOW,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationCyan/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_CYAN,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentSaturationMagenta/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_SATURATION, tvDataColor_MAGENTA,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueRed/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_RED,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueBlue/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_BLUE,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueGreen/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_GREEN,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueYellow/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_YELLOW,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueMagenta/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_MAGENTA,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentHueCyan/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, tvDataColor_CYAN,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaRed/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_RED,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaBlue/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_BLUE,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaGreen/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_GREEN,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaYellow/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_YELLOW,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaMagenta/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_MAGENTA,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-    }
-    else if(UT_KVP_PROFILE_GET_BOOL("tvSettings/ComponentLumaCyan/platformsupport") == false)
-    {
-        result = SaveCMS(videoSource,pqValue,videoFormat,COMP_LUMA, tvDataColor_CYAN,30);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        SupportAvailable = false;
+        for( j =0 ; j < componentCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentType/%d", j);
+            componentValue = (tvComponentType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(componentValue == i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+
+        if(!SupportAvailable){
+            result = SaveCMS(videoSource,pqValue,videoFormat,(tvComponentType_t)i, colorValue,1);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
     }
 
+    componentValue = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedComponentType/0");
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+    for( i =tvDataColor_NONE ; i <= tvDataColor_MAX; i++)
+    {
+        SupportAvailable = false;
+        for( j =0 ; j < colorCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", j);
+            colorValue = (tvDataComponentColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(colorValue == i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
 
+        if(!SupportAvailable){
+            result = SaveCMS(videoSource,pqValue,videoFormat,COMP_HUE, (tvDataComponentColor_t)i,1);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+    
     /* Step 20: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -17731,6 +17618,737 @@ void test_l1_tvSettings_negative_GetNumberOfDimmingZones (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+/**
+ * @brief Validate SaveCustom2PointWhiteBalance() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 59@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SaveCustom2PointWhiteBalance() -  Save the current custom WB Balance by looping through all the values of sourceId, pqmode, videoFormatType,color,control from the VideoSource, PictureMode, VideoFormat, WBColor, WBControl sections of test specific config file  |  tvVideoSrcType_t , int ,tvVideoFormatType_t,tvWBColor_t,tvWBControl_t ,int | tvERROR_NONE| Should Pass|
+ * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_SaveCustom2PointWhiteBalance (void)
+{
+    gTestID = 229;                                    /* It must be 229 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
+    int pqValue = 0;
+    tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+    tvWBColor_t colorValue = tvWB_COLOR_RED;
+    tvWBControl_t controlValue = tvWB_CONTROL_GAIN;
+    uint32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+    uint32_t videoFmtCount = 0;
+    uint32_t colorCount = 0;
+    uint32_t controlCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings SaveCustom2PointWhiteBalance for all the sourceId,pqmode,videoFormatType,color,control and expecting the API to return success */
+    videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+    pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+    controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+
+    for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned int j = 0; j < pqCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int k = 0; k < videoFmtCount; k++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int l = 0; l < colorCount; l++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", l);
+                    colorValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    for (unsigned int m = 0; m < controlCount; m++)
+                    {
+                        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", m);
+                        controlValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                        result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,controlValue,50);
+                        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    }
+                }
+            }
+        }
+    }
+
+    /* Step 03: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+/**
+ * @brief Validate SaveCustom2PointWhiteBalance() for all negative invocation scenarios
+ *
+ * @note tvERROR_GENERAL is platform specific and cannot be simulated
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 230@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call SaveCustom2PointWhiteBalance() -  save current TV Brightness even before TvInit() | tvVideoSrcType_t , int ,tvVideoFormatType_t ,int  | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call SaveCustom2PointWhiteBalance() -  "pq_mode,videoFormatType,color,control,value"=valid, "videoSrcType"=invalid max range| VIDEO_SOURCE_MAX, int ,tvVideoFormatType_t ,tvWBColor_t ,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call SaveCustom2PointWhiteBalance() -  "pq_mode,videoFormatType,color,control,value"=valid, "videoSrcType"=invalid lower range| -2, int ,tvVideoFormatType_t ,tvWBColor_t ,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,videoFormatType,color,control,value"=valid, "pq_mode"=invalid lower range | tvVideoSrcType_t, -1 ,tvVideoFormatType_t ,tvWBColor_t ,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,videoFormatType,color,control,value"=valid, "pq_mode"=invalid max range| tvVideoSrcType_t, PQ_MODE_MAX ,tvVideoFormatType_t ,tvWBColor_t ,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,color,control,value"=valid, "videoFormatType"=invalid max range| tvVideoSrcType_t, int ,VIDEO_FORMAT_MAX ,tvWBColor_t ,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 08 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,color,control,value"=valid, "videoFormatType"=invalid lower range| tvVideoSrcType_t, int , -1 ,tvWBColor_t ,tvWBControl_t, int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 09 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,videoFormatType,control,value"=valid, "color"=invalid lower range| tvVideoSrcType_t, int ,tvVideoFormatType_t ,-1,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 10 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,videoFormatType,control,value"=valid, "color"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t,tvWB_COLOR_MAX,tvWBControl_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 11 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,videoFormatType,color,value"=valid, "control"=invalid lower range| tvVideoSrcType_t, int ,tvVideoFormatType_t ,tvWBColor_t,-1,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 12 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,videoFormatType,color,value"=valid, "control"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t,tvWBColor_t,tvWB_CONTROL_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 13 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,videoFormatType,color,control"=valid, "value"=invalid max range| tvVideoSrcType_t, int , tvVideoFormatType_t,tvWBColor_t ,tvWB_CONTROL_GAIN,2048| tvERROR_INVALID_PARAM | Should Pass |
+ * | 14 | call SaveCustom2PointWhiteBalance() -  "videoSrcType,pq_mode,videoFormatType,color,control"=valid, "value"=invalid lower range| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvWBColor_t ,tvWB_CONTROL_GAIN,-1| tvERROR_INVALID_PARAM | Should Pass |
+ * | 15 | call SaveCustom2PointWhiteBalance() -  Save current CustomWhiteBalance with valid source input, pqmode, videoFormatType color control value but not supported by the platform by looping through the VideoSource, PictureMode, VideoFormat SupportedCustomWhiteBalanceColor SupportedCustomWhiteBalanceControl sections of test specific config file| tvVideoSrcType_t, int , tvVideoFormatType_t ,tvWBColor_t ,tvWBControl_t, 50| tvERROR_INVALID_PARAM | Should Pass |
+ * | 16 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 17 | call SaveCustom2PointWhiteBalance() -  save current TV Brightness valid arguments | tvVideoSrcType_t , int ,tvVideoFormatType_t ,tvWBColor_t ,tvWBControl_t,int  | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance (void)
+{
+    gTestID = 230;                                    /* It must be 230 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    bool SupportAvailable = true;
+    tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
+    int pqValue = 0;
+    tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+    tvWBColor_t colorValue = tvWB_COLOR_RED;
+    tvWBControl_t controlValue = tvWB_CONTROL_GAIN;
+    uint32_t count = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (int)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
+    colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/WBControl/SupportedCustomWhiteBalanceControl/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveCustom2PointWhiteBalance(videoSource, pqValue, videoFormat,colorValue,controlValue, 50);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(VIDEO_SOURCE_MAX,pqValue,videoFormat,colorValue,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance((tvVideoSrcType_t)-2,pqValue,videoFormat,colorValue,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,-1,videoFormat,colorValue,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 06: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,PQ_MODE_MAX,videoFormat,colorValue,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 07: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,VIDEO_FORMAT_MAX,colorValue,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 08: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,(tvVideoFormatType_t)-1,colorValue,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 09: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,-1,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 10: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,tvWB_COLOR_MAX,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 11: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,-1,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 12: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,tvWB_CONTROL_MAX,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 13: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,controlValue,-1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 14: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,controlValue,2048);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 15: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+    for(int i =VIDEO_SOURCE_ALL ; i < VIDEO_SOURCE_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(int j =0 ; j < count; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", j);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(videoSource == i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+
+        if(!SupportAvailable){
+            result = SaveCustom2PointWhiteBalance((tvVideoSrcType_t)i,pqValue,videoFormat,colorValue,controlValue,1000);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+
+    for(int i =0 ; i < PQ_MODE_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(int j =0 ; j < count; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(pqValue == i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+
+        if(!SupportAvailable){
+            result = SaveCustom2PointWhiteBalance(videoSource,i,videoFormat,colorValue,controlValue,1000);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+
+    pqValue = (int)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    for(int i =VIDEO_FORMAT_NONE ; i < VIDEO_FORMAT_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(int j =0 ; j < count; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", j);
+            videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if(videoFormat == i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+
+        if(!SupportAvailable){
+            result = SaveCustom2PointWhiteBalance(videoSource,pqValue,(tvVideoFormatType_t)i,colorValue,controlValue,1000);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
+    for (int i=tvWB_COLOR_RED; i< tvWB_COLOR_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(unsigned int j =0; j < count; j++){
+
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", j);
+            colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvWBColor_t) colorValue == (tvWBColor_t) i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+        if(!SupportAvailable)
+        {
+            result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,i,controlValue,1000);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+    
+    colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    for (int i=tvWB_CONTROL_GAIN; i< tvWB_CONTROL_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(unsigned int j =0; j < count; j++){
+
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
+            controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvWBControl_t) controlValue == (tvWBControl_t) i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+        if(!SupportAvailable)
+        {
+            result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,i,1000);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+
+
+    /* Step 16: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    controlValue = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceControl/0");
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 17: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveCustom2PointWhiteBalance(videoSource, pqValue, videoFormat,colorValue,controlValue, 1000);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+
+/**
+ * @brief Validate SetCustom2PointWhiteBalance() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 231@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call SetCustom2PointWhiteBalance() -  Set the current custom WB Balance by looping through all the values of color,control from the WBColor, WBControl sections of test specific config file  |  tvVideoSrcType_t ,tvWBColor_t,tvWBControl_t ,int | tvERROR_NONE| Should Pass|
+ * | 03 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_SetCustom2PointWhiteBalance (void)
+{
+    gTestID = 231;                                    /* It must be 231 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    tvWBColor_t colorValue = tvWB_COLOR_RED;
+    tvWBControl_t controlValue = tvWB_CONTROL_GAIN;
+    uint32_t colorCount = 0;
+    uint32_t controlCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings SetCustom2PointWhiteBalance for all the pqmode,videoFormatType,color,control and expecting the API to return success */
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+    controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+
+    for (unsigned int k = 0; k < colorCount; k++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", k);
+        colorValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned int l = 0;l < controlCount; l++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", l);
+            controlValue = (int)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            result = SetCustom2PointWhiteBalance(colorValue,controlValue,50);
+            UT_ASSERT_EQUAL(result, tvERROR_NONE);
+        }
+    }
+    
+    /* Step 03: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+/**
+ * @brief Validate SetCustom2PointWhiteBalance() for all negative invocation scenarios
+ *
+ * @note tvERROR_GENERAL is platform specific and cannot be simulated
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 232@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call SetCustom2PointWhiteBalance() -  set current TV Custom WhiteBalance even before TvInit() | tvVideoSrcType_t , tvWBColor_t , tvWBControl_t ,int  | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call SetCustom2PointWhiteBalance() -  "control,value"=valid, "color"=invalid lower range| -1,tvWBControl_t,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call SetCustom2PointWhiteBalance() -  "control,value"=valid, "color"=invalid max range| tvWB_COLOR_MAX,tvWBControl_t ,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call SetCustom2PointWhiteBalance() -  "color,value"=valid, "control"=invalid lower range| tvWBColor_t,-1,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call SetCustom2PointWhiteBalance() -  "color,value"=valid, "control"=invalid max range| tvWBColor_t,tvWB_CONTROL_MAX ,int| tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call SetCustom2PointWhiteBalance() -  "color,control"=valid, "value"=invalid max range| tvWBColor_t ,tvWB_CONTROL_GAIN,2048| tvERROR_INVALID_PARAM | Should Pass |
+ * | 08 | call SetCustom2PointWhiteBalance() -  "color,control"=valid, "value"=invalid lower range| tvWBColor_t ,tvWB_CONTROL_GAIN,-1| tvERROR_INVALID_PARAM | Should Pass |
+ * | 09 | call SetCustom2PointWhiteBalance() -  Set current Custom WhiteBalance with valid color, control value but not supported by the platform by looping through the SupportedCustomWhiteBalanceColor SupportedCustomWhiteBalanceControl sections of test specific config file| tvWBColor_t ,tvWBControl_t, 50| tvERROR_INVALID_PARAM | Should Pass |
+ * | 10 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 11 | call SetCustom2PointWhiteBalance() -  set current Custom WhiteBalance valid arguments | tvWBColor_t ,tvWBControl_t,int  | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_SetCustom2PointWhiteBalance (void)
+{
+    gTestID = 232;                                    /* It must be 232 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    bool SupportAvailable = true;
+    tvWBColor_t colorValue = tvWB_COLOR_RED;
+    tvWBControl_t controlValue = tvWB_CONTROL_GAIN;
+    uint32_t colorCount = 0;
+    uint32_t controlCount = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceControl/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetCustom2PointWhiteBalance(colorValue,controlValue, 50);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+    /* Step 03: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetCustom2PointWhiteBalance(-1,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 04: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetCustom2PointWhiteBalance(tvWB_COLOR_MAX,controlValue,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 05: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetCustom2PointWhiteBalance(colorValue,-1,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 06: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetCustom2PointWhiteBalance(colorValue,tvWB_CONTROL_MAX,50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 07: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetCustom2PointWhiteBalance(colorValue,tvWB_CONTROL_GAIN,2048);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 08: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetCustom2PointWhiteBalance(colorValue,tvWB_CONTROL_GAIN,-1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 09: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+    for (int i=tvWB_COLOR_RED; i<= tvWB_COLOR_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(unsigned int j =0; j < colorCount; j++){
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", j);
+            colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvWBColor_t) colorValue == (tvWBColor_t) i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+        if(!SupportAvailable)
+        {
+            result = SetCustom2PointWhiteBalance((tvWBColor_t)i,controlValue,10);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+    
+    colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    for (int i=tvWB_CONTROL_GAIN; i<= tvWB_CONTROL_MAX; i++)
+    {
+        SupportAvailable = false;
+        for(unsigned int j =0; j < controlCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
+            controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvWBControl_t)controlValue == (tvWBControl_t) i)
+            {
+                SupportAvailable = true;
+                break;
+            }
+        }
+        if(!SupportAvailable)
+        {
+            result = SetCustom2PointWhiteBalance(colorValue,(tvWBControl_t)i,10);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+    
+    /* Step 10: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 11: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetCustom2PointWhiteBalance(colorValue,controlValue, 1000);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+
+/**
+ * @brief Validate GetCustom2PointWhiteBalance() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 233@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call GetCustom2PointWhiteBalance() - Retrieve the Custom WB with valid arguments by looping through all the values of color from WBColor section of test specific config file | tvWBColor_t,tvWBControl_t, int * | (tvERROR_NONE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass |
+ * | 03 | call GetCustom2PointWhiteBalance() -  Retrieve the Custom WB  with valid argument and validate with above value | tvWBColor_t,tvWBControl_t, int * | tvERROR_NONE | Should Pass |
+ * | 04 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetCustom2PointWhiteBalance (void)
+{
+    gTestID = 233;                                    /* It must be 233 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE;
+    int WB = 0;
+    int WBRetry = 0;
+    uint32_t colorCount = 0;
+    uint32_t controlCount = 0;
+    tvWBColor_t color = tvWB_COLOR_RED;
+    tvWBControl_t control = tvWB_CONTROL_GAIN;
+	
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetCustom2PointWhiteBalance and expecting the API to return success */
+    color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceControl/0");
+    result = GetCustom2PointWhiteBalance(color,control,&WB);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetCustom2PointWhiteBalance and expecting the API to return success */
+    result = GetCustom2PointWhiteBalance(color,control,&WBRetry);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+    UT_ASSERT_EQUAL(WB, WBRetry);
+
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+    controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    for (unsigned int j = 0; j < colorCount; ++j)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", j);
+        color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+	
+        for (unsigned int k = 0; k < controlCount; ++k)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", k);
+            control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+		
+            result = GetCustom2PointWhiteBalance(color,control,&WB);
+            UT_ASSERT_EQUAL(result, tvERROR_NONE);
+            if( control == tvWB_CONTROL_GAIN )
+            {
+                UT_ASSERT_TRUE( (WB >=0 && WB <= 2047));
+            }
+            else
+            {
+                UT_ASSERT_TRUE( (WB >=-1024 && WB <= 1024));
+            }
+        }
+    }
+	
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+
+/**
+ * @brief Validate GetCustom2PointWhiteBalance() for all negative invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 234@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance even before TvInit() |tvVideoSrcType_t,tvWBColor_t,tvWBControl_t, int * | (tvERROR_INVALID_STATE | tvERROR_OPERATION_NOT_SUPPORTED) | Should Pass and exit if tvERROR_OPERATION_NOT_SUPPORTED |
+ * | 02 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance with Max range of tvWBColor_t  | tvWB_COLOR_MAX, tvWBControl_t, int * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance withless than low range of tvWBColor_t  | -1, tvWBControl_t, int *  | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance with Max range of  tvWBControl_t  | tvWBColor_t, tvWB_CONTROL_MAX,int * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance with less than range of  tvWBControl_t  | tvWBColor_t, -1 ,int * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance with invalid color,control | tvWBColor_t, -1 ,int * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 08 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 09 | call GetCustom2PointWhiteBalance() -  Retrieve current TV Custom WhiteBalance with valid arguments | tvWBControl_t,tvWBControl_t, int * | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
+{
+
+    gTestID = 234;                                    /* It must be 234 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE;
+    int WB = 0;
+    int colorCount = 0;
+    int controlCount = 0;
+    bool bModeMatched = false;
+    tvWBColor_t color = tvWB_COLOR_RED;
+    tvWBControl_t control = tvWB_CONTROL_GAIN;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceControl/0");
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetCustom2PointWhiteBalance before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetCustom2PointWhiteBalance(color,control, &WB);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+    /* Step 03: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
+    result = GetCustom2PointWhiteBalance(tvWB_COLOR_MAX,control,&WB);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
+    result = GetCustom2PointWhiteBalance(-1,control,&WB);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 05: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
+    result = GetCustom2PointWhiteBalance(color,tvWB_CONTROL_MAX,&WB);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 06: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
+    result = GetCustom2PointWhiteBalance(color,-1,&WB);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+    /* Step 07: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+    for (int i=tvWB_COLOR_RED; i< tvWB_COLOR_MAX; i++)
+    {
+        bModeMatched = false;
+        for(unsigned int j =0; j < colorCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", j);
+            color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvWBColor_t) color == (tvWBColor_t) i)
+            {
+                bModeMatched = true;
+                break;
+            }
+        }
+        if(!bModeMatched)
+        {
+            result = GetCustom2PointWhiteBalance((tvWBColor_t)i,control,&WB);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+    
+    color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    for (int i=tvWB_CONTROL_GAIN; i< tvWB_CONTROL_MAX; i++)
+    {
+        bModeMatched = false;
+        for(unsigned int j =0; j < controlCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
+            control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if((tvWBControl_t) control == (tvWBControl_t) i)
+            {
+                bModeMatched = true;
+                break;
+            }
+        }
+        if(!bModeMatched)
+        {
+            result = GetCustom2PointWhiteBalance(color,(tvWBControl_t)i,&WB);
+            UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+        }
+    }
+    
+
+    /* Step 08: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
+    control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceControl/0");
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return success */
+        result = GetCustom2PointWhiteBalance(color,control, &WB);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s",__FUNCTION__);
+}
 
 static UT_test_suite_t * pSuite = NULL;
 
@@ -17972,6 +18590,12 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "EnableLocalContrast_L1_negative" ,test_l1_tvSettings_negative_EnableLocalContrast );
     UT_add_test( pSuite, "GetLdimZoneShortCircuitStatus_L1_positive" ,test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus );
     UT_add_test( pSuite, "GetLdimZoneShortCircuitStatus_L1_negative" ,test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus );
+    UT_add_test( pSuite, "SetCustom2PointWhiteBalance_L1_positive" ,test_l1_tvSettings_positive_SetCustom2PointWhiteBalance );
+    UT_add_test( pSuite, "SetCustom2PointWhiteBalance_L1_negative" ,test_l1_tvSettings_negative_SetCustom2PointWhiteBalance );
+    UT_add_test( pSuite, "GetCustom2PointWhiteBalance_L1_positive" ,test_l1_tvSettings_positive_GetCustom2PointWhiteBalance);
+    UT_add_test( pSuite, "GetCustom2PointWhiteBalance_L1_negative" ,test_l1_tvSettings_negative_GetCustom2PointWhiteBalance );
+    UT_add_test( pSuite, "SaveCustom2PointWhiteBalance_L1_positive" ,test_l1_tvSettings_positive_SaveCustom2PointWhiteBalance );
+    UT_add_test( pSuite, "SaveCustom2PointWhiteBalance_L1_negative" ,test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance );
     UT_add_test( pSuite, "RegisterVideoFormatChangeCB_L1_positive" ,test_l1_tvSettings_positive_RegisterVideoFormatChangeCB );
     UT_add_test( pSuite, "RegisterVideoFormatChangeCB_L1_negative" ,test_l1_tvSettings_negative_RegisterVideoFormatChangeCB );
     UT_add_test( pSuite, "RegisterVideoContentChangeCB_L1_positive" ,test_l1_tvSettings_positive_RegisterVideoContentChangeCB );
