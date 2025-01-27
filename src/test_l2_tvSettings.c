@@ -3987,6 +3987,97 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
 
+/**
+* @brief Test to verify the setting and getting of customWhiteBalance
+*
+* This test initializes the TV settings, loops through the different color  and control
+* sets and gets the WhiteBalance value for each combination, verifies that the retrieved
+* getWB value matches the set value, and finally de-initializes the TV settings. It uses Cunit's
+* assertion functions to check the return values of the API calls.
+*
+* **Test Group ID:** 02@n
+* **Test Case ID:** 029@n
+*
+* **Test Procedure:**
+* Refer to Test specification documentation [tv-settings_L2_Low_Level_Test_Spec.md](../docs/pages/tv-settings_L2_Low_Level_Test_Spec.md)
+*/
+
+void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
+{
+    gTestID = 29;
+    UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t status = tvERROR_NONE;
+    int32_t getWB = 0;
+    int32_t setWB = 0;
+    int32_t from =0;
+    int32_t to = 0;
+    int32_t colorCount = 0;
+    int32_t controlCount = 0;
+    char keyValue[KEY_VALUE_SIZE] = {0};
+    tvWBColor_t color = tvWB_COLOR_RED;
+    tvWBControl_t control = tvWB_CONTROL_GAIN;
+
+    UT_LOG_DEBUG("Invoking TvInit");
+    status = TvInit();
+    UT_LOG_DEBUG("TvInit status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+
+    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+	controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+
+    for(int32_t i = 0; i < colorCount; i++)
+    {
+        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", i);
+        color = UT_KVP_PROFILE_GET_UINT32( keyValue);
+
+        for(int32_t j = 0; j < controlCount; j++)
+        {
+            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
+            control = UT_KVP_PROFILE_GET_UINT32( keyValue);
+            if (control == tvWB_CONTROL_GAIN) {
+                from = 0;
+                to = 2047;
+            } else if (control == tvWB_CONTROL_OFFSET) {
+                from = -1024;
+                to = 1023;
+            }
+			
+            for (setWB = from; setWB <= to; setWB += (to - from) / 10)
+            {
+                UT_LOG_DEBUG("Invoking SetCustom2PointWhiteBalance with color: %d, control: %d, setWB: %d", color,control,setWB);
+                status = SetCustom2PointWhiteBalance(color,control,setWB);
+                UT_LOG_DEBUG("SetCustom2PointWhiteBalance status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if(status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("SetCustom2PointWhiteBalance failed with status: %d", status);
+                }
+
+                UT_LOG_DEBUG("Invoking GetCustom2PointWhiteBalance with color: %d, control: %d",color,control);
+                status = GetCustom2PointWhiteBalance(color, control, &getWB);
+                UT_LOG_DEBUG("getWB: %d, status: %d", getWB, status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                if(status != tvERROR_NONE)
+                {
+                    UT_LOG_ERROR("GetCustom2PointWhiteBalance failed with status: %d", status);
+                }
+                UT_ASSERT_EQUAL(setWB, getWB);
+                if(setWB != getWB)
+                {
+                    UT_LOG_ERROR("Mismatch in set and retrieved WB values");
+                }
+            }
+        }
+    }
+    UT_LOG_DEBUG("Invoking TvTerm");
+    status = TvTerm();
+    UT_LOG_DEBUG("TvTerm status: %d", status);
+    UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
+
+    UT_LOG_INFO("Out %s\n", __FUNCTION__);
+}
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -4056,7 +4147,7 @@ int32_t test_l2_tvSettings_register(void)
     UT_add_test( pSuite, "L2_EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
     UT_add_test( pSuite, "L2_GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
     UT_add_test( pSuite, "L2_RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
-
+    UT_add_test( pSuite, "L2_SetandGetCustom2PointWhiteBalance", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
     return 0;
 }
 
