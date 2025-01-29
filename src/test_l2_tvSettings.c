@@ -1772,7 +1772,7 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
         UT_LOG_ERROR("GetTVSupportedDolbyVisionModes failed with status: %d", status);
     }
 
-    for ( int32_t i = 0; i <= getcount; i++ )
+    for ( int32_t i = 0; i < getcount; i++ )
     {
         UT_LOG_DEBUG("Invoking SetTVDolbyVisionMode with dolbyMode: %d", (*dvModes)[i]);
         status = SetTVDolbyVisionMode((*dvModes)[i]);
