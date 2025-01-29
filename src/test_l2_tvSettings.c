@@ -1639,7 +1639,7 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Invalid };
+    tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Dark };
     tvDolbyMode_t *dvModesPtr[tvMode_Max];
     uint16_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
@@ -1723,7 +1723,7 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
     tvError_t status = tvERROR_NONE;
     tvDolbyMode_t getDolbyMode = tvMode_Max;
     uint16_t getcount = 0;
-    tvDolbyMode_t dvModes[tvMode_Max];
+    tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Dark };
     tvDolbyMode_t *dvModesPtr[tvMode_Max];
 
     UT_LOG_DEBUG("Invoking TvInit");
