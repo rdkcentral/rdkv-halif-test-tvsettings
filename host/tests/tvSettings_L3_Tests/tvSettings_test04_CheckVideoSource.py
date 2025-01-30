@@ -74,8 +74,15 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
 
         # Iterate through streams, but only for VIDEO_SOURCE_IP
         for stream in streams:
-            # Start the stream playback
-            self.testPlayer.play(stream)
+
+            # Download the individual stream
+            self.testDownloadAssetsByUrl(stream)
+
+            streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(stream))
+
+            # Play the stream
+            self.testPlayer.play(streamFullPath)
+
             time.sleep(3)  # Wait for a moment to let the stream start
 
             self.log.stepStart(f'Video Source Level: VIDEO_SOURCE_IP Stream: {stream}')
