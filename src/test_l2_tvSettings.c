@@ -3444,6 +3444,10 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                     {
                         UT_ASSERT_EQUAL(value, 500);
                     }
+                    else if ( pqParamIndex >= PQ_PARAM_CMS_LUMA_RED ||  pqParamIndex  <= PQ_PARAM_CMS_LUMA_MAGENTA )
+                    {
+                        UT_ASSERT_EQUAL(value,15);
+                    }
                     else
                     {
                         UT_ASSERT_EQUAL(value, 50);
