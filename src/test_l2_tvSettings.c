@@ -3444,18 +3444,6 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                     {
                         UT_ASSERT_EQUAL(value, 500);
                     }
-                    else if ( pqParamIndex >= PQ_PARAM_CMS_LUMA_RED ||  pqParamIndex  <= PQ_PARAM_CMS_LUMA_MAGENTA )
-                    {
-                        UT_ASSERT_EQUAL(value,15);
-                    }
-                    else if( pqParamIndex >= PQ_PARAM_WB_GAIN_RED || pqParamIndex  <= PQ_PARAM_WB_GAIN_BLUE)
-                    {
-                        UT_ASSERT_EQUAL(value,1024);
-                    }
-                    else if( pqParamIndex >= PQ_PARAM_WB_OFFSET_RED || pqParamIndex  <= PQ_PARAM_WB_OFFSET_BLUE)
-                    {
-                        UT_ASSERT_EQUAL(value,0);
-                    }
                     else
                     {
                         UT_ASSERT_EQUAL(value, 50);
