@@ -155,7 +155,7 @@ void test_l2_tvSettings_GetSupportedVideoFormats(void)
 
     tvError_t status = tvERROR_NONE;
     tvVideoFormatType_t videoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
-    tvVideoFormatType_t *videoFormatsPtr[VIDEO_FORMAT_MAX];
+    tvVideoFormatType_t *videoFormatsPtr[VIDEO_FORMAT_MAX]={0};
     uint32_t format = 0;
     int32_t flag = 0, j = 0, count = 0;
     uint16_t numberOfFormats = 0;
@@ -392,7 +392,7 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
 
     tvError_t status = tvERROR_NONE;
     tvVideoSrcType_t videoSources[VIDEO_SOURCE_MAX];
-    tvVideoSrcType_t *videoSourcesPtr[VIDEO_SOURCE_MAX];
+    tvVideoSrcType_t *videoSourcesPtr[VIDEO_SOURCE_MAX]={0};
     uint32_t source = 0;
     int32_t flag = 0, j =0 , count = 0;
     uint16_t numberOfSources;
@@ -782,7 +782,7 @@ void test_l2_tvSettings_GetSupportedDimmingModes(void)
 
     tvError_t status = tvERROR_NONE;
     tvDimmingMode_t dimmingModes[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
-    tvDimmingMode_t *dimmingModesPtr[tvDimmingMode_MAX];
+    tvDimmingMode_t *dimmingModesPtr[tvDimmingMode_MAX]={0};
 
     uint16_t numDimmingModes = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
@@ -866,7 +866,7 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
 
     tvError_t status = tvERROR_NONE;
     tvDimmingMode_t supportedDimmingModes[tvDimmingMode_MAX];
-    tvDimmingMode_t *supportedDimmingModesPtr[tvDimmingMode_MAX];
+    tvDimmingMode_t *supportedDimmingModesPtr[tvDimmingMode_MAX]={0};
     char getDimmingMode[10] = { 0 };
     int32_t count = 0;
     uint16_t numDimmingModes = 0;
@@ -1640,7 +1640,7 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
 
     tvError_t status = tvERROR_NONE;
     tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Dark };
-    tvDolbyMode_t *dvModesPtr[tvMode_Max];
+    tvDolbyMode_t *dvModesPtr[tvMode_Max]={0};
     uint16_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
     uint32_t mode = 0;
@@ -1724,7 +1724,7 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
     tvDolbyMode_t getDolbyMode = tvMode_Max;
     uint16_t getcount = 0;
     tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Dark };
-    tvDolbyMode_t *dvModesPtr[tvMode_Max];
+    tvDolbyMode_t *dvModesPtr[tvMode_Max]={0};
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
@@ -1793,7 +1793,7 @@ void test_l2_tvSettings_GetTVSupportedPictureModes(void)
 
     tvError_t status = tvERROR_NONE;
     pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     uint16_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
     char szReturnedString[UT_KVP_MAX_ELEMENT_SIZE];
@@ -1884,7 +1884,7 @@ void test_l2_tvSettings_SetAndGetPictureMode(void)
 
     tvError_t status = tvERROR_NONE;
     pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     uint16_t count = 0;
     char getPictureMode[PIC_MODE_NAME_MAX] = {0};
 
@@ -3321,11 +3321,11 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     tvVideoFormatType_t videoFormatType = VIDEO_FORMAT_MAX;
     tvPQParameterIndex_t pqParamIndex = PQ_PARAM_MAX;
     tvVideoFormatType_t videoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
-    tvVideoFormatType_t *videoFormatsPtr[VIDEO_FORMAT_MAX];
+    tvVideoFormatType_t *videoFormatsPtr[VIDEO_FORMAT_MAX]={0};
     tvVideoSrcType_t videoSources[VIDEO_SOURCE_MAX];
-    tvVideoSrcType_t *videoSourcesPtr[VIDEO_SOURCE_MAX];
+    tvVideoSrcType_t *videoSourcesPtr[VIDEO_SOURCE_MAX]={0};
     pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     int32_t pq_mode = 0;
     uint16_t countVideoSrc = 0, countVideoFormat= 0, countPictureFormat =0;
 

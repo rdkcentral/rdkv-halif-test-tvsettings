@@ -810,9 +810,9 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
     tvError_t result = tvERROR_NONE;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
     tvVideoFormatType_t tvVideoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
-    tvVideoFormatType_t *tvVideoFormatsPtr[VIDEO_FORMAT_MAX];
+    tvVideoFormatType_t *tvVideoFormatsPtr[VIDEO_FORMAT_MAX]={0};
     tvVideoFormatType_t tvVideoFormatsRetry[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
-    tvVideoFormatType_t *tvVideoFormatsRetryPtr[VIDEO_FORMAT_MAX];
+    tvVideoFormatType_t *tvVideoFormatsRetryPtr[VIDEO_FORMAT_MAX]={0};
     bool IsVideoFormatValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -902,7 +902,7 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats(void)
 
     tvError_t result = tvERROR_NONE;
     tvVideoFormatType_t tvVideoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
-    tvVideoFormatType_t *tvVideoFormatsPtr[VIDEO_FORMAT_MAX];
+    tvVideoFormatType_t *tvVideoFormatsPtr[VIDEO_FORMAT_MAX]={0};
     unsigned short size = 0;
 
     for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
@@ -2676,9 +2676,9 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
 
     tvError_t result = tvERROR_NONE;
     tvDimmingMode_t tvDimmingModes[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
-    tvDimmingMode_t *tvDimmingModesPtr[tvDimmingMode_MAX];
+    tvDimmingMode_t *tvDimmingModesPtr[tvDimmingMode_MAX]={0};
     tvDimmingMode_t tvDimmingModesRetry[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
-    tvDimmingMode_t *tvDimmingModesRetryPtr[tvDimmingMode_MAX];
+    tvDimmingMode_t *tvDimmingModesRetryPtr[tvDimmingMode_MAX]={0};
     bool IsDimmingModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -2770,7 +2770,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
 
     tvError_t result = tvERROR_NONE ;
     tvDimmingMode_t tvDimmingModes[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
-    tvDimmingMode_t *tvDimmingModesPtr[tvDimmingMode_MAX];
+    tvDimmingMode_t *tvDimmingModesPtr[tvDimmingMode_MAX]={0};
     unsigned short size = 0;
 
     for (int i = 0; i < tvDimmingMode_MAX; i++)
@@ -8198,9 +8198,9 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
 
     tvError_t result = tvERROR_NONE;
     tvDolbyMode_t tvDolbyModes[tvMode_Max] = { tvDolbyMode_Dark };
-    tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max];
+    tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max]={0};
     tvDolbyMode_t tvDolbyModesRetry[tvMode_Max] = { tvDolbyMode_Dark };
-    tvDolbyMode_t *tvDolbyModesRetryPtr[tvMode_Max];
+    tvDolbyMode_t *tvDolbyModesRetryPtr[tvMode_Max]={0};
 
     bool IsDolbyModeValid = true;
     unsigned short sizeReceived = 0;
@@ -8295,7 +8295,7 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
 
     tvError_t result = tvERROR_NONE ;
     tvDolbyMode_t tvDolbyModes[tvMode_Max] = { tvDolbyMode_Invalid };
-    tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max];
+    tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max]={0};
 
     unsigned short size = 0;
     for (int i = 0; i < tvMode_Max; i++)
@@ -8878,9 +8878,9 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 
     tvError_t result = tvERROR_NONE;
     pic_modes_t tvPicModes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *tvPicModesPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *tvPicModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     pic_modes_t tvPicModesRetry[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *tvPicModesRetryPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *tvPicModesRetryPtr[PIC_MODES_SUPPORTED_MAX]={0};
 
     bool IsPictureModeValid = true;
     unsigned short sizeReceived = 0;
@@ -8975,7 +8975,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
 
     tvError_t result = tvERROR_NONE ;
     pic_modes_t pic_modes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *pic_modesPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pic_modesPtr[PIC_MODES_SUPPORTED_MAX]={0};
 
     unsigned short size = 0;
     for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)

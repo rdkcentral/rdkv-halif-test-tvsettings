@@ -1803,7 +1803,7 @@ void test_l3_tvSettings_PictureMode(void)
     char currentPictureMode[PIC_MODE_NAME_MAX] = {0};
     char selectedPictureMode[PIC_MODE_NAME_MAX] = {0};
     pic_modes_t supportedPictureModes[PIC_MODES_SUPPORTED_MAX];
-    pic_modes_t *supportedPictureModesPtr[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *supportedPictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     unsigned short pictureModeCount = 0;
     int32_t userChoice = 0;
     for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)
