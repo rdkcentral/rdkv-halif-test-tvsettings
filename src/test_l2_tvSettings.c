@@ -3361,7 +3361,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     status = GetTVSupportedVideoSources(videoSourcesPtr, &countVideoSrc);
     UT_LOG_DEBUG("Return status: %d, Number of sources: %d", status, countVideoSrc);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (countVideoSrc < 1 || countVideoSrc > VIDEO_SOURCE_MAX)
+    if (countVideoSrc < 1 || countVideoSrc >= VIDEO_SOURCE_MAX)
     {
         UT_FAIL("In valid number of supported video sources");
         goto exit;
@@ -3401,7 +3401,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
             {
                 pq_mode = pictureModes[z].value;
 
-                UT_LOG_DEBUG("Invoking SaveBrightness(), SaveContrast(), SaveSaturation(), SaveHue() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=50", videoSrcType, pq_mode, videoFormatType);
+                UT_LOG_DEBUG("Invoking SaveBrightness(), SaveContrast(), SaveSaturation(), SaveHue(), SaveBacklight() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=50", videoSrcType, pq_mode, videoFormatType);
                 status = SaveBrightness(videoSrcType, pq_mode, videoFormatType, 50);
                 UT_LOG_DEBUG(" SaveBrightness Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
@@ -3414,39 +3414,51 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                 status = SaveHue(videoSrcType, pq_mode, videoFormatType, 50);
                 UT_LOG_DEBUG(" SaveHue Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-                UT_LOG_DEBUG("Invoking SetCurrentComponentSaturation() with blSaturationColor=%d, saturation=50", videoSrcType);
-                status = SetCurrentComponentSaturation(videoSrcType, 50);
-                UT_LOG_DEBUG(" SetCurrentComponentSaturation Return status: %d", status);
+                status = SaveBacklight(videoSrcType, pq_mode, videoFormatType, 50);
+                UT_LOG_DEBUG(" SaveBacklight Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-                UT_LOG_DEBUG("Invoking SaveDvTmaxValue() with state=LDIM_STATE_NONBOOST, value=500");
-                status = SaveDvTmaxValue(LDIM_STATE_NONBOOST, 500);
-                UT_LOG_DEBUG(" SaveDvTmaxValue Return status: %d", status);
+                UT_LOG_DEBUG("Invoking SaveTVDolbyVisionMode(), SaveLowLatencyState(), SaveLowLatencyState(), SaveAspectRatio(), SaveColorTemperature(), SaveLocalDimmingLevel()  with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=1", videoSrcType, pq_mode, videoFormatType);
+                status = SaveTVDolbyVisionMode(videoSrcType, pq_mode, videoFormatType, tvDolbyMode_Bright);
+                UT_LOG_DEBUG(" SaveTVDolbyVisionMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-                UT_LOG_DEBUG("Invoking SaveLowLatencyState() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=1", videoSrcType, pq_mode, videoFormatType);
                 status = SaveLowLatencyState(videoSrcType, pq_mode, videoFormatType, 1);
                 UT_LOG_DEBUG(" SaveLowLatencyState Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                status = SaveAspectRatio(videoSrcType, pq_mode, videoFormatType, tvDisplayMode_16x9);
+                UT_LOG_DEBUG(" SaveAspectRatio Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                status = SaveColorTemperature(videoSrcType, pq_mode, videoFormatType, tvColorTemp_WARM);
+                UT_LOG_DEBUG(" SaveColorTemperature Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                status = SaveLocalDimmingLevel(videoSrcType, pq_mode, videoFormatType, LDIM_STATE_BOOST);
+                UT_LOG_DEBUG(" SaveLocalDimmingLevel Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                UT_LOG_DEBUG("Invoking SaveTVDimmingMode()  with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=0", videoSrcType, pq_mode, videoFormatType);
+                status = SaveTVDimmingMode(videoSrcType, pq_mode, videoFormatType, tvDimmingMode_Fixed);
+                UT_LOG_DEBUG(" SaveTVDimmingMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
                 for(pqParamIndex = PQ_PARAM_BRIGHTNESS; pqParamIndex < PQ_PARAM_MAX; pqParamIndex++)
                 {
                     UT_LOG_DEBUG("Invoking GetPQParams() with pqIndex=%d, videoSrcType=%d, videoFormatType=%d, pqParamIndex=%d", pq_mode, videoSrcType, videoFormatType, pqParamIndex);
                     status = GetPQParams(pq_mode, videoSrcType, videoFormatType, pqParamIndex, &value);
-                    UT_LOG_DEBUG(" GetPQParams Return status: %d", status);
+                    UT_LOG_DEBUG(" GetPQParams Return status: %d value: %d", status, value);
                     UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(pqParamIndex == PQ_PARAM_LOWLATENCY_STATE)
+
+                    if ( pqParamIndex == PQ_PARAM_BRIGHTNESS || pqParamIndex == PQ_PARAM_CONTRAST ||
+                        pqParamIndex == PQ_PARAM_SATURATION || pqParamIndex == PQ_PARAM_HUE || pqParamIndex == PQ_PARAM_BACKLIGHT )
+                    {
+                        UT_ASSERT_EQUAL(value, 50);
+                    }
+                    else if ( pqParamIndex == PQ_PARAM_LOWLATENCY_STATE || pqParamIndex == PQ_PARAM_DOLBY_MODE ||
+                             pqParamIndex == PQ_PARAM_ASPECT_RATIO || pqParamIndex == PQ_PARAM_COLOR_TEMPERATURE ||
+                             pqParamIndex == PQ_PARAM_LOCALDIMMING_LEVEL )
                     {
                         UT_ASSERT_EQUAL(value, 1);
                     }
-                    else if(pqParamIndex == PQ_PARAM_DOLBY_MODE)
+                    else if ( pqParamIndex == PQ_PARAM_DIMMINGMODE )
                     {
-                        UT_ASSERT_EQUAL(value, 500);
-                    }
-                    else
-                    {
-                        UT_ASSERT_EQUAL(value, 50);
+                        UT_ASSERT_EQUAL(value, tvDimmingMode_Fixed);
                     }
                 }
             }
