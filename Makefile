@@ -28,6 +28,7 @@ INC_DIRS := $(ROOT_DIR)/../include
 INC_DIRS += $(ROOT_DIR)/profiles/include
 HAL_LIB := tvsettings-hal
 SKELETON_SRCS := $(ROOT_DIR)/skeletons/src/tvSettings.c
+TARGET_EXEC :=hal_test_$(HAL_LIB)
 
 ifeq ($(TARGET),)
 $(info TARGET NOT SET )
@@ -55,6 +56,7 @@ export INC_DIRS
 export TARGET
 export TOP_DIR
 export HAL_LIB_DIR
+export TARGET_EXEC
 
 .PHONY: clean list build
 
