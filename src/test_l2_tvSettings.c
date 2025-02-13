@@ -154,7 +154,8 @@ void test_l2_tvSettings_GetSupportedVideoFormats(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvVideoFormatType_t *videoFormats;
+    tvVideoFormatType_t videoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
+    tvVideoFormatType_t *videoFormatsPtr[VIDEO_FORMAT_MAX]={0};
     uint32_t format = 0;
     int32_t flag = 0, j = 0, count = 0;
     uint16_t numberOfFormats = 0;
@@ -166,15 +167,11 @@ void test_l2_tvSettings_GetSupportedVideoFormats(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     UT_LOG_DEBUG("Invoking GetTVSupportedVideoFormats with valid parameters");
-    videoFormats = ( tvVideoFormatType_t *) malloc( VIDEO_FORMAT_MAX * sizeof(tvVideoFormatType_t));
-
-    if (videoFormats == NULL) {
-   // Handle memory allocation failure
-        status = TvTerm();
-        UT_FAIL_FATAL("Memory allocation failed for videoFormats");
+    for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
+    {
+            videoFormatsPtr[i] = &videoFormats[i];
     }
-
-    status = GetTVSupportedVideoFormats(&videoFormats, &numberOfFormats);
+    status = GetTVSupportedVideoFormats(videoFormatsPtr, &numberOfFormats);
     UT_LOG_DEBUG("GetTVSupportedVideoFormats returned : %d numberOfFormats :%d ",status, numberOfFormats );
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -394,7 +391,8 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvVideoSrcType_t *videoSources[VIDEO_SOURCE_MAX];
+    tvVideoSrcType_t videoSources[VIDEO_SOURCE_MAX];
+    tvVideoSrcType_t *videoSourcesPtr[VIDEO_SOURCE_MAX]={0};
     uint32_t source = 0;
     int32_t flag = 0, j =0 , count = 0;
     uint16_t numberOfSources;
@@ -404,9 +402,12 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
+    for (int i = 0; i < VIDEO_SOURCE_MAX; i++)
+    {
+        videoSourcesPtr[i] = &videoSources[i];
+    }
     UT_LOG_DEBUG("Invoking GetTVSupportedVideoSources()");
-    status = GetTVSupportedVideoSources(videoSources, &numberOfSources);
+    status = GetTVSupportedVideoSources(videoSourcesPtr, &numberOfSources);
     UT_LOG_DEBUG("Return status: %d, Number of sources: %d", status, numberOfSources);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -426,7 +427,7 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
 
         for ( j = 0; j < numberOfSources; j++)
         {
-            if ( videoSources[j] && (*videoSources[j] == source))
+            if ( videoSources[j] == source)
             {
                 flag = 1;
                 break;
@@ -435,7 +436,7 @@ void test_l2_tvSettings_GetTVSupportedVideoSources(void)
         if (flag == 1)
         {
             UT_PASS("VideoSource match");
-            UT_LOG_DEBUG("Video source : %d is in the list of supported VideoSources", videoSources[j] ? *videoSources[j] : 0);
+            UT_LOG_DEBUG("Video source : %d is in the list of supported VideoSources", videoSources[j]);
         }
         else
         {
@@ -780,7 +781,9 @@ void test_l2_tvSettings_GetSupportedDimmingModes(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvDimmingMode_t *dimmingModes = NULL;
+    tvDimmingMode_t dimmingModes[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
+    tvDimmingMode_t *dimmingModesPtr[tvDimmingMode_MAX]={0};
+
     uint16_t numDimmingModes = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
     uint32_t mode = 0;
@@ -793,17 +796,12 @@ void test_l2_tvSettings_GetSupportedDimmingModes(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-
-    dimmingModes = (tvDimmingMode_t *)malloc(count * sizeof(tvDimmingMode_t));
-
-    if (dimmingModes == NULL) {
-   // Handle memory allocation failure
-        status = TvTerm();
-        UT_FAIL_FATAL("Memory allocation failed for dimmingModes");
+    for (int i = 0; i < tvDimmingMode_MAX; i++)
+    {
+        dimmingModesPtr[i] = &dimmingModes[i];
     }
-
     UT_LOG_DEBUG("Invoking GetTVSupportedDimmingModes with valid output parameters");
-    status = GetTVSupportedDimmingModes(&dimmingModes, &numDimmingModes);
+    status = GetTVSupportedDimmingModes(dimmingModesPtr, &numDimmingModes);
     UT_LOG_DEBUG("Return status: %d, Number of Dimming Modes: %d", status, numDimmingModes);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -839,9 +837,6 @@ void test_l2_tvSettings_GetSupportedDimmingModes(void)
             UT_FAIL("dimmingMode mismatch");
         }
     }
-
-    free(dimmingModes);
-
     UT_LOG_DEBUG("Invoking TvTerm with no input parameters");
     status = TvTerm();
     UT_LOG_DEBUG("Return status: %d", status);
@@ -870,7 +865,8 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvDimmingMode_t *supportedDimmingModes = NULL;
+    tvDimmingMode_t supportedDimmingModes[tvDimmingMode_MAX];
+    tvDimmingMode_t *supportedDimmingModesPtr[tvDimmingMode_MAX]={0};
     char getDimmingMode[10] = { 0 };
     int32_t count = 0;
     uint16_t numDimmingModes = 0;
@@ -881,16 +877,12 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-    supportedDimmingModes = (tvDimmingMode_t *)malloc( count * sizeof(tvDimmingMode_t));
-
-    if (supportedDimmingModes == NULL) {
-        // Handle memory allocation failure
-        status = TvTerm();
-        UT_FAIL_FATAL("Memory allocation failed for dimmingModes");
+    for (int i = 0; i < tvDimmingMode_MAX; i++)
+    {
+        supportedDimmingModesPtr[i] = &supportedDimmingModes[i];
     }
-
     UT_LOG_DEBUG("Invoking GetTVSupportedDimmingModes with valid output parameters");
-    status = GetTVSupportedDimmingModes(&supportedDimmingModes, &numDimmingModes);
+    status = GetTVSupportedDimmingModes(supportedDimmingModesPtr, &numDimmingModes);
     UT_LOG_DEBUG("Return status: %d, Number of Dimming Modes: %d", status, numDimmingModes);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -933,10 +925,6 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
             UT_ASSERT_STRING_EQUAL(getDimmingMode, dimmingModeStr);
         }
     }
-
-    free(supportedDimmingModes);
-    supportedDimmingModes = NULL;
-
     status = TvTerm();
     UT_LOG_DEBUG("Invoking TvTerm");
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -1651,8 +1639,8 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvDolbyMode_t **dvModes;
-    tvDolbyMode_t supportedDvModes[tvMode_Max];
+    tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Dark };
+    tvDolbyMode_t *dvModesPtr[tvMode_Max]={0};
     uint16_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
     uint32_t mode = 0;
@@ -1664,19 +1652,12 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
     status = TvInit();
     UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    dvModes = (tvDolbyMode_t **)malloc(sizeof(tvDolbyMode_t *));
-
-    if (dvModes == NULL) {
-        // Handle memory allocation failure
-        status = TvTerm();
-        UT_FAIL_FATAL("Memory allocation failed for dimmingModes");
+    for (int i = 0; i < tvMode_Max; i++)
+    {
+        dvModesPtr[i] = &dvModes[i];
     }
-
-    *dvModes = supportedDvModes;
-
     UT_LOG_DEBUG("Invoking GetTVSupportedDolbyVisionModes with valid dvModes and count");
-    status = GetTVSupportedDolbyVisionModes(dvModes, &count);
+    status = GetTVSupportedDolbyVisionModes(dvModesPtr, &count);
     UT_LOG_DEBUG("GetTVSupportedDolbyVisionModes status: %d, count: %d", status, count);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -1696,7 +1677,7 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
         j = 0;
         for ( j = 0; j < count; j++)
         {
-            if ( *dvModes && ( (*dvModes)[j] == mode ))
+            if ( dvModes[j] == mode )
             {
                 flag = 1;
                 break;
@@ -1705,16 +1686,13 @@ void test_l2_tvSettings_GetSupportedDolbyVisionModes(void)
         if (flag == 1)
         {
             UT_PASS("DolbyVisionMode match");
-            UT_LOG_DEBUG("DolbyVision Mode is in the list of supported  mode: %d DolbyVisionModes: %d ", mode, *dvModes? (*dvModes)[j] : 0);
+            UT_LOG_DEBUG("DolbyVision Mode is in the list of supported  mode: %d DolbyVisionModes: %d ", mode, dvModes[j]);
         }
         else
         {
-            UT_LOG_ERROR("DolbyVisionMode mismatch mode %d DolbyVisionModes: %d ", mode, *dvModes? (*dvModes)[j] : 0);
+            UT_LOG_ERROR("DolbyVisionMode mismatch mode %d DolbyVisionModes: %d ", mode, dvModes[j]);
         }
     }
-
-    free(dvModes);
-
     UT_LOG_DEBUG("Invoking TvTerm");
     status = TvTerm();
     UT_LOG_DEBUG("TvTerm status: %d", status);
@@ -1743,28 +1721,21 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    tvDolbyMode_t supportedDvModes[tvMode_Max];
     tvDolbyMode_t getDolbyMode = tvMode_Max;
     uint16_t getcount = 0;
-    tvDolbyMode_t **dvModes;
+    tvDolbyMode_t dvModes[tvMode_Max] = { tvDolbyMode_Dark };
+    tvDolbyMode_t *dvModesPtr[tvMode_Max]={0};
 
     UT_LOG_DEBUG("Invoking TvInit");
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
-    dvModes = (tvDolbyMode_t **)malloc(sizeof(tvDolbyMode_t *));
-
-    if (dvModes == NULL) {
-        // Handle memory allocation failure
-        status = TvTerm();
-        UT_FAIL_FATAL("Memory allocation failed for dimmingModes");
+    for (int i = 0; i < tvMode_Max; i++)
+    {
+        dvModesPtr[i] = &dvModes[i];
     }
-
-    *dvModes = supportedDvModes;
-
     UT_LOG_DEBUG("Invoking GetTVSupportedDolbyVisionModes with valid dvModes and count");
-    status = GetTVSupportedDolbyVisionModes(dvModes, &getcount);
+    status = GetTVSupportedDolbyVisionModes(dvModesPtr, &getcount);
     UT_LOG_DEBUG("GetTVSupportedDolbyVisionModes status: %d, count: %d", status, getcount);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -1772,10 +1743,10 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
         UT_LOG_ERROR("GetTVSupportedDolbyVisionModes failed with status: %d", status);
     }
 
-    for ( int32_t i = 0; i <= getcount; i++ )
+    for ( int32_t i = 0; i < getcount; i++ )
     {
-        UT_LOG_DEBUG("Invoking SetTVDolbyVisionMode with dolbyMode: %d", (*dvModes)[i]);
-        status = SetTVDolbyVisionMode((*dvModes)[i]);
+        UT_LOG_DEBUG("Invoking SetTVDolbyVisionMode with dolbyMode: %d", dvModes[i]);
+        status = SetTVDolbyVisionMode(dvModes[i]);
         UT_LOG_DEBUG("Return status: %d", status);
         UT_ASSERT_EQUAL(status, tvERROR_NONE);
         if (status != tvERROR_NONE)
@@ -1787,8 +1758,8 @@ void test_l2_tvSettings_SetAndGetDolbyVisionMode(void)
         status = GetTVDolbyVisionMode(&getDolbyMode);
         UT_LOG_DEBUG("Return status: %d, getDolbyMode: %d", status, getDolbyMode);
         UT_ASSERT_EQUAL(status, tvERROR_NONE);
-        UT_ASSERT_EQUAL(getDolbyMode, (*dvModes)[i]);
-        if (status != tvERROR_NONE || getDolbyMode != (*dvModes)[i])
+        UT_ASSERT_EQUAL(getDolbyMode, dvModes[i]);
+        if (status != tvERROR_NONE || getDolbyMode != dvModes[i])
         {
             UT_LOG_ERROR("Mismatch in set and get Dolby Vision Mode");
         }
@@ -1821,7 +1792,8 @@ void test_l2_tvSettings_GetTVSupportedPictureModes(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    pic_modes_t *pictureModes;
+    pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     uint16_t count = 0;
     char keyValue[KEY_VALUE_SIZE] = {0};
     char szReturnedString[UT_KVP_MAX_ELEMENT_SIZE];
@@ -1834,9 +1806,12 @@ void test_l2_tvSettings_GetTVSupportedPictureModes(void)
     status = TvInit();
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
+    for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)
+    {
+        pictureModesPtr[i] = &pictureModes[i];
+    }
     UT_LOG_DEBUG("Invoking GetTVSupportedPictureModes with valid pictureModes and count buffers");
-    status = GetTVSupportedPictureModes(&pictureModes, &count);
+    status = GetTVSupportedPictureModes(pictureModesPtr, &count);
     UT_LOG_DEBUG("Return status: %d, count: %d", status, count);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -1908,7 +1883,8 @@ void test_l2_tvSettings_SetAndGetPictureMode(void)
     UT_LOG_INFO("In %s [%02d%03d]\n", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t status = tvERROR_NONE;
-    pic_modes_t *pictureModes;
+    pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     uint16_t count = 0;
     char getPictureMode[PIC_MODE_NAME_MAX] = {0};
 
@@ -1916,9 +1892,12 @@ void test_l2_tvSettings_SetAndGetPictureMode(void)
     status = TvInit();
     UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
-
+    for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)
+    {
+        pictureModesPtr[i] = &pictureModes[i];
+    }
     UT_LOG_DEBUG("Invoking GetTVSupportedPictureModes()");
-    status = GetTVSupportedPictureModes(&pictureModes, &count);
+    status = GetTVSupportedPictureModes(pictureModesPtr, &count);
     UT_LOG_DEBUG("GetTVSupportedPictureModes status: %d, count: %d", status, count);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (status != tvERROR_NONE)
@@ -3341,9 +3320,12 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     tvVideoSrcType_t videoSrcType = VIDEO_SOURCE_MAX;
     tvVideoFormatType_t videoFormatType = VIDEO_FORMAT_MAX;
     tvPQParameterIndex_t pqParamIndex = PQ_PARAM_MAX;
-    tvVideoFormatType_t *videoFormats;
-    tvVideoSrcType_t *videoSources[VIDEO_SOURCE_MAX];
-    pic_modes_t *pictureModes;
+    tvVideoFormatType_t videoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
+    tvVideoFormatType_t *videoFormatsPtr[VIDEO_FORMAT_MAX]={0};
+    tvVideoSrcType_t videoSources[VIDEO_SOURCE_MAX];
+    tvVideoSrcType_t *videoSourcesPtr[VIDEO_SOURCE_MAX]={0};
+    pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     int32_t pq_mode = 0;
     uint16_t countVideoSrc = 0, countVideoFormat= 0, countPictureFormat =0;
 
@@ -3355,16 +3337,11 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     countPictureFormat = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
 
     UT_LOG_DEBUG("Invoking GetTVSupportedVideoFormats with valid parameters");
-
-    videoFormats = ( tvVideoFormatType_t *) malloc( VIDEO_FORMAT_MAX * sizeof(tvVideoFormatType_t));
-
-    if (videoFormats == NULL) {
-    // Handle memory allocation failure
-        UT_LOG_ERROR("Memory allocation failed for videoFormats");
-        goto exit;
+    for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
+    {
+        videoFormatsPtr[i] = &videoFormats[i];
     }
-
-    status = GetTVSupportedVideoFormats(&videoFormats, &countVideoFormat);
+    status = GetTVSupportedVideoFormats(videoFormatsPtr, &countVideoFormat);
     UT_LOG_DEBUG("GetTVSupportedVideoFormats returned : %d numberOfFormats :%d ",status, countVideoFormat );
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if(countVideoFormat < 1 || countVideoFormat >= VIDEO_FORMAT_MAX)
@@ -3376,12 +3353,15 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     {
         UT_LOG_ERROR("GetTVSupportedVideoFormats failed with status: %d", status);
     }
-
+    for (int i = 0; i < VIDEO_SOURCE_MAX ; i++)
+    {
+        videoSourcesPtr[i] = &videoSources[i];
+    }
     UT_LOG_DEBUG("Invoking GetTVSupportedVideoSources()");
-    status = GetTVSupportedVideoSources(videoSources, &countVideoSrc);
+    status = GetTVSupportedVideoSources(videoSourcesPtr, &countVideoSrc);
     UT_LOG_DEBUG("Return status: %d, Number of sources: %d", status, countVideoSrc);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (countVideoSrc < 1 || countVideoSrc > VIDEO_SOURCE_MAX)
+    if (countVideoSrc < 1 || countVideoSrc >= VIDEO_SOURCE_MAX)
     {
         UT_FAIL("In valid number of supported video sources");
         goto exit;
@@ -3390,9 +3370,12 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     {
         UT_LOG_ERROR("Failure in GetTVSupportedVideoSources");
     }
-
+    for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)
+    {
+        pictureModesPtr[i] = &pictureModes[i];
+    }
     UT_LOG_DEBUG("Invoking GetTVSupportedPictureModes with valid pictureModes and count buffers");
-    status = GetTVSupportedPictureModes(&pictureModes, &countPictureFormat);
+    status = GetTVSupportedPictureModes(pictureModesPtr, &countPictureFormat);
     UT_LOG_DEBUG("Return status: %d, count: %d", status, countPictureFormat);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if(countPictureFormat < 1 || countPictureFormat > PIC_MODES_SUPPORTED_MAX)
@@ -3408,7 +3391,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
 
     for(int32_t i = 0; i < countVideoSrc; i++)
     {
-        videoSrcType = (*videoSources)[i];
+        videoSrcType = videoSources[i];
 
         for(int32_t j = 0; j < countVideoFormat; j++)
         {
@@ -3418,7 +3401,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
             {
                 pq_mode = pictureModes[z].value;
 
-                UT_LOG_DEBUG("Invoking SaveBrightness(), SaveContrast(), SaveSaturation(), SaveHue() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=50", videoSrcType, pq_mode, videoFormatType);
+                UT_LOG_DEBUG("Invoking SaveBrightness(), SaveContrast(), SaveSaturation(), SaveHue(), SaveBacklight() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=50", videoSrcType, pq_mode, videoFormatType);
                 status = SaveBrightness(videoSrcType, pq_mode, videoFormatType, 50);
                 UT_LOG_DEBUG(" SaveBrightness Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
@@ -3431,39 +3414,51 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                 status = SaveHue(videoSrcType, pq_mode, videoFormatType, 50);
                 UT_LOG_DEBUG(" SaveHue Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-                UT_LOG_DEBUG("Invoking SetCurrentComponentSaturation() with blSaturationColor=%d, saturation=50", videoSrcType);
-                status = SetCurrentComponentSaturation(videoSrcType, 50);
-                UT_LOG_DEBUG(" SetCurrentComponentSaturation Return status: %d", status);
+                status = SaveBacklight(videoSrcType, pq_mode, videoFormatType, 50);
+                UT_LOG_DEBUG(" SaveBacklight Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-                UT_LOG_DEBUG("Invoking SaveDvTmaxValue() with state=LDIM_STATE_NONBOOST, value=500");
-                status = SaveDvTmaxValue(LDIM_STATE_NONBOOST, 500);
-                UT_LOG_DEBUG(" SaveDvTmaxValue Return status: %d", status);
+                UT_LOG_DEBUG("Invoking SaveTVDolbyVisionMode(), SaveLowLatencyState(), SaveLowLatencyState(), SaveAspectRatio(), SaveColorTemperature(), SaveLocalDimmingLevel()  with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=1", videoSrcType, pq_mode, videoFormatType);
+                status = SaveTVDolbyVisionMode(videoSrcType, pq_mode, videoFormatType, tvDolbyMode_Bright);
+                UT_LOG_DEBUG(" SaveTVDolbyVisionMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-
-                UT_LOG_DEBUG("Invoking SaveLowLatencyState() with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=1", videoSrcType, pq_mode, videoFormatType);
                 status = SaveLowLatencyState(videoSrcType, pq_mode, videoFormatType, 1);
                 UT_LOG_DEBUG(" SaveLowLatencyState Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                status = SaveAspectRatio(videoSrcType, pq_mode, videoFormatType, tvDisplayMode_16x9);
+                UT_LOG_DEBUG(" SaveAspectRatio Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                status = SaveColorTemperature(videoSrcType, pq_mode, videoFormatType, tvColorTemp_WARM);
+                UT_LOG_DEBUG(" SaveColorTemperature Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                status = SaveLocalDimmingLevel(videoSrcType, pq_mode, videoFormatType, LDIM_STATE_BOOST);
+                UT_LOG_DEBUG(" SaveLocalDimmingLevel Return status: %d", status);
+                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                UT_LOG_DEBUG("Invoking SaveTVDimmingMode()  with videoSrcType=%d, pq_mode=%d, videoFormatType=%d, value=0", videoSrcType, pq_mode, videoFormatType);
+                status = SaveTVDimmingMode(videoSrcType, pq_mode, videoFormatType, tvDimmingMode_Fixed);
+                UT_LOG_DEBUG(" SaveTVDimmingMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
                 for(pqParamIndex = PQ_PARAM_BRIGHTNESS; pqParamIndex < PQ_PARAM_MAX; pqParamIndex++)
                 {
                     UT_LOG_DEBUG("Invoking GetPQParams() with pqIndex=%d, videoSrcType=%d, videoFormatType=%d, pqParamIndex=%d", pq_mode, videoSrcType, videoFormatType, pqParamIndex);
                     status = GetPQParams(pq_mode, videoSrcType, videoFormatType, pqParamIndex, &value);
-                    UT_LOG_DEBUG(" GetPQParams Return status: %d", status);
+                    UT_LOG_DEBUG(" GetPQParams Return status: %d value: %d", status, value);
                     UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                    if(pqParamIndex == PQ_PARAM_LOWLATENCY_STATE)
+
+                    if ( pqParamIndex == PQ_PARAM_BRIGHTNESS || pqParamIndex == PQ_PARAM_CONTRAST ||
+                        pqParamIndex == PQ_PARAM_SATURATION || pqParamIndex == PQ_PARAM_HUE || pqParamIndex == PQ_PARAM_BACKLIGHT )
+                    {
+                        UT_ASSERT_EQUAL(value, 50);
+                    }
+                    else if ( pqParamIndex == PQ_PARAM_LOWLATENCY_STATE || pqParamIndex == PQ_PARAM_DOLBY_MODE ||
+                             pqParamIndex == PQ_PARAM_ASPECT_RATIO || pqParamIndex == PQ_PARAM_COLOR_TEMPERATURE ||
+                             pqParamIndex == PQ_PARAM_LOCALDIMMING_LEVEL )
                     {
                         UT_ASSERT_EQUAL(value, 1);
                     }
-                    else if(pqParamIndex == PQ_PARAM_DOLBY_MODE)
+                    else if ( pqParamIndex == PQ_PARAM_DIMMINGMODE )
                     {
-                        UT_ASSERT_EQUAL(value, 500);
-                    }
-                    else
-                    {
-                        UT_ASSERT_EQUAL(value, 50);
+                        UT_ASSERT_EQUAL(value, tvDimmingMode_Fixed);
                     }
                 }
             }

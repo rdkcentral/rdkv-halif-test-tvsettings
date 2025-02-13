@@ -809,8 +809,10 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
 
     tvError_t result = tvERROR_NONE;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
-    tvVideoFormatType_t *tvVideoFormats[1]={0};
-    tvVideoFormatType_t *tvVideoFormatsRetry[1]={0};
+    tvVideoFormatType_t tvVideoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
+    tvVideoFormatType_t *tvVideoFormatsPtr[VIDEO_FORMAT_MAX]={0};
+    tvVideoFormatType_t tvVideoFormatsRetry[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
+    tvVideoFormatType_t *tvVideoFormatsRetryPtr[VIDEO_FORMAT_MAX]={0};
     bool IsVideoFormatValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -820,75 +822,55 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-    tvVideoFormats[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvVideoFormatType_t));
-    if (tvVideoFormats[0] != NULL)
+    for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
     {
+        tvVideoFormatsPtr[i] = &tvVideoFormats[i];
+    }
+    /* Step 02: Calling tvsettings GetTVSupportedVideoFormats and expectinging the API to return success */
+    result = GetTVSupportedVideoFormats(tvVideoFormatsPtr, &sizeReceived);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    size = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    UT_ASSERT_EQUAL(sizeReceived, size);
 
-        /* Step 02: Calling tvsettings GetTVSupportedVideoFormats and expectinging the API to return success */
-        result = GetTVSupportedVideoFormats(tvVideoFormats, &sizeReceived);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        size = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-        UT_ASSERT_EQUAL(sizeReceived, size);
-
-        for (unsigned short i = 0; i < size; i++)
+    for (unsigned short i = 0; i < size; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", i);
+        index = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        IsVideoFormatValid = false;
+        for (unsigned short j = 0; j < sizeReceived; j++)
         {
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", i);
-            index = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            IsVideoFormatValid = false;
-            for (unsigned short j = 0; j < sizeReceived; j++)
+            if (index == tvVideoFormats[j])
             {
-                if (index == tvVideoFormats[0][j])
-                {
-                    IsVideoFormatValid = true;
-                    break;
-                }
-            }
-            UT_ASSERT_TRUE((IsVideoFormatValid));
-        }
-        tvVideoFormatsRetry[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvVideoFormatType_t));
-        if (tvVideoFormatsRetry[0] != NULL)
-        {
-
-            /* Step 03: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return success */
-            result = GetTVSupportedVideoFormats(tvVideoFormatsRetry, &sizeReceivedRetry);
-            UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
-            for (unsigned short i = 0; i < sizeReceivedRetry; i++)
-            {
-                IsVideoFormatValid = false;
-                for (unsigned short j = 0; j < sizeReceived; j++)
-                {
-                    if (tvVideoFormatsRetry[0][i] == tvVideoFormats[0][j])
-                    {
-                        IsVideoFormatValid = true;
-                        break;
-                    }
-                }
-                UT_ASSERT_TRUE((IsVideoFormatValid));
+                IsVideoFormatValid = true;
+                break;
             }
         }
-        else
-        {
-            UT_LOG_ERROR("Memory Allocation failed for Retry step ");
-        }
+        UT_ASSERT_TRUE((IsVideoFormatValid));
     }
-    else
+    for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
     {
-        UT_LOG_ERROR("Memory Allocation failed");
+            tvVideoFormatsRetryPtr[i] = &tvVideoFormatsRetry[i];
     }
-    if ( tvVideoFormats[0] ){
-        free ( tvVideoFormats[0] );
+    /* Step 03: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return success */
+    result = GetTVSupportedVideoFormats(tvVideoFormatsRetryPtr, &sizeReceivedRetry);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
+    for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+    {
+        IsVideoFormatValid = false;
+        for (unsigned short j = 0; j < sizeReceived; j++)
+        {
+            if (tvVideoFormatsRetry[i] == tvVideoFormats[j])
+            {
+                IsVideoFormatValid = true;
+                break;
+            }
+        }
+        UT_ASSERT_TRUE((IsVideoFormatValid));
     }
-    if ( tvVideoFormatsRetry[0] ){
-        free ( tvVideoFormatsRetry[0] );
-    }
-
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-
     UT_LOG("Out %s",__FUNCTION__);
 }
 
@@ -919,66 +901,44 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats(void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
 
     tvError_t result = tvERROR_NONE;
-    tvVideoFormatType_t *tvVideoFormats[1] = {0};
+    tvVideoFormatType_t tvVideoFormats[VIDEO_FORMAT_MAX] = { VIDEO_FORMAT_NONE };
+    tvVideoFormatType_t *tvVideoFormatsPtr[VIDEO_FORMAT_MAX]={0};
     unsigned short size = 0;
 
-    tvVideoFormats[0] = (tvVideoFormatType_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvVideoFormatType_t));
-    if (tvVideoFormats[0] != NULL)
+    for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
     {
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 01: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedVideoFormats(tvVideoFormats, &size);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        /* Step 02: Calling tvsettings initialization and expecting the API to return success */
-        result = TvInit();
-        if (result != tvERROR_NONE)
-        {
-            if (tvVideoFormats[0])
-            {
-                free(tvVideoFormats[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        /* Step 03: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedVideoFormats(tvVideoFormats, NULL);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 04: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedVideoFormats(NULL, &size);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 05: Calling tvsettings termination and expecting the API to return success */
-        result = TvTerm();
-        if (result != tvERROR_NONE)
-        {
-            if (tvVideoFormats[0])
-            {
-                free(tvVideoFormats[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 06: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedVideoFormats(tvVideoFormats, &size);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-        if (tvVideoFormats[0])
-        {
-            free(tvVideoFormats[0]);
-        }
+        tvVideoFormatsPtr[i] = &tvVideoFormats[i];
     }
-    else
+
+    if (extendedEnumsSupported == true)
     {
-        UT_LOG_ERROR("Memory Allocation Failed");
+        /* Step 01: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedVideoFormats(tvVideoFormatsPtr, &size);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
-    UT_LOG("Out %s", __FUNCTION__);
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedVideoFormats(tvVideoFormatsPtr, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedVideoFormats(NULL, &size);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 06: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedVideoFormats(tvVideoFormatsPtr, &size);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
 }
 
 /**
@@ -1435,8 +1395,10 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    tvVideoSrcType_t *tvVideoSources[1]={0};
-    tvVideoSrcType_t *tvVideoSourcesRetry[1]={0};
+    tvVideoSrcType_t tvVideoSources[VIDEO_SOURCE_MAX]={0};
+    tvVideoSrcType_t *tvVideoSourcesPtr[VIDEO_SOURCE_MAX]={0};
+    tvVideoSrcType_t tvVideoSourcesRetry[VIDEO_SOURCE_MAX]={0};
+    tvVideoSrcType_t *tvVideoSourcesRetryPtr[VIDEO_SOURCE_MAX]={0};
     bool IsVideoSourceValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -1447,70 +1409,52 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-    tvVideoSources[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvVideoSrcType_t));
-    if (tvVideoSources[0] != NULL)
+    for (int i = 0; i < VIDEO_SOURCE_MAX ; i++)
     {
+        tvVideoSourcesPtr[i] = &tvVideoSources[i];
+    }
+    /* Step 02: Calling tvsettings GetTVSupportedVideoSources and expectinging the API to return success */
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+    result = GetTVSupportedVideoSources(tvVideoSourcesPtr, &sizeReceived);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_EQUAL(sizeReceived, count);
 
-        /* Step 02: Calling tvsettings GetTVSupportedVideoSources and expectinging the API to return success */
-        count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
-        result = GetTVSupportedVideoSources(tvVideoSources, &sizeReceived);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        UT_ASSERT_EQUAL(sizeReceived, count);
-
-        for (unsigned int i = 0; i < sizeReceived; i++)
+    for (unsigned int i = 0; i < sizeReceived; i++)
+    {
+        IsVideoSourceValid = false;
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        source = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned short j = 0; j < count; j++)
         {
-            IsVideoSourceValid = false;
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
-            source = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (unsigned short j = 0; j < count; j++)
+            if (source == tvVideoSources[j])
             {
-                if (source == tvVideoSources[0][j])
-                {
-                    IsVideoSourceValid = true;
-                    break;
-                }
-            }
-            UT_ASSERT_TRUE((IsVideoSourceValid));
-        }
-        tvVideoSourcesRetry[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvVideoSrcType_t));
-        if (tvVideoSourcesRetry[0] != NULL)
-        {
-
-            /* Step 03: Calling tvsettings GetTVSupportedVideoSources and expectinging the API to return success */
-            result = GetTVSupportedVideoSources(tvVideoSourcesRetry, &sizeReceivedRetry);
-            UT_ASSERT_EQUAL(result, tvERROR_NONE);
-
-            for (unsigned short i = 0; i < sizeReceivedRetry; i++)
-            {
-                IsVideoSourceValid = false;
-                for (unsigned short j = 0; j < sizeReceived; j++)
-                {
-                    if (tvVideoSourcesRetry[0][i] == tvVideoSources[0][j])
-                    {
-                        IsVideoSourceValid = true;
-                        break;
-                    }
-                }
-                UT_ASSERT_TRUE((IsVideoSourceValid));
+                IsVideoSourceValid = true;
+                break;
             }
         }
-        else
-        {
-            UT_LOG_ERROR("Memory Allocation Failed for the Retry Step");
-        }
+        UT_ASSERT_TRUE((IsVideoSourceValid));
     }
-    else
+    for (int i = 0; i < VIDEO_SOURCE_MAX ; i++)
     {
-        UT_LOG_ERROR("Memory Allocation Failed");
+        tvVideoSourcesRetryPtr[i] = &tvVideoSourcesRetry[i];
     }
-    if ( tvVideoSources[0] ){
-        free ( tvVideoSources[0] );
-    }
-    if ( tvVideoSourcesRetry[0] ){
-        free ( tvVideoSourcesRetry[0] );
-    }
+    /* Step 03: Calling tvsettings GetTVSupportedVideoSources and expectinging the API to return success */
+    result = GetTVSupportedVideoSources(tvVideoSourcesRetryPtr, &sizeReceivedRetry);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
+    for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+    {
+        IsVideoSourceValid = false;
+        for (unsigned short j = 0; j < sizeReceived; j++)
+        {
+            if (tvVideoSourcesRetry[i] == tvVideoSources[j])
+            {
+                IsVideoSourceValid = true;
+                break;
+            }
+        }
+        UT_ASSERT_TRUE((IsVideoSourceValid));
+    }
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -1547,67 +1491,43 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoSources (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
-    tvVideoSrcType_t *tvVideoSrcType[1] = {0};
+    tvVideoSrcType_t tvVideoSrcType[VIDEO_SOURCE_MAX]={0};
+    tvVideoSrcType_t *tvVideoSrcTypePtr[VIDEO_SOURCE_MAX]={0};
     unsigned short numberOfSources = 0;
-
-    tvVideoSrcType[0] = (tvVideoSrcType_t *)malloc(MAX_VIDEO_FORMAT*sizeof(tvVideoSrcType_t));
-    if (tvVideoSrcType[0] != NULL)
+    for (int i = 0; i < VIDEO_SOURCE_MAX ; i++)
     {
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 01: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedVideoSources(tvVideoSrcType, &numberOfSources);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        /* Step 02: Calling tvsettings initialization and expecting the API to return success */
-        result = TvInit();
-        if (result != tvERROR_NONE)
-        {
-            if (tvVideoSrcType[0])
-            {
-                free(tvVideoSrcType[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        /* Step 03: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedVideoSources(NULL, &numberOfSources);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 04: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedVideoSources(tvVideoSrcType, NULL);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 05: Calling tvsettings termination and expecting the API to return success */
-        result = TvTerm();
-        if (result != tvERROR_NONE)
-        {
-            if (tvVideoSrcType[0])
-            {
-                free(tvVideoSrcType[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 06: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedVideoSources(tvVideoSrcType, &numberOfSources);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        if (tvVideoSrcType[0])
-        {
-            free(tvVideoSrcType[0]);
-        }
-    }
-    else
-    {
-        UT_LOG_ERROR("Memory Allocation Failed");
+        tvVideoSrcTypePtr[i] = &tvVideoSrcType[i];
     }
 
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedVideoSources(tvVideoSrcTypePtr, &numberOfSources);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedVideoSources(NULL, &numberOfSources);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedVideoSources(tvVideoSrcTypePtr, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 06: Calling tvsettings GetTVSupportedVideoSources and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedVideoSources(tvVideoSrcTypePtr, &numberOfSources);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
     UT_LOG("Out %s",__FUNCTION__);
 }
 
@@ -2755,8 +2675,10 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    tvDimmingMode_t *tvDimmingModes[1]={0};
-    tvDimmingMode_t *tvDimmingModesRetry[1]={0};
+    tvDimmingMode_t tvDimmingModes[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
+    tvDimmingMode_t *tvDimmingModesPtr[tvDimmingMode_MAX]={0};
+    tvDimmingMode_t tvDimmingModesRetry[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
+    tvDimmingMode_t *tvDimmingModesRetryPtr[tvDimmingMode_MAX]={0};
     bool IsDimmingModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -2767,71 +2689,50 @@ void test_l1_tvSettings_positive_GetTVSupportedDimmingModes (void)
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-    tvDimmingModes[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvDimmingMode_t));
-    if (tvDimmingModes[0] != NULL)
+    for (int i = 0; i < tvDimmingMode_MAX; i++)
     {
+        tvDimmingModesPtr[i] = &tvDimmingModes[i];
+        tvDimmingModesRetryPtr[i] = &tvDimmingModesRetry[i];
 
-        /* Step 02: Calling tvsettings GetTVSupportedDimmingModes and expectinging the API to return success */
-        result = GetTVSupportedDimmingModes(tvDimmingModes, &sizeReceived);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-        UT_ASSERT_EQUAL(sizeReceived, (unsigned short)count);
-
-        for (unsigned int i = 0; i < count; i++)
+    }
+    /* Step 02: Calling tvsettings GetTVSupportedDimmingModes and expectinging the API to return success */
+    result = GetTVSupportedDimmingModes(tvDimmingModesPtr, &sizeReceived);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
+    UT_ASSERT_EQUAL(sizeReceived, (unsigned short)count);
+    for (unsigned int i = 0; i < count; i++)
+    {
+        IsDimmingModeValid = false;
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", i);
+        modeValue = (tvDimmingMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+        for (unsigned short j = 0; j < sizeReceived; j++)
         {
-            IsDimmingModeValid = false;
-            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/index/%d", i);
-            modeValue = (tvDimmingMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-            for (unsigned short j = 0; j < sizeReceived; j++)
+            if (modeValue == tvDimmingModes[j])
             {
-                if (modeValue == tvDimmingModes[0][j])
-                {
-                    IsDimmingModeValid = true;
-                    break;
-                }
-            }
-            UT_ASSERT_TRUE((IsDimmingModeValid));
-        }
-        tvDimmingModesRetry[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvDimmingMode_t));
-        if (tvDimmingModesRetry[0] != NULL)
-        {
-
-            /* Step 03: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return success */
-            result = GetTVSupportedDimmingModes(tvDimmingModesRetry, &sizeReceivedRetry);
-            UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
-
-            for (unsigned short i = 0; i < sizeReceivedRetry; i++)
-            {
-                IsDimmingModeValid = false;
-                for (unsigned short j = 0; j < sizeReceived; j++)
-                {
-                    if (tvDimmingModesRetry[0][i] == tvDimmingModes[0][j])
-                    {
-                        IsDimmingModeValid = true;
-                        break;
-                    }
-                }
-                UT_ASSERT_TRUE((IsDimmingModeValid));
+                IsDimmingModeValid = true;
+                break;
             }
         }
-        else
-        {
-            UT_LOG_ERROR("Memory Allocation Failed for retry step");
-        }
+        UT_ASSERT_TRUE((IsDimmingModeValid));
     }
-    else
-    {
-        UT_LOG_ERROR("Memory Allocation Failed");
-    }
-    if ( tvDimmingModes[0] ){
-        free ( tvDimmingModes[0] );
-    }
-    if ( tvDimmingModesRetry[0] ){
-        free ( tvDimmingModesRetry[0] );
-    }
+    /* Step 03: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return success */
+    result = GetTVSupportedDimmingModes(tvDimmingModesRetryPtr, &sizeReceivedRetry);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
 
+    for (unsigned short i = 0; i < sizeReceivedRetry; i++)
+    {
+        IsDimmingModeValid = false;
+        for (unsigned short j = 0; j < sizeReceived; j++)
+        {
+            if (tvDimmingModesRetry[i] == tvDimmingModes[j])
+            {
+                IsDimmingModeValid = true;
+                break;
+            }
+        }
+        UT_ASSERT_TRUE((IsDimmingModeValid));
+    }
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -2868,65 +2769,42 @@ void test_l1_tvSettings_negative_GetTVSupportedDimmingModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
-    tvDimmingMode_t *tvDimmingModes[1]={0};
+    tvDimmingMode_t tvDimmingModes[tvDimmingMode_MAX] = { tvDimmingMode_Fixed };
+    tvDimmingMode_t *tvDimmingModesPtr[tvDimmingMode_MAX]={0};
     unsigned short size = 0;
 
-    tvDimmingModes[0] = (tvDimmingMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDimmingMode_t));
-    if (tvDimmingModes[0] != NULL)
+    for (int i = 0; i < tvDimmingMode_MAX; i++)
     {
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 01: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedDimmingModes(tvDimmingModes, &size);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        /* Step 02: Calling tvsettings initialization and expecting the API to return success */
-        result = TvInit();
-        if (result != tvERROR_NONE)
-        {
-            if (tvDimmingModes[0])
-            {
-                free(tvDimmingModes[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        /* Step 03: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedDimmingModes(tvDimmingModes, NULL);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 04: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedDimmingModes(NULL, &size);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 05: Calling tvsettings termination and expecting the API to return success */
-        result = TvTerm();
-        if (result != tvERROR_NONE)
-        {
-            if (tvDimmingModes[0])
-            {
-                free(tvDimmingModes[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 06: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedDimmingModes(tvDimmingModes, &size);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        if (tvDimmingModes[0])
-        {
-            free(tvDimmingModes[0]);
-        }
+        tvDimmingModesPtr[i] = &tvDimmingModes[i];
     }
-    else
+    if (extendedEnumsSupported == true)
     {
-        UT_LOG_ERROR("Memory Allocaiton Failed");
+        /* Step 01: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedDimmingModes(tvDimmingModesPtr, &size);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedDimmingModes(tvDimmingModesPtr, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedDimmingModes(NULL, &size);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 06: Calling tvsettings GetTVSupportedDimmingModes and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedDimmingModes(tvDimmingModesPtr, &size);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -8319,8 +8197,11 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE;
-    tvDolbyMode_t *tvDolbyModes[1]={0};
-    tvDolbyMode_t *tvDolbyModesRetry[1]={0};
+    tvDolbyMode_t tvDolbyModes[tvMode_Max] = { tvDolbyMode_Dark };
+    tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max]={0};
+    tvDolbyMode_t tvDolbyModesRetry[tvMode_Max] = { tvDolbyMode_Dark };
+    tvDolbyMode_t *tvDolbyModesRetryPtr[tvMode_Max]={0};
+
     bool IsDolbyModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -8331,71 +8212,52 @@ void test_l1_tvSettings_positive_GetTVSupportedDolbyVisionModes (void)
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-    tvDolbyModes[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvDolbyMode_t));
-    if (tvDolbyModes[0] != NULL)
+    for (int i = 0; i < tvMode_Max; i++)
     {
+        tvDolbyModesPtr[i] = &tvDolbyModes[i];
+        tvDolbyModesRetryPtr[i] = &tvDolbyModesRetry[i];
+    }
 
-        /* Step 02: Calling tvsettings GetTVSupportedDolbyVisionModes and expectinging the API to return success */
-        result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &sizeReceived);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    /* Step 02: Calling tvsettings GetTVSupportedDolbyVisionModes and expectinging the API to return success */
+    result = GetTVSupportedDolbyVisionModes(tvDolbyModesPtr, &sizeReceived);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-        dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
-        UT_ASSERT_EQUAL(sizeReceived, (unsigned short)dolbyVisonModeCount);
+    dolbyVisonModeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DolbyVisionMode/index");
+    UT_ASSERT_EQUAL(sizeReceived, (unsigned short)dolbyVisonModeCount);
 
-        for (unsigned int i = 0; i < dolbyVisonModeCount; i++)
+    for (unsigned int i = 0; i < dolbyVisonModeCount; i++)
+    {
+        IsDolbyModeValid = false;
+        for (unsigned short j = 0; j < sizeReceived; j++)
         {
-            IsDolbyModeValid = false;
-            for (unsigned short j = 0; j < sizeReceived; j++)
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d", i);
+            dolbyVisionModevalue = (tvDolbyMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            if (dolbyVisionModevalue == tvDolbyModes[j])
             {
-                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d", i);
-                dolbyVisionModevalue = (tvDolbyMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-                if (dolbyVisionModevalue == tvDolbyModes[0][j])
-                {
-                    IsDolbyModeValid = true;
-                    break;
-                }
-            }
-            UT_ASSERT_TRUE((IsDolbyModeValid));
-        }
-        tvDolbyModesRetry[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT * sizeof(tvDolbyMode_t));
-        if (tvDolbyModesRetry[0] != NULL)
-        {
-
-            /* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return success */
-            result = GetTVSupportedDolbyVisionModes(tvDolbyModesRetry, &sizeReceivedRetry);
-            UT_ASSERT_EQUAL(result, tvERROR_NONE);
-            UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
-
-            for (unsigned short i = 0; i < sizeReceivedRetry; i++)
-            {
-                IsDolbyModeValid = false;
-                for (unsigned short j = 0; j < sizeReceived; j++)
-                {
-                    if (tvDolbyModesRetry[0][i] == tvDolbyModes[0][j])
-                    {
-                        IsDolbyModeValid = true;
-                        break;
-                    }
-                }
-
-                UT_ASSERT_TRUE((IsDolbyModeValid));
+                IsDolbyModeValid = true;
+                break;
             }
         }
-        else
-        {
-            UT_LOG_ERROR("Memory Allocation failed for retry step");
-        }
+        UT_ASSERT_TRUE((IsDolbyModeValid));
     }
-    else
+    /* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return success */
+    result = GetTVSupportedDolbyVisionModes(tvDolbyModesRetryPtr, &sizeReceivedRetry);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
+
+    for (unsigned short i = 0; i < sizeReceivedRetry; i++)
     {
-        UT_LOG_ERROR("Memory Allocation failed");
-    }
-    if ( tvDolbyModes[0] ){
-        free ( tvDolbyModes[0] );
-    }
-    if ( tvDolbyModesRetry[0] ){
-        free ( tvDolbyModesRetry[0] );
+        IsDolbyModeValid = false;
+        for (unsigned short j = 0; j < sizeReceived; j++)
+        {
+            if (tvDolbyModesRetry[i] == tvDolbyModes[j])
+            {
+                IsDolbyModeValid = true;
+                break;
+            }
+        }
+
+        UT_ASSERT_TRUE((IsDolbyModeValid));
     }
 
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
@@ -8432,65 +8294,42 @@ void test_l1_tvSettings_negative_GetTVSupportedDolbyVisionModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
-    tvDolbyMode_t *tvDolbyModes[1]={0};
+    tvDolbyMode_t tvDolbyModes[tvMode_Max] = { tvDolbyMode_Invalid };
+    tvDolbyMode_t *tvDolbyModesPtr[tvMode_Max]={0};
+
     unsigned short size = 0;
-
-    tvDolbyModes[0] = (tvDolbyMode_t *)malloc(MAX_VIDEO_FORMAT *sizeof(tvDolbyMode_t));
-    if (tvDolbyModes[0] != NULL)
+    for (int i = 0; i < tvMode_Max; i++)
     {
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        /* Step 02: Calling tvsettings initialization and expecting the API to return success */
-        result = TvInit();
-        if (result != tvERROR_NONE)
-        {
-            if (tvDolbyModes[0])
-            {
-                free(tvDolbyModes[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        /* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedDolbyVisionModes(tvDolbyModes, NULL);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 04: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
-        result = GetTVSupportedDolbyVisionModes(NULL, &size);
-        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-
-        /* Step 05: Calling tvsettings termination and expecting the API to return success */
-        result = TvTerm();
-        if (result != tvERROR_NONE)
-        {
-            if (tvDolbyModes[0])
-            {
-                free(tvDolbyModes[0]);
-            }
-        }
-        UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
-        if (extendedEnumsSupported == true)
-        {
-            /* Step 06: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
-            result = GetTVSupportedDolbyVisionModes(tvDolbyModes, &size);
-            UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
-        }
-
-        if (tvDolbyModes[0])
-        {
-            free(tvDolbyModes[0]);
-        }
+        tvDolbyModesPtr[i] = &tvDolbyModes[i];
     }
-    else
+    if (extendedEnumsSupported == true)
     {
-        UT_LOG_ERROR("Memory Allocaiton failed");
+        /* Step 01: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedDolbyVisionModes(tvDolbyModesPtr, &size);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedDolbyVisionModes(tvDolbyModesPtr, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedDolbyVisionModes(NULL, &size);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 06: Calling tvsettings GetTVSupportedDolbyVisionModes and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetTVSupportedDolbyVisionModes(tvDolbyModesPtr, &size);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -9039,7 +8878,10 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
 
     tvError_t result = tvERROR_NONE;
     pic_modes_t tvPicModes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *tvPicModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     pic_modes_t tvPicModesRetry[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *tvPicModesRetryPtr[PIC_MODES_SUPPORTED_MAX]={0};
+
     bool IsPictureModeValid = true;
     unsigned short sizeReceived = 0;
     unsigned short sizeReceivedRetry = 0;
@@ -9050,10 +8892,14 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-
+    for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)
+    {
+        tvPicModesPtr[i] = &tvPicModes[i];
+        tvPicModesRetryPtr[i] = &tvPicModesRetry[i];
+    }
     /* Step 02: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
-    result = GetTVSupportedPictureModes(&tvPicModes, &sizeReceived);
+    result = GetTVSupportedPictureModes(tvPicModesPtr, &sizeReceived);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
     UT_ASSERT_EQUAL(sizeReceived, (unsigned short)pqCount);
 
@@ -9075,7 +8921,7 @@ void test_l1_tvSettings_positive_GetTVSupportedPictureModes (void)
     }
 
     /* Step 03: Calling tvsettings GetTVSupportedPictureModes and expectinging the API to return success */
-    result = GetTVSupportedPictureModes(&tvPicModesRetry, &sizeReceivedRetry);
+    result = GetTVSupportedPictureModes(tvPicModesRetryPtr, &sizeReceivedRetry);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
     UT_ASSERT_EQUAL(sizeReceived, sizeReceivedRetry);
     for (unsigned short i = 0; i < sizeReceivedRetry; i++)
@@ -9128,13 +8974,18 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
     UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
 
     tvError_t result = tvERROR_NONE ;
-    pic_modes_t *pic_modes=NULL;
-    unsigned short size = 0;
+    pic_modes_t pic_modes[PIC_MODES_SUPPORTED_MAX];
+    pic_modes_t *pic_modesPtr[PIC_MODES_SUPPORTED_MAX]={0};
 
+    unsigned short size = 0;
+    for (int i = 0; i < PIC_MODES_SUPPORTED_MAX; i++)
+    {
+        pic_modesPtr[i] = &pic_modes[i];
+    }
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetTVSupportedPictureModes(&pic_modes, &size);
+        result = GetTVSupportedPictureModes(pic_modesPtr, &size);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
 
@@ -9143,7 +8994,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_PARAM */
-    result = GetTVSupportedPictureModes(&pic_modes, NULL);
+    result = GetTVSupportedPictureModes(pic_modesPtr, NULL);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
     /* Step 04: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_PARAM */
@@ -9157,7 +9008,7 @@ void test_l1_tvSettings_negative_GetTVSupportedPictureModes (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 06: Calling tvsettings GetTVSupportedPictureModes and expecting the API to return tvERROR_INVALID_STATE */
-        result = GetTVSupportedPictureModes(&pic_modes, &size);
+        result = GetTVSupportedPictureModes(pic_modesPtr, &size);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
 

@@ -134,24 +134,19 @@ class tvSettings_test55_SaveGammaTable(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
-        # Get the list of streams from the test setup
-        streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
-
         # Set gamma values for the color temperatures
         gamma_values = self.setGammaValues()  # This should return a list of (color_temp, red, green, blue) tuples
         colorTemperatures = self.testtvSettings.getColorTemperatureInfo()  # Get the available color temperatures
 
         # Loop through streams
-        for stream in streams:
-
-            streamPath =  os.path.join(self.targetWorkspace, os.path.basename(stream))
+        for stream in self.testStreams:
 
             # Play the stream
-            self.testPlayer.play(streamPath)
+            self.testPlayer.play(stream)
             time.sleep(3)  # Allow the stream to start
 
             # Log details for the current stream
-            self.log.stepStart(f'Stream: {streamPath}')
+            self.log.stepStart(f'Stream: {stream}')
 
             # Loop through the combinations and assign color temperatures
             for index, (color_temp, red, green, blue, description) in enumerate(gamma_values):
