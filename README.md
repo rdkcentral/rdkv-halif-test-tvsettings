@@ -53,7 +53,7 @@ export CC="arm-rdk-linux-gnueabi-gcc  -march=armv7-a -mthumb -mfpu=neon -mfloat-
 - Clone the `HAL` Repository:
 
 ```bash
-git clone git@github.com:rdkcentral/rdkv-halif-test-tvsettings.git
+git clone git@github.com:rdkcentral/rdkv-halif-tvsettings.git
 ```
 - Set Project Version:
 
