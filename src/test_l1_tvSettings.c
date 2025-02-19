@@ -17451,9 +17451,19 @@ void test_l1_tvSettings_negative_GetNumberOfDimmingZones (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 03: Calling tvsettings GetNumberOfDimmingZones and the API to return tvERROR_INVALID_PARAM */
-    result = GetNumberOfDimmingZones(NULL);
-    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+    if(UT_KVP_PROFILE_GET_BOOL("tvSettings/LDIMShortCircuitStatus/enable") == true)
+    {
+        /* Step 03: Calling tvsettings GetNumberOfDimmingZones and the API to return tvERROR_INVALID_PARAM */
+        result = GetNumberOfDimmingZones(NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    }
+    else
+    {
+        /* Step 03: Calling tvsettings GetNumberOfDimmingZones and the API to return tvERROR_OPERATION_NOT_SUPPORTED */
+        result = GetNumberOfDimmingZones(NULL);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
 
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
