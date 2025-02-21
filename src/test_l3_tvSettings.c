@@ -702,7 +702,7 @@ void test_l3_tvSettings_GetCurrentVideoResolution(void)
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Result GetCurrentVideoResolution(OUT:Resolution:[%dx%d], OUT:isInterlaced:[%d], OUT:res value:[%s]),tvError_t:[%s]",
-                resolution.frameHeight, resolution.frameWidth, resolution.isInterlaced,
+                resolution.frameWidth, resolution.frameHeight, resolution.isInterlaced,
                 UT_Control_GetMapString(tvVideoResolution_mapTable, resolution.resolutionValue),
                 UT_Control_GetMapString(tvError_mapTable, ret));
 
