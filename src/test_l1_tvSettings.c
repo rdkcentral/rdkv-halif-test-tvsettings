@@ -8610,7 +8610,7 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 02: Calling tvsettings SaveTVDimmingMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
+    /* Step 02: Calling tvsettings SaveTVDolbyVisionMode for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
 
@@ -8632,7 +8632,7 @@ void test_l1_tvSettings_positive_SaveTVDolbyVisionMode (void)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DolbyVisionMode/index/%d" , l);
                     dolbyVisionModevalue = (tvDolbyMode_t) UT_KVP_PROFILE_GET_UINT32(keyValue);
-                    result = SaveTVDimmingMode(videoSource,pqValue,\
+                    result = SaveTVDolbyVisionMode(videoSource,pqValue,\
                             videoFormat,dolbyVisionModevalue);
                     UT_ASSERT_EQUAL(result, tvERROR_NONE);
                 }
