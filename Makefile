@@ -30,6 +30,10 @@ HAL_LIB := tvsettings-hal
 SKELETON_SRCS := $(ROOT_DIR)/skeletons/src/tvSettings.c
 TARGET_EXEC :=hal_test_$(HAL_LIB)
 
+# Export the tag version
+VERSION := $(shell git describe --tags | head -n1)
+KCFLAGS := -D HALIF_TEST_TAG_VERSION=\"$(VERSION)\"
+
 ifeq ($(TARGET),)
 $(info TARGET NOT SET )
 $(info TARGET FORCED TO Linux)
@@ -57,6 +61,7 @@ export TARGET
 export TOP_DIR
 export HAL_LIB_DIR
 export TARGET_EXEC
+export KCFLAGS
 
 .PHONY: clean list build
 
