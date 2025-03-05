@@ -1,0 +1,917 @@
+# This is a sample test configuration file. Users can customize the YAML entries as needed
+# This test configuration file includes sample YAML entries for executing various combinations
+tvSettings:
+  description: "tvSettings L1 and L2 test setup"
+  test_suites: # List of L1 and L2 test suites
+
+    ######################################
+    # Entry to run all test case
+    ######################################
+    #- name: "L1 tvSettings"
+    #  test_cases:
+    #    - all
+
+    #######################################
+    # Entries to run individual test cases
+    #######################################
+    - name: "L1 tvSettings"
+      test_cases:
+        - TvInit_pos
+    - name: "L1 tvSettings"
+      test_cases:
+        - TvInit_neg
+    - name: "L1 tvSettings"
+      test_cases:
+        - TvTerm_pos
+    - name: "L1 tvSettings"
+      test_cases:
+        - TvTerm_neg
+    - name: "L1 tvSettings"
+      test_cases:
+        - GetTVSupportedVideoFormats_pos
+    - name: "L1 tvSettings"
+      test_cases:
+        - GetTVSupportedVideoFormats_neg
+    - name: "L1 tvSettings"
+      test_cases:
+        - GetCurrentVideoFormat_pos
+    - name: "L1 tvSettings"
+      test_cases:
+        - GetCurrentVideoFormat_neg
+    - name: "L1 tvSettings"
+      test_cases:
+        - GetCurrentVideoResolution_pos
+    - name: "L1 tvSettings"
+      test_cases:
+        - GetCurrentVideoResolution_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetCurrentVideoFrameRate_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetCurrentVideoFrameRate_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetCurrentVideoSource_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetCurrentVideoSource_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetTVSupportedVideoSources_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetTVSupportedVideoSources_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetBacklight_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetBacklight_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetBacklight_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetBacklight_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveBacklight_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveBacklight_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetBacklightFade_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetBacklightFade_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetBacklightFade_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetBacklightFade_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetSupportedBacklightModes_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetSupportedBacklightModes_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetCurrentBacklightMode_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetCurrentBacklightMode_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetCurrentBacklightMode_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetCurrentBacklightMode_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetTVSupportedDimmingModes_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetTVSupportedDimmingModes_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetTVDimmingMode_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetTVDimmingMode_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetTVDimmingMode_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetTVDimmingMode_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveTVDimmingMode_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveTVDimmingMode_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetLocalDimmingLevel_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetLocalDimmingLevel_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetLocalDimmingLevel_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetLocalDimmingLevel_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveLocalDimmingLevel_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveLocalDimmingLevel_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetBrightness_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetBrightness_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetBrightness_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetBrightness_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveBrightness_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveBrightness_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetContrast_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetContrast_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetContrast_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetContrast_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveContrast_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveContrast_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetSharpness_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - SetSharpness_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetSharpness_pos
+    - name: "L1 tvSettings"
+      test_cases:
+          - GetSharpness_neg
+    - name: "L1 tvSettings"
+      test_cases:
+          - SaveSharpness_pos
+     - name: "L1 tvSettings"
+      test_cases:
+          - SaveSharpness_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetSaturation_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetSaturation_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetSaturation_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetSaturation_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveSaturation_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveSaturation_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetNumberOfDimmingZones_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetNumberOfDimmingZones_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetHue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetHue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetHue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetHue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveHue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveHue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemperature_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemperature_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemperature_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemperature_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveColorTemperature_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveColorTemperature_neg
+      - name: "L1 tvSettings"
+        test_cases:
+           - SetAspectRatio_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetAspectRatio_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetAspectRatio_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetAspectRatio_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveAspectRatio_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveAspectRatio_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetLowLatencyState_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetLowLatencyState_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetLowLatencyState_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetLowLatencyState_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveLowLatencyState_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveLowLatencyState_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetDynamicContrast_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetDynamicContrast_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDynamicContrast_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDynamicContrast_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetDynamicGamma_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetDynamicGamma_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDynamicGamma_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDynamicGamma_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVSupportedDolbyVisionModes_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVSupportedDolbyVisionModes_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetTVDolbyVisionMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetTVDolbyVisionMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVDolbyVisionMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVDolbyVisionMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveTVDolbyVisionMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveTVDolbyVisionMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVSupportedPictureModes_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVSupportedPictureModes_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVPictureMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetTVPictureMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetTVPictureMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetTVPictureMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveSourcePictureMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveSourcePictureMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_Rgain_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_Rgain_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_Rgain_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_Rgain_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_Ggain_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_Ggain_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_Ggain_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_Ggain_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_Bgain_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_Bgain_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_Bgain_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_Bgain_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_R_post_offset_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_R_post_offset_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_R_post_offset_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_R_post_offset_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_G_post_offset_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_G_post_offset_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_G_post_offset_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_G_post_offset_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_B_post_offset_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetColorTemp_B_post_offset_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_B_post_offset_onSource_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetColorTemp_B_post_offset_onSource_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - EnableWBCalibrationMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - EnableWBCalibrationMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetCurrentWBCalibrationMode_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetCurrentWBCalibrationMode_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetGammaTable_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetGammaTable_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDefaultGammaTable_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDefaultGammaTable_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetGammaTable_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetGammaTable_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveGammaTable_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveGammaTable_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetDvTmaxValue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetDvTmaxValue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDvTmaxValue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetDvTmaxValue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveDvTmaxValue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SaveDvTmaxValue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetSupportedComponentColor_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetSupportedComponentColor_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetCurrentComponentSaturation_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetCurrentComponentSaturation_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetCurrentComponentSaturation_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetCurrentComponentSaturation_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetCurrentComponentHue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetCurrentComponentHue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetCurrentComponentHue_pos
+      - name: "L1 tvSettings"
+        test_cases:
+            - GetCurrentComponentHue_neg
+      - name: "L1 tvSettings"
+        test_cases:
+            - SetCurrentComponentLuma_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetCurrentComponentLuma_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetCurrentComponentLuma_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetCurrentComponentLuma_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SaveCMS_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SaveCMS_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetCMSState_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetCMSState_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetCMSState_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetCMSState_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetDefaultPQParams_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetDefaultPQParams_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetPQParams_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetPQParams_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetMaxGainValue_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetMaxGainValue_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableGammaMode_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableGammaMode_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetGammaPattern_pos
+       - name: "L1 tvSettings"
+         test_cases:
+            - SetGammaPattern_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetTVGammaTarget_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetTVGammaTarget_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetGammaPatternMode_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetGammaPatternMode_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetRGBPattern_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetRGBPattern_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetRGBPattern_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetRGBPattern_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetGrayPattern_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetGrayPattern_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetGrayPattern_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetGrayPattern_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetOpenCircuitStatus_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - GetOpenCircuitStatus_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableLDIMPixelCompensation_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableLDIMPixelCompensation_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableLDIM_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableLDIM_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - StartLDIMSequenceTest_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - StartLDIMSequenceTest_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetBacklightTestMode_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - SetBacklightTestMode_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableWhiteBalance_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableWhiteBalance_neg
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableDynamicContrast_pos
+       - name: "L1 tvSettings"
+         test_cases:
+             - EnableDynamicContrast_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - EnableLocalContrast_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - EnableLocalContrast_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - GetLdimZoneShortCircuitStatus_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - GetLdimZoneShortCircuitStatus_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - SetCustom2PointWhiteBalance_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - SetCustom2PointWhiteBalance_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - GetCustom2PointWhiteBalance_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - GetCustom2PointWhiteBalance_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - SaveCustom2PointWhiteBalance_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - SaveCustom2PointWhiteBalance_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoFormatChangeCB_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoFormatChangeCB_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoContentChangeCB_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoContentChangeCB_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoResolutionChangeCB_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoResolutionChangeCB_neg
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoFrameRateChangeCB_pos
+        - name: "L1 tvSettings"
+          test_cases:
+              - RegisterVideoFrameRateChangeCB_neg
+
+    ######################################
+    # Entries to run selected test case
+    ######################################
+    #- name: "L1 tvSettings"  # Name of the test suit to run
+    #  test_cases:  # List of test cases to execute, to run all test cases in test suite with R option use `all`
+    #    -TvInit_pos
+    #    -TvInit_neg
+    #    -TvTerm_pos
+    #    -TvTerm_neg
+    #    -GetTVSupportedVideoFormats_pos
+    #    -GetTVSupportedVideoFormats_neg
+    #    -GetCurrentVideoFormat_pos
+    #    -GetCurrentVideoFormat_neg
+    #    -GetCurrentVideoResolution_pos
+    #    -GetCurrentVideoResolution_neg
+    #    -GetCurrentVideoFrameRate_pos
+    #    -GetCurrentVideoFrameRate_neg
+    #    -GetCurrentVideoSource_pos
+
+    #######################################
+    # Entries to run individual test cases
+    #######################################
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetSupportedVideoFormats
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetCurrentVideoFormat_NoVideoPlayback
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - VerifyCurrentVideoResolution
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - VerifyFrameRateWhenStopped
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetTVSupportedVideoSources
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - VerifyNoVideoSource
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetBacklight
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetBacklightFade
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetSupportedBacklightModes
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetBacklightMode
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetSupportedDimmingModes
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetDimmingMode
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetLocalDimmingLevel
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetBrightness
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetContrast
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetSharpness
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetSaturation
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetHue
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTemperature
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetAspectRatio
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetLowLatencyState
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetDynamicContrast
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetDynamicGamma
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetSupportedDolbyVisionModes
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetDolbyVisionMode
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetTVSupportedPictureModes
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetPictureMode
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTempRgain
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTempGgain
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTempBgain
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTemp_R_post_offset_onSource
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTempGPostOffset
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetColorTempBPostOffset
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - EnableAndVerifyWBCalibrationMode
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetGammaTable
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetDefaultGammaTable
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetDvTmaxValue
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetSupportedComponentColor
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetComponentSaturation
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetComponentHue
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetComponentLuma
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetCMSState
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - TestGetPQParameters
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetTVGammaTarget
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetMaxGainValue
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetRGBPattern
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetAndGetGrayPattern
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - RetrieveOpenCircuitStatus
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - EnableAndGetDynamicContrast
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetNumberOfDimmingZones
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - RetrieveLDIMShortCircuitStatus
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - SetandGetCustom2PointWhiteBalance
+
+    ######################################
+    # Entries to run selected test case
+    ######################################
+    #- name: "L2 tvSettings"
+    #  test_cases:
+    #    - GetSupportedVideoFormats
+    #    - GetCurrentVideoFormat_NoVideoPlayback
+    #    - VerifyCurrentVideoResolution
+    #    - VerifyFrameRateWhenStopped
+    #    - GetTVSupportedVideoSources
+    #    - VerifyNoVideoSource
+    #    - SetAndGetBacklight
+    #    - SetAndGetBacklightFade
