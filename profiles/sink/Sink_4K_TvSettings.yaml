@@ -883,13 +883,13 @@ tvSettings:
     # Game
     # Filmmaker
     range:
-      - standard
-      - vivid
-      - energysaving
-      - custom
-      - theater
-      - game
-      - sports
+      - Standard
+      - Vivid
+      - Energysaving
+      - Custom
+      - Theater
+      - Game
+      - Sports
     # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
     # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
     # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"
