@@ -20,7 +20,7 @@
 
 ## Run L1 and L2 Test directly (without python)
 
-Refer [Running L1 and L2 Test suits](https://github.com/rdkcentral/rdk-hpk-documentation/tree/1.4.5?tab=readme-ov-file#running-the-l1-l2-test-suite-on-the-target)
+Refer [Running L1 and L2 Test suites](https://github.com/rdkcentral/rdk-hpk-documentation/tree/1.4.5?tab=readme-ov-file#running-the-l1-l2-test-suite-on-the-target)
 
 ## Run L1 and L2 using python
 
