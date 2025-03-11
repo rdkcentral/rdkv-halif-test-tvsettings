@@ -148,5 +148,5 @@ tvSettings:
 Once the environment is set up, you can execute the test cases with the following command
 
 ```bash
-python dsAudio_L1_L2_tests.py --config </PATH>/ut/host/tests/configs/example_rack_config.yml --deviceConfig </PATH>/ut/host/tests/configs/deviceConfig.yml
+python tvSettings_L1_L2_tests.py --config </PATH>/ut/host/tests/configs/example_rack_config.yml --deviceConfig </PATH>/ut/host/tests/configs/deviceConfig.yml
 ```
