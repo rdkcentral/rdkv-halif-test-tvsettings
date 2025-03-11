@@ -127,7 +127,7 @@ tvSettings:
 
 #### Test Configuration
 
-Example Test Setup configuration File: [tvSettings_testConfig.yml](../../../../ut/host/tests/Classes/tvSettings_testConfig.yml)
+Example Test Setup configuration File: [tvSettings_testConfig.yml](../../host/tests/Classes/tvSettings_testConfig.yml)
 
 Execute command to run the HAL binary was provided in this file.
 
