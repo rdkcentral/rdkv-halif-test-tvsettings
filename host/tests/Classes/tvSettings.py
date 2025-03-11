@@ -218,7 +218,7 @@ class tvSettingsClass():
         """
         self.moduleName    = "tvSettings"
         self.testConfigFile     =  dir_path + "/tvSettings_testConfig.yml"
-        self.testSuite     = "testSuite"
+        self.testSuite     = testSuite
 
         # Load configurations for device profile and menu
         self.deviceProfile = ConfigRead( moduleConfigProfileFile , self.moduleName)
