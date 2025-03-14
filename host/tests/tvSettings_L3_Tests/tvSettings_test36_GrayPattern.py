@@ -75,6 +75,9 @@ class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
         # Initialize the tvSettings module
         self.testtvSettings.initialise()
 
+        # Enable Gamma Pattern Mode
+        self.testtvSettings.setGammaPatternMode(1)
+
         # Set up different values for gray levels across the predefined samples
         for grayLevel in self.grayLevels:
             self.log.stepStart(f'Gray Level: {grayLevel}')
@@ -87,6 +90,9 @@ class tvSettings_test36_GrayPattern(tvSettingsHelperClass):
 
             # Log the result of the Gray pattern verification
             self.log.stepResult(result, f'Gray Level: {grayLevel}')
+
+        # Disable Gamma Pattern Mode
+        self.testtvSettings.setGammaPatternMode(0)
 
         # Terminate the tvSettings module
         self.testtvSettings.terminate()
