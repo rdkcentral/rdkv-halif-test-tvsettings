@@ -73,8 +73,8 @@ class tvSettings_test44_SaveLocalDimmingLevel(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getLocalDimmingPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getLocalDimmingVideoFormatInfo()
         self.local_dimming_levels = self.testtvSettings.getLocalDimmingMode()
 
         # Prepare the list of local dimming assignments based on video formats

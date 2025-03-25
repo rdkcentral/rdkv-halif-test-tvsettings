@@ -73,8 +73,8 @@ class tvSettings_test51_SaveAspectRatio(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getAspectRatioPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getAspectRatioVideoFormatInfo()
         aspectRatios = self.testtvSettings.getAspectRatio()  # Assuming this returns a list of aspect ratios
 
         # Prepare the list of aspect ratio assignments based on video formats
@@ -102,8 +102,8 @@ class tvSettings_test51_SaveAspectRatio(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getAspectRatioPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getAspectRatioVideoFormatInfo()
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:

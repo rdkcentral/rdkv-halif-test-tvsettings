@@ -73,8 +73,8 @@ class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getSaturationPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getSaturationVideoFormatInfo()
 
         # Split the saturation values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
@@ -100,8 +100,8 @@ class tvSettings_test48_SaveSaturation(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getSaturationPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getSaturationVideoFormatInfo()
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:

@@ -73,8 +73,8 @@ class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getContrastPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getContrastVideoFormatInfo()
 
         # Split the contrast values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
@@ -100,8 +100,8 @@ class tvSettings_test46_SaveContrast(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getContrastPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getContrastVideoFormatInfo()
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:
