@@ -14335,7 +14335,7 @@ void test_l1_tvSettings_positive_SaveCMS (void)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-                
+
                 for (unsigned int l=0; l< componentColorCount; l++)
                 {
                     snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedComponentColor/%d", l);
@@ -14606,7 +14606,7 @@ void test_l1_tvSettings_negative_SaveCMS (void)
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
-    
+
     /* Step 20: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -14864,9 +14864,11 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
     int value = 0;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
     int pqValue = 0;
+    int pqParamIndex = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
     uint32_t videoSrcCount = 0;
     uint32_t pqCount = 0;
+    uint32_t pqParamCount = 0;
     uint32_t videoFmtCount = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
@@ -14877,6 +14879,7 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
     /* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+    pqParamCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedPQParameter/index");
 
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
     for (unsigned int i = 0; i < videoSrcCount; i++)
@@ -14891,34 +14894,36 @@ void test_l1_tvSettings_positive_GetDefaultPQParams (void)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (unsigned int l = 0; l < PQ_PARAM_MAX; l++)
+                for (unsigned int l = 0; l < pqParamCount; l++)
                 {
-                    result = GetDefaultPQParams(pqValue,videoSource,videoFormat, (tvPQParameterIndex_t)l,&value);
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedPQParameter/index/%d", l);
+                    pqParamIndex = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetDefaultPQParams(pqValue,videoSource,videoFormat, (tvPQParameterIndex_t)pqParamIndex,&value);
                     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                    if( (l == PQ_PARAM_CMS_SATURATION_RED) || \
-                            (l == PQ_PARAM_CMS_SATURATION_GREEN)  || \
-                            (l == PQ_PARAM_CMS_SATURATION_BLUE)  || \
-                            (l == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
-                            (l == PQ_PARAM_CMS_SATURATION_CYAN) || \
-                            (l == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
-                            (l == PQ_PARAM_CMS_HUE_RED) || \
-                            (l == PQ_PARAM_CMS_HUE_GREEN) || \
-                            (l == PQ_PARAM_CMS_HUE_BLUE) || \
-                            (l == PQ_PARAM_CMS_HUE_YELLOW) || \
-                            (l == PQ_PARAM_CMS_HUE_CYAN) || \
-                            (l == PQ_PARAM_CMS_HUE_MAGENTA) || \
-                            (l == PQ_PARAM_CMS_LUMA_RED) || \
-                            (l == PQ_PARAM_CMS_LUMA_GREEN) || \
-                            (l == PQ_PARAM_CMS_LUMA_BLUE) || \
-                            (l == PQ_PARAM_CMS_LUMA_YELLOW) || \
-                            (l == PQ_PARAM_CMS_LUMA_CYAN) || \
-                            (l == PQ_PARAM_CMS_LUMA_MAGENTA) || \
-                            (l == PQ_PARAM_BRIGHTNESS) || \
-                            (l == PQ_PARAM_CONTRAST) || \
-                            (l == PQ_PARAM_SATURATION) || \
-                            (l == PQ_PARAM_SHARPNESS) || \
-                            (l == PQ_PARAM_HUE) || \
-                            (l == PQ_PARAM_BACKLIGHT) )
+                    if( (pqParamIndex == PQ_PARAM_CMS_SATURATION_RED) || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_GREEN)  || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_BLUE)  || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_CYAN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_RED) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_GREEN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_BLUE) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_YELLOW) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_CYAN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_MAGENTA) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_RED) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_GREEN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_BLUE) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_YELLOW) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_CYAN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_MAGENTA) || \
+                            (pqParamIndex == PQ_PARAM_BRIGHTNESS) || \
+                            (pqParamIndex == PQ_PARAM_CONTRAST) || \
+                            (pqParamIndex == PQ_PARAM_SATURATION) || \
+                            (pqParamIndex == PQ_PARAM_SHARPNESS) || \
+                            (pqParamIndex == PQ_PARAM_HUE) || \
+                            (pqParamIndex == PQ_PARAM_BACKLIGHT) )
                             {
                                 UT_ASSERT_TRUE((value >= 0 && value <= 100));
                             }
@@ -15065,9 +15070,11 @@ void test_l1_tvSettings_positive_GetPQParams (void)
     int value = 0;
     tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
     int pqValue = 0;
+    int pqParamIndex = 0;
     tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
     uint32_t videoSrcCount = 0;
     uint32_t pqCount = 0;
+    uint32_t pqParamCount = 0;
     uint32_t videoFmtCount = 0;
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
@@ -15078,6 +15085,7 @@ void test_l1_tvSettings_positive_GetPQParams (void)
     /* Step 02: Calling tvsettings SaveBacklight for all the sourceId,pqmode,videoFormatType and expecting the API to return success */
     videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
     pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+    pqParamCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedPQParameter/index");
 
     videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
     for (unsigned int i = 0; i < videoSrcCount; i++)
@@ -15092,34 +15100,36 @@ void test_l1_tvSettings_positive_GetPQParams (void)
             {
                 snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
                 videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-                for (unsigned int l = 0; l < PQ_PARAM_MAX; l++)
+                for (unsigned int l = 0; l < pqParamCount; l++)
                 {
-                    result = GetPQParams(pqValue,videoSource,videoFormat, (tvPQParameterIndex_t)l,&value);
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedPQParameter/index/%d", l);
+                    pqParamIndex = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetPQParams(pqValue,videoSource,videoFormat, (tvPQParameterIndex_t)pqParamIndex,&value);
                     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-                    if( (l == PQ_PARAM_CMS_SATURATION_RED) || \
-                            (l == PQ_PARAM_CMS_SATURATION_GREEN)  || \
-                            (l == PQ_PARAM_CMS_SATURATION_BLUE)  || \
-                            (l == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
-                            (l == PQ_PARAM_CMS_SATURATION_CYAN) || \
-                            (l == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
-                            (l == PQ_PARAM_CMS_HUE_RED) || \
-                            (l == PQ_PARAM_CMS_HUE_GREEN) || \
-                            (l == PQ_PARAM_CMS_HUE_BLUE) || \
-                            (l == PQ_PARAM_CMS_HUE_YELLOW) || \
-                            (l == PQ_PARAM_CMS_HUE_CYAN) || \
-                            (l == PQ_PARAM_CMS_HUE_MAGENTA) || \
-                            (l == PQ_PARAM_CMS_LUMA_RED) || \
-                            (l == PQ_PARAM_CMS_LUMA_GREEN) || \
-                            (l == PQ_PARAM_CMS_LUMA_BLUE) || \
-                            (l == PQ_PARAM_CMS_LUMA_YELLOW) || \
-                            (l == PQ_PARAM_CMS_LUMA_CYAN) || \
-                            (l == PQ_PARAM_CMS_LUMA_MAGENTA) || \
-                            (l == PQ_PARAM_BRIGHTNESS) || \
-                            (l == PQ_PARAM_CONTRAST) || \
-                            (l == PQ_PARAM_SATURATION) || \
-                            (l == PQ_PARAM_SHARPNESS) || \
-                            (l == PQ_PARAM_HUE) || \
-                            (l == PQ_PARAM_BACKLIGHT) )
+                    if( (pqParamIndex == PQ_PARAM_CMS_SATURATION_RED) || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_GREEN)  || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_BLUE)  || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_YELLOW)  || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_CYAN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_SATURATION_MAGENTA) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_RED) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_GREEN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_BLUE) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_YELLOW) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_CYAN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_HUE_MAGENTA) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_RED) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_GREEN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_BLUE) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_YELLOW) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_CYAN) || \
+                            (pqParamIndex == PQ_PARAM_CMS_LUMA_MAGENTA) || \
+                            (pqParamIndex == PQ_PARAM_BRIGHTNESS) || \
+                            (pqParamIndex == PQ_PARAM_CONTRAST) || \
+                            (pqParamIndex == PQ_PARAM_SATURATION) || \
+                            (pqParamIndex == PQ_PARAM_SHARPNESS) || \
+                            (pqParamIndex == PQ_PARAM_HUE) || \
+                            (pqParamIndex == PQ_PARAM_BACKLIGHT) )
                             {
                                 UT_ASSERT_TRUE((value >= 0 && value <= 100));
                             }
@@ -17241,7 +17251,7 @@ void test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus (void)
     unsigned char shortcircuitlistRetry[listsize > 0? listsize: 1];
     // Initialize array elements to 0
     for (int i = 0; i < listsize; i++ ) {
-        shortcircuitlist[i] = 0; 
+        shortcircuitlist[i] = 0;
         shortcircuitlistRetry[i] = 0;
     }
 
@@ -17305,7 +17315,7 @@ void test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus (void)
     unsigned char shortcircuitlist[listsize > 0? listsize: 1];
     // Initialize array elements to 0
     for (int i = 0; i < listsize; i++ ) {
-        shortcircuitlist[i] = 0; 
+        shortcircuitlist[i] = 0;
     }
 
     if (extendedEnumsSupported == true)
@@ -17615,7 +17625,7 @@ void test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance (void)
     videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
     colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
     controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/WBControl/SupportedCustomWhiteBalanceControl/0");
-	
+
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_STATE */
@@ -17650,19 +17660,19 @@ void test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance (void)
     /* Step 08: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SaveCustom2PointWhiteBalance(videoSource,pqValue,(tvVideoFormatType_t)-1,colorValue,controlValue,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 09: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,-1,controlValue,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 10: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,tvWB_COLOR_MAX,controlValue,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 11: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,-1,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 12: Calling tvsettings SaveCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SaveCustom2PointWhiteBalance(videoSource,pqValue,videoFormat,colorValue,tvWB_CONTROL_MAX,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
@@ -17763,7 +17773,7 @@ void test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance (void)
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
-    
+
     colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
     for (int i=tvWB_CONTROL_GAIN; i< tvWB_CONTROL_MAX; i++)
@@ -17853,7 +17863,7 @@ void test_l1_tvSettings_positive_SetCustom2PointWhiteBalance (void)
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
         }
     }
-    
+
     /* Step 03: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -17904,7 +17914,7 @@ void test_l1_tvSettings_negative_SetCustom2PointWhiteBalance (void)
 
     colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
     controlValue = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceControl/0");
-	
+
     if (extendedEnumsSupported == true)
     {
         /* Step 01: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_STATE */
@@ -17915,19 +17925,19 @@ void test_l1_tvSettings_negative_SetCustom2PointWhiteBalance (void)
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	
+
     /* Step 03: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SetCustom2PointWhiteBalance(-1,controlValue,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 04: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SetCustom2PointWhiteBalance(tvWB_COLOR_MAX,controlValue,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 05: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SetCustom2PointWhiteBalance(colorValue,-1,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 06: Calling tvsettings SetCustom2PointWhiteBalance and expecting the API to return tvERROR_INVALID_PARAM */
     result = SetCustom2PointWhiteBalance(colorValue,tvWB_CONTROL_MAX,50);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
@@ -17960,7 +17970,7 @@ void test_l1_tvSettings_negative_SetCustom2PointWhiteBalance (void)
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
-    
+
     colorValue = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
     controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
     for (int i=tvWB_CONTROL_GAIN; i<= tvWB_CONTROL_MAX; i++)
@@ -17982,7 +17992,7 @@ void test_l1_tvSettings_negative_SetCustom2PointWhiteBalance (void)
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
-    
+
     /* Step 10: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -18029,7 +18039,7 @@ void test_l1_tvSettings_positive_GetCustom2PointWhiteBalance (void)
     uint32_t controlCount = 0;
     tvWBColor_t color = tvWB_COLOR_RED;
     tvWBControl_t control = tvWB_CONTROL_GAIN;
-	
+
     char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     /* Step 01: Calling tvsettings initialization and expecting the API to return success */
@@ -18054,12 +18064,12 @@ void test_l1_tvSettings_positive_GetCustom2PointWhiteBalance (void)
     {
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", j);
         color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-	
+
         for (unsigned int k = 0; k < controlCount; ++k)
         {
             snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", k);
             control = (tvWBControl_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-		
+
             result = GetCustom2PointWhiteBalance(color,control,&WB);
             UT_ASSERT_EQUAL(result, tvERROR_NONE);
             if( control == tvWB_CONTROL_GAIN )
@@ -18072,7 +18082,7 @@ void test_l1_tvSettings_positive_GetCustom2PointWhiteBalance (void)
             }
         }
     }
-	
+
     /* Step 04: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -18133,7 +18143,7 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     /* Step 02: Calling tvsettings initialization and expecting the API to return success */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
-	
+
     /* Step 03: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
     result = GetCustom2PointWhiteBalance(tvWB_COLOR_MAX,control,&WB);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
@@ -18141,7 +18151,7 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     /* Step 04: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
     result = GetCustom2PointWhiteBalance(-1,control,&WB);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 05: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
     result = GetCustom2PointWhiteBalance(color,tvWB_CONTROL_MAX,&WB);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
@@ -18149,7 +18159,7 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     /* Step 06: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
     result = GetCustom2PointWhiteBalance(color,-1,&WB);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
-	
+
     /* Step 07: Calling tvsettings GetCustom2PointWhiteBalance and expectinging the API to return tvERROR_INVALID_PARAM */
     colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
     for (int i=tvWB_COLOR_RED; i< tvWB_COLOR_MAX; i++)
@@ -18171,7 +18181,7 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
-    
+
     color = (tvWBColor_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/SupportedCustomWhiteBalanceColor/0");
     controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
     for (int i=tvWB_CONTROL_GAIN; i< tvWB_CONTROL_MAX; i++)
@@ -18193,7 +18203,7 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
             UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
         }
     }
-    
+
 
     /* Step 08: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
