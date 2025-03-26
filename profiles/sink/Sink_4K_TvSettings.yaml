@@ -45,7 +45,6 @@ tvSettings:
   # PQ_PARAM_WB_OFFSET_RED = 0x27                    //!< Picture parameter is Component Red Offset
   # PQ_PARAM_WB_OFFSET_GREEN = 0x28                  //!< Picture parameter is Component Green Offset
   # PQ_PARAM_WB_OFFSET_BLUE =0x29                    //!< Picture parameter is Component Blue Offset
-  # PQ_PARAM_MAX           = 0x2A                    //!< End of enum
   SupportedPQParameter:
     index:
       - 0x01    # PQ_PARAM_BRIGHTNESS
@@ -84,7 +83,6 @@ tvSettings:
       - 0x27    # PQ_PARAM_WB_OFFSET_RED
       - 0x28    # PQ_PARAM_WB_OFFSET_GREEN
       - 0x29    # PQ_PARAM_WB_OFFSET_BLUE
-      - 0x2A    # PQ_PARAM_MAX
   # tvDataColor_NONE    = 0x00, //!< No color
   # tvDataColor_RED     = 0x01, //!< Color is Red
   # tvDataColor_GREEN   = 0x02, //!< Color is Green
