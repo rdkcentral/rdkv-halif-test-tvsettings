@@ -4092,7 +4092,7 @@ int32_t test_l2_tvSettings_register(void)
     // List of test function names and strings
 
     UT_add_test( pSuite, "GetSupportedVideoFormats", test_l2_tvSettings_GetSupportedVideoFormats);
-    UT_add_test( pSuite, "GetCurrentVideoFormat_NoVideoPlayback", test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback);
+    UT_add_test( pSuite, "GetCurrentVdoFmt_NoVdoPlyback", test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback);
     UT_add_test( pSuite, "VerifyCurrentVideoResolution", test_l2_tvSettings_VerifyCurrentVideoResolution);
     UT_add_test( pSuite, "VerifyFrameRateWhenStopped", test_l2_tvSettings_VerifyFrameRateWhenStopped);
     UT_add_test( pSuite, "GetTVSupportedVideoSources", test_l2_tvSettings_GetTVSupportedVideoSources);
@@ -4121,7 +4121,7 @@ int32_t test_l2_tvSettings_register(void)
     UT_add_test( pSuite, "SetAndGetColorTempRgain", test_l2_tvSettings_SetAndGetColorTempRgain);
     UT_add_test( pSuite, "SetAndGetColorTempGgain", test_l2_tvSettings_SetAndGetColorTempGgain);
     UT_add_test( pSuite, "SetAndGetColorTempBgain", test_l2_tvSettings_SetAndGetColorTempBgain);
-    UT_add_test( pSuite, "SetAndGetColorTemp_R_post_offset_onSource", test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource);
+    UT_add_test( pSuite, "SetAndGetColorTempRpostoffset", test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource);
     UT_add_test( pSuite, "SetAndGetColorTempGPostOffset", test_l2_tvSettings_SetAndGetColorTempGPostOffset);
     UT_add_test( pSuite, "SetAndGetColorTempBPostOffset", test_l2_tvSettings_SetAndGetColorTempBPostOffset);
     UT_add_test( pSuite, "EnableAndVerifyWBCalibrationMode", test_l2_tvSettings_EnableAndVerifyWBCalibrationMode);
@@ -4142,7 +4142,7 @@ int32_t test_l2_tvSettings_register(void)
     UT_add_test( pSuite, "EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
     UT_add_test( pSuite, "GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
     UT_add_test( pSuite, "RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
-    UT_add_test( pSuite, "SetandGetCustom2PointWhiteBalance", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
+    UT_add_test( pSuite, "SetandGetCustom2PntWhiteBal", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
     return 0;
 }
 
