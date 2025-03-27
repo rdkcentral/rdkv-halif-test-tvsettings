@@ -877,7 +877,7 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-    for (int i = 0; i < tvDimmingMode_MAX; i++)
+    for (int i = 0; i < count; i++)
     {
         supportedDimmingModesPtr[i] = &supportedDimmingModes[i];
     }
@@ -3327,7 +3327,8 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
     pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     int32_t pq_mode = 0;
-    uint16_t countVideoSrc = 0, countVideoFormat= 0, countPictureFormat =0;
+    uint16_t countVideoSrc = 0, countVideoFormat= 0, countPictureFormat =0, countPQParamIndex = 0;
+    char keyValue[KEY_VALUE_SIZE] = {0};
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
@@ -3335,6 +3336,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     countPictureFormat = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+    countPQParamIndex = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedPQParameter/index");
 
     UT_LOG_DEBUG("Invoking GetTVSupportedVideoFormats with valid parameters");
     for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
@@ -3438,8 +3440,10 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                 UT_LOG_DEBUG(" SaveTVDimmingMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
-                for(pqParamIndex = PQ_PARAM_BRIGHTNESS; pqParamIndex < PQ_PARAM_MAX; pqParamIndex++)
+                for(int32_t l = 0; l < countPQParamIndex; l++)
                 {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedPQParameter/index/%d", l);
+                    pqParamIndex = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
                     UT_LOG_DEBUG("Invoking GetPQParams() with pqIndex=%d, videoSrcType=%d, videoFormatType=%d, pqParamIndex=%d", pq_mode, videoSrcType, videoFormatType, pqParamIndex);
                     status = GetPQParams(pq_mode, videoSrcType, videoFormatType, pqParamIndex, &value);
                     UT_LOG_DEBUG(" GetPQParams Return status: %d value: %d", status, value);
