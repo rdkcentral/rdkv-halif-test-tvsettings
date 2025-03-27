@@ -212,7 +212,7 @@ class tvSettingsClass():
 
     This module provides common extensions for tvSettings Module.
     """
-    def __init__(self, moduleConfigProfileFile:str, session=None, testSuite:str="L3 tvSettings", targetWorkspace="/tmp"):
+    def __init__(self, moduleConfigProfileFile:str, session=None, testSuite:str="L3 tvSettings", targetWorkspace="/tmp", copyArtifacts:bool=True):
         """
         Initializes the tvSettings class function.
         """
@@ -229,14 +229,14 @@ class tvSettingsClass():
         self.testSession   = session
         self.utils         = utBaseUtils()
 
-         # Copy bin files to the target
+        if copyArtifacts:
+            # Copy bin files to the target
+            for artifact in self.testConfig.test.artifacts:
+                filesPath = os.path.join(dir_path, artifact)
+                self.utils.rsync(self.testSession, filesPath, targetWorkspace)
 
-        for artifact in self.testConfig.test.artifacts:
-            filesPath = os.path.join(dir_path, artifact)
-            self.utils.rsync(self.testSession, filesPath, targetWorkspace)
-
-        # Copy the profile file to the target
-        self.utils.scpCopy(self.testSession, moduleConfigProfileFile, targetWorkspace)
+            # Copy the profile file to the target
+            self.utils.scpCopy(self.testSession, moduleConfigProfileFile, targetWorkspace)
 
         # Start the user interface menu
         self.utMenu.start()
