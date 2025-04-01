@@ -7,6 +7,8 @@
 - [Reference Documents](#reference-documents)
 - [How to build the test suite](#how-to-build-the-test-suite)
 - [Notes](#notes)
+- [Manual way of running the L1 and L2 test cases](#manual-way-of-running-the-l1-and-l2-test-cases)
+- [Setting Python environment for running the L1 L2 and L3 automation test cases](#setting-python-environment-for-running-the-l1-l2-and-l3-automation-test-cases)
 
 ## Acronyms, Terms and Abbreviations
 
@@ -29,8 +31,9 @@ This repository contains the Unit Test Suites (L1,L2 & L3) for TV Settings `HAL`
 |1|`HAL` Specification Document|This document provides specific information on the APIs for which tests are written in this module|[tv-settings_halSpec](https://github.com/rdkcentral/rdkv-halif-tvsettings/blob/main/docs/pages/tv-settings_halSpec.md "tv-settings_halSpec" )|
 |2|High-Level Test Spec |High Level Test Specification Documentation|[tv-settings_High_Level_Test_Spec.md]( docs/pages/tv-settings_High_Level_Test_Spec.md)|
 |3|`L2` Low Level Test Spec |`L2` Low Level Test Specification and Procedure Documentation|[tv-settings_L2_Low_Level_Test_Spec.md]( docs/pages/tv-settings_L2_Low_Level_Test_Spec.md)|
-|4|`L3` Low Level Test Spec |`L3` Low Level Test Specification|[tv-settings_L3_Low_Level_Test_Spec.md]( docs/pages/tv-settings_L3_Low_Level_Test_Spec.md)|
-|5|`L3` Test Procedure Document |`L3` Test procedure documentation|[tv-settings_L3_TestProcedure.md]( docs/pages/tv-settings_L3_TestProcedure.md)|
+|4|`L1` and `L2` Test Procedure Document |`L1` and `L2` Test procedure documentation|[tv-settings_L1_L2_TestProcedure.md]( docs/pages/tv-settings_L1_L2_TestProcedure.md)|
+|5|`L3` Low Level Test Spec |`L3` Low Level Test Specification|[tv-settings_L3_Low_Level_Test_Spec.md]( docs/pages/tv-settings_L3_Low_Level_Test_Spec.md)|
+|6|`L3` Test Procedure Document |`L3` Test procedure documentation|[tv-settings_L3_TestProcedure.md]( docs/pages/tv-settings_L3_TestProcedure.md)|
 
 ## Notes
 
@@ -82,7 +85,7 @@ build_ut.sh TARGET=arm
 
 - `build_ut.sh` script will clone the hal-test repo, ut-core and generate a `hal_test_tvsettings-hal` binary in `ut/bin/` upon successful completion.
 
-### Running the `L1` and `L2` test cases
+### Manual way of running the `L1` and `L2` test cases
 
 ```bash
  ./hal_test_tvsettings-hal -p Sink_4K_TvSettings.yaml
@@ -95,9 +98,10 @@ Alternatively, use the run.sh script with the profile file:
 
 - Profile files define the configuration for the platform available here [profile yaml file](./profiles/)
 
-### Running the `L3` test cases
+### Setting Python environment for running the `L1` `L2` and `L3` automation test cases
 
-- For running the L3 test suite, a host PC or server with a Python environment is required.
+- For running the `L1` `L2` and `L3` test suite, a host PC or server with a Python environment is required.
 - Install Python Environment and Activation Scripts as detailed in the [HPK Documentation](https://github.com/rdkcentral/rdk-hpk-documentation/tree/main?tab=readme-ov-file#installing-the-python-environment-for-l3-testing-suite)
-- To run the test cases follow the [tv-settings_L3_TestProcedure.md](docs/pages/tv-settings_L3_TestProcedure.md)
+- To run the `L1` and `L2` test cases follow the [tv-settings_L1_L2_TestProcedure.md](docs/pages/tv-settings_L1_L2_TestProcedure.md)
+- To run the `L3` test cases follow the [tv-settings_L3_TestProcedure.md](docs/pages/tv-settings_L3_TestProcedure.md)
 
