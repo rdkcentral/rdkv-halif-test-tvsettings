@@ -48,6 +48,7 @@ class tvSettingsHelperClass(utHelperClass):
         self.testSetupPath = os.path.join(dir_path, "tvSettings_L3_testSetup.yml")
         self.moduleName = "tvSettings"
         self.rackDevice = "dut"
+        self.testsuite  =  "L3 tvSettings"
 
         super().__init__(testName, qcId, log)
 
@@ -153,7 +154,8 @@ class tvSettingsHelperClass(utHelperClass):
 
 
         # Create the tvSettings class
-        self.testtvSettings = tvSettingsClass(self.moduleConfigProfileFile , self.hal_session, self.targetWorkspace )
+        self.testtvSettings = tvSettingsClass(self.moduleConfigProfileFile , self.hal_session, self.testsuite, self.targetWorkspace )
+
 
         return True
 

@@ -4,7 +4,85 @@ tvSettings:
     Name: Panel_4k
   features:
     extendedEnumsSupported: false
-
+  # PQ_PARAM_BRIGHTNESS  = 0x01                      //!< Picture parameter is Brightness
+  # PQ_PARAM_CONTRAST    = 0x02                      //!< Picture parameter is Contrast
+  # PQ_PARAM_SHARPNESS   = 0x03                      //!< Picture parameter is Sharpness
+  # PQ_PARAM_SATURATION  = 0x04                      //!< Picture parameter is Saturation
+  # PQ_PARAM_HUE         = 0x05                      //!< Picture parameter is Hue
+  # PQ_PARAM_BACKLIGHT   = 0x06                      //!< Picture parameter is Backlight
+  # PQ_PARAM_DOLBY_MODE  = 0x07                      //!< Picture parameter is Dolby Mode
+  # PQ_PARAM_HDR10_MODE  = 0x08                      //!< Picture parameter is HDR10 mode. To be deprecated
+  # PQ_PARAM_HLG_MODE    = 0x09                      //!< Picture parameter is HLG mode. To be deprecated
+  # PQ_PARAM_ASPECT_RATIO = 0xA                      //!< Picture parameter is Aspect ratio
+  # PQ_PARAM_COLOR_TEMPERATURE = 0x0B                //!< Picture parameter is Colour temperature
+  # PQ_PARAM_DIMMINGMODE = 0x0C                      //!< Picture parameter is Dimming mode
+  # PQ_PARAM_LDIM        = 0x0D                      //!< Picture parameter is LDIM. To be deprecated
+  # PQ_PARAM_LOCALDIMMING_LEVEL = 0x0E               //!< Picture parameter is Local dimming level
+  # PQ_PARAM_LOWLATENCY_STATE = 0x0F                 //!< Picture parameter is Low latency state
+  # PQ_PARAM_CMS         = 0x10                      //!< Picture parameter is CMS. To be deprecated
+  # PQ_PARAM_CMS_STATE   = 0x11                      //!< Picture parameter is CMS. To be deprecated
+  # PQ_PARAM_CMS_SATURATION_RED = 0x12               //!< Picture parameter is Component saturation red
+  # PQ_PARAM_CMS_SATURATION_BLUE = 0x13              //!< Picture parameter is Component saturation blue
+  # PQ_PARAM_CMS_SATURATION_GREEN = 0x14             //!< Picture parameter is Component saturation green
+  # PQ_PARAM_CMS_SATURATION_YELLOW = 0x15            //!< Picture parameter is Component saturation yellow
+  # PQ_PARAM_CMS_SATURATION_CYAN = 0x16              //!< Picture parameter is Component saturation cyan
+  # PQ_PARAM_CMS_SATURATION_MAGENTA = 0x17           //!< Picture parameter is Component saturation magenta
+  # PQ_PARAM_CMS_HUE_RED = 0x18                      //!< Picture parameter is Component hue red
+  # PQ_PARAM_CMS_HUE_BLUE = 0x19                     //!< Picture parameter is Component hue blue
+  # PQ_PARAM_CMS_HUE_GREEN = 0x1A                    //!< Picture parameter is Component hue green
+  # PQ_PARAM_CMS_HUE_YELLOW = 0x1B                   //!< Picture parameter is Component hue yellow
+  # PQ_PARAM_CMS_HUE_CYAN = 0x1C                     //!< Picture parameter is Component hue cyan
+  # PQ_PARAM_CMS_HUE_MAGENTA =0x1D                   //!< Picture parameter is Component hue magenta
+  # PQ_PARAM_CMS_LUMA_RED = 0x1E                     //!< Picture parameter is Component luma red
+  # PQ_PARAM_CMS_LUMA_BLUE = 0x1F                    //!< Picture parameter is Component luma blue
+  # PQ_PARAM_CMS_LUMA_GREEN = 0x20                   //!< Picture parameter is Component luma green
+  # PQ_PARAM_CMS_LUMA_YELLOW =0x21                   //!< Picture parameter is Component luma yellow
+  # PQ_PARAM_CMS_LUMA_CYAN = 0x22                    //!< Picture parameter is Component luma cyan
+  # PQ_PARAM_CMS_LUMA_MAGENTA = 0x23                 //!< Picture parameter is Component luma magenta
+  # PQ_PARAM_WB_GAIN_RED  = 0x24                     //!< Picture parameter is Component Red Gain
+  # PQ_PARAM_WB_GAIN_GREEN = 0x25                    //!< Picture parameter is Component Green Gain
+  # PQ_PARAM_WB_GAIN_BLUE = 0x26                     //!< Picture parameter is Component Blue Gain
+  # PQ_PARAM_WB_OFFSET_RED = 0x27                    //!< Picture parameter is Component Red Offset
+  # PQ_PARAM_WB_OFFSET_GREEN = 0x28                  //!< Picture parameter is Component Green Offset
+  # PQ_PARAM_WB_OFFSET_BLUE =0x29                    //!< Picture parameter is Component Blue Offset
+  SupportedPQParameter:
+    index:
+      - 0x01    # PQ_PARAM_BRIGHTNESS
+      - 0x02    # PQ_PARAM_CONTRAST
+      - 0x03    # PQ_PARAM_SHARPNESS
+      - 0x04    # PQ_PARAM_SATURATION
+      - 0x05    # PQ_PARAM_HUE
+      - 0x06    # PQ_PARAM_BACKLIGHT
+      - 0x07    # PQ_PARAM_DOLBY_MODE
+      - 0x0A    # PQ_PARAM_ASPECT_RATIO
+      - 0x0B    # PQ_PARAM_COLOR_TEMPERATURE
+      - 0x0C    # PQ_PARAM_DIMMINGMODE
+      - 0x0E    # PQ_PARAM_LOCALDIMMING_LEVEL
+      - 0x0F    # PQ_PARAM_LOWLATENCY_STATE
+      - 0x12    # PQ_PARAM_CMS_SATURATION_RED
+      - 0x13    # PQ_PARAM_CMS_SATURATION_BLUE
+      - 0x14    # PQ_PARAM_CMS_SATURATION_GREEN
+      - 0x15    # PQ_PARAM_CMS_SATURATION_YELLOW
+      - 0x16    # PQ_PARAM_CMS_SATURATION_CYAN
+      - 0x17    # PQ_PARAM_CMS_SATURATION_MAGENTA
+      - 0x18    # PQ_PARAM_CMS_HUE_RED
+      - 0x19    # PQ_PARAM_CMS_HUE_BLUE
+      - 0x1A    # PQ_PARAM_CMS_HUE_GREEN
+      - 0x1B    # PQ_PARAM_CMS_HUE_YELLOW
+      - 0x1C    # PQ_PARAM_CMS_HUE_CYAN
+      - 0x1D    # PQ_PARAM_CMS_HUE_MAGENTA
+      - 0x1E    # PQ_PARAM_CMS_LUMA_RED
+      - 0x1F    # PQ_PARAM_CMS_LUMA_BLUE
+      - 0x20    # PQ_PARAM_CMS_LUMA_GREEN
+      - 0x21    # PQ_PARAM_CMS_LUMA_YELLOW
+      - 0x22    # PQ_PARAM_CMS_LUMA_CYAN
+      - 0x23    # PQ_PARAM_CMS_LUMA_MAGENTA
+      - 0x24    # PQ_PARAM_WB_GAIN_RED
+      - 0x25    # PQ_PARAM_WB_GAIN_GREEN
+      - 0x26    # PQ_PARAM_WB_GAIN_BLUE
+      - 0x27    # PQ_PARAM_WB_OFFSET_RED
+      - 0x28    # PQ_PARAM_WB_OFFSET_GREEN
+      - 0x29    # PQ_PARAM_WB_OFFSET_BLUE
   # tvDataColor_NONE    = 0x00, //!< No color
   # tvDataColor_RED     = 0x01, //!< Color is Red
   # tvDataColor_GREEN   = 0x02, //!< Color is Green
@@ -883,13 +961,13 @@ tvSettings:
     # Game
     # Filmmaker
     range:
-      - standard
-      - vivid
-      - energysaving
-      - custom
-      - theater
-      - game
-      - sports
+      - Standard
+      - Vivid
+      - Energysaving
+      - Custom
+      - Theater
+      - Game
+      - Sports
     # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
     # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
     # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"

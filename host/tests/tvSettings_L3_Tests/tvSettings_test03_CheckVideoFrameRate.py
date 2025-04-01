@@ -59,7 +59,7 @@ class tvSettings_test03_CheckVideoFrameRate(tvSettingsHelperClass):
             "30",
             "60",
             "23dot98",
-            "59dot94"
+            "59dot94",
             "24",
             "25",
             "50",

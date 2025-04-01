@@ -110,6 +110,10 @@ static char gContentChangeCBFile[MAX_FILE_SIZE];
 static char gResolutionChangeCBFile[MAX_FILE_SIZE];
 static char gFrameRateChangeCBFile[MAX_FILE_SIZE];
 static pthread_mutex_t gCallbackMutex = PTHREAD_MUTEX_INITIALIZER;
+static char gvideoFormatChangeData[] = "videoFormatChange";
+static char gvideoContentData[] = "videoContentChange";
+static char gvideoResolutionData[] = "videoResolutionChange";
+static char gvideoFrameRateData[] = "videoFrameRateChange";
 
 /* tvBacklightTestMode_t */
 const static ut_control_keyStringMapping_t  tvBacklightTestMode_mapTable [] =
@@ -565,10 +569,6 @@ void test_l3_tvSettings_initialize(void)
     tvVideoContentCallbackData videoContentCallbackData = {0};
     tvVideoResolutionCallbackData videoResolutionCallbackData = {0};
     tvVideoFrameRateCallbackData videoFrameRateCallbackData = {0};
-    char videoFormatChangeData[] = "videoFormatChange";
-    char videoContentData[] = "videoContentChange";
-    char videoResolutionData[] = "videoResolutionChange";
-    char videoFrameRateData[] = "videoFrameRateChange";
 
     strncpy(gFormatChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
     strncpy(gContentChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
@@ -582,7 +582,7 @@ void test_l3_tvSettings_initialize(void)
     UT_LOG_INFO("Result tvSettingsInit tvError_t:[%s]", UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for the Video Format */
-    videoFormatCallbackData.userdata = videoFormatChangeData;
+    videoFormatCallbackData.userdata = gvideoFormatChangeData;
     videoFormatCallbackData.cb = videoFormatChangeCB;
     UT_LOG_INFO("Calling RegisterVideoFormatChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *)videoFormatCallbackData.userdata, videoFormatCallbackData.userdata, videoFormatCallbackData.cb);
     ret = RegisterVideoFormatChangeCB(&videoFormatCallbackData);
@@ -591,7 +591,7 @@ void test_l3_tvSettings_initialize(void)
                (char *) videoFormatCallbackData.userdata, videoFormatCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for the Video Content */
-    videoContentCallbackData.userdata = videoContentData;
+    videoContentCallbackData.userdata = gvideoContentData;
     videoContentCallbackData.cb = videoContentChangeCB;
     UT_LOG_INFO("Calling RegisterVideoContentChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])",
                 videoContentCallbackData.userdata,
@@ -603,7 +603,7 @@ void test_l3_tvSettings_initialize(void)
                (char *) videoContentCallbackData.userdata, videoContentCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for Video Resolution */
-    videoResolutionCallbackData.userdata = videoResolutionData;
+    videoResolutionCallbackData.userdata = gvideoResolutionData;
     videoResolutionCallbackData.cb = videoResolutionChangeCB;
     UT_LOG_INFO("Calling RegisterVideoResolutionChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *) videoResolutionCallbackData.userdata, videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb);
     ret = RegisterVideoResolutionChangeCB(&videoResolutionCallbackData);
@@ -612,7 +612,7 @@ void test_l3_tvSettings_initialize(void)
                 (char *)videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
 
     /* Registration for Video Frame Rate Change */
-    videoFrameRateCallbackData.userdata = videoFrameRateData;
+    videoFrameRateCallbackData.userdata = gvideoFrameRateData;
     videoFrameRateCallbackData.cb = videoFrameRateChangeCB;
     UT_LOG_INFO("Calling RegisterVideoFrameRateChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *)videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb);
     ret = RegisterVideoFrameRateChangeCB(&videoFrameRateCallbackData);
@@ -702,7 +702,7 @@ void test_l3_tvSettings_GetCurrentVideoResolution(void)
     ASSERT(ret == tvERROR_NONE);
 
     UT_LOG_INFO("Result GetCurrentVideoResolution(OUT:Resolution:[%dx%d], OUT:isInterlaced:[%d], OUT:res value:[%s]),tvError_t:[%s]",
-                resolution.frameHeight, resolution.frameWidth, resolution.isInterlaced,
+                resolution.frameWidth, resolution.frameHeight, resolution.isInterlaced,
                 UT_Control_GetMapString(tvVideoResolution_mapTable, resolution.resolutionValue),
                 UT_Control_GetMapString(tvError_mapTable, ret));
 

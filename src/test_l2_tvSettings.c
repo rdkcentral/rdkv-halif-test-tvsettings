@@ -877,7 +877,7 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/DimmingMode/index");
-    for (int i = 0; i < tvDimmingMode_MAX; i++)
+    for (int i = 0; i < count; i++)
     {
         supportedDimmingModesPtr[i] = &supportedDimmingModes[i];
     }
@@ -3327,7 +3327,8 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     pic_modes_t pictureModes[PIC_MODES_SUPPORTED_MAX];
     pic_modes_t *pictureModesPtr[PIC_MODES_SUPPORTED_MAX]={0};
     int32_t pq_mode = 0;
-    uint16_t countVideoSrc = 0, countVideoFormat= 0, countPictureFormat =0;
+    uint16_t countVideoSrc = 0, countVideoFormat= 0, countPictureFormat =0, countPQParamIndex = 0;
+    char keyValue[KEY_VALUE_SIZE] = {0};
 
     UT_LOG_DEBUG("Invoking TvInit()");
     status = TvInit();
@@ -3335,6 +3336,7 @@ void test_l2_tvSettings_TestGetPQParameters(void)
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
     countPictureFormat = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+    countPQParamIndex = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedPQParameter/index");
 
     UT_LOG_DEBUG("Invoking GetTVSupportedVideoFormats with valid parameters");
     for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
@@ -3438,8 +3440,10 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                 UT_LOG_DEBUG(" SaveTVDimmingMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
 
-                for(pqParamIndex = PQ_PARAM_BRIGHTNESS; pqParamIndex < PQ_PARAM_MAX; pqParamIndex++)
+                for(int32_t l = 0; l < countPQParamIndex; l++)
                 {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/SupportedPQParameter/index/%d", l);
+                    pqParamIndex = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
                     UT_LOG_DEBUG("Invoking GetPQParams() with pqIndex=%d, videoSrcType=%d, videoFormatType=%d, pqParamIndex=%d", pq_mode, videoSrcType, videoFormatType, pqParamIndex);
                     status = GetPQParams(pq_mode, videoSrcType, videoFormatType, pqParamIndex, &value);
                     UT_LOG_DEBUG(" GetPQParams Return status: %d value: %d", status, value);
@@ -4091,58 +4095,58 @@ int32_t test_l2_tvSettings_register(void)
     }
     // List of test function names and strings
 
-    UT_add_test( pSuite, "L2_GetSupportedVideoFormats", test_l2_tvSettings_GetSupportedVideoFormats);
-    UT_add_test( pSuite, "L2_GetCurrentVideoFormat_NoVideoPlayback", test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback);
-    UT_add_test( pSuite, "L2_VerifyCurrentVideoResolution", test_l2_tvSettings_VerifyCurrentVideoResolution);
-    UT_add_test( pSuite, "L2_VerifyFrameRateWhenStopped", test_l2_tvSettings_VerifyFrameRateWhenStopped);
-    UT_add_test( pSuite, "L2_GetTVSupportedVideoSources", test_l2_tvSettings_GetTVSupportedVideoSources);
-    UT_add_test( pSuite, "L2_VerifyNoVideoSource", test_l2_tvSettings_VerifyNoVideoSource);
-    UT_add_test( pSuite, "L2_SetAndGetBacklight", test_l2_tvSettings_SetAndGetBacklight);
-    UT_add_test( pSuite, "L2_SetAndGetBacklightFade", test_l2_tvSettings_SetAndGetBacklightFade);
-    UT_add_test( pSuite, "L2_GetSupportedBacklightModes", test_l2_tvSettings_GetSupportedBacklightModes);
-    UT_add_test( pSuite, "L2_SetAndGetBacklightMode", test_l2_tvSettings_SetAndGetBacklightMode);
-    UT_add_test( pSuite, "L2_GetSupportedDimmingModes", test_l2_tvSettings_GetSupportedDimmingModes);
-    UT_add_test( pSuite, "L2_SetAndGetDimmingMode", test_l2_tvSettings_SetAndGetDimmingMode);
-    UT_add_test( pSuite, "L2_SetAndGetLocalDimmingLevel", test_l2_tvSettings_SetAndGetLocalDimmingLevel);
-    UT_add_test( pSuite, "L2_SetAndGetBrightness", test_l2_tvSettings_SetAndGetBrightness);
-    UT_add_test( pSuite, "L2_SetAndGetContrast", test_l2_tvSettings_SetAndGetContrast);
-    UT_add_test( pSuite, "L2_SetAndGetSharpness", test_l2_tvSettings_SetAndGetSharpness);
-    UT_add_test( pSuite, "L2_SetAndGetSaturation", test_l2_tvSettings_SetAndGetSaturation);
-    UT_add_test( pSuite, "L2_SetAndGetHue", test_l2_tvSettings_SetAndGetHue);
-    UT_add_test( pSuite, "L2_SetAndGetColorTemperature", test_l2_tvSettings_SetAndGetColorTemperature);
-    UT_add_test( pSuite, "L2_SetAndGetAspectRatio", test_l2_tvSettings_SetAndGetAspectRatio);
-    UT_add_test( pSuite, "L2_SetAndGetLowLatencyState", test_l2_tvSettings_SetAndGetLowLatencyState);
-    UT_add_test( pSuite, "L2_SetAndGetDynamicContrast", test_l2_tvSettings_SetAndGetDynamicContrast);
-    UT_add_test( pSuite, "L2_SetAndGetDynamicGamma", test_l2_tvSettings_SetAndGetDynamicGamma);
-    UT_add_test( pSuite, "L2_GetSupportedDolbyVisionModes", test_l2_tvSettings_GetSupportedDolbyVisionModes);
-    UT_add_test( pSuite, "L2_SetAndGetDolbyVisionMode", test_l2_tvSettings_SetAndGetDolbyVisionMode);
-    UT_add_test( pSuite, "L2_GetTVSupportedPictureModes", test_l2_tvSettings_GetTVSupportedPictureModes);
-    UT_add_test( pSuite, "L2_SetAndGetPictureMode", test_l2_tvSettings_SetAndGetPictureMode);
-    UT_add_test( pSuite, "L2_SetAndGetColorTempRgain", test_l2_tvSettings_SetAndGetColorTempRgain);
-    UT_add_test( pSuite, "L2_SetAndGetColorTempGgain", test_l2_tvSettings_SetAndGetColorTempGgain);
-    UT_add_test( pSuite, "L2_SetAndGetColorTempBgain", test_l2_tvSettings_SetAndGetColorTempBgain);
-    UT_add_test( pSuite, "L2_SetAndGetColorTemp_R_post_offset_onSource", test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource);
-    UT_add_test( pSuite, "L2_SetAndGetColorTempGPostOffset", test_l2_tvSettings_SetAndGetColorTempGPostOffset);
-    UT_add_test( pSuite, "L2_SetAndGetColorTempBPostOffset", test_l2_tvSettings_SetAndGetColorTempBPostOffset);
-    UT_add_test( pSuite, "L2_EnableAndVerifyWBCalibrationMode", test_l2_tvSettings_EnableAndVerifyWBCalibrationMode);
-    UT_add_test( pSuite, "L2_SetAndGetGammaTable", test_l2_tvSettings_SetAndGetGammaTable);
-    UT_add_test( pSuite, "L2_GetDefaultGammaTable", test_l2_tvSettings_GetDefaultGammaTable);
-    UT_add_test( pSuite, "L2_SetAndGetDvTmaxValue", test_l2_tvSettings_SetAndGetDvTmaxValue);
-    UT_add_test( pSuite, "L2_GetSupportedComponentColor", test_l2_tvSettings_GetSupportedComponentColor);
-    UT_add_test( pSuite, "L2_SetAndGetComponentSaturation", test_l2_tvSettings_SetAndGetComponentSaturation);
-    UT_add_test( pSuite, "L2_SetAndGetComponentHue", test_l2_tvSettings_SetAndGetComponentHue);
-    UT_add_test( pSuite, "L2_SetAndGetComponentLuma", test_l2_tvSettings_SetAndGetComponentLuma);
-    UT_add_test( pSuite, "L2_SetAndGetCMSState", test_l2_tvSettings_SetAndGetCMSState);
-    UT_add_test( pSuite, "L2_TestGetPQParameters", test_l2_tvSettings_TestGetPQParameters);
-    UT_add_test( pSuite, "L2_GetTVGammaTarget", test_l2_tvSettings_GetTVGammaTarget);
-    UT_add_test( pSuite, "L2_GetMaxGainValue", test_l2_tvSettings_GetMaxGainValue);
-    UT_add_test( pSuite, "L2_SetAndGetRGBPattern", test_l2_tvSettings_SetAndGetRGBPattern);
-    UT_add_test( pSuite, "L2_SetAndGetGrayPattern", test_l2_tvSettings_SetAndGetGrayPattern);
-    UT_add_test( pSuite, "L2_RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
-    UT_add_test( pSuite, "L2_EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
-    UT_add_test( pSuite, "L2_GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
-    UT_add_test( pSuite, "L2_RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
-    UT_add_test( pSuite, "L2_SetandGetCustom2PointWhiteBalance", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
+    UT_add_test( pSuite, "GetSupportedVideoFormats", test_l2_tvSettings_GetSupportedVideoFormats);
+    UT_add_test( pSuite, "GetCurrentVdoFmt_NoVdoPlyback", test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback);
+    UT_add_test( pSuite, "VerifyCurrentVideoResolution", test_l2_tvSettings_VerifyCurrentVideoResolution);
+    UT_add_test( pSuite, "VerifyFrameRateWhenStopped", test_l2_tvSettings_VerifyFrameRateWhenStopped);
+    UT_add_test( pSuite, "GetTVSupportedVideoSources", test_l2_tvSettings_GetTVSupportedVideoSources);
+    UT_add_test( pSuite, "VerifyNoVideoSource", test_l2_tvSettings_VerifyNoVideoSource);
+    UT_add_test( pSuite, "SetAndGetBacklight", test_l2_tvSettings_SetAndGetBacklight);
+    UT_add_test( pSuite, "SetAndGetBacklightFade", test_l2_tvSettings_SetAndGetBacklightFade);
+    UT_add_test( pSuite, "GetSupportedBacklightModes", test_l2_tvSettings_GetSupportedBacklightModes);
+    UT_add_test( pSuite, "SetAndGetBacklightMode", test_l2_tvSettings_SetAndGetBacklightMode);
+    UT_add_test( pSuite, "GetSupportedDimmingModes", test_l2_tvSettings_GetSupportedDimmingModes);
+    UT_add_test( pSuite, "SetAndGetDimmingMode", test_l2_tvSettings_SetAndGetDimmingMode);
+    UT_add_test( pSuite, "SetAndGetLocalDimmingLevel", test_l2_tvSettings_SetAndGetLocalDimmingLevel);
+    UT_add_test( pSuite, "SetAndGetBrightness", test_l2_tvSettings_SetAndGetBrightness);
+    UT_add_test( pSuite, "SetAndGetContrast", test_l2_tvSettings_SetAndGetContrast);
+    UT_add_test( pSuite, "SetAndGetSharpness", test_l2_tvSettings_SetAndGetSharpness);
+    UT_add_test( pSuite, "SetAndGetSaturation", test_l2_tvSettings_SetAndGetSaturation);
+    UT_add_test( pSuite, "SetAndGetHue", test_l2_tvSettings_SetAndGetHue);
+    UT_add_test( pSuite, "SetAndGetColorTemperature", test_l2_tvSettings_SetAndGetColorTemperature);
+    UT_add_test( pSuite, "SetAndGetAspectRatio", test_l2_tvSettings_SetAndGetAspectRatio);
+    UT_add_test( pSuite, "SetAndGetLowLatencyState", test_l2_tvSettings_SetAndGetLowLatencyState);
+    UT_add_test( pSuite, "SetAndGetDynamicContrast", test_l2_tvSettings_SetAndGetDynamicContrast);
+    UT_add_test( pSuite, "SetAndGetDynamicGamma", test_l2_tvSettings_SetAndGetDynamicGamma);
+    UT_add_test( pSuite, "GetSupportedDolbyVisionModes", test_l2_tvSettings_GetSupportedDolbyVisionModes);
+    UT_add_test( pSuite, "SetAndGetDolbyVisionMode", test_l2_tvSettings_SetAndGetDolbyVisionMode);
+    UT_add_test( pSuite, "GetTVSupportedPictureModes", test_l2_tvSettings_GetTVSupportedPictureModes);
+    UT_add_test( pSuite, "SetAndGetPictureMode", test_l2_tvSettings_SetAndGetPictureMode);
+    UT_add_test( pSuite, "SetAndGetColorTempRgain", test_l2_tvSettings_SetAndGetColorTempRgain);
+    UT_add_test( pSuite, "SetAndGetColorTempGgain", test_l2_tvSettings_SetAndGetColorTempGgain);
+    UT_add_test( pSuite, "SetAndGetColorTempBgain", test_l2_tvSettings_SetAndGetColorTempBgain);
+    UT_add_test( pSuite, "SetAndGetColorTempRpostoffset", test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource);
+    UT_add_test( pSuite, "SetAndGetColorTempGPostOffset", test_l2_tvSettings_SetAndGetColorTempGPostOffset);
+    UT_add_test( pSuite, "SetAndGetColorTempBPostOffset", test_l2_tvSettings_SetAndGetColorTempBPostOffset);
+    UT_add_test( pSuite, "EnableAndVerifyWBCalibrationMode", test_l2_tvSettings_EnableAndVerifyWBCalibrationMode);
+    UT_add_test( pSuite, "SetAndGetGammaTable", test_l2_tvSettings_SetAndGetGammaTable);
+    UT_add_test( pSuite, "GetDefaultGammaTable", test_l2_tvSettings_GetDefaultGammaTable);
+    UT_add_test( pSuite, "SetAndGetDvTmaxValue", test_l2_tvSettings_SetAndGetDvTmaxValue);
+    UT_add_test( pSuite, "GetSupportedComponentColor", test_l2_tvSettings_GetSupportedComponentColor);
+    UT_add_test( pSuite, "SetAndGetComponentSaturation", test_l2_tvSettings_SetAndGetComponentSaturation);
+    UT_add_test( pSuite, "SetAndGetComponentHue", test_l2_tvSettings_SetAndGetComponentHue);
+    UT_add_test( pSuite, "SetAndGetComponentLuma", test_l2_tvSettings_SetAndGetComponentLuma);
+    UT_add_test( pSuite, "SetAndGetCMSState", test_l2_tvSettings_SetAndGetCMSState);
+    UT_add_test( pSuite, "TestGetPQParameters", test_l2_tvSettings_TestGetPQParameters);
+    UT_add_test( pSuite, "GetTVGammaTarget", test_l2_tvSettings_GetTVGammaTarget);
+    UT_add_test( pSuite, "GetMaxGainValue", test_l2_tvSettings_GetMaxGainValue);
+    UT_add_test( pSuite, "SetAndGetRGBPattern", test_l2_tvSettings_SetAndGetRGBPattern);
+    UT_add_test( pSuite, "SetAndGetGrayPattern", test_l2_tvSettings_SetAndGetGrayPattern);
+    UT_add_test( pSuite, "RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
+    UT_add_test( pSuite, "EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
+    UT_add_test( pSuite, "GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
+    UT_add_test( pSuite, "RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
+    UT_add_test( pSuite, "SetandGetCustom2PntWhiteBal", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
     return 0;
 }
 
