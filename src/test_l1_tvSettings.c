@@ -17488,7 +17488,8 @@ void test_l1_tvSettings_negative_GetNumberOfDimmingZones (void)
 
     UT_LOG("Out %s",__FUNCTION__);
 }
-
+/*Commenting the code for now to match the interface file*/
+#ifdef TVSETTINGS_NEW_API
 /**
  * @brief Validate SaveCustom2PointWhiteBalance() for all positive invocation scenarios
  *
@@ -17811,7 +17812,6 @@ void test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance (void)
 
     UT_LOG("Out %s",__FUNCTION__);
 }
-
 
 /**
  * @brief Validate SetCustom2PointWhiteBalance() for all positive invocation scenarios
@@ -18220,7 +18220,7 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
 
     UT_LOG("Out %s",__FUNCTION__);
 }
-
+#endif /*TVSETTINGS_NEW_API*/
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -18461,12 +18461,14 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "EnableLocalContrast_neg" ,test_l1_tvSettings_negative_EnableLocalContrast );
     UT_add_test( pSuite, "GetLdimZoneShortCirStatus_pos" ,test_l1_tvSettings_positive_GetLdimZoneShortCircuitStatus );
     UT_add_test( pSuite, "GetLdimZoneShortCirStatus_neg" ,test_l1_tvSettings_negative_GetLdimZoneShortCircuitStatus );
+#ifdef TVSETTINGS_NEW_API
     UT_add_test( pSuite, "SetCustom2PointWhiteBalance_pos" ,test_l1_tvSettings_positive_SetCustom2PointWhiteBalance );
     UT_add_test( pSuite, "SetCustom2PointWhiteBalance_neg" ,test_l1_tvSettings_negative_SetCustom2PointWhiteBalance );
     UT_add_test( pSuite, "GetCustom2PointWhiteBalance_pos" ,test_l1_tvSettings_positive_GetCustom2PointWhiteBalance);
     UT_add_test( pSuite, "GetCustom2PointWhiteBalance_neg" ,test_l1_tvSettings_negative_GetCustom2PointWhiteBalance );
     UT_add_test( pSuite, "SaveCustom2PointWhiteBalance_pos" ,test_l1_tvSettings_positive_SaveCustom2PointWhiteBalance );
     UT_add_test( pSuite, "SaveCustom2PointWhiteBalance_neg" ,test_l1_tvSettings_negative_SaveCustom2PointWhiteBalance );
+#endif /*TVSETTINGS_NEW_API*/
     UT_add_test( pSuite, "RegisterVideoFormatChangeCB_pos" ,test_l1_tvSettings_positive_RegisterVideoFormatChangeCB );
     UT_add_test( pSuite, "RegisterVideoFormatChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoFormatChangeCB );
     UT_add_test( pSuite, "RegisterVideoContentChangeCB_pos" ,test_l1_tvSettings_positive_RegisterVideoContentChangeCB );
