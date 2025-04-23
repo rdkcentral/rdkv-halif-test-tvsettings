@@ -590,7 +590,7 @@ void test_l2_tvSettings_SetAndGetBacklightFade(void)
     {
         for ( int32_t j = 0; j <= 100; j += 25 )
         {
-            for ( int32_t k = 0; k <= 1000; k += 250 )
+            for ( int32_t k = 0; k <= 10000; k += 250 )
             {
                 from = i;
                 to = j;
