@@ -935,7 +935,8 @@ tvError_t GetNumberOfDimmingZones(unsigned int* number_of_dimming_zones)
   (void)number_of_dimming_zones;
   return (tvError_t)0;  
 }
-
+/*Commenting the code for now to match the interface file*/
+#ifdef TVSETTINGS_NEW_API
 tvError_t SetCustom2PointWhiteBalance(tvWBColor_t color, tvWBControl_t control, int value)
 {
   /*TODO: Implement Me!*/
@@ -962,3 +963,4 @@ tvError_t SaveCustom2PointWhiteBalance(tvVideoSrcType_t videoSrcType, int pq_mod
   (void)value;
   return (tvError_t)0;
 }
+#endif /*TVSETTINGS_NEW_API*/

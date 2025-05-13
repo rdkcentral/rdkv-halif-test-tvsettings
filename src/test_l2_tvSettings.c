@@ -3922,7 +3922,6 @@ void test_l2_tvSettings_RetrieveLDIMShortCircuitStatus(void)
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
 
-  
 /**
 * @brief Test to verify the functionality of GetNumberOfDimmingZones API
 *
@@ -3985,7 +3984,8 @@ void test_l2_tvSettings_GetNumberOfDimmingZones(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
-
+/*Commenting the code for now to match the interface file*/
+#ifdef TVSETTINGS_NEW_API
 /**
 * @brief Test to verify the setting and getting of customWhiteBalance
 *
@@ -4076,6 +4076,7 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
 
     UT_LOG_INFO("Out %s\n", __FUNCTION__);
 }
+#endif /*TVSETTINGS_NEW_API*/
 
 static UT_test_suite_t * pSuite = NULL;
 
@@ -4146,7 +4147,9 @@ int32_t test_l2_tvSettings_register(void)
     UT_add_test( pSuite, "EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
     UT_add_test( pSuite, "GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
     UT_add_test( pSuite, "RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
+#ifdef TVSETTINGS_NEW_API
     UT_add_test( pSuite, "SetandGetCustom2PntWhiteBal", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
+#endif /*TVSETTINGS_NEW_API*/
     return 0;
 }
 

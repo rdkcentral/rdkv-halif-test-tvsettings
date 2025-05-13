@@ -680,24 +680,24 @@ tvSettings:
     - name: "L1 tvSettings"
       test_cases:
           - GetLdimZoneShortCirStatus_neg
-    - name: "L1 tvSettings"
-      test_cases:
-          - SetCustom2PointWhiteBalance_pos
-    - name: "L1 tvSettings"
-      test_cases:
-          - SetCustom2PointWhiteBalance_neg
-    - name: "L1 tvSettings"
-      test_cases:
-          - GetCustom2PointWhiteBalance_pos
-    - name: "L1 tvSettings"
-      test_cases:
-          - GetCustom2PointWhiteBalance_neg
-    - name: "L1 tvSettings"
-      test_cases:
-          - SaveCustom2PointWhiteBalance_pos
-    - name: "L1 tvSettings"
-      test_cases:
-          - SaveCustom2PointWhiteBalance_neg
+#    - name: "L1 tvSettings"
+#      test_cases:
+#          - SetCustom2PointWhiteBalance_pos
+#    - name: "L1 tvSettings"
+#      test_cases:
+#          - SetCustom2PointWhiteBalance_neg
+#    - name: "L1 tvSettings"
+#      test_cases:
+#          - GetCustom2PointWhiteBalance_pos
+#    - name: "L1 tvSettings"
+#      test_cases:
+#          - GetCustom2PointWhiteBalance_neg
+#    - name: "L1 tvSettings"
+#      test_cases:
+#          - SaveCustom2PointWhiteBalance_pos
+#    - name: "L1 tvSettings"
+#      test_cases:
+#          - SaveCustom2PointWhiteBalance_neg
     - name: "L1 tvSettings"
       test_cases:
           - RegisterVideoFormatChangeCB_pos
@@ -898,9 +898,9 @@ tvSettings:
     - name: "L2 tvSettings"
       test_cases:
         - RetrieveLDIMShortCircuitStatus
-    - name: "L2 tvSettings"
-      test_cases:
-        - SetandGetCustom2PntWhiteBal
+#    - name: "L2 tvSettings"
+#      test_cases:
+#        - SetandGetCustom2PntWhiteBal
 
     ######################################
     # Entries to run selected test case
