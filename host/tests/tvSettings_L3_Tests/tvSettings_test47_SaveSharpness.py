@@ -73,8 +73,8 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getSharpnessPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getSharpnessVideoFormatInfo()
 
         # Split the sharpness values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
@@ -100,8 +100,8 @@ class tvSettings_test47_SaveSharpness(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getSharpnessPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getSharpnessVideoFormatInfo()
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:

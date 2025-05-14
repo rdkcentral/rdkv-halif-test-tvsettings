@@ -73,8 +73,8 @@ class tvSettings_test50_SaveColorTemperature(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getColorTemperaturePictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getColorTemperatureVideoFormatInfo()
         colorTemperatures = self.testtvSettings.getColorTemperatureInfo()
 
         # Prepare the list of color temperature assignments based on video formats
@@ -102,8 +102,8 @@ class tvSettings_test50_SaveColorTemperature(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getColorTemperaturePictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getColorTemperatureVideoFormatInfo()
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:
