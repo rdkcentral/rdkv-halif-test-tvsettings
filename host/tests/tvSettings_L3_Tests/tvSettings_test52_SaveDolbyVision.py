@@ -73,8 +73,8 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getDolbyVisionPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getDolbyVisionVideoFormatInfo()
         dolbyVisionValues = self.testtvSettings.getDolbyVisionInfo()
 
         # Prepare the list of Dolby Vision assignments based on video formats
@@ -102,8 +102,8 @@ class tvSettings_test52_SaveDolbyVision(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getDolbyVisionPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getDolbyVisionVideoFormatInfo()
 
         for pictureModeIndex in pictureModeIndices:
             for videoFormat in videoFormatInfo:
