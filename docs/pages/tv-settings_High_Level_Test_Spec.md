@@ -7,7 +7,7 @@
 - [Introduction](#introduction)
 - [Module Description](#module-description)
 - [Testing Scope](#testing-scope)
-  - [Test Start up Requirement](test-start-up-requirement)
+  - [Test Start up Requirement](#test-start-up-requirement)
   - [Emulator Requirement](#emulator-requirement)
 
 ## Acronyms, Terms and Abbreviations
