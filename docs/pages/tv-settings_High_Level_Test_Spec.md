@@ -47,9 +47,9 @@ High level overview:
 |3|[Get Current Video Resolution](#get-current-video-resolution)|The test aims to verify the current video resolution of the primary video|
 |4|[Get Current Video FrameRate](#get-current-video-framerate)|The test aims to verify the video frame rate of the current primary video|
 |5|[Video sources](#video-sources)|The test aims to verify the supported video sources of the systems and its count|
-|6|[Back light, Back light fade, Back light modes and TV Dimming Modes](#back-light---back-light-fade---back-light-modes-and-tv-dimming-modes)|The test is to verify by set and Get the current backlight value, backlight fade, backlight modes and tv dimming modes for the primary video source selected, primary video format played and picture mode selected.|
-|7|[Local Dimming Level, Brightness, Contrast, Sharpness, Saturation and Hue](#local-dimming-level---brightness---contrast---sharpness---saturation-and-hue)|This test verifies the functionality of setting the local dimming level, brightness, contrast, sharpness, saturation and Hue|
-|8|[Color Temperature, Aspect Ratio, Low Latency State, Dynamic Contrast and Dynamic Gamma](#color-temperature---aspect-ratio---low-latency-state---dynamic-contrast-and-dynamic-gamma)|This test verifies the functionality of setting the color temperature value to driver registers. It ensures that the new color temperature value is updated in the hardware and applied for the current primary video source, video format, and picture mode.|
+|6|[BackLight BackLightfade BackLightModes and TV Dimming Modes](#backlight-backlightfade-backlightmodes-and-tv-dimming-modes)|The test is to verify by set and Get the current backlight value, backlight fade, backlight modes and tv dimming modes for the primary video source selected, primary video format played and picture mode selected.|
+|7|[Local Dimming Level, Brightness, Contrast, Sharpness, Saturation and Hue](#localdimminglevel-brightness-contrast-sharpness-saturation-and-hue)|This test verifies the functionality of setting the local dimming level, brightness, contrast, sharpness, saturation and Hue|
+|8|[Color Temperature, Aspect Ratio, Low Latency State, Dynamic Contrast and Dynamic Gamma](#colortemperature-aspectratio-lowlatencystate-dynamiccontrast-and-dynamicgamma)|This test verifies the functionality of setting the color temperature value to driver registers. It ensures that the new color temperature value is updated in the hardware and applied for the current primary video source, video format, and picture mode.|
 |9|[TV Dolby Vision mode](#tv-dolby-vision-mode)|This test verifies the functionality of retrieving the supported Dolby Vision modes. It ensures that the returned list contains accurate information about the available DV modes and their count. |
 |10|[Picture Modes](#picture-modes)|This test verifies the functionality of retrieving the list of supported picture modes and their count. It ensures that the returned list is accurate and contains valid picture modes.|
 |11|[Color Temperature Rgain Ggain Bgain on source](#color-temperature-rgain-ggain-bgain-on-source)|This test verifies the functionality of setting or saving the RGB gain value for a specific color temperature and video source. It ensures that the value is successfully applied or saved for future use.|
@@ -58,16 +58,16 @@ High level overview:
 |14|[Get and Set Gamma Table](#get-and-set-gamma-table)|This test verifies the functionality of setting the gamma calibrated values to the gamma hardware for the current selected color temperature. It ensures that the values are successfully applied and do not override otherSettings in the picture profile database. |
 |15|[Get and Set Dv Tmax Value](#get-and-set-dv-tmax-value)|This test verifies the functionality of setting the Dolby Vision TMAX parameter in the Dolby Vision core. It ensures that the provided value is valid and can be applied successfully.|
 |16|[Get Supported Component Color](#get-supported-component-color)|This test verifies the functionality of retrieving the supported component colors. It ensures that the returned value represents the bitwise OR-ed combination of all supported colors.|
-|17|[Current Component Saturation, Component Hue and Component Luma](#current-component-saturation---component-hue-and-component-luma)|This test verifies the functionality of setting the current component saturation, component luma and component hue value. It ensures that the provided saturation, luma and hue value is valid and can be applied successfully.|
+|17|[Current Component Saturation, Component Hue and Component Luma](#currentcomponentsaturation-component-hue-and-component-luma)|This test verifies the functionality of setting the current component saturation, component luma and component hue value. It ensures that the provided saturation, luma and hue value is valid and can be applied successfully.|
 |18|[CMS](#cms)|This test verifies the functionality of saving the `CMS` value in the picture profile database for specificSettings. It ensures that the `CMS` values are stored correctly and can be applied automatically when needed.|
 |19|[PQ Params](#pq-params)|This test verifies the functionality of retrieving the default `PQ` (Picture Quality) and `PQ` parameters for a given picture mode, primary video source, and video format. It ensures that the default values and `PQ` parameter values are retrieved correctly.|
 |20|[Get Max Gain Value](#get-max-gain-value)|This test verifies the functionality of retrieving the maximum gamma/white balance gain value capable for the platform. It ensures that the returned value is within the valid range and accurately reflects the maximum gain value.|
-|21|[Gamma Mode, Gamma pattern and Get TV Gamma Target](#gamma-mode---gamma-pattern-and-get-tv-gamma-target)|This test verifies the functionality of enabling or disabling the gamma mode, gamma patter and get tv gamma target. It ensures that the gamma module can be successfully enabled or disabled as intended.|
+|21|[Gamma Mode, Gamma pattern and Get TV Gamma Target](#gammamode-gammapattern-and-get-tv-gamma-target)|This test verifies the functionality of enabling or disabling the gamma mode, gamma patter and get tv gamma target. It ensures that the gamma module can be successfully enabled or disabled as intended.|
 |22|[Get and Set RGB Pattern Gray Pattern](#get-and-set-rgb-pattern-gray-pattern)|This test verifies the functionality of setting the RGB and Gray pattern. It ensures that the primary color levels can be set accurately and displayed as intended on the screen.|
 |23|[Get Open Circuit Status](#get-open-circuit-status)|This test verifies the functionality of retrieving the current open circuit status of the backlight hardware. It ensures that the returned status indicates whether any `LED` fault is detected.|
 |24|[LDIM and LDIM Sequence Test](#ldim-and-ldim-sequence-test)|This test verifies the functionality of enabling or disabling the local dimming module, pixel compensation and sequence test. It ensures that the local dimming module can be successfully validated.|
 |25|[Set Backlight Test Mode](#set-backlight-test-mode)|This test verifies the functionality of setting the backlight test mode. It ensures that the backlight hardware can be configured correctly for calibration purposes based on the specified test mode.|
-|26|[Enable and Disable White Balance, Dynamic Contrast and Local Contrast](#enable-and-disable-white-balance---dynamic-contrast-and-local-contrast)|This test verifies the functionality of enabling or disabling the white balance, dynamic contrast and local contrast module. It ensures that the white balance, dynamic contrast and local contrast module can be successfully enabled or disabled as intended.|
+|26|[Enable and Disable White Balance, Dynamic Contrast and Local Contrast](#enable-and-disable-white-balance-dynamiccontrast-and-local-contrast)|This test verifies the functionality of enabling or disabling the white balance, dynamic contrast and local contrast module. It ensures that the white balance, dynamic contrast and local contrast module can be successfully enabled or disabled as intended.|
 |27|[Test the save setting values](#test-the-save-setting-values)|This test verifies the functionality of saving all persistence settings by rebooting the test case.|
 |28|[Get short Circuit Status](#get-short-circuit-status)|This test verifies the functionality of retrieving the short circuit status of the adjacent zones. It ensures that the returned status indicates whether any short is detected.|
 -----------
@@ -231,7 +231,7 @@ The Control Plane dynamically adjusts to various video formats, video resolution
 
 - Control plane connects and disconnects various video sources from external devices.
 
-## Back light - Back light fade - Back light modes and TV Dimming Modes
+## BackLight BackLightfade Backlightmodes and TV Dimming Modes
 
 |Description|HAL APIs|L2|L3|Control Plane requirements|
 |-----------|--------|--|--|--------------------------|
@@ -260,7 +260,7 @@ The Control Plane dynamically adjusts to various video formats, video resolution
 
 - Control plane checks the functionality with the analyzer by using different video sources, video formats, and picture settings to test the backlight fade, backlight, backlight modes, and TV dimming modes.
 
-## Local Dimming Level - Brightness - Contrast - Sharpness - Saturation and Hue
+## LocalDimmingLevel Brightness Contrast Sharpness Saturation and Hue
 
 |Description|HAL APIs|L2|L3|Control Plane requirements|
 |-----------|--------|--|--|--------------------------|
@@ -290,7 +290,7 @@ The Control Plane dynamically adjusts to various video formats, video resolution
 
 - Control plane checks the functionality by analyzer and the different  streams to test the local dimming level, brightness levels, contrast levels, Sharpness levels and Saturation levels.
 
-## Color Temperature - Aspect Ratio - Low Latency State - Dynamic Contrast and Dynamic Gamma
+## ColorTemperature AspectRatio LowLatencyState DynamicContrast and DynamicGamma
 
 |Description|HAL APIs|L2|L3|Control Plane requirements|
 |-----------|--------|--|--|--------------------------|
@@ -305,15 +305,15 @@ The Control Plane dynamically adjusts to various video formats, video resolution
 |Set and Gets the Dynamic Gamma within the valid range ( 1.80 to 2.60 ). The retrieved value should match the set value. Get values are retrieved from the database.|SetDynamicGamma(), GetDynamicGamma()|Y|N|N|
 |Set and get the Dynamic Gamma. Validate the functionality by adjusting the color temperature and confirming that the new gamma curve shifts according to the set Dynamic Gamma value. Validate with the analyzer and with various video sources, formats, and color temperatures.|SetDynamicGamma(), GetDynamicGamma()|N|Y|Y|
 
-### Test Startup Requirement - Color Temperature - Aspect Ratio - Low Latency State - Dynamic Contrast and Dynamic Gamma
+### Test Startup Requirement - Color Temperature - Aspect Ratio -  Low Latency State - Dynamic Contrast and Dynamic Gamma
 
 [Test Start up Requirement](#test-start-up-requirement)
 
-### Emulator Requirement - Color Temperature - Aspect Ratio - Low Latency State - Dynamic Contrast and Dynamic Gamma
+### Emulator Requirement - Color Temperature - Aspect Ratio -  Low Latency State - Dynamic Contrast and Dynamic Gamma
 
 [Emulator Requirement](#emulator-requirement)
 
-### Control Plane Requirement - Color Temperature - Aspect Ratio - Low Latency State - Dynamic Contrast and Dynamic Gamma
+### Control Plane Requirement - Color Temperature - Aspect Ratio -  Low Latency State - Dynamic Contrast and Dynamic Gamma
 
 - Control plane checks the functionality by analyzer.
 - For color temperature, aspect ratio and low latency state, control plane dynamically changing the selected video sources, formats and picture modes by the external devices
@@ -491,7 +491,7 @@ The Control Plane dynamically adjusts to various video formats, video resolution
 
 None
 
-## Current Component Saturation - Component Hue and Component Luma
+## CurrentComponentSaturation Component Hue and Component Luma
 
 |Description|HAL APIs|L2|L3|Control Plane requirements|
 |-----------|--------|--|--|--------------------------|
@@ -502,15 +502,15 @@ None
 |Set and Gets the Component Luma by verifying whether the values are within the valid range (0 - 100). The retrieved value should match the set value. Get values are fetched from the  database.|SetCurrentComponentLuma(), GetCurrentComponentLuma()|Y|N|N|
 |Set and Get the Component Luma, and verify its functionality with the currently selected video sources, formats, and picture modes to ensure it uses the set component Luma for the current selections. Confirm that when switching to different content and returning to the chosen source, format, and mode, the Component Luma remains retained. Validate the component Luma using an analyzer and test it with different video sources, formats, and picture modes.|SetCurrentComponentLuma(), GetCurrentComponentLuma()|N|Y|Y|
 
-### Test Startup Requirement - Current Component Saturation Component Hue and Component Luma
+### Test Startup Requirement - Current Component Saturation - Component Hue and Component Luma
 
 [Test Start up Requirement](#test-start-up-requirement)
 
-### Emulator Requirement - Current Component Saturation Component Hue and Component Luma
+### Emulator Requirement - Current Component Saturation - Component Hue and Component Luma
 
 [Emulator Requirement](#emulator-requirement)
 
-### Control Plane Requirement - Current Component Saturation Component Hue and Component Luma
+### Control Plane Requirement - Current Component Saturation - Component Hue and Component Luma
 
 - Control plane verifies functionality using an analyzer and dynamically changes the content, then switches back to the selected video sources, formats, and picture modes.
 
@@ -570,7 +570,7 @@ None
 
 None
 
-## Gamma Mode - Gamma pattern and Get TV Gamma Target
+## GammaMode Gammapattern and Get TV Gamma Target
 
 |Description|HAL APIs|L2|L3|Control Plane requirements|
 |-----------|--------|--|--|--------------------------|
@@ -669,7 +669,7 @@ None
 
 None
 
-## Enable and Disable White Balance - Dynamic Contrast and Local Contrast
+## Enable and Disable White Balance DynamicContrast and Local Contrast
 
 |Description|HAL APIs|L2|L3|Control Plane requirements|
 |-----------|--------|--|--|--------------------------|
