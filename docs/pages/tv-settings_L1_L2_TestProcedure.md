@@ -94,7 +94,7 @@ deviceConfig:
 
 #### Test Setup Configuration File
 
-Example Test Setup configuration File: [tvSettings_L1_L2_testSetup.yml](https://github.com/rdkcentral/rdkv-halif-test-tvsettings/blob/main/host/tests/L1_L2_TestCases/tvSettings_L1_L2_testSetup.yml)
+Example Test Setup configuration File: [tvSettings_L1_L2_testSetup.yml](../../host/tests/L1_L2_TestCases/tvSettings_L1_L2_testSetup.yml)
 
 This `yaml` contains the list of test_suites and test_cases to run
 

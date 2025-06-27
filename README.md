@@ -96,7 +96,7 @@ Alternatively, use the run.sh script with the profile file:
 ./run.sh -p /absolute/path/to/profile/file
  ```
 
-- Profile files define the configuration for the platform available here [profile yaml file](https://github.com/rdkcentral/rdkv-halif-test-tvsettings/blob/main/profiles/sink/Sink_4K_TvSettings.yaml)
+- Profile files define the configuration for the platform available here [profile yaml file](./profiles/sink/Sink_4K_TvSettings.yaml)
 
 ### Setting Python environment for running the `L1` `L2` and `L3` automation test cases
 
