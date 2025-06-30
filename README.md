@@ -46,5 +46,6 @@ Alternatively, use the run.sh script with the profile file:
 ./run.sh -p /absolute/path/to/profile/file
  ```
 
-- Profiles file available in [profile yaml file](./profiles/)
+- Profile files define the configuration for the platform available here [profile yaml file](./profiles/sink/Sink_4K_TvSettings.yaml)
 - Install Python Environment and Activation Scripts please check the [HPK Documentation](https://github.com/rdkcentral/rdk-hpk-documentation/blob/main/README.md)
+
