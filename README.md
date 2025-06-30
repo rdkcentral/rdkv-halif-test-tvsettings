@@ -46,5 +46,12 @@ Alternatively, use the run.sh script with the profile file:
 ./run.sh -p /absolute/path/to/profile/file
  ```
 
-- Profiles file available in [profile yaml file](./profiles/)
-- Install Python Environment and Activation Scripts please check the [HPK Documentation](https://github.com/rdkcentral/rdk-hpk-documentation/blob/main/README.md)
+- Profile files define the configuration for the platform available here [profile yaml file](./profiles/sink/Sink_4K_TvSettings.yaml)
+
+### Setting Python environment for running the `L1` `L2` and `L3` automation test cases
+
+- For running the `L1` `L2` and `L3` test suite, a host PC or server with a Python environment is required.
+- Install Python Environment and Activation Scripts as detailed in the [HPK Documentation](https://github.com/rdkcentral/rdk-hpk-documentation/tree/main?tab=readme-ov-file#installing-the-python-environment-for-l3-testing-suite)
+- To run the `L1` and `L2` test cases follow the [tv-settings_L1_L2_TestProcedure.md](docs/pages/tv-settings_L1_L2_TestProcedure.md)
+- To run the `L3` test cases follow the [tv-settings_L3_TestProcedure.md](docs/pages/tv-settings_L3_TestProcedure.md)
+
