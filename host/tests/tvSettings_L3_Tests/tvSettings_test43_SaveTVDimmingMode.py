@@ -73,8 +73,8 @@ class tvSettings_test43_SaveTVDimmingMode(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getTVDimmingModePictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getTVDimmingModeVideoFormatInfo()
         self.dimming_levels = self.testtvSettings.getTVDimmingMode()
 
         # Prepare the list of dimming assignments based on video formats

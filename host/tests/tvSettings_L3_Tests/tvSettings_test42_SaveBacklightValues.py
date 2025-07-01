@@ -73,8 +73,8 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getBacklightPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getBacklightVideoFormatInfo()
 
         # Split the brightness values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
@@ -98,8 +98,8 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getBacklightPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getBacklightVideoFormatInfo()
 
         for videoFormat in videoFormatInfo:
             for pictureModeIndex in pictureModeIndices:
@@ -124,7 +124,7 @@ class tvSettings_test42_SaveBacklightValues(tvSettingsHelperClass):
         streams = self.testSetup.get("assets").get("device").get(self.testName).get("streams")
 
         # Loop through video formats and corresponding stream URLs
-        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(),streams)):
+        for videoFormatIndex, (videoFormat,streamUrl) in enumerate(zip(self.testtvSettings.getBacklightVideoFormatInfo(),streams)):
 
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)

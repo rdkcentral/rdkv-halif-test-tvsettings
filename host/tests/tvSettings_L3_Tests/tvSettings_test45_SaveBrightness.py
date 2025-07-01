@@ -73,8 +73,8 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getBrightnessPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getBrightnessVideoFormatInfo()
 
         # Split the brightness values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
@@ -99,8 +99,8 @@ class tvSettings_test45_SaveBrightness(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getBrightnessPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getBrightnessVideoFormatInfo()
 
         for videoFormat in videoFormatInfo:
             for pictureModeIndex in pictureModeIndices:
