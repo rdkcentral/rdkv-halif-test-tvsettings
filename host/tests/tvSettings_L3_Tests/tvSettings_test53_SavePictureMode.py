@@ -73,7 +73,7 @@ class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
             None.
         """
         pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        videoFormatInfo = self.testtvSettings.getPictureModeVideoFormatInfo()
 
         # Prepare the list of picture mode assignments based on video formats
         for videoFormatIndex in range(len(videoFormatInfo)):
@@ -98,7 +98,7 @@ class tvSettings_test53_SavePictureMode(tvSettingsHelperClass):
         Returns:
             None.
         """
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        videoFormatInfo = self.testtvSettings.getPictureModeVideoFormatInfo()
 
         for videoFormat in videoFormatInfo:
             # Log and save the default Picture Mode value
