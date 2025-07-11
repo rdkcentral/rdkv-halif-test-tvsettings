@@ -4,7 +4,85 @@ tvSettings:
     Name: Panel_4k
   features:
     extendedEnumsSupported: false
-
+  # PQ_PARAM_BRIGHTNESS  = 0x00                      //!< Picture parameter is Brightness
+  # PQ_PARAM_CONTRAST    = 0x01                      //!< Picture parameter is Contrast
+  # PQ_PARAM_SHARPNESS   = 0x02                      //!< Picture parameter is Sharpness
+  # PQ_PARAM_SATURATION  = 0x03                      //!< Picture parameter is Saturation
+  # PQ_PARAM_HUE         = 0x04                      //!< Picture parameter is Hue
+  # PQ_PARAM_BACKLIGHT   = 0x05                      //!< Picture parameter is Backlight
+  # PQ_PARAM_DOLBY_MODE  = 0x06                      //!< Picture parameter is Dolby Mode
+  # PQ_PARAM_HDR10_MODE  = 0x07                      //!< Picture parameter is HDR10 mode. To be deprecated
+  # PQ_PARAM_HLG_MODE    = 0x08                      //!< Picture parameter is HLG mode. To be deprecated
+  # PQ_PARAM_ASPECT_RATIO = 0x09                      //!< Picture parameter is Aspect ratio
+  # PQ_PARAM_COLOR_TEMPERATURE = 0x0A                //!< Picture parameter is Colour temperature
+  # PQ_PARAM_DIMMINGMODE = 0x0B                      //!< Picture parameter is Dimming mode
+  # PQ_PARAM_LDIM        = 0x0C                      //!< Picture parameter is LDIM. To be deprecated
+  # PQ_PARAM_LOCALDIMMING_LEVEL = 0x0D               //!< Picture parameter is Local dimming level
+  # PQ_PARAM_LOWLATENCY_STATE = 0x0E                 //!< Picture parameter is Low latency state
+  # PQ_PARAM_CMS         = 0x0F                      //!< Picture parameter is CMS. To be deprecated
+  # PQ_PARAM_CMS_STATE   = 0x10                      //!< Picture parameter is CMS. To be deprecated
+  # PQ_PARAM_CMS_SATURATION_RED = 0x11               //!< Picture parameter is Component saturation red
+  # PQ_PARAM_CMS_SATURATION_BLUE = 0x12              //!< Picture parameter is Component saturation blue
+  # PQ_PARAM_CMS_SATURATION_GREEN = 0x13             //!< Picture parameter is Component saturation green
+  # PQ_PARAM_CMS_SATURATION_YELLOW = 0x14            //!< Picture parameter is Component saturation yellow
+  # PQ_PARAM_CMS_SATURATION_CYAN = 0x15              //!< Picture parameter is Component saturation cyan
+  # PQ_PARAM_CMS_SATURATION_MAGENTA = 0x16           //!< Picture parameter is Component saturation magenta
+  # PQ_PARAM_CMS_HUE_RED = 0x17                      //!< Picture parameter is Component hue red
+  # PQ_PARAM_CMS_HUE_BLUE = 0x18                     //!< Picture parameter is Component hue blue
+  # PQ_PARAM_CMS_HUE_GREEN = 0x19                    //!< Picture parameter is Component hue green
+  # PQ_PARAM_CMS_HUE_YELLOW = 0x1A                   //!< Picture parameter is Component hue yellow
+  # PQ_PARAM_CMS_HUE_CYAN = 0x1B                     //!< Picture parameter is Component hue cyan
+  # PQ_PARAM_CMS_HUE_MAGENTA =0x1C                   //!< Picture parameter is Component hue magenta
+  # PQ_PARAM_CMS_LUMA_RED = 0x1D                     //!< Picture parameter is Component luma red
+  # PQ_PARAM_CMS_LUMA_BLUE = 0x1E                    //!< Picture parameter is Component luma blue
+  # PQ_PARAM_CMS_LUMA_GREEN = 0x1F                   //!< Picture parameter is Component luma green
+  # PQ_PARAM_CMS_LUMA_YELLOW =0x20                   //!< Picture parameter is Component luma yellow
+  # PQ_PARAM_CMS_LUMA_CYAN = 0x21                    //!< Picture parameter is Component luma cyan
+  # PQ_PARAM_CMS_LUMA_MAGENTA = 0x22                 //!< Picture parameter is Component luma magenta
+  # PQ_PARAM_WB_GAIN_RED  = 0x23                     //!< Picture parameter is Component Red Gain
+  # PQ_PARAM_WB_GAIN_GREEN = 0x24                    //!< Picture parameter is Component Green Gain
+  # PQ_PARAM_WB_GAIN_BLUE = 0x25                     //!< Picture parameter is Component Blue Gain
+  # PQ_PARAM_WB_OFFSET_RED = 0x26                    //!< Picture parameter is Component Red Offset
+  # PQ_PARAM_WB_OFFSET_GREEN = 0x27                  //!< Picture parameter is Component Green Offset
+  # PQ_PARAM_WB_OFFSET_BLUE =0x28                    //!< Picture parameter is Component Blue Offset
+  SupportedPQParameter:
+    index:
+      - 0x00    # PQ_PARAM_BRIGHTNESS
+      - 0x01    # PQ_PARAM_CONTRAST
+      - 0x02    # PQ_PARAM_SHARPNESS
+      - 0x03    # PQ_PARAM_SATURATION
+      - 0x04    # PQ_PARAM_HUE
+      - 0x05    # PQ_PARAM_BACKLIGHT
+      - 0x06    # PQ_PARAM_DOLBY_MODE
+      - 0x09    # PQ_PARAM_ASPECT_RATIO
+      - 0x0A    # PQ_PARAM_COLOR_TEMPERATURE
+      - 0x0B    # PQ_PARAM_DIMMINGMODE
+      - 0x0D    # PQ_PARAM_LOCALDIMMING_LEVEL
+      - 0x0E   # PQ_PARAM_LOWLATENCY_STATE
+      - 0x11    # PQ_PARAM_CMS_SATURATION_RED
+      - 0x12    # PQ_PARAM_CMS_SATURATION_BLUE
+      - 0x13    # PQ_PARAM_CMS_SATURATION_GREEN
+      - 0x14    # PQ_PARAM_CMS_SATURATION_YELLOW
+      - 0x15    # PQ_PARAM_CMS_SATURATION_CYAN
+      - 0x16    # PQ_PARAM_CMS_SATURATION_MAGENTA
+      - 0x17    # PQ_PARAM_CMS_HUE_RED
+      - 0x18    # PQ_PARAM_CMS_HUE_BLUE
+      - 0x19    # PQ_PARAM_CMS_HUE_GREEN
+      - 0x1A    # PQ_PARAM_CMS_HUE_YELLOW
+      - 0x1B    # PQ_PARAM_CMS_HUE_CYAN
+      - 0x1C    # PQ_PARAM_CMS_HUE_MAGENTA
+      - 0x1D    # PQ_PARAM_CMS_LUMA_RED
+      - 0x1E    # PQ_PARAM_CMS_LUMA_BLUE
+      - 0x1F    # PQ_PARAM_CMS_LUMA_GREEN
+      - 0x20    # PQ_PARAM_CMS_LUMA_YELLOW
+      - 0x21    # PQ_PARAM_CMS_LUMA_CYAN
+      - 0x22    # PQ_PARAM_CMS_LUMA_MAGENTA
+      - 0x23    # PQ_PARAM_WB_GAIN_RED
+      - 0x24    # PQ_PARAM_WB_GAIN_GREEN
+      - 0x25    # PQ_PARAM_WB_GAIN_BLUE
+      - 0x26    # PQ_PARAM_WB_OFFSET_RED
+      - 0x27    # PQ_PARAM_WB_OFFSET_GREEN
+      - 0x28    # PQ_PARAM_WB_OFFSET_BLUE
   # tvDataColor_NONE    = 0x00, //!< No color
   # tvDataColor_RED     = 0x01, //!< Color is Red
   # tvDataColor_GREEN   = 0x02, //!< Color is Green
@@ -20,6 +98,32 @@ tvSettings:
     - 0x08 # tvDataColor_YELLOW
     - 0x10 # tvDataColor_CYAN
     - 0x20 # tvDataColor_MAGENTA
+
+  # COMP_NONE=0,     //!< No Component
+  # COMP_HUE,        //!< Component is Hue
+  # COMP_SATURATION, //!< Component is Saturation
+  # COMP_LUMA,       //!< Component is Luma
+  # COMP_MAX         //!< End of enum
+  SupportedComponentType:
+    - 0x1 # COMP_HUE
+    - 0x2 # COMP_SATURATION
+    - 0x3 # COMP_LUMA
+
+  # tvWB_COLOR_RED    = 0, //!< Color is Red
+  # tvWB_COLOR_GREEN, = 1, //!< Color is Green
+  # tvWB_COLOR_BLUE,  = 2, //!< Color is Blue
+  # tvWB_COLOR_MAX    = 3, //!< End of Enum
+  SupportedCustomWhiteBalanceColor:
+    - 0x0 # tvWB_COLOR_RED
+    - 0x1 # tvWB_COLOR_GREEN
+    - 0x2 # tvWB_COLOR_BLUE
+
+  # tvWB_CONTROL_GAIN   = 0, //!< Control is Gain
+  # tvWB_CONTROL_OFFSET = 1, //!< Control is Offset
+  # tvWB_CONTROL_MAX    = 2, //!< End of Enum
+  SupportedCustomWhiteBalanceControl:
+    - 0x0 # tvWB_CONTROL_GAIN
+    - 0x1 # tvWB_CONTROL_OFFSET
 
   # Video Frame Rates
   # tvVideoFrameRate_NONE    = 0x00, //!< No frame rate
@@ -857,13 +961,13 @@ tvSettings:
     # Game
     # Filmmaker
     range:
-      - standard
-      - vivid
-      - energysaving
-      - custom
-      - theater
-      - game
-      - sports
+      - Standard
+      - Vivid
+      - Energysaving
+      - Custom
+      - Theater
+      - Game
+      - Sports
     # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
     # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
     # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"
@@ -919,10 +1023,14 @@ tvSettings:
       - Tuner
       - Composite1
 
-  ComponentSaturationRed:
+  CMS:
     # range from 0 to 100
-    range_from: 0
-    range_to: 100
+    range_Saturation_from : 0
+    range_Saturation_to  : 100
+    range_Hue_from  : 0
+    range_Hue_to  : 100
+    range_Luma_from  : 0
+    range_Luma_to  : 30
     # Entertainment
     # Dynamic
     # Energy saving
@@ -968,695 +1076,94 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    # Red
+    # Green
+    # Blue
+    # Yellow
+    # Cyan
+    # Magenta
+    color:
+      - Red
+      - Green
+      - Blue
+      - Yellow
+      - Cyan
+      - Magenta
+    # Hue
+    # Saturation
+    # Luma
+    Component:
+      - Saturation
+      - Hue
+      - Luma
     platformsupport: true
 
-  ComponentSaturationBlue:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationGreen:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationYellow:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationCyan:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSTE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentSaturationMagenta:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueRed:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueBlue:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueGreen:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  ComponentHueYellow:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentHueMagenta:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentHueCyan:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaRed:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaBlue:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaGreen:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaYellow:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaMagenta:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
-
-  ComponentLumaCyan:
-    # range from 0 to 100
-    range_from: 0
-    range_to: 100
-    # Entertainment
-    # Dynamic
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Expert
-      - Movie
-      - Sports
-    # HDR10
-    # HDR10PLUS
-    # DV
-    # PRIMESL
-    # HLG
-    # SDR
-    # MVC
-    format:
-      - SDR
-      - HDR10
-      - HLG
-    platformsupport: true
   LDIMShortCircuitStatus:
     enable: true
     size : 160
     zone_count : 160
+
+  CustomWhiteBalance:
+    range_gain_from: 0
+    range_gain_to: 2047
+    range_offset_from: -1024
+    range_offset_to: 1023
+    # Entertainment
+    # Dynamic
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Filmmaker
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Expert
+      - Movie
+      - Sports
+      - Dynamic2
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+    # ANALOGUE
+    # COMPOSITE1
+    # COMPOSITE2
+    # YPBPR1
+    # YPBPR2
+    # HDMI1
+    # HDMI2
+    # HDMI3
+    # HDMI4
+    # VGA
+    # IP
+    # TUNER
+    # SVIDEO
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
+    # RED
+    # GREEN
+    # BLUE
+    color:
+      - Red
+      - Green
+      - Blue
+    # GAIN
+    # OFFSET
+    control:
+      - Gain
+      - Offset
+    platformsupport: true
