@@ -1,15 +1,5 @@
 # TV Settings High Level Test Specification Document
 
-## Table of Contents
-
-- [Acronyms, Terms and Abbreviations](#acronyms-terms-and-abbreviations)
-- [References](#references)
-- [Introduction](#introduction)
-- [Module Description](#module-description)
-- [Testing Scope](#testing-scope)
-  - [Test Start up Requirement](#test-start-up-requirement)
-  - [Emulator Requirement](#emulator-requirement)
-
 ## Acronyms, Terms and Abbreviations
 
 - `SoC`   - System On a Chip
