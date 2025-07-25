@@ -870,6 +870,8 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
     char getDimmingMode[10] = { 0 };
     int32_t count = 0;
     uint16_t numDimmingModes = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    char dimmingModeStr[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     status = TvInit();
     UT_LOG_DEBUG("Invoking TvInit");
@@ -894,15 +896,8 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
 
     for(int32_t j = 0; j < numDimmingModes; j++)
     {
-        // Convert tvDimmingMode_t to string for SetTVDimmingMode
-        const char *dimmingModeStr = NULL;
-        if (supportedDimmingModes[j] == tvDimmingMode_Fixed) {
-            dimmingModeStr = "fixed";
-        } else if (supportedDimmingModes[j] == tvDimmingMode_Global) {
-            dimmingModeStr = "global";
-        } else if (supportedDimmingModes[j] == tvDimmingMode_Local) {
-            dimmingModeStr = "local";
-        }
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/range/%d", j);
+        UT_KVP_PROFILE_GET_STRING(keyValue,dimmingModeStr);
 
         if (dimmingModeStr != NULL) {
             status = SetTVDimmingMode(dimmingModeStr);
