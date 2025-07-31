@@ -844,11 +844,11 @@ tvSettings:
     range:
       - Fixed
       - Global
-      # - Local
+      - Local
     index:
       - 0x00 #tvDimmingMode_Fixed
       - 0x02 #tvDimmingMode_Global
-      # - 0x01 #tvDimmingMode_Local
+      - 0x01 #tvDimmingMode_Local
     # Entertaiment
     # Dynamic
     # Energy saving
@@ -894,7 +894,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
-    numberOfDimmingModes: 2 #Local #Fixed
+    numberOfDimmingModes: 3 #Local #Fixed #Global
 
 
   DolbyVisionMode:
