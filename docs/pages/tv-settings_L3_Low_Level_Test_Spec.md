@@ -196,7 +196,7 @@ classDiagram
 - **componentProfile.yaml/platformProfile.yaml**
   - Contains component-specific configurations
   - Contains platform wide configuration broken down into separate components
-  - Example configuration file [tvSettings](https://github.com/rdkcentral/rdkv-halif-test-tvsettings/blob/2.0.0/profiles/sink/Sink_4K_TvSettings.yaml)
+  - Example configuration file [tvSettings](../../profiles/sink/Sink_4K_TvSettings.yaml)
 
 - **testSetupConfig.yaml**
   - This configuration file contains the list of requirements for tests to execute. Eg: Copying the streams, setting environment variables etc.
