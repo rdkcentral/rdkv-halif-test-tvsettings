@@ -2338,6 +2338,271 @@ class tvSettingsClass():
             outPicture.append(PQMode_(Picture).name)
         return outPicture
 
+    def getBacklightPictureModeIndex(self):
+        """
+        Gets the Picture Modes from the Backlight Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from Backlight configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.Backlight.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getTVDimmingModePictureModeIndex(self):
+        """
+        Gets the Picture Modes from the TvDimming Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from TvDimming configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.DimmingMode.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getLocalDimmingPictureModeIndex(self):
+        """
+        Gets the Picture Modes from the LocalDimming Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from LocalDimming configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.LocalDimmingLevel.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getBrightnessPictureModeIndex(self):
+        """
+        Gets the Picture Modes from the Brightness Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from Brightness configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.Brightness.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getContrastPictureModeIndex(self):
+        """
+        Gets the Picture Modes from the contrast Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from contrast configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.contrast.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getSharpnessPictureModeIndex(self):
+        """
+        Gets the Picture Modes from the Sharpness Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from Sharpness configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.Sharpness.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getSaturationPictureModeIndex(self):
+        """
+        Gets the Picture Modes from the Saturation Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from Saturation configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.Saturation.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getHuePictureModeIndex(self):
+        """
+        Gets the Picture Modes from the Hue Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from Hue configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.Hue.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getColorTemperaturePictureModeIndex(self):
+        """
+        Gets the Picture Modes from the ColorTemperature Feature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofPicture Modes from ColorTemperature configuration
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.ColorTemperature.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getAspectRatioPictureModeIndex(self):
+        """
+        Gets the AspectRatio Picture Modes.
+
+        Args:
+            None.
+
+        Returns:
+            list : list of AspectRatio Picture Modes
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.AspectRatio.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+
+    def getDolbyVisionPictureModeIndex(self):
+        """
+        Gets the DolbyVision Picture Modes.
+
+        Args:
+            None.
+
+        Returns:
+            list : list of DolbyVision Picture Modes
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.DolbyVision.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
+    def getTMAXPictureModeIndex(self):
+        """
+        Gets the TMAX Picture Modes.
+
+        Args:
+            None.
+
+        Returns:
+            list : list of TMAX Picture Modes
+        """
+        # Get the Picture Mode index from the profile
+        PictureMode = self.deviceProfile.TMAX.pqmode
+
+        # Check if index is valid
+        if PictureMode is None:
+            return []
+
+        outPicture = []
+        for Picture in PictureMode:
+            outPicture.append(PQMode_(Picture).name)
+        return outPicture
+
     def getVideoFormatInfo(self):
         """
         Gets the Video Format.
@@ -2350,6 +2615,292 @@ class tvSettingsClass():
         """
         # Get the Video Format index from the profile
         videoFormatIndex = self.deviceProfile.VideoFormat.index
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getBacklightVideoFormatInfo(self):
+        """
+        Gets the Video Format of the Backlight.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from Backlight Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.Backlight.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getTVDimmingModeVideoFormatInfo(self):
+        """
+        Gets the Video Format of the TVDimmingMode.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from TVDimmingMode Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.DimmingMode.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getLocalDimmingVideoFormatInfo(self):
+        """
+        Gets the Video Format of the LocalDimmingLevel.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from LocalDimmingLevel Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.LocalDimmingLevel.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getBrightnessVideoFormatInfo(self):
+        """
+        Gets the Video Format of the Brightness.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from Brightness Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.Brightness.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getContrastVideoFormatInfo(self):
+        """
+        Gets the Video Format of the Contrast.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from Contrast Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.Contrast.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getSharpnessVideoFormatInfo(self):
+        """
+        Gets the Video Format of the Sharpness.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from Sharpness Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.Sharpness.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getSaturationVideoFormatInfo(self):
+        """
+        Gets the Video Format of the Saturation.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from Saturation Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.Saturation.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getHueVideoFormatInfo(self):
+        """
+        Gets the Video Format of the Hue.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from Hue Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.Hue.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getColorTemperatureVideoFormatInfo(self):
+        """
+        Gets the Video Format of the ColorTemperature.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from ColorTemperature Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.ColorTemperature.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getAspectRatioVideoFormatInfo(self):
+        """
+        Gets the Video Format of the AspectRatio.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from AspectRatio Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.AspectRatio.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getDolbyVisionVideoFormatInfo(self):
+        """
+        Gets the Video Format of the DolbyVision.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from DolbyVision Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.DolbyVisionMode.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getPictureModeVideoFormatInfo(self):
+        """
+        Gets the Video Format of the PictureMode.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from PictureMode Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.PictureMode.format
+
+        # Check if index is valid
+        if videoFormatIndex is None:
+            return []
+
+        outVideoFormats = []
+        for videoFormat in videoFormatIndex:
+            outVideoFormats.append(VideoFormat(videoFormat).name)
+        return outVideoFormats
+
+    def getTMAXVideoFormatInfo(self):
+        """
+        Gets the Video Format of the TMAX.
+
+        Args:
+            None.
+
+        Returns:
+            list : list ofList of Video Formats from TMAX Configuration.
+        """
+        # Get the Video Format index from the profile
+        videoFormatIndex = self.deviceProfile.TMAX.format
 
         # Check if index is valid
         if videoFormatIndex is None:

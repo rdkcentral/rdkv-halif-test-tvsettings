@@ -75,8 +75,8 @@ class tvSettings_test56_SaveDvTmaxValue(tvSettingsHelperClass):
         Returns:
             None
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getTMAXPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getTMAXVideoFormatInfo()
 
         # Split the TMAX values based on the number of video formats
         num_video_formats = len(videoFormatInfo)
@@ -112,8 +112,8 @@ class tvSettings_test56_SaveDvTmaxValue(tvSettingsHelperClass):
         Returns:
             None.
         """
-        pictureModeIndices = self.testtvSettings.getPictureModeIndex()
-        videoFormatInfo = self.testtvSettings.getVideoFormatInfo()
+        pictureModeIndices = self.testtvSettings.getTMAXPictureModeIndex()
+        videoFormatInfo = self.testtvSettings.getTMAXVideoFormatInfo()
 
         # Get the supported LDIM states from the system
         ldim_states = self.testtvSettings.getLocalDimmingMode()
@@ -151,10 +151,10 @@ class tvSettings_test56_SaveDvTmaxValue(tvSettingsHelperClass):
 
         # Get the supported LDIM states from the system
         ldim_states = self.testtvSettings.getLocalDimmingMode()
-        pictureModeIndices = self.testtvSettings.getPictureModeInfo()
+        pictureModeIndices = self.testtvSettings.getTMAXPictureModeIndex()
 
         # Loop through video formats and corresponding stream URLs
-        for videoFormatIndex, (videoFormat, streamUrl) in enumerate(zip(self.testtvSettings.getVideoFormatInfo(), streams)):
+        for videoFormatIndex, (videoFormat, streamUrl) in enumerate(zip(self.testtvSettings.getTMAXVideoFormatInfo(), streams)):
 
             # Download the individual stream
             self.testDownloadAssetsByUrl(streamUrl)
@@ -176,7 +176,7 @@ class tvSettings_test56_SaveDvTmaxValue(tvSettingsHelperClass):
             ]
 
             # Select the LDIM state using modulus logic from the retrieved list of states
-            ldim_state = ldim_states[(pictureModeIndex * len(self.testtvSettings.getVideoFormatInfo()) + videoFormatIndex) % len(ldim_states)]
+            ldim_state = ldim_states[(pictureModeIndex * len(self.testtvSettings.getTMAXVideoFormatInfo()) + videoFormatIndex) % len(ldim_states)]
 
             self.testtvSettings.setPictureMode(pictureMode)
 
