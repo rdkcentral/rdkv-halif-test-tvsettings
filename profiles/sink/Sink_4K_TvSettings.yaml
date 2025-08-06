@@ -1169,3 +1169,44 @@ tvSettings:
       - Gain
       - Offset
     platformsupport: true
+  
+  tvSdrGamma:
+    #tvSdrGamma_INVALID = -1, //!< SDR gamma is invalid.
+    #tvSdrGamma_1_8, //!< SDR gamma is 1.8
+    #tvSdrGamma_1_9, //!< SDR gamma is 1.9
+    #tvSdrGamma_2_0, //!< SDR gamma is 2.0
+    #tvSdrGamma_2_1, //!< SDR gamma is 2.1
+    #tvSdrGamma_2_2, //!< SDR gamma is 2.2
+    #tvSdrGamma_2_3, //!< SDR gamma is 2.3
+    #tvSdrGamma_2_4, //!< SDR gamma is 2.4
+    #tvSdrGamma_BT_1886, //!< SDR gamma is ITU-R BT.1886
+    #tvSdrGamma_MAX //!< End of enum
+    index:
+      - 0x00 #tvSdrGamma_1_8
+      - 0x01 #tvSdrGamma_1_9
+      - 0x02 #tvSdrGamma_2_0
+      - 0x03 #tvSdrGamma_2_1
+      - 0x04 #tvSdrGamma_2_2
+      - 0x05 #tvSdrGamma_2_3
+      - 0x06 #tvSdrGamma_2_4
+      - 0x07 #tvSdrGamma_BT_1886
+      - 0x08 #tvSdrGamma_MAX
+    platformsupport: false
+  
+  AISuperResolution:
+    platformsupport: false
+
+  DigitalNoiseReduction:
+    platformsupport: false
+
+  PrecisionDetail:
+    platformsupport: false
+
+  MPEGNoiseReduction:
+    platformsupport: false
+
+  LocalContrastEnhancement:
+    platformsupport: false
+
+  MEMC:
+    platformsupport: false

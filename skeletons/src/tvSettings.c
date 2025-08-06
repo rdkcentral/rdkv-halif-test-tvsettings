@@ -962,3 +962,167 @@ tvError_t SaveCustom2PointWhiteBalance(tvVideoSrcType_t videoSrcType, int pq_mod
   (void)value;
   return (tvError_t)0;
 }
+
+tvError_t GetSdrGamma(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvSdrGamma_t * sdrGamma)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)sdrGamma;
+  return (tvError_t)0;
+}
+
+tvError_t SetSdrGamma(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvSdrGamma_t sdrGamma)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)sdrGamma;
+  return (tvError_t)0;
+}
+
+tvError_t SetPrecisionDetail(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int precisionDetail)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)precisionDetail;
+  return (tvError_t)0;
+}
+
+tvError_t GetPrecisionDetail(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int * precisionDetail)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)precisionDetail;
+  return (tvError_t)0;
+}
+
+tvError_t GetAISuperResolution(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int * aiSuperResolution)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)aiSuperResolution;
+  return (tvError_t)0;
+}
+
+tvError_t SetAISuperResolution(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int aiSuperResolution)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)aiSuperResolution;
+  return (tvError_t)0;
+}
+
+tvError_t SetDigitalNoiseReduction(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int digitalNoiseReduction)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)digitalNoiseReduction;
+  return (tvError_t)0;
+}
+
+tvError_t GetDigitalNoiseReduction(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int * digitalNoiseReduction)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)digitalNoiseReduction;
+  return (tvError_t)0;
+}
+
+tvError_t SetMPEGNoiseReduction(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int mpegNoiseReduction)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)mpegNoiseReduction;
+  return (tvError_t)0;
+}
+
+tvError_t GetMPEGNoiseReduction(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int * mpegNoiseReduction)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)mpegNoiseReduction;
+  return (tvError_t)0;
+}
+
+tvError_t SetLocalContrastEnhancement(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int localContrastEnhancement)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)localContrastEnhancement;
+  return (tvError_t)0;
+}
+
+tvError_t GetLocalContrastEnhancement(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int * localContrastEnhancement)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)localContrastEnhancement;
+  return (tvError_t)0;
+}
+
+tvError_t SetMEMC(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int memc)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)memc;
+  return (tvError_t)0;
+}
+
+tvError_t GetMEMC(tvVideoSrcType_t videoSrcType, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, int * memc)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)memc;
+  return (tvError_t)0;
+}
+
+tvError_t SaveBacklightMode(tvVideoSrcType_t videoSrcType, int pq_mode, tvVideoFormatType_t videoFormatType, tvBacklightMode_t value)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)value;
+  return (tvError_t)0;
+}
+
+tvError_t GetDVCalibrationDefault(tvPQModeIndex_t pq_mode, tvDVCalibrationSettings_t * calibration_values)
+{
+  /*TODO: Implement Me!*/
+  (void)pq_mode;
+  (void)calibration_values;
+  return (tvError_t)0;
+}
+
+tvError_t GetDVCalibration(tvPQModeIndex_t pq_mode, tvDVCalibrationSettings_t * calibration_values)
+{
+  /*TODO: Implement Me!*/
+  (void)pq_mode;
+  (void)calibration_values;
+  return (tvError_t)0;
+}

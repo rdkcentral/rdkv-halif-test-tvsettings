@@ -18221,6 +18221,1926 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+void test_l1_tvSettings_positive_GetSdrGamma (void)
+{
+    gTestID = 237;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvSdrGamma_t SdrGamma = tvSdrGamma_MAX;
+	tvSdrGamma_t SdrGammaRetry = tvSdrGamma_MAX;
+
+    tvError_t result = tvERROR_NONE ;
+    //int backlight = -1;
+    //int backlightRetry = -1;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetBacklight and expecting the API to return success */
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+	for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for (unsigned int j = 0; j < pqCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			result = GetSdrGamma(videoSource, pqValue, &SdrGamma);
+			UT_ASSERT_EQUAL(result, tvERROR_NONE);
+			UT_ASSERT_EQUAL(SdrGamma, tvSdrGamma_1_8); // Karthi: need to check with the all the supported values from ya
+    
+		//UT_ASSERT_TRUE( (backlight >= 0 && backlight <= 100 ));
+
+			/* Step 03: Calling tvsettings GetBacklight again and expecting the API to return success */
+			result = GetSdrGamma(videoSource, pqValue, &SdrGammaRetry);
+			UT_ASSERT_EQUAL(result, tvERROR_NONE);
+			UT_ASSERT_EQUAL(SdrGamma, SdrGammaRetry);
+		}
+	}
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetSdrGamma (void)
+{
+    gTestID = 237;
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
+    tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+    tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	tvSdrGamma_t SdrGamma = tvSdrGamma_MAX;
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetSdrGamma before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetSdrGamma(videoSource, pqValue, &SdrGamma);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetSdrGamma((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, &SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetSdrGamma((tvVideoSrcType_t) -2, pqValue, &SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetSdrGamma(videoSource, PQ_MODE_MAX, &SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetSdrGamma(videoSource,(tvPQModeIndex_t) -1, &SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetSdrGamma(videoSource, pqValue, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 09: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 10: Calling tvsettings GetSdrGamma after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetSdrGamma(videoSource, pqValue, &SdrGamma);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_positive_SetSdrGamma (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvSdrGamma_t SdrGamma = tvSdrGamma_MAX;
+	tvSdrGamma_t SdrGammaRetry = tvSdrGamma_MAX;
+
+    tvError_t result = tvERROR_NONE ;
+    //int backlight = -1;
+    //int backlightRetry = -1;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t sdrGammaCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings GetBacklight and expecting the API to return success */
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+	sdrGammaCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/tvSdrGamma/index");
+
+    result = SetSdrGamma(VIDEO_SOURCE_ANALOGUE, PQ_MODE_VIVID, tvSdrGamma_1_8);
+	UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+	for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for (unsigned int j = 0; j < pqCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			for (unsigned int k = 0; k < sdrGammaCount; k++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/tvSdrGamma/index/%d", k);
+                SdrGamma = (tvSdrGamma_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+				result = SetSdrGamma(videoSource, pqValue, SdrGamma);
+				UT_ASSERT_EQUAL(result, tvERROR_NONE);
+            }
+		}
+	}
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetSdrGamma (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
+    tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+    tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	tvSdrGamma_t SdrGamma = tvSdrGamma_MAX;
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	SdrGamma = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/tvSdrGamma/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetSdrGamma before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetSdrGamma(videoSource, pqValue, SdrGamma);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetSdrGamma((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetSdrGamma((tvVideoSrcType_t) -2, pqValue, SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetSdrGamma(videoSource, PQ_MODE_MAX, SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetSdrGamma(videoSource,(tvPQModeIndex_t) -1, SdrGamma);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetSdrGamma(videoSource, pqValue, tvSdrGamma_MAX);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings GetSdrGamma and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetSdrGamma(videoSource, pqValue, (tvSdrGamma_t)-1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	
+	/* Step 09: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 10: Calling tvsettings GetSdrGamma after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetSdrGamma(videoSource, pqValue, SdrGamma);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_positive_SetPrecisionDetail (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+    //int backlight = -1;
+    //int backlightRetry = -1;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings SetPrecisionDetail and expecting the API to return success */
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+	for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for (unsigned int j = 0; j < pqCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			for (unsigned int k = 0; k < videoFmtCount; k++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+				result = SetPrecisionDetail(videoSource, pqValue, videoFormat, 0);
+				UT_ASSERT_EQUAL(result, tvERROR_NONE);
+				
+				result = SetPrecisionDetail(videoSource, pqValue, videoFormat, 1);
+				UT_ASSERT_EQUAL(result, tvERROR_NONE);
+            }
+		}
+	}
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetPrecisionDetail (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetPrecisionDetail before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetPrecisionDetail(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetPrecisionDetail((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetPrecisionDetail((tvVideoSrcType_t) -2, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetPrecisionDetail(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetPrecisionDetail(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetPrecisionDetail(videoSource, pqValue, videoFormat, -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings SetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetPrecisionDetail(videoSource, pqValue, videoFormat, 50);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	
+	/* Step 09: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 10: Calling tvsettings SetPrecisionDetail after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetPrecisionDetail(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_GetPrecisionDetail (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+    //int backlight = -1;
+    //int backlightRetry = -1;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    int precisionDetail = 0;
+    int precisionDetailRetry = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings SetPrecisionDetail and expecting the API to return success */
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+	for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for (unsigned int j = 0; j < pqCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			for (unsigned int k = 0; k < videoFmtCount; k++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+				result = GetPrecisionDetail(videoSource, pqValue, videoFormat, &precisionDetail);
+				UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                UT_ASSERT_TRUE((precisionDetail == 0) || (precisionDetail == 1) );
+				
+				result = GetPrecisionDetail(videoSource, pqValue, videoFormat, &precisionDetailRetry);
+				UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                UT_ASSERT_EQUAL(precisionDetail,precisionDetailRetry);
+            }
+		}
+	}
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetPrecisionDetail (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    int value = 0;
+    int precisionDetail = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetPrecisionDetail before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetPrecisionDetail(videoSource, pqValue, videoFormat, &precisionDetail);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetPrecisionDetail((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, &precisionDetail);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetPrecisionDetail((tvVideoSrcType_t) -2, pqValue, videoFormat, &precisionDetail);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetPrecisionDetail(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, &precisionDetail);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetPrecisionDetail(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, &precisionDetail);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetPrecisionDetail and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetPrecisionDetail(videoSource, pqValue, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetPrecisionDetail after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetPrecisionDetail(videoSource, pqValue, videoFormat, &precisionDetail);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_SetAISuperResolution (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+    
+    bool platformsupported = true;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+
+    if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings SetAISuperResolution and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+                    //Karthi: Here on passing the last param need to call Caps function.
+                    result = SetAISuperResolution(videoSource, pqValue, videoFormat, 0);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = SetAISuperResolution(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetAISuperResolution (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetAISuperResolution before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetAISuperResolution(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetAISuperResolution((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetAISuperResolution((tvVideoSrcType_t) -2, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetAISuperResolution(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetAISuperResolution(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetAISuperResolution(videoSource, pqValue, videoFormat, -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings SetAISuperResolution after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetAISuperResolution(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_GetAISuperResolution (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    bool platformsupported = true;
+    int aiSuperResolution = 0;
+    int aiSuperResolutionRetry = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+	if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings GetAISuperResolution and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetAISuperResolution(videoSource, pqValue, videoFormat, &aiSuperResolution);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_TRUE((aiSuperResolution >= 0)); //Karthi: Since valid values are from 0...N
+                    
+                    result = GetAISuperResolution(videoSource, pqValue, videoFormat, &aiSuperResolutionRetry);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_EQUAL(aiSuperResolution,aiSuperResolutionRetry);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GetAISuperResolution(videoSource, pqValue, videoFormat, &aiSuperResolution);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);   
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetAISuperResolution (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    int value = 0;
+    int aiSuperResolution = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetAISuperResolution before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetAISuperResolution(videoSource, pqValue, videoFormat, &aiSuperResolution);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetAISuperResolution((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, &aiSuperResolution);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetAISuperResolution((tvVideoSrcType_t) -2, pqValue, videoFormat, &aiSuperResolution);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetAISuperResolution(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, &aiSuperResolution);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetPrecisionDetail(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, &aiSuperResolution);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetAISuperResolution and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetAISuperResolution(videoSource, pqValue, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetAISuperResolution after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetAISuperResolution(videoSource, pqValue, videoFormat, &aiSuperResolution);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_SetDigitalNoiseReduction (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+
+    bool platformsupported = true;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+    if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings SetDigitalNoiseReduction and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+                    //Karthi: Here on passing the last param need to call Caps function.
+                    result = SetDigitalNoiseReduction(videoSource, pqValue, videoFormat, 0);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = SetDigitalNoiseReduction(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetDigitalNoiseReduction (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetDigitalNoiseReduction before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetDigitalNoiseReduction(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetDigitalNoiseReduction((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetDigitalNoiseReduction((tvVideoSrcType_t) -2, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetDigitalNoiseReduction(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetDigitalNoiseReduction(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetDigitalNoiseReduction(videoSource, pqValue, videoFormat, -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings SetDigitalNoiseReduction after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetDigitalNoiseReduction(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_GetDigitalNoiseReduction (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    bool platformsupported = true;
+    int digitalNoiseReduction = 0;
+    int digitalNoiseReductionRetry = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+	if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings GetDigitalNoiseReduction and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetDigitalNoiseReduction(videoSource, pqValue, videoFormat, &digitalNoiseReduction);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_TRUE((digitalNoiseReduction >= 0)); //Karthi: Since valid values are from 0...N
+                    
+                    result = GetDigitalNoiseReduction(videoSource, pqValue, videoFormat, &digitalNoiseReductionRetry);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_EQUAL(digitalNoiseReduction,digitalNoiseReductionRetry);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GetDigitalNoiseReduction(videoSource, pqValue, videoFormat, &digitalNoiseReduction);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);   
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetDigitalNoiseReduction (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    int value = 0;
+    int digitalNoiseReduction = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetDigitalNoiseReduction before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetDigitalNoiseReduction(videoSource, pqValue, videoFormat, &digitalNoiseReduction);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetDigitalNoiseReduction((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, &digitalNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetDigitalNoiseReduction((tvVideoSrcType_t) -2, pqValue, videoFormat, &digitalNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetDigitalNoiseReduction(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, &digitalNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetDigitalNoiseReduction(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, &digitalNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetDigitalNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetDigitalNoiseReduction(videoSource, pqValue, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetDigitalNoiseReduction after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetDigitalNoiseReduction(videoSource, pqValue, videoFormat, &digitalNoiseReduction);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_SetMPEGNoiseReduction (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+
+    bool platformsupported = true;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+    if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings SetMPEGNoiseReduction and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+                    //Karthi: Here on passing the last param need to call Caps function.
+                    result = SetMPEGNoiseReduction(videoSource, pqValue, videoFormat, 0);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = SetMPEGNoiseReduction(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetMPEGNoiseReduction (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetMPEGNoiseReduction before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetMPEGNoiseReduction(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMPEGNoiseReduction((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMPEGNoiseReduction((tvVideoSrcType_t) -2, pqValue, videoFormat, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMPEGNoiseReduction(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMPEGNoiseReduction(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, 0);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMPEGNoiseReduction(videoSource, pqValue, videoFormat, -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings SetMPEGNoiseReduction after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetMPEGNoiseReduction(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_GetMPEGNoiseReduction (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    bool platformsupported = true;
+    int mpegNoiseReduction = 0;
+    int mpegNoiseReductionRetry = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+	if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings GetMPEGNoiseReduction and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetMPEGNoiseReduction(videoSource, pqValue, videoFormat, &mpegNoiseReduction);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_TRUE((mpegNoiseReduction >= 0)); //Karthi: Since valid values are from 0...N
+                    
+                    result = GetMPEGNoiseReduction(videoSource, pqValue, videoFormat, &mpegNoiseReductionRetry);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_EQUAL(mpegNoiseReduction, mpegNoiseReductionRetry);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GetMPEGNoiseReduction(videoSource, pqValue, videoFormat, &mpegNoiseReduction);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);   
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetMPEGNoiseReduction (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    int value = 0;
+    int mpegNoiseReduction = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetMPEGNoiseReduction before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetMPEGNoiseReduction(videoSource, pqValue, videoFormat, &mpegNoiseReduction);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMPEGNoiseReduction((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, &mpegNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMPEGNoiseReduction((tvVideoSrcType_t) -2, pqValue, videoFormat, &mpegNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMPEGNoiseReduction(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, &mpegNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMPEGNoiseReduction(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, &mpegNoiseReduction);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetMPEGNoiseReduction and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMPEGNoiseReduction(videoSource, pqValue, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetMPEGNoiseReduction after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetMPEGNoiseReduction(videoSource, pqValue, videoFormat, &mpegNoiseReduction);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_SetLocalContrastEnhancement (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+
+    bool platformsupported = true;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    int maxLocalContrastEnhancement = 0;
+    tvContextCaps_t *contextCaps = NULL;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+    if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        
+        /* Step 03: Calling tvsettings GetLocalContrastEnhancementCaps to get the max local enhancement value and expecting the API to return success */
+        result = GetLocalContrastEnhancementCaps(&maxLocalContrastEnhancement, &contextCaps);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+                    //Karthi: Here on passing the last param need to call Caps function.
+                    result = SetLocalContrastEnhancement(videoSource, pqValue, videoFormat, maxLocalContrastEnhancement);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = SetLocalContrastEnhancement(videoSource, pqValue, videoFormat, maxLocalContrastEnhancement);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetLocalContrastEnhancement (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int maxLocalContrastEnhancement = 0;
+    tvContextCaps_t *contextCaps = NULL;
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetLocalContrastEnhancement before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetLocalContrastEnhancement(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    result = GetLocalContrastEnhancementCaps(&maxLocalContrastEnhancement, &contextCaps);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetLocalContrastEnhancement((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, maxLocalContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetLocalContrastEnhancement((tvVideoSrcType_t) -2, pqValue, videoFormat, maxLocalContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetLocalContrastEnhancement(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, maxLocalContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetLocalContrastEnhancement(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, maxLocalContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetLocalContrastEnhancement(videoSource, pqValue, videoFormat, -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 08: Calling tvsettings SetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetLocalContrastEnhancement(videoSource, pqValue, videoFormat, maxLocalContrastEnhancement+1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings SetLocalContrastEnhancement after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetLocalContrastEnhancement(videoSource, pqValue, videoFormat, maxLocalContrastEnhancement);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_GetLocalContrastEnhancement (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    bool platformsupported = true;
+    int localContrastEnhancement = 0;
+    int localContrastEnhancementRetry = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+	if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetLocalContrastEnhancement(videoSource, pqValue, videoFormat, &localContrastEnhancement);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_TRUE((localContrastEnhancement >= 0)); //Karthi: Since valid values are from 0...N
+                    
+                    result = GetLocalContrastEnhancement(videoSource, pqValue, videoFormat, &localContrastEnhancementRetry);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_EQUAL(localContrastEnhancement, localContrastEnhancementRetry);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GetLocalContrastEnhancement(videoSource, pqValue, videoFormat, &localContrastEnhancement);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);   
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetLocalContrastEnhancement (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    int value = 0;
+    int localContrastEnhancement = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetLocalContrastEnhancement before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetLocalContrastEnhancement(videoSource, pqValue, videoFormat, &localContrastEnhancement);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetLocalContrastEnhancement((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, &localContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetLocalContrastEnhancement((tvVideoSrcType_t) -2, pqValue, videoFormat, &localContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetLocalContrastEnhancement(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, &localContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetLocalContrastEnhancement(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, &localContrastEnhancement);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetLocalContrastEnhancement(videoSource, pqValue, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetLocalContrastEnhancement after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetLocalContrastEnhancement(videoSource, pqValue, videoFormat, &localContrastEnhancement);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_SetMEMC (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+
+    bool platformsupported = true;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    int MEMC = 0;
+    tvContextCaps_t *contextCaps = NULL;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+    if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings SetMEMC and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        
+        /* Step 03: Calling tvsettings GetMEMCCaps to get the max local enhancement value and expecting the API to return success */
+        result = GetMEMCCaps(&MEMC, &contextCaps);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+                    //Karthi: Here on passing the last param need to call Caps function.
+                    result = SetMEMC(videoSource, pqValue, videoFormat, MEMC);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = SetMEMC(videoSource, pqValue, videoFormat, MEMC);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SetMEMC (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    int MEMC = 0;
+    tvContextCaps_t *contextCaps = NULL;
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SetLocalContrastEnhancement before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetMEMC(videoSource, pqValue, videoFormat, 0);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    result = GetMEMCCaps(&MEMC, &contextCaps);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMEMC((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, MEMC);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMEMC((tvVideoSrcType_t) -2, pqValue, videoFormat, MEMC);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMEMC(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, MEMC);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMEMC(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, MEMC);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMEMC(videoSource, pqValue, videoFormat, -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 08: Calling tvsettings SetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SetMEMC(videoSource, pqValue, videoFormat, MEMC+1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings SetMEMC after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SetMEMC(videoSource, pqValue, videoFormat, MEMC);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_GetMEMC (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    bool platformsupported = true;
+    int memc = 0;
+    int memcRetry = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    /* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+	
+	if(platformsupported == true)
+    {
+        /* Step 02: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return success */
+        videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+        pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+        videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+        for (unsigned int i = 0; i < videoSrcCount; i++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+            videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+            for (unsigned int j = 0; j < pqCount; j++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+                pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int k = 0; k < videoFmtCount; k++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                    result = GetMEMC(videoSource, pqValue, videoFormat, &memc);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_TRUE((memc >= 0)); //Karthi: Since valid values are from 0...N
+                    
+                    result = GetMEMC(videoSource, pqValue, videoFormat, &memcRetry);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                    UT_ASSERT_EQUAL(memc, memcRetry);
+                }
+            }
+        }
+    }
+    else
+    {
+        result = GetMEMC(videoSource, pqValue, videoFormat, &memc);
+        UT_ASSERT_EQUAL(result, tvERROR_OPERATION_NOT_SUPPORTED);   
+    }
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_GetMEMC (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    int value = 0;
+    int memc = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings GetLocalContrastEnhancement before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetMEMC(videoSource, pqValue, videoFormat, &memc);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMEMC((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, &memc);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings GetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMEMC((tvVideoSrcType_t) -2, pqValue, videoFormat, &memc);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings GetLocalContrastEnhancement and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetLocalContrastEnhancement(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, &memc);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings GetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMEMC(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, &memc);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings GetMEMC and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetMEMC(videoSource, pqValue, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 09: Calling tvsettings GetMEMC after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = GetMEMC(videoSource, pqValue, videoFormat, &memc);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
+void test_l1_tvSettings_positive_SaveBacklightMode (void)
+{
+    gTestID = 25;                                    /* It must be 25 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+	
+	tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+    tvBacklightMode_t modeValue = tvBacklightMode_NONE;
+	
+    tvError_t result = tvERROR_NONE ;
+	int32_t videoSrcCount = 0;
+    uint32_t pqCount = 0;
+	uint32_t videoFmtCount = 0;
+    uint32_t bkLightCount = 0;
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+	
+	
+	/* Step 01: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Calling tvsettings SaveBacklightMode and expecting the API to return success */
+	videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+	pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+	videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    bkLightCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index");
+
+	for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+		for (unsigned int j = 0; j < pqCount; j++)
+        {
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", j);
+            pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+			for (unsigned int k = 0; k < videoFmtCount; k++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", k);
+                videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                for (unsigned int l = 0; l < (count); l++)
+                {
+                    snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/BacklightControl/index/%d", l);
+                    modeValue = (tvBacklightMode_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+                            
+                    result = SaveBacklightMode(videoSource, pqValue, videoFormat, modeValue);
+                    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+                }
+            }
+		}
+	}
+
+    /* Step 04: Calling tvsettings termination and expecting the API to return success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s",__FUNCTION__);
+
+}
+
+void test_l1_tvSettings_negative_SaveBacklightMode (void)
+{
+	gTestID = 25;
+	
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE ;
+    int value = 0;
+    tvVideoSrcType_t videoSource = VIDEO_FORMAT_MAX;
+	tvPQModeIndex_t pqValue = PQ_MODE_STANDARD;
+	tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+    tvBacklightMode_t modeValue = tvBacklightMode_NONE;
+	
+	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    pqValue = (tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/index/0");
+	videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index/0");
+    modeValue = (tvBacklightMode_t)UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/BacklightControl/index/0");
+	
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling tvsettings SaveBacklightMode before TvInit and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveBacklightMode(videoSource, pqValue, videoFormat, modeValue);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02: Calling tvsettings initialization and expecting the API to return success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+	
+	/* Step 03: Calling tvsettings SaveBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveBacklightMode((tvVideoSrcType_t) VIDEO_SOURCE_MAX, pqValue, videoFormat, modeValue);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: Calling tvsettings SaveBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveBacklightMode((tvVideoSrcType_t) -2, pqValue, videoFormat, modeValue);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Calling tvsettings SaveBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveBacklightMode(videoSource, PQ_MODE_MAX, VIDEO_FORMAT_MAX, modeValue);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 06: Calling tvsettings SaveBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveBacklightMode(videoSource,(tvPQModeIndex_t) -1, (tvVideoFormatType_t)-1, modeValue);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 07: Calling tvsettings SaveBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveBacklightMode(videoSource, pqValue, videoFormat, tvBacklightMode_MAX);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	/* Step 08: Calling tvsettings SaveBacklightMode and expecting the API to return tvERROR_INVALID_PARAM */
+    result = SaveBacklightMode(videoSource, pqValue, videoFormat, (tvBacklightMode_t) -1);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+	
+	
+	/* Step 09: Calling tvsettings termination and expecting the API to return success */
+	result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 10: Calling tvsettings SaveBacklightMode after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        result = SaveBacklightMode(videoSource, pqValue, videoFormat, modeValue);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+    UT_LOG("Out %s",__FUNCTION__);
+}
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -18475,6 +20395,36 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "RegisterVideoResChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_pos" ,test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB );
+    UT_add_test( pSuite, "GetSdrGamma_pos" ,test_l1_tvSettings_positive_GetSdrGamma );
+    UT_add_test( pSuite, "GetSdrGamma_neg" ,test_l1_tvSettings_negative_GetSdrGamma );
+    UT_add_test( pSuite, "SetSdrGamma_pos" ,test_l1_tvSettings_positive_SetSdrGamma );
+    UT_add_test( pSuite, "SetSdrGamma_neg" ,test_l1_tvSettings_negative_SetSdrGamma );
+    UT_add_test( pSuite, "SetPrecisionDetail_pos" ,test_l1_tvSettings_positive_SetPrecisionDetail );
+    UT_add_test( pSuite, "SetPrecisionDetail_neg" ,test_l1_tvSettings_negative_SetPrecisionDetail );
+    UT_add_test( pSuite, "GetPrecisionDetail_pos" ,test_l1_tvSettings_positive_GetPrecisionDetail );
+    UT_add_test( pSuite, "GetPrecisionDetail_neg" ,test_l1_tvSettings_negative_GetPrecisionDetail );
+    UT_add_test( pSuite, "SetAISuperResolution_pos" ,test_l1_tvSettings_positive_SetAISuperResolution );
+    UT_add_test( pSuite, "SetAISuperResolution_neg" ,test_l1_tvSettings_negative_SetAISuperResolution );
+    UT_add_test( pSuite, "GetAISuperResolution_pos" ,test_l1_tvSettings_positive_GetAISuperResolution );
+    UT_add_test( pSuite, "GetAISuperResolution_neg" ,test_l1_tvSettings_negative_GetAISuperResolution );
+    UT_add_test( pSuite, "SetDigitalNoiseReduction_pos" ,test_l1_tvSettings_positive_SetDigitalNoiseReduction );
+    UT_add_test( pSuite, "SetDigitalNoiseReduction_neg" ,test_l1_tvSettings_negative_SetDigitalNoiseReduction );
+    UT_add_test( pSuite, "GetDigitalNoiseReduction_pos" ,test_l1_tvSettings_positive_GetDigitalNoiseReduction );
+    UT_add_test( pSuite, "GetDigitalNoiseReduction_neg" ,test_l1_tvSettings_negative_GetDigitalNoiseReduction );
+    UT_add_test( pSuite, "SetMPEGNoiseReduction_pos" ,test_l1_tvSettings_positive_SetMPEGNoiseReduction );
+    UT_add_test( pSuite, "SetMPEGNoiseReduction_neg" ,test_l1_tvSettings_negative_SetMPEGNoiseReduction );
+    UT_add_test( pSuite, "GetMPEGNoiseReduction_pos" ,test_l1_tvSettings_positive_GetMPEGNoiseReduction );
+    UT_add_test( pSuite, "GetMPEGNoiseReduction_neg" ,test_l1_tvSettings_negative_GetMPEGNoiseReduction );
+    UT_add_test( pSuite, "SetLocalContrastEnhancement_pos" ,test_l1_tvSettings_positive_SetLocalContrastEnhancement );
+    UT_add_test( pSuite, "SetLocalContrastEnhancement_neg" ,test_l1_tvSettings_negative_SetLocalContrastEnhancement );
+    UT_add_test( pSuite, "GetLocalContrastEnhancement_pos" ,test_l1_tvSettings_positive_GetLocalContrastEnhancement );
+    UT_add_test( pSuite, "GetLocalContrastEnhancement_neg" ,test_l1_tvSettings_negative_GetLocalContrastEnhancement );
+    UT_add_test( pSuite, "SetMEMC_pos" ,test_l1_tvSettings_positive_SetMEMC );
+    UT_add_test( pSuite, "SetMEMC_neg" ,test_l1_tvSettings_negative_SetMEMC );
+    UT_add_test( pSuite, "GetMEMC_pos" ,test_l1_tvSettings_positive_GetMEMC );
+    UT_add_test( pSuite, "GetMEMC_neg" ,test_l1_tvSettings_negative_GetMEMC );
+    UT_add_test( pSuite, "SaveBacklightMode_pos" ,test_l1_tvSettings_positive_SaveBacklightMode );
+    UT_add_test( pSuite, "SaveBacklightMode_neg" ,test_l1_tvSettings_negative_SaveBacklightMode );
 
     return 0;
 }
