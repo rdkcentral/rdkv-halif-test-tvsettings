@@ -1210,3 +1210,39 @@ tvSettings:
 
   MEMC:
     platformsupport: false
+
+  MultiPointWBMatrix:
+    platformsupport: false
+
+  BrightnessCaps:
+    platformsupport: false
+
+  BacklightCaps:
+    platformsupport: false
+
+  ContrastCaps:
+    platformsupport: false
+
+  SharpnessCaps:
+    platformsupport: false
+
+  SaturationCaps:
+    platformsupport: false
+  
+  HueCaps:
+    platformsupport: false
+
+  LowLatencyStateCaps:
+    platformsupport: false
+
+  PrecisionDetailCaps:
+    platformsupport: false
+
+  LocalContrastEnhancementCaps:
+    platformsupport: false
+
+  DigitalNoiseReductionCaps:
+    platformsupport: false
+
+  BacklightModeCaps:
+    platformsupport: false

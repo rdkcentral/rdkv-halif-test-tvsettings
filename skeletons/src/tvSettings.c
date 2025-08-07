@@ -1126,3 +1126,87 @@ tvError_t GetDVCalibration(tvPQModeIndex_t pq_mode, tvDVCalibrationSettings_t * 
   (void)calibration_values;
   return (tvError_t)0;
 }
+
+tvError_t SetMultiPointWBMatrix(tvColorTemp_t colorTemp, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, tvVideoSrcType_t videoSrcType, int * r, int * g, int * b)
+{
+  /*TODO: Implement Me!*/
+  (void)colorTemp;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)videoSrcType;
+  (void)r;
+  (void)g;
+  (void)b;
+  return (tvError_t)0;
+}
+
+tvError_t GetBacklightCaps(int *max_backlight, tvContextCaps_t ** context_caps)
+{
+  (void)max_backlight;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetBrightnessCaps(int *max_brightness, tvContextCaps_t ** context_caps)
+{
+  (void)max_brightness;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetSharpnessCaps(int *max_sharpness, tvContextCaps_t ** context_caps)
+{
+  (void)max_sharpness;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetSaturationCaps(int* max_saturation, tvContextCaps_t ** context_caps)
+{
+  (void)max_saturation;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetLowLatencyStateCaps(int* max_latency, tvContextCaps_t ** context_caps)
+{
+  (void)max_latency;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetPrecisionDetailCaps(int* max_precision, tvContextCaps_t ** context_caps)
+{
+  (void)max_precision;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetLocalContrastEnhancementCaps(int * maxLocalContrastEnhancement, tvContextCaps_t ** context_caps)
+{
+  (void)maxLocalContrastEnhancement;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetAISuperResolutionCaps(int * maxAISuperResolution, tvContextCaps_t ** context_caps)
+{
+  (void)maxAISuperResolution;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetMEMCCaps(int * maxMEMC, tvContextCaps_t ** context_caps)
+{
+  (void)maxMEMC;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetBacklightModeCaps(tvBacklightMode_t** backlight_mode, size_t* num_backlight_mode, tvContextCaps_t** context_caps)
+{
+  (void)backlight_mode;
+  (void)num_backlight_mode;
+  (void)context_caps;
+  return (tvError_t)0;
+}
