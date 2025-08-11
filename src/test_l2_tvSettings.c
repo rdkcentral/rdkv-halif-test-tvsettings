@@ -247,14 +247,34 @@ void test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
+    tvVideoFormatType_t *format;
+    size_t num_video_format = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormatCaps/platformsupport");
+    if (platformsupported) {
+        status = GetVideoFormatCaps(&format, &num_video_format);
+        UT_LOG_DEBUG("GetVideoFormatCaps status: %d num_video_format:%d", status, num_video_format);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
     UT_LOG_DEBUG("Invoking GetCurrentVideoFormat with valid pointer to tvVideoFormatType_t variable");
     status = GetCurrentVideoFormat(&videoFormat);
     UT_LOG_DEBUG("Return status: %d, Video Format: %d", status, videoFormat);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(videoFormat, VIDEO_FORMAT_SDR);
-    if (status != tvERROR_NONE || videoFormat != VIDEO_FORMAT_SDR)
-    {
-        UT_LOG_ERROR("GetCurrentVideoFormat failed with status: %d videoformat: %d", status, videoFormat);
+    if (platformsupported) {
+        tvVideoFormatType_t capformat = VIDEO_FORMAT_SDR;
+        for (int i = 0; i < num_video_format; i++) {
+            if (format[i] == videoFormat) {
+                capformat = format[i];
+                break;
+            }
+        }
+        UT_ASSERT_EQUAL(videoFormat, capformat);
+    } else {
+        UT_ASSERT_EQUAL(videoFormat, VIDEO_FORMAT_SDR);
+        if (status != tvERROR_NONE || videoFormat != VIDEO_FORMAT_SDR)
+        {
+            UT_LOG_ERROR("GetCurrentVideoFormat failed with status: %d videoformat: %d", status, videoFormat);
+        }
     }
 
     UT_LOG_DEBUG("Invoking TvTerm with no input parameters");
@@ -298,6 +318,15 @@ void test_l2_tvSettings_VerifyCurrentVideoResolution(void)
     UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
+    tvVideoResolution_t *resol;
+    size_t num_video_resolution = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoResolutionCaps/platformsupport");
+    if (platformsupported) {
+        status = GetVideoResolutionCaps(&resol, &num_video_resolution);
+        UT_LOG_DEBUG("GetVideoResolutionCaps status: %d num_video_resolution:%d", status, num_video_resolution);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
     UT_LOG_DEBUG("Invoking GetCurrentVideoResolution with valid buffer");
     status = GetCurrentVideoResolution(&res);
     UT_LOG_DEBUG("GetCurrentVideoResolution status: %d, resolutionValue: %d, frameHeight: %d, frameWidth: %d, isInterlaced: %d",
@@ -306,7 +335,18 @@ void test_l2_tvSettings_VerifyCurrentVideoResolution(void)
                                                             res.frameWidth,
                                                             res.isInterlaced);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(res.resolutionValue, tvVideoResolution_NONE);
+    if (platformsupported) {
+        tvVideoResolution_t capres = tvVideoResolution_NONE;
+        for (int i = 0; i < num_video_resolution; i++) {
+            if (resol[i] == res.resolutionValue) {
+                capres = resol[i];
+                break;
+            }
+        }
+        UT_ASSERT_EQUAL(res.resolutionValue, capres);
+    } else {
+        UT_ASSERT_EQUAL(res.resolutionValue, tvVideoResolution_NONE);
+    }
     UT_ASSERT_EQUAL(res.frameHeight, 0);
     UT_ASSERT_EQUAL(res.frameWidth, 0);
     UT_ASSERT_EQUAL(res.isInterlaced, 0);
@@ -352,14 +392,34 @@ void test_l2_tvSettings_VerifyFrameRateWhenStopped(void)
     UT_LOG_DEBUG("Return status: %d", error);
     UT_ASSERT_EQUAL_FATAL(error, tvERROR_NONE);
 
+    tvVideoFrameRate_t *framerate;
+    size_t num_video_framerate = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFramerateCaps/platformsupport");
+    if (platformsupported) {
+        error = GetVideoFrameRateCaps(&framerate, &num_video_framerate);
+        UT_LOG_DEBUG("GetVideoFrameRateCaps status: %d num_video_framerate:%d", error, num_video_framerate);
+        UT_ASSERT_EQUAL(error, tvERROR_NONE);
+    }
+
     UT_LOG_DEBUG("Invoking GetCurrentVideoFrameRate");
     error = GetCurrentVideoFrameRate(&frameRate);
     UT_LOG_DEBUG("Frame rate: %d, Return status: %d", frameRate, error);
     UT_ASSERT_EQUAL(error, tvERROR_NONE);
-    UT_ASSERT_EQUAL(frameRate, tvVideoFrameRate_NONE);
-    if (error != tvERROR_NONE || frameRate != tvVideoFrameRate_NONE)
-    {
-        UT_LOG_ERROR("Failure of GetCurrentVideoFrameRate Frame rate: %d, Return status: %d", frameRate, error);
+    if (platformsupported) {
+        tvVideoFrameRate_t capframerate = tvVideoFrameRate_NONE;
+        for (int i = 0; i < num_video_framerate; i++) {
+            if (framerate[i] == frameRate) {
+                capframerate = framerate[i];
+                break;
+            }
+        }
+        UT_ASSERT_EQUAL(frameRate, capframerate);
+    } else {
+        UT_ASSERT_EQUAL(frameRate, tvVideoFrameRate_NONE);
+        if (error != tvERROR_NONE || frameRate != tvVideoFrameRate_NONE)
+        {
+            UT_LOG_ERROR("Failure of GetCurrentVideoFrameRate Frame rate: %d, Return status: %d", frameRate, error);
+        }
     }
 
     UT_LOG_DEBUG("Invoking TvTerm");
@@ -712,15 +772,43 @@ void test_l2_tvSettings_SetAndGetBacklightMode(void)
     UT_LOG_DEBUG("TvInit() returned %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
+    UT_LOG_DEBUG("Invoking GetSupportedBacklightModes with valid pointer");
+    ret = GetSupportedBacklightModes(&getblModes);
+    UT_LOG_DEBUG("GetSupportedBacklightModes status: %d, blModes: %d", ret, getblModes);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("Failure in GetSupportedBacklightModes()");
+    }
+
     tvBacklightMode_t *blmode;
     size_t blsize = 0;
     tvContextCaps_t *contextCaps = NULL;
-    ret = GetBacklightModeCaps(&blmode, &blsize, &contextCaps);
-    UT_LOG_DEBUG("GetBacklightModeCaps status: %d blsize:%d", ret, blsize);
-    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
-    for(int32_t i = tvBacklightMode_MANUAL ; i < blsize ; i <<= 1)
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightModeCaps/platformsupport");
+    if (platformsupported) {
+        ret = GetBacklightModeCaps(&blmode, &blsize, &contextCaps);
+        UT_LOG_DEBUG("GetBacklightModeCaps status: %d blsize:%d", ret, blsize);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    }
+    for(int32_t i = tvBacklightMode_MANUAL ; i < tvBacklightMode_MAX ; i <<= 1)
     {
-        setMode = blmode[i];
+        if (!(getblModes & i)){
+            continue;
+        }
+
+        if (platformsupported) {
+            int unsupported = false;
+            for (int j = 0; j < blsize ; j++){
+                if (blmode[j] == i) {
+                    continue;
+                } else {
+                    unsupported = true;
+                }
+            }
+            if (unsupported)
+                continue;
+        }
+        setMode = i;
 
         UT_LOG_DEBUG("Invoking SetCurrentBacklightMode() with valid backlight mode %d",setMode);
         ret = SetCurrentBacklightMode(setMode);
@@ -3427,10 +3515,13 @@ void test_l2_tvSettings_TestGetPQParameters(void)
                 status = SaveTVDimmingMode(videoSrcType, pq_mode, videoFormatType, tvDimmingMode_Fixed);
                 UT_LOG_DEBUG(" SaveTVDimmingMode Return status: %d", status);
                 UT_ASSERT_EQUAL(status, tvERROR_NONE);
-                UT_LOG_DEBUG("Invoking SaveBacklightMode()  with videoSrcType=%d, pq_mode=%d, videoFormatType=%d", videoSrcType, pq_mode, videoFormatType);
-                status = SaveBacklightMode(videoSrcType, pq_mode, videoFormatType, tvBacklightMode_MANUAL);
-                UT_LOG_DEBUG(" SaveBacklightMode Return status: %d", status);
-                UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightModeCaps/platformsupport");
+                if (platformsupported) {
+                    UT_LOG_DEBUG("Invoking SaveBacklightMode()  with videoSrcType=%d, pq_mode=%d, videoFormatType=%d", videoSrcType, pq_mode, videoFormatType);
+                    status = SaveBacklightMode(videoSrcType, pq_mode, videoFormatType, tvBacklightMode_MANUAL);
+                    UT_LOG_DEBUG(" SaveBacklightMode Return status: %d", status);
+                    UT_ASSERT_EQUAL(status, tvERROR_NONE);
+                }
 
                 for(int32_t l = 0; l < countPQParamIndex; l++)
                 {
