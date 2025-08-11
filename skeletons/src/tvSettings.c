@@ -1210,3 +1210,143 @@ tvError_t GetBacklightModeCaps(tvBacklightMode_t** backlight_mode, size_t* num_b
   (void)context_caps;
   return (tvError_t)0;
 }
+
+tvError_t GetVideoResolutionCaps( tvVideoResolution_t ** resolution, size_t* num_video_resolution)
+{
+  (void)resolution;
+  (void)num_video_resolution;
+  return (tvError_t)0;
+}
+
+tvError_t GetVideoFormatCaps(tvVideoFormatType_t **format, size_t* num_video_format)
+{
+  (void)format;
+  (void)num_video_format;
+  return (tvError_t)0;
+}
+
+tvError_t GetVideoFrameRateCaps( tvVideoFrameRate_t **framerate, size_t* num_video_framerate)
+{
+  (void)framerate;
+  (void)num_video_framerate;
+  return (tvError_t)0;
+}
+
+tvError_t GetVideoSourceCaps( tvVideoSrcType_t **source, size_t* num_video_source)
+{
+  (void)source;
+  (void)num_video_source;
+  return (tvError_t)0;
+}
+
+tvError_t GetSdrGammaCaps(tvSdrGamma_t ** sdr_gamma, size_t * num_sdr_gamma, tvContextCaps_t ** context_caps)
+{
+  (void)sdr_gamma;
+  (void)num_sdr_gamma;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetAspectRatioCaps(tvDisplayMode_t** aspect_ratio, size_t* num_aspect_ratio, tvContextCaps_t** context_caps)
+{
+  (void)aspect_ratio;
+  (void)num_aspect_ratio;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetTVDimmingModeCaps(tvDimmingMode_t** dimming_mode, size_t* num_dimming_mode, tvContextCaps_t** context_caps)
+{
+  (void)dimming_mode;
+  (void)num_dimming_mode;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetTVPictureModeCaps(tvPQModeIndex_t** mode, size_t* num_pic_modes, tvContextCaps_t** context_caps)
+{
+  (void)mode;
+  (void)num_pic_modes;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetCMSCaps (int *max_hue, int *max_saturation,int *max_luma, tvDataComponentColor_t **color, tvComponentType_t **component, size_t* num_color, size_t* num_component, tvContextCaps_t **context_caps)
+{
+  (void)max_hue;
+  (void)max_saturation;
+  (void)max_luma;
+  (void)color;
+  (void)component;
+  (void)num_color;
+  (void)num_component;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetDVCalibration(tvPQModeIndex_t pq_mode, tvDVCalibrationSettings_t * calibration_values)
+{
+  (void)pq_mode;
+  (void)calibration_values;
+  return (tvError_t)0;
+}
+
+tvError_t GetDVCalibrationCaps(tvDVCalibrationSettings_t ** min_values, tvDVCalibrationSettings_t ** max_values, tvContextCaps_t ** context_caps)
+{
+  (void)min_values;
+  (void)max_values;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetMultiPointWBMatrix(tvColorTemp_t colorTemp, tvPQModeIndex_t pq_mode, tvVideoFormatType_t videoFormatType, tvVideoSrcType_t videoSrcType, int * r, int * g, int * b)
+{
+  (void)colorTemp;
+  (void)pq_mode;
+  (void)videoFormatType;
+  (void)videoSrcType;
+  (void)r;
+  (void)g;
+  (void)b;
+  return (tvError_t)0;
+}
+
+tvError_t GetMultiPointWBCaps(int * num_hal_matrix_points, int * rgb_min, int * rgb_max, int * num_ui_matrix_points, double ** ui_matrix_positions, tvContextCaps_t ** context_caps)
+{
+  (void)num_hal_matrix_points;
+  (void)rgb_min;
+  (void)rgb_max;
+  (void)num_ui_matrix_points;
+  (void)ui_matrix_positions;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetCustom2PointWhiteBalanceCaps ( int *min_gain, int *min_offset, int *max_gain, int *max_offset, tvWBColor_t **color, tvWBControl_t **control, size_t* num_color, size_t* num_control, tvContextCaps_t ** context_caps )
+{
+  (void)min_gain;
+  (void)min_offset;
+  (void)max_gain;
+  (void)max_offset;
+  (void)color;
+  (void)control;
+  (void)num_color;
+  (void)num_control;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t GetColorTemperatureCaps(tvColorTemp_t** color_temp, size_t* num_color_temp, tvContextCaps_t** context_caps)
+{
+  (void)color_temp;
+  (void)num_color_temp;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
+tvError_t SetDVCalibration(tvPQModeIndex_t pq_mode, tvDVCalibrationSettings_t * calibration_values)
+{
+  (void)pq_mode;
+  (void)calibration_values;
+  return (tvError_t)0;
+}
