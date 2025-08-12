@@ -249,7 +249,7 @@ void test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback(void)
 
     tvVideoFormatType_t *format;
     size_t num_video_format = 0;
-    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormatCaps/platformsupport");
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/platformsupport");
     if (platformsupported) {
         status = GetVideoFormatCaps(&format, &num_video_format);
         UT_LOG_DEBUG("GetVideoFormatCaps status: %d num_video_format:%d", status, num_video_format);
@@ -261,20 +261,20 @@ void test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback(void)
     UT_LOG_DEBUG("Return status: %d, Video Format: %d", status, videoFormat);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (platformsupported) {
-        tvVideoFormatType_t capformat = VIDEO_FORMAT_SDR;
+        bool supported = false;
         for (int i = 0; i < num_video_format; i++) {
             if (format[i] == videoFormat) {
-                capformat = format[i];
+                supported = true;
                 break;
             }
         }
-        UT_ASSERT_EQUAL(videoFormat, capformat);
-    } else {
-        UT_ASSERT_EQUAL(videoFormat, VIDEO_FORMAT_SDR);
-        if (status != tvERROR_NONE || videoFormat != VIDEO_FORMAT_SDR)
-        {
-            UT_LOG_ERROR("GetCurrentVideoFormat failed with status: %d videoformat: %d", status, videoFormat);
-        }
+        if(!supported)
+            UT_LOG_ERROR("Failure videoFormat was not available in GetVideoFormatCaps videoFormat: %d", videoFormat);
+    }
+    UT_ASSERT_EQUAL(videoFormat, VIDEO_FORMAT_SDR);
+    if (status != tvERROR_NONE || videoFormat != VIDEO_FORMAT_SDR)
+    {
+        UT_LOG_ERROR("GetCurrentVideoFormat failed with status: %d videoformat: %d", status, videoFormat);
     }
 
     UT_LOG_DEBUG("Invoking TvTerm with no input parameters");
@@ -320,7 +320,7 @@ void test_l2_tvSettings_VerifyCurrentVideoResolution(void)
 
     tvVideoResolution_t *resol;
     size_t num_video_resolution = 0;
-    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoResolutionCaps/platformsupport");
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoResolution/platformsupport");
     if (platformsupported) {
         status = GetVideoResolutionCaps(&resol, &num_video_resolution);
         UT_LOG_DEBUG("GetVideoResolutionCaps status: %d num_video_resolution:%d", status, num_video_resolution);
@@ -336,17 +336,17 @@ void test_l2_tvSettings_VerifyCurrentVideoResolution(void)
                                                             res.isInterlaced);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
     if (platformsupported) {
-        tvVideoResolution_t capres = tvVideoResolution_NONE;
+        bool supported = false;
         for (int i = 0; i < num_video_resolution; i++) {
             if (resol[i] == res.resolutionValue) {
-                capres = resol[i];
+                supported = true;
                 break;
             }
         }
-        UT_ASSERT_EQUAL(res.resolutionValue, capres);
-    } else {
-        UT_ASSERT_EQUAL(res.resolutionValue, tvVideoResolution_NONE);
+        if(!supported)
+            UT_LOG_ERROR("Failure resolutionValue was not available in GetVideoResolutionCaps resolution: %d", res.resolutionValue);
     }
+    UT_ASSERT_EQUAL(res.resolutionValue, tvVideoResolution_NONE);
     UT_ASSERT_EQUAL(res.frameHeight, 0);
     UT_ASSERT_EQUAL(res.frameWidth, 0);
     UT_ASSERT_EQUAL(res.isInterlaced, 0);
@@ -394,7 +394,7 @@ void test_l2_tvSettings_VerifyFrameRateWhenStopped(void)
 
     tvVideoFrameRate_t *framerate;
     size_t num_video_framerate = 0;
-    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFramerateCaps/platformsupport");
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFramerate/platformsupport");
     if (platformsupported) {
         error = GetVideoFrameRateCaps(&framerate, &num_video_framerate);
         UT_LOG_DEBUG("GetVideoFrameRateCaps status: %d num_video_framerate:%d", error, num_video_framerate);
@@ -406,20 +406,20 @@ void test_l2_tvSettings_VerifyFrameRateWhenStopped(void)
     UT_LOG_DEBUG("Frame rate: %d, Return status: %d", frameRate, error);
     UT_ASSERT_EQUAL(error, tvERROR_NONE);
     if (platformsupported) {
-        tvVideoFrameRate_t capframerate = tvVideoFrameRate_NONE;
+        bool supported = false;
         for (int i = 0; i < num_video_framerate; i++) {
             if (framerate[i] == frameRate) {
-                capframerate = framerate[i];
+                supported = true;
                 break;
             }
         }
-        UT_ASSERT_EQUAL(frameRate, capframerate);
-    } else {
-        UT_ASSERT_EQUAL(frameRate, tvVideoFrameRate_NONE);
-        if (error != tvERROR_NONE || frameRate != tvVideoFrameRate_NONE)
-        {
-            UT_LOG_ERROR("Failure of GetCurrentVideoFrameRate Frame rate: %d, Return status: %d", frameRate, error);
-        }
+        if(!supported)
+            UT_LOG_ERROR("Failure  frameRate was no available in GetVideoFrameRateCaps Frame rate: %d", frameRate);
+    }
+    UT_ASSERT_EQUAL(frameRate, tvVideoFrameRate_NONE);
+    if (error != tvERROR_NONE || frameRate != tvVideoFrameRate_NONE)
+    {
+        UT_LOG_ERROR("Failure of GetCurrentVideoFrameRate Frame rate: %d, Return status: %d", frameRate, error);
     }
 
     UT_LOG_DEBUG("Invoking TvTerm");
@@ -540,10 +540,30 @@ void test_l2_tvSettings_VerifyNoVideoSource(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
+    tvVideoSrcType_t *videosource;
+    size_t num_video_source = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/platformsupport");
+    if (platformsupported) {
+        status = GetVideoSourceCaps(&videosource, &num_video_source);
+        UT_LOG_DEBUG("GetVideoSourceCaps status: %d num_video_source:%d", status, num_video_source);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
     UT_LOG_DEBUG("Invoking GetCurrentVideoSource() with valid pointer");
     status = GetCurrentVideoSource(&currentSource);
     UT_LOG_DEBUG("Return status: %d, Current Source: %d", status, currentSource);
     UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    if (platformsupported) {
+        bool supported = false;
+        for (int i = 0; i < num_video_source; i++) {
+            if (videosource[i] == currentSource) {
+                supported = true;
+                break;
+            }
+        }
+        if (!supported)
+            UT_LOG_ERROR("Failure currentSource not available in GetVideoSourceCaps, Current Source: %d", currentSource);
+    }
     UT_ASSERT_EQUAL(currentSource, VIDEO_SOURCE_IP);
     if (status != tvERROR_NONE || currentSource != VIDEO_SOURCE_IP)
     {
@@ -585,8 +605,17 @@ void test_l2_tvSettings_SetAndGetBacklight(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    //get and set for 5 different values 0-100
-    for (int i = 0; i <= 100; i += 25)
+    tvContextCaps_t *context_caps = NULL;
+    int max_backlight = 100;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightCaps/platformsupport");
+    if (platformsupported) {
+        status = GetBacklightCaps(&max_backlight, &context_caps);
+        UT_LOG_DEBUG("GetBacklightCaps status: %d max_backlight:%d", status, max_backlight);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
+    //get and set for few different values 0-100
+    for (int i = 0; i <= max_backlight; i += 25)
     {
         backlight = i;
         UT_LOG_DEBUG("Invoking SetBacklight() with valid backlight value: %d", backlight);
@@ -784,12 +813,13 @@ void test_l2_tvSettings_SetAndGetBacklightMode(void)
     tvBacklightMode_t *blmode;
     size_t blsize = 0;
     tvContextCaps_t *contextCaps = NULL;
-    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightModeCaps/platformsupport");
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/platformsupport");
     if (platformsupported) {
         ret = GetBacklightModeCaps(&blmode, &blsize, &contextCaps);
         UT_LOG_DEBUG("GetBacklightModeCaps status: %d blsize:%d", ret, blsize);
         UT_ASSERT_EQUAL(ret, tvERROR_NONE);
     }
+
     for(int32_t i = tvBacklightMode_MANUAL ; i < tvBacklightMode_MAX ; i <<= 1)
     {
         if (!(getblModes & i)){
@@ -797,16 +827,17 @@ void test_l2_tvSettings_SetAndGetBacklightMode(void)
         }
 
         if (platformsupported) {
-            int unsupported = false;
+            int supported = false;
             for (int j = 0; j < blsize ; j++){
                 if (blmode[j] == i) {
-                    continue;
-                } else {
-                    unsupported = true;
+                    supported = true;
+                    break;
                 }
             }
-            if (unsupported)
+            if (!supported) {
+                UT_LOG_ERROR("Failure backlightmode is not available in GetBacklightModeCaps backlightmode %d",i);
                 continue;
+            }
         }
         setMode = i;
 
@@ -973,6 +1004,17 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
         UT_LOG_ERROR("GetTVSupportedDimmingModes failed with status: %d", status);
     }
 
+    tvContextCaps_t *context_caps = NULL;
+    tvDimmingMode_t *dimming_mode;
+    size_t num_dimming_mode = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/platformsupport");
+    if (platformsupported) {
+        status = GetTVDimmingModeCaps(&dimming_mode, &num_dimming_mode, &context_caps);
+        UT_LOG_DEBUG("GetTVDimmingModeCaps status: %d num_dimming_mode:%d", status, num_dimming_mode);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_ASSERT_TRUE(num_dimming_mode >= 1 && num_dimming_mode <= tvDimmingMode_MAX);
+    }
+
     UT_ASSERT_TRUE(numDimmingModes >= 1 && numDimmingModes <= tvDimmingMode_MAX);
 
     for(int32_t j = 0; j < numDimmingModes; j++)
@@ -1098,7 +1140,16 @@ void test_l2_tvSettings_SetAndGetBrightness(void)
     UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for (int32_t i = 0; i <= 100 ; i += 25)
+    tvContextCaps_t *context_caps = NULL;
+    int max_brightness = 100;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Brightness/platformsupport");
+    if (platformsupported) {
+        status = GetBrightnessCaps(&max_brightness, &context_caps);
+        UT_LOG_DEBUG("GetBrightnessCaps status: %d max_brightness:%d", status, max_brightness);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
+    for (int32_t i = 0; i <= max_brightness ; i += 25)
     {
         brightness = i;
         UT_LOG_DEBUG("Invoking SetBrightness with brightness: %d", brightness);
@@ -1155,7 +1206,16 @@ void test_l2_tvSettings_SetAndGetContrast(void)
     UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
-    for ( int32_t i = 0; i <= 100 ; i += 25 )
+    tvContextCaps_t *context_caps = NULL;
+    int max_contrast = 100;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Contrast/platformsupport");
+    if (platformsupported) {
+        ret = GetContrastCaps(&max_contrast, &context_caps);
+        UT_LOG_DEBUG("GetContrastCaps ret: %d max_contrast:%d", ret, max_contrast);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    }
+
+    for ( int32_t i = 0; i <= max_contrast ; i += 25 )
     {
         contrast = i;
         UT_LOG_DEBUG("Invoking SetContrast() with valid contrast value: %d", contrast);
@@ -1214,7 +1274,16 @@ void test_l2_tvSettings_SetAndGetSharpness(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for ( int32_t i = 0; i <= 100; i += 25 )
+    tvContextCaps_t *context_caps = NULL;
+    int max_sharpness = 100;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Sharpness/platformsupport");
+    if (platformsupported) {
+        status = GetSharpnessCaps(&max_sharpness, &context_caps);
+        UT_LOG_DEBUG("GetSharpnessCaps status: %d max_sharpness:%d", status, max_sharpness);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
+    for ( int32_t i = 0; i <= max_sharpness; i += 25 )
     {
         setSharpness = i;
         UT_LOG_DEBUG("Invoking SetSharpness() with sharpness: %d", setSharpness);
@@ -1273,7 +1342,16 @@ void test_l2_tvSettings_SetAndGetSaturation(void)
     UT_LOG_DEBUG("Return status: %d", ret);
     UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
 
-    for (int32_t i = 0; i <= 100; i += 25 )
+    tvContextCaps_t *context_caps = NULL;
+    int max_saturation = 100;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Saturation/platformsupport");
+    if (platformsupported) {
+        ret = GetSaturationCaps(&max_saturation, &context_caps);
+        UT_LOG_DEBUG("GetSaturationCaps ret: %d max_saturation:%d", ret, max_saturation);
+        UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    }
+
+    for (int32_t i = 0; i <= max_saturation; i += 25 )
     {
         saturation_set = i;
         UT_LOG_DEBUG("Invoking SetSaturation() with saturation value: %d", saturation_set);
@@ -1330,7 +1408,16 @@ void test_l2_tvSettings_SetAndGetHue(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    for ( int32_t i = 0; i <= 100; i += 25 )
+    tvContextCaps_t *context_caps = NULL;
+    int max_hue = 100;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Hue/platformsupport");
+    if (platformsupported) {
+        status = GetHueCaps(&max_hue, &context_caps);
+        UT_LOG_DEBUG("GetHueCaps status: %d max_hue:%d", status, max_hue);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    }
+
+    for ( int32_t i = 0; i <= max_hue; i += 25 )
     {
         hue = i;
         UT_LOG_DEBUG("Invoking SetHue with hue: %d", hue);
@@ -1388,12 +1475,27 @@ void test_l2_tvSettings_SetAndGetColorTemperature(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    tvColorTemp_t *capscolortemp;
+    size_t num_color_temp = 0;
+    tvContextCaps_t *contextCaps = NULL;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/ColorTemperatureCaps/platformsupport");
+    if (platformsupported) {
+        status = GetColorTemperatureCaps(&capscolortemp, &num_color_temp, &contextCaps);
+        UT_LOG_DEBUG("GetColorTemperatureCaps status: %d num_color_temp:%d", status, num_color_temp);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        count = num_color_temp;
+    } else {
+        count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ColorTemperature/index");
+    }
 
     for ( int32_t i = 0; i < count; i++ )
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
-        colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        if (platformsupported) {
+            colorTemp = capscolortemp[i];
+        } else {
+            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/ColorTemperature/index/%d", i);
+            colorTemp = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        }
 
         UT_LOG_DEBUG("Invoking SetColorTemperature with colorTemp = %d", colorTemp);
         status = SetColorTemperature(colorTemp);
@@ -1454,12 +1556,27 @@ void test_l2_tvSettings_SetAndGetAspectRatio(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
+    tvContextCaps_t *context_caps = NULL;
+    tvDisplayMode_t *aspect_ratio;
+    size_t num_aspect_ratio = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/AspectRatio/platformsupport");
+    if (platformsupported) {
+        status = GetAspectRatioCaps(&aspect_ratio, &num_aspect_ratio, &context_caps);
+        UT_LOG_DEBUG("GetAspectRatioCaps status: %d num_aspect_ratio:%d", status, num_aspect_ratio);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        count = num_aspect_ratio;
+    } else {
+        count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/AspectRatio/index");
+    }
 
     for ( int32_t i = 0; i < count; i++ )
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/AspectRatio/index/%d", i);
-        setMode = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        if (platformsupported) {
+            setMode = aspect_ratio[i];
+        } else {
+            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/AspectRatio/index/%d", i);
+            setMode = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        }
 
         UT_LOG_DEBUG("Invoking SetAspectRatio() with display mode = %d", setMode);
         status = SetAspectRatio(setMode);
@@ -1517,42 +1634,34 @@ void test_l2_tvSettings_SetAndGetLowLatencyState(void)
     UT_LOG_DEBUG("Return status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    UT_LOG_DEBUG("Invoking SetLowLatencyState(1)");
-    status = SetLowLatencyState(1);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
-    {
-        UT_LOG_ERROR("SetLowLatencyState(1) failed with status %d", status);
+    tvContextCaps_t *context_caps = NULL;
+    int max_latency = 1;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/LowLatencyState/platformsupport");
+    if (platformsupported) {
+        status = GetLowLatencyStateCaps(&max_latency, &context_caps);
+        UT_LOG_DEBUG("GetLowLatencyStateCaps status: %d max_latency:%d", status, max_latency);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
     }
 
-    UT_LOG_DEBUG("Invoking GetLowLatencyState()");
-    status = GetLowLatencyState(&lowlatencystate);
-    UT_LOG_DEBUG("GetLowLatencyState() returned lowlatencystate: %d and status: %d", lowlatencystate, status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE || lowlatencystate != 1)
-    {
-        UT_LOG_ERROR("GetLowLatencyState() failed with status %d, lowlatencystate %d", status, lowlatencystate);
-    }
-    UT_ASSERT_EQUAL(lowlatencystate, 1);
-
-    UT_LOG_DEBUG("Invoking SetLowLatencyState(0)");
-    status = SetLowLatencyState(0);
-    UT_LOG_DEBUG("Return status: %d", status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    if (status != tvERROR_NONE)
-    {
-        UT_LOG_ERROR("SetLowLatencyState(0) failed with status %d", status);
-    }
-
-    UT_LOG_DEBUG("Invoking GetLowLatencyState(&lowlatencystate)");
-    status = GetLowLatencyState(&lowlatencystate);
-    UT_LOG_DEBUG("GetLowLatencyState() returned lowlatencystate: %d and status: %d", lowlatencystate, status);
-    UT_ASSERT_EQUAL(status, tvERROR_NONE);
-    UT_ASSERT_EQUAL(lowlatencystate, 0);
-    if (status != tvERROR_NONE || lowlatencystate != 0)
-    {
-        UT_LOG_ERROR("GetLowLatencyState(&lowlatencystate) failed with status %d, lowlatencystate %d", status, lowlatencystate);
+    for (int i =0; i <= max_latency; i++) {
+        UT_LOG_DEBUG("Invoking SetLowLatencyState");
+        status = SetLowLatencyState(i);
+        UT_LOG_DEBUG("Return status: %d", status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE)
+        {
+            UT_LOG_ERROR("SetLowLatencyState failed with status %d", status);
+        }
+    
+        UT_LOG_DEBUG("Invoking GetLowLatencyState()");
+        status = GetLowLatencyState(&lowlatencystate);
+        UT_LOG_DEBUG("GetLowLatencyState() returned lowlatencystate: %d and status: %d", lowlatencystate, status);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        if (status != tvERROR_NONE || lowlatencystate != i)
+        {
+            UT_LOG_ERROR("GetLowLatencyState() failed with status %d, lowlatencystate %d", status, lowlatencystate);
+        }
+        UT_ASSERT_EQUAL(lowlatencystate, i);
     }
 
     UT_LOG_DEBUG("Invoking TvTerm()");
@@ -1979,6 +2088,17 @@ void test_l2_tvSettings_SetAndGetPictureMode(void)
     if (status != tvERROR_NONE)
     {
         UT_LOG_ERROR("GetTVSupportedPictureModes failed with status: %d", status);
+    }
+
+    tvContextCaps_t *context_caps = NULL;
+    tvPQModeIndex_t *mode;
+    size_t num_pic_modes = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
+    if (platformsupported) {
+        status = GetTVPictureModeCaps(&mode, &num_pic_modes, &context_caps);
+        UT_LOG_DEBUG("GetTVPictureModeCaps status: %d num_pic_modes:%d", status, num_pic_modes);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        UT_ASSERT_TRUE(num_pic_modes >= 1 && num_pic_modes <= PIC_MODES_SUPPORTED_MAX);
     }
 
     UT_ASSERT_TRUE(count >= 1 && count <= PIC_MODES_SUPPORTED_MAX);
