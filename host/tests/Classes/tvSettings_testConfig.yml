@@ -302,6 +302,16 @@ tvSettings:  # Prefix must always exist
                     - "GetNumberOfDimmingZones"
                     - "RetrieveLDIMShortCircuitStatus"
                     - "SetandGetCustom2PntWhiteBal"
+                    - "SetAndGetAndGetCapsMEMC"
+                    - "SetAndGetAndGetCapsAISuperResolution"
+                    - "SetAndGetAndGetCapsDigitalNoiseReduction"
+                    - "SetAndGetAndGetCapsMPEGNoiseReduction"
+                    - "SetAndGetAndGetCapsLocalContrastEnhancement"
+                    - "SetAndGetAndGetCapsSdrGamma"
+                    - "SetAndGetAndGetCapsPrecisionDetail"
+                    - "SetAndGetAndGetCapsMultiPointWB"
+                    - "SetAndGetAndGetCapsDVCalibration"
+                    - "GetDVCalibrationDefault"
 
             2:
                 name: "L3 tvSettings"
