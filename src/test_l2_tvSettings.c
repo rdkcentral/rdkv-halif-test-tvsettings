@@ -3208,13 +3208,40 @@ void test_l2_tvSettings_SetAndGetComponentSaturation(void)
         UT_LOG_ERROR("GetSupportedComponentColor failed with status: %d", status);
     }
 
-    for(int32_t color = tvDataColor_RED ; color < tvDataColor_MAX ; color <<= 1)
+    int max_hue = 100, max_saturation = 100, max_luma = 30;
+    tvDataComponentColor_t *capcolor;
+    tvComponentType_t *capcomponent;
+    size_t num_color = 0;
+    size_t num_component = 0;
+    tvContextCaps_t *context_caps;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/CMS/platformsupport");
+    if (platformsupported) {
+        status = GetCMSCaps(&max_hue, &max_saturation, &max_luma, &capcolor, &capcomponent, &num_color, &num_component, &context_caps);
+        UT_LOG_DEBUG("GetCMSCaps status: %d max_saturation:%d", status, max_saturation);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    } else {
+        num_color = tvDataColor_MAX;
+    }
+
+    for(int32_t color = tvDataColor_RED ; color < num_color ; color <<= 1)
     {
         if (!(blComponentColor & color)){
             continue;
         }
 
-        for( int32_t i = 0; i <= 100; i += 25 )
+        if (platformsupported) {
+            bool supported = false;
+            for (int num = 0; num < num_color; num++) {
+                if (capcolor[num] == color) {
+                    supported = true;
+                    break;
+                }
+            }
+            if (!supported)
+                continue;
+        }
+
+        for( int32_t i = 0; i <= max_saturation; i += 25 )
         {
             setSaturation = i; // Saturation value between 0 and 100
             UT_LOG_DEBUG("Invoking SetCurrentComponentSaturation(%d, %d)", color, setSaturation);
@@ -3292,12 +3319,40 @@ void test_l2_tvSettings_SetAndGetComponentHue(void)
         UT_LOG_ERROR("GetSupportedComponentColor failed with status: %d", status);
     }
 
-    for(int32_t color = tvDataColor_RED ; color < tvDataColor_MAX ; color <<= 1)
+    int max_hue = 100, max_saturation = 100, max_luma = 30;
+    tvDataComponentColor_t *capcolor;
+    tvComponentType_t *capcomponent;
+    size_t num_color = 0;
+    size_t num_component = 0;
+    tvContextCaps_t *context_caps;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/CMS/platformsupport");
+    if (platformsupported) {
+        status = GetCMSCaps(&max_hue, &max_saturation, &max_luma, &capcolor, &capcomponent, &num_color, &num_component, &context_caps);
+        UT_LOG_DEBUG("GetCMSCaps status: %d max_hue:%d", status, max_hue);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    } else {
+        num_color = tvDataColor_MAX;
+    }
+
+    for(int32_t color = tvDataColor_RED ; color < num_color ; color <<= 1)
     {
         if (!(blComponentColor & color)){
             continue;
         }
-        for( int32_t i = 0; i <= 100; i += 25 )
+
+        if (platformsupported) {
+            bool supported = false;
+            for (int num = 0; num < num_color; num++) {
+                if (capcolor[num] == color) {
+                    supported = true;
+                    break;
+                }
+            }
+            if (!supported)
+                continue;
+        }
+
+        for( int32_t i = 0; i <= max_hue; i += 25 )
         {
             hue = i; // hue value between 0 and 100
             UT_LOG_DEBUG("Invoking SetCurrentComponentHue(%d, %d)", color, hue);
@@ -3378,13 +3433,40 @@ void test_l2_tvSettings_SetAndGetComponentLuma(void)
         UT_LOG_ERROR("GetSupportedComponentColor failed with status: %d", status);
     }
 
+    int max_hue = 100, max_saturation = 100, max_luma = 30;
+    tvDataComponentColor_t *capcolor;
+    tvComponentType_t *capcomponent;
+    size_t num_color = 0;
+    size_t num_component = 0;
+    tvContextCaps_t *context_caps;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/CMS/platformsupport");
+    if (platformsupported) {
+        status = GetCMSCaps(&max_hue, &max_saturation, &max_luma, &capcolor, &capcomponent, &num_color, &num_component, &context_caps);
+        UT_LOG_DEBUG("GetCMSCaps status: %d max_luma:%d", status, max_luma);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+    } else {
+        num_color = tvDataColor_MAX;
+    }
+
     for(int32_t color = tvDataColor_RED ; color < tvDataColor_MAX ; color <<= 1)
     {
         if (!(blComponentColor & color)){
             continue;
         }
 
-        for( int32_t i = 0; i <= 30; i += 6 )
+        if (platformsupported) {
+            bool supported = false;
+            for (int num = 0; num < num_color; num++) {
+                if (capcolor[num] == color) {
+                    supported = true;
+                    break;
+                }
+            }
+            if (!supported)
+                continue;
+        }
+
+        for( int32_t i = 0; i <= max_luma; i += 6 )
         {
             lumaSet = i; // A valid luma value in the range of 0 to 30
             UT_LOG_DEBUG("Invoking SetCurrentComponentLuma(%d, %d)", color, lumaSet);
@@ -4225,24 +4307,54 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
     UT_LOG_DEBUG("TvInit status: %d", status);
     UT_ASSERT_EQUAL_FATAL(status, tvERROR_NONE);
 
-    colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
-	controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    tvContextCaps_t *context_caps = NULL;
+    int min_gain = 0, min_offset = -1024, max_gain = 0, max_offset = -1024;
+    tvWBColor_t *capcolor;
+    tvWBControl_t *capcontrol;
+    size_t num_color = 0;
+    size_t num_control = 0;
+    bool platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/CustomWhiteBalance/platformsupport");
+    if (platformsupported) {
+        status = GetCustom2PointWhiteBalanceCaps(&min_gain, &min_offset, &max_gain, &max_offset, &capcolor, &capcontrol,  &num_color, &num_control, &context_caps);
+        UT_LOG_DEBUG("GetCustom2PointWhiteBalanceCaps status: %d num_color:%d, num_control:%d", status, num_color, num_control);
+        UT_ASSERT_EQUAL(status, tvERROR_NONE);
+        colorCount = num_color;
+        controlCount = num_control;
+    } else {
+        colorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceColor");
+	    controlCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedCustomWhiteBalanceControl");
+    }
 
     for(int32_t i = 0; i < colorCount; i++)
     {
-        snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", i);
-        color = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        if (platformsupported) {
+            color = capcolor[i];
+        } else {
+            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceColor/%d", i);
+            color = UT_KVP_PROFILE_GET_UINT32( keyValue);
+        }
 
         for(int32_t j = 0; j < controlCount; j++)
         {
-            snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
-            control = UT_KVP_PROFILE_GET_UINT32( keyValue);
-            if (control == tvWB_CONTROL_GAIN) {
-                from = 0;
-                to = 2047;
-            } else if (control == tvWB_CONTROL_OFFSET) {
-                from = -1024;
-                to = 1023;
+            if (platformsupported) {
+                control = capcontrol[i];
+                if (control == tvWB_CONTROL_GAIN) {
+                    from = min_gain;
+                    to = max_gain;
+                } else if (control == tvWB_CONTROL_OFFSET) {
+                    from = min_offset;
+                    to = max_offset;
+                }
+            } else {
+                snprintf(keyValue, KEY_VALUE_SIZE, "tvSettings/SupportedCustomWhiteBalanceControl/%d", j);
+                control = UT_KVP_PROFILE_GET_UINT32( keyValue);
+                if (control == tvWB_CONTROL_GAIN) {
+                    from = 0;
+                    to = 2047;
+                } else if (control == tvWB_CONTROL_OFFSET) {
+                    from = -1024;
+                    to = 1023;
+                }
             }
 			
             for (setWB = from; setWB <= to; setWB += (to - from) / 10)
