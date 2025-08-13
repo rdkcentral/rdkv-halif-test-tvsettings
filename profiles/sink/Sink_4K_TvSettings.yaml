@@ -91,23 +91,27 @@ tvSettings:
   # tvDataColor_CYAN    = 0x10, //!< Color is Cyan
   # tvDataColor_MAGENTA = 0x20, //!< Color is Magenta
   # tvDataColor_MAX     = 0x40  //!< End of enum
-  SupportedComponentColor:
-    - 0x01 # tvDataColor_RED
-    - 0x02 # tvDataColor_GREEN
-    - 0x04 # tvDataColor_BLUE
-    - 0x08 # tvDataColor_YELLOW
-    - 0x10 # tvDataColor_CYAN
-    - 0x20 # tvDataColor_MAGENTA
+  ComponentColor:
+    SupportedComponentColor:
+      - 0x01 # tvDataColor_RED
+      - 0x02 # tvDataColor_GREEN
+      - 0x04 # tvDataColor_BLUE
+      - 0x08 # tvDataColor_YELLOW
+      - 0x10 # tvDataColor_CYAN
+      - 0x20 # tvDataColor_MAGENTA
+    platformsupport: true
 
   # COMP_NONE=0,     //!< No Component
   # COMP_HUE,        //!< Component is Hue
   # COMP_SATURATION, //!< Component is Saturation
   # COMP_LUMA,       //!< Component is Luma
   # COMP_MAX         //!< End of enum
-  SupportedComponentType:
-    - 0x1 # COMP_HUE
-    - 0x2 # COMP_SATURATION
-    - 0x3 # COMP_LUMA
+  ComponentType:
+    SupportedComponentType:
+      - 0x1 # COMP_HUE
+      - 0x2 # COMP_SATURATION
+      - 0x3 # COMP_LUMA
+    platformsupport: true
 
   # tvWB_COLOR_RED    = 0, //!< Color is Red
   # tvWB_COLOR_GREEN, = 1, //!< Color is Green
@@ -538,6 +542,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    platformsupport: true
 
   WhiteBalanceRed:
     range.gain.from: 0
@@ -767,6 +772,7 @@ tvSettings:
     pqmode: none
     format: none
     source: none
+    platformsupport: true
 
   # VIDEO_FORMAT_NONE       = 0x00,   //!< No video format
   # VIDEO_FORMAT_HDR10      = 0x01,   //!< Video format is HDR10
@@ -1251,3 +1257,6 @@ tvSettings:
 
   BacklightModeCaps:
     platformsupport: false
+
+  tvDVCalibrationSettings:
+     platformsupport: false
