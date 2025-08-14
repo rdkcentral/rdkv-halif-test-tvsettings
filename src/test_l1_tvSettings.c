@@ -20494,7 +20494,7 @@ void test_l1_tvSettings_positive_GetBrightnessCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BrightnessCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Brightness/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -20627,7 +20627,7 @@ void test_l1_tvSettings_positive_GetContrastCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Contrast/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -20760,7 +20760,7 @@ void test_l1_tvSettings_positive_GetSharpnessCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/SharpnessCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Sharpness/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -20893,7 +20893,7 @@ void test_l1_tvSettings_positive_GetSaturationCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/SaturationCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Saturation/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -21026,7 +21026,7 @@ void test_l1_tvSettings_positive_GetHueCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/HueCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/Hue/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -21159,7 +21159,7 @@ void test_l1_tvSettings_positive_GetLowLatencyStateCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/LowLatencyStateCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/LowLatencyState/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -21291,7 +21291,7 @@ void test_l1_tvSettings_positive_GetPrecisionDetailCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PrecisionDetailCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PrecisionDetail/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -21423,7 +21423,7 @@ void test_l1_tvSettings_positive_GetLocalContrastEnhancementCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/LocalContrastEnhancementCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/LocalContrastEnhancement/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -21555,7 +21555,7 @@ void test_l1_tvSettings_positive_GetDigitalNoiseReductionCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/DigitalNoiseReductionCaps/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/DigitalNoiseReduction/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -22942,7 +22942,7 @@ void test_l1_tvSettings_positive_GetTVPictureModeCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/DimmingMode/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/PictureMode/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -23614,7 +23614,7 @@ void test_l1_tvSettings_positive_GetDVCalibrationCaps (void)
     
 	char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 	
-	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/tvDVCalibrationSettings/platformsupport");
+	platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/DVCalibration/platformsupport");
 	
 	if(platformsupported == true)
     {
@@ -24129,7 +24129,7 @@ void test_l1_tvSettings_positive_GetMultiPointWBMatrix (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
     
-    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/MultiPointWBMatrix/platformsupport");
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/MultiPointWB/platformsupport");
 	
     if(platformsupported == true)
     {
@@ -24317,7 +24317,7 @@ void test_l1_tvSettings_positive_GetCMSCaps (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
     
-    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/BacklightControl/platformsupport");
+    platformsupported = (bool)UT_KVP_PROFILE_GET_UINT32("tvSettings/CMS/platformsupport");
 	
     if(platformsupported == true)
     {
@@ -24325,8 +24325,8 @@ void test_l1_tvSettings_positive_GetCMSCaps (void)
         videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
         pqCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
         videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
-        componentcolorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ComponentColor/SupportedComponentColor");
-        componenttypeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/ComponentType/SupportedComponentType");
+        componentcolorCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentColor");
+        componenttypeCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/SupportedComponentType");
         
         /* Step 03: Calling tvsettings GetCMSCaps to get the max local enhancement value and expecting the API to return success */
         result = GetCMSCaps(&max_hue, &max_saturation, &max_luma, &color, &component, &num_color, &num_component, &context_caps);
@@ -24777,6 +24777,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "GetBacklightCaps_neg" ,test_l1_tvSettings_negative_GetBacklightCaps );
     UT_add_test( pSuite, "GetBrightnessCaps_pos" ,test_l1_tvSettings_positive_GetBrightnessCaps );
     UT_add_test( pSuite, "GetBrightnessCaps_neg" ,test_l1_tvSettings_negative_GetBrightnessCaps );
+    UT_add_test( pSuite, "GetContrastCaps_pos" ,test_l1_tvSettings_positive_GetContrastCaps );
+    UT_add_test( pSuite, "GetContrastCaps_neg" ,test_l1_tvSettings_negative_GetContrastCaps );
     UT_add_test( pSuite, "GetSharpnessCaps_pos" ,test_l1_tvSettings_positive_GetSharpnessCaps );
     UT_add_test( pSuite, "GetSharpnessCaps_neg" ,test_l1_tvSettings_negative_GetSharpnessCaps );
     UT_add_test( pSuite, "SaturationCaps_pos" ,test_l1_tvSettings_positive_GetSaturationCaps );

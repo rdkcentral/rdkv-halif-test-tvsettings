@@ -91,27 +91,24 @@ tvSettings:
   # tvDataColor_CYAN    = 0x10, //!< Color is Cyan
   # tvDataColor_MAGENTA = 0x20, //!< Color is Magenta
   # tvDataColor_MAX     = 0x40  //!< End of enum
-  ComponentColor:
-    SupportedComponentColor:
-      - 0x01 # tvDataColor_RED
-      - 0x02 # tvDataColor_GREEN
-      - 0x04 # tvDataColor_BLUE
-      - 0x08 # tvDataColor_YELLOW
-      - 0x10 # tvDataColor_CYAN
-      - 0x20 # tvDataColor_MAGENTA
-    platformsupport: true
+  
+  SupportedComponentColor:
+    - 0x01 # tvDataColor_RED
+    - 0x02 # tvDataColor_GREEN
+    - 0x04 # tvDataColor_BLUE
+    - 0x08 # tvDataColor_YELLOW
+    - 0x10 # tvDataColor_CYAN
+    - 0x20 # tvDataColor_MAGENTA
 
   # COMP_NONE=0,     //!< No Component
   # COMP_HUE,        //!< Component is Hue
   # COMP_SATURATION, //!< Component is Saturation
   # COMP_LUMA,       //!< Component is Luma
   # COMP_MAX         //!< End of enum
-  ComponentType:
-    SupportedComponentType:
-      - 0x1 # COMP_HUE
-      - 0x2 # COMP_SATURATION
-      - 0x3 # COMP_LUMA
-    platformsupport: true
+  SupportedComponentType:
+    - 0x1 # COMP_HUE
+    - 0x2 # COMP_SATURATION
+    - 0x3 # COMP_LUMA
 
   # tvWB_COLOR_RED    = 0, //!< Color is Red
   # tvWB_COLOR_GREEN, = 1, //!< Color is Green
@@ -284,6 +281,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    platformsupport: true
 
   Contrast:
     range_from: 0
@@ -333,6 +331,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    platformsupport: true
 
   Saturation:
     range_from: 0
@@ -382,6 +381,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    platformsupport: true
 
   Sharpness:
     range_from: 0
@@ -431,6 +431,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    platformsupport: true
 
   Hue:
     range_from: 0
@@ -480,6 +481,7 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
+    platformsupport: true
 
   ColorTemperature:
   # tvColorTemp_STANDARD       = 0x00, //!< Color Temperature is Standard
@@ -676,6 +678,7 @@ tvSettings:
     pqmode: none
     source: none
     format: none
+    platformsupport: true
 
   AspectRatio:
   # 4x3
@@ -741,6 +744,7 @@ tvSettings:
       - HDR10
       - HLG
     source: none
+    platformsupport: true
 
   # VIDEO_SOURCE_ALL        = 0xFFFFFFFF, //!< Video source is All
   # VIDEO_SOURCE_ANALOGUE   = 0x00,        //!< Video source is Analogue
@@ -1035,6 +1039,7 @@ tvSettings:
       - IP
       - Tuner
       - Composite1
+    platformsupport: true
 
   CMS:
     # range from 0 to 100
@@ -1222,41 +1227,11 @@ tvSettings:
   MEMC:
     platformsupport: false
 
-  MultiPointWBMatrix:
-    platformsupport: false
-
-  BrightnessCaps:
+  MultiPointWB:
     platformsupport: false
 
   BacklightCaps:
     platformsupport: false
 
-  ContrastCaps:
-    platformsupport: false
-
-  SharpnessCaps:
-    platformsupport: false
-
-  SaturationCaps:
-    platformsupport: false
-  
-  HueCaps:
-    platformsupport: false
-
-  LowLatencyStateCaps:
-    platformsupport: false
-
-  PrecisionDetailCaps:
-    platformsupport: false
-
-  LocalContrastEnhancementCaps:
-    platformsupport: false
-
-  DigitalNoiseReductionCaps:
-    platformsupport: false
-
-  BacklightModeCaps:
-    platformsupport: false
-
-  tvDVCalibrationSettings:
+  DVCalibration:
      platformsupport: false
