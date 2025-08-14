@@ -1350,3 +1350,31 @@ tvError_t SetDVCalibration(tvPQModeIndex_t pq_mode, tvDVCalibrationSettings_t * 
   (void)calibration_values;
   return (tvError_t)0;
 }
+
+tvError_t GetContrastCaps(int *max_contrast, tvContextCaps_t ** context_caps)
+{
+  (void)max_contrast;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+ 
+tvError_t GetHueCaps(int *max_hue, tvContextCaps_t ** context_caps)
+{
+  (void)max_hue;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+ 
+tvError_t GetDigitalNoiseReductionCaps(int * maxDigitalNoiseReduction, tvContextCaps_t ** context_caps)
+{
+  (void)maxDigitalNoiseReduction;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+ 
+tvError_t GetMPEGNoiseReductionCaps(int * maxMPEGNoiseReduction, tvContextCaps_t ** context_caps)
+{
+  (void)maxMPEGNoiseReduction;
+  (void)context_caps;
+  return (tvError_t)0;
+}
