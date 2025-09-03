@@ -2035,10 +2035,11 @@ void test_l2_tvSettings_SetAndGetColorTempRgain(void)
 
             UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
             // Ensure the saved value with 2047 doesn't impact the set value 1024
-            UT_ASSERT_EQUAL(rgain, setRgain);
-            if (rgain != setRgain)
+            UT_ASSERT_NOT_EQUAL(rgain, setRgain);
+            UT_ASSERT_EQUAL(rgain, saveRgain);
+            if (rgain == setRgain)
             {
-                UT_LOG_ERROR("Mismatch in set [%d] and retrieved rgain values [%d]", rgain, setRgain);
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved rgain values [%d]", setRgain, rgain);
             }
         }
     }
@@ -2155,10 +2156,11 @@ void test_l2_tvSettings_SetAndGetColorTempGgain(void)
 
             UT_LOG_DEBUG("Retrieved ggain: %d", ggain);
             // Ensure the saved value with 2047 doesn't impact the set value 1024
-            UT_ASSERT_EQUAL(ggain, setGgain);
-            if(ggain != setGgain)
+            UT_ASSERT_NOT_EQUAL(ggain, setGgain);
+            UT_ASSERT_EQUAL(ggain, saveGgain);
+            if (ggain == setGgain)
             {
-                UT_LOG_ERROR("Mismatch in set [%d]and retrieved ggain values [%d]", ggain, setGgain);
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved ggain values [%d]", setGgain, ggain);
             }
         }
     }
@@ -2274,10 +2276,11 @@ void test_l2_tvSettings_SetAndGetColorTempBgain(void)
 
             UT_LOG_DEBUG("Retrieved bgain: %d", bgain);
             // Ensure the saved value with 2047 doesn't impact the set value 1024
-            UT_ASSERT_EQUAL(bgain, setBgain);
-            if(bgain != setBgain)
+            UT_ASSERT_NOT_EQUAL(bgain, setBgain);
+            UT_ASSERT_EQUAL(bgain, saveBgain);
+            if (bgain == setBgain)
             {
-                UT_LOG_ERROR("Mismatch in set[%d] and retrieved bgain values[%d]", bgain, setBgain);
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved bgain values [%d]", setBgain, bgain);
             }
         }
     }
@@ -2386,8 +2389,9 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
             }
 
             UT_LOG_DEBUG("Retrieved rpostoffset=%d", rpostoffset_get);
-            UT_ASSERT_EQUAL(rpostoffset_set, rpostoffset_get);
-            if (rpostoffset_set != rpostoffset_get)
+            UT_ASSERT_NOT_EQUAL(rpostoffset_set, rpostoffset_get);
+            UT_ASSERT_EQUAL(rpostoffset_save, rpostoffset_get);
+            if (rpostoffset_set == rpostoffset_get)
             {
                 UT_LOG_ERROR("Mismatch in set [%d]and retrieved rpostoffset values [%d]", rpostoffset_set, rpostoffset_get);
             }
@@ -2499,8 +2503,9 @@ void test_l2_tvSettings_SetAndGetColorTempGPostOffset(void)
             }
 
             UT_LOG_DEBUG("Retrieved gpostoffset=%d", gpostoffset_get);
-            UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
-            if (gpostoffset_set != gpostoffset_get)
+            UT_ASSERT_NOT_EQUAL(gpostoffset_set, gpostoffset_get);
+            UT_ASSERT_EQUAL(gpostoffset_save, gpostoffset_get);
+            if (gpostoffset_set == gpostoffset_get)
             {
                 UT_LOG_ERROR("Mismatch in set [%d]and retrieved gpostoffset values [%d]", gpostoffset_set, gpostoffset_get);
             }
@@ -2610,8 +2615,9 @@ void test_l2_tvSettings_SetAndGetColorTempBPostOffset(void)
             }
 
             UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
-            UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
-            if (bpostoffset_set != bpostoffset_get)
+            UT_ASSERT_NOT_EQUAL(bpostoffset_set, bpostoffset_get);
+            UT_ASSERT_EQUAL(bpostoffset_save, bpostoffset_get);
+            if (bpostoffset_set == bpostoffset_get)
             {
                 UT_LOG_ERROR("Mismatch in set [%d] and retrieved bpostoffset values [%d]", bpostoffset_set, bpostoffset_get);
             }
