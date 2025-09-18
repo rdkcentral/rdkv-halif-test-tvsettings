@@ -81,6 +81,9 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssetsByUrl(streamFullPath)
+
 
     def resetComponentLumaToDefault(self):
         """
@@ -111,6 +114,9 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
 
             # Stop the stream playback after setting the default values
             self.testPlayer.stop()
+
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssetsByUrl(streamFullPath)
 
 
     def testFunction(self):
@@ -164,6 +170,9 @@ class tvSettings_test32_ComponentLuma(tvSettingsHelperClass):
 
             # Stop the stream playback after verification
             self.testPlayer.stop()
+
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssetsByUrl(streamFullPath)
 
         #reset to default values
         self.resetComponentLumaToDefault()

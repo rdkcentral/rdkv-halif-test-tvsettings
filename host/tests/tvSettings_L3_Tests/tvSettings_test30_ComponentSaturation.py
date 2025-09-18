@@ -84,6 +84,9 @@ class tvSettings_test30_ComponentSaturation(tvSettingsHelperClass):
             # Stop the stream playback
             self.testPlayer.stop()
 
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssetsByUrl(streamFullPath)
+
 
     def resetComponentSaturationToDefault(self):
         """
@@ -113,6 +116,9 @@ class tvSettings_test30_ComponentSaturation(tvSettingsHelperClass):
 
             # Stop the stream playback after setting the default values
             self.testPlayer.stop()
+
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssetsByUrl(streamFullPath)
 
 
     def testFunction(self):
@@ -166,6 +172,9 @@ class tvSettings_test30_ComponentSaturation(tvSettingsHelperClass):
 
             # Stop the stream playback after verification
             self.testPlayer.stop()
+
+            # Clean the assets (delete the downloaded stream)
+            self.testCleanAssetsByUrl(streamFullPath)
 
         #reset to default values
         self.resetComponentSaturationToDefault()
