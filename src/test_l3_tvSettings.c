@@ -3312,7 +3312,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     int32_t R_Value = 0, G_Value = 0, B_Value = 0;
 
     // User input for gamma pattern settings
-    UT_LOG_MENU_INFO("Enter bit resolution (0 for 10-bit, 1 for 8-bit): ");
+    UT_LOG_MENU_INFO("Enter bit resolution (0 for 8-bit, 1 for 10-bit): ");
     scanf("%d", &is_10_bit);
     readAndDiscardRestOfLine(stdin);
 
@@ -3328,7 +3328,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     readInt(&R_Value);
 
     // Validate Red value
-    if (is_10_bit == 0)
+    if (is_10_bit == 1)
     {
         if (R_Value < 0 || R_Value > 1023)
         {
@@ -3351,7 +3351,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     readInt(&G_Value);
 
     // Validate Green value
-    if (is_10_bit == 0)
+    if (is_10_bit == 1)
     {
         if (G_Value < 0 || G_Value > 1023)
         {
@@ -3374,7 +3374,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     readInt(&B_Value);
 
     // Validate Blue value
-    if (is_10_bit == 0)
+    if (is_10_bit == 1)
     {
         if (B_Value < 0 || B_Value > 1023)
         {
