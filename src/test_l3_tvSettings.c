@@ -100,6 +100,7 @@
 #define TVSETTINGS_CONTENT_CB_FILE "tvSettings_contentChangeStatus.txt"
 #define TVSETTINGS_RESOLUTION_CB_FILE "tvSettings_resolutionChangeStatus.txt"
 #define TVSETTINGS_FRAMERATE_CB_FILE "tvSettings_frameRateChangeStatus.txt"
+#define TVSETTINGS_SOURCE_CB_FILE "tvSettings_videoSourceChangeStatus.txt"
 
 /* Global Variables */
 static int32_t gTestGroup = 3;
@@ -109,11 +110,13 @@ static char gFormatChangeCBFile[MAX_FILE_SIZE];
 static char gContentChangeCBFile[MAX_FILE_SIZE];
 static char gResolutionChangeCBFile[MAX_FILE_SIZE];
 static char gFrameRateChangeCBFile[MAX_FILE_SIZE];
+static char gVideoSourceChangeCBFile[MAX_FILE_SIZE];
 static pthread_mutex_t gCallbackMutex = PTHREAD_MUTEX_INITIALIZER;
 static char gvideoFormatChangeData[] = "videoFormatChange";
 static char gvideoContentData[] = "videoContentChange";
 static char gvideoResolutionData[] = "videoResolutionChange";
 static char gvideoFrameRateData[] = "videoFrameRateChange";
+static char gvideoSourceData[] = "videoSourceChange";
 
 /* tvBacklightTestMode_t */
 const static ut_control_keyStringMapping_t  tvBacklightTestMode_mapTable [] =
@@ -548,6 +551,25 @@ static void videoFrameRateChangeCB (tvVideoFrameRate_t frameRate, void *userData
 }
 
 /**
+ * @brief Callback function for change in the video Source.
+ *
+ * This function is invoked whenever a change occurs in the video Source.
+ */
+static void videoSourceChangeCB(tvVideoSrcType_t source, void *userData)
+{
+    UT_LOG_INFO("Received Video Source Change callback source:[%s], userData[%s][0x%0X]",
+                UT_Control_GetMapString(tvVideoSrcType_mapTable, source),
+                (char *)userData,
+                userData);
+
+    writeCallbackLog(gVideoSourceChangeCBFile,
+                "Received Video Source Change callback source:[%s], userData[%s][0x%0X]",
+                UT_Control_GetMapString(tvVideoSrcType_mapTable, source),
+                (char *)userData,
+                userData);
+}
+
+/**
 * @brief This test initializes the tvSettings Module.
 *
 * This test function initializes the tvSettings Module.
@@ -569,11 +591,13 @@ void test_l3_tvSettings_initialize(void)
     tvVideoContentCallbackData videoContentCallbackData = {0};
     tvVideoResolutionCallbackData videoResolutionCallbackData = {0};
     tvVideoFrameRateCallbackData videoFrameRateCallbackData = {0};
+    tvVideoSourceCallbackData videoSourceCallbackData = {0};
 
-    strncpy(gFormatChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
-    strncpy(gContentChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
-    strncpy(gResolutionChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
-    strncpy(gFrameRateChangeCBFile,TVSETTINGS_FORMAT_CB_FILE, MAX_FILE_SIZE);
+    snprintf(gFormatChangeCBFile,     MAX_FILE_SIZE, "%s", TVSETTINGS_FORMAT_CB_FILE);
+    snprintf(gContentChangeCBFile,    MAX_FILE_SIZE, "%s", TVSETTINGS_CONTENT_CB_FILE);
+    snprintf(gResolutionChangeCBFile, MAX_FILE_SIZE, "%s", TVSETTINGS_RESOLUTION_CB_FILE);
+    snprintf(gFrameRateChangeCBFile,  MAX_FILE_SIZE, "%s", TVSETTINGS_FRAMERATE_CB_FILE);
+    snprintf(gVideoSourceChangeCBFile,MAX_FILE_SIZE, "%s", TVSETTINGS_SOURCE_CB_FILE);
 
     /* Initialize the tvSettings Module */
     UT_LOG_INFO("Calling tvSettingsInit()");
@@ -619,6 +643,20 @@ void test_l3_tvSettings_initialize(void)
     ASSERT(ret == tvERROR_NONE);
     UT_LOG_INFO("Result RegisterVideoFrameRateChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
                (char *) videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
+
+    /* Registration for Video Source Change */
+    videoSourceCallbackData.userData = gvideoSourceData;
+    videoSourceCallbackData.cb = videoSourceChangeCB;
+    UT_LOG_INFO("Calling RegisterVideoSourceChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])",
+                (char *)videoSourceCallbackData.userData,
+                videoSourceCallbackData.userData,
+                videoSourceCallbackData.cb);
+    ret = RegisterVideoSourceChangeCB(&videoSourceCallbackData);
+    ASSERT(ret == tvERROR_NONE);
+    UT_LOG_INFO("Result RegisterVideoSourceChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+                (char *)videoSourceCallbackData.userData,
+                videoSourceCallbackData.cb,
+                UT_Control_GetMapString(tvError_mapTable, ret));
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
