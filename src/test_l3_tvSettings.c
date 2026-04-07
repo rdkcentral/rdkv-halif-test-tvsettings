@@ -73,7 +73,7 @@
 #include "tvSettings.h"
 
 #define UT_LOG_MENU_INFO UT_LOG_INFO
-#define ASSERT assert
+#define ASSERT UT_ASSERT
 #define MAX_FILE_SIZE 64
 #define ASSERT_COMPARE(var1, var2) \
     do \
