@@ -73,7 +73,6 @@
 #include "tvSettings.h"
 
 #define UT_LOG_MENU_INFO UT_LOG_INFO
-#define ASSERT assert
 #define MAX_FILE_SIZE 64
 #define ASSERT_COMPARE(var1, var2) \
     do \
@@ -578,17 +577,25 @@ void test_l3_tvSettings_initialize(void)
     /* Initialize the tvSettings Module */
     UT_LOG_INFO("Calling tvSettingsInit()");
     ret = TvInit();
-    ASSERT(ret == tvERROR_NONE);
     UT_LOG_INFO("Result tvSettingsInit tvError_t:[%s]", UT_Control_GetMapString(tvError_mapTable, ret));
-
+    UT_ASSERT_EQUAL_FATAL(ret, tvERROR_NONE);
+    
     /* Registration for the Video Format */
     videoFormatCallbackData.userdata = gvideoFormatChangeData;
     videoFormatCallbackData.cb = videoFormatChangeCB;
     UT_LOG_INFO("Calling RegisterVideoFormatChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *)videoFormatCallbackData.userdata, videoFormatCallbackData.userdata, videoFormatCallbackData.cb);
     ret = RegisterVideoFormatChangeCB(&videoFormatCallbackData);
-    ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoFormatChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
-               (char *) videoFormatCallbackData.userdata, videoFormatCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_LOG_INFO("Result RegisterVideoFormatChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+                (char *) videoFormatCallbackData.userdata, videoFormatCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
+    }
+    else
+    {
+        UT_LOG_ERROR("RegisterVideoFormatChangeCB failed. Callback will not be triggered.");
+    }
 
     /* Registration for the Video Content */
     videoContentCallbackData.userdata = gvideoContentData;
@@ -598,27 +605,51 @@ void test_l3_tvSettings_initialize(void)
                 videoContentCallbackData.userdata,
                 videoContentCallbackData.cb);
     ret = RegisterVideoContentChangeCB(&videoContentCallbackData);
-    ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoContentChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_LOG_INFO("Result RegisterVideoContentChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
                (char *) videoContentCallbackData.userdata, videoContentCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
+    }
+    else
+    {
+        UT_LOG_ERROR("RegisterVideoContentChangeCB failed. Callback will not be triggered.");
+    }
 
     /* Registration for Video Resolution */
     videoResolutionCallbackData.userdata = gvideoResolutionData;
     videoResolutionCallbackData.cb = videoResolutionChangeCB;
     UT_LOG_INFO("Calling RegisterVideoResolutionChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *) videoResolutionCallbackData.userdata, videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb);
     ret = RegisterVideoResolutionChangeCB(&videoResolutionCallbackData);
-    ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoResolutionChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_LOG_INFO("Result RegisterVideoResolutionChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
                 (char *)videoResolutionCallbackData.userdata, videoResolutionCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
+    }
+    else
+    {
+        UT_LOG_ERROR("RegisterVideoResolutionChangeCB failed. Callback will not be triggered.");
+    }
 
     /* Registration for Video Frame Rate Change */
     videoFrameRateCallbackData.userdata = gvideoFrameRateData;
     videoFrameRateCallbackData.cb = videoFrameRateChangeCB;
     UT_LOG_INFO("Calling RegisterVideoFrameRateChangeCB(IN:UserData:[%s][0x%0X], IN:CBFunc:[0x%0X])", (char *)videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb);
     ret = RegisterVideoFrameRateChangeCB(&videoFrameRateCallbackData);
-    ASSERT(ret == tvERROR_NONE);
-    UT_LOG_INFO("Result RegisterVideoFrameRateChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_LOG_INFO("Result RegisterVideoFrameRateChangeCB(IN:UserData:[%s], IN:CBFunc:[0x%0X]), tvError_t:[%s]",
                (char *) videoFrameRateCallbackData.userdata, videoFrameRateCallbackData.cb, UT_Control_GetMapString(tvError_mapTable, ret));
+    }
+    else
+    {
+        UT_LOG_ERROR("RegisterVideoFrameRateChangeCB failed. Callback will not be triggered.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -643,8 +674,8 @@ void test_l3_tvSettings_terminate(void)
 
     UT_LOG_INFO("Calling tvSettingsTerm()");
     ret = TvTerm();
-    ASSERT(ret == tvERROR_NONE);
     UT_LOG_INFO("Result tvSettingsTerm tvError_t:[%s]", UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -670,7 +701,7 @@ void test_l3_tvSettings_GetVideoFormat(void)
 
     UT_LOG_INFO("Calling GetCurrentVideoFormat(OUT:videoFormat:[])");
     ret = GetCurrentVideoFormat(&videoFormat);
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
     UT_LOG_INFO("Result GetCurrentVideoFormat(OUT:Video Format:[%s]), tvError_t:[%s]",
                 UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
                 UT_Control_GetMapString(tvError_mapTable, ret));
@@ -699,7 +730,7 @@ void test_l3_tvSettings_GetCurrentVideoResolution(void)
 
     UT_LOG_INFO("Calling GetCurrentVideoResolution(OUT:res:[])");
     ret = GetCurrentVideoResolution(&resolution);
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Result GetCurrentVideoResolution(OUT:Resolution:[%dx%d], OUT:isInterlaced:[%d], OUT:res value:[%s]),tvError_t:[%s]",
                 resolution.frameWidth, resolution.frameHeight, resolution.isInterlaced,
@@ -730,7 +761,7 @@ void test_l3_tvSettings_GetCurrentVideoFrameRate(void)
 
     UT_LOG_INFO("Calling GetCurrentVideoFrameRate(OUT:format:[])");
     ret = GetCurrentVideoFrameRate(&frameRate);
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Result GetCurrentVideoFrameRate(OUT:Frame Rate:[%s]),tvError_t:[%s]"
                 , UT_Control_GetMapString(tvVideoFrameRate_mapTable, frameRate)
@@ -760,7 +791,7 @@ void test_l3_tvSettings_GetCurrentVideoSource(void)
 
     UT_LOG_INFO("Calling GetCurrentVideoSource(OUT:currentSource:[])");
     ret = GetCurrentVideoSource(&currentSource);
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Result GetCurrentVideoSource(OUT:Current Source:[%s]), tvError_t:[%s]",
                 UT_Control_GetMapString(tvVideoSrcType_mapTable, currentSource), UT_Control_GetMapString(tvError_mapTable, ret));
@@ -803,15 +834,29 @@ void test_l3_tvSettings_backlight(void)
     UT_LOG_INFO("Calling SetBacklight(IN:backlight:[%d])", backlightValue);
     ret = SetBacklight(backlightValue);
     UT_LOG_INFO("Result SetBacklight(IN:backlight:[%d]), tvError_t:[%s]", backlightValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetBacklight failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the backlight value to confirm
     UT_LOG_INFO("Calling GetBacklight(OUT:backlight:[])");
     ret = GetBacklight(&currentBacklight);
     UT_LOG_INFO("Result GetBacklight(OUT:backlight:[%d]), tvError_t:[%s]", currentBacklight, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
-    ASSERT_COMPARE(backlightValue,currentBacklight);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(backlightValue,currentBacklight);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetBacklight failed. Cannot validate values.");
+    }
+
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -872,16 +917,30 @@ void test_l3_tvSettings_backlightFade(void)
     UT_LOG_INFO("Calling SetBacklightFade(IN:from:[%d], IN:to:[%d], IN:duration:[%d] ms)", fromValue, toValue, durationValue);
     ret = SetBacklightFade(fromValue, toValue, durationValue);
     UT_LOG_INFO("Result SetBacklightFade(IN:from:[%d], IN:to:[%d], IN:duration:[%d] ms), tvError_t:[%s]", fromValue, toValue, durationValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetBacklightFade failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the backlight fade settings to confirm
     UT_LOG_INFO("Calling GetCurrentBacklightFade(OUT:from:[], OUT:to:[], OUT:current:[])");
     ret = GetCurrentBacklightFade(&currentFrom, &currentTo, &currentProgress);
     UT_LOG_INFO("Result GetCurrentBacklightFade(OUT:from:[%d], OUT:to:[%d], OUT:current:[%d]), tvError_t:[%s]", currentFrom, currentTo, currentProgress, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
-    ASSERT_COMPARE(fromValue,currentFrom);
-    ASSERT_COMPARE(toValue,currentTo);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(fromValue, currentFrom);
+        UT_ASSERT_EQUAL(toValue, currentTo);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentBacklightFade failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -938,7 +997,13 @@ void test_l3_tvSettings_backlightMode(void)
     UT_LOG_INFO("Setting BacklightMode (IN: mode:[%s])", UT_Control_GetMapString(tvBacklightMode_mapTable, selectedMode));
     ret = SetCurrentBacklightMode(selectedMode);  // Removed the redundant cast
     UT_LOG_INFO("Result Backlight mode set to: SetCurrentBacklightMode(IN: mode[%s])", UT_Control_GetMapString(tvBacklightMode_mapTable, selectedMode));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCurrentBacklightMode failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the current backlight mode to confirm
     UT_LOG_INFO("Calling GetCurrentBacklightMode(OUT: currentMode:[])");
@@ -946,9 +1011,16 @@ void test_l3_tvSettings_backlightMode(void)
     UT_LOG_INFO("Get current BacklightMode (OUT: currentMode:[%s])tvError[%s]",
         UT_Control_GetMapString(tvBacklightMode_mapTable, currentMode),
         UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
-    ASSERT_COMPARE(currentMode,selectedMode);  // Ensure the mode was set correctly
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(currentMode,selectedMode);  // Ensure the mode was set correctly
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentBacklightFade failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1024,14 +1096,29 @@ void test_l3_tvSettings_TVDimmingMode(void)
     UT_LOG_INFO("Setting dimming mode to (IN:mode:[%s])", modeStr);
     ret = SetTVDimmingMode(modeStr);
     UT_LOG_INFO("Result SetTVDimmingMode(IN:mode:[%s]),tvError_t:[%s]", modeStr, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetTVDimmingMode failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and verify the current dimming mode
     UT_LOG_INFO("Calling GetTVDimmingMode(OUT:currentMode:[])");
     ret = GetTVDimmingMode(currentMode);
     UT_LOG_INFO("Result Get TVDimmingMode (OUT:currentMode:[%s]),tvError_t:[%s]", currentMode, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_STRING_COMPARE(modeStr,currentMode, strlen(modeStr) + 1);
+    UT_ASSERT_EQUAL(ret,tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        ASSERT_STRING_COMPARE(modeStr,currentMode, strlen(modeStr) + 1);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetTVDimmingMode failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1092,15 +1179,31 @@ void test_l3_tvSettings_LocalDimmingLevel(void)
     ret = SetLocalDimmingLevel(selectedLevel);
     UT_LOG_INFO("Result SetLocalDimmingLevel(IN:ldimStateLevel:[%s]),tvError_t:[%s]", UT_Control_GetMapString(ldimStateLevel_mapTable, selectedLevel), UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetLocalDimmingLevel failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and verify the current dimming level
     UT_LOG_INFO("Calling GetLocalDimmingLevel()");
     ret = GetLocalDimmingLevel(&currentLevel);
-    UT_LOG_INFO("Result Get LocalDimmingLevel (OUT:CurrentLevel:[%s]),tvError_t:[%s]", UT_Control_GetMapString(ldimStateLevel_mapTable, currentLevel), UT_Control_GetMapString(tvError_mapTable, ret));
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(selectedLevel, currentLevel);
+    if (ret == tvERROR_NONE)
+    {
+        UT_LOG_INFO("Result GetLocalDimmingLevel (OUT:CurrentLevel:[%s]),tvError_t:[%s]", 
+            UT_Control_GetMapString(ldimStateLevel_mapTable, currentLevel), UT_Control_GetMapString(tvError_mapTable, ret));
+
+        UT_ASSERT_EQUAL(selectedLevel, currentLevel);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetLocalDimmingLevel failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1148,15 +1251,28 @@ void test_l3_tvSettings_Brightness(void)
     ret = SetBrightness(brightness);
     UT_LOG_INFO("Result SetBrightness(IN:brightness:[%d]),tvError_t:[%s]", brightness, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetBrightness failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the brightness value
     UT_LOG_INFO("Calling GetBrightness(OUT:brightness:[])");
     ret = GetBrightness(&currentBrightness);
     UT_LOG_INFO("Result GetBrightness(OUT:brightness:[%d]),tvError_t:[%s]", currentBrightness, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(brightness, currentBrightness);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(brightness, currentBrightness);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetBrightness failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1207,15 +1323,30 @@ void test_l3_tvSettings_Contrast(void)
     ret = SetContrast(contrast);
     UT_LOG_INFO("Result SetContrast(IN:contrast:[%d]),tvError_t:[%s]", contrast, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetContrast failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the current contrast value
     UT_LOG_INFO("Calling GetContrast(OUT:contrast:[])");
     ret = GetContrast(&currentContrast);
     UT_LOG_INFO("Result GetContrast(OUT:contrast:[%d]),tvError_t:[%s]", currentContrast, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(contrast, currentContrast);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(contrast, currentContrast);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetContrast failed. Cannot validate values.");
+    }
+	
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1265,15 +1396,29 @@ void test_l3_tvSettings_Sharpness(void)
     ret = SetSharpness(sharpness);
     UT_LOG_INFO("Result SetSharpness(IN:sharpness:[%d]),tvError_t:[%s]", sharpness, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetSharpness failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the current sharpness value
     UT_LOG_INFO("Calling GetSharpness(OUT:sharpness:[])");
     ret = GetSharpness(&currentSharpness);
     UT_LOG_INFO("Result GetSharpness(OUT:sharpness:[%d]),tvError_t:[%s]", currentSharpness, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(sharpness, currentSharpness);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(sharpness, currentSharpness);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetSharpness failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1323,15 +1468,29 @@ void test_l3_tvSettings_Saturation(void)
     ret = SetSaturation(saturation);
     UT_LOG_INFO("Result SetSaturation(IN:saturation:[%d]),tvError_t:[%s]", saturation, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetSaturation failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the current saturation value
     UT_LOG_INFO("Calling GetSaturation(OUT:saturation:[])");
     ret = GetSaturation(&currentSaturation);
     UT_LOG_INFO("Result GetSaturation(OUT:saturation:[%d]),tvError_t:[%s]", currentSaturation, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(saturation, currentSaturation);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(saturation, currentSaturation);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetSaturation failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1380,15 +1539,28 @@ void test_l3_tvSettings_Hue(void)
     ret = SetHue(hue);
     UT_LOG_INFO("Result SetHue(IN:hue:[%d]),tvError_t:[%s]", hue, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetHue failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the current hue value
     UT_LOG_INFO("Calling GetHue(OUT:hue:[])");
     ret = GetHue(&currentHue);
     UT_LOG_INFO("Result GetHue(OUT:hue:[%d]),tvError_t:[%s]", currentHue, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(hue, currentHue);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(hue, currentHue);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetHue failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1445,15 +1617,28 @@ void test_l3_tvSettings_ColorTemperature(void)
     ret = SetColorTemperature(selectedTemperature);
     UT_LOG_INFO("Result SetColorTemperature(IN:SelectedTemperature:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvColorTemp_mapTable, selectedTemperature), UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemperature failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the current color temperature
     UT_LOG_INFO("Calling GetColorTemperature(OUT:colorTemperature:[])");
     ret = GetColorTemperature(&currentTemperature);
     UT_LOG_INFO("Result GetColorTemperature(OUT:colorTemperature:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvColorTemp_mapTable, currentTemperature), UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(selectedTemperature, currentTemperature);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(selectedTemperature, currentTemperature);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemperature failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1509,15 +1694,28 @@ void test_l3_tvSettings_AspectRatio(void)
     ret = SetAspectRatio(selectedAspectRatio);
     UT_LOG_INFO("Result SetAspectRatio(IN:AspectRatio:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvDisplayMode_mapTable, selectedAspectRatio), UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetAspectRatio failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the current aspect ratio
     UT_LOG_INFO("Calling GetAspectRatio(OUT:aspectRatio:[])");
     ret = GetAspectRatio(&currentAspectRatio);
     UT_LOG_INFO("Result GetAspectRatio(OUT:aspectRatio:[%s]),tvError_t:[%s]", UT_Control_GetMapString(tvDisplayMode_mapTable, currentAspectRatio), UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(selectedAspectRatio, currentAspectRatio);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(selectedAspectRatio, currentAspectRatio);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetAspectRatio failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1567,15 +1765,29 @@ void test_l3_tvSettings_LowLatencyState(void)
     ret = SetLowLatencyState(userChoice);
     UT_LOG_INFO("Result SetLowLatencyState(IN:LowLatencyState:[%d]),tvError_t:[%s]", userChoice, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetLowLatencyState failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the current low latency state
     UT_LOG_INFO("Calling GetLowLatencyState(OUT:LowLatencyState:[])");
     ret = GetLowLatencyState(&currentLowLatencyState);
     UT_LOG_INFO("Result GetLowLatencyState(OUT:LowLatencyState:[%d]),tvError_t:[%s]", currentLowLatencyState, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(userChoice, currentLowLatencyState);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+     if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(userChoice, currentLowLatencyState);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetLowLatencyState failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1699,15 +1911,28 @@ void test_l3_tvSettings_DynamicGamma(void)
     ret = SetDynamicGamma(userGammaValue);
     UT_LOG_INFO("Result SetDynamicGamma(IN: gammaValue:[%.2f]),tvError_t:[%s]", userGammaValue, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if(ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetDynamicGamma failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get the current dynamic gamma value to confirm
     UT_LOG_INFO("Calling GetDynamicGamma(OUT: dynamicGamma:[])");
     ret = GetDynamicGamma(&currentDynamicGamma);
     UT_LOG_INFO("Result GetDynamicGamma(OUT: dynamicGamma:[%.2f]),tvError_t:[%s]", currentDynamicGamma, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(userGammaValue, currentDynamicGamma);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(userGammaValue, currentDynamicGamma);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetDynamicGamma failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -1766,15 +1991,29 @@ void test_l3_tvSettings_DolbyVisionMode(void)
     UT_LOG_INFO("Result SetTVDolbyVisionMode (IN:DolbyVisionMode[%s]),tvError_t:[%s]",
                 UT_Control_GetMapString(tvDolbyMode_mapTable, selectedMode), UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetTVDolbyVisionMode failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the current Dolby Vision mode
     UT_LOG_INFO("Calling GetTVDolbyVisionMode(OUT: dolbyMode:[])");
     ret = GetTVDolbyVisionMode(&currentDolbyMode);
     UT_LOG_INFO("Result GetTVDolbyVisionMode(OUT:dolbyMode[%s]),tvError_t:[%s]",
                 UT_Control_GetMapString(tvDolbyMode_mapTable, currentDolbyMode), UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(selectedMode, currentDolbyMode);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(selectedMode, currentDolbyMode);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetTVDolbyVisionMode failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1854,15 +2093,29 @@ void test_l3_tvSettings_PictureMode(void)
     ret = SetTVPictureMode(selectedPictureMode);
     UT_LOG_INFO("Result SetTVPictureMode( IN: selectedPictureMode[%s]), tvError_t:[%s]", selectedPictureMode, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetTVPictureMode failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the current picture mode
     UT_LOG_INFO("Calling GetTVPictureMode(OUT: currentPictureMode[])");
     ret = GetTVPictureMode(currentPictureMode);
     UT_LOG_INFO("Result GetTVPictureMode(OUT:currentPictureMode[%s]), tvError_t:[%s]", currentPictureMode, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_STRING_COMPARE(selectedPictureMode, currentPictureMode, strlen(selectedPictureMode) + 1);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        ASSERT_STRING_COMPARE(selectedPictureMode, currentPictureMode, strlen(selectedPictureMode) + 1);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentBacklightFade failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -1988,7 +2241,13 @@ void test_l3_tvSettings_ColorTempRgain(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemp_Rgain_onSource failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the rgain value
     UT_LOG_INFO("Calling GetColorTemp_Rgain_onSource(IN:Color Temperature:[%s], OUT:rgain[], IN:Source ID:[%s])",
@@ -2000,8 +2259,16 @@ void test_l3_tvSettings_ColorTempRgain(void)
                   UT_Control_GetMapString(tvColorTemp_mapTable,selectedColorTemp),
                   UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                   UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(rgainValue, retrievedRgain);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(rgainValue, retrievedRgain);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemp_Rgain_onSource failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2126,7 +2393,13 @@ void test_l3_tvSettings_ColorTempGgain(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemp_Ggain_onSource failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the Ggain value
     UT_LOG_INFO("Calling GetColorTemp_Ggain_onSource(IN:Color Temperature:[%s], OUT:ggain[], IN:Source ID:[%s])",
@@ -2138,8 +2411,16 @@ void test_l3_tvSettings_ColorTempGgain(void)
                 retrievedGgain,
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(ggainValue,retrievedGgain);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(ggainValue,retrievedGgain);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemp_Ggain_onSource failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2263,7 +2544,13 @@ void test_l3_tvSettings_ColorTempBgain(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemp_Bgain_onSource failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Get and confirm the Bgain value
     UT_LOG_INFO("Calling GetColorTemp_Bgain_onSource(IN:Color Temperature:[%s], OUT:bgain[], IN:Source ID:[%s])",
@@ -2275,8 +2562,16 @@ void test_l3_tvSettings_ColorTempBgain(void)
                 retrievedBgain,
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(bgainValue, retrievedBgain);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(bgainValue, retrievedBgain);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemp_Bgain_onSource failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2401,7 +2696,13 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemp_R_post_offset_onSource failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the rpostoffset value
     UT_LOG_INFO("calling GetColorTemp_R_post_offset_onSource(IN:ColorTemperature:[%s], OUT:Rpostoffset[], IN:Source ID:[%s])",
@@ -2410,8 +2711,16 @@ void test_l3_tvSettings_ColorTempRpostoffset(void)
     ret = GetColorTemp_R_post_offset_onSource(selectedColorTemp, &retrievedRpostoffset, selectedSourceId);
     UT_LOG_INFO("Result GetColorTemp_R_post_offset_onSource(IN:rpostoffset:[%d], OUT:rpostoffset:[%d])tvError_t[%s]",
                 rpostoffsetValue, retrievedRpostoffset,UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(rpostoffsetValue, retrievedRpostoffset);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(rpostoffsetValue, retrievedRpostoffset);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemp_R_post_offset_onSource failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2535,7 +2844,13 @@ void test_l3_tvSettings_ColorTempGpostoffset(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemp_G_post_offset_onSource failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the gpostoffset value
     UT_LOG_INFO("Calling GetColorTemp_G_post_offset_onSource(IN:ColorTemperature:[%s], OUT:Gpostoffset[], IN:Source ID:[%s])",
@@ -2544,8 +2859,16 @@ void test_l3_tvSettings_ColorTempGpostoffset(void)
     ret = GetColorTemp_G_post_offset_onSource(selectedColorTemp, &retrievedGpostoffset, selectedSourceId);
     UT_LOG_INFO("Result GetColorTemp_G_post_offset_onSource(IN:gpostoffset:[%d], OUT:gpostoffset:[%d])tvError_t:[%s]",
                 gpostoffsetValue, retrievedGpostoffset,UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(gpostoffsetValue, retrievedGpostoffset);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(gpostoffsetValue, retrievedGpostoffset);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemp_G_post_offset_onSource failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2670,7 +2993,13 @@ void test_l3_tvSettings_ColorTempBpostoffset(void)
                 UT_Control_GetMapString(tvColorTempSourceOffset_mapTable, selectedSourceId),
                 saveOnly,
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetColorTemp_B_post_offset_onSource failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the bpostoffset value
     UT_LOG_INFO("Calling GetColorTemp_B_post_offset_onSource ( IN:ColorTemperature:[%s], OUT:Bpostoffset[], IN:Source ID:[%s])",
@@ -2679,8 +3008,16 @@ void test_l3_tvSettings_ColorTempBpostoffset(void)
     ret = GetColorTemp_B_post_offset_onSource(selectedColorTemp, &retrievedBpostoffset, selectedSourceId);
     UT_LOG_INFO("Result GetColorTemp_B_post_offset_onSource(IN:bpostoffset:[%d], OUT:bpostoffset:[%d]) tvError_t[%s]",
                 bpostoffsetValue, retrievedBpostoffset,UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(bpostoffsetValue, retrievedBpostoffset);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(bpostoffsetValue, retrievedBpostoffset);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetColorTemp_B_post_offset_onSource failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2727,14 +3064,28 @@ void test_l3_tvSettings_WBCalibrationMode(void)
     UT_LOG_INFO("Calling EnableWBCalibrationMode (IN: setWbMode[%s])", setWbMode ? "Enabled" : "Disabled");
     ret = EnableWBCalibrationMode(setWbMode);
     UT_LOG_INFO("Result EnableWBCalibrationMode (IN: setWbMode[%s]),tvError_t:[%s]", setWbMode ? "Enabled" : "Disabled", UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("EnableWBCalibrationMode failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the current WB mode
     UT_LOG_INFO("Calling GetCurrentWBCalibrationMode(OUT:[])");
     ret = GetCurrentWBCalibrationMode(&retrievedWbMode);
     UT_LOG_INFO("Result GetCurrentWBCalibrationMode(OUT: retrievedWbMode[%s]),tvError_t:[%s]", retrievedWbMode ? "Enabled" : "Disabled", UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(setWbMode, retrievedWbMode);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(setWbMode, retrievedWbMode);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentWBCalibrationMode failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2826,13 +3177,19 @@ void test_l3_tvSettings_GammaTable(void)
     UT_LOG_INFO("Calling SetGammaTable( IN: size[%hu])", size);
     ret = SetGammaTable(pData_R, pData_G, pData_B, size);
     UT_LOG_INFO("Result SetGammaTable(IN:size:[%hu]),tvError_t:[%s]", size, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if(ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetGammaTable failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the gamma table values
     UT_LOG_INFO("Calling  GetGammaTable (OUT: size[%hu])", size);
     ret = GetGammaTable(retrievedData_R, retrievedData_G, retrievedData_B, size);
     UT_LOG_INFO("Result GetGammaTable( OUT: size[%hu]),tvError_t:[%s]", size, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -2876,20 +3233,34 @@ void test_l3_tvSettings_DvTmaxValue(void)
     UT_LOG_INFO("Calling SetDvTmaxValue(IN: tmaxValue[%d])", tmaxValue);
     ret = SetDvTmaxValue(tmaxValue);
     UT_LOG_INFO("Result SetDvTmaxValue(IN:tmaxValue [%d]),tvError_t[%s]", tmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     // Set the Dolby Vision TMAX value
     UT_LOG_INFO("Calling SetDvTmaxValue(IN: tmaxValue[%d])", tmaxValue);
     ret = SetDvTmaxValue(tmaxValue);
     UT_LOG_INFO("Result SetDvTmaxValue(IN:tmaxValue [%d]),tvError_t[%s]", tmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if(ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetDvTmaxValue failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the Dolby Vision TMAX value
     UT_LOG_INFO("Calling GetDvTmaxValue(OUT:retrievedTmaxValue[]");
     ret = GetDvTmaxValue(&retrievedTmaxValue);
     UT_LOG_INFO("Result GetDvTmaxValue(OUT: retrievedTmaxValue[%d]),tvError_t:[%s]", retrievedTmaxValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(tmaxValue, retrievedTmaxValue);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(tmaxValue, retrievedTmaxValue);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetDvTmaxValue failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -2940,14 +3311,28 @@ void test_l3_tvSettings_CMSState(void)
     UT_LOG_INFO("Calling SetCMSState(IN: enableCMSState[%d])", enableCMSState);
     ret = SetCMSState(enableCMSState);
     UT_LOG_INFO("Result SetCMSState(IN: enableCMSState[%d]), tvError_t:[%s]", enableCMSState, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCMSState failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Retrieve and validate the CMS state
     UT_LOG_INFO("Calling GetCMSState OUT:retrievedCMSState[]");
     ret = GetCMSState(&retrievedCMSState);
     UT_LOG_INFO("Result GetCMSState(OUT: retrievedCMSState[%s]), tvError_t:[%s]", retrievedCMSState ? "Enabled" : "Disabled", UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(enableCMSState, retrievedCMSState);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(enableCMSState, retrievedCMSState);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCMSState failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3024,7 +3409,13 @@ void test_l3_tvSettings_ComponentSaturation(void)
     ret = SetCurrentComponentSaturation(blSaturationColor, saturationValue);
     UT_LOG_INFO("Result SetCurrentComponentSaturation( IN:color[%s] IN: value[%d]),tvError_t:[%s]",
                 UT_Control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), saturationValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCurrentComponentSaturation failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the component saturation value
     UT_LOG_INFO("Calling GetCurrentComponentSaturation (IN:color [%s] OUT: value[])",
@@ -3032,8 +3423,16 @@ void test_l3_tvSettings_ComponentSaturation(void)
     ret = GetCurrentComponentSaturation(blSaturationColor, &retrievedSaturationValue);
     UT_LOG_INFO("Result GetCurrentComponentSaturation (IN:color [%s] OUT: value[%d]),tvError_t:[%s]",
                 UT_Control_GetMapString(tvDataComponentColor_mapTable, blSaturationColor), retrievedSaturationValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(saturationValue, retrievedSaturationValue);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(saturationValue, retrievedSaturationValue);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentComponentSaturation failed. Cannot validate values.");
+    }
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3110,7 +3509,13 @@ void test_l3_tvSettings_ComponentHue(void)
     ret = SetCurrentComponentHue(blHueColor, hueValue);
     UT_LOG_INFO("Result SetCurrentComponentHue(IN:color [%s] IN: huevalue[%d]) tvError_t:[%s]",
                 UT_Control_GetMapString(tvDataComponentColor_mapTable, blHueColor), hueValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCurrentComponentHue failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the component hue value
     UT_LOG_INFO("Calling GetCurrentComponentHue(IN:color [%s] OUT:value[])",
@@ -3118,8 +3523,16 @@ void test_l3_tvSettings_ComponentHue(void)
     ret = GetCurrentComponentHue(blHueColor, &retrievedHueValue);
     UT_LOG_INFO("Result GetCurrentComponentHue(IN:color [%s] OUT:value[%d]), tvError_t:[%s]",
                 UT_Control_GetMapString(tvDataComponentColor_mapTable, blHueColor), retrievedHueValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(hueValue, retrievedHueValue);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(hueValue, retrievedHueValue);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentComponentHue failed. Cannot validate values.");
+    }
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3196,7 +3609,13 @@ void test_l3_tvSettings_ComponentLuma(void)
     ret = SetCurrentComponentLuma(blLumaColor, lumaValue);
     UT_LOG_INFO("Result SetCurrentComponentLuma (IN:color [%s] IN: lumaValue[%d]), tvError_t:[%s]",
                 UT_Control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), lumaValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetCurrentComponentLuma failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     // Verify the component luma value
     UT_LOG_INFO("Calling GetCurrentComponentLuma (IN:color [%s] OUT:value[])",
@@ -3204,8 +3623,16 @@ void test_l3_tvSettings_ComponentLuma(void)
     ret = GetCurrentComponentLuma(blLumaColor, &retrievedLumaValue);
     UT_LOG_INFO("Result GetCurrentComponentLuma (IN:color [%s] OUT:value[%d]), tvError_t:[%s]",
                 UT_Control_GetMapString(tvDataComponentColor_mapTable, blLumaColor), retrievedLumaValue, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(lumaValue, retrievedLumaValue);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(lumaValue, retrievedLumaValue);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetCurrentComponentLuma failed. Cannot validate values.");
+    }
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3240,7 +3667,7 @@ void test_l3_tvSettings_EnableGammaMode(void)
     UT_LOG_INFO("Calling EnableGammaMode(IN:Mode:[%d])", mode);
     ret = EnableGammaMode(mode);
     UT_LOG_INFO("Result  EnableGammaMode(IN:Mode:[%d]) tvError_t:[%s]", mode, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3283,7 +3710,7 @@ void test_l3_tvSettings_SetGammaPatternMode(void)
     ret = SetGammaPatternMode(mode);
     UT_LOG_INFO("Result SetGammaPatternMode(IN:Mode:[%d]) tvError_t:[%s]", mode, UT_Control_GetMapString(tvError_mapTable, ret));
 
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3396,7 +3823,7 @@ void test_l3_tvSettings_SetGammaPattern(void)
     UT_LOG_INFO("Calling SetGammaPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d])", is_10_bit, R_Value, G_Value, B_Value);
     ret = SetGammaPattern(is_10_bit, R_Value, G_Value, B_Value);
     UT_LOG_INFO("Result SetGammaPattern(IN:is10BIT[%d] IN:R:[%d], IN:G:[%d], IN:B:[%d]), tvError_t:[%s]", is_10_bit, R_Value, G_Value, B_Value, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3460,15 +3887,29 @@ void test_l3_tvSettings_RGBPattern(void)
     UT_LOG_INFO("Calling SetRGBPattern(IN:R:[%d], IN:G:[%d], IN:B:[%d])", r, g, b);
     ret = SetRGBPattern(r, g, b);
     UT_LOG_INFO("Result SetRGBPattern(IN:R:[%d], IN:G:[%d], IN:B:[%d]) tvError_t:[%s]", r, g, b, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetRGBPattern failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     UT_LOG_INFO("Calling GetRGBPattern(OUT:R:[], OUT:G:[], OUT:B:[])");
     ret = GetRGBPattern(&r_get, &g_get, &b_get);
     UT_LOG_INFO("Result GetRGBPattern(OUT:R:[%d], OUT:G:[%d], OUT:B:[%d]) tvError_t:[%s]", r_get, g_get, b_get, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(r,r_get);
-    ASSERT_COMPARE(g,b_get);
-    ASSERT_COMPARE(b,b_get);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(r, r_get);
+        UT_ASSERT_EQUAL(g, g_get);
+        UT_ASSERT_EQUAL(b, b_get);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetRGBPattern failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3510,13 +3951,27 @@ void test_l3_tvSettings_GrayPattern(void)
     UT_LOG_INFO("Calling SetGrayPattern(IN:YUVValue:[%d])", YUVValue);
     ret = SetGrayPattern(YUVValue);
     UT_LOG_INFO("Result SetGrayPattern(IN:YUVValue:[%d]) tvError_t:[%s]", YUVValue,UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    if (ret != tvERROR_NONE)
+    {
+        UT_LOG_ERROR("SetGrayPattern failed. Skipping verification.");
+        UT_LOG_INFO("Out %s", __FUNCTION__);
+        return;
+    }
 
     UT_LOG_INFO("Calling GetGrayPattern(OUT:YUVValue:[])");
     ret = GetGrayPattern(&YUVValue_get);
     UT_LOG_INFO("Result GetGrayPattern(OUT:YUVValue:[%d]) tvError_t:[%s]",YUVValue_get, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
-    ASSERT_COMPARE(YUVValue, YUVValue_get);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
+    
+    if (ret == tvERROR_NONE)
+    {
+        UT_ASSERT_EQUAL(YUVValue, YUVValue_get);
+    }
+    else
+    {
+        UT_LOG_ERROR("GetGrayPattern failed. Cannot validate values.");
+    }
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3560,7 +4015,7 @@ void test_l3_tvSettings_EnableLDIMPixelCompensation(void)
     UT_LOG_INFO("Calling EnableLDIMPixelCompensation(IN:Mode:[%s])", enable ? "true" : "false");
     ret = EnableLDIMPixelCompensation(enable);
     UT_LOG_INFO("Result EnableLDIMPixelCompensation(IN:Mode:[%s]) tvError_t:[%s]", enable ? "true" : "false", UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3605,7 +4060,7 @@ void test_l3_tvSettings_EnableLDIM(void)
     UT_LOG_INFO("Result EnableLDIM(IN:Mode:[%s]) tvError_t:[%s]",
                  enable ? "true" : "false",
                  UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3667,7 +4122,7 @@ void test_l3_tvSettings_SetBacklightTestMode(void)
     UT_LOG_INFO("Result SetBacklightTestMode(IN: Mode: [%s]) tvError_t: [%s]",
                  UT_Control_GetMapString(tvBacklightTestMode_mapTable, mode),
                  UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -3722,7 +4177,7 @@ void test_l3_tvSettings_EnableDynamicContrast(void)
     UT_LOG_INFO("Result EnableDynamicContrast(IN:Mode:[%s]) tvError_t:[%s]",
                  enable ? "true" : "false",
                  UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3776,7 +4231,7 @@ void test_l3_tvSettings_EnableLocalContrast(void)
     UT_LOG_INFO("Result EnableLocalContrast(IN:Mode:[%s]) tvError_t:[%s]",
              enable ? "true" : "false",
              UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -3904,7 +4359,7 @@ void test_l3_tvSettings_BacklightSave(void)
              UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              backlightValue,
              UT_Control_GetMapString(tvError_mapTable, result));
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -4050,7 +4505,7 @@ void test_l3_tvSettings_TVDimmingModeSave(void)
                  UT_Control_GetMapString(tvDimmingMode_mapTable, dimmingMode),
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4186,7 +4641,7 @@ void test_l3_tvSettings_LocalDimmingLevelSave(void)
              UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              UT_Control_GetMapString(ldimStateLevel_mapTable, dimmingLevel),
              UT_Control_GetMapString(tvError_mapTable, result));
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -4321,7 +4776,7 @@ void test_l3_tvSettings_BrightnessSave(void)
                  brightnessValue,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     // Log function exit
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -4459,7 +4914,7 @@ void test_l3_tvSettings_ContrastSave(void)
                  contrastValue,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -4594,7 +5049,7 @@ void test_l3_tvSettings_SharpnessSave(void)
                  sharpnessValue,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -4728,7 +5183,7 @@ void test_l3_tvSettings_HueSave(void)
              hueValue,
              UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -4860,7 +5315,7 @@ void test_l3_tvSettings_SaturationSave(void)
              UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              saturationValue,
              UT_Control_GetMapString(tvError_mapTable, result));
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5002,7 +5457,9 @@ void test_l3_tvSettings_ColorTemperatureSave(void)
              pqValue,
              UT_Control_GetMapString(tvVideoFormatType_mapTable, videoFormat),
              UT_Control_GetMapString(tvColorTemp_mapTable, colorTemp),
-             UT_Control_GetMapString(tvError_mapTable, result));    ASSERT(result == tvERROR_NONE);
+             UT_Control_GetMapString(tvError_mapTable, result));    
+    
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5149,7 +5606,7 @@ void test_l3_tvSettings_AspectRatioSave(void)
                  UT_Control_GetMapString(tvDisplayMode_mapTable, aspectRatio),
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5281,7 +5738,7 @@ void test_l3_tvSettings_LowLatencySave(void)
                  lowLatencyIndex,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5422,7 +5879,7 @@ void test_l3_tvSettings_DolbyVisionSave(void)
                  selectedMode,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5539,7 +5996,7 @@ void test_l3_tvSettings_PictureModeSave(void)
                  selectedPictureMode,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5749,7 +6206,7 @@ void test_l3_tvSettings_CMSSave(void)
                  cmsValue,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5863,7 +6320,7 @@ void test_l3_tvSettings_SaveGammaTable(void)
     UT_LOG_INFO("Calling SaveGammaTable(IN: colortemp[%hu], size[%hu])", selectedColorTemp, size);
     ret = SaveGammaTable(selectedColorTemp, pData_R, pData_G, pData_B, size);
     UT_LOG_INFO("Result SaveGammaTable(colortemp:[%hu], size:[%hu]), tvError_t:[%s]", selectedColorTemp, size, UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
@@ -5897,7 +6354,7 @@ void test_l3_tvSettings_GetCMSState(void)
     UT_LOG_INFO("Result GetCMSState(OUT: retrievedCMSState[%s]), tvError_t:[%s]",
                 retrievedCMSState ? "Enabled" : "Disabled",
                 UT_Control_GetMapString(tvError_mapTable, ret));
-    ASSERT(ret == tvERROR_NONE);
+    UT_ASSERT_EQUAL(ret, tvERROR_NONE);
 
     // Log exit and end function
     UT_LOG_INFO("Out %s", __FUNCTION__);
@@ -5977,7 +6434,7 @@ void test_l3_tvSettings_SaveDvTmaxValue(void)
                  tmaxValue,
                  UT_Control_GetMapString(tvError_mapTable, result));
 
-    ASSERT(result == tvERROR_NONE);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     UT_LOG_INFO("Out %s", __FUNCTION__);
 }
