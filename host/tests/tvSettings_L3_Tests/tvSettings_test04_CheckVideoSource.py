@@ -75,9 +75,6 @@ class tvSettings_test04_CheckVideoSource(tvSettingsHelperClass):
         # Iterate through streams, but only for VIDEO_SOURCE_IP
         for stream in streams:
 
-            # Download the individual stream
-            self.testDownloadAssetsByUrl(stream)
-
             streamFullPath = os.path.join(self.targetWorkspace, os.path.basename(stream))
 
             # Play the stream

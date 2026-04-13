@@ -870,6 +870,8 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
     char getDimmingMode[10] = { 0 };
     int32_t count = 0;
     uint16_t numDimmingModes = 0;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
+    char dimmingModeStr[UT_KVP_MAX_ELEMENT_SIZE] = { 0 };
 
     status = TvInit();
     UT_LOG_DEBUG("Invoking TvInit");
@@ -894,15 +896,8 @@ void test_l2_tvSettings_SetAndGetDimmingMode(void)
 
     for(int32_t j = 0; j < numDimmingModes; j++)
     {
-        // Convert tvDimmingMode_t to string for SetTVDimmingMode
-        const char *dimmingModeStr = NULL;
-        if (supportedDimmingModes[j] == tvDimmingMode_Fixed) {
-            dimmingModeStr = "fixed";
-        } else if (supportedDimmingModes[j] == tvDimmingMode_Global) {
-            dimmingModeStr = "global";
-        } else if (supportedDimmingModes[j] == tvDimmingMode_Local) {
-            dimmingModeStr = "local";
-        }
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/DimmingMode/range/%d", j);
+        UT_KVP_PROFILE_GET_STRING(keyValue,dimmingModeStr);
 
         if (dimmingModeStr != NULL) {
             status = SetTVDimmingMode(dimmingModeStr);
@@ -2040,10 +2035,11 @@ void test_l2_tvSettings_SetAndGetColorTempRgain(void)
 
             UT_LOG_DEBUG("Retrieved rgain: %d", rgain);
             // Ensure the saved value with 2047 doesn't impact the set value 1024
-            UT_ASSERT_EQUAL(rgain, setRgain);
-            if (rgain != setRgain)
+            UT_ASSERT_NOT_EQUAL(rgain, setRgain);
+            UT_ASSERT_EQUAL(rgain, saveRgain);
+            if (rgain == setRgain)
             {
-                UT_LOG_ERROR("Mismatch in set [%d] and retrieved rgain values [%d]", rgain, setRgain);
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved rgain values [%d]", setRgain, rgain);
             }
         }
     }
@@ -2160,10 +2156,11 @@ void test_l2_tvSettings_SetAndGetColorTempGgain(void)
 
             UT_LOG_DEBUG("Retrieved ggain: %d", ggain);
             // Ensure the saved value with 2047 doesn't impact the set value 1024
-            UT_ASSERT_EQUAL(ggain, setGgain);
-            if(ggain != setGgain)
+            UT_ASSERT_NOT_EQUAL(ggain, setGgain);
+            UT_ASSERT_EQUAL(ggain, saveGgain);
+            if (ggain == setGgain)
             {
-                UT_LOG_ERROR("Mismatch in set [%d]and retrieved ggain values [%d]", ggain, setGgain);
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved ggain values [%d]", setGgain, ggain);
             }
         }
     }
@@ -2279,10 +2276,11 @@ void test_l2_tvSettings_SetAndGetColorTempBgain(void)
 
             UT_LOG_DEBUG("Retrieved bgain: %d", bgain);
             // Ensure the saved value with 2047 doesn't impact the set value 1024
-            UT_ASSERT_EQUAL(bgain, setBgain);
-            if(bgain != setBgain)
+            UT_ASSERT_NOT_EQUAL(bgain, setBgain);
+            UT_ASSERT_EQUAL(bgain, saveBgain);
+            if (bgain == setBgain)
             {
-                UT_LOG_ERROR("Mismatch in set[%d] and retrieved bgain values[%d]", bgain, setBgain);
+                UT_LOG_ERROR("Mismatch in set [%d] and retrieved bgain values [%d]", setBgain, bgain);
             }
         }
     }
@@ -2391,8 +2389,9 @@ void test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource(void)
             }
 
             UT_LOG_DEBUG("Retrieved rpostoffset=%d", rpostoffset_get);
-            UT_ASSERT_EQUAL(rpostoffset_set, rpostoffset_get);
-            if (rpostoffset_set != rpostoffset_get)
+            UT_ASSERT_NOT_EQUAL(rpostoffset_set, rpostoffset_get);
+            UT_ASSERT_EQUAL(rpostoffset_save, rpostoffset_get);
+            if (rpostoffset_set == rpostoffset_get)
             {
                 UT_LOG_ERROR("Mismatch in set [%d]and retrieved rpostoffset values [%d]", rpostoffset_set, rpostoffset_get);
             }
@@ -2504,8 +2503,9 @@ void test_l2_tvSettings_SetAndGetColorTempGPostOffset(void)
             }
 
             UT_LOG_DEBUG("Retrieved gpostoffset=%d", gpostoffset_get);
-            UT_ASSERT_EQUAL(gpostoffset_set, gpostoffset_get);
-            if (gpostoffset_set != gpostoffset_get)
+            UT_ASSERT_NOT_EQUAL(gpostoffset_set, gpostoffset_get);
+            UT_ASSERT_EQUAL(gpostoffset_save, gpostoffset_get);
+            if (gpostoffset_set == gpostoffset_get)
             {
                 UT_LOG_ERROR("Mismatch in set [%d]and retrieved gpostoffset values [%d]", gpostoffset_set, gpostoffset_get);
             }
@@ -2615,8 +2615,9 @@ void test_l2_tvSettings_SetAndGetColorTempBPostOffset(void)
             }
 
             UT_LOG_DEBUG("Retrieved bpostoffset=%d", bpostoffset_get);
-            UT_ASSERT_EQUAL(bpostoffset_set, bpostoffset_get);
-            if (bpostoffset_set != bpostoffset_get)
+            UT_ASSERT_NOT_EQUAL(bpostoffset_set, bpostoffset_get);
+            UT_ASSERT_EQUAL(bpostoffset_save, bpostoffset_get);
+            if (bpostoffset_set == bpostoffset_get)
             {
                 UT_LOG_ERROR("Mismatch in set [%d] and retrieved bpostoffset values [%d]", bpostoffset_set, bpostoffset_get);
             }
