@@ -690,7 +690,7 @@ tvSettings:
     range.gain.from: 0
     range.gain.to: 2047
     range.offset.from: -1024
-    range.offset.to: 1024
+    range.offset.to: 1023
     # STANDARD
     # WARM
     # COLD
@@ -732,7 +732,7 @@ tvSettings:
     range.gain.from: 0
     range.gain.to: 2047
     range.offset.from: -1024
-    range.offset.to: 1024
+    range.offset.to: 1023
     # STANDARD
     # WARM
     # COLD
@@ -774,7 +774,7 @@ tvSettings:
     range.gain.from: 0
     range.gain.to: 2047
     range.offset.from: -1024
-    range.offset.to: 1024
+    range.offset.to: 1023
     # STANDARD
     # WARM
     # COLD
@@ -1702,7 +1702,7 @@ tvSettings:
     range_gain_from: 0
     range_gain_to: 2047
     range_offset_from: -1024
-    range_offset_to: 1024
+    range_offset_to: 1023
     # Dark
     # Bright
     range:
