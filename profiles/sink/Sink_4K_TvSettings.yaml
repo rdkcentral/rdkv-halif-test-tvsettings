@@ -611,17 +611,12 @@ tvSettings:
       - Warm
       - Cold
       - UserDefined
-    index:
-      - 0x00 # STANDARD
-      - 0x01 # WARM
-      - 0x02 # COLD
-      - 0x03 # USER
-      - 0x04 # BOOST_STANDARD
-      - 0x05 # BOOST_WARM
-      - 0x06 # BOOST_COLD
-      - 0x07 # BOOST_USER
-      - 0x08 # SUPERCOLD
-      - 0x09 # BOOST_SUPERCOLD
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     # Entertainment
     # Dynamic
     # Dynamic2
@@ -705,7 +700,13 @@ tvSettings:
       - Standard
       - Warm
       - Cold
-      - User Defined
+      - UserDefined
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     pqmode: none
     format: none
     # ANALOGUE
@@ -725,7 +726,6 @@ tvSettings:
       - HDMI
       - TV
       - AV
-      - All
     platformsupport: true
 
   WhiteBalanceBlue:
@@ -747,7 +747,13 @@ tvSettings:
       - Standard
       - Warm
       - Cold
-      - User Defined
+      - UserDefined
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     pqmode: none
     format: none
     # ANALOGUE
@@ -767,7 +773,6 @@ tvSettings:
       - HDMI
       - TV
       - AV
-      - All
     platformsupport: true
 
   WhiteBalanceGreen:
@@ -789,7 +794,13 @@ tvSettings:
       - Standard
       - Warm
       - Cold
-      - User Defined
+      - UserDefined
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     pqmode: none
     format: none
     # ANALOGUE
@@ -809,7 +820,6 @@ tvSettings:
       - HDMI
       - TV
       - AV
-      - All
     platformsupport: true
 
   GammaTableRed:
@@ -831,7 +841,13 @@ tvSettings:
       - Standard
       - Warm
       - Cold
-      - User Defined
+      - UserDefined
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     pqmode: none
     format: none
     source: none
@@ -856,7 +872,13 @@ tvSettings:
       - Standard
       - Warm
       - Cold
-      - User Defined
+      - UserDefined
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     pqmode: none
     format: none
     source: none
@@ -881,7 +903,13 @@ tvSettings:
       - Standard
       - Warm
       - Cold
-      - User Defined
+      - UserDefined
+      - BoostStandard
+      - BoostWarm
+      - BoostCold
+      - BoostUserDefined
+      - Supercold
+      - BoostSupercold
     pqmode: none
     format: none
     source: none
@@ -952,7 +980,6 @@ tvSettings:
       - HDMI3
       - IP
       - Tuner
-      - All
     platformsupport: true
 
   # tvBacklightMode_NONE       = 0x00,         //!< No backlight
@@ -1181,13 +1208,7 @@ tvSettings:
     platformsupport: true
 
   LocalDimmingLevel:
-    #LDIM_STATE_NONBOOST = 0x0             # LDIM state level is non boost (AKA Normal)
-    #LDIM_STATE_BOOST    = 0x01           # LDIM state level is boost
-    #LDIM_STATE_BURST    = 0x02          # LDIM state level is burst
     range:
-      - nonboost
-      - boost
-      - burst
       - 0
       - 1
       - 2
@@ -1212,13 +1233,66 @@ tvSettings:
       - 21
       - 22
       - 255
-    index:
-      - 0x00
-      - 0x01
-      - 0x02
-    pqmode: none
-    format: none
-    source: none
+    # Entertainment
+    # Dynamic
+    # Dynamic2
+    # Energy saving
+    # Expert
+    # Movie
+    # Sports
+    # Game
+    # Graphics
+    # Standard
+    # Vivid
+    # EnergySaving
+    # Custom
+    # Theater
+    pqmode:
+      - Entertainment
+      - Dynamic
+      - Dynamic2
+      - Expert
+      - Movie
+      - Sports
+      - Standard
+      - Vivid
+      - EnergySaving
+      - Custom
+      - Theater
+      - Game
+      - Graphics
+    # HDR10
+    # HDR10PLUS
+    # DV
+    # PRIMESL
+    # HLG
+    # SDR
+    # MVC
+    format:
+      - SDR
+      - HDR10
+      - HLG
+      - DV
+    # ANALOGUE
+    # COMPOSITE1
+    # COMPOSITE2
+    # YPBPR1
+    # YPBPR2
+    # HDMI1
+    # HDMI2
+    # HDMI3
+    # HDMI4
+    # VGA
+    # IP
+    # TUNER
+    # SVIDEO
+    source:
+      - Composite1
+      - HDMI1
+      - HDMI2
+      - HDMI3
+      - IP
+      - Tuner
     platformsupport: true
 
   # tvDimmingMode_Fixed   = 0x00, //!< Dimming Mode is Fixed
