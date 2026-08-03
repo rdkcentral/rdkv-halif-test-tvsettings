@@ -617,6 +617,17 @@ tvSettings:
       - BoostUserDefined
       - Supercold
       - BoostSupercold
+    index:
+      - 0x00 # tvColorTemp_STANDARD
+      - 0x01 # tvColorTemp_WARM
+      - 0x02 # tvColorTemp_COLD
+      - 0x03 # tvColorTemp_USER
+      - 0x04 # tvColorTemp_BOOST_STANDARD
+      - 0x05 # tvColorTemp_BOOST_WARM
+      - 0x06 # tvColorTemp_BOOST_COLD
+      - 0x07 # tvColorTemp_BOOST_USER
+      - 0x08 # tvColorTemp_SUPERCOLD
+      - 0x09 # tvColorTemp_BOOST_SUPERCOLD
     # Entertainment
     # Dynamic
     # Dynamic2
@@ -1208,31 +1219,10 @@ tvSettings:
     platformsupport: true
 
   LocalDimmingLevel:
-    range:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-      - 11
-      - 12
-      - 13
-      - 14
-      - 15
-      - 16
-      - 17
-      - 18
-      - 19
-      - 20
-      - 21
-      - 22
-      - 255
+    index:
+      - 0x00 # LDIM_STATE_NONBOOST
+      - 0x01 # LDIM_STATE_BOOST
+      - 0x02 # LDIM_STATE_BURST
     # Entertainment
     # Dynamic
     # Dynamic2
