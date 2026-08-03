@@ -45,18 +45,8 @@ tvSettings:
   # PQ_PARAM_WB_OFFSET_RED = 0x26                    //!< Picture parameter is Component Red Offset
   # PQ_PARAM_WB_OFFSET_GREEN = 0x27                  //!< Picture parameter is Component Green Offset
   # PQ_PARAM_WB_OFFSET_BLUE =0x28                    //!< Picture parameter is Component Blue Offset
-  # PQ_PARAM_PRECISION_DETAIL = 0x29                 //!< Picture parameter is Precision Detail
-  # PQ_PARAM_SDR_GAMMA = 0x2A                        //!< Picture parameter is SDR Gamma
-  # PQ_PARAM_LOCAL_CONTRAST_ENHANCEMENT = 0x2B       //!< Picture parameter is Local Contrast Enhancement
-  # PQ_PARAM_MPEG_NOISE_REDUCTION = 0x2C             //!< Picture parameter is MPEG Noise Reduction
-  # PQ_PARAM_DIGITAL_NOISE_REDUCTION = 0x2D          //!< Picture parameter is Digital Noise Reduction
-  # PQ_PARAM_AI_SUPER_RESOLUTION = 0x2E              //!< Picture parameter is AI Super Resolution
-  # PQ_PARAM_MEMC = 0x2F                             //!< Picture parameter is MEMC
-  # PQ_PARAM_MULTI_POINT_WB = 0x30                   //!< Picture parameter is Multi-Point WB
-  # PQ_PARAM_DOLBY_VISION_CALIBRATION = 0x31         //!< Picture parameter is Dolby Vision Calibration
-  # PQ_PARAM_BACKLIGHT_MODE = 0x32                   //!< Picture parameter is BacklightMode
-  # PQ_PARAM_BACKLIGHT_DIMMINGLEVEL = 0x33           //!< Picture parameter is Backlight Dimming Level
-  # PQ_PARAM_MAX            = 0x34                   //!< End of enum
+  # PQ_PARAM_BACKLIGHT_MODE = 0x29                   //!< Picture parameter is BacklightMode
+  # PQ_PARAM_MAX            = 0x2A                   //!< End of enum
   SupportedPQParameter:
     index:
       - 0x00    # PQ_PARAM_BRIGHTNESS
@@ -66,8 +56,6 @@ tvSettings:
       - 0x04    # PQ_PARAM_HUE
       - 0x05    # PQ_PARAM_BACKLIGHT
       - 0x06    # PQ_PARAM_DOLBY_MODE
-      - 0x07    # PQ_PARAM_HDR10_MODE
-      - 0x08    # PQ_PARAM_HLG_MODE
       - 0x09    # PQ_PARAM_ASPECT_RATIO
       - 0x0A    # PQ_PARAM_COLOR_TEMPERATURE
       - 0x0B    # PQ_PARAM_DIMMINGMODE
@@ -100,17 +88,7 @@ tvSettings:
       - 0x26    # PQ_PARAM_WB_OFFSET_RED
       - 0x27    # PQ_PARAM_WB_OFFSET_GREEN
       - 0x28    # PQ_PARAM_WB_OFFSET_BLUE
-      - 0x29    # PQ_PARAM_PRECISION_DETAIL
-      - 0x2A    # PQ_PARAM_SDR_GAMMA
-      - 0x2B    # PQ_PARAM_LOCAL_CONTRAST_ENHANCEMENT
-      - 0x2C    # PQ_PARAM_MPEG_NOISE_REDUCTION
-      - 0x2D    # PQ_PARAM_DIGITAL_NOISE_REDUCTION
-      - 0x2E    # PQ_PARAM_AI_SUPER_RESOLUTION
-      - 0x2F    # PQ_PARAM_MEMC
-      - 0x30    # PQ_PARAM_MULTI_POINT_WB
-      - 0x31    # PQ_PARAM_DOLBY_VISION_CALIBRATION
-      - 0x32    # PQ_PARAM_BACKLIGHT_MODE
-      - 0x33    # PQ_PARAM_BACKLIGHT_DIMMINGLEVEL
+      - 0x29    # PQ_PARAM_BACKLIGHT_MODE
   # tvDataColor_NONE    = 0x00, //!< No color
   # tvDataColor_RED     = 0x01, //!< Color is Red
   # tvDataColor_GREEN   = 0x02, //!< Color is Green
@@ -720,20 +698,12 @@ tvSettings:
       - BoostSupercold
     pqmode: none
     format: none
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
+    # ALL
+    # HDMI
+    # TV
+    # AV
     source:
+      - All
       - HDMI
       - TV
       - AV
@@ -767,20 +737,12 @@ tvSettings:
       - BoostSupercold
     pqmode: none
     format: none
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
+    # ALL
+    # HDMI
+    # TV
+    # AV
     source:
+      - All
       - HDMI
       - TV
       - AV
@@ -814,20 +776,12 @@ tvSettings:
       - BoostSupercold
     pqmode: none
     format: none
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
+    # ALL
+    # HDMI
+    # TV
+    # AV
     source:
+      - All
       - HDMI
       - TV
       - AV
@@ -1437,141 +1391,10 @@ tvSettings:
     platformsupport: true
     numberOfDolbyVisionMode : 3
 
-  HDR10Mode:
-    range:
-      - Dark
-      - Bright
-      - Game
-    index:
-      # tvHDR10Mode_Dark      = 0x03,       //!< HDR10 mode is Dark
-      # tvHDR10Mode_Bright    = 0x04,       //!< HDR10 mode is Bright
-      # tvHDR10Mode_Game      = 0x05,       //!< HDR10 mode is Game
-      - 0x03 #tvHDR10Mode_Dark
-      - 0x04 #tvHDR10Mode_Bright
-      - 0x05 #tvHDR10Mode_Game
-    # Entertainment
-    # Dynamic
-    # Dynamic2
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    # Graphics
-    # Standard
-    # Vivid
-    # EnergySaving
-    # Custom
-    # Theater
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Dynamic2
-      - Expert
-      - Movie
-      - Sports
-      - Standard
-      - Vivid
-      - EnergySaving
-      - Custom
-      - Theater
-      - Game
-      - FilmMaker
-      - Graphics
-    format: none
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
-  HLGMode:
-    range:
-      - Dark
-      - Bright
-      - Game
-    index:
-      # tvHLGMode_Dark        = 0x06,       //!< HLG mode is Dark
-      # tvHLGMode_Bright      = 0x07,       //!< HLG mode is Bright
-      # tvHLGMode_Game        = 0x08,       //!< HLG mode is Game
-      - 0x06 #tvHLGMode_Dark
-      - 0x07 #tvHLGMode_Bright
-      - 0x08 #tvHLGMode_Game
-    # Entertainment
-    # Dynamic
-    # Dynamic2
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    # Graphics
-    # Standard
-    # Vivid
-    # EnergySaving
-    # Custom
-    # Theater
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Dynamic2
-      - Expert
-      - Movie
-      - Sports
-      - Standard
-      - Vivid
-      - EnergySaving
-      - Custom
-      - Theater
-      - Game
-      - FilmMaker
-      - Graphics
-    format: none
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
-    platformsupport: true
-
   PictureMode:
     # Entertainment
     # Dynamic
     # Dynamic2
-    # Energy saving
     # Expert
     # Movie
     # Sports
@@ -1590,33 +1413,26 @@ tvSettings:
       - Expert
       - Movie
       - Sports
+      - Game
+      - FilmMaker
+      - Graphics
       - Standard
       - Vivid
       - EnergySaving
       - Custom
       - Theater
-      - Game
-      - FilmMaker
-      - Graphics
     # PQ_MODE_INVALID        = 0xFFFFFFFF, //!< Picture mode is Invalid
     # PQ_MODE_STANDARD       = 0x00,       //!< Picture mode is "Standard" or "Entertainment"
     # PQ_MODE_VIVID          = 0x01,       //!< Picture mode is "Vivid" or "Dynamic"
     # PQ_MODE_ENERGY_SAVING  = 0x02,       //!< Picture mode is "Energysaving"
     # PQ_MODE_CUSTOM         = 0x03,       //!< Picture mode is "Custom" or "Expert"
     # PQ_MODE_THEATER        = 0x04,       //!< Picture mode is "Theater" or "Movie"
-    # PQ_MODE_RESERVED1      = 0x05,       //!< Picture mode is Reserved
-    # PQ_MODE_RESERVED2      = 0x06,       //!< Picture mode is Reserved
     # PQ_MODE_GAME           = 0x07,       //!< Picture mode is "Game"
     # PQ_MODE_SPORTS         = 0x08,       //!< Picture mode is "Sports"
     # PQ_MODE_GRAPHICS       = 0x09,       //!< Picture mode is "Graphics"
     # PQ_MODE_FMM            = 0x0A,       //!< Picture mode is "Filmmaker"
     # PQ_MODE_VIVID2         = 0x0B,       //!< Picture mode is "Vivid2 or Dynamic2"
-    # PQ_MODE_AIPQ           = 0x0C,       //!< Picture mode is "AIPQ"
-    # PQ_MODE_DARK           = 0x0D,       //!< Picture mode is "Dark"
-    # PQ_MODE_BRIGHT         = 0x0E,       //!< Picture mode is "Bright"
-    # PQ_MODE_IQ             = 0x0F,       //!< Picture mode is "IQ"
-    # PQ_MODE_DISABLE        = 0x10,       //!< Picture mode is "Disable"
-    # PQ_MODE_MAX            = 0x11        //!< End of enum
+    # PQ_MODE_MAX            = 0x0C        //!< End of enum
     index:
       - 0x00 # PQ_MODE_STANDARD
       - 0x01 # PQ_MODE_VIVID
@@ -1846,75 +1662,4 @@ tvSettings:
     control:
       - Gain
       - Offset
-    platformsupport: true
-
-  HDRMode:
-    range:
-      - Dark
-      - Bright
-    index_HDR10:
-      # tvHDR10Mode_Dark      = 0x03,       //!< HDR10 mode is Dark
-      # tvHDR10Mode_Bright    = 0x04,       //!< HDR10 mode is Bright
-      - 0x03
-      - 0x04
-    index_HLG:
-      # tvHLGMode_Dark        = 0x06,       //!< HLG mode is Dark
-      # tvHLGMode_Bright      = 0x07,       //!< HLG mode is Bright
-      - 0x06
-      - 0x07
-    # Entertainment
-    # Dynamic
-    # Dynamic2
-    # Energy saving
-    # Expert
-    # Movie
-    # Sports
-    # Game
-    # Filmmaker
-    # Graphics
-    # Standard
-    # Vivid
-    # EnergySaving
-    # Custom
-    # Theater
-    pqmode:
-      - Entertainment
-      - Dynamic
-      - Dynamic2
-      - Expert
-      - Movie
-      - Sports
-      - Standard
-      - Vivid
-      - EnergySaving
-      - Custom
-      - Theater
-      - Game
-      - FilmMaker
-      - Graphics
-    # HDR10
-    # HLG
-    format:
-      - HDR10
-      - HLG
-    # ANALOGUE
-    # COMPOSITE1
-    # COMPOSITE2
-    # YPBPR1
-    # YPBPR2
-    # HDMI1
-    # HDMI2
-    # HDMI3
-    # HDMI4
-    # VGA
-    # IP
-    # TUNER
-    # SVIDEO
-    source:
-      - Composite1
-      - HDMI1
-      - HDMI2
-      - HDMI3
-      - IP
-      - Tuner
     platformsupport: true
