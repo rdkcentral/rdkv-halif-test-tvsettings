@@ -1434,18 +1434,20 @@ tvSettings:
     # PQ_MODE_VIVID2         = 0x0B,       //!< Picture mode is "Vivid2 or Dynamic2"
     # PQ_MODE_MAX            = 0x0C        //!< End of enum
     index:
-      - 0x00 # PQ_MODE_STANDARD
-      - 0x01 # PQ_MODE_VIVID
-      - 0x02 # PQ_MODE_ENERGY_SAVING
-      - 0x03 # PQ_MODE_CUSTOM
-      - 0x04 # PQ_MODE_THEATER
-      - 0x05 # PQ_MODE_RESERVED1
-      - 0x06 # PQ_MODE_RESERVED2
-      - 0x07 # PQ_MODE_GAME
-      - 0x08 # PQ_MODE_SPORTS
-      - 0x09 # PQ_MODE_GRAPHICS
-      - 0x0A # PQ_MODE_FMM
-      - 0x0B # PQ_MODE_VIVID2
+      - 0x00 # PQ_MODE_STANDARD (Entertainment)
+      - 0x01 # PQ_MODE_VIVID (Dynamic)
+      - 0x0B # PQ_MODE_VIVID2 (Dynamic2)
+      - 0x03 # PQ_MODE_CUSTOM (Expert)
+      - 0x04 # PQ_MODE_THEATER (Movie)
+      - 0x08 # PQ_MODE_SPORTS (Sports)
+      - 0x00 # PQ_MODE_STANDARD (Standard)
+      - 0x01 # PQ_MODE_VIVID (Vivid)
+      - 0x02 # PQ_MODE_ENERGY_SAVING (EnergySaving)
+      - 0x03 # PQ_MODE_CUSTOM (Custom)
+      - 0x04 # PQ_MODE_THEATER (Theater)
+      - 0x07 # PQ_MODE_GAME (Game)
+      - 0x0A # PQ_MODE_FMM (fmm)
+      - 0x09 # PQ_MODE_GRAPHICS (Graphics)
     pqmode: none
     # HDR10
     # HDR10PLUS
