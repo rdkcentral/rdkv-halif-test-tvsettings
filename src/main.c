@@ -63,7 +63,6 @@
 * @file main.c
 *
 */
-
 #include <ut.h>
 
 #ifndef HALIF_TEST_TAG_VERSION
@@ -93,9 +92,15 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+    if (!CapabilityDatabase_Init())
+	{
+		return -1;
+	}
+
 	/* Begin test executions */
 	UT_run_tests();
 
+    CapabilityDatabase_Deinit();
 	return 0;
 
 }

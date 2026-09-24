@@ -73,6 +73,7 @@
 #include <ut_kvp_profile.h>
 
 #include "tvSettings.h"
+#include "vts_capability_repository.h"
 
 static int gTestGroup = 1;                                         /* Level 1 Testing -  Stress Test   */
 int gTestID = 1;
@@ -18221,6 +18222,112 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+/**
+ * @brief Validate GetBrightnessCaps() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 235@n
+ *
+ * **Pre-Conditions:** Capability database must be initialized@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() | void | tvERROR_NONE | Should Pass |
+ * | 02 | call GetBrightnessCaps() | valid output parameters | tvERROR_NONE | Should Pass |
+ * | 03 | validate returned max brightness and supported contexts against YAML expected capabilities | HAL output | Validation Success | Should Pass |
+ * | 04 | call TvTerm() | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetBrightnessCaps(void)
+{
+    gTestID = 235;
+
+    UT_LOG("In:%s [%02d%03d]",__FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE;
+
+    int maxBrightness = 0;
+    tvContextCaps_t *contextCaps = NULL;
+
+    /* Step 01: Initialize tvSettings */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Retrieve brightness capabilities */
+    result = GetBrightnessCaps(&maxBrightness, &contextCaps);
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: Validate returned capability against YAML */
+    UT_ASSERT_TRUE(ValidateRangeProperty(&gCapsDb.brightness, maxBrightness, contextCaps));
+
+    /* Step 04: Terminate tvSettings */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out:%s", __FUNCTION__);
+}
+
+/**
+ * @brief Validate GetBrightnessCaps() for all negative invocation scenarios
+ *
+ * @note tvERROR_GENERAL is platform specific and cannot be simulated
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 236@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetBrightnessCaps() before TvInit() | valid parameters | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetBrightnessCaps() with NULL max_brightness | NULL, valid context pointer | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetBrightnessCaps() with NULL context_caps | valid max pointer, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetBrightnessCaps() with all NULL parameters | NULL, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call TvTerm() | void | tvERROR_NONE | Should Pass |
+ * | 07 | call GetBrightnessCaps() after TvTerm() | valid parameters | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetBrightnessCaps(void)
+{
+    gTestID = 236;     /* Assign actual test ID */
+
+    UT_LOG("In:%s [%02d%03d]",__FUNCTION__,gTestGroup,gTestID);
+
+    tvError_t result = tvERROR_NONE;
+
+    int maxBrightness = 0;
+    tvContextCaps_t *contextCaps = NULL;
+
+    /* Step 02: Initialize TV Settings */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03: NULL max_brightness */
+    result = GetBrightnessCaps(NULL, &contextCaps);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04: NULL context_caps */
+    result = GetBrightnessCaps(&maxBrightness, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Both parameters NULL */
+    result = GetBrightnessCaps(NULL, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 06: Terminate TV Settings */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s", __FUNCTION__);
+}
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -18231,7 +18338,7 @@ static UT_test_suite_t * pSuite = NULL;
 int test_l1_tvSettings_register ( void )
 {
     UT_LOG("\n*******UT version Number : %d.%d*********\n", UT_VERSION_MAJOR, UT_VERSION_MINOR);
-    extendedEnumsSupported = UT_KVP_PROFILE_GET_BOOL("tvSettings/features/extendedEnumsSupported" );
+    //extendedEnumsSupported = UT_KVP_PROFILE_GET_BOOL("tvSettings/features/extendedEnumsSupported" );
     /* add a suite to the registry */
     pSuite = UT_add_suite( "[L1 tvSettings]", NULL, NULL );
     if ( NULL == pSuite )
@@ -18475,6 +18582,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "RegisterVideoResChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_pos" ,test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB );
+    UT_add_test( pSuite, "GetBrightnessCaps_pos" ,test_l1_tvSettings_positive_GetBrightnessCaps );
+    UT_add_test( pSuite, "GetBrightnessCaps_neg" ,test_l1_tvSettings_negative_GetBrightnessCaps );
 
     return 0;
 }
