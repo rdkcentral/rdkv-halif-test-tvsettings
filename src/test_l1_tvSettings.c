@@ -15495,27 +15495,31 @@ void test_l1_tvSettings_positive_SetGammaPattern (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 02: Calling tvsettings to Set the SetGammaPattern for value 0,0,0,0 and the API to return success */
+    /* Step 02: Calling tvsettings to enable gamma pattern mode and the API to return success */
+    result = SetGammaPatternMode(true);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+    /* Step 03: Calling tvsettings to Set the SetGammaPattern for value 0,0,0,0 and the API to return success */
     result = SetGammaPattern(0,0,0,0);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 03: Calling tvsettings to Set the SetGammaPattern for value 0,500,500,500 and the API to return success */
+    /* Step 04: Calling tvsettings to Set the SetGammaPattern for value 0,500,500,500 and the API to return success */
     result = SetGammaPattern(0,500,500,500);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 04: Calling tvsettings to Set the SetGammaPattern for value 0,1023,1023,1023 and the API to return success */
+    /* Step 05: Calling tvsettings to Set the SetGammaPattern for value 0,1023,1023,1023 and the API to return success */
     result = SetGammaPattern(0,1023,1023,1023);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 05: Calling tvsettings to Set the SetGammaPattern for value 1,0,0,0 and the API to return success */
+    /* Step 06: Calling tvsettings to Set the SetGammaPattern for value 1,0,0,0 and the API to return success */
     result = SetGammaPattern(1,0,0,0);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 06: Calling tvsettings to Set the SetGammaPattern for value 1,255,255,255 and the API to return success */
+    /* Step 07: Calling tvsettings to Set the SetGammaPattern for value 1,255,255,255 and the API to return success */
     result = SetGammaPattern(1,255,255,255);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 07: Calling tvsettings termination and expecting the API to return success */
+    /* Step 08: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
@@ -15568,41 +15572,45 @@ void test_l1_tvSettings_negative_SetGammaPattern (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 03: Calling tvsettings to Set the SetGammaPattern for value -1,-1,-1,-1 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 03: Calling tvsettings to enable gamma pattern mode and the API to return success */
+    result = SetGammaPatternMode(true);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+    /* Step 04: Calling tvsettings to Set the SetGammaPattern for value -1,-1,-1,-1 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(-1,-1,-1,-1);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 04: Calling tvsettings to Set the SetGammaPattern for value -1 ,1025, 1025, 1025 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 05: Calling tvsettings to Set the SetGammaPattern for value -1 ,1025, 1025, 1025 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(-1,1025,1025,1025);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 05: Calling tvsettings to Set the SetGammaPattern for value -1,1025,0,0 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 06: Calling tvsettings to Set the SetGammaPattern for value -1,1025,0,0 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(-1,0,0,0);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 06: Calling tvsettings to Set the SetGammaPattern for value 1,1026,1026,1026 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 07: Calling tvsettings to Set the SetGammaPattern for value 1,1026,1026,1026 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(1,1026,1026,1026);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 07: Calling tvsettings to Set the SetGammaPattern for value 1,1026,0,0 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 08: Calling tvsettings to Set the SetGammaPattern for value 1,1026,0,0 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(1,1026,0,0);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 08: Calling tvsettings to Set the SetGammaPattern for value 1,0,1026,0 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 09: Calling tvsettings to Set the SetGammaPattern for value 1,0,1026,0 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(1,0,1026,0);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 09: Calling tvsettings to Set the SetGammaPattern for value 1,0,0,1026 and the API to return tvERROR_INVALID_PARAM */
+    /* Step 10: Calling tvsettings to Set the SetGammaPattern for value 1,0,0,1026 and the API to return tvERROR_INVALID_PARAM */
     result = SetGammaPattern(1,0,0,1026);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 10: Calling tvsettings termination and expecting the API to return success */
+    /* Step 11: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     if (extendedEnumsSupported == true)
     {
-        /* Step 11: Calling tvsettings to Set the SetGammaPattern for value 0,0,0,0 and the API to return tvERROR_INVALID_STATE */
+        /* Step 12: Calling tvsettings to Set the SetGammaPattern for value 0,0,0,0 and the API to return tvERROR_INVALID_STATE */
         result = SetGammaPattern(0, 0, 0, 0);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
