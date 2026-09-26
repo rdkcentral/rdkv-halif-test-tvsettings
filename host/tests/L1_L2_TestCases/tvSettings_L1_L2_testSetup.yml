@@ -901,6 +901,36 @@ tvSettings:
     - name: "L2 tvSettings"
       test_cases:
         - SetandGetCustom2PntWhiteBal
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsMEMC
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsAISuperResolution
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsDigitalNoiseReduction
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsMPEGNoiseReduction
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsLocalContrastEnhancement
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsSdrGamma
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsPrecisionDetail
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsMultiPointWB
+    - name: "L2 tvSettings"
+      test_cases:
+        - SetAndGetAndGetCapsDVCalibration
+    - name: "L2 tvSettings"
+      test_cases:
+        - GetDVCalibrationDefault
 
     ######################################
     # Entries to run selected test case
