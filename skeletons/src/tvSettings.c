@@ -781,6 +781,15 @@ tvError_t GetDefaultPQParams(int pqIndex, tvVideoSrcType_t videoSrcType, tvVideo
   return (tvError_t)0;
 }
 
+tvError_t GetDefaultPQMode(tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, tvPQModeIndex_t* pqMode)
+{
+  /*TODO: Implement Me!*/
+  (void)videoSrcType;
+  (void)videoFormatType;
+  (void)pqMode;
+  return (tvError_t)0;
+}
+
 tvError_t GetPQParams(int pqIndex, tvVideoSrcType_t videoSrcType, tvVideoFormatType_t videoFormatType, tvPQParameterIndex_t pqParamIndex, int* value)
 {
   /*TODO: Implement Me!*/

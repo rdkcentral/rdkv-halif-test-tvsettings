@@ -18221,6 +18221,174 @@ void test_l1_tvSettings_negative_GetCustom2PointWhiteBalance (void)
     UT_LOG("Out %s",__FUNCTION__);
 }
 
+/**
+ * @brief Validate GetDefaultPQMode() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 235@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() - Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | call GetDefaultPQMode() - Get the default PQ mode by looping through all the input params from VideoSource and VideoFormat sections of test specific config file | tvVideoSrcType_t ,tvVideoFormatType_t , tvPQModeIndex_t * | tvERROR_NONE | Should Pass |
+ * | 03 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ */
+void test_l1_tvSettings_positive_GetDefaultPQMode (void)
+{
+    gTestID = 235;                                    /* It must be 235 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t result = tvERROR_NONE;
+    tvPQModeIndex_t pqMode = PQ_MODE_STANDARD;
+    tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
+    tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+    uint32_t videoSrcCount = 0;
+    uint32_t videoFmtCount = 0;
+    uint32_t pqCount = 0;
+    bool isReturnedPQModeSupported = false;
+    char keyValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
+
+    /* Step 01: Initialise TV client and expect success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02: Get counts of available video sources, formats, and PQ modes */
+    videoSrcCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
+    videoFmtCount = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    pqCount       = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/PictureMode/index");
+
+    for (unsigned int i = 0; i < videoSrcCount; i++)
+    {
+        /* Step 03: Retrieve video source from profile */
+        snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
+        videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+        for (unsigned int j = 0; j < videoFmtCount; j++)
+        {
+            isReturnedPQModeSupported = false;
+
+            /* Step 04: Retrieve video format from profile */
+            snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoFormat/index/%d", j);
+            videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
+
+            /* Step 05: Call GetDefaultPQMode and expect success */
+            result = GetDefaultPQMode(videoSource, videoFormat, &pqMode);
+            UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+            /* Step 06: Verify returned PQ mode is in supported list */
+            for (unsigned int k = 0; k < pqCount; k++)
+            {
+                snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/PictureMode/index/%d", k);
+                if ((tvPQModeIndex_t)UT_KVP_PROFILE_GET_UINT32(keyValue) == pqMode)
+                {
+                    isReturnedPQModeSupported = true;
+                    break;
+                }
+            }
+
+            /* Step 07: Assert that returned PQ mode is supported */
+            UT_ASSERT_TRUE(isReturnedPQModeSupported);
+        }
+    }
+
+    /* Step 08: Terminate TV client and expect success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s", __FUNCTION__);
+}
+
+/**
+ * @brief Validate GetDefaultPQMode() for all negative invocation scenarios
+ *
+ * @note tvERROR_GENERAL is platform specific and cannot be simulated
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 236@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call GetDefaultPQMode() - Get the default PQ mode even before TvInit() | tvVideoSrcType_t ,tvVideoFormatType_t , tvPQModeIndex_t * | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() - Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 03 | call GetDefaultPQMode() - "videoFormatType,pq_mode" valid, "videoSrcType" invalid max range | VIDEO_SOURCE_MAX, tvVideoFormatType_t , tvPQModeIndex_t * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | call GetDefaultPQMode() - "videoFormatType,pq_mode" valid, "videoSrcType" invalid lower range | -2, tvVideoFormatType_t , tvPQModeIndex_t * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | call GetDefaultPQMode() - "videoSrcType,pq_mode" valid, "videoFormatType" invalid max range | tvVideoSrcType_t, VIDEO_FORMAT_MAX, tvPQModeIndex_t * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call GetDefaultPQMode() - "videoSrcType,pq_mode" valid, "videoFormatType" invalid lower range | tvVideoSrcType_t, -1, tvPQModeIndex_t * | tvERROR_INVALID_PARAM | Should Pass |
+ * | 07 | call GetDefaultPQMode() - "videoSrcType,videoFormatType" valid, "pq_mode" invalid NULL pointer | tvVideoSrcType_t, tvVideoFormatType_t, NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 08 | call TvTerm() - Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 09 | call GetDefaultPQMode() - Get the default PQ mode with valid arguments after TvTerm() | tvVideoSrcType_t ,tvVideoFormatType_t , tvPQModeIndex_t * | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_GetDefaultPQMode (void)
+{
+    gTestID = 236;                                    /* It must be 236 */
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t result = tvERROR_NONE;
+    tvPQModeIndex_t pqMode = PQ_MODE_STANDARD;
+    tvVideoSrcType_t videoSource = VIDEO_SOURCE_ANALOGUE;
+    tvVideoFormatType_t videoFormat = VIDEO_FORMAT_NONE;
+
+    /* Step 01: Retrieve initial video source and format from profile */
+    videoSource = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoSource/index/0");
+    videoFormat = (tvVideoFormatType_t)UT_KVP_PROFILE_GET_UINT32("tvSettings/VideoFormat/index/0");
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 02: Call GetDefaultPQMode before TvInit and expect tvERROR_INVALID_STATE */
+        result = GetDefaultPQMode(videoSource, videoFormat, &pqMode);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 03: Initialise TV client and expect success */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 04: Call GetDefaultPQMode with invalid video source (max range) */
+    result = GetDefaultPQMode((tvVideoSrcType_t)VIDEO_SOURCE_MAX, videoFormat, &pqMode);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05: Call GetDefaultPQMode with invalid video source (lower range) */
+    result = GetDefaultPQMode((tvVideoSrcType_t)-2, videoFormat, &pqMode);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 06: Call GetDefaultPQMode with invalid video format (max range) */
+    result = GetDefaultPQMode(videoSource, (tvVideoFormatType_t)VIDEO_FORMAT_MAX, &pqMode);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 07: Call GetDefaultPQMode with invalid video format (lower range) */
+    result = GetDefaultPQMode(videoSource, (tvVideoFormatType_t)-1, &pqMode);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 08: Call GetDefaultPQMode with NULL PQ mode pointer */
+    result = GetDefaultPQMode(videoSource, videoFormat, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 09: Terminate TV client and expect success */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 10: Call GetDefaultPQMode after TvTerm and expect tvERROR_INVALID_STATE */
+        result = GetDefaultPQMode(videoSource, videoFormat, &pqMode);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s", __FUNCTION__);
+}
+
 static UT_test_suite_t * pSuite = NULL;
 
 /**
@@ -18475,6 +18643,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "RegisterVideoResChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_pos" ,test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB );
+    UT_add_test( pSuite, "GetDefaultPQMode_pos" ,test_l1_tvSettings_positive_GetDefaultPQMode );
+    UT_add_test( pSuite, "GetDefaultPQMode_neg" ,test_l1_tvSettings_negative_GetDefaultPQMode );
 
     return 0;
 }
