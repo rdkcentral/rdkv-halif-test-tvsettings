@@ -15478,10 +15478,10 @@ void test_l1_tvSettings_negative_EnableGammaMode (void)
  * | :-------: | ------------- | --------- | --------------- | ----- |
  * | 01 | call TvInit() -  Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
  * | 02 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 0 ,0, 0, 0 | tvERROR_NONE | Should Pass |
- * | 03 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 0 ,500, 500, 500 | tvERROR_NONE | Should Pass |
- * | 04 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 0 ,1023, 1023, 1023 | tvERROR_NONE | Should Pass |
+ * | 03 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 0 ,127, 127, 127 | tvERROR_NONE | Should Pass |
+ * | 04 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 0 ,255, 255, 255 | tvERROR_NONE | Should Pass |
  * | 05 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 1 ,0, 0, 0 | tvERROR_NONE | Should Pass |
- * | 06 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 1 ,255, 255, 255 | tvERROR_NONE | Should Pass |
+ * | 06 | call SetGammaPattern() -  Set the GammaPattern with valid arguments | 1 ,1023, 1023, 1023 | tvERROR_NONE | Should Pass |
  * | 07 | call TvTerm() -  Terminate and close the instance of the TV client | void | tvERROR_NONE | Should Pass |
  */
 void test_l1_tvSettings_positive_SetGammaPattern (void)
@@ -15499,20 +15499,20 @@ void test_l1_tvSettings_positive_SetGammaPattern (void)
     result = SetGammaPattern(0,0,0,0);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 03: Calling tvsettings to Set the SetGammaPattern for value 0,500,500,500 and the API to return success */
-    result = SetGammaPattern(0,500,500,500);
+    /* Step 03: Calling tvsettings to Set the SetGammaPattern for value 0,127,127,127 and the API to return success */
+    result = SetGammaPattern(0,127,127,127);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 04: Calling tvsettings to Set the SetGammaPattern for value 0,1023,1023,1023 and the API to return success */
-    result = SetGammaPattern(0,1023,1023,1023);
+    /* Step 04: Calling tvsettings to Set the SetGammaPattern for value 0,255,255,255 and the API to return success */
+    result = SetGammaPattern(0,255,255,255);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     /* Step 05: Calling tvsettings to Set the SetGammaPattern for value 1,0,0,0 and the API to return success */
     result = SetGammaPattern(1,0,0,0);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
-    /* Step 06: Calling tvsettings to Set the SetGammaPattern for value 1,255,255,255 and the API to return success */
-    result = SetGammaPattern(1,255,255,255);
+    /* Step 06: Calling tvsettings to Set the SetGammaPattern for value 1,1023,1023,1023 and the API to return success */
+    result = SetGammaPattern(1,1023,1023,1023);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     /* Step 07: Calling tvsettings termination and expecting the API to return success */

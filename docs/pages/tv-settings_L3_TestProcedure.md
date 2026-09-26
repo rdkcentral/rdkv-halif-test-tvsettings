@@ -1877,7 +1877,7 @@ Success Criteria
 
 2. **Gamma Pattern Setting:**
 
-   - The script iterates through the predefined bit depths (0 for 10-bit, 1 for 8-bit) for each stream:
+   - The script iterates through the predefined bit depths (0 for 8-bit, 1 for 10-bit) for each stream:
      - For each bit depth, it retrieves the corresponding level ranges for Red, Green, and Blue channels.
      - It sets the gamma pattern.
 

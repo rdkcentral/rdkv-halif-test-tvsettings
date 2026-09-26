@@ -17,7 +17,7 @@ class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
     gamma patterns for different bit depths (10-bit and 8-bit) on the device.
     """
 
-    # Predefined bit depths (0: 10-bit, 1: 8-bit)
+    # Predefined bit depths (0: 8-bit, 1: 10-bit)
     bitDepths = [0, 1]
 
     # Specific level values for each bit depth and RGB combination
@@ -49,19 +49,19 @@ class tvSettings_test34_SetGammaPattern(tvSettingsHelperClass):
         Retrieves level ranges based on the specified bit depth.
 
         Args:
-            bitDepth (int): 0 for 10-bit, 1 for 8-bit.
+            bitDepth (int): 0 for 8-bit, 1 for 10-bit.
 
         Returns:
             list: List of tuples representing (red, green, blue) levels.
         """
-        return self.ten_bit_levels if bitDepth == 0 else self.eight_bit_levels
+        return self.eight_bit_levels if bitDepth == 0 else self.ten_bit_levels
 
     def testVerifyGammaPattern(self, bitDepth, redLevel, greenLevel, blueLevel, manual=False):
         """
         Verifies whether the gamma pattern is set correctly.
 
         Args:
-            bitDepth (int): 0 for 10-bit, 1 for 8-bit.
+            bitDepth (int): 0 for 8-bit, 1 for 10-bit.
             redLevel (int): Red level value.
             greenLevel (int): Green level value.
             blueLevel (int): Blue level value.
