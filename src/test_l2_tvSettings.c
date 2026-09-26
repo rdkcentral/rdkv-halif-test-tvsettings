@@ -4080,6 +4080,247 @@ void test_l2_tvSettings_SetandGetCustom2PointWhiteBalance(void)
 
 static UT_test_suite_t * pSuite = NULL;
 
+static bool test_l2_tvSettings_tryGetProfileBool(const char *keyPath, bool *keyValue)
+{
+    char returnedValue[UT_KVP_MAX_ELEMENT_SIZE] = {0};
+    ut_kvp_status_t kvpStatus;
+
+    if ((keyPath == NULL) || (keyValue == NULL))
+    {
+        return false;
+    }
+
+    kvpStatus = ut_kvp_getStringField(ut_kvp_profile_getInstance(), keyPath, returnedValue, UT_KVP_MAX_ELEMENT_SIZE);
+    if (kvpStatus != UT_KVP_STATUS_SUCCESS)
+    {
+        return false;
+    }
+
+    if ((strcmp(returnedValue, "true") == 0) || (strcmp(returnedValue, "1") == 0))
+    {
+        *keyValue = true;
+        return true;
+    }
+
+    if ((strcmp(returnedValue, "false") == 0) || (strcmp(returnedValue, "0") == 0))
+    {
+        *keyValue = false;
+        return true;
+    }
+
+    return false;
+}
+
+static bool test_l2_tvSettings_isSectionSupported(const char *sectionPath)
+{
+    static const char * const supportKeyNames[] = {
+        "platformsupport",
+        "isPlatformSupport"
+    };
+    char supportKeyPath[UT_KVP_MAX_ELEMENT_SIZE] = {0};
+    bool isSupported = true;
+
+    if (sectionPath == NULL)
+    {
+        return true;
+    }
+
+    for (size_t keyIndex = 0; keyIndex < (sizeof(supportKeyNames) / sizeof(supportKeyNames[0])); keyIndex++)
+    {
+        snprintf(supportKeyPath, sizeof(supportKeyPath), "%s/%s", sectionPath, supportKeyNames[keyIndex]);
+        if (test_l2_tvSettings_tryGetProfileBool(supportKeyPath, &isSupported) == true)
+        {
+            return isSupported;
+        }
+    }
+
+    return true;
+}
+
+static bool test_l2_tvSettings_isNamedSectionSupported(const char *sectionName)
+{
+    char sectionPath[UT_KVP_MAX_ELEMENT_SIZE] = {0};
+
+    if ((sectionName == NULL) || (sectionName[0] == '\0'))
+    {
+        return true;
+    }
+
+    snprintf(sectionPath, sizeof(sectionPath), "tvSettings/%s", sectionName);
+    return test_l2_tvSettings_isSectionSupported(sectionPath);
+}
+
+static bool test_l2_tvSettings_isRuntimeSupported(const char *testName)
+{
+    if (testName == NULL)
+    {
+        return true;
+    }
+
+    if (strstr(testName, "WBCalibration") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("WhiteBalanceRed") &&
+               test_l2_tvSettings_isNamedSectionSupported("WhiteBalanceGreen") &&
+               test_l2_tvSettings_isNamedSectionSupported("WhiteBalanceBlue");
+    }
+
+    if ((strstr(testName, "Custom2PntWhiteBal") != NULL) || (strstr(testName, "CustomWhiteBalance") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("CustomWhiteBalance");
+    }
+
+    if ((strstr(testName, "Component") != NULL) || (strstr(testName, "CMS") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("CMS");
+    }
+
+    if ((strstr(testName, "DvTmax") != NULL) || (strstr(testName, "Tmax") != NULL) || (strstr(testName, "TMAX") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("TMAX");
+    }
+
+    if (strstr(testName, "GammaTable") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("GammaTableRed") &&
+               test_l2_tvSettings_isNamedSectionSupported("GammaTableGreen") &&
+               test_l2_tvSettings_isNamedSectionSupported("GammaTableBlue");
+    }
+
+    if (strstr(testName, "ColorTempR") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("WhiteBalanceRed");
+    }
+
+    if (strstr(testName, "ColorTempG") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("WhiteBalanceGreen");
+    }
+
+    if (strstr(testName, "ColorTempB") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("WhiteBalanceBlue");
+    }
+
+    if (strstr(testName, "DynamicContrast") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("DynamicContrast");
+    }
+
+    if (strstr(testName, "DynamicGamma") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("DynamicGamma");
+    }
+
+    if ((strstr(testName, "BacklightMode") != NULL) || (strstr(testName, "BacklightModes") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("BacklightControl");
+    }
+
+    if (strstr(testName, "BacklightFade") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("BacklightFade");
+    }
+
+    if (strstr(testName, "Backlight") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("Backlight");
+    }
+
+    if (strstr(testName, "LocalDimming") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("LocalDimmingLevel");
+    }
+
+    if ((strstr(testName, "LDIM") != NULL) || (strstr(testName, "DimmingZones") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("LocalDimmingLevel");
+    }
+
+    if (strstr(testName, "DimmingMode") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("DimmingMode");
+    }
+
+    if (strstr(testName, "Brightness") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("Brightness");
+    }
+
+    if (strstr(testName, "Contrast") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("Contrast");
+    }
+
+    if (strstr(testName, "Sharpness") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("Sharpness");
+    }
+
+    if (strstr(testName, "Saturation") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("Saturation");
+    }
+
+    if (strstr(testName, "Hue") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("Hue");
+    }
+
+    if (strstr(testName, "ColorTemperature") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("ColorTemperature");
+    }
+
+    if (strstr(testName, "AspectRatio") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("AspectRatio");
+    }
+
+    if (strstr(testName, "LowLatencyState") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("LowLatencyState");
+    }
+
+    if ((strstr(testName, "DolbyVisionMode") != NULL) || (strstr(testName, "DolbyVisionModes") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("DolbyVisionMode");
+    }
+
+    if ((strstr(testName, "PictureMode") != NULL) || (strstr(testName, "PictureModes") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("PictureMode");
+    }
+
+    if ((strstr(testName, "VideoFormat") != NULL) || (strstr(testName, "VdoFmt") != NULL))
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("VideoFormat");
+    }
+
+    if (strstr(testName, "FrameRate") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("VideoFrameRate");
+    }
+
+    if (strstr(testName, "VideoSource") != NULL)
+    {
+        return test_l2_tvSettings_isNamedSectionSupported("VideoSource");
+    }
+
+    return true;
+}
+
+static void test_l2_tvSettings_registerIfSupported(const char *testName,
+                                                   void (*testFunction)(void))
+{
+    if (test_l2_tvSettings_isRuntimeSupported(testName) == true)
+    {
+        UT_add_test(pSuite, testName, testFunction);
+        return;
+    }
+
+    UT_LOG_INFO("Skipping registration for %s because the profile marks it unsupported", testName);
+}
+
 /**
  * @brief Register the main tests for this module
  *
@@ -4094,60 +4335,62 @@ int32_t test_l2_tvSettings_register(void)
     {
         return -1;
     }
-    // List of test function names and strings
+    // List of test function names and strings all being checked for explicit lack of platformsupport before registering test.
 
-    UT_add_test( pSuite, "GetSupportedVideoFormats", test_l2_tvSettings_GetSupportedVideoFormats);
-    UT_add_test( pSuite, "GetCurrentVdoFmt_NoVdoPlyback", test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback);
-    UT_add_test( pSuite, "VerifyCurrentVideoResolution", test_l2_tvSettings_VerifyCurrentVideoResolution);
-    UT_add_test( pSuite, "VerifyFrameRateWhenStopped", test_l2_tvSettings_VerifyFrameRateWhenStopped);
-    UT_add_test( pSuite, "GetTVSupportedVideoSources", test_l2_tvSettings_GetTVSupportedVideoSources);
-    UT_add_test( pSuite, "VerifyNoVideoSource", test_l2_tvSettings_VerifyNoVideoSource);
-    UT_add_test( pSuite, "SetAndGetBacklight", test_l2_tvSettings_SetAndGetBacklight);
-    UT_add_test( pSuite, "SetAndGetBacklightFade", test_l2_tvSettings_SetAndGetBacklightFade);
-    UT_add_test( pSuite, "GetSupportedBacklightModes", test_l2_tvSettings_GetSupportedBacklightModes);
-    UT_add_test( pSuite, "SetAndGetBacklightMode", test_l2_tvSettings_SetAndGetBacklightMode);
-    UT_add_test( pSuite, "GetSupportedDimmingModes", test_l2_tvSettings_GetSupportedDimmingModes);
-    UT_add_test( pSuite, "SetAndGetDimmingMode", test_l2_tvSettings_SetAndGetDimmingMode);
-    UT_add_test( pSuite, "SetAndGetLocalDimmingLevel", test_l2_tvSettings_SetAndGetLocalDimmingLevel);
-    UT_add_test( pSuite, "SetAndGetBrightness", test_l2_tvSettings_SetAndGetBrightness);
-    UT_add_test( pSuite, "SetAndGetContrast", test_l2_tvSettings_SetAndGetContrast);
-    UT_add_test( pSuite, "SetAndGetSharpness", test_l2_tvSettings_SetAndGetSharpness);
-    UT_add_test( pSuite, "SetAndGetSaturation", test_l2_tvSettings_SetAndGetSaturation);
-    UT_add_test( pSuite, "SetAndGetHue", test_l2_tvSettings_SetAndGetHue);
-    UT_add_test( pSuite, "SetAndGetColorTemperature", test_l2_tvSettings_SetAndGetColorTemperature);
-    UT_add_test( pSuite, "SetAndGetAspectRatio", test_l2_tvSettings_SetAndGetAspectRatio);
-    UT_add_test( pSuite, "SetAndGetLowLatencyState", test_l2_tvSettings_SetAndGetLowLatencyState);
-    UT_add_test( pSuite, "SetAndGetDynamicContrast", test_l2_tvSettings_SetAndGetDynamicContrast);
-    UT_add_test( pSuite, "SetAndGetDynamicGamma", test_l2_tvSettings_SetAndGetDynamicGamma);
-    UT_add_test( pSuite, "GetSupportedDolbyVisionModes", test_l2_tvSettings_GetSupportedDolbyVisionModes);
-    UT_add_test( pSuite, "SetAndGetDolbyVisionMode", test_l2_tvSettings_SetAndGetDolbyVisionMode);
-    UT_add_test( pSuite, "GetTVSupportedPictureModes", test_l2_tvSettings_GetTVSupportedPictureModes);
-    UT_add_test( pSuite, "SetAndGetPictureMode", test_l2_tvSettings_SetAndGetPictureMode);
-    UT_add_test( pSuite, "SetAndGetColorTempRgain", test_l2_tvSettings_SetAndGetColorTempRgain);
-    UT_add_test( pSuite, "SetAndGetColorTempGgain", test_l2_tvSettings_SetAndGetColorTempGgain);
-    UT_add_test( pSuite, "SetAndGetColorTempBgain", test_l2_tvSettings_SetAndGetColorTempBgain);
-    UT_add_test( pSuite, "SetAndGetColorTempRpostoffset", test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource);
-    UT_add_test( pSuite, "SetAndGetColorTempGPostOffset", test_l2_tvSettings_SetAndGetColorTempGPostOffset);
-    UT_add_test( pSuite, "SetAndGetColorTempBPostOffset", test_l2_tvSettings_SetAndGetColorTempBPostOffset);
-    UT_add_test( pSuite, "EnableAndVerifyWBCalibrationMode", test_l2_tvSettings_EnableAndVerifyWBCalibrationMode);
-    UT_add_test( pSuite, "SetAndGetGammaTable", test_l2_tvSettings_SetAndGetGammaTable);
-    UT_add_test( pSuite, "GetDefaultGammaTable", test_l2_tvSettings_GetDefaultGammaTable);
-    UT_add_test( pSuite, "SetAndGetDvTmaxValue", test_l2_tvSettings_SetAndGetDvTmaxValue);
-    UT_add_test( pSuite, "GetSupportedComponentColor", test_l2_tvSettings_GetSupportedComponentColor);
-    UT_add_test( pSuite, "SetAndGetComponentSaturation", test_l2_tvSettings_SetAndGetComponentSaturation);
-    UT_add_test( pSuite, "SetAndGetComponentHue", test_l2_tvSettings_SetAndGetComponentHue);
-    UT_add_test( pSuite, "SetAndGetComponentLuma", test_l2_tvSettings_SetAndGetComponentLuma);
-    UT_add_test( pSuite, "SetAndGetCMSState", test_l2_tvSettings_SetAndGetCMSState);
-    UT_add_test( pSuite, "TestGetPQParameters", test_l2_tvSettings_TestGetPQParameters);
-    UT_add_test( pSuite, "GetTVGammaTarget", test_l2_tvSettings_GetTVGammaTarget);
-    UT_add_test( pSuite, "GetMaxGainValue", test_l2_tvSettings_GetMaxGainValue);
-    UT_add_test( pSuite, "SetAndGetRGBPattern", test_l2_tvSettings_SetAndGetRGBPattern);
-    UT_add_test( pSuite, "SetAndGetGrayPattern", test_l2_tvSettings_SetAndGetGrayPattern);
-    UT_add_test( pSuite, "RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
-    UT_add_test( pSuite, "EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
-    UT_add_test( pSuite, "GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
-    UT_add_test( pSuite, "RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
-    UT_add_test( pSuite, "SetandGetCustom2PntWhiteBal", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
+    
+
+    test_l2_tvSettings_registerIfSupported("GetSupportedVideoFormats", test_l2_tvSettings_GetSupportedVideoFormats);
+    test_l2_tvSettings_registerIfSupported("GetCurrentVdoFmt_NoVdoPlyback", test_l2_tvSettings_GetCurrentVideoFormat_NoVideoPlayback);
+    test_l2_tvSettings_registerIfSupported("VerifyCurrentVideoResolution", test_l2_tvSettings_VerifyCurrentVideoResolution);
+    test_l2_tvSettings_registerIfSupported("VerifyFrameRateWhenStopped", test_l2_tvSettings_VerifyFrameRateWhenStopped);
+    test_l2_tvSettings_registerIfSupported("GetTVSupportedVideoSources", test_l2_tvSettings_GetTVSupportedVideoSources);
+    test_l2_tvSettings_registerIfSupported("VerifyNoVideoSource", test_l2_tvSettings_VerifyNoVideoSource);
+    test_l2_tvSettings_registerIfSupported("SetAndGetBacklight", test_l2_tvSettings_SetAndGetBacklight);
+    test_l2_tvSettings_registerIfSupported("SetAndGetBacklightFade", test_l2_tvSettings_SetAndGetBacklightFade);
+    test_l2_tvSettings_registerIfSupported("GetSupportedBacklightModes", test_l2_tvSettings_GetSupportedBacklightModes);
+    test_l2_tvSettings_registerIfSupported("SetAndGetBacklightMode", test_l2_tvSettings_SetAndGetBacklightMode);
+    test_l2_tvSettings_registerIfSupported("GetSupportedDimmingModes", test_l2_tvSettings_GetSupportedDimmingModes);
+    test_l2_tvSettings_registerIfSupported("SetAndGetDimmingMode", test_l2_tvSettings_SetAndGetDimmingMode);
+    test_l2_tvSettings_registerIfSupported("SetAndGetLocalDimmingLevel", test_l2_tvSettings_SetAndGetLocalDimmingLevel);
+    test_l2_tvSettings_registerIfSupported("SetAndGetBrightness", test_l2_tvSettings_SetAndGetBrightness);
+    test_l2_tvSettings_registerIfSupported("SetAndGetContrast", test_l2_tvSettings_SetAndGetContrast);
+    test_l2_tvSettings_registerIfSupported("SetAndGetSharpness", test_l2_tvSettings_SetAndGetSharpness);
+    test_l2_tvSettings_registerIfSupported("SetAndGetSaturation", test_l2_tvSettings_SetAndGetSaturation);
+    test_l2_tvSettings_registerIfSupported("SetAndGetHue", test_l2_tvSettings_SetAndGetHue);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTemperature", test_l2_tvSettings_SetAndGetColorTemperature);
+    test_l2_tvSettings_registerIfSupported("SetAndGetAspectRatio", test_l2_tvSettings_SetAndGetAspectRatio);
+    test_l2_tvSettings_registerIfSupported("SetAndGetLowLatencyState", test_l2_tvSettings_SetAndGetLowLatencyState);
+    test_l2_tvSettings_registerIfSupported("SetAndGetDynamicContrast", test_l2_tvSettings_SetAndGetDynamicContrast);
+    test_l2_tvSettings_registerIfSupported("SetAndGetDynamicGamma", test_l2_tvSettings_SetAndGetDynamicGamma);
+    test_l2_tvSettings_registerIfSupported("GetSupportedDolbyVisionModes", test_l2_tvSettings_GetSupportedDolbyVisionModes);
+    test_l2_tvSettings_registerIfSupported("SetAndGetDolbyVisionMode", test_l2_tvSettings_SetAndGetDolbyVisionMode);
+    test_l2_tvSettings_registerIfSupported("GetTVSupportedPictureModes", test_l2_tvSettings_GetTVSupportedPictureModes);
+    test_l2_tvSettings_registerIfSupported("SetAndGetPictureMode", test_l2_tvSettings_SetAndGetPictureMode);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTempRgain", test_l2_tvSettings_SetAndGetColorTempRgain);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTempGgain", test_l2_tvSettings_SetAndGetColorTempGgain);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTempBgain", test_l2_tvSettings_SetAndGetColorTempBgain);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTempRpostoffset", test_l2_tvSettings_SetAndGetColorTemp_R_post_offset_onSource);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTempGPostOffset", test_l2_tvSettings_SetAndGetColorTempGPostOffset);
+    test_l2_tvSettings_registerIfSupported("SetAndGetColorTempBPostOffset", test_l2_tvSettings_SetAndGetColorTempBPostOffset);
+    test_l2_tvSettings_registerIfSupported("EnableAndVerifyWBCalibrationMode", test_l2_tvSettings_EnableAndVerifyWBCalibrationMode);
+    test_l2_tvSettings_registerIfSupported("SetAndGetGammaTable", test_l2_tvSettings_SetAndGetGammaTable);
+    test_l2_tvSettings_registerIfSupported("GetDefaultGammaTable", test_l2_tvSettings_GetDefaultGammaTable);
+    test_l2_tvSettings_registerIfSupported("SetAndGetDvTmaxValue", test_l2_tvSettings_SetAndGetDvTmaxValue);
+    test_l2_tvSettings_registerIfSupported("GetSupportedComponentColor", test_l2_tvSettings_GetSupportedComponentColor);
+    test_l2_tvSettings_registerIfSupported("SetAndGetComponentSaturation", test_l2_tvSettings_SetAndGetComponentSaturation);
+    test_l2_tvSettings_registerIfSupported("SetAndGetComponentHue", test_l2_tvSettings_SetAndGetComponentHue);
+    test_l2_tvSettings_registerIfSupported("SetAndGetComponentLuma", test_l2_tvSettings_SetAndGetComponentLuma);
+    test_l2_tvSettings_registerIfSupported("SetAndGetCMSState", test_l2_tvSettings_SetAndGetCMSState);
+    test_l2_tvSettings_registerIfSupported("TestGetPQParameters", test_l2_tvSettings_TestGetPQParameters);
+    test_l2_tvSettings_registerIfSupported("GetTVGammaTarget", test_l2_tvSettings_GetTVGammaTarget);
+    test_l2_tvSettings_registerIfSupported("GetMaxGainValue", test_l2_tvSettings_GetMaxGainValue);
+    test_l2_tvSettings_registerIfSupported("SetAndGetRGBPattern", test_l2_tvSettings_SetAndGetRGBPattern);
+    test_l2_tvSettings_registerIfSupported("SetAndGetGrayPattern", test_l2_tvSettings_SetAndGetGrayPattern);
+    test_l2_tvSettings_registerIfSupported("RetrieveOpenCircuitStatus", test_l2_tvSettings_RetrieveOpenCircuitStatus);
+    test_l2_tvSettings_registerIfSupported("EnableAndGetDynamicContrast", test_l2_tvSettings_EnableAndGetDynamicContrast);
+    test_l2_tvSettings_registerIfSupported("GetNumberOfDimmingZones", test_l2_tvSettings_GetNumberOfDimmingZones);
+    test_l2_tvSettings_registerIfSupported("RetrieveLDIMShortCircuitStatus", test_l2_tvSettings_RetrieveLDIMShortCircuitStatus);
+    test_l2_tvSettings_registerIfSupported("SetandGetCustom2PntWhiteBal", test_l2_tvSettings_SetandGetCustom2PointWhiteBalance);
     return 0;
 }
 
