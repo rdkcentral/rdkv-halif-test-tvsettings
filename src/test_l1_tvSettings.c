@@ -784,6 +784,136 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
 }
 
 /**
+ * @brief Validate RegisterVideoSourceChangeCB() for all positive invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 13@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** Callback function should be prepared to handle the video source change event.@n
+ * **User Interaction:** Ensure that the test environment allows for simulating source change events (e.g., switching HDMI inputs).
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | call TvInit() - Initialise and get a valid instance of the TV client | void | tvERROR_NONE | Should Pass |
+ * | 02 | Call RegisterVideoSourceChangeCB() - Register with valid callback data | tvVideoSourceCallbackData * | tvERROR_NONE | Should Pass |
+ * | 03 | call TvTerm() - Terminate and close the instance | void | tvERROR_NONE | Should Pass |
+ */
+void tvVideoSourceChangeHandler(tvVideoSrcType_t source, void *userData)
+{
+    UT_LOG("callback : %s source:%d", __FUNCTION__, source);
+}
+
+void test_l1_tvSettings_positive_RegisterVideoSourceChangeCB(void)
+{
+    gTestID = 13;
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t result = tvERROR_NONE;
+    tvVideoSourceCallbackData callbackData = {0};
+
+    /* Step 01 */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 02 */
+    callbackData.userData = (char *)malloc(USER_DATA_SIZE);
+    if (callbackData.userData) {
+        strncpy((char*)callbackData.userData, "TestData", USER_DATA_SIZE);
+        callbackData.cb = tvVideoSourceChangeHandler;
+
+        result = RegisterVideoSourceChangeCB(&callbackData);
+        UT_ASSERT_EQUAL(result, tvERROR_NONE);
+
+        free(callbackData.userData);
+        callbackData.userData = NULL;
+        callbackData.cb = NULL;
+    } else {
+        UT_LOG_ERROR("Error: Memory Allocation Failed\n");
+    }
+
+    /* Step 03 */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    UT_LOG("Out %s", __FUNCTION__);
+}
+
+/**
+ * @brief Validate RegisterVideoSourceChangeCB() for all negative invocation scenarios
+ *
+ * **Test Group ID:** Basic : 01@n
+ * **Test Case ID:** 14@n
+ *
+ * **Pre-Conditions:** None@n
+ *
+ * **Dependencies:** None@n
+ * **User Interaction:** None
+ *
+ * **Test Procedure:**@n
+ * | Variation / Step | Description | Test Data | Expected Result | Notes |
+ * | :-------: | ------------- | --------- | --------------- | ----- |
+ * | 01 | Call RegisterVideoSourceChangeCB() before TvInit() | tvVideoSourceCallbackData * | tvERROR_INVALID_STATE | Should Pass |
+ * | 02 | call TvInit() | void | tvERROR_NONE | Should Pass |
+ * | 03 | Call RegisterVideoSourceChangeCB(NULL) | NULL | tvERROR_INVALID_PARAM | Should Pass |
+ * | 04 | Call RegisterVideoSourceChangeCB() with NULL callback | tvVideoSourceCallbackData(void*, NULL) | tvERROR_INVALID_PARAM | Should Pass |
+ * | 05 | Call RegisterVideoSourceChangeCB() with NULL userData | tvVideoSourceCallbackData(NULL, valid cb) | tvERROR_INVALID_PARAM | Should Pass |
+ * | 06 | call TvTerm() | void | tvERROR_NONE | Should Pass |
+ * | 07 | Call RegisterVideoSourceChangeCB() after TvTerm() | tvVideoSourceCallbackData * | tvERROR_INVALID_STATE | Should Pass |
+ */
+void test_l1_tvSettings_negative_RegisterVideoSourceChangeCB(void)
+{
+    gTestID = 14;
+    UT_LOG("In:%s [%02d%03d]", __FUNCTION__, gTestGroup, gTestID);
+
+    tvError_t result = tvERROR_NONE;
+    tvVideoSourceCallbackData callbackData = {0};
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01 */
+        callbackData.cb = tvVideoSourceChangeHandler;
+        result = RegisterVideoSourceChangeCB(&callbackData);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    /* Step 02 */
+    result = TvInit();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    /* Step 03 */
+    result = RegisterVideoSourceChangeCB(NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 04 */
+    callbackData.cb = NULL;
+    result = RegisterVideoSourceChangeCB(&callbackData);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 05 */
+    callbackData.userData = NULL;
+    callbackData.cb = tvVideoSourceChangeHandler;
+    result = RegisterVideoSourceChangeCB(&callbackData);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 06 */
+    result = TvTerm();
+    UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 07 */
+        callbackData.cb = tvVideoSourceChangeHandler;
+        result = RegisterVideoSourceChangeCB(&callbackData);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
+    UT_LOG("Out %s", __FUNCTION__);
+}
+
+/**
  * @brief Validate GetTVSupportedVideoFormats() for all positive invocation scenarios
  *
  * **Test Group ID:** Basic : 01@n
@@ -18475,7 +18605,8 @@ int test_l1_tvSettings_register ( void )
     UT_add_test( pSuite, "RegisterVideoResChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_pos" ,test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB );
     UT_add_test( pSuite, "RegisterVideoFrmRateChangeCB_neg" ,test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB );
-
+    UT_add_test( pSuite, "RegisterVideoSourceChangeCB_pos", test_l1_tvSettings_positive_RegisterVideoSourceChangeCB);
+    UT_add_test( pSuite, "RegisterVideoSourceChangeCB_neg", test_l1_tvSettings_negative_RegisterVideoSourceChangeCB);
     return 0;
 }
 

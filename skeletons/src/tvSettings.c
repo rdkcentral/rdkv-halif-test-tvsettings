@@ -51,6 +51,12 @@ tvError_t RegisterVideoFrameRateChangeCB(tvVideoFrameRateCallbackData *cbData){
   return (tvError_t)0;
 }
 
+tvError_t RegisterVideoSourceChangeCB(tvVideoSourceCallbackData *cbData)
+{
+    return (tvError_t)0;
+}
+
+
 tvError_t GetTVSupportedVideoFormats(tvVideoFormatType_t** videoFormats, unsigned short* numberOfFormats)
 {
   /*TODO: Implement Me!*/
