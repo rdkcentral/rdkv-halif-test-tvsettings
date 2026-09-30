@@ -214,6 +214,14 @@ tvError_t SaveLocalDimmingLevel(tvVideoSrcType_t videoSrcType, int pq_mode, tvVi
   return (tvError_t)0;
 }
 
+tvError_t GetBrightnessCaps(int *max_brightness, tvContextCaps_t ** context_caps)
+{
+  /*TODO: Implement Me!*/
+  (void)max_brightness;
+  (void)context_caps;
+  return (tvError_t)0;
+}
+
 tvError_t SetBrightness(int brightness)
 {
   /*TODO: Implement Me!*/

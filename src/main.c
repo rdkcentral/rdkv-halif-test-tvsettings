@@ -63,8 +63,8 @@
 * @file main.c
 *
 */
-
 #include <ut.h>
+#include "vts_capability_repository.h"
 
 #ifndef HALIF_TEST_TAG_VERSION
 #define HALIF_TEST_TAG_VERSION "Not Defined"
@@ -93,9 +93,15 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
+    if (!CapabilityDatabase_Init())
+	{
+		return -1;
+	}
+
 	/* Begin test executions */
 	UT_run_tests();
 
+    CapabilityDatabase_Deinit();
 	return 0;
 
 }
