@@ -71,6 +71,8 @@
 
 #include "vts_capability_repository.h"
 
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+
 /*
 * Global capability repository.
 * Initialized during test suite startup and reused by
@@ -116,7 +118,7 @@ static size_t gNumDimmingModes;
  *                   Helper Function Prototypes
  *********************************************************************/
 static bool LoadEnumDefinitions(void);
-static bool LoadEnumDefinitionGroup(const char *yamlPath, EnumLookup_t *lookupTable, size_t *entryCount);
+static bool LoadEnumDefinitionGroup(const char *yamlPath, EnumLookup_t *lookupTable, size_t lookupTableCapacity, size_t *entryCount);
 static int LookupEnumValue(const EnumLookup_t *table, size_t count, const char *name);
 static bool LoadRangeCaps(const char *propertyName, ExpectedRangeCaps_t *caps);
 /*
@@ -129,9 +131,9 @@ static bool LoadVideoFormatCaps();
 */
 static bool PopulateExpectedContexts(const char *yamlPath, ExpectedContextCaps_t *contextCaps);
 static size_t GetExpandedContextCount(const char *yamlPath, size_t numContextGroups);
-static void ReadFormatArray(const char *yamlPath, tvVideoFormatType_t **formats, size_t *numFormats, size_t groupIndex);
-static void ReadPqModeArray(const char *yamlPath, tvPQModeIndex_t **pqModes, size_t *numPqModes, size_t groupIndex);
-static void ReadSourceArray(const char *yamlPath, tvVideoSrcType_t **sources, size_t *numSources, size_t groupIndex);
+static bool ReadFormatArray(const char *yamlPath, tvVideoFormatType_t **formats, size_t *numFormats, size_t groupIndex);
+static bool ReadPqModeArray(const char *yamlPath, tvPQModeIndex_t **pqModes, size_t *numPqModes, size_t groupIndex);
+static bool ReadSourceArray(const char *yamlPath, tvVideoSrcType_t **sources, size_t *numSources, size_t groupIndex);
 static void ExpandContextGroup(ExpectedContextCaps_t *contextCaps, size_t *currentIndex, const tvVideoFormatType_t *formats, size_t numFormats, const tvPQModeIndex_t *pqModes, size_t numPqModes, const tvVideoSrcType_t *sources, size_t numSources);
 static bool ValidateContextCaps(const ExpectedContextCaps_t *expected,const tvContextCaps_t *actual);
 static void FreeRangeCaps(ExpectedRangeCaps_t *caps);
@@ -155,6 +157,7 @@ static bool LoadEnumDefinitions(void)
     if (!LoadEnumDefinitionGroup(
         "_defs/pictureModes",
         gPictureModeLookup,
+        ARRAY_SIZE(gPictureModeLookup),
         &gNumPictureModes))
     {
         UT_LOG_ERROR("LoadEnumDefinitionsGroup failed for Picture Modes \n");
@@ -164,6 +167,7 @@ static bool LoadEnumDefinitions(void)
     if (!LoadEnumDefinitionGroup(
         "_defs/videoFormats",
         gVideoFormatLookup,
+        ARRAY_SIZE(gVideoFormatLookup),
         &gNumVideoFormats))
     {
         UT_LOG_ERROR("LoadEnumDefinitionsGroup failed for Video Formats \n");
@@ -173,9 +177,18 @@ static bool LoadEnumDefinitions(void)
     if (!LoadEnumDefinitionGroup(
         "_defs/videoSources",
         gVideoSourceLookup,
+        ARRAY_SIZE(gVideoSourceLookup),
         &gNumVideoSources))
     {
         UT_LOG_ERROR("LoadEnumDefinitionsGroup failed for Video Sources \n");
+        return false;
+    }
+
+    if ((gNumPictureModes == 0) ||
+        (gNumVideoFormats == 0) ||
+        (gNumVideoSources == 0))
+    {
+        UT_LOG_ERROR("One or more required enum definition groups were not loaded successfully");
         return false;
     }
 
@@ -196,6 +209,7 @@ static bool LoadEnumDefinitions(void)
 static bool LoadEnumDefinitionGroup(
         const char *enumPathYaml,
         EnumLookup_t *lookupTable,
+        size_t lookupTableCapacity,
         size_t *entryCount)
 {
     size_t i;
@@ -210,6 +224,16 @@ static bool LoadEnumDefinitionGroup(
     }
 
     *entryCount = UT_KVP_PROFILE_GET_LIST_COUNT(enumPathYaml);
+
+    if (*entryCount > lookupTableCapacity)
+    {
+        UT_LOG_ERROR("Entry count (%zu) exceeds lookup table capacity (%zu) for %s",
+                *entryCount,
+                lookupTableCapacity,
+                enumPathYaml);
+
+        return false;
+    }
 
     for (i = 0; i < *entryCount; i++)
     {
@@ -245,6 +269,7 @@ static int LookupEnumValue(
             return table[i].value;
         }
     }
+    return -1;
 }
 
 static bool LoadRangeCaps(
@@ -301,6 +326,7 @@ static bool PopulateExpectedContexts(
 {
     size_t groupIndex;
     size_t currentContextIndex = 0;
+    bool success = false;
 
     if ((yamlPath == NULL) ||
         (contextCaps == NULL))
@@ -328,41 +354,75 @@ static bool PopulateExpectedContexts(
         return false;
     }
 
+    tvVideoFormatType_t *formats = NULL;
+    tvPQModeIndex_t *pqModes = NULL;
+    tvVideoSrcType_t *sources = NULL;
+
     // Read all context groups and expand them.
     for (groupIndex = 0;
          groupIndex < contextCaps->numContextGroups;
          groupIndex++)
     {
-        size_t formatIndex;
-        size_t pqModeIndex;
-        size_t sourceIndex;
-
         size_t numFormats = 0;
         size_t numPqModes = 0;
         size_t numSources = 0;
 
-        tvVideoFormatType_t *formats = NULL;
-        tvPQModeIndex_t *pqModes = NULL;
-        tvVideoSrcType_t *sources = NULL;
+        formats = NULL;
+        pqModes = NULL;
+        sources = NULL;
 
         // Read Video Formats
-        ReadFormatArray(yamlPath, &formats, &numFormats, groupIndex);
+        if (!ReadFormatArray(yamlPath, &formats, &numFormats, groupIndex))
+        {
+            UT_LOG_ERROR("ReadFormatArray failed for context group: %zu \n", groupIndex);
+            goto cleanup;
+        }
 
         // Read Picture Modes
-        ReadPqModeArray(yamlPath, &pqModes, &numPqModes, groupIndex);
+        if (!ReadPqModeArray(yamlPath, &pqModes, &numPqModes, groupIndex))
+        {
+            UT_LOG_ERROR("ReadPqModeArray failed for context group: %zu \n", groupIndex);
+            goto cleanup;
+        }
 
         // Read Sources
-        ReadSourceArray(yamlPath, &sources, &numSources, groupIndex);
+        if (!ReadSourceArray(yamlPath, &sources, &numSources, groupIndex))
+        {
+            UT_LOG_ERROR("ReadSourceArray failed for context group: %zu \n", groupIndex);
+            goto cleanup;
+        }
 
         // Expand combinations
         ExpandContextGroup(contextCaps, &currentContextIndex, formats, numFormats, pqModes, numPqModes, sources, numSources);
 
         free(formats);
+        formats = NULL;
+
         free(pqModes);
+        pqModes = NULL;
+
         free(sources);
+        sources = NULL;
     }
 
-    return true;
+    success = true;
+
+cleanup:
+
+    free(formats);
+    free(pqModes);
+    free(sources);
+
+    if (!success)
+    {
+        free(contextCaps->contexts);
+        contextCaps->contexts = NULL;
+        contextCaps->numContexts = 0;
+        contextCaps->numContextGroups = 0;
+    }
+
+    return success;
+
 }
 
 static size_t GetExpandedContextCount(
@@ -413,7 +473,7 @@ static size_t GetExpandedContextCount(
     return totalContexts;
 }
 
-static void ReadFormatArray(
+static bool ReadFormatArray(
         const char *yamlPath,
         tvVideoFormatType_t **formats,
         size_t *numFormats,
@@ -435,7 +495,7 @@ static void ReadFormatArray(
     *formats = calloc(*numFormats, sizeof(tvVideoFormatType_t));
     if (*formats == NULL)
     {
-        return;
+        return false;
     }
 
     // Read format values
@@ -445,6 +505,7 @@ static void ReadFormatArray(
             formatIndex++)
     {
         char formatName[256];
+        int formatValue;
 
         snprintf(yamlNode,
                     sizeof(yamlNode),
@@ -457,13 +518,23 @@ static void ReadFormatArray(
 
         UT_KVP_PROFILE_GET_STRING(yamlNode, formatName);
 
-        (*formats)[formatIndex] = (tvVideoFormatType_t)LookupEnumValue(gVideoFormatLookup,
-                                                                    gNumVideoFormats,
-                                                                    formatName);
+        formatValue = LookupEnumValue(gVideoFormatLookup, gNumVideoFormats, formatName);
+        if (formatValue < 0)
+        {
+            UT_LOG_ERROR("Unknown format '%s' in YAML path '%s'", formatName, yamlNode);
+            free(*formats);
+            *formats = NULL;
+            *numFormats = 0;
+            return false;
+        }
+
+        (*formats)[formatIndex] = (tvVideoFormatType_t)formatValue;
     }
+
+    return true;
 }
 
-static void ReadPqModeArray(
+static bool ReadPqModeArray(
         const char *yamlPath, 
         tvPQModeIndex_t **pqModes, 
         size_t *numPqModes,
@@ -485,7 +556,7 @@ static void ReadPqModeArray(
     *pqModes = calloc(*numPqModes, sizeof(tvPQModeIndex_t));
     if (*pqModes == NULL)
     {
-        return;
+        return false;
     }
 
     for (size_t pqModeIndex = 0;
@@ -493,6 +564,7 @@ static void ReadPqModeArray(
             pqModeIndex++)
     {
         char pqModeName[256];
+        int pqModeValue;
 
         snprintf(yamlNode,
                     sizeof(yamlNode),
@@ -505,13 +577,23 @@ static void ReadPqModeArray(
 
         UT_KVP_PROFILE_GET_STRING(yamlNode, pqModeName);
 
-        (*pqModes)[pqModeIndex] = (tvPQModeIndex_t)LookupEnumValue(gPictureModeLookup,
-                                                                gNumPictureModes,
-                                                                pqModeName);
+        pqModeValue = LookupEnumValue(gPictureModeLookup, gNumPictureModes, pqModeName);
+        if (pqModeValue < 0)
+        {
+            UT_LOG_ERROR("Unknown PQ Mode '%s' in YAML path '%s'", pqModeName, yamlNode);
+            free(*pqModes);
+            *pqModes = NULL;
+            *numPqModes = 0;
+            return false;
+        }
+
+        (*pqModes)[pqModeIndex] = (tvPQModeIndex_t)pqModeValue;
     }
+
+    return true;
 }
 
-static void ReadSourceArray(
+static bool ReadSourceArray(
         const char *yamlPath, 
         tvVideoSrcType_t **sources, 
         size_t *numSources,
@@ -533,7 +615,7 @@ static void ReadSourceArray(
     *sources = calloc(*numSources, sizeof(tvVideoSrcType_t));
     if (*sources == NULL)
     {
-        return;
+        return false;
     }
 
     for (size_t sourceIndex = 0;
@@ -541,6 +623,7 @@ static void ReadSourceArray(
             sourceIndex++)
     {
         char sourceName[256];
+        int sourceValue;
 
         snprintf(yamlNode,
                     sizeof(yamlNode),
@@ -553,10 +636,20 @@ static void ReadSourceArray(
 
         UT_KVP_PROFILE_GET_STRING(yamlNode, sourceName);
 
-        (*sources)[sourceIndex] = (tvVideoSrcType_t)LookupEnumValue(gVideoSourceLookup,
-                                                                 gNumVideoSources,
-                                                                 sourceName);
+        sourceValue = LookupEnumValue(gVideoSourceLookup, gNumVideoSources, sourceName);
+        if (sourceValue < 0)
+        {
+            UT_LOG_ERROR("Unknown source '%s' in YAML path '%s'", sourceName, yamlNode);
+            free(*sources);
+            *sources = NULL;
+            *numSources = 0;
+            return false;
+        }
+
+        (*sources)[sourceIndex] = (tvVideoSrcType_t)sourceValue;
     }
+
+    return true;
 }
 
 static void ExpandContextGroup(
@@ -731,9 +824,13 @@ bool CapabilityDatabase_Init(void)
     memset(&gCapsDb,0,sizeof(gCapsDb));
 
     // Range-based Capabilities
-    LoadRangeCaps(
+    if (!LoadRangeCaps(
         "Brightness",
-        &gCapsDb.brightness);
+        &gCapsDb.brightness))
+    {
+        UT_LOG_ERROR("LoadRangeCaps failed for Brightness \n");
+        return false;
+    }
 /*
     LoadRangeCaps(
         "Contrast",
@@ -874,7 +971,8 @@ bool ValidateEnumProperty(
         size_t actualCount,
         tvContextCaps_t *actualContexts)
 {
-    // TO DO 
+    // TO DO
+    return false;
 }
 
 /**
@@ -915,6 +1013,7 @@ bool ValidateCMSProperty(
         tvContextCaps_t *actualContexts)
 {
     // TO DO
+    return false;
 }
 
 /**
@@ -960,6 +1059,7 @@ bool Validate2PointWBProperty(
         bool validateColorTemperatures)
 {
     // TO DO
+    return false;
 }
 
 /**
@@ -989,6 +1089,7 @@ bool ValidateMultiPointWBProperty(
         tvContextCaps_t *actualContexts)
 {
     // TO DO
+    return false;
 }
 
 /**
@@ -1011,6 +1112,7 @@ bool ValidateVideoSourceCaps(
         size_t actualNumSources)
 {
     // TO DO
+    return false;
 }
 
 /**
@@ -1033,6 +1135,7 @@ bool ValidateVideoFormatCaps(
         size_t actualNumFormats)
 {
     // TO DO
+    return false;
 }
 
 /**
@@ -1055,6 +1158,7 @@ bool ValidateVideoResolutionCaps(
         size_t actualNumResolutions)
 {
     // TO DO
+    return false;
 }
 
 /**

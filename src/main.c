@@ -64,6 +64,7 @@
 *
 */
 #include <ut.h>
+#include "vts_capability_repository.h"
 
 #ifndef HALIF_TEST_TAG_VERSION
 #define HALIF_TEST_TAG_VERSION "Not Defined"

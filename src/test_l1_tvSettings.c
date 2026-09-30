@@ -18305,6 +18305,13 @@ void test_l1_tvSettings_negative_GetBrightnessCaps(void)
     int maxBrightness = 0;
     tvContextCaps_t *contextCaps = NULL;
 
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 01: Calling GetBrightnessCaps before TvInit and expecting tvERROR_INVALID_STATE */
+        result = GetBrightnessCaps(&maxBrightness, &contextCaps);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
     /* Step 02: Initialize TV Settings */
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
@@ -18325,6 +18332,13 @@ void test_l1_tvSettings_negative_GetBrightnessCaps(void)
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
+    if (extendedEnumsSupported == true)
+    {
+        /* Step 07: Calling GetBrightnessCaps after TvTerm and expecting tvERROR_INVALID_STATE */
+        result = GetBrightnessCaps(&maxBrightness, &contextCaps);
+        UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
+    }
+
     UT_LOG("Out %s", __FUNCTION__);
 }
 
@@ -18338,7 +18352,7 @@ static UT_test_suite_t * pSuite = NULL;
 int test_l1_tvSettings_register ( void )
 {
     UT_LOG("\n*******UT version Number : %d.%d*********\n", UT_VERSION_MAJOR, UT_VERSION_MINOR);
-    //extendedEnumsSupported = UT_KVP_PROFILE_GET_BOOL("tvSettings/features/extendedEnumsSupported" );
+    extendedEnumsSupported = UT_KVP_PROFILE_GET_BOOL("tvSettings/features/extendedEnumsSupported" );
     /* add a suite to the registry */
     pSuite = UT_add_suite( "[L1 tvSettings]", NULL, NULL );
     if ( NULL == pSuite )

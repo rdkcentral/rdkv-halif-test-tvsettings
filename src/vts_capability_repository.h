@@ -61,7 +61,7 @@
 *
 */
 
-#ifndef __VTS_CAPABILITY_REPOSITORY_H_
+#ifndef __VTS_CAPABILITY_REPOSITORY_H__
 #define __VTS_CAPABILITY_REPOSITORY_H__
 
 #include <unistd.h>
@@ -574,6 +574,6 @@ bool ValidateVideoResolutionCaps(
  *
  * @return None
  */
-void CapabilityDatabase_DeInit(void);
+void CapabilityDatabase_Deinit(void);
 
 #endif /* __VTS_CAPABILITY_REPOSITORY_H__ */
