@@ -305,22 +305,18 @@ void test_l1_tvSettings_positive_RegisterVideoFormatChangeCB (void)
 
     /* Step 02: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return success*/
     callbackData.userdata = (char *)malloc(USER_DATA_SIZE);
-    if(callbackData.userdata){
-        strncpy(callbackData.userdata, "TestData", USER_DATA_SIZE);
-        callbackData.cb = tvVideoFormatChangeHandler;
-        result = RegisterVideoFormatChangeCB(&callbackData);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        free(callbackData.userdata);
-        callbackData.userdata = NULL;
-        callbackData.cb = NULL;
-    }
-    else {
-        UT_LOG_ERROR("Error: Memory Allocation Failed\n");
-    }
+    UT_ASSERT_EQUAL_FATAL(callbackData.userdata != NULL, true);
+    strncpy(callbackData.userdata, "TestData", USER_DATA_SIZE);
+    callbackData.cb = tvVideoFormatChangeHandler;
+    result = RegisterVideoFormatChangeCB(&callbackData);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings initialization and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    free(callbackData.userdata);
+    callbackData.userdata = NULL;
+    callbackData.cb = NULL;
 
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -387,6 +383,7 @@ void test_l1_tvSettings_negative_RegisterVideoFormatChangeCB (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 07: Calling tvsettings RegisterVideoFormatChangeCB and expecting the API to return  invalid state*/
+        callbackData.userdata = (char *)"TestData";
         callbackData.cb = tvVideoFormatChangeHandler;
         result = RegisterVideoFormatChangeCB(&callbackData);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
@@ -432,22 +429,18 @@ void test_l1_tvSettings_positive_RegisterVideoContentChangeCB (void)
 
     /* Step 02: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return success*/
     callbackData.userdata = (char *)malloc(USER_DATA_SIZE);
-    if(callbackData.userdata){
-        strncpy(callbackData.userdata, "TestData",USER_DATA_SIZE);
-        callbackData.cb = tvVideoContentChangeHandler;
-        result = RegisterVideoContentChangeCB(&callbackData);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        free(callbackData.userdata);
-        callbackData.userdata = NULL;
-        callbackData.cb = NULL;
-    }
-    else {
-        UT_LOG_ERROR("Error: Memory Allocation Failed\n");
-    }
+    UT_ASSERT_EQUAL_FATAL(callbackData.userdata != NULL, true);
+    strncpy(callbackData.userdata, "TestData",USER_DATA_SIZE);
+    callbackData.cb = tvVideoContentChangeHandler;
+    result = RegisterVideoContentChangeCB(&callbackData);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings initialization and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    free(callbackData.userdata);
+    callbackData.userdata = NULL;
+    callbackData.cb = NULL;
 
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -516,6 +509,7 @@ void test_l1_tvSettings_negative_RegisterVideoContentChangeCB (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 07: Calling tvsettings RegisterVideoContentChangeCB and expecting the API to return  invalid state*/
+        callbackData.userdata = (char *)"TestData";
         callbackData.cb = tvVideoContentChangeHandler;
         result = RegisterVideoContentChangeCB(&callbackData);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
@@ -561,22 +555,18 @@ void test_l1_tvSettings_positive_RegisterVideoResolutionChangeCB (void)
 
     /* Step 02: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return success*/
     callbackData.userdata = (char *)malloc(USER_DATA_SIZE);
-    if(callbackData.userdata){
-        strncpy(callbackData.userdata, "TestData",USER_DATA_SIZE);
-        callbackData.cb = tvVideoResolutionChangeHandler;
-        result = RegisterVideoResolutionChangeCB(&callbackData);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        free(callbackData.userdata);
-        callbackData.userdata = NULL;
-        callbackData.cb = NULL;
-    }
-    else {
-        UT_LOG_ERROR("Error: Memory Allocation Failed\n");
-    }
+    UT_ASSERT_EQUAL_FATAL(callbackData.userdata != NULL, true);
+    strncpy(callbackData.userdata, "TestData",USER_DATA_SIZE);
+    callbackData.cb = tvVideoResolutionChangeHandler;
+    result = RegisterVideoResolutionChangeCB(&callbackData);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings initialization and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    free(callbackData.userdata);
+    callbackData.userdata = NULL;
+    callbackData.cb = NULL;
 
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -645,6 +635,7 @@ void test_l1_tvSettings_negative_RegisterVideoResolutionChangeCB (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 07: Calling tvsettings RegisterVideoResolutionChangeCB and expecting the API to return  invalid state*/
+        callbackData.userdata = (char *)"TestData";
         callbackData.cb = tvVideoResolutionChangeHandler;
         result = RegisterVideoResolutionChangeCB(&callbackData);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
@@ -691,22 +682,18 @@ void test_l1_tvSettings_positive_RegisterVideoFrameRateChangeCB (void)
 
     /* Step 02: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return success*/
     callbackData.userdata = (char *)malloc(USER_DATA_SIZE);
-    if(callbackData.userdata){
-        strncpy(callbackData.userdata, "TestData",USER_DATA_SIZE);
-        callbackData.cb = tvVideoFrameRateChangeHandler;
-        result = RegisterVideoFrameRateChangeCB(&callbackData);
-        UT_ASSERT_EQUAL(result, tvERROR_NONE);
-        free(callbackData.userdata);
-        callbackData.userdata = NULL;
-        callbackData.cb = NULL;
-    }
-    else {
-        UT_LOG_ERROR("Error: Memory Allocation Failed\n");
-    }
+    UT_ASSERT_EQUAL_FATAL(callbackData.userdata != NULL, true);
+    strncpy(callbackData.userdata, "TestData",USER_DATA_SIZE);
+    callbackData.cb = tvVideoFrameRateChangeHandler;
+    result = RegisterVideoFrameRateChangeCB(&callbackData);
+    UT_ASSERT_EQUAL(result, tvERROR_NONE);
 
     /* Step 03: Calling tvsettings initialization and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
+    free(callbackData.userdata);
+    callbackData.userdata = NULL;
+    callbackData.cb = NULL;
 
     UT_LOG("Out %s",__FUNCTION__);
 }
@@ -775,6 +762,7 @@ void test_l1_tvSettings_negative_RegisterVideoFrameRateChangeCB (void)
     if (extendedEnumsSupported == true)
     {
         /* Step 07: Calling tvsettings RegisterVideoFrameRateChangeCB and expecting the API to return  invalid state*/
+        callbackData.userdata = (char *)"TestData";
         callbackData.cb = tvVideoFrameRateChangeHandler;
         result = RegisterVideoFrameRateChangeCB(&callbackData);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
@@ -830,6 +818,8 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
     result = GetTVSupportedVideoFormats(tvVideoFormatsPtr, &sizeReceived);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
     size = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoFormat/index");
+    UT_ASSERT_TRUE(size <= VIDEO_FORMAT_MAX);
+    UT_ASSERT_TRUE(sizeReceived <= VIDEO_FORMAT_MAX);
     UT_ASSERT_EQUAL(sizeReceived, size);
 
     for (unsigned short i = 0; i < size; i++)
@@ -846,6 +836,13 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoFormats (void)
             }
         }
         UT_ASSERT_TRUE((IsVideoFormatValid));
+    }
+    for (unsigned short i = 0; i < sizeReceived; i++)
+    {
+        for (unsigned short j = i + 1; j < sizeReceived; j++)
+        {
+            UT_ASSERT_TRUE(tvVideoFormats[i] != tvVideoFormats[j]);
+        }
     }
     for (int i = 0; i < VIDEO_FORMAT_MAX; i++)
     {
@@ -929,13 +926,17 @@ void test_l1_tvSettings_negative_GetTVSupportedVideoFormats(void)
     result = GetTVSupportedVideoFormats(NULL, &size);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 
-    /* Step 05: Calling tvsettings termination and expecting the API to return success */
+    /* Step 05: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetTVSupportedVideoFormats(NULL, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+    /* Step 06: Calling tvsettings termination and expecting the API to return success */
     result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     if (extendedEnumsSupported == true)
     {
-        /* Step 06: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
+        /* Step 07: Calling tvsettings GetTVSupportedVideoFormats and expecting the API to return tvERROR_INVALID_STATE */
         result = GetTVSupportedVideoFormats(tvVideoFormatsPtr, &size);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
@@ -973,12 +974,13 @@ void test_l1_tvSettings_positive_GetCurrentVideoFormat (void)
     result = TvInit();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
-    /* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
+     /* Step 02: Calling GetCurrentVideoFormat and verifying the default video format is VIDEO_FORMAT_SDR */
     result = GetCurrentVideoFormat(&tvVideoFormatType);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_EQUAL(tvVideoFormatType,VIDEO_FORMAT_SDR)
+    /* Validate that the default video format is VIDEO_FORMAT_SDR */
+    UT_ASSERT_EQUAL(tvVideoFormatType,VIDEO_FORMAT_SDR);
 
-    /* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
+     /* Step 03: Calling GetCurrentVideoFormat again and verifying the returned value matches the previous value */
     result = GetCurrentVideoFormat(&tvVideoFormatTypeRetry);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
     UT_ASSERT_EQUAL(tvVideoFormatTypeRetry, tvVideoFormatType);
@@ -1083,7 +1085,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoResolution (void)
     /* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoResolution(&tvVideoResolution);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-
+    /* Validate that the default video resolution is tvVideoResolution_NONE */
     UT_ASSERT_EQUAL(tvVideoResolution.resolutionValue,tvVideoResolution_NONE);
 
     /* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
@@ -1192,7 +1194,7 @@ void test_l1_tvSettings_positive_GetCurrentVideoFrameRate (void)
     /* Step 02: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoFrameRate(&tvVideoFramerate);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_EQUAL(tvVideoFramerate,tvVideoFrameRate_NONE)
+    UT_ASSERT_EQUAL(tvVideoFramerate,tvVideoFrameRate_NONE);
 
     /* Step 03: Calling tvsettings GetCurrentVideoFormat and expectinging the API to return success */
     result = GetCurrentVideoFrameRate(&tvVideoFramerateRetry);
@@ -1298,7 +1300,8 @@ void test_l1_tvSettings_positive_GetCurrentVideoSource (void)
     /* Step 02: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
     result = GetCurrentVideoSource(&tvVideoSource);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
-    UT_ASSERT_EQUAL(tvVideoSource,VIDEO_SOURCE_IP)
+    /* Validate that the current video source is VIDEO_SOURCE_IP */
+    UT_ASSERT_EQUAL(tvVideoSource,VIDEO_SOURCE_IP);
 
     /* Step 03: Calling tvsettings GetCurrentVideoSource and expectinging the API to return success */
     result = GetCurrentVideoSource(&tvVideoSourceRetry);
@@ -1417,6 +1420,8 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
     count = UT_KVP_PROFILE_GET_LIST_COUNT("tvSettings/VideoSource/index");
     result = GetTVSupportedVideoSources(tvVideoSourcesPtr, &sizeReceived);
     UT_ASSERT_EQUAL(result, tvERROR_NONE);
+    UT_ASSERT_TRUE(count <= VIDEO_SOURCE_MAX);
+    UT_ASSERT_TRUE(sizeReceived <= VIDEO_SOURCE_MAX);
     UT_ASSERT_EQUAL(sizeReceived, count);
 
     for (unsigned int i = 0; i < sizeReceived; i++)
@@ -1424,7 +1429,7 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
         IsVideoSourceValid = false;
         snprintf(keyValue, UT_KVP_MAX_ELEMENT_SIZE, "tvSettings/VideoSource/index/%d", i);
         source = (tvVideoSrcType_t)UT_KVP_PROFILE_GET_UINT32(keyValue);
-        for (unsigned short j = 0; j < count; j++)
+        for (unsigned short j = 0; j < sizeReceived; j++)
         {
             if (source == tvVideoSources[j])
             {
@@ -1433,6 +1438,13 @@ void test_l1_tvSettings_positive_GetTVSupportedVideoSources (void)
             }
         }
         UT_ASSERT_TRUE((IsVideoSourceValid));
+    }
+    for (unsigned short i = 0; i < sizeReceived; i++)
+    {
+        for (unsigned short j = i + 1; j < sizeReceived; j++)
+        {
+            UT_ASSERT_TRUE(tvVideoSources[i] != tvVideoSources[j]);
+        }
     }
     for (int i = 0; i < VIDEO_SOURCE_MAX ; i++)
     {
@@ -20859,13 +20871,17 @@ void test_l1_tvSettings_negative_GetSharpnessCaps (void)
     result = GetSharpnessCaps(&max_sharpness, NULL);
     UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
 	
-	/* Step 09: Calling tvsettings termination and expecting the API to return success */
+    /* Step 05: Calling tvsettings GetSharpnessCaps and expecting the API to return tvERROR_INVALID_PARAM */
+    result = GetSharpnessCaps(NULL, NULL);
+    UT_ASSERT_EQUAL(result, tvERROR_INVALID_PARAM);
+
+	/* Step 06: Calling tvsettings termination and expecting the API to return success */
 	result = TvTerm();
     UT_ASSERT_EQUAL_FATAL(result, tvERROR_NONE);
 
     if (extendedEnumsSupported == true)
     {
-        /* Step 10: Calling tvsettings GetSharpnessCaps after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
+        /* Step 07: Calling tvsettings GetSharpnessCaps after TvTerm and expecting the API to return tvERROR_INVALID_STATE */
         result = GetSharpnessCaps(&max_sharpness, &context_caps);
         UT_ASSERT_EQUAL(result, tvERROR_INVALID_STATE);
     }
